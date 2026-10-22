@@ -39,16 +39,20 @@ final class TouchFeedback {
  }
  static void pulse(Context context,SharedPreferences preferences,View target){
   if(preferences==null||!preferences.getBoolean("haptics",true))return;
+  int level=Math.max(1,Math.min(3,preferences.getInt("haptic_strength",2)));
+  try{
+   Vibrator vibrator=(Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+   if(vibrator!=null&&vibrator.hasVibrator()){
+    int amplitude=level==1?85:level==3?210:145;
+    long millis=level==1?12:level==3?26:19;
+    vibrator.vibrate(VibrationEffect.createOneShot(millis,amplitude));
+    return;
+   }
+  }catch(Exception ignored){}
   try{
    if(target!=null){
     target.setHapticFeedbackEnabled(true);
-    if(target.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY))return;
-   }
-   Vibrator vibrator=(Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
-   if(vibrator!=null&&vibrator.hasVibrator()){
-    if(Build.VERSION.SDK_INT>=29){
-     vibrator.vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_TICK));
-    }else vibrator.vibrate(VibrationEffect.createOneShot(14,95));
+    target.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
    }
   }catch(Exception ignored){}
  }
