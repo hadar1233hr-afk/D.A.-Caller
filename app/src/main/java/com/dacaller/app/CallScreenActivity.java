@@ -60,7 +60,11 @@ public final class CallScreenActivity extends Activity {
  private LinearLayout horizontal(){
   LinearLayout v=new LinearLayout(this);v.setGravity(Gravity.CENTER);return v;
  }
- private void tick(View v){if(v!=null)v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);}
+ private void tick(View v){
+  if(v!=null&&getSharedPreferences("da_caller",MODE_PRIVATE).getBoolean("haptics",true)){
+   v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+  }
+ }
  @Override public void onCreate(Bundle b){
   super.onCreate(b);setShowWhenLocked(true);setTurnScreenOn(true);
   getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
