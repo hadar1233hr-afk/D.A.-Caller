@@ -4,51 +4,131 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Person;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.telecom.Call;
+import android.telecom.CallAudioState;
 import android.telecom.InCallService;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class PhoneSessionService extends InCallService {
+public final class PhoneSessionService extends InCallService {
+ static volatile PhoneSessionService instance;
  static volatile Call current;
  private static final CopyOnWriteArrayList<Runnable> listeners=new CopyOnWriteArrayList<>();
+ private final Call.Callback callback=new Call.Callback(){
+  @Override public void onStateChanged(Call call,int state){
+   notifyViews();
+   if(state==Call.STATE_DISCONNECTED)clear(call);
+   else updateNotification(call);
+  }
+  @Override public void onDetailsChanged(Call call,Call.Details details){
+   notifyViews();
+   updateNotification(call);
+  }
+ };
  static void register(Runnable cb){listeners.addIfAbsent(cb);}
  static void unregister(Runnable cb){listeners.remove(cb);}
  static void notifyViews(){for(Runnable cb:listeners){try{cb.run();}catch(Exception ignored){}}}
- private final Call.Callback callback=new Call.Callback(){
-  @Override public void onStateChanged(Call call,int state){notifyViews();if(state==Call.STATE_DISCONNECTED)clear(call);}
-  @Override public void onDetailsChanged(Call call,Call.Details details){notifyViews();}
- };
+ @Override public void onCreate(){super.onCreate();instance=this;}
+ @Override public void onDestroy(){
+  instance=null;current=null;notifyViews();
+  super.onDestroy();
+ }
  @Override public void onCallAdded(Call call){
-  super.onCallAdded(call);current=call;call.registerCallback(callback);
-  Intent screen=new Intent(this,CallScreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
-  try{startActivity(screen);}catch(Exception ignored){}
+  super.onCallAdded(call);
+  current=call;
+  call.registerCallback(callback);
+  updateNotification(call);
   notifyViews();
-  showNotification(call);
+  // Opening via the full-screen notification is reliable when Android disallows
+  // background Activity launches; opening directly is attempted for outgoing calls.
+  if(call.getState()!=Call.STATE_RINGING){
+   try{
+    Intent ui=new Intent(this,CallScreenActivity.class);
+    ui.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    startActivity(ui);
+   }catch(Exception ignored){}
+  }
  }
  @Override public void onCallRemoved(Call call){
   try{call.unregisterCallback(callback);}catch(Exception ignored){}
-  clear(call);super.onCallRemoved(call);
+  clear(call);
+  super.onCallRemoved(call);
  }
+ @Override public void onCallAudioStateChanged(CallAudioState state){super.onCallAudioStateChanged(state);notifyViews();}
+ @Override public void onMuteStateChanged(boolean muted){super.onMuteStateChanged(muted);notifyViews();}
+ static boolean muted(){
+  PhoneSessionService service=instance;
+  if(service==null)return false;
+  CallAudioState state=service.getCallAudioState();
+  return state!=null&&state.isMuted();
+ }
+ static boolean speaker(){
+  PhoneSessionService service=instance;
+  if(service==null)return false;
+  CallAudioState state=service.getCallAudioState();
+  return state!=null && (state.getRoute() & CallAudioState.ROUTE_SPEAKER)!=0;
+ }
+ static void mute(boolean value){
+  PhoneSessionService service=instance;
+  if(service!=null)try{service.setMuted(value);}catch(Exception ignored){}
+ }
+ static void speaker(boolean value){
+  PhoneSessionService service=instance;
+  if(service==null)return;
+  try{service.setAudioRoute(value?CallAudioState.ROUTE_SPEAKER:CallAudioState.ROUTE_EARPIECE);}catch(Exception ignored){}
+ }
+ private static PendingIntent command(Context ctx,String command,int code){
+  Intent intent=new Intent(ctx,CallCommandReceiver.class);
+  intent.setAction("com.dacaller.app.CALL_"+command);
+  return PendingIntent.getBroadcast(ctx,code,intent,PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
+ }
+ static void notifyChanged(){notifyViews();}
  private void clear(Call call){
-  if(current==call)current=null;notifyViews();
-  ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE)).cancel(1502);
+  if(current==call)current=null;
+  notifyViews();
+  try{((NotificationManager)getSystemService(NOTIFICATION_SERVICE)).cancel(1502);}catch(Exception ignored){}
  }
- private void showNotification(Call call){
-  NotificationManager nm=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-  String channel="dacaller_incall";
-  if(Build.VERSION.SDK_INT>=26)nm.createNotificationChannel(new NotificationChannel(channel,"DA CALLER • שיחות",NotificationManager.IMPORTANCE_HIGH));
-  Intent i=new Intent(this,CallScreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
-  PendingIntent pi=PendingIntent.getActivity(this,55,i,PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
-  Notification.Builder builder=Build.VERSION.SDK_INT>=26?new Notification.Builder(this,channel):new Notification.Builder(this);
-  boolean ringing=call.getState()==Call.STATE_RINGING;
-  builder.setSmallIcon(R.drawable.ic_launcher).setContentTitle(ringing?"שיחה נכנסת • DA CALLER":"שיחה פעילה • DA CALLER")
-    .setContentText("הקש לפתיחת מסך השיחה").setContentIntent(pi).setOngoing(true).setCategory(Notification.CATEGORY_CALL)
-    .setPriority(Notification.PRIORITY_HIGH);
-  if(ringing)builder.setFullScreenIntent(pi,true);
-  try{nm.notify(1502,builder.build());}catch(Exception ignored){}
+ private void updateNotification(Call call){
+  if(call==null)return;
+  int state=call.getState();
+  if(state==Call.STATE_DISCONNECTED)return;
+  NotificationManager nm=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+  String channel="dacaller_calls_v3";
+  NotificationChannel ch=new NotificationChannel(channel,"DA CALLER · שיחות",NotificationManager.IMPORTANCE_HIGH);
+  ch.setDescription("התראות שיחה נכנסת ושיחה פעילה");
+  ch.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+  nm.createNotificationChannel(ch);
+  Intent intent=new Intent(this,CallScreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+  PendingIntent open=PendingIntent.getActivity(this,1502,intent,PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
+  boolean ringing=state==Call.STATE_RINGING;
+  String number="מספר לא ידוע";
+  try{
+   if(call.getDetails()!=null&&call.getDetails().getHandle()!=null)number=call.getDetails().getHandle().getSchemeSpecificPart();
+  }catch(Exception ignored){}
+  Notification.Builder b=new Notification.Builder(this,channel);
+  b.setSmallIcon(R.drawable.ic_launcher)
+   .setContentTitle(ringing?"שיחה נכנסת · DA CALLER":"שיחה פעילה · DA CALLER")
+   .setContentText(number)
+   .setContentIntent(open).setVisibility(Notification.VISIBILITY_PUBLIC)
+   .setCategory(Notification.CATEGORY_CALL)
+   .setPriority(Notification.PRIORITY_MAX).setOngoing(true)
+   .setFullScreenIntent(open,ringing);
+  if(Build.VERSION.SDK_INT>=31){
+   try{
+    Person caller=new Person.Builder().setName(number).setImportant(true).build();
+    if(ringing)b.setStyle(Notification.CallStyle.forIncomingCall(caller,
+      command(this,"DECLINE",2001),command(this,"ANSWER",2002)));
+    else b.setStyle(Notification.CallStyle.forOngoingCall(caller,command(this,"HANGUP",2003)));
+   }catch(Exception ignored){}
+  }else{
+   if(ringing){
+    b.addAction(android.R.drawable.ic_menu_close_clear_cancel,"דחה",command(this,"DECLINE",2001));
+    b.addAction(android.R.drawable.sym_action_call,"ענה",command(this,"ANSWER",2002));
+   }else b.addAction(android.R.drawable.ic_menu_close_clear_cancel,"סיים",command(this,"HANGUP",2003));
+  }
+  try{nm.notify(1502,b.build());}catch(Exception ignored){}
  }
 }
