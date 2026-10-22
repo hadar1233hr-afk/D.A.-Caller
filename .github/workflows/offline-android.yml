@@ -1,0 +1,89 @@
+name: DA ID Offline - populated APK
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'offline/**'
+      - '.github/workflows/offline-android.yml'
+      - 'settings.gradle'
+  workflow_dispatch:
+concurrency:
+  group: da-id-offline-release-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: write
+jobs:
+  build-offline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Prepare Android SDK
+        run: |
+          SDKM=$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager | head -n 1)
+          test -n "$SDKM"
+          yes | "$SDKM" "platforms;android-35" "build-tools;35.0.0" >/dev/null || test -d "$ANDROID_HOME/platforms/android-35"
+      - name: Download public phone database source
+        run: |
+          python -m pip install --disable-pip-version-check osmium
+          mkdir -p offline/src/main/assets
+          curl --fail --location --silent --show-error --retry 4 --retry-delay 6 --max-time 300 \
+            --output /tmp/israel-and-palestine.osm.pbf \
+            https://download.geofabrik.de/asia/israel-and-palestine-latest.osm.pbf
+          test -s /tmp/israel-and-palestine.osm.pbf
+      - name: Build bundled SQLite with real numbers
+        run: |
+          python offline/tools/build_osm_db.py \
+            --pbf /tmp/israel-and-palestine.osm.pbf \
+            --db offline/src/main/assets/bundled_calls.db
+          python - <<'PY'
+          import sqlite3
+          db=sqlite3.connect('offline/src/main/assets/bundled_calls.db')
+          n=db.execute('select count(*) from entries').fetchone()[0]
+          print(f"Packaged {n} verified distinct public phone numbers")
+          assert n >= 100, "No useful phone directory was built"
+          assert db.execute('pragma integrity_check').fetchone()[0]=='ok'
+          assert db.execute('pragma user_version').fetchone()[0]==2
+          db.close()
+          PY
+      - name: Build installable APK
+        run: gradle --no-daemon :offline:assembleDebug
+      - name: Verify signature and embedded phone database
+        run: |
+          APK=offline/build/outputs/apk/debug/offline-debug.apk
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose "$APK"
+          unzip -l "$APK" | grep -F assets/bundled_calls.db
+          test -s "$APK"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DA-ID-OFFLINE-v0.2.0-APK
+          path: offline/build/outputs/apk/debug/offline-debug.apk
+      - name: Publish populated version to GitHub Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp offline/build/outputs/apk/debug/offline-debug.apk DA-ID-OFFLINE-v0.2.0.apk
+          cp offline/src/main/assets/bundled_calls.db DA-ID-OFFLINE-v0.2.0-public-directory.db
+          cat > DATA-ATTRIBUTION.txt <<'EOF'
+          DA ID OFFLINE public phone directory, v0.2.0
+          Contains names and public business/organization telephone numbers sourced from OpenStreetMap (israel-and-palestine extract by Geofabrik).
+          Source: https://download.geofabrik.de/asia/israel-and-palestine.html
+          Copyright: OpenStreetMap contributors, licensed under Open Database License (ODbL) 1.0: https://opendatacommons.org/licenses/odbl/1-0/
+          Optional additional business entries: Kfar Saba open data business licensing (2021), ODbL; source linked in offline/tools/build_osm_db.py
+          Data is distributed as an ODbL database; this app's Java code has separate ownership.
+          Public contact records may be stale or reassigned. Not a private people directory.
+          EOF
+          if gh release view id-offline-v0.2.0 >/dev/null 2>&1; then
+            gh release upload id-offline-v0.2.0 DA-ID-OFFLINE-v0.2.0.apk DA-ID-OFFLINE-v0.2.0-public-directory.db DATA-ATTRIBUTION.txt --clobber
+          else
+            gh release create id-offline-v0.2.0 DA-ID-OFFLINE-v0.2.0.apk DA-ID-OFFLINE-v0.2.0-public-directory.db DATA-ATTRIBUTION.txt --title 'DA ID Offline v0.2.0 - populated public database' --notes 'Experimental Android caller-ID app, offline. Includes a bundled SQLite directory of publicly tagged organizations and business phone numbers from OpenStreetMap (ODbL). Read DATA-ATTRIBUTION.txt. It does not identify most private mobile numbers.'
+          fi
