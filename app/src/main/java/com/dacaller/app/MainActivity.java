@@ -52,6 +52,9 @@ public class MainActivity extends Activity {
  private boolean loadingContacts=false;
  private String pendingNumber=null;
  private boolean keypadOpen=false;
+ private final java.util.Map<String,String> contactNames=new java.util.HashMap<>();
+ private int recentDisplayCount=35;
+ private String currentSearch="";
  private int d(float n){return (int)(getResources().getDisplayMetrics().density*n+0.5f);}
  private boolean dark(){return prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);}
  private boolean amoled(){return prefs.getBoolean("amoled",false);}
@@ -60,7 +63,10 @@ public class MainActivity extends Activity {
  private int text(){return dark()?0xFFF7F7F7:0xFF181818;}
  private int muted(){return dark()?0xFF9D9D9D:0xFF747474;}
  private int border(){return dark()?0xFF343434:0xFFE6E6E5;}
- private int tint(){return dark()?0xFFE5C987:0xFF99702D;}
+ private int tint(){
+  if("silver".equals(prefs.getString("accent","gold")))return dark()?0xFFE0E0E0:0xFF626262;
+  return dark()?0xFFE5C987:0xFF99702D;
+ }
  private int soft(){return dark()?0xFF24211B:0xFFF3EEE4;}
  private int scaled(int value){return Math.round(value*prefs.getInt("font_"+page,100)/100f);}
  private int screenHeight(){return (int)(getResources().getDisplayMetrics().heightPixels/getResources().getDisplayMetrics().density);}
@@ -85,6 +91,7 @@ public class MainActivity extends Activity {
  @Override public void onCreate(Bundle saved){
   super.onCreate(saved);
   prefs=getSharedPreferences("da_caller",MODE_PRIVATE);
+  page=prefs.getString("start_page","recents");
   handleIntent(getIntent());
   render();loadContacts();refreshLog();
   handler.postDelayed(()->{
@@ -101,12 +108,19 @@ public class MainActivity extends Activity {
    if(intent.getData()!=null)pendingNumber=intent.getData().getSchemeSpecificPart();
   }
  }
- @Override public void onResume(){super.onResume();if(prefs!=null){refreshLog();if(!contacts.isEmpty())FavoritesWidget.refresh(this);}}
+ @Override public void onResume(){super.onResume();if(prefs!=null)refreshLog();}
  @Override public void onRequestPermissionsResult(int request,String[] requested,int[] results){
   super.onRequestPermissionsResult(request,requested,results);
   if(request==21){loadContacts();render();}
   if(request==22){refreshLog();render();}
-  if(request==23&&pendingNumber!=null){String number=pendingNumber;pendingNumber=null;makeCall(number);}
+  if(request==23&&pendingNumber!=null){
+   String number=pendingNumber;pendingNumber=null;
+   if(results.length>0&&results[0]==PackageManager.PERMISSION_GRANTED)makeCall(number);
+   else{
+    try{startActivity(new Intent(Intent.ACTION_DIAL,Uri.fromParts("tel",number,null)));}
+    catch(Exception ignored){Toast.makeText(this,"לא ניתן לפתוח חייגן",Toast.LENGTH_SHORT).show();}
+   }
+  }
  }
  @Override protected void onActivityResult(int code,int result,Intent data){
   super.onActivityResult(code,result,data);
@@ -144,7 +158,13 @@ public class MainActivity extends Activity {
   loadingContacts=true;
   CallHistory.worker.execute(()->{
    List<Contacts.Person> result=Contacts.all(getApplicationContext());
-   handler.post(()->{contacts=result;loadingContacts=false;if(page.equals("contacts")||page.equals("favorites"))render();FavoritesWidget.refresh(this);});
+   handler.post(()->{
+    if(isFinishing()||isDestroyed())return;
+    contacts=result;contactNames.clear();
+    for(Contacts.Person item:result)contactNames.put(item.key,item.name);
+    loadingContacts=false;
+    if(page.equals("contacts")||page.equals("favorites")||page.equals("recents"))render();
+   });
   });
  }
  private void refreshLog(){
@@ -177,8 +197,12 @@ public class MainActivity extends Activity {
   footer.setBackgroundColor(panel());root.addView(footer,lp(-1,70));
   nav=footer;
   if(page.equals("settings")){
-   TextView back=center("←  חזרה לשיחות",15,true,tint());footer.addView(back,lp(-1,53));
+   TextView back=center("←  חזרה לשיחות",15,true,tint());
+   footer.addView(back,new LinearLayout.LayoutParams(0,d(53),1));
    back.setOnClickListener(v->{page="recents";render();});
+   TextView keypad=center("▦",26,true,Color.BLACK);
+   keypad.setBackground(rounded(GOLD,19));footer.addView(keypad,lp(65,53));
+   keypad.setOnClickListener(v->showKeypad(null));
   }else{
    addNav("שיחות","◷","recents");
    addNav("אנשי קשר","☷","contacts");
@@ -219,8 +243,7 @@ public class MainActivity extends Activity {
   if(checkSelfPermission(Manifest.permission.READ_CALL_LOG)!=PackageManager.PERMISSION_GRANTED){
    permissionPanel("יומן השיחות דורש הרשאה","אפשר גישה ליומן השיחות",()->ensureCallLogPermission());return;
   }
-  summary();
-  gap(body,21);
+  if(prefs.getBoolean("show_stats",true)){summary();gap(body,21);}
   LinearLayout labelLine=row();body.addView(labelLine,lp(-1,35));
   labelLine.addView(t("שיחות אחרונות",17,true,text()),new LinearLayout.LayoutParams(0,-2,1));
   TextView reload=center("↻",23,true,tint());labelLine.addView(reload,lp(40,38));
@@ -228,8 +251,14 @@ public class MainActivity extends Activity {
   gap(body,5);
   List<CallHistory.Entry> entries=CallHistory.entries;
   if(entries.isEmpty()){empty("אין שיחות להצגה");return;}
-  int limit=Math.min(entries.size(),85);
+  int limit=Math.min(entries.size(),recentDisplayCount);
   for(int i=0;i<limit;i++)addCall(entries.get(i));
+  if(limit<entries.size()){
+   TextView more=center("הצג עוד שיחות   ↓",14,true,tint());
+   more.setBackground(stroked(panel(),14));
+   LinearLayout.LayoutParams moreParams=lp(-1,53);moreParams.topMargin=d(9);body.addView(more,moreParams);
+   more.setOnClickListener(v->{recentDisplayCount+=35;render();});
+  }
  }
  private void summary(){
   LinearLayout header=row();body.addView(header,lp(-1,26));
@@ -237,16 +266,24 @@ public class MainActivity extends Activity {
   gap(body,11);
   String[] titles={"היום","השבוע","החודש","השנה"};
   CallHistory.Summary s=CallHistory.summary;
-  LinearLayout cards=row();body.addView(cards,lp(-1,81));
+  int widthDp=(int)(getResources().getDisplayMetrics().widthPixels/getResources().getDisplayMetrics().density);
+  boolean compact=widthDp<355;
+  LinearLayout cards=compact?column():row();
+  body.addView(cards,lp(-1,compact?156:81));
+  LinearLayout line=cards;
   for(int i=0;i<4;i++){
-   final int at=i;LinearLayout tile=column();tile.setGravity(Gravity.CENTER);
+   if(compact && i%2==0){
+    line=row();cards.addView(line,lp(-1,78));
+   }
+   final int at=i;
+   LinearLayout tile=column();tile.setGravity(Gravity.CENTER);
    tile.setBackground(stroked(period==i?soft():panel(),15));
-   LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(0,d(81),1);
-   param.setMargins(d(2),0,d(2),0);cards.addView(tile,param);
-   tile.addView(center(titles[i],11,false,muted()),lp(-1,20));
+   LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(0,d(compact?75:81),1);
+   param.setMargins(d(2),d(1),d(2),d(1));line.addView(tile,param);
+   tile.addView(center(titles[i],11,false,muted()),lp(-1,18));
    long mins=Math.round(s.seconds[i]/60.0);
-   tile.addView(center(String.valueOf(mins),24,true,period==i?tint():text()),lp(-1,31));
-   tile.addView(center("דקות",10,false,muted()),lp(-1,15));
+   tile.addView(center(String.valueOf(mins),23,true,period==i?tint():text()),lp(-1,30));
+   tile.addView(center("דקות",10,false,muted()),lp(-1,14));
    tile.setOnClickListener(v->{period=at;render();});
   }
   gap(body,11);
@@ -264,8 +301,8 @@ public class MainActivity extends Activity {
  private String contactName(String phone){
   if(phone==null)return "";
   String cleaned=phone.replaceAll("[^+0-9]","");
-  for(Contacts.Person p:contacts)if(p.key.equals(cleaned))return p.name;
-  return phone;
+  String name=contactNames.get(cleaned);
+  return name!=null?name:phone;
  }
  private void addCall(CallHistory.Entry e){
   LinearLayout item=row();pad(item,9,5);
@@ -294,23 +331,44 @@ public class MainActivity extends Activity {
   search.setHint("חיפוש שם או מספר");search.setBackground(stroked(panel(),15));pad(search,15,3);
   body.addView(search,lp(-1,52));gap(body,12);
   LinearLayout list=column();body.addView(list,lp(-1,-2));
+  final int[] maxRows={55};
   Runnable filter=()->{
    list.removeAllViews();String query=search.getText().toString().toLowerCase(Locale.ROOT).trim();
-   Set<String> starred=favorites();int shown=0;
+   Set<String> starred=favorites();int shown=0;int totalMatches=0;
    for(Contacts.Person person:contacts){
     if(onlyFav&&!starred.contains(person.key))continue;
     if(!query.isEmpty()&&!person.name.toLowerCase(Locale.ROOT).contains(query)&&!person.phone.contains(query))continue;
-    addContact(list,person,starred.contains(person.key));
-    if(++shown>=90)break;
+    totalMatches++;
+    if(shown<maxRows[0]){addContact(list,person,starred.contains(person.key));shown++;}
    }
    if(shown==0)emptyIn(list,onlyFav?"אין אנשי קשר מועדפים":"אין תוצאות");
+   if(totalMatches>shown){
+    TextView more=center("הצג עוד אנשי קשר ("+(totalMatches-shown)+")",13,true,tint());
+    more.setBackground(stroked(panel(),14));list.addView(more,lp(-1,51));
+    more.setOnClickListener(v->{maxRows[0]+=55;filterClick(list,search,onlyFav,maxRows[0]);});
+   }
   };
   search.addTextChangedListener(new TextWatcher(){
    public void beforeTextChanged(CharSequence s,int st,int count,int after){}
-   public void onTextChanged(CharSequence s,int st,int before,int count){handler.removeCallbacks(filter);handler.postDelayed(filter,80);}
+   public void onTextChanged(CharSequence s,int st,int before,int count){maxRows[0]=55;handler.removeCallbacks(filter);handler.postDelayed(filter,55);}
    public void afterTextChanged(Editable e){}
   });
   filter.run();
+ }
+ private void filterClick(LinearLayout list,EditText search,boolean onlyFav,int max){
+  list.removeAllViews();
+  String q=search.getText().toString().toLowerCase(Locale.ROOT).trim();
+  Set<String> starred=favorites();int shown=0;
+  for(Contacts.Person person:contacts){
+   if(onlyFav&&!starred.contains(person.key))continue;
+   if(!q.isEmpty()&&!person.name.toLowerCase(Locale.ROOT).contains(q)&&!person.phone.contains(q))continue;
+   addContact(list,person,starred.contains(person.key));shown++;if(shown>=max)break;
+  }
+  if(shown<contacts.size()){
+   TextView more=center("הצג עוד",14,true,tint());more.setBackground(stroked(panel(),13));
+   list.addView(more,lp(-1,49));
+   more.setOnClickListener(v->filterClick(list,search,onlyFav,max+55));
+  }
  }
  private Set<String> favorites(){return new HashSet<>(prefs.getStringSet("favorites",Collections.emptySet()));}
  private void toggleFavorite(Contacts.Person person){
@@ -419,8 +477,38 @@ public class MainActivity extends Activity {
   section("תצוגה");
   toggleSetting("מצב כהה · שחור גרפיט","dark",prefs.getBoolean("dark",false));
   toggleSetting("מצב AMOLED · שחור מוחלט","amoled",amoled());
+  toggleSetting("הצג סיכום שיחות בראש היומן","show_stats",prefs.getBoolean("show_stats",true));
+  section("צבע הדגשה");
+  LinearLayout themes=row();body.addView(themes,lp(-1,46));
+  for(String option:new String[]{"gold","silver"}){
+   boolean active=option.equals(prefs.getString("accent","gold"));
+   TextView choice=center(option.equals("gold")?"זהב שמפניה":"כסף אלגנטי",13,active,active?tint():muted());
+   choice.setBackground(stroked(panel(),12));
+   LinearLayout.LayoutParams weights=new LinearLayout.LayoutParams(0,d(44),1);weights.setMargins(d(3),0,d(3),0);
+   themes.addView(choice,weights);
+   choice.setOnClickListener(v->{prefs.edit().putString("accent",option).apply();render();});
+  }
   section("צפיפות ומראה");
-  slider("גודל טקסט", "font_"+page, 85, 125,100,"%");
+  String current=prefs.getString("edit_page","recents");
+  LinearLayout chooser=row();body.addView(chooser,lp(-1,46));
+  String[] pages={"recents","contacts","favorites","settings"};
+  String[] labels={"שיחות","אנשי קשר","מועדפים","הגדרות"};
+  for(int i=0;i<pages.length;i++){
+   String value=pages[i];
+   TextView option=center(labels[i],10,current.equals(value),current.equals(value)?tint():muted());
+   option.setBackground(stroked(panel(),10));
+   LinearLayout.LayoutParams op=new LinearLayout.LayoutParams(0,d(42),1);op.setMargins(d(2),0,d(2),0);chooser.addView(option,op);
+   option.setOnClickListener(v->{prefs.edit().putString("edit_page",value).apply();render();});
+  }
+  slider("גודל טקסט במסך שנבחר","font_"+current,85,130,100,"%");
+  section("מסך פתיחה");
+  LinearLayout home=row();body.addView(home,lp(-1,45));
+  for(int i=0;i<3;i++){
+   String pg=pages[i];String name=labels[i];boolean selected=prefs.getString("start_page","recents").equals(pg);
+   TextView choose=center(name,12,selected,selected?tint():muted());choose.setBackground(stroked(panel(),10));
+   LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(0,d(42),1);params.setMargins(d(2),0,d(2),0);home.addView(choose,params);
+   choose.setOnClickListener(v->{prefs.edit().putString("start_page",pg).apply();render();});
+  }
   TextView note=t("התאמה למסכים קטנים (כולל מסכי 4 אינץ׳): כפתורים קומפקטיים, גלילה חלקה וחייגן צף בכל מסך.",12,false,muted());body.addView(note);
   section("הרשאות");
   TextView access=center("בדיקת הרשאות ליומן שיחות",14,true,tint());access.setBackground(stroked(panel(),14));body.addView(access,lp(-1,50));access.setOnClickListener(v->ensureCallLogPermission());
