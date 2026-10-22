@@ -26,17 +26,21 @@ jobs:
         with:
           gradle-version: '8.9'
       - run: gradle --no-daemon :app:assembleDebug
+      - name: Verify APK signature
+        run: |
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose app/build/outputs/apk/debug/app-debug.apk
+          test -s app/build/outputs/apk/debug/app-debug.apk
       - uses: actions/upload-artifact@v4
         with:
-          name: DA-CALLER-v0.2.0-APK
+          name: DA-CALLER-v0.3.0-APK
           path: app/build/outputs/apk/debug/app-debug.apk
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cp app/build/outputs/apk/debug/app-debug.apk DA-CALLER-v0.2.0.apk
-          if gh release view v0.2.0 >/dev/null 2>&1; then
-            gh release upload v0.2.0 DA-CALLER-v0.2.0.apk --clobber
+          cp app/build/outputs/apk/debug/app-debug.apk DA-CALLER-v0.3.0.apk
+          if gh release view v0.3.0 >/dev/null 2>&1; then
+            gh release upload v0.3.0 DA-CALLER-v0.3.0.apk --clobber
           else
-            gh release create v0.2.0 DA-CALLER-v0.2.0.apk --title 'DA CALLER v0.2.0' --notes 'Modern dialer beta: premium UI, recent calls and in-call controls. Debug-signed Android APK.'
+            gh release create v0.3.0 DA-CALLER-v0.3.0.apk --title 'DA CALLER v0.3.0' --notes 'Performance and reliability update: fast contacts, call notifications, compact 4-inch layout, premium widgets, call statistics.'
           fi
