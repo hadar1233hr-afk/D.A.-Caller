@@ -105,7 +105,8 @@ public final class CallScreenActivity extends Activity {
   root.addView(avatar,avatarParams);
   root.addView(new View(this),new LinearLayout.LayoutParams(1,0,1));
   buttons=vertical();
-  root.addView(buttons,new LinearLayout.LayoutParams(-1,-2));
+  int widthDp=(int)(getResources().getDisplayMetrics().widthPixels/getResources().getDisplayMetrics().density);
+  root.addView(buttons,new LinearLayout.LayoutParams(dp(Math.max(230,Math.min(widthDp-24,330))),-2));
   root.addView(new View(this),new LinearLayout.LayoutParams(1,0,1));
  }
  private void actionTile(LinearLayout row,String symbol,String title,int style,int height,Runnable action){
@@ -179,15 +180,18 @@ public final class CallScreenActivity extends Activity {
   // End call and incoming-call answer/decline remain visible for safety.
   ArrayList<String> active=new ArrayList<>();
   for(String id:InCallControls.IDS)if(InCallControls.enabled(prefs,id))active.add(id);
+  // Four or fewer actions use two balanced columns; larger sets use three.
+  int columns=active.size()<=4?2:3;
   LinearLayout row=null;
   for(int i=0;i<active.size();i++){
-   if(i%3==0){
+   if(i%columns==0){
     row=horizontal();buttons.addView(row,new LinearLayout.LayoutParams(-1,-2));
    }
    renderControl(row,active.get(i),call,state);
   }
-  if(row!=null){
-   for(int filler=active.size()%3;filler>0&&filler<3;filler++){
+  int remainder=active.size()%columns;
+  if(row!=null&&remainder!=0){
+   for(int filler=remainder;filler<columns;filler++){
     row.addView(new View(this),new LinearLayout.LayoutParams(0,dp(buttonHeight()),1));
    }
   }
