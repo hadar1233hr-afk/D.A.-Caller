@@ -29,6 +29,7 @@ public final class CallScreenActivity extends Activity {
  private TextView title,status,time;
  private String shownState="";
  private int dp(float v){return (int)(getResources().getDisplayMetrics().density*v+0.5f);}
+ private boolean compact(){return getResources().getDisplayMetrics().heightPixels/getResources().getDisplayMetrics().density<620;}
  private GradientDrawable shape(int color,int radius){GradientDrawable bg=new GradientDrawable();bg.setColor(color);bg.setCornerRadius(dp(radius));return bg;}
  private TextView text(String s,int sp,int color,boolean bold){
   TextView t=new TextView(this);t.setText(s);t.setTextColor(color);t.setTextSize(sp);
@@ -39,10 +40,10 @@ public final class CallScreenActivity extends Activity {
  private void control(String label,String symbol,int bg,Runnable action){
   LinearLayout item=col();
   TextView icon=text(symbol,23,Color.WHITE,true);icon.setBackground(shape(bg,32));
-  item.addView(icon,new LinearLayout.LayoutParams(dp(54),dp(54)));
+  item.addView(icon,new LinearLayout.LayoutParams(dp(compact()?46:54),dp(compact()?46:54)));
   TextView caption=text(label,11,0xFFD6D6D6,false);
   LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,dp(27));p.topMargin=dp(5);item.addView(caption,p);
-  controls.addView(item,new LinearLayout.LayoutParams(0,dp(92),1));
+  controls.addView(item,new LinearLayout.LayoutParams(0,dp(compact()?77:92),1));
   item.setOnClickListener(v->action.run());
  }
  @Override public void onCreate(Bundle b){
@@ -54,18 +55,18 @@ public final class CallScreenActivity extends Activity {
  }
  @Override protected void onNewIntent(android.content.Intent i){super.onNewIntent(i);refresh();}
  private void build(){
-  layout=col();layout.setPadding(dp(16),dp(11),dp(16),dp(14));layout.setBackgroundColor(Color.BLACK);
+  layout=col();layout.setPadding(dp(compact()?8:16),dp(compact()?5:11),dp(compact()?8:16),dp(compact()?6:14));layout.setBackgroundColor(Color.BLACK);
   setContentView(layout);
-  TextView brand=text("DA CALLER",13,GOLD,true);brand.setLetterSpacing(0.17f);layout.addView(brand,new LinearLayout.LayoutParams(-1,dp(32)));
-  status=text("",14,0xFFBBBBBB,false);layout.addView(status,new LinearLayout.LayoutParams(-1,dp(34)));
-  title=text("",Math.min(28,getResources().getDisplayMetrics().widthPixels/dp(13)),Color.WHITE,true);
+  TextView brand=text("DA CALLER",13,GOLD,true);brand.setLetterSpacing(0.17f);layout.addView(brand,new LinearLayout.LayoutParams(-1,dp(compact()?25:32)));
+  status=text("",14,0xFFBBBBBB,false);layout.addView(status,new LinearLayout.LayoutParams(-1,dp(compact()?27:34)));
+  title=text("",compact()?22:28,Color.WHITE,true);
   title.setSingleLine(true);title.setEllipsize(android.text.TextUtils.TruncateAt.MIDDLE);
-  layout.addView(title,new LinearLayout.LayoutParams(-1,dp(58)));
-  time=text("",16,GOLD,false);layout.addView(time,new LinearLayout.LayoutParams(-1,dp(36)));
+  layout.addView(title,new LinearLayout.LayoutParams(-1,dp(compact()?41:58)));
+  time=text("",16,GOLD,false);layout.addView(time,new LinearLayout.LayoutParams(-1,dp(compact()?28:36)));
   TextView avatar=text("DA",35,GOLD,true);avatar.setBackground(shape(0xFF181818,72));
-  LinearLayout.LayoutParams ap=new LinearLayout.LayoutParams(dp(112),dp(112));ap.topMargin=dp(8);ap.bottomMargin=dp(8);layout.addView(avatar,ap);
+  LinearLayout.LayoutParams ap=new LinearLayout.LayoutParams(dp(compact()?77:112),dp(compact()?77:112));ap.topMargin=dp(compact()?3:8);ap.bottomMargin=dp(compact()?3:8);layout.addView(avatar,ap);
   layout.addView(new View(this),new LinearLayout.LayoutParams(1,0,1));
-  controls=row();layout.addView(controls,new LinearLayout.LayoutParams(-1,dp(185)));
+  controls=row();layout.addView(controls,new LinearLayout.LayoutParams(-1,dp(compact()?80:100)));
  }
  private void updateTimer(){
   Call call=PhoneSessionService.current;if(call==null||time==null)return;
