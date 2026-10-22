@@ -34,7 +34,8 @@ final class CallHistory {
  static void refresh(Context c,boolean force,Runnable complete){
   if(c.checkSelfPermission(Manifest.permission.READ_CALL_LOG)!=PackageManager.PERMISSION_GRANTED){if(complete!=null)ui.post(complete);return;}
   if(loading){return;}
-  if(!force && System.currentTimeMillis()-fetchedAt<12000){if(complete!=null)ui.post(complete);return;}
+  // Cached data are already on-screen: avoid a full Activity re-render on resume.
+  if(!force && System.currentTimeMillis()-fetchedAt<18000)return;
   loading=true;
   Context app=c.getApplicationContext();
   worker.execute(()->{
@@ -49,13 +50,15 @@ final class CallHistory {
     if(cursor!=null)while(cursor.moveToNext()){
      String n=cursor.getString(0);if(n==null)n="מספר חסוי";
      long at=cursor.getLong(1),secs=Math.max(0,cursor.getLong(2));int type=cursor.getInt(3);
-     if(latest.size()<180)latest.add(new Entry(n,at,secs,type));
+     if(latest.size()<140)latest.add(new Entry(n,at,secs,type));
      for(int i=0;i<4;i++)if(at>=starts[i]){
       stats.calls[i]++;
       if(type==CallLog.Calls.MISSED_TYPE)stats.missed[i]++;
       else if(type==CallLog.Calls.OUTGOING_TYPE){stats.outgoing[i]++;stats.seconds[i]+=secs;}
       else if(type==CallLog.Calls.INCOMING_TYPE){stats.incoming[i]++;stats.seconds[i]+=secs;}
      }
+     // Keep recent rows available; don't scan years of old calls beyond the needed period.
+     if(at<year && latest.size()>=90)break;
     }
    }catch(Exception ignored){}
    entries=Collections.unmodifiableList(latest);summary=stats;
