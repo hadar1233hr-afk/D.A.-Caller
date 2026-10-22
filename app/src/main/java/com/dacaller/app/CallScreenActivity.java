@@ -106,7 +106,7 @@ public final class CallScreenActivity extends Activity {
   root.addView(new View(this),new LinearLayout.LayoutParams(1,0,1));
   buttons=vertical();
   int widthDp=(int)(getResources().getDisplayMetrics().widthPixels/getResources().getDisplayMetrics().density);
-  root.addView(buttons,new LinearLayout.LayoutParams(dp(Math.max(230,Math.min(widthDp-24,330))),-2));
+  root.addView(buttons,new LinearLayout.LayoutParams(dp(Math.max(1,Math.min(widthDp-24,330))),-2));
   root.addView(new View(this),new LinearLayout.LayoutParams(1,0,1));
  }
  private void actionTile(LinearLayout row,String symbol,String title,int style,int height,Runnable action){
