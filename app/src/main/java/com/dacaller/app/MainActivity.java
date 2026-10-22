@@ -97,6 +97,8 @@ public class MainActivity extends Activity {
   handler.postDelayed(()->{
    if(!prefs.getBoolean("role_prompted",false)&&!isDefault()){
     prefs.edit().putBoolean("role_prompted",true).apply();askDefault();
+   }else if(isDefault()&&checkSelfPermission(Manifest.permission.READ_CALL_LOG)==PackageManager.PERMISSION_GRANTED){
+    ensureCallNotifications();
    }
   },650);
  }
@@ -113,7 +115,7 @@ public class MainActivity extends Activity {
  @Override public void onRequestPermissionsResult(int request,String[] requested,int[] results){
   super.onRequestPermissionsResult(request,requested,results);
   if(request==21){loadContacts();render();}
-  if(request==22){refreshLog();render();}
+  if(request==22){refreshLog();render();if(isDefault())ensureCallNotifications();}
   if(request==23&&pendingNumber!=null){
    String number=pendingNumber;pendingNumber=null;
    if(results.length>0&&results[0]==PackageManager.PERMISSION_GRANTED)makeCall(number);
@@ -125,7 +127,13 @@ public class MainActivity extends Activity {
  }
  @Override protected void onActivityResult(int code,int result,Intent data){
   super.onActivityResult(code,result,data);
-  if(code==100){render();refreshLog();if(isDefault())ensureCallLogPermission();}
+  if(code==100){
+   render();refreshLog();
+   if(isDefault()){
+    if(checkSelfPermission(Manifest.permission.READ_CALL_LOG)!=PackageManager.PERMISSION_GRANTED)ensureCallLogPermission();
+    else ensureCallNotifications();
+   }
+  }
  }
  private boolean isDefault(){
   try{if(android.os.Build.VERSION.SDK_INT>=29){
@@ -153,6 +161,13 @@ public class MainActivity extends Activity {
  private void ensureCallLogPermission(){
   if(checkSelfPermission(Manifest.permission.READ_CALL_LOG)!=PackageManager.PERMISSION_GRANTED)
    requestPermissions(new String[]{Manifest.permission.READ_CALL_LOG},22);
+ }
+ private void ensureCallNotifications(){
+  if(android.os.Build.VERSION.SDK_INT<33)return;
+  if(checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)==PackageManager.PERMISSION_GRANTED)return;
+  if(prefs.getBoolean("notifications_prompted",false))return;
+  prefs.edit().putBoolean("notifications_prompted",true).apply();
+  requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS},24);
  }
  private void loadContacts(){
   if(checkSelfPermission(Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED||loadingContacts)return;
@@ -518,7 +533,19 @@ public class MainActivity extends Activity {
   }
   TextView note=t("התאמה למסכים קטנים (כולל מסכי 4 אינץ׳): כפתורים קומפקטיים, גלילה חלקה וחייגן צף בכל מסך.",12,false,muted());body.addView(note);
   section("הרשאות");
-  TextView access=center("בדיקת הרשאות ליומן שיחות",14,true,tint());access.setBackground(stroked(panel(),14));body.addView(access,lp(-1,50));access.setOnClickListener(v->ensureCallLogPermission());
+  TextView access=center("בדיקת הרשאות ליומן שיחות",14,true,tint());
+  access.setBackground(stroked(panel(),14));body.addView(access,lp(-1,50));
+  access.setOnClickListener(v->ensureCallLogPermission());
+  gap(body,8);
+  TextView notifications=center("הגדרות התראות שיחה",14,true,tint());
+  notifications.setBackground(stroked(panel(),14));body.addView(notifications,lp(-1,50));
+  notifications.setOnClickListener(v->{
+   try{
+    Intent settings=new Intent("android.settings.APP_NOTIFICATION_SETTINGS");
+    settings.putExtra("android.provider.extra.APP_PACKAGE",getPackageName());
+    startActivity(settings);
+   }catch(Exception ignored){ensureCallNotifications();}
+  });
   section("הקלטת שיחות");
   TextView recording=t("הקלטת שני הצדדים אינה זמינה לאפליקציות רגילות באנדרואיד 13 ללא הרשאות מערכת מיוחדות. לא הוספנו כפתור הקלטה שאינו עובד.",13,false,muted());body.addView(recording);
   section("אודות");
