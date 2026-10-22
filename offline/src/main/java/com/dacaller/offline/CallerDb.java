@@ -14,8 +14,10 @@ public final class CallerDb extends SQLiteOpenHelper {
         public final String phone, name, kind, source;
         Entry(String p, String n, String k, String s) { phone=p;name=n;kind=k;source=s; }
     }
+    private final Context appContext;
     public CallerDb(Context context) {
-        super(context, "da_id_offline.db", null, 1);
+        super(context, "da_id_offline.db", null, 2);
+        appContext=context.getApplicationContext();
         // Bundle a real offline directory; install it on first run only.
         // Never overwrite user's own imported data when upgrading the APK.
         java.io.File dst=context.getDatabasePath("da_id_offline.db");
@@ -39,7 +41,36 @@ public final class CallerDb extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE entries (phone TEXT PRIMARY KEY, name TEXT NOT NULL, kind TEXT NOT NULL DEFAULT 'business', source TEXT NOT NULL DEFAULT 'local', updated INTEGER NOT NULL DEFAULT 0)");
         db.execSQL("CREATE INDEX idx_name ON entries(name)");
     }
-    @Override public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
+    @Override public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // Upgrade an earlier empty/user-edited database without losing additions.
+        if(oldVersion < 2) {
+            java.io.File temp=new java.io.File(appContext.getCacheDir(),"da_seed_upgrade.db");
+            try {
+                try(java.io.InputStream in=appContext.getAssets().open("bundled_calls.db");
+                    java.io.FileOutputStream out=new java.io.FileOutputStream(temp)){
+                    byte[] buf=new byte[65536];int n;
+                    while((n=in.read(buf))!=-1)out.write(buf,0,n);
+                }
+                try(SQLiteDatabase seed=SQLiteDatabase.openDatabase(temp.getAbsolutePath(),null,SQLiteDatabase.OPEN_READONLY);
+                    Cursor c=seed.rawQuery("SELECT phone,name,kind,source,updated FROM entries",null)){
+                    android.database.sqlite.SQLiteStatement ins=db.compileStatement(
+                        "INSERT OR IGNORE INTO entries(phone,name,kind,source,updated) VALUES(?,?,?,?,?)");
+                    try {
+                        while(c.moveToNext()) {
+                            ins.bindString(1,c.getString(0));
+                            ins.bindString(2,c.getString(1));
+                            ins.bindString(3,c.getString(2));
+                            ins.bindString(4,c.getString(3));
+                            ins.bindLong(5,c.getLong(4));
+                            ins.executeInsert();
+                        }
+                    }finally{ins.close();}
+                }
+            }catch(Exception ignored){
+                // Existing user directory must still remain accessible if seed is absent.
+            }finally{temp.delete();}
+        }
+    }
     public static String canonical(String raw) {
         if (raw==null) return "";
         String p=raw.replaceAll("[^0-9+]", "");
