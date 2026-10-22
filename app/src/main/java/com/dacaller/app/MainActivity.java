@@ -390,7 +390,7 @@ public class MainActivity extends Activity {
   scroll.addView(bar,new android.widget.FrameLayout.LayoutParams(-2,d(42)));
   TextView picker=center(ranges[period]+"  ▾",11,true,tint());
   picker.setBackground(rounded(soft(),9));picker.setPadding(d(9),0,d(9),0);
-  bar.addView(picker,lp(-2,31));
+  bar.addView(picker,lp(-2,31));decorate(picker);
   picker.setOnClickListener(v->{haptic(picker);period=(period+1)%4;render();});
   addStat(bar,String.valueOf(Math.round(totals.seconds[period]/60.0))+" דק׳",true);
   addStat(bar,totals.calls[period]+" שיחות",false);
@@ -410,21 +410,48 @@ public class MainActivity extends Activity {
   return name!=null?name:phone;
  }
  private void addCall(CallHistory.Entry e){
-  LinearLayout item=row();pad(item,9,5);
-  LinearLayout.LayoutParams margin=lp(-1,62);margin.bottomMargin=d(3);
+  // Android call log duration can be zero for unanswered or failed outgoing attempts;
+  // don't misrepresent that as a verified network connection failure.
+  boolean unansweredOutgoing=e.type==CallLog.Calls.OUTGOING_TYPE&&e.duration==0;
+  boolean missed=e.type==CallLog.Calls.MISSED_TYPE;
+  boolean declined=e.type==CallLog.Calls.REJECTED_TYPE;
+  boolean blocked=e.type==CallLog.Calls.BLOCKED_TYPE;
+  int color;String symbol,category;
+  if(blocked){color=0xFF9B80AC;symbol="⊘";category="נחסמה";}
+  else if(declined){color=0xFFF0A353;symbol="✕";category="נדחתה";}
+  else if(missed){color=0xFFE85D67;symbol="↙";category="לא נענתה";}
+  else if(unansweredOutgoing){color=0xFFF0A353;symbol="↗";category="יוצאת · ללא זמן שיחה";}
+  else if(e.type==CallLog.Calls.OUTGOING_TYPE){color=0xFF20AD83;symbol="↗";category="יוצאת";}
+  else if(e.type==CallLog.Calls.INCOMING_TYPE){color=0xFF5F9EE6;symbol="↙";category="נכנסת";}
+  else{color=muted();symbol="•";category="שיחה";}
+  LinearLayout item=row();pad(item,5,5);
+  LinearLayout.LayoutParams margin=lp(-1,67);margin.bottomMargin=d(3);
   body.addView(item,margin);
-  int iconColor=e.type==CallLog.Calls.MISSED_TYPE?0xFFCA5656:tint();
-  TextView icon=center(e.type==CallLog.Calls.OUTGOING_TYPE?"↗":e.type==CallLog.Calls.MISSED_TYPE?"↙":"↘",23,true,iconColor);
-  icon.setBackground(rounded(panel(),15));item.addView(icon,lp(45,45));
-  LinearLayout details=column();details.setPadding(d(11),0,d(4),0);
+  int shade=dark()?0xFF202020:0xFFF4F4F3;
+  GradientDrawable background=rounded(shade,14);
+  item.setBackground(background);
+  TextView direction=center(symbol,25,true,color);
+  direction.setContentDescription(category);
+  direction.setBackground(rounded(dark()?0xFF2D2D2D:0xFFE7E9E7,14));
+  item.addView(direction,lp(44,44));
+  LinearLayout details=column();details.setPadding(d(10),0,d(4),0);
   item.addView(details,new LinearLayout.LayoutParams(0,-2,1));
-  TextView who=t(contactName(e.number),15,true,text());who.setSingleLine(true);who.setEllipsize(android.text.TextUtils.TruncateAt.END);details.addView(who);
+  TextView who=t(contactName(e.number),15,true,text());
+  who.setSingleLine(true);who.setEllipsize(android.text.TextUtils.TruncateAt.END);
+  details.addView(who);
   String when=callDates.format(new Date(e.date));
-  details.addView(t(when+"  ·  "+(e.duration>0?Math.round(e.duration/60.0)+" דק׳":e.type==CallLog.Calls.MISSED_TYPE?"לא נענתה":"ללא מענה"),11,false,muted()));
-  TextView dial=center("☎",22,true,tint());item.addView(dial,lp(44,48));
-  dial.setOnClickListener(v->makeCall(e.number));
-  item.setOnClickListener(v->showKeypad(e.number));
-  View divider=new View(this);divider.setBackgroundColor(border());body.addView(divider,lp(-1,1));
+  String duration=e.duration>0?" · "+Math.max(1,(int)Math.ceil(e.duration/60.0))+" דק׳":"";
+  TextView info=t(category+"  ·  "+when+duration,11,false,muted());
+  info.setSingleLine(true);info.setEllipsize(android.text.TextUtils.TruncateAt.END);
+  details.addView(info);
+  ImageView phone=icon(R.drawable.ic_phone_line,tint(),23,23);
+  FrameLayout dial=new FrameLayout(this);dial.setBackground(stroked(panel(),12));
+  dial.addView(phone,new FrameLayout.LayoutParams(d(25),d(25),Gravity.CENTER));
+  item.addView(dial,lp(43,46));
+  decorate(dial);decorate(item);
+  dial.setContentDescription("חייג "+e.number);
+  dial.setOnClickListener(v->{haptic(dial);makeCall(e.number);});
+  item.setOnClickListener(v->{haptic(item);showKeypad(e.number);});
  }
  private void contactsPage(boolean onlyFav){
   heading(onlyFav?"מועדפים":"אנשי קשר",onlyFav?"האנשים שאתה מתקשר אליהם הכי הרבה":"חיפוש מהיר ונוח לפי שם או מספר");
@@ -436,7 +463,7 @@ public class MainActivity extends Activity {
   search.setHint("חיפוש שם או מספר");search.setBackground(stroked(panel(),15));pad(search,15,3);
   LinearLayout searchBar=row();searchBar.addView(search,new LinearLayout.LayoutParams(0,d(49),1));
   TextView reload=center("↻",22,true,tint());searchBar.addView(reload,lp(46,49));
-  reload.setOnClickListener(v->{haptic(reload);contactsLoaded=false;loadContacts(true);});
+  decorate(reload);reload.setOnClickListener(v->{haptic(reload);contactsLoaded=false;loadContacts(true);});
   body.addView(searchBar,lp(-1,52));gap(body,7);
   if(contactsLoaded)body.addView(t(contacts.size()+" אנשי קשר במכשיר",11,false,muted()));
   gap(body,6);
@@ -503,10 +530,10 @@ public class MainActivity extends Activity {
   TextView name=t(person.name,15,true,text());name.setSingleLine(true);name.setEllipsize(android.text.TextUtils.TruncateAt.END);
   data.addView(name);data.addView(t(person.phone.isEmpty()?"ללא מספר טלפון":person.phone,11,false,muted()));
   TextView star=center(starred?"★":"☆",24,false,starred?tint():muted());item.addView(star,lp(42,42));
-  star.setOnClickListener(v->{haptic(star);toggleFavorite(person);});
+  decorate(star);star.setOnClickListener(v->{haptic(star);toggleFavorite(person);});
   TextView call=center("☎",22,false,tint());item.addView(call,lp(40,42));
   call.setAlpha(person.phone.isEmpty()?0.28f:1f);
-  call.setOnClickListener(v->{if(!person.phone.isEmpty()){haptic(call);makeCall(person.phone);}});
+  decorate(call);call.setOnClickListener(v->{if(!person.phone.isEmpty()){haptic(call);makeCall(person.phone);}});
   data.setOnClickListener(v->{
    haptic(data);
    if(!Contacts.openById(this,person.id) && !person.phone.isEmpty())showKeypad(person.phone);
