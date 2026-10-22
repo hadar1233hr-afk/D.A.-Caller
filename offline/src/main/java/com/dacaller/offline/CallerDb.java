@@ -14,7 +14,27 @@ public final class CallerDb extends SQLiteOpenHelper {
         public final String phone, name, kind, source;
         Entry(String p, String n, String k, String s) { phone=p;name=n;kind=k;source=s; }
     }
-    public CallerDb(Context context) { super(context, "da_id_offline.db", null, 1); }
+    public CallerDb(Context context) {
+        super(context, "da_id_offline.db", null, 1);
+        // Bundle a real offline directory; install it on first run only.
+        // Never overwrite user's own imported data when upgrading the APK.
+        java.io.File dst=context.getDatabasePath("da_id_offline.db");
+        if(!dst.exists()) {
+            try {
+                java.io.File parent=dst.getParentFile();
+                if(parent!=null && !parent.exists()) parent.mkdirs();
+                try(java.io.InputStream in=context.getAssets().open("bundled_calls.db");
+                    java.io.FileOutputStream out=new java.io.FileOutputStream(dst)){
+                    byte[] buf=new byte[65536];int n;
+                    while((n=in.read(buf))!=-1) out.write(buf,0,n);
+                }
+            }catch(java.io.IOException e) {
+                // Graceful fallback for developer builds without bundled data.
+                // SQLiteOpenHelper creates the schema on first database opening.
+                dst.delete();
+            }
+        }
+    }
     @Override public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE entries (phone TEXT PRIMARY KEY, name TEXT NOT NULL, kind TEXT NOT NULL DEFAULT 'business', source TEXT NOT NULL DEFAULT 'local', updated INTEGER NOT NULL DEFAULT 0)");
         db.execSQL("CREATE INDEX idx_name ON entries(name)");
