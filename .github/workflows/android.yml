@@ -28,6 +28,30 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Download and package real OSM business phone directory
+        run: |
+          python -m pip install --disable-pip-version-check osmium
+          mkdir -p offline/src/main/assets
+          curl --fail --location --silent --show-error --retry 4 --retry-delay 6 \
+            --max-time 300 \
+            -o /tmp/israel-and-palestine-latest.osm.pbf \
+            https://download.geofabrik.de/asia/israel-and-palestine-latest.osm.pbf
+          test -s /tmp/israel-and-palestine-latest.osm.pbf
+          python offline/tools/build_osm_db.py \
+            --pbf /tmp/israel-and-palestine-latest.osm.pbf \
+            --db offline/src/main/assets/bundled_calls.db
+          python - <<'PY'
+          import sqlite3
+          con=sqlite3.connect('offline/src/main/assets/bundled_calls.db')
+          n=con.execute('select count(*) from entries').fetchone()[0]
+          print('Verified bundled phone identities:',n)
+          assert n>=100
+          assert con.execute('pragma integrity_check').fetchone()[0]=='ok'
+          assert con.execute('pragma user_version').fetchone()[0]==2
+          PY
       - name: Build both apps
         run: gradle --no-daemon :app:assembleDebug :offline:assembleDebug
       - name: Verify APK signatures
@@ -36,27 +60,29 @@ jobs:
           "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose offline/build/outputs/apk/debug/offline-debug.apk
           test -s app/build/outputs/apk/debug/app-debug.apk
           test -s offline/build/outputs/apk/debug/offline-debug.apk
+          unzip -l offline/build/outputs/apk/debug/offline-debug.apk | grep -F assets/bundled_calls.db
       - uses: actions/upload-artifact@v4
         with:
           name: DA-CALLER-v0.6.0-APK
           path: app/build/outputs/apk/debug/app-debug.apk
       - uses: actions/upload-artifact@v4
         with:
-          name: DA-ID-OFFLINE-v0.1.0-APK
+          name: DA-ID-OFFLINE-v0.2.0-APK
           path: offline/build/outputs/apk/debug/offline-debug.apk
       - name: Publish APK releases
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           cp app/build/outputs/apk/debug/app-debug.apk DA-CALLER-v0.6.0.apk
-          cp offline/build/outputs/apk/debug/offline-debug.apk DA-ID-OFFLINE-v0.1.0.apk
+          cp offline/build/outputs/apk/debug/offline-debug.apk DA-ID-OFFLINE-v0.2.0.apk
+          cp offline/src/main/assets/bundled_calls.db DA-ID-OFFLINE-v0.2.0-public-directory.db
           if gh release view v0.6.0 >/dev/null 2>&1; then
             gh release upload v0.6.0 DA-CALLER-v0.6.0.apk --clobber
           else
             gh release create v0.6.0 DA-CALLER-v0.6.0.apk --title 'DA CALLER v0.6.0' --notes 'Performance-focused dialer beta: persistent UI shell, tappable feedback, compact pages, clear call types and vector icons.'
           fi
-          if gh release view id-offline-v0.1.0 >/dev/null 2>&1; then
+          if gh release view id-offline-v0.2.0 >/dev/null 2>&1; then
             gh release upload id-offline-v0.1.0 DA-ID-OFFLINE-v0.1.0.apk --clobber
           else
-            gh release create id-offline-v0.1.0 DA-ID-OFFLINE-v0.1.0.apk --title 'DA ID Offline v0.1.0' --notes 'Experimental Hebrew offline caller ID. No Internet permission. Import CSV/TSV/SQLite business directory, manual phone number lookup, Android call-screening role and optional opt-in spam blocking. No large public data set bundled yet; build/source only.'
+            gh release create id-offline-v0.1.0 DA-ID-OFFLINE-v0.1.0.apk --title 'DA ID Offline v0.2.0' --notes 'Experimental Hebrew offline caller ID. No Internet permission. Import CSV/TSV/SQLite business directory, manual phone number lookup, Android call-screening role and optional opt-in spam blocking. Includes actual public OSM business and organizational phone numbers in preloaded local SQLite. ODbL attribution. Limited private mobile caller ID coverage.'
           fi
