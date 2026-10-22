@@ -138,7 +138,9 @@ def build(pbf, target):
     print("PACKAGED REAL PUBLIC TELEPHONE NUMBERS:",total,flush=True)
     if total < 100:
         raise RuntimeError("Input unexpectedly produced fewer than 100 phone records; refuse publishing a blank APK")
-    db.execute("PRAGMA integrity_check")
+    db.execute("PRAGMA user_version=2")
+    check=db.execute("PRAGMA integrity_check").fetchone()[0]
+    if check!="ok": raise RuntimeError("Generated SQLite DB integrity check failed: "+check)
     db.commit()
     db.close()
     print("SQLite asset:",target,dbpath.stat().st_size,"bytes",flush=True)
