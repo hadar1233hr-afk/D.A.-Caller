@@ -33,7 +33,7 @@ final class CallHistory {
  static volatile boolean loading=false;
  static void refresh(Context c,boolean force,Runnable complete){
   if(c.checkSelfPermission(Manifest.permission.READ_CALL_LOG)!=PackageManager.PERMISSION_GRANTED){if(complete!=null)ui.post(complete);return;}
-  if(loading){if(complete!=null)ui.postDelayed(complete,250);return;}
+  if(loading){return;}
   if(!force && System.currentTimeMillis()-fetchedAt<12000){if(complete!=null)ui.post(complete);return;}
   loading=true;
   Context app=c.getApplicationContext();
