@@ -468,7 +468,7 @@ public class MainActivity extends Activity {
   if(contactsLoaded)body.addView(t(contacts.size()+" אנשי קשר במכשיר",11,false,muted()));
   gap(body,6);
   LinearLayout list=column();body.addView(list,lp(-1,-2));
-  final int[] maxRows={55};
+  final int[] maxRows={24};
   Runnable filter=()->{
    list.removeAllViews();String query=search.getText().toString().toLowerCase(Locale.ROOT).trim();
    Set<String> starred=favorites();int shown=0;int totalMatches=0;
@@ -486,7 +486,7 @@ public class MainActivity extends Activity {
    if(totalMatches>shown){
     TextView more=center("הצג עוד אנשי קשר ("+(totalMatches-shown)+")",13,true,tint());
     more.setBackground(stroked(panel(),14));list.addView(more,lp(-1,51));
-    more.setOnClickListener(v->{maxRows[0]+=55;filterClick(list,search,onlyFav,maxRows[0]);});
+    more.setOnClickListener(v->{maxRows[0]+=24;filterClick(list,search,onlyFav,maxRows[0]);});
    }
   };
   search.addTextChangedListener(new TextWatcher(){
@@ -514,7 +514,7 @@ public class MainActivity extends Activity {
   if(shown<matching){
    TextView more=center("הצג עוד ("+(matching-shown)+")",14,true,tint());more.setBackground(stroked(panel(),13));
    list.addView(more,lp(-1,49));
-   more.setOnClickListener(v->filterClick(list,search,onlyFav,max+55));
+   more.setOnClickListener(v->filterClick(list,search,onlyFav,max+24));
   }
  }
  private Set<String> favorites(){return new HashSet<>(prefs.getStringSet("favorites",Collections.emptySet()));}
@@ -680,6 +680,28 @@ public class MainActivity extends Activity {
   toggleSetting("מצב כהה · שחור גרפיט","dark",prefs.getBoolean("dark",false));
   toggleSetting("מצב AMOLED · שחור מוחלט","amoled",amoled());
   toggleSetting("רטט בעת לחיצה על מקשים ופעולות","haptics",prefs.getBoolean("haptics",true));
+  section("עוצמת רטט");
+  LinearLayout hapticsBox=column();
+  hapticsBox.setPadding(d(12),d(7),d(12),d(7));
+  hapticsBox.setBackground(stroked(panel(),14));
+  body.addView(hapticsBox,lp(-1,-2));
+  int initialHaptic=prefs.getInt("haptic_strength",2);
+  TextView hapticLabel=t(initialHaptic==1?"עדין":initialHaptic==3?"מודגש":"רגיל",13,true,tint());
+  hapticsBox.addView(hapticLabel);
+  SeekBar hapticSlider=new SeekBar(this);
+  hapticSlider.setMax(2);hapticSlider.setProgress(Math.max(0,Math.min(2,initialHaptic-1)));
+  hapticsBox.addView(hapticSlider,lp(-1,45));
+  hapticSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+   public void onStartTrackingTouch(SeekBar bar){}
+   public void onStopTrackingTouch(SeekBar bar){}
+   public void onProgressChanged(SeekBar bar,int p,boolean user){
+    if(!user)return;
+    int level=p+1;
+    prefs.edit().putInt("haptic_strength",level).apply();
+    hapticLabel.setText(level==1?"עדין":level==3?"מודגש":"רגיל");
+    TouchFeedback.pulse(MainActivity.this,prefs,hapticSlider);
+   }
+  });
   toggleSetting("הצג סיכום שיחות בראש היומן","show_stats",prefs.getBoolean("show_stats",true));
   inCallControlsSettings();
   section("צבע הדגשה");
