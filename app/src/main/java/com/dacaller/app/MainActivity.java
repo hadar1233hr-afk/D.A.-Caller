@@ -105,6 +105,7 @@ public class MainActivity extends Activity {
   if(intent==null)return;
   if(intent.getBooleanExtra("favorites",false))page="favorites";
   if(Intent.ACTION_DIAL.equals(intent.getAction())||intent.hasExtra("phone")){page="recents";pendingNumber=intent.getStringExtra("phone");
+   if(Intent.ACTION_DIAL.equals(intent.getAction())&&pendingNumber==null)pendingNumber="";
    if(intent.getData()!=null)pendingNumber=intent.getData().getSchemeSpecificPart();
   }
  }
@@ -364,8 +365,14 @@ public class MainActivity extends Activity {
    if(!q.isEmpty()&&!person.name.toLowerCase(Locale.ROOT).contains(q)&&!person.phone.contains(q))continue;
    addContact(list,person,starred.contains(person.key));shown++;if(shown>=max)break;
   }
-  if(shown<contacts.size()){
-   TextView more=center("הצג עוד",14,true,tint());more.setBackground(stroked(panel(),13));
+  int matching=0;
+  for(Contacts.Person item:contacts){
+   if(onlyFav&&!starred.contains(item.key))continue;
+   if(!q.isEmpty()&&!item.name.toLowerCase(Locale.ROOT).contains(q)&&!item.phone.contains(q))continue;
+   matching++;
+  }
+  if(shown<matching){
+   TextView more=center("הצג עוד ("+(matching-shown)+")",14,true,tint());more.setBackground(stroked(panel(),13));
    list.addView(more,lp(-1,49));
    more.setOnClickListener(v->filterClick(list,search,onlyFav,max+55));
   }
