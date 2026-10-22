@@ -2,7 +2,9 @@ package com.dacaller.app;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.role.RoleManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -11,12 +13,16 @@ import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.CallLog;
+import android.telecom.TelecomManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -25,281 +31,416 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
 public class MainActivity extends Activity {
- private static final String[] TABS={"dial","contacts","favorites","settings"};
- private static final String[] NAMES={"חייגן","אנשי קשר","מועדפים","הגדרות"};
- private static final String[] ICONS={"☎","☷","★","⚙"};
- private static final int[] COLORS={0xFF2865E8,0xFF159B8B,0xFF7A4DE2,0xFF208457,0xFFE47D25,0xFFD94674};
- private SharedPreferences p;
- private LinearLayout root,content;
- private EditText number;
- private String tab="dial",pendingCall=null;
- private int dp(float n){return (int)(getResources().getDisplayMetrics().density*n+0.5f);}
- private boolean dark(){return p.getBoolean("dark",false);}
- private int pageBg(){return dark()?0xFF0D1626:0xFFF7F9FE;}
- private int surface(){return dark()?0xFF1B2940:Color.WHITE;}
- private int textColor(){return dark()?Color.WHITE:0xFF17243B;}
- private int muted(){return dark()?0xFFA8B7CE:0xFF66778F;}
- private int pale(){return dark()?0xFF263A57:0xFFEAF1FF;}
- private int accent(){return COLORS[Math.max(0,Math.min(COLORS.length-1,p.getInt("color_"+tab,0)))];}
- private float scaling(){return p.getInt("font_"+tab,100)/100f;}
- private GradientDrawable shape(int color,int radius){GradientDrawable g=new GradientDrawable();g.setColor(color);g.setCornerRadius(dp(radius));return g;}
- private GradientDrawable border(int color,int radius){GradientDrawable g=shape(color,radius);g.setStroke(dp(1),dark()?0xFF334662:0xFFE1E9F3);return g;}
- private LinearLayout vertical(){LinearLayout v=new LinearLayout(this);v.setOrientation(LinearLayout.VERTICAL);v.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);return v;}
- private LinearLayout horizontal(){LinearLayout v=new LinearLayout(this);v.setOrientation(LinearLayout.HORIZONTAL);v.setGravity(Gravity.CENTER_VERTICAL);v.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);return v;}
- private LinearLayout.LayoutParams size(int w,int h){return new LinearLayout.LayoutParams(w<0?w:dp(w),h<0?h:dp(h));}
- private void padding(View v,int x,int y){v.setPadding(dp(x),dp(y),dp(x),dp(y));}
- private void spacer(LinearLayout parent,int height){parent.addView(new View(this),size(1,height));}
- private TextView label(String text,int sp,boolean bold,int color){
-  TextView v=new TextView(this);v.setText(text);v.setTextColor(color);
-  v.setTextSize(TypedValue.COMPLEX_UNIT_SP,sp*scaling());v.setGravity(Gravity.CENTER_VERTICAL);
-  if(bold)v.setTypeface(Typeface.DEFAULT,Typeface.BOLD);
-  return v;
+ private final Handler handler=new Handler(Looper.getMainLooper());
+ private final int GOLD=0xFFD2AE69;
+ private SharedPreferences prefs;
+ private LinearLayout root,body,nav;
+ private String page="recents";
+ private int period=0;
+ private List<Contacts.Person> contacts=Collections.emptyList();
+ private boolean loadingContacts=false;
+ private String pendingNumber=null;
+ private boolean keypadOpen=false;
+ private int d(float n){return (int)(getResources().getDisplayMetrics().density*n+0.5f);}
+ private boolean dark(){return prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);}
+ private boolean amoled(){return prefs.getBoolean("amoled",false);}
+ private int bg(){return amoled()?Color.BLACK:dark()?0xFF131313:0xFFF5F5F4;}
+ private int panel(){return amoled()?0xFF0A0A0A:dark()?0xFF1E1E1E:Color.WHITE;}
+ private int text(){return dark()?0xFFF7F7F7:0xFF181818;}
+ private int muted(){return dark()?0xFF9D9D9D:0xFF747474;}
+ private int border(){return dark()?0xFF343434:0xFFE6E6E5;}
+ private int tint(){return dark()?0xFFE5C987:0xFF99702D;}
+ private int soft(){return dark()?0xFF24211B:0xFFF3EEE4;}
+ private int scaled(int value){return Math.round(value*prefs.getInt("font_"+page,100)/100f);}
+ private int screenHeight(){return (int)(getResources().getDisplayMetrics().heightPixels/getResources().getDisplayMetrics().density);}
+ private GradientDrawable rounded(int c,int radius){GradientDrawable b=new GradientDrawable();b.setColor(c);b.setCornerRadius(d(radius));return b;}
+ private GradientDrawable stroked(int c,int radius){GradientDrawable b=rounded(c,radius);b.setStroke(d(1),border());return b;}
+ private LinearLayout column(){LinearLayout v=new LinearLayout(this);v.setOrientation(1);v.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);return v;}
+ private LinearLayout row(){LinearLayout v=new LinearLayout(this);v.setOrientation(0);v.setGravity(Gravity.CENTER_VERTICAL);v.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);return v;}
+ private LinearLayout.LayoutParams lp(int w,int h){return new LinearLayout.LayoutParams(w<0?w:d(w),h<0?h:d(h));}
+ private void pad(View v,int x,int y){v.setPadding(d(x),d(y),d(x),d(y));}
+ private void gap(LinearLayout parent,int size){parent.addView(new View(this),lp(1,size));}
+ private TextView t(String content,int size,boolean strong,int color){
+  TextView v=new TextView(this);v.setText(content);v.setTextSize(TypedValue.COMPLEX_UNIT_SP,scaled(size));
+  v.setTextColor(color);v.setGravity(Gravity.CENTER_VERTICAL);v.setIncludeFontPadding(false);
+  if(strong)v.setTypeface(Typeface.create("sans-serif-medium",Typeface.NORMAL));return v;
  }
- private TextView action(String t,boolean primary,int sp){
-  TextView v=label(t,sp,true,primary?Color.WHITE:textColor());
-  v.setGravity(Gravity.CENTER);v.setBackground(shape(primary?accent():surface(),20));return v;
- }
- @Override public void onCreate(Bundle saved){
-  super.onCreate(saved);p=getSharedPreferences("da_caller",MODE_PRIVATE);
-  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-  if(getIntent().getBooleanExtra("favorites",false))tab="favorites";
-  render();
- }
- @Override protected void onResume(){super.onResume();if(p!=null)FavoritesWidget.refresh(this);}
- @Override public void onRequestPermissionsResult(int request,String[] permissions,int[] grants){
-  super.onRequestPermissionsResult(request,permissions,grants);
-  if(request==10){render();return;}
-  if(request==11 && pendingCall!=null){
-   String value=pendingCall;pendingCall=null;
-   startCall(value,grants.length>0&&grants[0]==PackageManager.PERMISSION_GRANTED);
-  }
- }
- private void render(){
-  getWindow().setStatusBarColor(pageBg());getWindow().setNavigationBarColor(pageBg());
-  getWindow().getDecorView().setSystemUiVisibility(dark()?0:View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
-  root=vertical();root.setBackgroundColor(pageBg());setContentView(root);
-  LinearLayout header=horizontal();padding(header,20,6);root.addView(header,size(-1,66));
-  TextView appLogo=action("☎",true,27);header.addView(appLogo,size(48,48));
-  LinearLayout title=vertical();title.setPadding(dp(12),0,0,0);header.addView(title,new LinearLayout.LayoutParams(0,-2,1));
-  title.addView(label("DA CALLER",21,true,textColor()));
-  title.addView(label("חייגן ואנשי קשר • גרסת ניסיון",11,false,muted()));
-  ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);scroll.setVerticalScrollBarEnabled(false);
-  root.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));
-  content=vertical();padding(content,19,10);scroll.addView(content);
-  if(tab.equals("contacts"))renderContacts(false);
-  else if(tab.equals("favorites"))renderContacts(true);
-  else if(tab.equals("settings"))renderSettings();
-  else renderDialer();
-  LinearLayout nav=horizontal();padding(nav,5,5);nav.setBackground(border(surface(),25));
-  LinearLayout.LayoutParams navSize=size(-1,75);navSize.setMargins(dp(12),0,dp(12),dp(9));root.addView(nav,navSize);
-  for(int i=0;i<TABS.length;i++){
-   final String next=TABS[i];boolean selected=tab.equals(next);
-   LinearLayout tile=vertical();tile.setGravity(Gravity.CENTER);
-   if(selected)tile.setBackground(shape(pale(),18));
-   TextView icon=label(ICONS[i],25,true,selected?accent():muted());icon.setGravity(Gravity.CENTER);tile.addView(icon);
-   TextView name=label(NAMES[i],11,selected,selected?accent():muted());name.setGravity(Gravity.CENTER);tile.addView(name);
-   nav.addView(tile,new LinearLayout.LayoutParams(0,-1,1));
-   tile.setOnClickListener(v->{tab=next;render();});
-  }
+ private TextView center(String content,int size,boolean bold,int color){
+  TextView v=t(content,size,bold,color);v.setGravity(Gravity.CENTER);return v;
  }
  private void heading(String title,String subtitle){
-  content.addView(label(title,25,true,textColor()));spacer(content,4);
-  content.addView(label(subtitle,13,false,muted()));spacer(content,21);
+  body.addView(t(title,25,true,text()));gap(body,3);body.addView(t(subtitle,12,false,muted()));gap(body,18);
  }
- private void renderDialer(){
-  heading("חייגן","גדול, נוח ופשוט לחיוג");
-  LinearLayout display=vertical();display.setGravity(Gravity.CENTER);
-  display.setBackground(border(surface(),25));padding(display,15,13);content.addView(display,size(-1,92));
-  number=new EditText(this);number.setSingleLine(true);number.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
-  number.setShowSoftInputOnFocus(false);number.setTextDirection(View.TEXT_DIRECTION_LTR);
-  number.setTextSize(TypedValue.COMPLEX_UNIT_SP,30*scaling());
-  number.setTextColor(textColor());number.setHintTextColor(muted());number.setHint("הקלד מספר");
-  number.setGravity(Gravity.CENTER);number.setBackgroundColor(Color.TRANSPARENT);display.addView(number,size(-1,60));
-  String preload=getIntent().getStringExtra("phone");
-  if(preload!=null){number.setText(preload);getIntent().removeExtra("phone");}
-  spacer(content,19);
-  String[] keys={"1","2","3","4","5","6","7","8","9","*","0","#"};
-  String[] small={"","ABC","DEF","GHI","JKL","MNO","PQRS","TUV","WXYZ","","+",""};
-  int h=p.getInt("keypad",74);
-  float screenH=getResources().getDisplayMetrics().heightPixels/getResources().getDisplayMetrics().density;
-  if(screenH<710)h=Math.min(h,62);
-  for(int row=0;row<4;row++){
-   LinearLayout line=horizontal();line.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
-   content.addView(line,size(-1,h+10));
-   for(int col=0;col<3;col++){
-    int ix=row*3+col;String key=keys[ix];
-    LinearLayout tile=vertical();tile.setGravity(Gravity.CENTER);
-    tile.setBackground(border(surface(),p.getBoolean("square",false)?17:40));
-    LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(0,dp(h),1);
-    params.setMargins(dp(4),dp(2),dp(4),dp(2));line.addView(tile,params);
-    TextView main=label(key,30,true,textColor());main.setGravity(Gravity.CENTER);tile.addView(main);
-    if(!small[ix].isEmpty()){
-     TextView hint=label(small[ix],10,true,muted());hint.setGravity(Gravity.CENTER);tile.addView(hint);
-    }
-    tile.setOnClickListener(v->number.append(key));
-    if(key.equals("0"))tile.setOnLongClickListener(v->{number.append("+");return true;});
+ @Override public void onCreate(Bundle saved){
+  super.onCreate(saved);
+  prefs=getSharedPreferences("da_caller",MODE_PRIVATE);
+  handleIntent(getIntent());
+  render();loadContacts();refreshLog();
+  handler.postDelayed(()->{
+   if(!prefs.getBoolean("role_prompted",false)&&!isDefault()){
+    prefs.edit().putBoolean("role_prompted",true).apply();askDefault();
    }
+  },650);
+ }
+ @Override protected void onNewIntent(Intent intent){super.onNewIntent(intent);setIntent(intent);handleIntent(intent);render();}
+ private void handleIntent(Intent intent){
+  if(intent==null)return;
+  if(intent.getBooleanExtra("favorites",false))page="favorites";
+  if(Intent.ACTION_DIAL.equals(intent.getAction())||intent.hasExtra("phone")){page="recents";pendingNumber=intent.getStringExtra("phone");
+   if(intent.getData()!=null)pendingNumber=intent.getData().getSchemeSpecificPart();
   }
-  spacer(content,17);
-  LinearLayout buttons=horizontal();buttons.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
-  content.addView(buttons,size(-1,63));
-  TextView erase=action("⌫",false,25);buttons.addView(erase,new LinearLayout.LayoutParams(0,dp(61),1));
-  erase.setOnClickListener(v->{
-   String s=number.getText().toString();
-   if(!s.isEmpty()){number.setText(s.substring(0,s.length()-1));number.setSelection(number.length());}
+ }
+ @Override public void onResume(){super.onResume();if(prefs!=null){refreshLog();if(!contacts.isEmpty())FavoritesWidget.refresh(this);}}
+ @Override public void onRequestPermissionsResult(int request,String[] requested,int[] results){
+  super.onRequestPermissionsResult(request,requested,results);
+  if(request==21){loadContacts();render();}
+  if(request==22){refreshLog();render();}
+  if(request==23&&pendingNumber!=null){String number=pendingNumber;pendingNumber=null;makeCall(number);}
+ }
+ @Override protected void onActivityResult(int code,int result,Intent data){
+  super.onActivityResult(code,result,data);
+  if(code==100){render();refreshLog();if(isDefault())ensureCallLogPermission();}
+ }
+ private boolean isDefault(){
+  try{if(android.os.Build.VERSION.SDK_INT>=29){
+   RoleManager rm=(RoleManager)getSystemService(ROLE_SERVICE);
+   return rm!=null&&rm.isRoleHeld(RoleManager.ROLE_DIALER);
+  }
+   TelecomManager tm=(TelecomManager)getSystemService(TELECOM_SERVICE);
+   return tm!=null&&getPackageName().equals(tm.getDefaultDialerPackage());
+  }catch(Exception e){return false;}
+ }
+ private void askDefault(){
+  try{
+   if(android.os.Build.VERSION.SDK_INT>=29){
+    RoleManager roles=(RoleManager)getSystemService(ROLE_SERVICE);
+    if(roles!=null&&roles.isRoleAvailable(RoleManager.ROLE_DIALER)&&!roles.isRoleHeld(RoleManager.ROLE_DIALER)){
+     startActivityForResult(roles.createRequestRoleIntent(RoleManager.ROLE_DIALER),100);
+    }
+   }else{
+    Intent i=new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER);
+    i.putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME,getPackageName());
+    startActivityForResult(i,100);
+   }
+  }catch(Exception e){Toast.makeText(this,"פתח הגדרות > אפליקציות ברירת מחדל > טלפון",Toast.LENGTH_LONG).show();}
+ }
+ private void ensureCallLogPermission(){
+  if(checkSelfPermission(Manifest.permission.READ_CALL_LOG)!=PackageManager.PERMISSION_GRANTED)
+   requestPermissions(new String[]{Manifest.permission.READ_CALL_LOG},22);
+ }
+ private void loadContacts(){
+  if(checkSelfPermission(Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED||loadingContacts)return;
+  loadingContacts=true;
+  CallHistory.worker.execute(()->{
+   List<Contacts.Person> result=Contacts.all(getApplicationContext());
+   handler.post(()->{contacts=result;loadingContacts=false;if(page.equals("contacts")||page.equals("favorites"))render();FavoritesWidget.refresh(this);});
   });
-  erase.setOnLongClickListener(v->{number.setText("");return true;});
-  TextView go=action("☎  התקשר",true,18);
-  LinearLayout.LayoutParams gp=new LinearLayout.LayoutParams(0,dp(61),2);gp.setMargins(dp(10),0,dp(10),0);
-  buttons.addView(go,gp);go.setOnClickListener(v->dial(number.getText().toString()));
-  TextView add=action("＋",false,25);buttons.addView(add,new LinearLayout.LayoutParams(0,dp(61),1));
-  add.setOnClickListener(v->{
-   String n=number.getText().toString();if(n.trim().isEmpty())return;
-   Intent intent=new Intent(Intent.ACTION_INSERT,ContactsContract.Contacts.CONTENT_URI);
-   intent.putExtra(ContactsContract.Intents.Insert.PHONE,n);startActivity(intent);
+ }
+ private void refreshLog(){
+  if(prefs==null)return;
+  CallHistory.refresh(this,false,()->{
+   if(!isFinishing()&&page.equals("recents"))render();
   });
-  spacer(content,15);
-  TextView info=label("לחיצה ממושכת על 0 מוסיפה + • על מחיקה מנקה מספר",11,false,muted());
-  info.setGravity(Gravity.CENTER);content.addView(info);
  }
- private void dial(String value){
-  if(value==null||value.trim().isEmpty()){
-   Toast.makeText(this,"נא להזין מספר",Toast.LENGTH_SHORT).show();return;
+ private void render(){
+  getWindow().setStatusBarColor(bg());getWindow().setNavigationBarColor(bg());
+  getWindow().getDecorView().setSystemUiVisibility(dark()?0:View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+  root=column();root.setBackgroundColor(bg());setContentView(root);
+  LinearLayout top=row();pad(top,18,10);root.addView(top,lp(-1,63));
+  TextView mark=center("DA",16,true,dark()?0xFF080808:Color.WHITE);
+  mark.setBackground(rounded(dark()?GOLD:0xFF181818,13));top.addView(mark,lp(43,43));
+  LinearLayout names=column();names.setPadding(d(12),0,0,0);
+  top.addView(names,new LinearLayout.LayoutParams(0,-2,1));
+  TextView product=t("DA CALLER",19,true,text());product.setLetterSpacing(0.08f);names.addView(product);
+  TextView sub=t("PREMIUM DIALER",9,false,tint());sub.setLetterSpacing(0.16f);names.addView(sub);
+  TextView settings=center("⚙",23,false,muted());top.addView(settings,lp(43,43));settings.setOnClickListener(v->{page=page.equals("settings")?"recents":"settings";render();});
+  View rule=new View(this);rule.setBackgroundColor(border());root.addView(rule,lp(-1,1));
+  ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);scroll.setVerticalScrollBarEnabled(false);
+  root.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));
+  body=column();pad(body,18,14);scroll.addView(body);
+  if(page.equals("contacts"))contactsPage(false);
+  else if(page.equals("favorites"))contactsPage(true);
+  else if(page.equals("settings"))settingsPage();
+  else recentsPage();
+  LinearLayout footer=row();footer.setGravity(Gravity.CENTER_VERTICAL);pad(footer,15,8);
+  footer.setBackgroundColor(panel());root.addView(footer,lp(-1,70));
+  nav=footer;
+  if(page.equals("settings")){
+   TextView back=center("←  חזרה לשיחות",15,true,tint());footer.addView(back,lp(-1,53));
+   back.setOnClickListener(v->{page="recents";render();});
+  }else{
+   addNav("שיחות","◷","recents");
+   addNav("אנשי קשר","☷","contacts");
+   addNav("מועדפים","★","favorites");
+   TextView dial=center("▦",27,true,Color.BLACK);
+   dial.setBackground(rounded(GOLD,23));
+   LinearLayout.LayoutParams fp=lp(60,55);fp.setMargins(d(5),0,d(1),0);
+   footer.addView(dial,fp);dial.setElevation(d(5));
+   dial.setOnClickListener(v->showKeypad(null));
   }
-  if(checkSelfPermission(Manifest.permission.CALL_PHONE)!=PackageManager.PERMISSION_GRANTED){
-   pendingCall=value;requestPermissions(new String[]{Manifest.permission.CALL_PHONE},11);return;
+  if(pendingNumber!=null){String n=pendingNumber;pendingNumber=null;handler.post(()->showKeypad(n));}
+ }
+ private void addNav(String label,String glyph,String dest){
+  boolean chosen=page.equals(dest);
+  LinearLayout tile=column();tile.setGravity(Gravity.CENTER);
+  TextView i=center(glyph,23,chosen,tintOrMute(chosen));
+  tile.addView(i,lp(-1,30));
+  TextView name=center(label,10,chosen,tintOrMute(chosen));
+  tile.addView(name,lp(-1,17));
+  nav.addView(tile,new LinearLayout.LayoutParams(0,-1,1));
+  tile.setOnClickListener(v->{page=dest;render();});
+ }
+ private int tintOrMute(boolean chosen){return chosen?tint():muted();}
+ private void roleBanner(){
+  if(isDefault())return;
+  LinearLayout banner=column();pad(banner,15,15);banner.setBackground(stroked(soft(),17));
+  body.addView(banner,lp(-1,-2));
+  banner.addView(t("הפעל כחייגן ברירת המחדל",15,true,text()));
+  gap(banner,5);banner.addView(t("כדי לקבל שיחות ולנהל אותן מתוך DA CALLER",12,false,muted()));
+  gap(banner,12);
+  TextView go=center("הגדר כחייגן הראשי   ←",14,true,Color.BLACK);
+  go.setBackground(rounded(GOLD,13));banner.addView(go,lp(-1,45));
+  go.setOnClickListener(v->askDefault());gap(body,18);
+ }
+ private void recentsPage(){
+  heading("שיחות אחרונות","יומן השיחות והפעילות שלך");
+  roleBanner();
+  if(checkSelfPermission(Manifest.permission.READ_CALL_LOG)!=PackageManager.PERMISSION_GRANTED){
+   permissionPanel("יומן השיחות דורש הרשאה","אפשר גישה ליומן השיחות",()->ensureCallLogPermission());return;
   }
-  startCall(value,true);
+  summary();
+  gap(body,21);
+  LinearLayout labelLine=row();body.addView(labelLine,lp(-1,35));
+  labelLine.addView(t("שיחות אחרונות",17,true,text()),new LinearLayout.LayoutParams(0,-2,1));
+  TextView reload=center("↻",23,true,tint());labelLine.addView(reload,lp(40,38));
+  reload.setOnClickListener(v->CallHistory.refresh(this,true,()->render()));
+  gap(body,5);
+  List<CallHistory.Entry> entries=CallHistory.entries;
+  if(entries.isEmpty()){empty("אין שיחות להצגה");return;}
+  int limit=Math.min(entries.size(),85);
+  for(int i=0;i<limit;i++)addCall(entries.get(i));
  }
- private void startCall(String n,boolean direct){
-  try{startActivity(new Intent(direct?Intent.ACTION_CALL:Intent.ACTION_DIAL,Uri.fromParts("tel",n,null)));}
-  catch(Exception e){
-   if(direct)startCall(n,false);
-   else Toast.makeText(this,"לא נמצאה אפליקציית טלפון",Toast.LENGTH_SHORT).show();
+ private void summary(){
+  LinearLayout header=row();body.addView(header,lp(-1,26));
+  header.addView(t("סיכום פעילות",15,true,text()),new LinearLayout.LayoutParams(0,-2,1));
+  gap(body,11);
+  String[] titles={"היום","השבוע","החודש","השנה"};
+  CallHistory.Summary s=CallHistory.summary;
+  LinearLayout cards=row();body.addView(cards,lp(-1,81));
+  for(int i=0;i<4;i++){
+   final int at=i;LinearLayout tile=column();tile.setGravity(Gravity.CENTER);
+   tile.setBackground(stroked(period==i?soft():panel(),15));
+   LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(0,d(81),1);
+   param.setMargins(d(2),0,d(2),0);cards.addView(tile,param);
+   tile.addView(center(titles[i],11,false,muted()),lp(-1,20));
+   long mins=Math.round(s.seconds[i]/60.0);
+   tile.addView(center(String.valueOf(mins),24,true,period==i?tint():text()),lp(-1,31));
+   tile.addView(center("דקות",10,false,muted()),lp(-1,15));
+   tile.setOnClickListener(v->{period=at;render();});
   }
+  gap(body,11);
+  LinearLayout totals=row();totals.setBackground(stroked(panel(),16));body.addView(totals,lp(-1,71));
+  metric(totals,"שיחות",s.calls[period]);
+  metric(totals,"יוצאות",s.outgoing[period]);
+  metric(totals,"נכנסות",s.incoming[period]);
+  metric(totals,"לא נענו",s.missed[period]);
  }
- private Set<String> favorites(){return new HashSet<>(p.getStringSet("favorites",Collections.emptySet()));}
- private void updateFavorite(Contacts.Person who){
-  Set<String> fav=favorites();
-  if(!fav.add(who.key))fav.remove(who.key);
-  p.edit().putStringSet("favorites",fav).apply();
-  FavoritesWidget.refresh(this);render();
+ private void metric(LinearLayout parent,String label,int count){
+  LinearLayout tile=column();tile.setGravity(Gravity.CENTER);parent.addView(tile,new LinearLayout.LayoutParams(0,-1,1));
+  tile.addView(center(String.valueOf(count),19,true,text()),lp(-1,29));
+  tile.addView(center(label,10,false,muted()),lp(-1,18));
  }
- private void renderContacts(boolean onlyFav){
-  heading(onlyFav?"אנשי קשר מועדפים":"אנשי קשר",onlyFav?"חיוג מהיר לאנשים שחשובים לך":"כל אנשי הקשר מהמכשיר במקום אחד");
+ private String contactName(String phone){
+  if(phone==null)return "";
+  String cleaned=phone.replaceAll("[^+0-9]","");
+  for(Contacts.Person p:contacts)if(p.key.equals(cleaned))return p.name;
+  return phone;
+ }
+ private void addCall(CallHistory.Entry e){
+  LinearLayout item=row();pad(item,9,5);
+  LinearLayout.LayoutParams margin=lp(-1,62);margin.bottomMargin=d(3);
+  body.addView(item,margin);
+  int iconColor=e.type==CallLog.Calls.MISSED_TYPE?0xFFCA5656:tint();
+  TextView icon=center(e.type==CallLog.Calls.OUTGOING_TYPE?"↗":e.type==CallLog.Calls.MISSED_TYPE?"↙":"↘",23,true,iconColor);
+  icon.setBackground(rounded(panel(),15));item.addView(icon,lp(45,45));
+  LinearLayout details=column();details.setPadding(d(11),0,d(4),0);
+  item.addView(details,new LinearLayout.LayoutParams(0,-2,1));
+  TextView who=t(contactName(e.number),15,true,text());who.setSingleLine(true);who.setEllipsize(android.text.TextUtils.TruncateAt.END);details.addView(who);
+  String when=DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT,new Locale("he","IL")).format(new Date(e.date));
+  details.addView(t(when+"  ·  "+(e.duration>0?Math.round(e.duration/60.0)+" דק׳":e.type==CallLog.Calls.MISSED_TYPE?"לא נענתה":"ללא מענה"),11,false,muted()));
+  TextView dial=center("☎",22,true,tint());item.addView(dial,lp(44,48));
+  dial.setOnClickListener(v->makeCall(e.number));
+  item.setOnClickListener(v->showKeypad(e.number));
+  View divider=new View(this);divider.setBackgroundColor(border());body.addView(divider,lp(-1,1));
+ }
+ private void contactsPage(boolean onlyFav){
+  heading(onlyFav?"מועדפים":"אנשי קשר",onlyFav?"האנשים שאתה מתקשר אליהם הכי הרבה":"חיפוש מהיר ונוח לפי שם או מספר");
   if(checkSelfPermission(Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED){
-   LinearLayout intro=vertical();padding(intro,18,20);intro.setBackground(border(surface(),20));
-   content.addView(intro,size(-1,-2));
-   intro.addView(label("יש לאפשר גישה לאנשי קשר כדי להציג אותם",17,true,textColor()));
-   spacer(intro,14);
-   TextView permission=action("אפשר גישה לאנשי קשר",true,16);intro.addView(permission,size(-1,60));
-   permission.setOnClickListener(v->requestPermissions(new String[]{Manifest.permission.READ_CONTACTS},10));return;
+   permissionPanel("אנשי הקשר נמצאים בטלפון שלך","אפשר גישה לאנשי קשר",()->requestPermissions(new String[]{Manifest.permission.READ_CONTACTS},21));return;
   }
   EditText search=new EditText(this);search.setSingleLine(true);
-  search.setHint("חיפוש שם או מספר...");search.setHintTextColor(muted());search.setTextColor(textColor());
-  search.setTextSize(TypedValue.COMPLEX_UNIT_SP,16*scaling());
-  padding(search,16,3);search.setBackground(border(surface(),20));content.addView(search,size(-1,55));
-  spacer(content,14);LinearLayout rows=vertical();content.addView(rows,size(-1,-2));
-  List<Contacts.Person> all=Contacts.all(this);
-  Runnable fill=()->{
-   rows.removeAllViews();String q=search.getText().toString().trim().toLowerCase(Locale.ROOT);
-   Set<String> starred=favorites();int count=0;
-   for(Contacts.Person person:all){
+  search.setTextSize(scaled(15));search.setTextColor(text());search.setHintTextColor(muted());
+  search.setHint("חיפוש שם או מספר");search.setBackground(stroked(panel(),15));pad(search,15,3);
+  body.addView(search,lp(-1,52));gap(body,12);
+  LinearLayout list=column();body.addView(list,lp(-1,-2));
+  Runnable filter=()->{
+   list.removeAllViews();String query=search.getText().toString().toLowerCase(Locale.ROOT).trim();
+   Set<String> starred=favorites();int shown=0;
+   for(Contacts.Person person:contacts){
     if(onlyFav&&!starred.contains(person.key))continue;
-    if(!q.isEmpty()&&!person.name.toLowerCase(Locale.ROOT).contains(q)&&!person.phone.contains(q))continue;
-    LinearLayout item=horizontal();padding(item,10,8);item.setBackground(border(surface(),19));
-    LinearLayout.LayoutParams ip=size(-1,75);ip.bottomMargin=dp(9);rows.addView(item,ip);
-    TextView avatar=label(person.name.substring(0,1),22,true,accent());
-    avatar.setGravity(Gravity.CENTER);avatar.setBackground(shape(pale(),17));item.addView(avatar,size(48,48));
-    LinearLayout words=vertical();words.setPadding(dp(10),0,dp(8),0);
-    item.addView(words,new LinearLayout.LayoutParams(0,-2,1));
-    words.addView(label(person.name,16,true,textColor()));
-    TextView phoneNumber=label(person.phone,13,false,muted());
-    phoneNumber.setTextDirection(View.TEXT_DIRECTION_LTR);words.addView(phoneNumber);
-    TextView star=label(starred.contains(person.key)?"★":"☆",27,false,starred.contains(person.key)?accent():muted());
-    star.setGravity(Gravity.CENTER);item.addView(star,size(39,52));
-    star.setOnClickListener(v->updateFavorite(person));
-    TextView call=label("☎",25,true,accent());call.setGravity(Gravity.CENTER);item.addView(call,size(42,52));
-    call.setOnClickListener(v->dial(person.phone));
-    words.setOnClickListener(v->new AlertDialog.Builder(this)
-      .setTitle(person.name).setMessage(person.phone)
-      .setPositiveButton("התקשר",(dialog,which)->dial(person.phone))
-      .setNegativeButton("סגור",null).show());
-    if(++count>=250)break;
+    if(!query.isEmpty()&&!person.name.toLowerCase(Locale.ROOT).contains(query)&&!person.phone.contains(query))continue;
+    addContact(list,person,starred.contains(person.key));
+    if(++shown>=90)break;
    }
-   if(count==0){
-    TextView message=label(onlyFav?"עדיין לא נבחרו מועדפים. לחץ ★ ליד איש קשר.":"לא נמצאו אנשי קשר מתאימים",15,false,muted());
-    padding(message,12,25);rows.addView(message);
-   }
-   if(count==250)rows.addView(label("מוצגים 250 אנשי קשר. חיפוש לפי שם או מספר מצמצם את הרשימה.",12,false,muted()));
+   if(shown==0)emptyIn(list,onlyFav?"אין אנשי קשר מועדפים":"אין תוצאות");
   };
   search.addTextChangedListener(new TextWatcher(){
-   public void beforeTextChanged(CharSequence s,int a,int b,int c){}
-   public void onTextChanged(CharSequence s,int start,int before,int count){fill.run();}
+   public void beforeTextChanged(CharSequence s,int st,int count,int after){}
+   public void onTextChanged(CharSequence s,int st,int before,int count){handler.removeCallbacks(filter);handler.postDelayed(filter,80);}
    public void afterTextChanged(Editable e){}
   });
-  fill.run();
+  filter.run();
  }
- private void section(String t){spacer(content,18);content.addView(label(t,17,true,textColor()));spacer(content,12);}
- private void toggle(String t,String key){
-  LinearLayout line=horizontal();padding(line,15,12);line.setBackground(border(surface(),18));
-  LinearLayout.LayoutParams lineP=size(-1,62);lineP.bottomMargin=dp(10);content.addView(line,lineP);
-  line.addView(label(t,15,true,textColor()),new LinearLayout.LayoutParams(0,-2,1));
-  Switch sw=new Switch(this);sw.setChecked(p.getBoolean(key,false));line.addView(sw);
-  sw.setOnCheckedChangeListener((v,on)->{p.edit().putBoolean(key,on).apply();render();});
+ private Set<String> favorites(){return new HashSet<>(prefs.getStringSet("favorites",Collections.emptySet()));}
+ private void toggleFavorite(Contacts.Person person){
+  Set<String> set=favorites();if(!set.add(person.key))set.remove(person.key);
+  prefs.edit().putStringSet("favorites",set).apply();FavoritesWidget.refresh(this);render();
  }
- private void slider(String title,String key,int min,int max,int defaultValue,String unit){
-  LinearLayout container=vertical();padding(container,13,11);container.setBackground(border(surface(),18));
-  LinearLayout.LayoutParams params=size(-1,-2);params.bottomMargin=dp(10);content.addView(container,params);
-  TextView v=label(title+": "+p.getInt(key,defaultValue)+unit,13,true,textColor());container.addView(v);
-  SeekBar bar=new SeekBar(this);bar.setMax(max-min);bar.setProgress(p.getInt(key,defaultValue)-min);
-  container.addView(bar,size(-1,45));
+ private void addContact(LinearLayout list,Contacts.Person person,boolean starred){
+  LinearLayout item=row();pad(item,5,5);list.addView(item,lp(-1,65));
+  TextView avatar=center(person.name.substring(0,1).toUpperCase(Locale.ROOT),18,true,tint());
+  avatar.setBackground(rounded(soft(),15));item.addView(avatar,lp(44,44));
+  LinearLayout data=column();data.setPadding(d(12),0,0,0);item.addView(data,new LinearLayout.LayoutParams(0,-2,1));
+  TextView name=t(person.name,15,true,text());name.setSingleLine(true);name.setEllipsize(android.text.TextUtils.TruncateAt.END);
+  data.addView(name);data.addView(t(person.phone,11,false,muted()));
+  TextView star=center(starred?"★":"☆",24,false,starred?tint():muted());item.addView(star,lp(42,42));
+  star.setOnClickListener(v->toggleFavorite(person));
+  TextView call=center("☎",22,false,tint());item.addView(call,lp(40,42));
+  call.setOnClickListener(v->makeCall(person.phone));
+  data.setOnClickListener(v->showKeypad(person.phone));
+  View line=new View(this);line.setBackgroundColor(border());list.addView(line,lp(-1,1));
+ }
+ private void empty(String message){emptyIn(body,message);}
+ private void emptyIn(LinearLayout parent,String message){
+  TextView label=center(message,13,false,muted());parent.addView(label,lp(-1,80));
+ }
+ private void permissionPanel(String message,String button,Runnable click){
+  LinearLayout card=column();pad(card,15,18);card.setBackground(stroked(panel(),15));body.addView(card,lp(-1,-2));
+  card.addView(t(message,14,false,muted()));gap(card,17);
+  TextView grant=center(button,15,true,Color.BLACK);grant.setBackground(rounded(GOLD,14));card.addView(grant,lp(-1,48));grant.setOnClickListener(v->click.run());
+ }
+ private void makeCall(String phone){
+  if(phone==null||phone.trim().isEmpty()){Toast.makeText(this,"הזן מספר",Toast.LENGTH_SHORT).show();return;}
+  if(checkSelfPermission(Manifest.permission.CALL_PHONE)!=PackageManager.PERMISSION_GRANTED){
+   pendingNumber=phone;requestPermissions(new String[]{Manifest.permission.CALL_PHONE},23);return;
+  }
+  Uri tel=Uri.fromParts("tel",phone,null);
+  try{
+   if(isDefault()){
+    TelecomManager telecom=(TelecomManager)getSystemService(TELECOM_SERVICE);
+    if(telecom!=null){telecom.placeCall(tel,new Bundle());return;}
+   }
+   startActivity(new Intent(Intent.ACTION_CALL,tel));
+  }catch(Exception e){
+   try{startActivity(new Intent(Intent.ACTION_DIAL,tel));}
+   catch(Exception other){Toast.makeText(this,"לא ניתן לבצע שיחה",Toast.LENGTH_SHORT).show();}
+  }
+ }
+ private void showKeypad(String preset){
+  Dialog dialog=new Dialog(this);
+  LinearLayout sheet=column();pad(sheet,16,13);sheet.setBackground(rounded(panel(),25));
+  TextView grip=center("━━━━",18,false,muted());sheet.addView(grip,lp(-1,21));
+  TextView header=center("חיוג מהיר",17,true,text());sheet.addView(header,lp(-1,31));
+  final EditText value=new EditText(this);value.setSingleLine(true);
+  value.setInputType(android.text.InputType.TYPE_CLASS_PHONE);value.setShowSoftInputOnFocus(false);
+  value.setTextColor(text());value.setTextSize(25);
+  value.setGravity(Gravity.CENTER);value.setTextDirection(View.TEXT_DIRECTION_LTR);
+  value.setBackground(stroked(bg(),12));value.setHint("הזן מספר");value.setHintTextColor(muted());
+  if(preset!=null)value.setText(preset);sheet.addView(value,lp(-1,49));
+  gap(sheet,8);
+  String[] digits={"1","2","3","4","5","6","7","8","9","*","0","#"};
+  int keyHeight=screenHeight()<680?43:51;
+  for(int i=0;i<4;i++){
+   LinearLayout line=row();line.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+   sheet.addView(line,lp(-1,keyHeight+5));
+   for(int j=0;j<3;j++){
+    String key=digits[i*3+j];
+    TextView btn=center(key,24,true,text());btn.setBackground(stroked(bg(),14));
+    LinearLayout.LayoutParams b=new LinearLayout.LayoutParams(0,d(keyHeight),1);b.setMargins(d(3),d(2),d(3),d(2));
+    line.addView(btn,b);btn.setOnClickListener(v->value.append(key));
+    if(key.equals("0"))btn.setOnLongClickListener(v->{value.append("+");return true;});
+   }
+  }
+  gap(sheet,9);
+  LinearLayout actions=row();sheet.addView(actions,lp(-1,52));
+  TextView erase=center("⌫",24,true,text());actions.addView(erase,new LinearLayout.LayoutParams(0,-1,1));
+  erase.setOnClickListener(v->{String s=value.getText().toString();if(!s.isEmpty())value.setText(s.substring(0,s.length()-1));});
+  erase.setOnLongClickListener(v->{value.setText("");return true;});
+  TextView call=center("☎  התקשר",16,true,Color.BLACK);call.setBackground(rounded(GOLD,15));
+  LinearLayout.LayoutParams callp=new LinearLayout.LayoutParams(0,d(51),3);callp.setMargins(d(5),0,d(5),0);actions.addView(call,callp);
+  call.setOnClickListener(v->{String n=value.getText().toString();dialog.dismiss();makeCall(n);});
+  TextView close=center("✕",20,true,muted());actions.addView(close,new LinearLayout.LayoutParams(0,-1,1));
+  close.setOnClickListener(v->dialog.dismiss());
+  dialog.setContentView(sheet);
+  Window w=dialog.getWindow();
+  if(w!=null){w.setBackgroundDrawableResource(android.R.color.transparent);w.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+   w.setDimAmount(0.5f);w.setGravity(Gravity.BOTTOM);w.setLayout(-1,-2);}
+  dialog.show();
+  if(dialog.getWindow()!=null)dialog.getWindow().setLayout(-1,-2);
+ }
+ private void section(String title){gap(body,18);body.addView(t(title,16,true,text()));gap(body,10);}
+ private void toggleSetting(String label,String key,boolean value){
+  LinearLayout item=row();pad(item,14,7);item.setBackground(stroked(panel(),15));
+  LinearLayout.LayoutParams p=lp(-1,58);p.bottomMargin=d(7);body.addView(item,p);
+  item.addView(t(label,14,true,text()),new LinearLayout.LayoutParams(0,-2,1));
+  Switch sw=new Switch(this);sw.setChecked(value);item.addView(sw);
+  sw.setOnCheckedChangeListener((v,on)->{
+   prefs.edit().putBoolean(key,on).apply();
+   if(key.equals("amoled")&&on)prefs.edit().putBoolean("dark",true).apply();
+   render();
+  });
+ }
+ private void settingsPage(){
+  heading("הגדרות","התאמה אישית מדויקת ואלגנטית");
+  section("ניהול חייגן");
+  TextView role=center(isDefault()?"✓  DA CALLER מוגדר כחייגן ראשי":"הגדר כחייגן ברירת המחדל",14,true,Color.BLACK);
+  role.setBackground(rounded(GOLD,14));body.addView(role,lp(-1,51));role.setOnClickListener(v->askDefault());
+  section("תצוגה");
+  toggleSetting("מצב כהה · שחור גרפיט","dark",prefs.getBoolean("dark",false));
+  toggleSetting("מצב AMOLED · שחור מוחלט","amoled",amoled());
+  section("צפיפות ומראה");
+  slider("גודל טקסט", "font_"+page, 85, 125,100,"%");
+  TextView note=t("התאמה למסכים קטנים (כולל מסכי 4 אינץ׳): כפתורים קומפקטיים, גלילה חלקה וחייגן צף בכל מסך.",12,false,muted());body.addView(note);
+  section("הרשאות");
+  TextView access=center("בדיקת הרשאות ליומן שיחות",14,true,tint());access.setBackground(stroked(panel(),14));body.addView(access,lp(-1,50));access.setOnClickListener(v->ensureCallLogPermission());
+  section("הקלטת שיחות");
+  TextView recording=t("הקלטת שני הצדדים אינה זמינה לאפליקציות רגילות באנדרואיד 13 ללא הרשאות מערכת מיוחדות. לא הוספנו כפתור הקלטה שאינו עובד.",13,false,muted());body.addView(recording);
+  section("אודות");
+  body.addView(t("DA CALLER 0.2.0 · PREMIUM PREVIEW",12,false,muted()));
+ }
+ private void slider(String title,String key,int min,int max,int initial,String unit){
+  LinearLayout box=column();pad(box,12,9);box.setBackground(stroked(panel(),15));
+  body.addView(box,lp(-1,-2));
+  TextView value=t(title+": "+prefs.getInt(key,initial)+unit,13,false,text());box.addView(value);
+  SeekBar bar=new SeekBar(this);bar.setMax(max-min);bar.setProgress(prefs.getInt(key,initial)-min);
+  box.addView(bar,lp(-1,45));
   bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
    public void onStartTrackingTouch(SeekBar b){}
    public void onStopTrackingTouch(SeekBar b){render();}
-   public void onProgressChanged(SeekBar b,int progress,boolean user){
-    if(user){int val=min+progress;p.edit().putInt(key,val).apply();v.setText(title+": "+val+unit);}
+   public void onProgressChanged(SeekBar b,int n,boolean user){
+    if(user){int v=min+n;prefs.edit().putInt(key,v).apply();value.setText(title+": "+v+unit);}
    }
   });
- }
- private void renderSettings(){
-  heading("התאמה אישית","התאמה לפי כל מסך • צבעים, טקסט ולחצנים");
-  section("עיצוב כללי");
-  toggle("מצב כהה","dark");
-  toggle("מקשים מלבניים מעוגלים","square");
-  slider("גודל מקשי החייגן","keypad",60,88,74,"dp");
-  section("בחירת מסך לעיצוב");
-  String target=p.getString("edit_tab","dial");
-  LinearLayout picker=horizontal();content.addView(picker,size(-1,48));
-  for(int i=0;i<TABS.length;i++){
-   String value=TABS[i];TextView chip=action(NAMES[i],target.equals(value),12);
-   LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(0,dp(45),1);
-   cp.setMargins(dp(2),0,dp(2),0);picker.addView(chip,cp);
-   chip.setOnClickListener(v->{p.edit().putString("edit_tab",value).apply();render();});
-  }
-  section("צבע מוביל");
-  LinearLayout palette=horizontal();content.addView(palette,size(-1,47));
-  for(int i=0;i<COLORS.length;i++){
-   int index=i;TextView swatch=label(p.getInt("color_"+target,0)==i?"✓":"",19,true,Color.WHITE);
-   swatch.setGravity(Gravity.CENTER);swatch.setBackground(shape(COLORS[i],40));
-   LinearLayout.LayoutParams s=new LinearLayout.LayoutParams(0,dp(43),1);
-   s.setMargins(dp(3),0,dp(3),0);palette.addView(swatch,s);
-   swatch.setOnClickListener(v->{p.edit().putInt("color_"+target,index).apply();render();});
-  }
-  section("טקסט");
-  slider("גודל טקסט במסך "+NAMES[Arrays.asList(TABS).indexOf(target)],"font_"+target,85,135,100,"%");
-  section("ווידג׳טים למסך הבית");
-  content.addView(label("לחיצה ארוכה על מסך הבית ← ווידג׳טים ← DA CALLER. קיימים קיצור לחיוג, קיצור לאיש קשר ומועדפים.",14,false,muted()));
-  section("פרטיות וגרסת ניסיון");
-  content.addView(label("אנשי קשר ומועדפים נשמרים במכשיר בלבד, ללא הרשאת אינטרנט. הגרסה אינה מחליפה עדיין את ממשק השיחה הנכנסת או את יומן השיחות.",12,false,muted()));
  }
 }
