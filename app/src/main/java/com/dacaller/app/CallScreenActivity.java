@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.content.res.ColorStateList;
+import android.widget.ImageView;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -68,10 +70,7 @@ public final class CallScreenActivity extends Activity {
  private LinearLayout horizontal(){
   LinearLayout l=new LinearLayout(this);l.setGravity(Gravity.CENTER);return l;
  }
- private void tick(View view){
-  if(view!=null&&prefs.getBoolean("haptics",true))
-   view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
- }
+ private void tick(View view){TouchFeedback.pulse(this,prefs,view);}
  @Override public void onCreate(Bundle saved){
   super.onCreate(saved);prefs=getSharedPreferences("da_caller",MODE_PRIVATE);
   setShowWhenLocked(true);setTurnScreenOn(true);
@@ -109,17 +108,45 @@ public final class CallScreenActivity extends Activity {
   root.addView(buttons,new LinearLayout.LayoutParams(dp(Math.max(1,Math.min(widthDp-24,330))),-2));
   root.addView(new View(this),new LinearLayout.LayoutParams(1,0,1));
  }
+ private int controlIcon(String title,String symbol){
+  if(title.equals("השתק"))return R.drawable.ic_control_mic;
+  if(title.equals("בטל השתקה"))return R.drawable.ic_control_mic_off;
+  if(title.equals("רמקול")||title.equals("אפרכסת"))return R.drawable.ic_control_speaker;
+  if(title.equals("מקשים"))return R.drawable.ic_control_dialpad;
+  if(title.equals("המתן"))return R.drawable.ic_control_pause;
+  if(title.equals("המשך"))return R.drawable.ic_control_play;
+  if(title.equals("Bluetooth")||title.equals("לאפרכסת"))return R.drawable.ic_control_bluetooth;
+  if(title.equals("הוסף שיחה"))return R.drawable.ic_control_add;
+  if(title.equals("אנשי קשר"))return R.drawable.ic_contacts;
+  if(title.equals("הערה"))return R.drawable.ic_control_note;
+  if(title.equals("ענה"))return R.drawable.ic_phone_line;
+  if(title.equals("דחה"))return R.drawable.ic_control_end;
+  return 0;
+ }
  private void actionTile(LinearLayout row,String symbol,String title,int style,int height,Runnable action){
   LinearLayout tile=vertical();
   tile.setBackground(glass(style));
-  tile.setElevation(dp(1));
-  int iconHeight=Math.max(27,height-25);
-  TextView glyph=label(symbol,compact()?21:24,style==2?Color.WHITE:GOLD,true);
-  tile.addView(glyph,new LinearLayout.LayoutParams(-1,dp(iconHeight)));
-  TextView caption=label(title,compact()?10:12,0xFFE7E7E7,true);
+  tile.setElevation(dp(2));
+  int iconHeight=Math.max(28,height-25);
+  int resource=controlIcon(title,symbol);
+  if(resource!=0){
+   ImageView glyph=new ImageView(this);
+   glyph.setImageResource(resource);
+   glyph.setImageTintList(ColorStateList.valueOf(style==2?Color.WHITE:GOLD));
+   glyph.setScaleType(ImageView.ScaleType.FIT_CENTER);
+   LinearLayout box=vertical();
+   box.addView(glyph,new LinearLayout.LayoutParams(dp(compact()?23:26),dp(compact()?23:26)));
+   tile.addView(box,new LinearLayout.LayoutParams(-1,dp(iconHeight)));
+  }else{
+   TextView glyph=label(symbol,compact()?21:24,style==2?Color.WHITE:GOLD,true);
+   tile.addView(glyph,new LinearLayout.LayoutParams(-1,dp(iconHeight)));
+  }
+  TextView caption=label(title,compact()?10:12,0xFFF1F1F1,true);
   tile.addView(caption,new LinearLayout.LayoutParams(-1,dp(22)));
   LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(0,dp(height),1);
   params.setMargins(dp(3),dp(4),dp(3),dp(4));row.addView(tile,params);
+  tile.setContentDescription(title);
+  TouchFeedback.bind(tile,prefs);
   tile.setOnClickListener(v->{tick(tile);action.run();});
  }
  private void safeEnd(Call call){
@@ -128,6 +155,7 @@ public final class CallScreenActivity extends Activity {
   LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(-1,dp(compact()?50:55));
   params.setMargins(dp(4),dp(9),dp(4),dp(4));
   buttons.addView(end,params);
+  TouchFeedback.bind(end,prefs);
   end.setOnClickListener(v->{tick(end);try{call.disconnect();}catch(Exception ignored){}finish();});
  }
  private void updateTimer(){
@@ -292,6 +320,7 @@ public final class CallScreenActivity extends Activity {
     LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(0,dp(compact()?44:50),1);
     params.setMargins(dp(3),dp(2),dp(3),dp(2));
     line.addView(key,params);
+    TouchFeedback.bind(key,prefs);
     key.setOnClickListener(v->{
      tick(key);
      try{
