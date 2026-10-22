@@ -293,11 +293,11 @@ public class MainActivity extends Activity {
  }
  private void recentsPage(){
   heading("שיחות אחרונות","יומן השיחות והפעילות שלך");
-  roleBanner();
   if(checkSelfPermission(Manifest.permission.READ_CALL_LOG)!=PackageManager.PERMISSION_GRANTED){
    permissionPanel("יומן השיחות דורש הרשאה","אפשר גישה ליומן השיחות",()->ensureCallLogPermission());return;
   }
-  if(prefs.getBoolean("show_stats",true)){summary();gap(body,21);}
+  if(prefs.getBoolean("show_stats",true)){summary();gap(body,8);}
+  roleBanner();
   LinearLayout labelLine=row();body.addView(labelLine,lp(-1,35));
   labelLine.addView(t("אחרונות",15,true,text()),new LinearLayout.LayoutParams(0,-2,1));
   TextView reload=center("↻",23,true,tint());labelLine.addView(reload,lp(40,38));
@@ -315,42 +315,30 @@ public class MainActivity extends Activity {
   }
  }
  private void summary(){
-  LinearLayout header=row();body.addView(header,lp(-1,26));
-  header.addView(t("סיכום פעילות",15,true,text()),new LinearLayout.LayoutParams(0,-2,1));
-  gap(body,11);
-  String[] titles={"היום","השבוע","החודש","השנה"};
-  CallHistory.Summary s=CallHistory.summary;
-  int widthDp=(int)(getResources().getDisplayMetrics().widthPixels/getResources().getDisplayMetrics().density);
-  boolean compact=widthDp<355;
-  LinearLayout cards=compact?column():row();
-  body.addView(cards,lp(-1,compact?156:81));
-  LinearLayout line=cards;
-  for(int i=0;i<4;i++){
-   if(compact && i%2==0){
-    line=row();cards.addView(line,lp(-1,78));
-   }
-   final int at=i;
-   LinearLayout tile=column();tile.setGravity(Gravity.CENTER);
-   tile.setBackground(stroked(period==i?soft():panel(),15));
-   LinearLayout.LayoutParams param=new LinearLayout.LayoutParams(0,d(compact?75:81),1);
-   param.setMargins(d(2),d(1),d(2),d(1));line.addView(tile,param);
-   tile.addView(center(titles[i],11,false,muted()),lp(-1,18));
-   long mins=Math.round(s.seconds[i]/60.0);
-   tile.addView(center(String.valueOf(mins),23,true,period==i?tint():text()),lp(-1,30));
-   tile.addView(center("דקות",10,false,muted()),lp(-1,14));
-   tile.setOnClickListener(v->{period=at;render();});
-  }
-  gap(body,11);
-  LinearLayout totals=row();totals.setBackground(stroked(panel(),16));body.addView(totals,lp(-1,71));
-  metric(totals,"שיחות",s.calls[period]);
-  metric(totals,"יוצאות",s.outgoing[period]);
-  metric(totals,"נכנסות",s.incoming[period]);
-  metric(totals,"לא נענו",s.missed[period]);
+  final String[] ranges={"היום","השבוע","החודש","השנה"};
+  CallHistory.Summary totals=CallHistory.summary;
+  android.widget.HorizontalScrollView scroll=new android.widget.HorizontalScrollView(this);
+  scroll.setHorizontalScrollBarEnabled(false);scroll.setFillViewport(true);
+  scroll.setOverScrollMode(View.OVER_SCROLL_NEVER);
+  LinearLayout bar=row();
+  bar.setPadding(d(9),d(3),d(9),d(3));
+  bar.setBackground(stroked(panel(),13));
+  scroll.addView(bar,new android.widget.FrameLayout.LayoutParams(-2,d(42)));
+  TextView picker=center(ranges[period]+"  ▾",11,true,tint());
+  picker.setBackground(rounded(soft(),9));picker.setPadding(d(9),0,d(9),0);
+  bar.addView(picker,lp(-2,31));
+  picker.setOnClickListener(v->{haptic(picker);period=(period+1)%4;render();});
+  addStat(bar,String.valueOf(Math.round(totals.seconds[period]/60.0))+" דק׳",true);
+  addStat(bar,totals.calls[period]+" שיחות",false);
+  addStat(bar,"↑ "+totals.outgoing[period],false);
+  addStat(bar,"↓ "+totals.incoming[period],false);
+  addStat(bar,"✕ "+totals.missed[period],false);
+  body.addView(scroll,lp(-1,44));
  }
- private void metric(LinearLayout parent,String label,int count){
-  LinearLayout tile=column();tile.setGravity(Gravity.CENTER);parent.addView(tile,new LinearLayout.LayoutParams(0,-1,1));
-  tile.addView(center(String.valueOf(count),19,true,text()),lp(-1,29));
-  tile.addView(center(label,10,false,muted()),lp(-1,18));
+ private void addStat(LinearLayout bar,String value,boolean highlight){
+  TextView label=center(value,11,highlight,highlight?tint():muted());
+  label.setPadding(d(9),0,d(9),0);
+  bar.addView(label,lp(-2,34));
  }
  private String contactName(String phone){
   if(phone==null)return "";
