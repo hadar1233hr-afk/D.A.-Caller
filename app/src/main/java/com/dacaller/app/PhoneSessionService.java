@@ -88,6 +88,7 @@ public final class PhoneSessionService extends InCallService {
  static void notifyChanged(){notifyViews();}
  private void clear(Call call){
   if(current==call)current=null;
+  CallHistory.fetchedAt=0;
   notifyViews();
   try{((NotificationManager)getSystemService(NOTIFICATION_SERVICE)).cancel(1502);}catch(Exception ignored){}
  }
