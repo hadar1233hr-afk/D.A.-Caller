@@ -147,6 +147,7 @@ public class MainActivity extends Activity {
   super.onRequestPermissionsResult(request,requested,results);
   if(request==21){contactsLoaded=false;loadContacts(true);render();}
   if(request==22){refreshLog();render();if(isDefault())ensureCallNotifications();}
+  if(request==24)ensureVoiceNetworkPermission();
   if(request==23&&pendingNumber!=null){
    String number=pendingNumber;pendingNumber=null;
    if(results.length>0&&results[0]==PackageManager.PERMISSION_GRANTED)makeCall(number);
@@ -194,11 +195,19 @@ public class MainActivity extends Activity {
    requestPermissions(new String[]{Manifest.permission.READ_CALL_LOG},22);
  }
  private void ensureCallNotifications(){
-  if(android.os.Build.VERSION.SDK_INT<33)return;
-  if(checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)==PackageManager.PERMISSION_GRANTED)return;
-  if(prefs.getBoolean("notifications_prompted",false))return;
+  if(android.os.Build.VERSION.SDK_INT<33 ||
+     checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)==PackageManager.PERMISSION_GRANTED ||
+     prefs.getBoolean("notifications_prompted",false)){
+    ensureVoiceNetworkPermission();return;
+  }
   prefs.edit().putBoolean("notifications_prompted",true).apply();
   requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS},24);
+ }
+ private void ensureVoiceNetworkPermission(){
+  if(checkSelfPermission(Manifest.permission.READ_PHONE_STATE)==PackageManager.PERMISSION_GRANTED ||
+     prefs.getBoolean("voice_permission_prompted",false))return;
+  prefs.edit().putBoolean("voice_permission_prompted",true).apply();
+  requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},25);
  }
  private void loadContacts(){loadContacts(false);}
  private void loadContacts(boolean force){
@@ -584,6 +593,14 @@ public class MainActivity extends Activity {
     settings.putExtra("android.provider.extra.APP_PACKAGE",getPackageName());
     startActivity(settings);
    }catch(Exception ignored){ensureCallNotifications();}
+  });
+  TextView voltePermission=center("גישה למצב הרשת עבור חיווי VoLTE",13,true,tint());
+  voltePermission.setBackground(stroked(panel(),14));body.addView(voltePermission,lp(-1,48));
+  voltePermission.setOnClickListener(v->{
+   haptic(voltePermission);
+   if(checkSelfPermission(Manifest.permission.READ_PHONE_STATE)!=PackageManager.PERMISSION_GRANTED)
+    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},25);
+   else android.widget.Toast.makeText(this,"הרשאת רשת השיחה פעילה",android.widget.Toast.LENGTH_SHORT).show();
   });
   section("הקלטת שיחות");
   TextView recording=t("הקלטת שני הצדדים אינה זמינה לאפליקציות רגילות באנדרואיד 13 ללא הרשאות מערכת מיוחדות. לא הוספנו כפתור הקלטה שאינו עובד.",13,false,muted());body.addView(recording);

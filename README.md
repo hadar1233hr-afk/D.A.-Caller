@@ -1,30 +1,21 @@
-# DA CALLER v0.3.0 · Premium Dialer beta
+# DA CALLER 0.4.0 · Premium Glass
 
-Native Android app, Hebrew RTL interface, no Internet permission. Tested at compile/build level using Android SDK 35. Real-life incoming and outgoing calls have **not** yet been tested on the target phone.
+Modern offline Android dialer for Android 8.0+, optimized for compact 4-inch phones.
 
-## What's new in 0.3
-- More reliable in-call screen with answer/decline from the call notification, end, microphone mute, speaker route, hold/resume, and DTMF keypad.
-- Audio controls now use Android telecom InCallService, not AudioManager system toggles.
-- Compact in-call interface for small phones, including 4-inch displays.
-- Optimized rendering: contact number lookup cached; contacts and call history read in background; recents and contacts shown in batches.
-- Gold/graphite design, AMOLED black mode, optional silver highlight, startup tab, summary visibility, per-tab text sizing.
-- Fixed denied CALL_PHONE permission loop. Native dialer opens instead if direct calling is denied.
-- Modern monochrome gold widgets; widget selection is searchable and loaded in a background thread.
-- "Open contact" widget opens the actual system contact details.
-- Automatic APK verification during GitHub Actions builds.
+## Changes
+- Gold/graphite native Android adaptive launcher icon and small monochrome notification icon.
+- Larger rounded-square call controls, two large columns in the center. Incoming accept and decline buttons are large.
+- Conditional VoLTE badge on an active call when Android voice network reports LTE and READ_PHONE_STATE permission is granted. This is a best-effort voice radio indicator, not a privileged IMS-registration proof. Hidden otherwise.
+- Contacts are loaded from the full Android Contacts provider, with phone number mapping, OEM fallback, manual refresh, search, and contacts without numbers.
+- Independent background executor for contact loading, separate from call-log statistics.
+- Compact single-line call statistics. Tap period name to cycle day/week/month/year and horizontally scroll for counts.
+- Minimal header, more modern font, glass-inspired subtle gradients, and configurable haptics.
+- No Internet permission.
 
-## Limitations and safety
-**Early beta! Keep another working phone app installed.** Request DA CALLER as default Phone app in settings. Incoming call notifications and in-call UI might behave differently on different Android vendors; confirm they work before relying on this app.
+## Testing
+APK builds and signature are validated in GitHub Actions. Real phone calls and OEM contact providers must be tested on an actual device. Keep the stock dialer installed.
+The launcher may tint the app icon when Android themed icons are enabled.
+Two-way call audio recording is not implemented because it requires restricted capabilities.
 
-The history dashboard uses local Android call logs (permission required) for total call minutes in the current day/week/month/year, plus incoming/outgoing/missed call counts.
-
-No two-way call recording is implemented: third-party apps cannot guarantee privileged telecom uplink/downlink capture on Android 13. Do not infer recording from the UI.
-
-No Internet permission. Contacts and favorites are local; backup is disabled to avoid exporting personal data.
-
-## Install
-Open [Releases](../../releases) and download **DA-CALLER-v0.3.0.apk**.
-This is a debug-signed development APK, built on a hosted runner. Because the signing certificate can change between GitHub Actions runs, you may need to **uninstall the old beta** before installing it. Uninstalling can erase the app's favorites and preferences. Device contacts and call history belong to Android, not DA CALLER.
-
-## Build
-The [GitHub Actions workflow](.github/workflows/android.yml) builds, verifies and publishes an APK for version 0.3.0. Local builds require JDK 17, Android SDK 35 and Gradle 8.9.
+## APK
+Download DA-CALLER-v0.4.0.apk from GitHub Releases. Debug certificates may vary between test builds; uninstalling the previous APK may be required, which can delete local favorites and app settings.

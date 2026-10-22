@@ -110,7 +110,7 @@ public final class PhoneSessionService extends InCallService {
    if(call.getDetails()!=null&&call.getDetails().getHandle()!=null)number=call.getDetails().getHandle().getSchemeSpecificPart();
   }catch(Exception ignored){}
   Notification.Builder b=new Notification.Builder(this,channel);
-  b.setSmallIcon(R.drawable.ic_launcher)
+  b.setSmallIcon(R.drawable.ic_stat_call)
    .setContentTitle(ringing?"שיחה נכנסת · DA CALLER":"שיחה פעילה · DA CALLER")
    .setContentText(number)
    .setContentIntent(open).setVisibility(Notification.VISIBILITY_PUBLIC)
