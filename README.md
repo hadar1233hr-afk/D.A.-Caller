@@ -1,19 +1,31 @@
-# DA CALLER 0.5.0 — configurable in-call buttons
+# DA CALLER v0.6.0 · Performance & Precision Preview
 
-This is a small native Android beta, not feature-equivalent to Google Phone.
+An Android 8+ offline native dialer for compact phones, with Android default-dialer and InCallService integration.
 
-## New in 0.5.0
-- A modest reduction in the in-call tile height, plus an optional slider from 54 to 84dp.
-- Compact three-column in-call grid to fit additional controls on small screens.
-- Settings → "כפתורים בזמן שיחה": individual switches for mute, speaker, keypad, hold, Bluetooth, add call, contacts, and call notes.
-- Incoming answer/reject and the red end-call button remain visible and cannot be hidden.
-- Bluetooth action uses the actual supported Android telecom audio route; shows an error if unavailable.
-- Add-call action opens the in-app dialpad. Whether another call can be placed depends on the operator/device and is not guaranteed.
-- Contacts action opens the app's contacts screen. Notes are stored locally per number; they are not cloud-synced or encrypted.
-- Reopens the in-call grid after returning from Settings to show new choices.
+## Performance work
+- **Persistent activity shell**: changing tabs no longer tears down the entire Activity view hierarchy, toolbar, ScrollView, and navigation bar. Only the page content is refreshed.
+- **No pointless recent-call repaint on resume**: cached call history returns without triggering UI reconstruction.
+- **Incremental list rendering**: 16 recents / 24 contacts loaded initially, with "show more" options.
+- **Background device queries**: contacts and call logs use dedicated workers; phone number/name lookup is cached.
+- **Cached date formatter** in recent calls avoids repeated formatter instantiation.
+- No large third-party UI/runtime dependencies.
 
-## Why the APK is so small
-The app uses Android framework views and platform telephony APIs rather than bundling Material Compose, Google libraries, spam databases, photos, languages, or large assets. A small APK is not equivalent to comprehensive functionality. The app is not yet tested for reliable carrier and OEM behavior, and does not provide protected two-way call recording.
+## Appearance and feedback
+- New vector icons for the dial action and bottom navigation; selected-tab pill treatment and high-contrast labels.
+- Distinct recent-call categories: blue incoming, green outgoing, red missed, amber rejected/zero-duration outgoing attempts, and violet blocked calls. Every category includes a **text label**, not color alone.
+- **Zero-duration outgoing calls are not proof of network failure**. The app labels them as "יוצאת · ללא זמן שיחה".
+- Refined dark graphite in-call buttons with real vector icons (mic, speaker, keypad, hold, Bluetooth, add call, contacts, note).
+- Touch animations and a short customizable physical vibration. Settings offer off/on and subtle / standard / emphasized.
+- AMOLED black mode and compact call statistics remain available.
+- Explicit configurable list of in-call buttons, with accept/reject/hangup always visible.
 
-## Testing
-GitHub Actions compiles the Android SDK 35 project, verifies its APK signature and publishes DA-CALLER-v0.5.0.apk to Releases. A successful build is not an end-to-end phone-call test. Keep a functioning stock dialer installed.
+## Still to validate
+Success in GitHub Actions verifies that the app compiles and the APK signature is valid. It does not establish real-world latency or reliability on the Unihertz Jelly Star. Before adopting DA CALLER as the sole phone app, test incoming calls, dialing, lock-screen call notifications, in-call controls, and Bluetooth. Keep the stock dialer installed.
+
+This version is **not** feature-complete with Secure Dialer; it is an original lightweight prototype using some comparable UX features and public Android APIs. Two-way call recording is not supported due to Android system restrictions.
+
+## Install
+Download DA-CALLER-v0.6.0.apk from [Releases](../../releases). APK signing is debug and may differ between builds, meaning an Android reinstall may be needed; uninstalling an old build can erase app-local favorites/settings. Device contacts and Android call history are not owned by this app.
+
+## Build
+GitHub Actions uses Gradle, Android SDK 35, a signature check, and publishes DA CALLER and the separate DA ID Offline APK. This release only updates the DA CALLER version; the independent offline ID module is unchanged.

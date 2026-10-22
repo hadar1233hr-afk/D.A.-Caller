@@ -38,7 +38,7 @@ jobs:
           test -s offline/build/outputs/apk/debug/offline-debug.apk
       - uses: actions/upload-artifact@v4
         with:
-          name: DA-CALLER-v0.5.0-APK
+          name: DA-CALLER-v0.6.0-APK
           path: app/build/outputs/apk/debug/app-debug.apk
       - uses: actions/upload-artifact@v4
         with:
@@ -48,12 +48,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cp app/build/outputs/apk/debug/app-debug.apk DA-CALLER-v0.5.0.apk
+          cp app/build/outputs/apk/debug/app-debug.apk DA-CALLER-v0.6.0.apk
           cp offline/build/outputs/apk/debug/offline-debug.apk DA-ID-OFFLINE-v0.1.0.apk
-          if gh release view v0.5.0 >/dev/null 2>&1; then
-            gh release upload v0.5.0 DA-CALLER-v0.5.0.apk --clobber
+          if gh release view v0.6.0 >/dev/null 2>&1; then
+            gh release upload v0.6.0 DA-CALLER-v0.6.0.apk --clobber
           else
-            gh release create v0.5.0 DA-CALLER-v0.5.0.apk --title 'DA CALLER v0.5.0' --notes 'Original dialer app; unaffected by the new offline caller-ID module.'
+            gh release create v0.6.0 DA-CALLER-v0.6.0.apk --title 'DA CALLER v0.6.0' --notes 'Performance-focused dialer beta: persistent UI shell, tappable feedback, compact pages, clear call types and vector icons.'
           fi
           if gh release view id-offline-v0.1.0 >/dev/null 2>&1; then
             gh release upload id-offline-v0.1.0 DA-ID-OFFLINE-v0.1.0.apk --clobber
