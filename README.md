@@ -1,21 +1,19 @@
-# DA CALLER 0.4.0 · Premium Glass
+# DA CALLER 0.5.0 — configurable in-call buttons
 
-Modern offline Android dialer for Android 8.0+, optimized for compact 4-inch phones.
+This is a small native Android beta, not feature-equivalent to Google Phone.
 
-## Changes
-- Gold/graphite native Android adaptive launcher icon and small monochrome notification icon.
-- Larger rounded-square call controls, two large columns in the center. Incoming accept and decline buttons are large.
-- Conditional VoLTE badge on an active call when Android voice network reports LTE and READ_PHONE_STATE permission is granted. This is a best-effort voice radio indicator, not a privileged IMS-registration proof. Hidden otherwise.
-- Contacts are loaded from the full Android Contacts provider, with phone number mapping, OEM fallback, manual refresh, search, and contacts without numbers.
-- Independent background executor for contact loading, separate from call-log statistics.
-- Compact single-line call statistics. Tap period name to cycle day/week/month/year and horizontally scroll for counts.
-- Minimal header, more modern font, glass-inspired subtle gradients, and configurable haptics.
-- No Internet permission.
+## New in 0.5.0
+- A modest reduction in the in-call tile height, plus an optional slider from 54 to 84dp.
+- Compact three-column in-call grid to fit additional controls on small screens.
+- Settings → "כפתורים בזמן שיחה": individual switches for mute, speaker, keypad, hold, Bluetooth, add call, contacts, and call notes.
+- Incoming answer/reject and the red end-call button remain visible and cannot be hidden.
+- Bluetooth action uses the actual supported Android telecom audio route; shows an error if unavailable.
+- Add-call action opens the in-app dialpad. Whether another call can be placed depends on the operator/device and is not guaranteed.
+- Contacts action opens the app's contacts screen. Notes are stored locally per number; they are not cloud-synced or encrypted.
+- Reopens the in-call grid after returning from Settings to show new choices.
+
+## Why the APK is so small
+The app uses Android framework views and platform telephony APIs rather than bundling Material Compose, Google libraries, spam databases, photos, languages, or large assets. A small APK is not equivalent to comprehensive functionality. The app is not yet tested for reliable carrier and OEM behavior, and does not provide protected two-way call recording.
 
 ## Testing
-APK builds and signature are validated in GitHub Actions. Real phone calls and OEM contact providers must be tested on an actual device. Keep the stock dialer installed.
-The launcher may tint the app icon when Android themed icons are enabled.
-Two-way call audio recording is not implemented because it requires restricted capabilities.
-
-## APK
-Download DA-CALLER-v0.4.0.apk from GitHub Releases. Debug certificates may vary between test builds; uninstalling the previous APK may be required, which can delete local favorites and app settings.
+GitHub Actions compiles the Android SDK 35 project, verifies its APK signature and publishes DA-CALLER-v0.5.0.apk to Releases. A successful build is not an end-to-end phone-call test. Keep a functioning stock dialer installed.

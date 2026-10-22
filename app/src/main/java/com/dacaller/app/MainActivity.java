@@ -125,6 +125,7 @@ public class MainActivity extends Activity {
  private void handleIntent(Intent intent){
   if(intent==null)return;
   if(intent.getBooleanExtra("favorites",false))page="favorites";
+  if(intent.getBooleanExtra("show_contacts",false))page="contacts";
   if(Intent.ACTION_DIAL.equals(intent.getAction())||intent.hasExtra("phone")){page="recents";pendingNumber=intent.getStringExtra("phone");
    if(Intent.ACTION_DIAL.equals(intent.getAction())&&pendingNumber==null)pendingNumber="";
    if(intent.getData()!=null)pendingNumber=intent.getData().getSchemeSpecificPart();
@@ -538,6 +539,57 @@ public class MainActivity extends Activity {
    render();
   });
  }
+ private void inCallControlsSettings(){
+  section("כפתורים בזמן שיחה");
+  TextView intro=t("בחר אילו פעולות יוצגו בשיחה. מענה, דחייה וניתוק נשארים תמיד זמינים.",12,false,muted());
+  body.addView(intro);
+  gap(body,10);
+  final TextView count=t("",12,true,tint());
+  for(int i=0;i<InCallControls.IDS.length;i++){
+   final String id=InCallControls.IDS[i];
+   LinearLayout item=row();pad(item,12,8);
+   item.setBackground(stroked(panel(),14));
+   LinearLayout.LayoutParams params=lp(-1,63);params.bottomMargin=d(6);
+   body.addView(item,params);
+   LinearLayout description=column();
+   item.addView(description,new LinearLayout.LayoutParams(0,-2,1));
+   description.addView(t(InCallControls.NAMES[i],14,true,text()));
+   description.addView(t(InCallControls.EXPLAIN[i],11,false,muted()));
+   Switch selected=new Switch(this);
+   selected.setChecked(InCallControls.enabled(prefs,id));
+   item.addView(selected,lp(47,50));
+   item.setOnClickListener(v->{haptic(item);selected.setChecked(!selected.isChecked());});
+   selected.setOnCheckedChangeListener((button,on)->{
+    prefs.edit().putBoolean("call_btn_"+id,on).apply();
+    count.setText(InCallControls.count(prefs)+" פעולות נבחרו");
+   });
+  }
+  count.setText(InCallControls.count(prefs)+" פעולות נבחרו");
+  body.addView(count);
+  gap(body,8);
+  TextView density=t("גודל לחצני השיחה",14,true,text());
+  body.addView(density);
+  gap(body,7);
+  LinearLayout sizeBox=column();pad(sizeBox,12,8);
+  sizeBox.setBackground(stroked(panel(),14));
+  body.addView(sizeBox,lp(-1,-2));
+  int initial=prefs.getInt("call_button_height",68);
+  TextView value=t(initial+"dp",13,true,tint());
+  sizeBox.addView(value);
+  SeekBar bar=new SeekBar(this);
+  bar.setMax(30);bar.setProgress(Math.max(0,Math.min(30,initial-54)));
+  sizeBox.addView(bar,lp(-1,42));
+  bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+   public void onStartTrackingTouch(SeekBar seek){}
+   public void onStopTrackingTouch(SeekBar seek){}
+   public void onProgressChanged(SeekBar seek,int progress,boolean user){
+    if(!user)return;
+    int height=54+progress;
+    prefs.edit().putInt("call_button_height",height).apply();
+    value.setText(height+"dp");
+   }
+  });
+ }
  private void settingsPage(){
   heading("הגדרות","התאמה אישית מדויקת ואלגנטית");
   section("ניהול חייגן");
@@ -548,6 +600,7 @@ public class MainActivity extends Activity {
   toggleSetting("מצב AMOLED · שחור מוחלט","amoled",amoled());
   toggleSetting("רטט בעת לחיצה על מקשים ופעולות","haptics",prefs.getBoolean("haptics",true));
   toggleSetting("הצג סיכום שיחות בראש היומן","show_stats",prefs.getBoolean("show_stats",true));
+  inCallControlsSettings();
   section("צבע הדגשה");
   LinearLayout themes=row();body.addView(themes,lp(-1,46));
   for(String option:new String[]{"gold","silver"}){
@@ -605,7 +658,7 @@ public class MainActivity extends Activity {
   section("הקלטת שיחות");
   TextView recording=t("הקלטת שני הצדדים אינה זמינה לאפליקציות רגילות באנדרואיד 13 ללא הרשאות מערכת מיוחדות. לא הוספנו כפתור הקלטה שאינו עובד.",13,false,muted());body.addView(recording);
   section("אודות");
-  body.addView(t("DA CALLER 0.2.0 · PREMIUM PREVIEW",12,false,muted()));
+  body.addView(t("DA CALLER 0.5.0 · PREMIUM BETA",12,false,muted()));
  }
  private void slider(String title,String key,int min,int max,int initial,String unit){
   LinearLayout box=column();pad(box,12,9);box.setBackground(stroked(panel(),15));

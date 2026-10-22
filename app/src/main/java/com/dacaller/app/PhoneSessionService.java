@@ -80,6 +80,27 @@ public final class PhoneSessionService extends InCallService {
   if(service==null)return;
   try{service.setAudioRoute(value?CallAudioState.ROUTE_SPEAKER:CallAudioState.ROUTE_EARPIECE);}catch(Exception ignored){}
  }
+ static boolean bluetooth(){
+  PhoneSessionService service=instance;
+  if(service==null)return false;
+  CallAudioState state=service.getCallAudioState();
+  return state!=null&&(state.getRoute()&CallAudioState.ROUTE_BLUETOOTH)!=0;
+ }
+ static boolean bluetoothAvailable(){
+  PhoneSessionService service=instance;
+  if(service==null)return false;
+  CallAudioState state=service.getCallAudioState();
+  return state!=null&&(state.getSupportedRouteMask()&CallAudioState.ROUTE_BLUETOOTH)!=0;
+ }
+ static boolean switchBluetooth(){
+  PhoneSessionService service=instance;
+  if(service==null||!bluetoothAvailable())return false;
+  try{
+   service.setAudioRoute(bluetooth()?CallAudioState.ROUTE_EARPIECE:CallAudioState.ROUTE_BLUETOOTH);
+   return true;
+  }catch(Exception ignored){return false;}
+ }
+
  private static PendingIntent command(Context ctx,String command,int code){
   Intent intent=new Intent(ctx,CallCommandReceiver.class);
   intent.setAction("com.dacaller.app.CALL_"+command);
