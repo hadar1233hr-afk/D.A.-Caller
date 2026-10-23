@@ -1,0 +1,100 @@
+name: DA Business Book Israel APK
+on:
+  push:
+    branches: [main]
+    paths: ['businessbook/**', '.github/workflows/businessbook.yml', 'settings.gradle']
+  workflow_dispatch:
+concurrency:
+  group: da-businessbook-\${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Prepare Android SDK
+        run: |
+          SDKM=$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager | head -n 1)
+          test -n "$SDKM"
+          yes | "$SDKM" "platforms;android-35" "build-tools;35.0.0" >/dev/null || test -d "$ANDROID_HOME/platforms/android-35"
+      - name: Download licensed data
+        run: |
+          python -m pip install --disable-pip-version-check osmium shapely requests
+          mkdir -p businessbook/src/main/assets
+          curl --fail --silent --show-error --location --retry 4 --max-time 400 \
+            -o /tmp/israel-and-palestine.osm.pbf \
+            https://download.geofabrik.de/asia/israel-and-palestine-latest.osm.pbf
+          test -s /tmp/israel-and-palestine.osm.pbf
+      - name: Compile offline Israeli business directory
+        run: |
+          python -u businessbook/tools/build_directory.py \
+            --pbf /tmp/israel-and-palestine.osm.pbf \
+            --db businessbook/src/main/assets/directory.sqlite
+          python - <<'PY'
+          import sqlite3,json
+          path='businessbook/src/main/assets/directory.sqlite'
+          c=sqlite3.connect(path)
+          n=c.execute('SELECT COUNT(*) FROM businesses').fetchone()[0]
+          p=c.execute('SELECT COUNT(DISTINCT phone) FROM businesses').fetchone()[0]
+          assert n>=1000 and p>=1000, (n,p)
+          assert c.execute('PRAGMA integrity_check').fetchone()[0]=='ok'
+          assert c.execute('PRAGMA user_version').fetchone()[0]==1
+          print('VERIFIED ISRAEL BUSINESS LISTINGS:',n,'UNIQUE PHONE NUMBERS:',p,flush=True)
+          c.close()
+          print(json.load(open(path+'.stats.json',encoding='utf8')))
+          PY
+      - name: Build installable APK
+        run: gradle --no-daemon :businessbook:assembleDebug
+      - name: Verify signature and packaged database
+        run: |
+          APK=businessbook/build/outputs/apk/debug/businessbook-debug.apk
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose "$APK"
+          unzip -l "$APK" | grep -F 'assets/directory.sqlite'
+          test -s "$APK"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DA-BUSINESS-BOOK-ISRAEL-v1.0.0-APK
+          path: businessbook/build/outputs/apk/debug/businessbook-debug.apk
+      - name: Publish APK and sources
+        env:
+          GH_TOKEN: \${{ github.token }}
+        run: |
+          cp businessbook/build/outputs/apk/debug/businessbook-debug.apk DA-BUSINESS-BOOK-ISRAEL-v1.0.0.apk
+          cp businessbook/src/main/assets/directory.sqlite DA-BUSINESS-BOOK-ISRAEL-v1.0.0.sqlite
+          cp businessbook/src/main/assets/directory.sqlite.stats.json DIRECTORY-STATS.json
+          cat > DATA-SOURCES-AND-LICENSES.txt <<'EOF'
+          DA BUSINESS BOOK ISRAEL: DATA AND SOURCES
+          OpenStreetMap © contributors, ODbL 1.0.
+          https://download.geofabrik.de/asia/israel-and-palestine.html
+          Geographic filter: geoBoundaries ISR ADM0 ODbL polygon:
+          https://www.geoboundaries.org/api/current/gbOpen/ISR/ADM0/
+          Municipality of Kfar Saba business registry 2021: ODbL 1.0.
+          https://kfar-saba.datacity.org.il/dataset/rishaion_esek
+          Municipality of Beer Sheva open business registry 2026: data.gov.il Other (Open).
+          https://data.gov.il/he/datasets/beer-sheva/business-licensing-br7/7d4c61e2-2416-453e-8efb-bd02ec89db35
+          Municipal sources used only when accessible to the build.
+          ODbL license: https://opendatacommons.org/licenses/odbl/1-0/
+          The ODbL-derived directory database is distributed alongside the APK.
+          Place name fallback may be the nearest named locality, not verified city.
+          Telephone numbers may be outdated; directory is not exhaustive.
+          No proprietary/private phone book scraping, no INTERNET permission.
+          EOF
+          if gh release view business-book-v1.0.0 >/dev/null 2>&1; then
+            gh release upload business-book-v1.0.0 DA-BUSINESS-BOOK-ISRAEL-v1.0.0.apk DA-BUSINESS-BOOK-ISRAEL-v1.0.0.sqlite DIRECTORY-STATS.json DATA-SOURCES-AND-LICENSES.txt --clobber
+          else
+            gh release create business-book-v1.0.0 DA-BUSINESS-BOOK-ISRAEL-v1.0.0.apk DA-BUSINESS-BOOK-ISRAEL-v1.0.0.sqlite DIRECTORY-STATS.json DATA-SOURCES-AND-LICENSES.txt \
+              --title 'DA Business Book Israel v1.0.0 - Offline' \
+              --notes 'Standalone Hebrew offline Android business phone directory in Israel. Search by business, phone, category, city, favorites and tap-to-dial. See attached stats JSON and ODbL data license.'
+          fi
