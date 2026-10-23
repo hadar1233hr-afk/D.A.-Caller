@@ -116,6 +116,7 @@ public class MainActivity extends Activity {
  @Override public void onCreate(Bundle saved){
   super.onCreate(saved);
   prefs=getSharedPreferences("da_caller",MODE_PRIVATE);
+  CallArchive.schedule(this);
   page=prefs.getString("start_page","recents");
   handleIntent(getIntent());
   render();loadContacts();refreshLog();
@@ -131,6 +132,7 @@ public class MainActivity extends Activity {
  private void handleIntent(Intent intent){
   if(intent==null)return;
   if(intent.getBooleanExtra("favorites",false))page="favorites";
+  if(intent.getBooleanExtra("show_contacts",false))page="contacts";
   if(intent.getBooleanExtra("show_contacts",false))page="contacts";
   if(Intent.ACTION_DIAL.equals(intent.getAction())||intent.hasExtra("phone")){page="recents";pendingNumber=intent.getStringExtra("phone");
    if(Intent.ACTION_DIAL.equals(intent.getAction())&&pendingNumber==null)pendingNumber="";
@@ -153,7 +155,7 @@ public class MainActivity extends Activity {
  @Override public void onRequestPermissionsResult(int request,String[] requested,int[] results){
   super.onRequestPermissionsResult(request,requested,results);
   if(request==21){contactsLoaded=false;loadContacts(true);render();}
-  if(request==22){refreshLog();render();if(isDefault())ensureCallNotifications();}
+  if(request==22){CallArchive.schedule(this);refreshLog();render();if(isDefault())ensureCallNotifications();}
   if(request==24)ensureVoiceNetworkPermission();
   if(request==23&&pendingNumber!=null){
    String number=pendingNumber;pendingNumber=null;
@@ -257,7 +259,7 @@ public class MainActivity extends Activity {
   getWindow().setNavigationBarColor(bg());
   getWindow().getDecorView().setSystemUiVisibility(dark()?0:
     View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
-  String theme=bg()+"_"+panel()+"_"+tint();
+  String theme=bg()+"_"+panel()+"_"+tint()+"_"+prefs.getString("language","he");
   boolean rebuild=root==null||!theme.equals(appliedTheme);
   if(rebuild){
    appliedTheme=theme;
@@ -273,11 +275,8 @@ public class MainActivity extends Activity {
   workspace.removeAllViews();
   body=null;pageScroll=null;
   if(page.equals("settings")){
-   pageScroll=new ScrollView(this);pageScroll.setFillViewport(true);
-   pageScroll.setVerticalScrollBarEnabled(false);
-   body=column();pad(body,13,12);pageScroll.addView(body);
+   pageScroll=new SettingsScreen(this).create();
    workspace.addView(pageScroll,new FrameLayout.LayoutParams(-1,-1));
-   settingsPage();
   }else{
    View current;
    if(page.equals("contacts"))current=fastPages.contacts(contacts,false);
@@ -306,7 +305,7 @@ public class MainActivity extends Activity {
       Gravity.BOTTOM|Gravity.RIGHT);
   fab.setMargins(d(13),d(10),d(16),d(18));
   workspace.addView(button,fab);
-  button.setContentDescription("הצגת מקשי חיוג");
+  button.setContentDescription(I18n.text(this,"הצגת מקשי חיוג"));
   decorate(button);
   button.setOnClickListener(v->{haptic(button);showKeypad(null);});
  }
@@ -316,13 +315,69 @@ public class MainActivity extends Activity {
   tile.setBackground(active?rounded(soft(),15):rounded(panel(),15));
   ImageView glyph=icon(drawable,active?tint():muted(),22,22);
   tile.addView(glyph,lp(24,25));
-  TextView name=center(title,11,active,active?tint():muted());
+  TextView name=center(I18n.text(this,title),11,active,active?tint():muted());
   tile.addView(name,lp(-1,20));
-  nav.addView(tile,new LinearLayout.LayoutParams(0,d(51),1));
-  decorate(tile);tile.setContentDescription(title);
+  LinearLayout.LayoutParams tabs=new LinearLayout.LayoutParams(0,d(51),1);
+  tabs.setMargins(d(3),0,d(3),0);
+  nav.addView(tile,tabs);
+  decorate(tile);tile.setContentDescription(I18n.text(this,title));
   tile.setOnClickListener(v->{haptic(tile);if(!page.equals(target)){page=target;render();}});
  }
  // FastPages callbacks: only use device-local phone and contacts providers.
+ void openArchive(){
+  if(!CallArchive.enabled(this)){
+   Toast.makeText(this,I18n.text(this,"יש להפעיל שמירת ארכיון בהגדרות"),Toast.LENGTH_LONG).show();return;
+  }
+  startActivity(new Intent(this,ArchiveActivity.class));
+ }
+ void openContactDetail(long id){
+  if(id<=0){Toast.makeText(this,I18n.text(this,"אין איש קשר תואם"),Toast.LENGTH_SHORT).show();return;}
+  Intent detail=new Intent(this,ContactDetailActivity.class);
+  detail.putExtra("contact_id",id);startActivityForResult(detail,201);
+ }
+ void openContactFromNumber(String number){
+  if(checkSelfPermission(Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED){
+   showNumberOnly(number);return;
+  }
+  ContactPhotos.lookup(this,number,(id,name,photo)->{
+   if(isFinishing()||isDestroyed())return;
+   if(id>0)openContactDetail(id);else showNumberOnly(number);
+  });
+ }
+ private void showNumberOnly(String phone){
+  new android.app.AlertDialog.Builder(this)
+   .setTitle(phone).setMessage(I18n.text(this,"אין איש קשר תואם"))
+   .setPositiveButton(I18n.text(this,"התקשר"),(dialog,which)->makeCall(phone))
+   .setNegativeButton(I18n.text(this,"סגור"),null).show();
+ }
+ void showCallNumber(CallHistory.Entry call){
+  String kind=call.type==CallLog.Calls.OUTGOING_TYPE?"יוצאת":
+      call.type==CallLog.Calls.INCOMING_TYPE?"נכנסת":
+      call.type==CallLog.Calls.MISSED_TYPE?"לא נענתה":
+      call.type==CallLog.Calls.REJECTED_TYPE?"נדחתה":"שיחה";
+  String description=I18n.text(this,kind)+"\n"+
+    java.text.DateFormat.getDateTimeInstance().format(new java.util.Date(call.date))+
+    "\n"+I18n.text(this,"משך השיחה")+": "+call.duration+" "+I18n.text(this,"שניות");
+  new android.app.AlertDialog.Builder(this)
+   .setTitle(call.number).setMessage(description)
+   .setPositiveButton(I18n.text(this,"התקשר"),(dialog,which)->makeCall(call.number))
+   .setNeutralButton(I18n.text(this,"כרטיס איש קשר"),(dialog,which)->openContactFromNumber(call.number))
+   .setNegativeButton(I18n.text(this,"סגור"),null).show();
+ }
+ void refreshPagePreserveScroll(){
+  int y=pageScroll==null?0:pageScroll.getScrollY();
+  render();
+  if(page.equals("settings")&&pageScroll!=null)
+   pageScroll.post(()->pageScroll.scrollTo(0,y));
+ }
+ void requestDefaultDialer(){askDefault();}
+ void openNotificationSettings(){
+  try{
+   Intent settings=new Intent("android.settings.APP_NOTIFICATION_SETTINGS");
+   settings.putExtra("android.provider.extra.APP_PACKAGE",getPackageName());
+   startActivity(settings);
+  }catch(Exception ignored){}
+ }
  void dialFromList(String phone){makeCall(phone);}
  void openDialPad(String phone){showKeypad(phone);}
  void refreshPage(){render();}
