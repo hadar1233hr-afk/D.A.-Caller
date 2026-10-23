@@ -6,6 +6,7 @@
  <uses-permission android:name="android.permission.CALL_PHONE"/>
  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
  <uses-permission android:name="android.permission.VIBRATE"/>
+ <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
  <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
  <application android:allowBackup="false" android:label="DA CALLER" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:theme="@style/AppTheme" android:supportsRtl="true">
@@ -23,6 +24,9 @@
   <receiver android:name=".CallCommandReceiver" android:exported="false"/>
   <activity android:name=".ContactEditorActivity" android:exported="false" android:windowSoftInputMode="adjustResize"/>
   <activity android:name=".ContactChooseActivity" android:exported="false"/>
+  <activity android:name=".ContactDetailActivity" android:exported="false"/>
+  <activity android:name=".ArchiveActivity" android:exported="false"/>
+  <service android:name=".ArchiveSyncJob" android:exported="true" android:permission="android.permission.BIND_JOB_SERVICE"/>
   <activity android:name=".WidgetTap" android:exported="false"/>
   <activity android:name=".WidgetConfigure" android:exported="true"/>
   <receiver android:name=".QuickWidget" android:exported="true"><intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE"/></intent-filter><meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_quick"/></receiver>
