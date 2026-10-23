@@ -154,7 +154,8 @@ final class FastPages {
   page.addView(list,new LinearLayout.LayoutParams(-1,0,1));
   if(CallHistory.entries.isEmpty()){
    TextView empty=text("אין שיחות להצגה",14,subtle(),false);
-   empty.setGravity(Gravity.CENTER);list.setEmptyView(empty);
+   empty.setGravity(Gravity.CENTER);
+   page.addView(empty,lp(-1,80));
   }
   return page;
  }
@@ -263,8 +264,8 @@ final class FastPages {
   public Object getItem(int position){return CallHistory.entries.get(position);}
   public long getItemId(int position){return position;}
   public View getView(int position,View convert,ViewGroup parent){
-   CallRow row=convert instanceof LinearLayout && convert.getTag() instanceof CallRow?(CallRow)convert.getTag():null;
-   if(row==null){row=new CallRow();}
+   CallRow recycled=convert instanceof LinearLayout && convert.getTag() instanceof CallRow?(CallRow)convert.getTag():null;
+   final CallRow row=recycled==null?new CallRow():recycled;
    CallHistory.Entry entry=CallHistory.entries.get(position);
    row.name.setText(contactName(entry.number));
    row.arrow.setText(entry.type==CallLog.Calls.OUTGOING_TYPE?"↗":
