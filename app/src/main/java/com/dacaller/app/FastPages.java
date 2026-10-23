@@ -46,6 +46,8 @@ final class FastPages {
  private final DateFormat format=DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT,new Locale("he","IL"));
  private final int gold=0xFFD2AE69;
  private int period=0;
+ private SwipeListView liveRecents,liveContacts;
+ private int recentPos=0,recentOffset=0,contactPos=0,contactOffset=0;
  FastPages(MainActivity activity){
   host=activity;
   prefs=activity.getSharedPreferences("da_caller",Context.MODE_PRIVATE);
@@ -90,6 +92,25 @@ final class FastPages {
  private void pulse(View v){TouchFeedback.pulse(host,prefs,v);}
  private void touch(View v){TouchFeedback.bind(v,prefs);}
  private String tr(String heb){return I18n.text(host,heb);}
+ void remember(String tab){
+  SwipeListView view=tab.equals("recents")?liveRecents:
+    tab.equals("contacts")?liveContacts:null;
+  if(view==null||view.getChildCount()==0)return;
+  int pos=view.getFirstVisiblePosition();
+  int offset=view.getChildAt(0).getTop();
+  if(tab.equals("recents")){recentPos=pos;recentOffset=offset;}
+  else if(tab.equals("contacts")){contactPos=pos;contactOffset=offset;}
+ }
+ void restore(String tab){
+  SwipeListView view=tab.equals("recents")?liveRecents:
+    tab.equals("contacts")?liveContacts:null;
+  if(view==null)return;
+  int pos=tab.equals("recents")?recentPos:contactPos;
+  int offset=tab.equals("recents")?recentOffset:contactOffset;
+  int max=view.getAdapter()==null?0:Math.max(0,view.getAdapter().getCount()-1);
+  int finalPos=Math.max(0,Math.min(pos,max));
+  view.post(()->view.setSelectionFromTop(finalPos,offset));
+ }
  interface NumberAt {String phone(int position);}
  private final class SwipeListView extends ListView {
   private NumberAt numbers;
@@ -173,6 +194,7 @@ final class FastPages {
   touch(refresh);refresh.setContentDescription("רענון יומן השיחות");
   refresh.setOnClickListener(v->{pulse(refresh);host.reloadCallLog();});
   SwipeListView list=new SwipeListView();
+  liveRecents=list;
   list.setDivider(null);list.setDividerHeight(0);
   list.setCacheColorHint(Color.TRANSPARENT);list.setScrollingCacheEnabled(true);
   list.setFastScrollEnabled(true);list.setSmoothScrollbarEnabled(true);
@@ -252,6 +274,7 @@ final class FastPages {
   touch(refresh);refresh.setOnClickListener(v->{pulse(refresh);host.reloadContacts();});
   ContactAdapter adapter=new ContactAdapter(contacts);
   SwipeListView list=new SwipeListView();
+  liveContacts=list;
   list.setDivider(null);list.setFastScrollEnabled(true);list.setVerticalScrollBarEnabled(false);
   list.setSelector(android.R.color.transparent);
   list.setCacheColorHint(Color.TRANSPARENT);

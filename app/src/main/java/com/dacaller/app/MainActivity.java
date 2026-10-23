@@ -272,6 +272,7 @@ public class MainActivity extends Activity {
    setContentView(root);
   }
   if(fastPages==null)fastPages=new FastPages(this);
+  if(fastPages!=null)fastPages.remember(lastPage);
   workspace.removeAllViews();
   body=null;pageScroll=null;
   if(page.equals("settings")){
@@ -283,8 +284,10 @@ public class MainActivity extends Activity {
    else if(page.equals("favorites"))current=fastPages.contacts(contacts,true);
    else current=fastPages.recents();
    workspace.addView(current,new FrameLayout.LayoutParams(-1,-1));
+   fastPages.restore(page);
    addFloatingDial();
   }
+  lastPage=page;
   nav.removeAllViews();
   addNav("שיחות",R.drawable.ic_recent,"recents");
   addNav("אנשי קשר",R.drawable.ic_contacts,"contacts");
