@@ -6,8 +6,29 @@ android {
   applicationId 'com.dacaller.app'
   minSdk 26
   targetSdk 34
-  versionCode 6
-  versionName '0.6.0'
+  versionCode 7
+  versionName '0.7.0'
+ }
+ signingConfigs {
+  permanent {
+   def storePath=System.getenv('DA_CALLER_KEYSTORE_PATH')
+   def password=System.getenv('DA_CALLER_KEYSTORE_PASSWORD')
+   if(storePath && password){
+    storeFile file(storePath)
+    storePassword password
+    keyAlias 'da-caller'
+    keyPassword password
+    storeType 'jks'
+   }
+  }
+ }
+ buildTypes {
+  release {
+   minifyEnabled false
+   def path=System.getenv('DA_CALLER_KEYSTORE_PATH')
+   def pass=System.getenv('DA_CALLER_KEYSTORE_PASSWORD')
+   if(path && pass) signingConfig signingConfigs.permanent
+  }
  }
  compileOptions {
   sourceCompatibility JavaVersion.VERSION_17

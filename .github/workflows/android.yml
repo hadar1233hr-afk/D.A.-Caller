@@ -1,4 +1,4 @@
-name: Android APK
+name: Build DA CALLER Android APK
 on:
   push:
     branches: [main]
@@ -11,6 +11,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -20,7 +21,6 @@ jobs:
       - name: Ensure Android SDK platforms
         run: |
           SDKM=$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager | head -n 1)
-          echo "Using $SDKM"
           test -n "$SDKM"
           yes | "$SDKM" --licenses >/dev/null || true
           yes | "$SDKM" "platforms;android-35" "build-tools;35.0.0" >/dev/null || test -d "$ANDROID_HOME/platforms/android-35"
@@ -28,23 +28,46 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
-      - name: Build main dialer
-        run: gradle --no-daemon :app:assembleDebug
-      - name: Verify APK signatures
+      - name: Restore optional permanent signing key
+        env:
+          KEYSTORE_B64: ${{ secrets.DA_CALLER_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.DA_CALLER_KEYSTORE_PASSWORD }}
         run: |
-          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose app/build/outputs/apk/debug/app-debug.apk
-          test -s app/build/outputs/apk/debug/app-debug.apk
+          if [ -n "$KEYSTORE_B64" ] && [ -n "$STORE_PASSWORD" ]; then
+            printf '%s' "$KEYSTORE_B64" | base64 --decode > app/release.jks
+            echo "DA_CALLER_KEYSTORE_PATH=$GITHUB_WORKSPACE/app/release.jks" >> "$GITHUB_ENV"
+            echo "DA_CALLER_KEYSTORE_PASSWORD=$STORE_PASSWORD" >> "$GITHUB_ENV"
+            echo "APK_PATH=app/build/outputs/apk/release/app-release.apk" >> "$GITHUB_ENV"
+            echo "SIGNING_FLAVOR=PERMANENT" >> "$GITHUB_ENV"
+          else
+            echo "APK_PATH=app/build/outputs/apk/debug/app-debug.apk" >> "$GITHUB_ENV"
+            echo "SIGNING_FLAVOR=TEMPORARY_DEBUG" >> "$GITHUB_ENV"
+            echo "::warning::Permanent signing secrets are missing. This APK may require a reinstall."
+          fi
+      - name: Build Android APK
+        run: |
+          if [ "$SIGNING_FLAVOR" = "PERMANENT" ]; then
+            gradle --no-daemon :app:assembleRelease
+          else
+            gradle --no-daemon :app:assembleDebug
+          fi
+      - name: Verify signature
+        run: |
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose "$APK_PATH"
+          test -s "$APK_PATH"
       - uses: actions/upload-artifact@v4
         with:
-          name: DA-CALLER-v0.6.0-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
-      - name: Publish APK releases
+          name: DA-CALLER-v0.7.0-APK
+          path: ${{ env.APK_PATH }}
+      - name: Publish APK release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cp app/build/outputs/apk/debug/app-debug.apk DA-CALLER-v0.6.0.apk
-          if gh release view v0.6.0 >/dev/null 2>&1; then
-            gh release upload v0.6.0 DA-CALLER-v0.6.0.apk --clobber
+          cp "$APK_PATH" DA-CALLER-v0.7.0.apk
+          if gh release view v0.7.0 >/dev/null 2>&1; then
+            gh release upload v0.7.0 DA-CALLER-v0.7.0.apk --clobber
           else
-            gh release create v0.6.0 DA-CALLER-v0.6.0.apk --title 'DA CALLER v0.6.0' --notes 'Performance-focused dialer beta: persistent UI shell, tappable feedback, compact pages, clear call types and vector icons.'
+            gh release create v0.7.0 DA-CALLER-v0.7.0.apk \
+              --title 'DA CALLER v0.7.0' \
+              --notes 'Complete call history and contacts with virtual scrolling, native contact editor, swipe-to-call, favorite tiles, floating dialpad, circle icon; configure permanent signing secrets for future in-place APK upgrades.'
           fi
