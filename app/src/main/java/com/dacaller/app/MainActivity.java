@@ -587,45 +587,121 @@ public class MainActivity extends Activity {
  }
  private void showKeypad(String preset){
   Dialog dialog=new Dialog(this);
-  LinearLayout sheet=column();pad(sheet,16,13);sheet.setBackground(rounded(panel(),25));
-  TextView grip=center("━━━━",18,false,muted());sheet.addView(grip,lp(-1,21));
-  TextView header=center("חיוג מהיר",17,true,text());sheet.addView(header,lp(-1,31));
-  final EditText value=new EditText(this);value.setSingleLine(true);
-  value.setInputType(android.text.InputType.TYPE_CLASS_PHONE);value.setShowSoftInputOnFocus(false);
-  value.setTextColor(text());value.setTextSize(25);
-  value.setGravity(Gravity.CENTER);value.setTextDirection(View.TEXT_DIRECTION_LTR);
-  value.setBackground(stroked(bg(),12));value.setHint("הזן מספר");value.setHintTextColor(muted());
-  if(preset!=null)value.setText(preset);sheet.addView(value,lp(-1,49));
+  LinearLayout sheet=column();
+  pad(sheet,15,13);
+  sheet.setBackground(rounded(panel(),27));
+  TextView handle=center("━━━━",17,false,muted());
+  sheet.addView(handle,lp(-1,23));
+  LinearLayout entryBar=row();
+  sheet.addView(entryBar,lp(-1,56));
+  final EditText input=new EditText(this);
+  input.setSingleLine(true);
+  input.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
+  input.setShowSoftInputOnFocus(false);
+  input.setTextColor(text());input.setHintTextColor(muted());
+  input.setTextSize(TypedValue.COMPLEX_UNIT_SP,29);
+  input.setTypeface(Typeface.create("sans-serif-light",Typeface.NORMAL));
+  input.setGravity(Gravity.CENTER);
+  input.setTextDirection(View.TEXT_DIRECTION_LTR);
+  input.setBackgroundColor(Color.TRANSPARENT);
+  input.setHint("מספר טלפון");
+  if(preset!=null)input.setText(preset);
+  entryBar.addView(input,new LinearLayout.LayoutParams(0,d(56),1));
+  ImageView addIcon=icon(R.drawable.ic_control_add,tint(),23,23);
+  FrameLayout addContact=new FrameLayout(this);
+  addContact.setBackground(rounded(soft(),14));
+  addContact.addView(addIcon,new FrameLayout.LayoutParams(d(31),d(31),Gravity.CENTER));
+  entryBar.addView(addContact,lp(51,49));
+  addContact.setContentDescription("הוספת מספר לאנשי קשר");
+  decorate(addContact);
+  addContact.setOnClickListener(v->{
+   haptic(addContact);
+   String number=input.getText().toString().trim();
+   if(number.isEmpty()){Toast.makeText(this,"הזן מספר לפני הוספה לאנשי קשר",Toast.LENGTH_SHORT).show();return;}
+   new android.app.AlertDialog.Builder(this)
+    .setTitle("הוספת מספר לאנשי קשר")
+    .setItems(new String[]{"יצירת איש קשר חדש","הוספה לאיש קשר קיים"},
+      (chooser,index)->{
+       dialog.dismiss();
+       if(index==0)newContact(number);else chooseExistingContact(number);
+      })
+    .setNegativeButton("ביטול",null).show();
+  });
   gap(sheet,8);
-  String[] digits={"1","2","3","4","5","6","7","8","9","*","0","#"};
-  int keyHeight=screenHeight()<680?43:51;
-  for(int i=0;i<4;i++){
-   LinearLayout line=row();line.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
-   sheet.addView(line,lp(-1,keyHeight+5));
-   for(int j=0;j<3;j++){
-    String key=digits[i*3+j];
-    TextView btn=center(key,24,true,text());btn.setBackground(stroked(bg(),14));
-    LinearLayout.LayoutParams b=new LinearLayout.LayoutParams(0,d(keyHeight),1);b.setMargins(d(3),d(2),d(3),d(2));
-    line.addView(btn,b);decorate(btn);btn.setOnClickListener(v->{haptic(btn);value.append(key);});
-    if(key.equals("0"))btn.setOnLongClickListener(v->{value.append("+");return true;});
+  String[] digit={"1","2","3","4","5","6","7","8","9","*","0","#"};
+  String[] letters={"","ABC","DEF","GHI","JKL","MNO","PQRS","TUV","WXYZ","","+",""};
+  int buttonHeight=screenHeight()<650?47:57;
+  for(int r=0;r<4;r++){
+   LinearLayout row= row();
+   row.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+   sheet.addView(row,lp(-1,buttonHeight+5));
+   for(int c=0;c<3;c++){
+    final int idx=r*3+c;
+    String key=digit[idx];
+    LinearLayout tile=column();tile.setGravity(Gravity.CENTER);
+    GradientDrawable glass=new GradientDrawable(GradientDrawable.Orientation.TL_BR,
+      dark()?new int[]{0xFF2C2C2C,0xFF1B1B1B}:new int[]{0xFFFDFDFD,0xFFEFEFEF});
+    glass.setCornerRadius(d(99));
+    tile.setBackground(glass);
+    LinearLayout.LayoutParams tileP=new LinearLayout.LayoutParams(0,d(buttonHeight),1);
+    tileP.setMargins(d(5),d(2),d(5),d(2));row.addView(tile,tileP);
+    TextView number=center(key,29,false,text());
+    number.setTypeface(Typeface.create("sans-serif-light",Typeface.NORMAL));
+    tile.addView(number,lp(-1,33));
+    if(!letters[idx].isEmpty()){
+     TextView subtitle=center(letters[idx],9,true,muted());
+     subtitle.setLetterSpacing(0.1f);
+     tile.addView(subtitle,lp(-1,12));
+    }
+    decorate(tile);
+    tile.setContentDescription(key);
+    tile.setOnClickListener(v->{haptic(tile);input.append(key);});
+    if(key.equals("0"))tile.setOnLongClickListener(v->{haptic(tile);input.append("+");return true;});
    }
   }
-  gap(sheet,9);
-  LinearLayout actions=row();sheet.addView(actions,lp(-1,52));
-  TextView erase=center("⌫",24,true,text());actions.addView(erase,new LinearLayout.LayoutParams(0,-1,1));
-  decorate(erase);erase.setOnClickListener(v->{haptic(erase);String s=value.getText().toString();if(!s.isEmpty())value.setText(s.substring(0,s.length()-1));});
-  erase.setOnLongClickListener(v->{value.setText("");return true;});
-  TextView call=center("☎  התקשר",16,true,Color.BLACK);call.setBackground(rounded(GOLD,15));
-  LinearLayout.LayoutParams callp=new LinearLayout.LayoutParams(0,d(51),3);callp.setMargins(d(5),0,d(5),0);actions.addView(call,callp);
-  decorate(call);call.setOnClickListener(v->{haptic(call);String n=value.getText().toString();dialog.dismiss();makeCall(n);});
-  TextView close=center("✕",20,true,muted());actions.addView(close,new LinearLayout.LayoutParams(0,-1,1));
-  close.setOnClickListener(v->dialog.dismiss());
+  gap(sheet,11);
+  LinearLayout actions=row();actions.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+  sheet.addView(actions,lp(-1,73));
+  ImageView removeIcon=icon(R.drawable.ic_backspace,tint(),28,28);
+  FrameLayout remove=new FrameLayout(this);
+  remove.addView(removeIcon,new FrameLayout.LayoutParams(d(34),d(34),Gravity.CENTER));
+  actions.addView(remove,new LinearLayout.LayoutParams(0,d(68),1));
+  remove.setContentDescription("מחיקת ספרה");
+  decorate(remove);
+  remove.setOnClickListener(v->{
+   haptic(remove);
+   String n=input.getText().toString();
+   if(!n.isEmpty()){input.setText(n.substring(0,n.length()-1));input.setSelection(input.length());}
+  });
+  remove.setOnLongClickListener(v->{haptic(remove);input.setText("");return true;});
+  FrameLayout call=new FrameLayout(this);
+  call.setBackground(rounded(0xFF17A763,29));call.setElevation(d(7));
+  ImageView callIcon=icon(R.drawable.ic_phone_line,Color.WHITE,38,38);
+  call.addView(callIcon,new FrameLayout.LayoutParams(d(44),d(44),Gravity.CENTER));
+  LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(0,d(68),2);
+  cp.setMargins(d(8),0,d(8),0);actions.addView(call,cp);
+  call.setContentDescription("חיוג למספר");
+  decorate(call);
+  call.setOnClickListener(v->{
+   haptic(call);
+   String number=input.getText().toString().trim();
+   if(number.isEmpty()){Toast.makeText(this,"הזן מספר לחיוג",Toast.LENGTH_SHORT).show();return;}
+   dialog.dismiss();makeCall(number);
+  });
+  ImageView closeIcon=icon(R.drawable.ic_control_end,muted(),25,25);
+  FrameLayout close=new FrameLayout(this);
+  close.addView(closeIcon,new FrameLayout.LayoutParams(d(34),d(34),Gravity.CENTER));
+  actions.addView(close,new LinearLayout.LayoutParams(0,d(68),1));
+  close.setContentDescription("סגירת מקשי החיוג");
+  decorate(close);close.setOnClickListener(v->{haptic(close);dialog.dismiss();});
   dialog.setContentView(sheet);
-  Window w=dialog.getWindow();
-  if(w!=null){w.setBackgroundDrawableResource(android.R.color.transparent);w.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-   w.setDimAmount(0.5f);w.setGravity(Gravity.BOTTOM);w.setLayout(-1,-2);}
   dialog.show();
-  if(dialog.getWindow()!=null)dialog.getWindow().setLayout(-1,-2);
+  Window window=dialog.getWindow();
+  if(window!=null){
+   window.setBackgroundDrawableResource(android.R.color.transparent);
+   window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+   window.setDimAmount(0.45f);window.setGravity(Gravity.BOTTOM);window.setLayout(-1,-2);
+  }
  }
  private void section(String title){gap(body,18);body.addView(t(title,16,true,text()));gap(body,10);}
  private void toggleSetting(String label,String key,boolean value){
@@ -699,6 +775,20 @@ public class MainActivity extends Activity {
   toggleSetting("מצב כהה · שחור גרפיט","dark",prefs.getBoolean("dark",false));
   toggleSetting("מצב AMOLED · שחור מוחלט","amoled",amoled());
   toggleSetting("רטט בעת לחיצה על מקשים ופעולות","haptics",prefs.getBoolean("haptics",true));
+  section("מחוות החלקה לחיוג");
+  String direction=prefs.getString("swipe_direction","right");
+  LinearLayout choices=row();body.addView(choices,lp(-1,53));
+  String[] labels={"ימינה →","← שמאלה","כבוי"};
+  String[] values={"right","left","off"};
+  for(int i=0;i<3;i++){
+   final String choice=values[i];
+   TextView button=center(labels[i],13,direction.equals(choice),direction.equals(choice)?tint():muted());
+   button.setBackground(stroked(panel(),13));
+   LinearLayout.LayoutParams bx=new LinearLayout.LayoutParams(0,d(47),1);
+   bx.setMargins(d(3),0,d(3),0);choices.addView(button,bx);
+   decorate(button);
+   button.setOnClickListener(v->{haptic(button);prefs.edit().putString("swipe_direction",choice).apply();render();});
+  }
   section("עוצמת רטט");
   LinearLayout hapticsBox=column();
   hapticsBox.setPadding(d(12),d(7),d(12),d(7));
@@ -780,7 +870,7 @@ public class MainActivity extends Activity {
   section("הקלטת שיחות");
   TextView recording=t("הקלטת שני הצדדים אינה זמינה לאפליקציות רגילות באנדרואיד 13 ללא הרשאות מערכת מיוחדות. לא הוספנו כפתור הקלטה שאינו עובד.",13,false,muted());body.addView(recording);
   section("אודות");
-  body.addView(t("DA CALLER 0.6.0 · PERFORMANCE PREVIEW",12,false,muted()));
+  body.addView(t("DA CALLER 0.7.0 · BETA",12,false,muted()));
  }
  private void slider(String title,String key,int min,int max,int initial,String unit){
   LinearLayout box=column();pad(box,12,9);box.setBackground(stroked(panel(),15));
