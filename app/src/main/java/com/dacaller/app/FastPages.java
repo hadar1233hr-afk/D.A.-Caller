@@ -486,6 +486,13 @@ final class FastPages {
    FavoriteTile tile=convert!=null&&convert.getTag() instanceof FavoriteTile?(FavoriteTile)convert.getTag():new FavoriteTile();
    Contacts.Person who=favorite.get(position);
    tile.avatar.setText(who.name.isEmpty()?"?":who.name.substring(0,1));
+   String expected=String.valueOf(who.id);
+   tile.bound=expected;tile.photo.setVisibility(View.GONE);
+   ContactPhotos.load(host,who.id,image->{
+    if(expected.equals(tile.bound)&&image!=null){
+     tile.photo.setImageBitmap(image);tile.photo.setVisibility(View.VISIBLE);
+    }
+   });
    tile.name.setText(who.name);
    tile.number.setText(who.phone);
    tile.root.setOnClickListener(v->{pulse(tile.root);host.dialFromList(who.phone);});
@@ -495,12 +502,19 @@ final class FastPages {
  }
  private final class FavoriteTile {
   final LinearLayout root; final TextView avatar,name,number;
+  final ImageView photo;
+  String bound="";
   FavoriteTile(){
    root=vertical();root.setGravity(Gravity.CENTER);
    root.setBackground(edge(panel(),22));root.setPadding(dp(8),dp(10),dp(8),dp(8));
    root.setMinimumHeight(dp(155));
+   FrameLayout picture=new FrameLayout(host);
+   picture.setBackground(bg(soft(),40));root.addView(picture,lp(62,62));
    avatar=text("",27,tint(),true);avatar.setGravity(Gravity.CENTER);
-   avatar.setBackground(bg(soft(),40));root.addView(avatar,lp(62,62));
+   picture.addView(avatar,new FrameLayout.LayoutParams(-1,-1));
+   photo=new ImageView(host);photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
+   photo.setClipToOutline(true);photo.setVisibility(View.GONE);
+   picture.addView(photo,new FrameLayout.LayoutParams(-1,-1));
    name=text("",14,ink(),true);name.setGravity(Gravity.CENTER);name.setSingleLine(true);
    name.setEllipsize(android.text.TextUtils.TruncateAt.END);
    root.addView(name,lp(-1,29));
