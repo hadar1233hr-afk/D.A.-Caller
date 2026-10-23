@@ -244,18 +244,6 @@ public class MainActivity extends Activity {
   });
  }
  private ImageView icon(int drawable,int color,int width,int height){
-  ImageView img=new ImageView(this);
-  img.setImageResource(drawable);
-  img.setImageTintList(ColorStateList.valueOf(color));
-  img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-  img.setPadding(d(3),d(3),d(3),d(3));
-  img.setContentDescription(null);
-  return img;
- }
- private void decorate(View view){
-  TouchFeedback.bind(view,prefs);
- }
- private ImageView icon(int drawable,int color,int width,int height){
   ImageView image=new ImageView(this);
   image.setImageResource(drawable);
   image.setImageTintList(ColorStateList.valueOf(color));
@@ -778,11 +766,11 @@ public class MainActivity extends Activity {
   section("מחוות החלקה לחיוג");
   String direction=prefs.getString("swipe_direction","right");
   LinearLayout choices=row();body.addView(choices,lp(-1,53));
-  String[] labels={"ימינה →","← שמאלה","כבוי"};
+  String[] swipeLabels={"ימינה →","← שמאלה","כבוי"};
   String[] values={"right","left","off"};
   for(int i=0;i<3;i++){
    final String choice=values[i];
-   TextView button=center(labels[i],13,direction.equals(choice),direction.equals(choice)?tint():muted());
+   TextView button=center(swipeLabels[i],13,direction.equals(choice),direction.equals(choice)?tint():muted());
    button.setBackground(stroked(panel(),13));
    LinearLayout.LayoutParams bx=new LinearLayout.LayoutParams(0,d(47),1);
    bx.setMargins(d(3),0,d(3),0);choices.addView(button,bx);
