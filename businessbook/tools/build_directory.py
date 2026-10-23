@@ -213,8 +213,11 @@ def fill_cities(db,places):
             d2=dx*dx+dy*dy
             if d2<best[0]:best=(d2,name)
         if best[1] and best[0] <= 12*12:
-            db.execute("UPDATE businesses SET city=?,source=? WHERE id=?",(best[1],source+" • יישוב משוער",rowid))
-            updated+=1
+            cur=db.execute("UPDATE OR IGNORE businesses SET city=?,source=? WHERE id=?",(best[1],source+" • יישוב משוער",rowid))
+            if cur.rowcount==0:
+                db.execute("DELETE FROM businesses WHERE id=?",(rowid,))
+            else:
+                updated+=1
     print("Approximate localities assigned",updated,flush=True)
 
 def main(inp,target):
