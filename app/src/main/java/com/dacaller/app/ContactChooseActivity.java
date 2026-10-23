@@ -29,6 +29,12 @@ public final class ContactChooseActivity extends Activity {
  private List<Contacts.Person> matched=new ArrayList<>();
  private ArrayAdapter<String> adapter;
  private String incoming="";
+ private boolean dark(){android.content.SharedPreferences p=getSharedPreferences("da_caller",0);return p.getBoolean("dark",false)||p.getBoolean("amoled",false);}
+ private int bg(){return getSharedPreferences("da_caller",0).getBoolean("amoled",false)?Color.BLACK:dark()?0xFF141414:0xFFF7F7F5;}
+ private int ink(){return dark()?Color.WHITE:0xFF1A1A1A;}
+ private int muted(){return dark()?0xFFAEAEAE:0xFF777777;}
+ private int accent(){return dark()?0xFFE2C48B:0xFF95662A;}
+ private String tr(String s){return I18n.text(this,s);}
  private int dp(int n){return (int)(getResources().getDisplayMetrics().density*n+.5f);}
  @Override public void onCreate(Bundle b){
   super.onCreate(b);
@@ -36,22 +42,22 @@ public final class ContactChooseActivity extends Activity {
   if(incoming==null)incoming="";
   LinearLayout root=new LinearLayout(this);root.setOrientation(1);
   root.setLayoutDirection(android.view.View.LAYOUT_DIRECTION_RTL);
-  root.setBackgroundColor(0xFF111111);root.setPadding(dp(14),dp(17),dp(14),dp(9));
+  root.setBackgroundColor(bg());root.setPadding(dp(14),dp(17),dp(14),dp(9));
   setContentView(root);
-  TextView title=new TextView(this);title.setText("הוספה לאיש קשר קיים");
-  title.setTextSize(20);title.setTextColor(0xFFE3C181);
+  TextView title=new TextView(this);title.setText(tr("הוספה לאיש קשר קיים"));
+  title.setTextSize(20);title.setTextColor(accent());
   title.setTypeface(Typeface.create("sans-serif-medium",Typeface.NORMAL));
   root.addView(title,new LinearLayout.LayoutParams(-1,dp(43)));
   EditText query=new EditText(this);
-  query.setSingleLine(true);query.setHint("חיפוש שם או מספר");
-  query.setTextColor(Color.WHITE);query.setHintTextColor(0xFFAAAAAA);
+  query.setSingleLine(true);query.setHint(tr("חיפוש שם או מספר"));
+  query.setTextColor(ink());query.setHintTextColor(muted());
   query.setTextSize(16);root.addView(query,new LinearLayout.LayoutParams(-1,dp(53)));
   ListView list=new ListView(this);list.setDividerHeight(dp(1));
   root.addView(list,new LinearLayout.LayoutParams(-1,0,1));
   adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,new ArrayList<String>()){
    @Override public android.view.View getView(int position,android.view.View convert,android.view.ViewGroup parent){
     TextView label=(TextView)super.getView(position,convert,parent);
-    label.setTextColor(Color.WHITE);label.setTextSize(16);label.setMinimumHeight(dp(56));return label;
+    label.setTextColor(ink());label.setTextSize(16);label.setMinimumHeight(dp(56));return label;
    }
   };
   list.setAdapter(adapter);
@@ -73,7 +79,7 @@ public final class ContactChooseActivity extends Activity {
  @Override public void onRequestPermissionsResult(int r,String[] p,int[] grants){
   super.onRequestPermissionsResult(r,p,grants);
   if(r==71&&grants.length>0&&grants[0]==PackageManager.PERMISSION_GRANTED)load();
-  else Toast.makeText(this,"נדרשת הרשאת אנשי קשר",Toast.LENGTH_LONG).show();
+  else Toast.makeText(this,tr("נדרשת הרשאת אנשי קשר"),Toast.LENGTH_LONG).show();
  }
  private void load(){
   IO.execute(()->{

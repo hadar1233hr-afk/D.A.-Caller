@@ -9,6 +9,11 @@ import android.os.Bundle;
 import android.widget.*;
 public class WidgetConfigure extends Activity {
  private int widgetId;private boolean direct;
+ private boolean dark(){android.content.SharedPreferences p=getSharedPreferences("da_caller",0);return p.getBoolean("dark",false)||p.getBoolean("amoled",false);}
+ private int bg(){return getSharedPreferences("da_caller",0).getBoolean("amoled",false)?android.graphics.Color.BLACK:dark()?0xFF101010:0xFFF8F8F6;}
+ private int ink(){return dark()?android.graphics.Color.WHITE:0xFF1E1E1E;}
+ private int gold(){return dark()?0xFFE4C589:0xFF936629;}
+ private String tr(String s){return I18n.text(this,s);}
  @Override public void onCreate(Bundle b){super.onCreate(b);
   widgetId=getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,AppWidgetManager.INVALID_APPWIDGET_ID);
   Intent cancel=new Intent();cancel.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,widgetId);setResult(RESULT_CANCELED,cancel);
@@ -25,20 +30,20 @@ public class WidgetConfigure extends Activity {
  private static final java.util.concurrent.ExecutorService IO=java.util.concurrent.Executors.newSingleThreadExecutor();
  private void populate(){
   android.widget.ScrollView scroll=new android.widget.ScrollView(this);
-  scroll.setBackgroundColor(0xFF101010);
+  scroll.setBackgroundColor(bg());
   android.widget.LinearLayout panel=new android.widget.LinearLayout(this);
   panel.setOrientation(1);panel.setPadding(18,24,18,24);
   scroll.addView(panel);setContentView(scroll);
   TextView head=new TextView(this);
   head.setText(direct?"בחר איש קשר לחיוג מהיר":"בחר איש קשר לפתיחת הכרטיס");
-  head.setTextSize(21);head.setTextColor(0xFFE4C589);head.setPadding(0,0,0,18);
+  head.setTextSize(21);head.setTextColor(gold());head.setPadding(0,0,0,18);
   panel.addView(head);
   search=new android.widget.EditText(this);
-  search.setSingleLine(true);search.setTextSize(16);search.setTextColor(0xFFFFFFFF);
-  search.setHintTextColor(0xFF999999);search.setHint("חיפוש שם או מספר");
+  search.setSingleLine(true);search.setTextSize(16);search.setTextColor(ink());
+  search.setHintTextColor(dark()?0xFF999999:0xFF888888);search.setHint(tr("חיפוש שם או מספר"));
   panel.addView(search,new android.widget.LinearLayout.LayoutParams(-1,58));
   rows=new android.widget.LinearLayout(this);rows.setOrientation(1);panel.addView(rows);
-  TextView loading=new TextView(this);loading.setText("טוען אנשי קשר...");loading.setTextColor(-1);rows.addView(loading);
+  TextView loading=new TextView(this);loading.setText(tr("טוען אנשי קשר..."));loading.setTextColor(ink());rows.addView(loading);
   search.addTextChangedListener(new android.text.TextWatcher(){
    public void beforeTextChanged(CharSequence s,int st,int count,int after){}
    public void onTextChanged(CharSequence s,int st,int before,int count){showFiltered();}
@@ -61,7 +66,7 @@ public class WidgetConfigure extends Activity {
    if(!query.isEmpty()&&!person.name.toLowerCase(java.util.Locale.ROOT).contains(query)&&!person.phone.contains(query))continue;
    if(count++>=60)continue;
    TextView line=new TextView(this);line.setText(person.name+"\n"+person.phone);
-   line.setTextSize(16);line.setTextColor(0xFFFFFFFF);
+   line.setTextSize(16);line.setTextColor(ink());
    line.setPadding(14,12,14,12);rows.addView(line);
    line.setOnClickListener(v->{
     WidgetSupport.prefs(this).edit().putString("widget_name_"+widgetId,person.name).putString("widget_phone_"+widgetId,person.phone).apply();
@@ -70,10 +75,10 @@ public class WidgetConfigure extends Activity {
    });
   }
   if(count>60){
-   TextView hint=new TextView(this);hint.setText("מוצגים 60 אנשי קשר. השתמש בחיפוש.");
-   hint.setTextColor(0xFFE4C589);hint.setPadding(0,12,0,0);rows.addView(hint);
+   TextView hint=new TextView(this);hint.setText(tr("מוצגים 60 אנשי קשר. השתמש בחיפוש."));
+   hint.setTextColor(gold());hint.setPadding(0,12,0,0);rows.addView(hint);
   }else if(count==0){
-   TextView empty=new TextView(this);empty.setText("לא נמצאו תוצאות");empty.setTextColor(-1);rows.addView(empty);
+   TextView empty=new TextView(this);empty.setText(tr("לא נמצאו תוצאות"));empty.setTextColor(ink());rows.addView(empty);
   }
  }
 }
