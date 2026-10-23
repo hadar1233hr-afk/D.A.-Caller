@@ -5,7 +5,7 @@ on:
     paths: ['businessbook/**', '.github/workflows/businessbook.yml', 'settings.gradle']
   workflow_dispatch:
 concurrency:
-  group: da-businessbook-\${{ github.ref }}
+  group: da-businessbook-${{ github.ref }}
   cancel-in-progress: true
 permissions:
   contents: write
@@ -69,7 +69,7 @@ jobs:
           path: businessbook/build/outputs/apk/debug/businessbook-debug.apk
       - name: Publish APK and sources
         env:
-          GH_TOKEN: \${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           cp businessbook/build/outputs/apk/debug/businessbook-debug.apk DA-BUSINESS-BOOK-ISRAEL-v1.0.0.apk
           cp businessbook/src/main/assets/directory.sqlite DA-BUSINESS-BOOK-ISRAEL-v1.0.0.sqlite
