@@ -147,7 +147,7 @@ public final class PhoneSessionService extends InCallService {
    .setPriority(ringing?Notification.PRIORITY_HIGH:Notification.PRIORITY_LOW)
    .setOngoing(true);
   if(ringing)b.setFullScreenIntent(open,true);
-  else b.setSilent(true);
+  else {b.setSound(null);b.setVibrate(null);}
   if(Build.VERSION.SDK_INT>=31){
    try{
     Person caller=new Person.Builder().setName(number).setImportant(true).build();

@@ -80,8 +80,8 @@ public final class ArchiveActivity extends Activity {
     }
     CallHistory.Entry entry=calls.get(position);
     number.setText(entry.number);
-    String type=entry.type==android.provider.CallLog.Calls.MISSED_TYPE?I18n.text(this,"לא נענתה"):
-      entry.type==android.provider.CallLog.Calls.OUTGOING_TYPE?I18n.text(this,"יוצאת"):I18n.text(this,"נכנסת");
+    String type=entry.type==android.provider.CallLog.Calls.MISSED_TYPE?I18n.text(ArchiveActivity.this,"לא נענתה"):
+      entry.type==android.provider.CallLog.Calls.OUTGOING_TYPE?I18n.text(ArchiveActivity.this,"יוצאת"):I18n.text(ArchiveActivity.this,"נכנסת");
     description.setText(type+"  ·  "+df.format(new Date(entry.date))+"  ·  "+Math.round(entry.duration/60.0)+" דק׳");
     row.setOnClickListener(v->new android.app.AlertDialog.Builder(ArchiveActivity.this)
       .setTitle(entry.number)
