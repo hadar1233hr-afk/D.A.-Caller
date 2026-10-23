@@ -181,7 +181,8 @@ final class FastPages {
   list.setNumberAt(position->position>=0&&position<CallHistory.entries.size()?
       CallHistory.entries.get(position).number:null);
   if(CallArchive.enabled(host)){
-   TextView archive=text(tr("ארכיון שיחות")+"   ◈",14,tint(),true);
+   int archived=CallArchive.knownMissing();
+   TextView archive=text(tr("ארכיון שיחות")+(archived>0?" ("+archived+")":"")+"   ◈",14,tint(),true);
    archive.setGravity(Gravity.CENTER);
    archive.setBackground(edge(panel(),16));
    archive.setPadding(dp(10),dp(16),dp(10),dp(16));

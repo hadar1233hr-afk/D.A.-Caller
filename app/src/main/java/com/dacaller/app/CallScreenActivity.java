@@ -235,7 +235,7 @@ public final class CallScreenActivity extends Activity {
    TextView instruction=text(tr("החלק בכרטיס כדי לענות"),12,theme.muted,false);
    controls.addView(instruction,new LinearLayout.LayoutParams(0,dp(64),1));
   }
-  tile(controls,R.drawable.ic_control_end,"דחה",2,compact()?65:77,()->{
+  tile(controls,R.drawable.ic_control_close,"דחה",2,compact()?65:77,()->{
    try{call.reject(false,null);}catch(Exception ignored){}
   });
  }

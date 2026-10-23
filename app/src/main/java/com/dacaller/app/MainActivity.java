@@ -731,7 +731,7 @@ public class MainActivity extends Activity {
    if(number.isEmpty()){Toast.makeText(this,"הזן מספר לחיוג",Toast.LENGTH_SHORT).show();return;}
    dialog.dismiss();makeCall(number);
   });
-  ImageView closeIcon=icon(R.drawable.ic_control_end,muted(),25,25);
+  ImageView closeIcon=icon(R.drawable.ic_control_close,muted(),25,25);
   FrameLayout close=new FrameLayout(this);
   close.addView(closeIcon,new FrameLayout.LayoutParams(d(34),d(34),Gravity.CENTER));
   actions.addView(close,new LinearLayout.LayoutParams(0,d(68),1));
