@@ -110,8 +110,9 @@ public final class CallScreenActivity extends Activity {
   shell.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));
   body=col();body.setGravity(Gravity.CENTER);scroll.addView(body);
   buttons=col();body.addView(buttons,new LinearLayout.LayoutParams(-1,-2));
-  shownContactId=-1;
+  shownContactId=-1;lastNumber="";
  }
+ private String lastNumber="";
  private void updateCaller(Call call){
   String number="מספר לא מזוהה";
   try{
@@ -119,16 +120,21 @@ public final class CallScreenActivity extends Activity {
     number=call.getDetails().getHandle().getSchemeSpecificPart();
   }catch(Exception ignored){}
   caller.setText(number);
-  String name=ContactPhotos.displayName(this,number);
-  identity.setText(name!=null&&!name.equals(number)?name:"");
-  long id=ContactPhotos.contactId(this,number);
-  if(id==shownContactId)return;shownContactId=id;
-  final long expected=id;
-  ContactPhotos.load(this,id,bitmap->{
-   if(isFinishing()||isDestroyed()||shownContactId!=expected)return;
+  if(lastNumber.equals(number))return;
+  lastNumber=number;
+  final String expected=number;
+  ContactPhotos.lookup(this,number,(id,name,picture)->{
+   if(isFinishing()||isDestroyed()||!expected.equals(lastNumber))return;
+   shownContactId=id;
+   identity.setText(name!=null&&!name.equals(expected)?name:"");
    View initials=(View)portrait.getTag();
-   if(bitmap!=null){portrait.setImageBitmap(bitmap);portrait.setVisibility(View.VISIBLE);if(initials!=null)initials.setVisibility(View.GONE);}
-   else{portrait.setImageDrawable(null);if(initials!=null)initials.setVisibility(View.VISIBLE);}
+   if(picture!=null){
+    portrait.setImageBitmap(picture);portrait.setVisibility(View.VISIBLE);
+    if(initials!=null)initials.setVisibility(View.GONE);
+   }else{
+    portrait.setImageDrawable(null);
+    if(initials!=null)initials.setVisibility(View.VISIBLE);
+   }
   });
  }
  private void updateTimer(){
