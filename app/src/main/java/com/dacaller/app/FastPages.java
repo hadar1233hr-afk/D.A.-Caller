@@ -66,7 +66,7 @@ final class FastPages {
  }
  private TextView text(String value,int sp,int color,boolean bold){
   TextView t=new TextView(host);
-  t.setText(value);t.setTextColor(color);t.setTextSize(sp);
+  t.setText(I18n.text(host,value));t.setTextColor(color);t.setTextSize(sp);
   t.setIncludeFontPadding(false);t.setGravity(Gravity.CENTER_VERTICAL);
   t.setTypeface(Typeface.create(bold?"sans-serif-medium":"sans-serif",Typeface.NORMAL));
   return t;
@@ -245,7 +245,7 @@ final class FastPages {
   head.addView(add,lp(51,46));touch(add);
   add.setOnClickListener(v->{pulse(add);host.newContact(null);});
   LinearLayout small=horizontal();page.addView(small,lp(-1,31));
-  TextView count=text(contacts.size()+" אנשי קשר",11,subtle(),false);
+  TextView count=text(I18n.count(host,contacts.size(),"אנשי קשר","contacts"),11,subtle(),false);
   small.addView(count,new LinearLayout.LayoutParams(0,-1,1));
   ImageView refresh=icon(R.drawable.ic_refresh,tint());small.addView(refresh,lp(38,30));
   touch(refresh);refresh.setOnClickListener(v->{pulse(refresh);host.reloadContacts();});
@@ -287,12 +287,12 @@ final class FastPages {
   return name==null||name.isEmpty()?number:name;
  }
  private String category(int type,long seconds){
-  if(type==CallLog.Calls.MISSED_TYPE)return "לא נענתה";
-  if(type==CallLog.Calls.REJECTED_TYPE)return "נדחתה";
-  if(type==CallLog.Calls.BLOCKED_TYPE)return "נחסמה";
-  if(type==CallLog.Calls.OUTGOING_TYPE)return seconds==0?"יוצאת · ללא זמן שיחה":"יוצאת";
-  if(type==CallLog.Calls.INCOMING_TYPE)return "נכנסת";
-  return "שיחה";
+  if(type==CallLog.Calls.MISSED_TYPE)return tr("לא נענתה");
+  if(type==CallLog.Calls.REJECTED_TYPE)return tr("נדחתה");
+  if(type==CallLog.Calls.BLOCKED_TYPE)return tr("נחסמה");
+  if(type==CallLog.Calls.OUTGOING_TYPE)return seconds==0?tr("יוצאת · ללא זמן שיחה"):tr("יוצאת");
+  if(type==CallLog.Calls.INCOMING_TYPE)return tr("נכנסת");
+  return tr("שיחה");
  }
  private int color(int type,long seconds){
   if(type==CallLog.Calls.MISSED_TYPE)return 0xFFE85D67;
@@ -322,7 +322,7 @@ final class FastPages {
    row.arrow.setTextColor(color(entry.type,entry.duration));
    row.arrow.setContentDescription(tr(category(entry.type,entry.duration)));
    String phone=entry.number;
-   row.info.setText(tr(category(entry.type,entry.duration))+"  ·  "+
+   row.info.setText(category(entry.type,entry.duration)+"  ·  "+
     format.format(new Date(entry.date))+
     (entry.duration>0?" · "+Math.max(1,(int)Math.ceil(entry.duration/60.0))+" "+tr("דק׳"):""));
    row.dialIcon.setImageTintList(ColorStateList.valueOf(recentCallColor()));

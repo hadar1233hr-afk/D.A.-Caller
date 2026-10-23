@@ -41,7 +41,7 @@ public final class ArchiveActivity extends Activity {
  private int gold(){return dark()?0xFFE1C58D:0xFF8D672E;}
  private GradientDrawable shape(int c,int r){GradientDrawable b=new GradientDrawable();b.setColor(c);b.setCornerRadius(dp(r));return b;}
  private TextView text(String s,int sp,boolean bold,int color){
-  TextView v=new TextView(this);v.setText(s);v.setTextColor(color);v.setTextSize(sp);
+  TextView v=new TextView(this);v.setText(I18n.text(this,s));v.setTextColor(color);v.setTextSize(sp);
   v.setGravity(Gravity.CENTER_VERTICAL);v.setTypeface(Typeface.create(bold?"sans-serif-medium":"sans-serif",Typeface.NORMAL));return v;
  }
  @Override public void onCreate(Bundle b){
@@ -80,8 +80,8 @@ public final class ArchiveActivity extends Activity {
     }
     CallHistory.Entry entry=calls.get(position);
     number.setText(entry.number);
-    String type=entry.type==android.provider.CallLog.Calls.MISSED_TYPE?"לא נענתה":
-      entry.type==android.provider.CallLog.Calls.OUTGOING_TYPE?"יוצאת":"נכנסת";
+    String type=entry.type==android.provider.CallLog.Calls.MISSED_TYPE?I18n.text(this,"לא נענתה"):
+      entry.type==android.provider.CallLog.Calls.OUTGOING_TYPE?I18n.text(this,"יוצאת"):I18n.text(this,"נכנסת");
     description.setText(type+"  ·  "+df.format(new Date(entry.date))+"  ·  "+Math.round(entry.duration/60.0)+" דק׳");
     row.setOnClickListener(v->new android.app.AlertDialog.Builder(ArchiveActivity.this)
       .setTitle(entry.number)

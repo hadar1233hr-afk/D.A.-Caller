@@ -102,7 +102,7 @@ public class MainActivity extends Activity {
  private void pad(View v,int x,int y){v.setPadding(d(x),d(y),d(x),d(y));}
  private void gap(LinearLayout parent,int size){parent.addView(new View(this),lp(1,size));}
  private TextView t(String content,int size,boolean strong,int color){
-  TextView v=new TextView(this);v.setText(content);v.setTextSize(TypedValue.COMPLEX_UNIT_SP,scaled(size));
+  TextView v=new TextView(this);v.setText(I18n.text(this,content));v.setTextSize(TypedValue.COMPLEX_UNIT_SP,scaled(size));
   v.setTextColor(color);v.setGravity(Gravity.CENTER_VERTICAL);v.setIncludeFontPadding(false);
   v.setTypeface(Typeface.create(strong?"sans-serif-medium":"sans-serif",Typeface.NORMAL));return v;
  }
@@ -647,7 +647,7 @@ public class MainActivity extends Activity {
   input.setGravity(Gravity.CENTER);
   input.setTextDirection(View.TEXT_DIRECTION_LTR);
   input.setBackgroundColor(Color.TRANSPARENT);
-  input.setHint("מספר טלפון");
+  input.setHint(I18n.text(this,"מספר טלפון"));
   if(preset!=null)input.setText(preset);
   entryBar.addView(input,new LinearLayout.LayoutParams(0,d(56),1));
   ImageView addIcon=icon(R.drawable.ic_control_add,tint(),23,23);
@@ -655,15 +655,15 @@ public class MainActivity extends Activity {
   addContact.setBackground(rounded(soft(),14));
   addContact.addView(addIcon,new FrameLayout.LayoutParams(d(31),d(31),Gravity.CENTER));
   entryBar.addView(addContact,lp(51,49));
-  addContact.setContentDescription("הוספת מספר לאנשי קשר");
+  addContact.setContentDescription(I18n.text(this,"הוספת מספר לאנשי קשר"));
   decorate(addContact);
   addContact.setOnClickListener(v->{
    haptic(addContact);
    String number=input.getText().toString().trim();
    if(number.isEmpty()){Toast.makeText(this,"הזן מספר לפני הוספה לאנשי קשר",Toast.LENGTH_SHORT).show();return;}
    new android.app.AlertDialog.Builder(this)
-    .setTitle("הוספת מספר לאנשי קשר")
-    .setItems(new String[]{"יצירת איש קשר חדש","הוספה לאיש קשר קיים"},
+    .setTitle(I18n.text(this,"הוספת מספר לאנשי קשר"))
+    .setItems(new String[]{I18n.text(this,"יצירת איש קשר חדש"),I18n.text(this,"הוספה לאיש קשר קיים")},
       (chooser,index)->{
        dialog.dismiss();
        if(index==0)newContact(number);else chooseExistingContact(number);

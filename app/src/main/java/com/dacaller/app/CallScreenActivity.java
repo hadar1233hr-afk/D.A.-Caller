@@ -342,7 +342,7 @@ public final class CallScreenActivity extends Activity {
   close.setOnClickListener(v->dialog.dismiss());
   dialog.setContentView(keypad);dialog.show();
   Window window=dialog.getWindow();
-  if(window!=null){window.setBackgroundDrawableResource(android.R.color.TRANSPARENT);window.setLayout(-1,-2);window.setGravity(Gravity.BOTTOM);}
+  if(window!=null){window.setBackgroundDrawableResource(android.R.color.transparent);window.setLayout(-1,-2);window.setGravity(Gravity.BOTTOM);}
  }
  @Override protected void onDestroy(){
   clockHandler.removeCallbacks(tickTask);PhoneSessionService.unregister(changed);super.onDestroy();
