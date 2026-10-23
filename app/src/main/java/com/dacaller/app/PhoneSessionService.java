@@ -110,6 +110,8 @@ public final class PhoneSessionService extends InCallService {
  private void clear(Call call){
   if(current==call)current=null;
   CallHistory.fetchedAt=0;
+  new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(
+   ()->CallHistory.refresh(getApplicationContext(),true,null),2500);
   notifyViews();
   try{((NotificationManager)getSystemService(NOTIFICATION_SERVICE)).cancel(1502);}catch(Exception ignored){}
  }
@@ -118,14 +120,19 @@ public final class PhoneSessionService extends InCallService {
   int state=call.getState();
   if(state==Call.STATE_DISCONNECTED)return;
   NotificationManager nm=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-  String channel="dacaller_calls_v3";
-  NotificationChannel ch=new NotificationChannel(channel,"DA CALLER · שיחות",NotificationManager.IMPORTANCE_HIGH);
-  ch.setDescription("התראות שיחה נכנסת ושיחה פעילה");
+  boolean ringing=state==Call.STATE_RINGING;
+  // A quiet, low-importance ongoing channel prevents a heads-up drawer from
+  // repeatedly obscuring an outgoing or already active in-call screen.
+  String channel=ringing?"dacaller_incoming_v4":"dacaller_ongoing_v4";
+  NotificationChannel ch=new NotificationChannel(channel,
+    ringing?"DA CALLER · שיחה נכנסת":"DA CALLER · שיחה פעילה",
+    ringing?NotificationManager.IMPORTANCE_HIGH:NotificationManager.IMPORTANCE_LOW);
+  ch.setDescription(ringing?"התראה על שיחה נכנסת":"שיחה פעילה בשורת ההתראות בלבד");
+  if(!ringing){ch.setSound(null,null);ch.enableVibration(false);}
   ch.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
   nm.createNotificationChannel(ch);
   Intent intent=new Intent(this,CallScreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
   PendingIntent open=PendingIntent.getActivity(this,1502,intent,PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
-  boolean ringing=state==Call.STATE_RINGING;
   String number="מספר לא ידוע";
   try{
    if(call.getDetails()!=null&&call.getDetails().getHandle()!=null)number=call.getDetails().getHandle().getSchemeSpecificPart();
@@ -136,8 +143,11 @@ public final class PhoneSessionService extends InCallService {
    .setContentText(number)
    .setContentIntent(open).setVisibility(Notification.VISIBILITY_PUBLIC)
    .setCategory(Notification.CATEGORY_CALL)
-   .setPriority(Notification.PRIORITY_MAX).setOngoing(true)
-   .setFullScreenIntent(open,ringing);
+   .setOnlyAlertOnce(true)
+   .setPriority(ringing?Notification.PRIORITY_HIGH:Notification.PRIORITY_LOW)
+   .setOngoing(true);
+  if(ringing)b.setFullScreenIntent(open,true);
+  else b.setSilent(true);
   if(Build.VERSION.SDK_INT>=31){
    try{
     Person caller=new Person.Builder().setName(number).setImportant(true).build();
