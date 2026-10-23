@@ -89,27 +89,55 @@ final class FastPages {
  }
  private void pulse(View v){TouchFeedback.pulse(host,prefs,v);}
  private void touch(View v){TouchFeedback.bind(v,prefs);}
- private void swipe(View view,String phone){
-  final float[] down=new float[2];
-  view.setOnTouchListener((v,event)->{
+ private String tr(String heb){return I18n.text(host,heb);}
+ interface NumberAt {String phone(int position);}
+ private final class SwipeListView extends ListView {
+  private NumberAt numbers;
+  private float downX,downY;
+  private int touched=-1;
+  private boolean sliding=false;
+  SwipeListView(){super(host);}
+  void setNumberAt(NumberAt source){numbers=source;}
+  private boolean allowed(float dx,float dy){
+   String mode=prefs.getString("swipe_direction","right");
+   if(mode.equals("off"))return false;
+   if(Math.abs(dx)<dp(50)||Math.abs(dx)<Math.abs(dy)*1.35f)return false;
+   return (dx>0&&mode.equals("right"))||(dx<0&&mode.equals("left"));
+  }
+  @Override public boolean onInterceptTouchEvent(MotionEvent event){
    switch(event.getActionMasked()){
     case MotionEvent.ACTION_DOWN:
-     down[0]=event.getX();down[1]=event.getY();return false;
-    case MotionEvent.ACTION_UP:
-     float dx=event.getX()-down[0],dy=event.getY()-down[1];
-     if(Math.abs(dx)>dp(72)&&Math.abs(dx)>Math.abs(dy)*1.45f){
-      String direction=prefs.getString("swipe_direction","right");
-      if(!"off".equals(direction)){
-       boolean physicalRight=dx>0;
-       if(("right".equals(direction)&&physicalRight)||("left".equals(direction)&&!physicalRight)){
-        pulse(view);host.dialFromList(phone);return true;
-       }
-      }
+     downX=event.getX();downY=event.getY();touched=pointToPosition((int)downX,(int)downY);
+     sliding=false;break;
+    case MotionEvent.ACTION_MOVE:
+     if(allowed(event.getX()-downX,event.getY()-downY)&&touched>=0){
+      sliding=true;
+      getParent().requestDisallowInterceptTouchEvent(true);
+      return true;
      }
      break;
+    case MotionEvent.ACTION_UP:
+    case MotionEvent.ACTION_CANCEL:sliding=false;break;
    }
-   return false;
-  });
+   return super.onInterceptTouchEvent(event);
+  }
+  @Override public boolean onTouchEvent(MotionEvent event){
+   if(sliding){
+    if(event.getActionMasked()==MotionEvent.ACTION_UP){
+     float dx=event.getX()-downX,dy=event.getY()-downY;
+     if(allowed(dx,dy)&&numbers!=null){
+      String phone=numbers.phone(touched);
+      if(phone!=null&&!phone.isEmpty()){
+       pulse(this);host.dialFromList(phone);
+      }
+     }
+     sliding=false;return true;
+    }
+    if(event.getActionMasked()==MotionEvent.ACTION_CANCEL){sliding=false;return true;}
+    return true;
+   }
+   return super.onTouchEvent(event);
+  }
  }
  View recents(){
   LinearLayout page=vertical();
@@ -124,32 +152,46 @@ final class FastPages {
    LinearLayout line=horizontal();line.setPadding(dp(7),dp(3),dp(7),dp(3));line.setBackground(edge(panel(),13));
    stats.addView(line,new android.widget.FrameLayout.LayoutParams(-2,dp(39)));
    CallHistory.Summary s=CallHistory.summary;
-   String[] periods={"היום","השבוע","החודש","השנה"};
+   String[] periods={tr("היום"),tr("השבוע"),tr("החודש"),tr("השנה")};
    TextView selector=text(periods[period]+" ▾",12,tint(),true);selector.setPadding(dp(10),0,dp(10),0);
    selector.setBackground(bg(soft(),9));line.addView(selector,lp(-2,31));
    touch(selector);
    selector.setOnClickListener(v->{pulse(selector);period=(period+1)%4;host.refreshPage();});
-   stat(line,Math.round(s.seconds[period]/60.0)+" דק׳",true);
-   stat(line,s.calls[period]+" שיחות",false);
+   stat(line,Math.round(s.seconds[period]/60.0)+" "+tr("דק׳"),true);
+   stat(line,s.calls[period]+" "+tr("שיחות"),false);
    stat(line,"↗ "+s.outgoing[period],false);
    stat(line,"↙ "+s.incoming[period],false);
    stat(line,"✕ "+s.missed[period],false);
    page.addView(stats,lp(-1,42));
   }
   LinearLayout top=horizontal();page.addView(top,lp(-1,41));
-  TextView title=text("כל השיחות",15,ink(),true);
+  TextView title=text(tr("כל השיחות"),15,ink(),true);
   top.addView(title,new LinearLayout.LayoutParams(0,-1,1));
   TextView count=text(String.valueOf(CallHistory.entries.size()),11,subtle(),false);
   top.addView(count,lp(-2,38));
   ImageView refresh=icon(R.drawable.ic_refresh,tint());top.addView(refresh,lp(42,40));
   touch(refresh);refresh.setContentDescription("רענון יומן השיחות");
   refresh.setOnClickListener(v->{pulse(refresh);host.reloadCallLog();});
-  ListView list=new ListView(host);
+  SwipeListView list=new SwipeListView();
   list.setDivider(null);list.setDividerHeight(0);
   list.setCacheColorHint(Color.TRANSPARENT);list.setScrollingCacheEnabled(true);
   list.setFastScrollEnabled(true);list.setSmoothScrollbarEnabled(true);
   list.setVerticalScrollBarEnabled(false);
   list.setSelector(android.R.color.transparent);
+  list.setNumberAt(position->position>=0&&position<CallHistory.entries.size()?
+      CallHistory.entries.get(position).number:null);
+  if(CallArchive.enabled(host)){
+   TextView archive=text(tr("ארכיון שיחות")+"   ◈",14,tint(),true);
+   archive.setGravity(Gravity.CENTER);
+   archive.setBackground(edge(panel(),16));
+   archive.setPadding(dp(10),dp(16),dp(10),dp(16));
+   archive.setMinHeight(dp(72));
+   touch(archive);
+   archive.setContentDescription(tr("ארכיון שיחות"));
+   archive.setOnClickListener(v->{pulse(archive);host.openArchive();});
+   // Footer appears only AFTER the last current Android call.
+   list.addFooterView(archive,null,true);
+  }
   list.setAdapter(new RecentsAdapter());
   page.addView(list,new LinearLayout.LayoutParams(-1,0,1));
   if(CallHistory.entries.isEmpty()){
@@ -171,8 +213,8 @@ final class FastPages {
   page.setPadding(dp(12),dp(7),dp(12),0);
   if(favorites){
    LinearLayout header=horizontal();page.addView(header,lp(-1,41));
-   header.addView(text("חיוג מיידי למועדפים",14,ink(),true),new LinearLayout.LayoutParams(0,-1,1));
-   TextView edit=text("ניהול ★",12,tint(),true);
+   header.addView(text(tr("חיוג מיידי למועדפים"),14,ink(),true),new LinearLayout.LayoutParams(0,-1,1));
+   TextView edit=text(tr("ניהול ★"),12,tint(),true);
    edit.setGravity(Gravity.CENTER);header.addView(edit,lp(83,38));
    touch(edit);edit.setOnClickListener(v->{pulse(edit);host.openContactsTab();});
    GridView grid=new GridView(host);
@@ -194,7 +236,7 @@ final class FastPages {
   }
   LinearLayout head=horizontal();page.addView(head,lp(-1,48));
   EditText search=new EditText(host);
-  search.setSingleLine(true);search.setHint("חיפוש שם או מספר");
+  search.setSingleLine(true);search.setHint(tr("חיפוש שם או מספר"));
   search.setHintTextColor(subtle());search.setTextColor(ink());search.setTextSize(15);
   search.setPadding(dp(12),0,dp(12),0);search.setBackground(edge(panel(),14));
   head.addView(search,new LinearLayout.LayoutParams(0,dp(46),1));
@@ -208,11 +250,12 @@ final class FastPages {
   ImageView refresh=icon(R.drawable.ic_refresh,tint());small.addView(refresh,lp(38,30));
   touch(refresh);refresh.setOnClickListener(v->{pulse(refresh);host.reloadContacts();});
   ContactAdapter adapter=new ContactAdapter(contacts);
-  ListView list=new ListView(host);
+  SwipeListView list=new SwipeListView();
   list.setDivider(null);list.setFastScrollEnabled(true);list.setVerticalScrollBarEnabled(false);
   list.setSelector(android.R.color.transparent);
   list.setCacheColorHint(Color.TRANSPARENT);
   list.setAdapter(adapter);
+  list.setNumberAt(position->adapter.phoneAt(position));
   page.addView(list,new LinearLayout.LayoutParams(-1,0,1));
   search.addTextChangedListener(new TextWatcher(){
    public void beforeTextChanged(CharSequence v,int a,int b,int c){}
@@ -259,51 +302,87 @@ final class FastPages {
   if(type==CallLog.Calls.INCOMING_TYPE)return 0xFF669FE8;
   return subtle();
  }
+ private int recentCallColor(){
+  return prefs.getBoolean("recents_green",false)?0xFF128758:tint();
+ }
  private final class RecentsAdapter extends BaseAdapter {
-  public int getCount(){return CallHistory.entries.size();}
-  public Object getItem(int position){return CallHistory.entries.get(position);}
-  public long getItemId(int position){return position;}
-  public View getView(int position,View convert,ViewGroup parent){
-   CallRow recycled=convert instanceof LinearLayout && convert.getTag() instanceof CallRow?(CallRow)convert.getTag():null;
-   final CallRow row=recycled==null?new CallRow():recycled;
+  @Override public int getCount(){return CallHistory.entries.size();}
+  @Override public Object getItem(int p){return CallHistory.entries.get(p);}
+  @Override public long getItemId(int p){return CallHistory.entries.get(p).id;}
+  @Override public View getView(int position,View convert,ViewGroup parent){
+   CallRow recycled=convert!=null&&convert.getTag() instanceof CallRow?(CallRow)convert.getTag():null;
+   final CallRow row=recycled!=null?recycled:new CallRow();
    CallHistory.Entry entry=CallHistory.entries.get(position);
+   row.bound=entry.number+"|"+entry.date;
+   row.initials.setText(entry.number.isEmpty()?"?":entry.number.substring(0,1));
+   row.photo.setVisibility(View.GONE);
    row.name.setText(contactName(entry.number));
    row.arrow.setText(entry.type==CallLog.Calls.OUTGOING_TYPE?"↗":
       entry.type==CallLog.Calls.REJECTED_TYPE||entry.type==CallLog.Calls.BLOCKED_TYPE?"⊘":"↙");
-   int color=color(entry.type,entry.duration);
-   row.arrow.setTextColor(color);
-   row.arrow.setContentDescription(category(entry.type,entry.duration));
-   row.info.setText(category(entry.type,entry.duration)+"  ·  "+format.format(new Date(entry.date))+
-      (entry.duration>0?" · "+Math.max(1,(int)Math.ceil(entry.duration/60.0))+" דק׳":""));
-   row.root.setOnClickListener(v->{pulse(row.root);host.openDialPad(entry.number);});
-   row.call.setOnClickListener(v->{pulse(row.call);host.dialFromList(entry.number);});
-   swipe(row.root,entry.number);
+   row.arrow.setTextColor(color(entry.type,entry.duration));
+   row.arrow.setContentDescription(tr(category(entry.type,entry.duration)));
+   String phone=entry.number;
+   row.info.setText(tr(category(entry.type,entry.duration))+"  ·  "+
+    format.format(new Date(entry.date))+
+    (entry.duration>0?" · "+Math.max(1,(int)Math.ceil(entry.duration/60.0))+" "+tr("דק׳"):""));
+   row.dialIcon.setImageTintList(ColorStateList.valueOf(recentCallColor()));
+   row.avatar.setOnClickListener(v->{pulse(row.avatar);host.openContactFromNumber(phone);});
+   row.center.setOnClickListener(v->{pulse(row.center);host.showCallNumber(entry);});
+   row.call.setOnClickListener(v->{pulse(row.call);host.dialFromList(phone);});
+   String expected=row.bound;
+   ContactPhotos.lookup(host,phone,(id,n,bitmap)->{
+    if(!expected.equals(row.bound))return;
+    if(n!=null&&!n.isEmpty()&&!n.equals(phone))row.name.setText(n);
+    if(bitmap!=null){row.photo.setImageBitmap(bitmap);row.photo.setVisibility(View.VISIBLE);}
+   });
    return row.root;
   }
  }
  private final class CallRow {
-  final LinearLayout root;
-  final TextView arrow,name,info;
-  final FrameLayout call;
+  final LinearLayout root,center;
+  final FrameLayout avatar,call;
+  final TextView initials,arrow,name,info;
+  final ImageView photo,dialIcon;
+  String bound="";
   CallRow(){
-   root=horizontal();root.setPadding(dp(5),dp(3),dp(5),dp(3));
-   root.setBackground(bg(panel(),15));root.setMinimumHeight(dp(69));
-   LinearLayout.LayoutParams ignored=lp(-1,69);
-   arrow=text("",25,ink(),true);arrow.setGravity(Gravity.CENTER);
-   arrow.setBackground(bg(dark()?0xFF2D2D2D:0xFFF2F0EC,13));
-   root.addView(arrow,lp(45,48));
-   LinearLayout detail=vertical();detail.setPadding(dp(11),0,dp(7),0);
-   root.addView(detail,new LinearLayout.LayoutParams(0,-2,1));
-   name=text("",15,ink(),true);name.setSingleLine(true);
-   name.setEllipsize(android.text.TextUtils.TruncateAt.END);detail.addView(name);
-   info=text("",11,subtle(),false);info.setSingleLine(true);
-   info.setEllipsize(android.text.TextUtils.TruncateAt.END);detail.addView(info);
+   root=horizontal();
+   root.setPadding(dp(6),dp(6),dp(6),dp(6));
+   root.setBackground(bg(panel(),16));
+   root.setMinimumHeight(dp(76));
+   avatar=new FrameLayout(host);
+   avatar.setBackground(bg(soft(),16));
+   LinearLayout.LayoutParams avatarParams=lp(52,52);
+   avatarParams.setMargins(dp(2),0,dp(5),0);
+   root.addView(avatar,avatarParams);
+   initials=text("?",20,tint(),true);initials.setGravity(Gravity.CENTER);
+   avatar.addView(initials,new FrameLayout.LayoutParams(-1,-1));
+   photo=new ImageView(host);photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
+   photo.setClipToOutline(true);photo.setVisibility(View.GONE);
+   avatar.addView(photo,new FrameLayout.LayoutParams(-1,-1));
+   View lineA=new View(host);lineA.setBackgroundColor(dark()?0xFF3A3A3A:0xFFE6E6E6);
+   root.addView(lineA,lp(1,34));
+   center=horizontal();center.setPadding(dp(9),0,dp(9),0);
+   root.addView(center,new LinearLayout.LayoutParams(0,d(59),1));
+   LinearLayout details=vertical();center.addView(details,new LinearLayout.LayoutParams(0,-2,1));
+   name=text("",15,ink(),true);name.setSingleLine(true);name.setEllipsize(android.text.TextUtils.TruncateAt.END);
+   details.addView(name);
+   info=text("",11,subtle(),false);info.setSingleLine(true);info.setEllipsize(android.text.TextUtils.TruncateAt.END);
+   details.addView(info);
+   arrow=text("",19,subtle(),true);arrow.setGravity(Gravity.CENTER);
+   center.addView(arrow,lp(27,40));
+   View lineB=new View(host);lineB.setBackgroundColor(dark()?0xFF3A3A3A:0xFFE6E6E6);
+   root.addView(lineB,lp(1,34));
    call=new FrameLayout(host);
-   call.setBackground(edge(dark()?0xFF242424:0xFFF5F4F2,13));
-   ImageView symbol=icon(R.drawable.ic_phone_line,tint());
-   call.addView(symbol,new FrameLayout.LayoutParams(dp(39),dp(39),Gravity.CENTER));
-   root.addView(call,lp(44,48));
-   touch(call);touch(root);
+   call.setBackground(bg(dark()?0xFF22372D:0xFFE7F4EA,15));
+   LinearLayout.LayoutParams cp=lp(60,56);cp.setMargins(dp(5),0,0,0);
+   root.addView(call,cp);
+   dialIcon=icon(R.drawable.ic_phone_line,recentCallColor());
+   dialIcon.setPadding(dp(11),dp(11),dp(11),dp(11));
+   call.addView(dialIcon,new FrameLayout.LayoutParams(-1,-1));
+   touch(avatar);touch(center);touch(call);
+   avatar.setContentDescription(tr("כרטיס איש קשר"));
+   center.setContentDescription(tr("הצג מספר"));
+   call.setContentDescription(tr("התקשר"));
    root.setTag(this);
   }
  }
@@ -321,43 +400,56 @@ final class FastPages {
   public int getCount(){return filtered.size();}
   public Object getItem(int p){return filtered.get(p);}
   public long getItemId(int p){return filtered.get(p).id;}
+  String phoneAt(int pos){return pos>=0&&pos<filtered.size()?filtered.get(pos).phone:null;}
   public View getView(int position,View convert,ViewGroup parent){
    ContactRow row=convert!=null && convert.getTag() instanceof ContactRow?(ContactRow)convert.getTag():new ContactRow();
    Contacts.Person person=filtered.get(position);
    boolean favorite=prefs.getStringSet("favorites",java.util.Collections.emptySet()).contains(person.key);
-   row.avatar.setText(person.name.isEmpty()?"?":person.name.substring(0,1));
+   row.letter.setText(person.name.isEmpty()?"?":person.name.substring(0,1));
+   row.bound=String.valueOf(person.id);row.photo.setVisibility(View.GONE);
+   String expected=row.bound;
+   ContactPhotos.load(host,person.id,image->{
+    if(expected.equals(row.bound)&&image!=null){row.photo.setImageBitmap(image);row.photo.setVisibility(View.VISIBLE);}
+   });
    row.title.setText(person.name);
-   row.phone.setText(person.phone.isEmpty()?"ללא מספר":person.phone);
+   row.phone.setText(person.phone.isEmpty()?tr("ללא מספר"):person.phone);
    row.star.setText(favorite?"★":"☆");
    row.star.setTextColor(favorite?tint():subtle());
-   row.root.setOnClickListener(v->{pulse(row.root);host.editContact(person.id,null);});
+   row.root.setOnClickListener(v->{pulse(row.root);host.openContactDetail(person.id);});
    row.quick.setAlpha(person.phone.isEmpty()?0.2f:1);
    row.quick.setOnClickListener(v->{if(!person.phone.isEmpty()){pulse(row.quick);host.dialFromList(person.phone);}});
    row.star.setOnClickListener(v->{pulse(row.star);host.favoriteFromList(person);});
-   if(!person.phone.isEmpty())swipe(row.root,person.phone);else row.root.setOnTouchListener(null);
+   row.avatar.setOnClickListener(v->{pulse(row.avatar);host.openContactDetail(person.id);});
    return row.root;
   }
  }
  private final class ContactRow {
   final LinearLayout root;
-  final TextView avatar,title,phone,star;
-  final FrameLayout quick;
+  final FrameLayout avatar,quick;
+  final TextView letter,title,phone,star;
+  final ImageView photo;
+  String bound="";
   ContactRow(){
-   root=horizontal();root.setMinimumHeight(dp(69));root.setPadding(dp(5),dp(3),dp(5),dp(3));
-   avatar=text("",19,tint(),true);avatar.setGravity(Gravity.CENTER);
-   avatar.setBackground(bg(soft(),16));root.addView(avatar,lp(47,47));
-   LinearLayout description=vertical();description.setPadding(dp(12),0,dp(5),0);
+   root=horizontal();root.setMinimumHeight(dp(71));root.setPadding(dp(5),dp(4),dp(5),dp(4));
+   avatar=new FrameLayout(host);avatar.setBackground(bg(soft(),17));
+   root.addView(avatar,lp(49,49));
+   letter=text("",19,tint(),true);letter.setGravity(Gravity.CENTER);
+   avatar.addView(letter,new FrameLayout.LayoutParams(-1,-1));
+   photo=new ImageView(host);photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
+   photo.setClipToOutline(true);photo.setVisibility(View.GONE);
+   avatar.addView(photo,new FrameLayout.LayoutParams(-1,-1));
+   LinearLayout description=vertical();description.setPadding(dp(11),0,dp(5),0);
    root.addView(description,new LinearLayout.LayoutParams(0,-2,1));
    title=text("",15,ink(),true);title.setSingleLine(true);
    title.setEllipsize(android.text.TextUtils.TruncateAt.END);description.addView(title);
    phone=text("",11,subtle(),false);phone.setSingleLine(true);description.addView(phone);
-   star=text("☆",27,subtle(),false);star.setGravity(Gravity.CENTER);
-   root.addView(star,lp(43,51));
-   quick=new FrameLayout(host);
-   ImageView icon=icon(R.drawable.ic_phone_line,tint());
-   quick.addView(icon,new FrameLayout.LayoutParams(dp(42),dp(42),Gravity.CENTER));
-   root.addView(quick,lp(44,49));
-   touch(star);touch(quick);touch(root);root.setTag(this);
+   star=text("☆",26,subtle(),false);star.setGravity(Gravity.CENTER);
+   root.addView(star,lp(42,51));
+   quick=new FrameLayout(host);quick.setBackground(bg(dark()?0xFF29352F:0xFFE7F4EA,14));
+   ImageView icon=icon(R.drawable.ic_phone_line,0xFF128758);
+   quick.addView(icon,new FrameLayout.LayoutParams(dp(49),dp(49),Gravity.CENTER));
+   root.addView(quick,lp(49,50));
+   touch(star);touch(quick);touch(root);touch(avatar);root.setTag(this);
   }
  }
  private final class FavoriteAdapter extends BaseAdapter {
