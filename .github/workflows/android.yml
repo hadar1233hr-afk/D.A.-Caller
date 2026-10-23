@@ -63,17 +63,17 @@ jobs:
           test -s "$APK_PATH"
       - uses: actions/upload-artifact@v4
         with:
-          name: DA-CALLER-v0.8.0-APK
+          name: DA-CALLER-v0.9.0-APK
           path: ${{ env.APK_PATH }}
       - name: Publish APK release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cp "$APK_PATH" DA-CALLER-v0.8.0.apk
-          if gh release view v0.8.0 >/dev/null 2>&1; then
-            gh release upload v0.8.0 DA-CALLER-v0.8.0.apk --clobber
+          cp "$APK_PATH" DA-CALLER-v0.9.0.apk
+          if gh release view v0.9.0 >/dev/null 2>&1; then
+            gh release upload v0.9.0 DA-CALLER-v0.9.0.apk --clobber
           else
-            gh release create v0.8.0 DA-CALLER-v0.8.0.apk \
-              --title 'DA CALLER v0.8.0' \
-              --notes 'Complete call history and contacts with virtual scrolling, native contact editor, swipe-to-call, favorite tiles, floating dialpad, circle icon; configure permanent signing secrets for future in-place APK upgrades.'
+            gh release create v0.9.0 DA-CALLER-v0.9.0.apk \
+              --title 'DA CALLER v0.9.0' \
+              --notes 'Dialer-only update from current main: improved favorite contact photos, preserved Recents and Contacts scroll position, call controls and notification fixes, archive visibility, expanded bilingual strings, and visual consistency. Business Book is a separate Android module and is not part of this APK. Debug signing may require reinstall unless permanent signing secrets are configured.'
           fi
