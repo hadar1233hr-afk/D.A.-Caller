@@ -363,7 +363,7 @@ final class FastPages {
    View lineA=new View(host);lineA.setBackgroundColor(dark()?0xFF3A3A3A:0xFFE6E6E6);
    root.addView(lineA,lp(1,34));
    center=horizontal();center.setPadding(dp(9),0,dp(9),0);
-   root.addView(center,new LinearLayout.LayoutParams(0,d(59),1));
+   root.addView(center,new LinearLayout.LayoutParams(0,dp(59),1));
    LinearLayout details=vertical();center.addView(details,new LinearLayout.LayoutParams(0,-2,1));
    name=text("",15,ink(),true);name.setSingleLine(true);name.setEllipsize(android.text.TextUtils.TruncateAt.END);
    details.addView(name);
