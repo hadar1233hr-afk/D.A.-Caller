@@ -1,0 +1,13 @@
+# Local Gradle/Android builds and test artifacts
+.gradle/
+**/build/
+local.properties
+work/
+# Signing material stays outside source control
+*.jks
+*.keystore
+*.p12
+*.pem
+# Android/IDE local settings
+.idea/
+*.iml

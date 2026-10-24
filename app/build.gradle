@@ -8,6 +8,7 @@ android {
   targetSdk 34
   versionCode 9
   versionName '0.9.0'
+  testInstrumentationRunner 'android.test.InstrumentationTestRunner'
  }
  signingConfigs {
   permanent {
@@ -22,6 +23,7 @@ android {
    }
   }
  }
+ buildFeatures { buildConfig true }
  buildTypes {
   release {
    minifyEnabled false
@@ -30,8 +32,24 @@ android {
    if(path && pass) signingConfig signingConfigs.permanent
   }
  }
+ testOptions {
+  unitTests.includeAndroidResources = true
+ }
+ lint {
+  abortOnError true
+  warningsAsErrors false
+ }
  compileOptions {
   sourceCompatibility JavaVersion.VERSION_17
   targetCompatibility JavaVersion.VERSION_17
  }
+}
+
+
+dependencies {
+ // Platform instrumentation APIs are compile-only and never enter the production APK.
+ androidTestCompileOnly fileTree(dir: "${android.sdkDirectory}/platforms/android-35/optional", include: ['android.test.base.jar', 'android.test.runner.jar', 'android.test.mock.jar'])
+ testImplementation 'junit:junit:4.13.2'
+ testImplementation 'org.robolectric:robolectric:4.14.1'
+ testImplementation 'org.mockito:mockito-core:5.14.2'
 }

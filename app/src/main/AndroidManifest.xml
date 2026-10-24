@@ -6,19 +6,20 @@
  <uses-permission android:name="android.permission.CALL_PHONE"/>
  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
  <uses-permission android:name="android.permission.VIBRATE"/>
+ <uses-permission android:name="android.permission.WAKE_LOCK"/>
  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
  <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
- <application android:allowBackup="false" android:label="DA CALLER" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:theme="@style/AppTheme" android:supportsRtl="true">
+ <queries><intent><action android:name="android.intent.action.DIAL"/><data android:scheme="tel"/></intent></queries>
+ <application android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:allowBackup="false" android:label="DA CALLER" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:theme="@style/AppTheme" android:supportsRtl="true">
   <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:windowSoftInputMode="adjustResize">
    <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
    <intent-filter><action android:name="android.intent.action.DIAL"/><category android:name="android.intent.category.DEFAULT"/></intent-filter>
    <intent-filter><action android:name="android.intent.action.DIAL"/><category android:name="android.intent.category.DEFAULT"/><data android:scheme="tel"/></intent-filter>
   </activity>
-  <activity android:name=".CallScreenActivity" android:exported="false" android:launchMode="singleTop" android:showWhenLocked="true" android:turnScreenOn="true" android:excludeFromRecents="true"/>
+  <activity android:name=".CallScreenActivity" android:exported="false" android:launchMode="singleTop" android:excludeFromRecents="true"/>
   <service android:name=".PhoneSessionService" android:exported="true" android:permission="android.permission.BIND_INCALL_SERVICE">
     <meta-data android:name="android.telecom.IN_CALL_SERVICE_UI" android:value="true"/>
-    <meta-data android:name="android.telecom.IN_CALL_SERVICE_RINGING" android:value="true"/>
     <intent-filter><action android:name="android.telecom.InCallService"/></intent-filter>
   </service>
   <receiver android:name=".CallCommandReceiver" android:exported="false"/>
