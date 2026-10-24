@@ -26,6 +26,22 @@ public class MainActivityRegressionTest {
   ctx.getSharedPreferences("da_caller",Context.MODE_PRIVATE).edit().clear().putBoolean("role_prompted",true).apply();
   Shadows.shadowOf(RuntimeEnvironment.getApplication()).denyPermissions(Manifest.permission.READ_CONTACTS,Manifest.permission.READ_CALL_LOG,Manifest.permission.CALL_PHONE);
  }
+ @Test public void phoneRoleMustBeGrantedBeforeCallAndPreservesNumber(){
+  android.app.role.RoleManager role=RuntimeEnvironment.getApplication().getSystemService(android.app.role.RoleManager.class);
+  org.robolectric.Shadows.shadowOf(role).addAvailableRole(android.app.role.RoleManager.ROLE_DIALER);
+  try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup()){
+   MainActivity activity=controller.get();
+   Shadows.shadowOf(activity.getApplication()).grantPermissions(Manifest.permission.CALL_PHONE);
+   activity.dialFromList("0501234567");
+   Intent roleRequest=Shadows.shadowOf(activity).getNextStartedActivity();
+   assertNotNull(roleRequest);
+   assertNotEquals("no external call without role",Intent.ACTION_CALL,roleRequest.getAction());
+   // A denied role must never silently launch the manufacturer's phone screen.
+   activity.onActivityResult(100,android.app.Activity.RESULT_CANCELED,null);
+   Intent next=Shadows.shadowOf(activity).getNextStartedActivity();
+   assertTrue(next==null||!Intent.ACTION_CALL.equals(next.getAction()));
+  }finally{org.robolectric.Shadows.shadowOf(role).removeAvailableRole(android.app.role.RoleManager.ROLE_DIALER);}
+ }
  @Test public void rerenderCannotConsumePendingPermissionDestination(){
   try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup()){
    MainActivity activity=controller.get();activity.dialFromList("0501234567");
