@@ -205,6 +205,17 @@ final class SettingsScreen {
   option("הרשאת יומן שיחות","לקריאת ההיסטוריה ואחסון ארכיון",()->host.requestLog());
   option("הרשאת אנשי קשר","הצגת תמונות, אנשי קשר ועריכה",()->host.requestContacts());
   option("התראות שיחה","התראות במסך הנעילה ובשורת המצב",()->host.openNotificationSettings());
+  option("אבחון תקלה בחיוג","סוג התקלה ומיקום בקוד, ללא מספר טלפון",()->{
+   String report=prefs.getString("last_call_failure","לא נרשמה תקלה בשירות השיחות בגרסה זו.");
+   new AlertDialog.Builder(host)
+     .setTitle("DA CALLER — אבחון שיחה")
+     .setMessage(report)
+     .setPositiveButton("העתק",(dialog,which)->{
+      android.content.ClipboardManager clipboard=(android.content.ClipboardManager)host.getSystemService(Context.CLIPBOARD_SERVICE);
+      if(clipboard!=null)clipboard.setPrimaryClip(android.content.ClipData.newPlainText("DA CALLER diagnostic",report));
+     })
+     .setNegativeButton("סגור",null).show();
+  });
   cardEnd();
   TextView bottom=text("DA CALLER · v"+BuildConfig.VERSION_NAME,11,false,subtle);
   bottom.setGravity(Gravity.CENTER);
