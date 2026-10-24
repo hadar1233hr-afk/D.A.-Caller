@@ -97,51 +97,57 @@ public final class CallScreenActivity extends Activity {
   theme=new CallThemes(this);themeKey=currentThemeKey();
   getWindow().setStatusBarColor(theme.background);
   getWindow().setNavigationBarColor(theme.background);
-  int lightBars=View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-  lightBars|=View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
-  getWindow().getDecorView().setSystemUiVisibility(theme.dark?0:lightBars);
-  shell=col();shell.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);shell.setPadding(dp(narrow()?11:18),dp(compact()?7:14),dp(narrow()?11:18),dp(9));
+  getWindow().getDecorView().setSystemUiVisibility(theme.dark?0:
+   View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+  shell=col();
+  shell.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL);
+  shell.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);
+  int side=narrow()?12:21;
+  shell.setPadding(dp(side),dp(compact()?10:22),dp(side),dp(12));
   shell.setBackgroundColor(theme.background);
   ScrollView viewport=new ScrollView(this);viewport.setFillViewport(true);
+  viewport.setVerticalScrollBarEnabled(false);
   viewport.setBackgroundColor(theme.background);viewport.addView(shell);
   setContentView(viewport);
-  TextView brand=text("DA",12,theme.accent,true);brand.setLetterSpacing(0.2f);
-  shell.addView(brand,new LinearLayout.LayoutParams(-1,dp(compact()?24:29)));
-  phase=text("",14,theme.muted,false);
-  shell.addView(phase,new LinearLayout.LayoutParams(-1,dp(compact()?25:32)));
-  caller=text("",theme.style==1?(compact()?26:36):theme.style==4?(compact()?21:26):compact()?23:29,theme.ink,true);
-  if(theme.style==3||theme.style==4)caller.setGravity(Gravity.START|Gravity.CENTER_VERTICAL);
-  caller.setSingleLine(true);caller.setEllipsize(android.text.TextUtils.TruncateAt.MIDDLE);
-  shell.addView(caller,new LinearLayout.LayoutParams(-1,dp(compact()?41:52)));
-  identity=text("",13,theme.muted,false);
-  shell.addView(identity,new LinearLayout.LayoutParams(-1,dp(19)));
-  LinearLayout metadata=row();shell.addView(metadata,new LinearLayout.LayoutParams(-1,dp(30)));
-  timer=text("",15,theme.accent,false);
-  metadata.addView(timer,new LinearLayout.LayoutParams(-2,-1));
-  badge=text("VoLTE",10,theme.accent,true);
-  badge.setBackground(theme.card(this,0));badge.setPadding(dp(7),0,dp(7),0);
-  LinearLayout.LayoutParams bp=new LinearLayout.LayoutParams(-2,dp(23));bp.leftMargin=dp(8);
-  metadata.addView(badge,bp);badge.setVisibility(View.GONE);
+  boolean pixel=theme.style==1;
   FrameLayout portraitFrame=new FrameLayout(this);
-  portraitFrame.setBackground(theme.card(this,0));
   int avatar=CallLayouts.avatarSize(theme.style,compact());
-  LinearLayout.LayoutParams avatarP=new LinearLayout.LayoutParams(dp(avatar),dp(avatar));
-  avatarP.topMargin=dp(compact()?7:15);avatarP.bottomMargin=dp(compact()?5:12);
-  if(theme.style==4)avatarP.gravity=Gravity.END;
-  else if(theme.style==3)avatarP.gravity=Gravity.START;
-  shell.addView(portraitFrame,avatarP);
-  // The layouts differ in portrait position, button order and geometry.
-  if(theme.style==2){shell.removeView(portraitFrame);shell.addView(portraitFrame,1,avatarP);}
-  else if(theme.style==3){shell.removeView(portraitFrame);shell.addView(portraitFrame,2,avatarP);}
+  portraitFrame.setBackground(theme.card(this,0));
+  LinearLayout.LayoutParams portraitSize=new LinearLayout.LayoutParams(dp(avatar),dp(avatar));
+  portraitSize.gravity=theme.style==3?Gravity.START:theme.style==4?Gravity.END:Gravity.CENTER_HORIZONTAL;
+  portraitSize.topMargin=dp(compact()?12:24);
+  portraitSize.bottomMargin=dp(compact()?13:19);
+  shell.addView(portraitFrame,portraitSize);
   portrait=new ImageView(this);portrait.setScaleType(ImageView.ScaleType.CENTER_CROP);
   portrait.setClipToOutline(true);
   portraitFrame.addView(portrait,new FrameLayout.LayoutParams(-1,-1));
-  TextView monogram=text("DA",compact()?28:34,theme.accent,true);
+  TextView monogram=text("DA",pixel?29:25,theme.accent,true);
   portraitFrame.addView(monogram,new FrameLayout.LayoutParams(-1,-1));
   portrait.setTag(monogram);
-  body=col();body.setGravity(Gravity.CENTER);
+  caller=text("",pixel?(compact()?26:33):compact()?24:30,theme.ink,true);
+  caller.setSingleLine(true);caller.setEllipsize(android.text.TextUtils.TruncateAt.MIDDLE);
+  if(theme.style==3||theme.style==4)caller.setGravity(Gravity.START|Gravity.CENTER_VERTICAL);
+  shell.addView(caller,new LinearLayout.LayoutParams(-1,dp(compact()?39:49)));
+  identity=text("",13,theme.muted,false);
+  shell.addView(identity,new LinearLayout.LayoutParams(-1,dp(21)));
+  phase=text("",14,theme.muted,false);
+  shell.addView(phase,new LinearLayout.LayoutParams(-1,dp(28)));
+  LinearLayout metadata=row();shell.addView(metadata,new LinearLayout.LayoutParams(-1,dp(30)));
+  timer=text("",15,theme.ink,true);
+  metadata.addView(timer,new LinearLayout.LayoutParams(-2,-1));
+  badge=text("VoLTE",10,theme.accent,true);
+  badge.setPadding(dp(8),0,dp(8),0);
+  badge.setBackground(theme.card(this,0));
+  LinearLayout.LayoutParams bp=new LinearLayout.LayoutParams(-2,dp(22));
+  bp.leftMargin=dp(8);metadata.addView(badge,bp);badge.setVisibility(View.GONE);
+  // Fill the available height first; on very small screens the outer view scrolls.
+  View space=new View(this);
+  shell.addView(space,new LinearLayout.LayoutParams(1,0,1));
+  body=col();body.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL);
   shell.addView(body,new LinearLayout.LayoutParams(-1,-2));
-  buttons=col();body.addView(buttons,new LinearLayout.LayoutParams(-1,-2));
+  buttons=col();
+  buttons.setGravity(Gravity.CENTER_HORIZONTAL);
+  body.addView(buttons,new LinearLayout.LayoutParams(-1,-2));
   shownContactId=-1;lastNumber="";
  }
  private String lastNumber="";
@@ -158,7 +164,9 @@ public final class CallScreenActivity extends Activity {
   ContactPhotos.lookup(this,number,(id,name,picture)->{
    if(isFinishing()||isDestroyed()||!expected.equals(lastNumber))return;
    shownContactId=id;
-   identity.setText(name!=null&&!name.equals(expected)?name:"");
+   if(name!=null&&!name.equals(expected)&&!name.trim().isEmpty()){
+    caller.setText(name);identity.setText(expected);
+   }else{caller.setText(expected);identity.setText("");}
    View initials=(View)portrait.getTag();
    if(picture!=null){
     portrait.setImageBitmap(picture);portrait.setVisibility(View.VISIBLE);
