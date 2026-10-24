@@ -157,8 +157,8 @@ public final class CallScreenActivity extends Activity {
    if(call.getDetails()!=null&&call.getDetails().getHandle()!=null)
     number=call.getDetails().getHandle().getSchemeSpecificPart();
   }catch(Exception ignored){}
-  caller.setText(number);
   if(lastNumber.equals(number))return;
+  caller.setText(number);identity.setText("");
   lastNumber=number;
   final String expected=number;
   ContactPhotos.lookup(this,number,(id,name,picture)->{
@@ -261,24 +261,55 @@ public final class CallScreenActivity extends Activity {
   else active(call,state);
  }
  private TextView tile(LinearLayout line,int res,String caption,int kind,int height,Runnable click){
-  LinearLayout box=col();box.setBackground(theme.card(this,kind));
-  if(theme.style==2){box.setOrientation(LinearLayout.HORIZONTAL);box.setPadding(dp(12),0,dp(12),0);}
-  box.setElevation(dp(theme.amoled?0:2));
+  boolean horizontal=theme.style==2;
+  LinearLayout box=horizontal?row():col();
+  box.setGravity(Gravity.CENTER);
+  box.setPadding(dp(4),dp(5),dp(4),dp(5));
+  box.setBackground(theme.card(this,kind));
   ImageView icon=new ImageView(this);
-  icon.setImageResource(res);icon.setImageTintList(ColorStateList.valueOf(kind==2?Color.WHITE:theme.accent));
+  icon.setImageResource(res);
+  icon.setImageTintList(ColorStateList.valueOf(kind==2?Color.WHITE:theme.accent));
   icon.setScaleType(ImageView.ScaleType.FIT_CENTER);
-  box.addView(icon,new LinearLayout.LayoutParams(dp(theme.style==1?22:compact()?24:28),dp(theme.style==1?22:compact()?24:28)));
-  TextView desc=text(tr(caption),theme.style==1?10:compact()?11:12,kind==2?Color.WHITE:theme.ink,true);
-  LinearLayout.LayoutParams cp=theme.style==2?new LinearLayout.LayoutParams(0,-2,1):new LinearLayout.LayoutParams(-1,dp(25));
-  if(theme.style==2){cp.leftMargin=dp(10);desc.setGravity(Gravity.START|Gravity.CENTER_VERTICAL);}
-  else cp.topMargin=dp(5);
-  box.addView(desc,cp);
+  int glyph=compact()?21:24;
+  box.addView(icon,new LinearLayout.LayoutParams(dp(glyph),dp(glyph)));
+  TextView desc=text(tr(caption),compact()?10:12,kind==2?Color.WHITE:theme.ink,true);
+  desc.setSingleLine(true);desc.setEllipsize(android.text.TextUtils.TruncateAt.END);
+  LinearLayout.LayoutParams label=horizontal?new LinearLayout.LayoutParams(0,-2,1):
+    new LinearLayout.LayoutParams(-1,dp(23));
+  if(horizontal){label.leftMargin=dp(6);desc.setGravity(Gravity.START|Gravity.CENTER_VERTICAL);}
+  else label.topMargin=dp(4);
+  box.addView(desc,label);
   LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(0,dp(height),1);
-  params.setMargins(dp(4),dp(4),dp(4),dp(4));line.addView(box,params);
-  box.setContentDescription(tr(caption));
+  params.setMargins(dp(4),dp(4),dp(4),dp(4));
+  line.addView(box,params);
+  box.setContentDescription(tr(caption));box.setFocusable(true);
   TouchFeedback.bind(box,prefs);
   box.setOnClickListener(v->{feedback(box);click.run();});
   return desc;
+ }
+ private void googleTile(LinearLayout line,int resource,String title,boolean selected,Runnable click){
+  LinearLayout cell=col();
+  cell.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL);
+  LinearLayout.LayoutParams width=new LinearLayout.LayoutParams(0,dp(compact()?68:81),1);
+  width.setMargins(dp(1),dp(2),dp(1),dp(2));line.addView(cell,width);
+  FrameLayout pill=new FrameLayout(this);
+  GradientDrawable bg=new GradientDrawable();
+  bg.setColor(selected?(theme.dark?0xFFB9CCED:0xFF65574D):(theme.dark?0xFF333B48:0xFFFFF9F5));
+  bg.setCornerRadius(dp(selected?18:50));
+  pill.setBackground(bg);
+  int size=compact()?42:49;
+  cell.addView(pill,new LinearLayout.LayoutParams(dp(size),dp(size)));
+  ImageView image=new ImageView(this);image.setImageResource(resource);
+  image.setImageTintList(ColorStateList.valueOf(selected?(theme.dark?0xFF24303B:Color.WHITE):theme.ink));
+  FrameLayout.LayoutParams glyph=new FrameLayout.LayoutParams(dp(23),dp(23),Gravity.CENTER);
+  pill.addView(image,glyph);
+  TextView label=text(tr(title),compact()?10:11,theme.ink,true);
+  label.setSingleLine(true);label.setEllipsize(android.text.TextUtils.TruncateAt.END);
+  LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,dp(21));
+  lp.topMargin=dp(3);cell.addView(label,lp);
+  cell.setContentDescription(tr(title));cell.setFocusable(true);
+  TouchFeedback.bind(cell,prefs);
+  cell.setOnClickListener(v->{feedback(cell);click.run();});
  }
  private void incoming(Call call){
   String mode=IncomingGesture.mode(prefs.getString("answer_mode","ios"));
@@ -332,29 +363,65 @@ public final class CallScreenActivity extends Activity {
   for(String id:InCallControls.IDS)if(InCallControls.enabled(prefs,id))allowed.add(id);
   java.util.List<String> ids=CallLayouts.ordered(theme.style,allowed);
   int height=CallLayouts.buttonHeight(theme.style,compact(),prefs.getInt("call_button_height",64));
-  if(CallLayouts.endAboveControls(theme.style))addEndCall(call);
+  // Only the essentials occupy the first level. Hang up is always visible.
+  String[] important={"keypad","mute","speaker"};
+  ArrayList<String> first=new ArrayList<>();
+  for(String id:important)if(ids.contains(id))first.add(id);
+  ArrayList<String> secondary=new ArrayList<>(ids);
+  secondary.removeAll(first);
   if(theme.style==1){
-   // Expressive-inspired dock: first actions stay visible; secondary commands expand.
-   LinearLayout primary=null;
-   int index=0,columns=narrow()?2:4;
-   String[] dock={"keypad","mute","speaker"};
-   for(String id:dock)if(ids.contains(id)){
-    if(index%columns==0){primary=row();buttons.addView(primary,new LinearLayout.LayoutParams(-1,-2));}
-    addOptional(primary,id,call,state,height);index++;
+   LinearLayout actionPanel=col();
+   actionPanel.setPadding(dp(5),dp(9),dp(5),dp(2));
+   GradientDrawable panel=new GradientDrawable();
+   panel.setColor(theme.dark?0xFF222934:0xFFF8E9E0);
+   panel.setCornerRadius(dp(26));
+   buttons.addView(actionPanel,new LinearLayout.LayoutParams(-1,-2));
+   LinearLayout primary=row();
+   actionPanel.addView(primary,new LinearLayout.LayoutParams(-1,-2));
+   for(String id:first)addGoogleAction(primary,id,call,state);
+   // Fill disabled actions without changing the familiar four-slot layout.
+   for(int i=first.size();i<3;i++){
+    View empty=new View(this);primary.addView(empty,new LinearLayout.LayoutParams(0,dp(68),1));
    }
-   if(index%columns==0){primary=row();buttons.addView(primary,new LinearLayout.LayoutParams(-1,-2));}
-   tile(primary,R.drawable.ic_control_more,expressiveMoreExpanded?"פחות":"עוד",0,height,()->{
+   googleTile(primary,R.drawable.ic_control_more,expressiveMoreExpanded,expressiveMoreExpanded?"פחות":"עוד",()->{
     expressiveMoreExpanded=!expressiveMoreExpanded;drawnState="";refreshSafely();
    });
-   if(expressiveMoreExpanded){
-    ArrayList<String> secondary=new ArrayList<>(ids);
-    for(String id:dock)secondary.remove(id);
-    renderOptions(secondary,narrow()?2:3,Math.max(58,height-5),call,state);
-   }
   }else{
-   renderOptions(ids,CallLayouts.columns(theme.style,narrow(),ids.size()),height,call,state);
+   ArrayList<String> primaryIds=new ArrayList<>(first);
+   if(primaryIds.size()<3){
+    for(String id:secondary)if(primaryIds.size()<3)primaryIds.add(id);
+    secondary.removeAll(primaryIds);
+   }
+   int columns=theme.style==3&&!narrow()?3:2;
+   LinearLayout line=null;
+   for(int i=0;i<primaryIds.size();i++){
+    if(i%columns==0){line=row();buttons.addView(line,new LinearLayout.LayoutParams(-1,-2));}
+    addOptional(line,primaryIds.get(i),call,state,height);
+   }
+   if(primaryIds.size()%columns==0){line=row();buttons.addView(line,new LinearLayout.LayoutParams(-1,-2));}
+   tile(line,R.drawable.ic_control_more,expressiveMoreExpanded?"פחות":"עוד",0,height,()->{
+    expressiveMoreExpanded=!expressiveMoreExpanded;drawnState="";refreshSafely();
+   });
   }
-  if(!CallLayouts.endAboveControls(theme.style))addEndCall(call);
+  addEndCall(call);
+  if(expressiveMoreExpanded&&!secondary.isEmpty()){
+   TextView label=text(tr("עוד"),12,theme.muted,true);
+   LinearLayout.LayoutParams h=new LinearLayout.LayoutParams(-1,dp(29));
+   h.topMargin=dp(9);buttons.addView(label,h);
+   renderOptions(secondary,narrow()?2:theme.style==2?2:3,
+     Math.max(54,height-8),call,state);
+  }
+ }
+ private void addGoogleAction(LinearLayout parent,String id,Call call,int state){
+  switch(id){
+   case "keypad":googleTile(parent,R.drawable.ic_control_dialpad,"מקשים",false,()->openDtmf(call));break;
+   case "mute":googleTile(parent,PhoneSessionService.muted()?R.drawable.ic_control_mic_off:R.drawable.ic_control_mic,
+      PhoneSessionService.muted()?"בטל השתקה":"השתק",PhoneSessionService.muted(),
+      ()->PhoneSessionService.mute(!PhoneSessionService.muted()));break;
+   case "speaker":googleTile(parent,R.drawable.ic_control_speaker,
+      PhoneSessionService.speaker()?"אפרכסת":"רמקול",PhoneSessionService.speaker(),
+      ()->PhoneSessionService.speaker(!PhoneSessionService.speaker()));break;
+  }
  }
  private void renderOptions(java.util.List<String> ids,int columns,int height,Call call,int state){
   LinearLayout line=null;
@@ -367,18 +434,41 @@ public final class CallScreenActivity extends Activity {
     line.addView(new View(this),new LinearLayout.LayoutParams(0,dp(height),1));
  }
  private void addEndCall(Call call){
-  TextView end=text(tr("סיום שיחה")+"   ✕",theme.style==1?17:16,Color.WHITE,true);
-  end.setBackground(theme.card(this,2));
-  int height=theme.style==1?(compact()?54:66):theme.style==2?(compact()?58:72):(compact()?53:62);
-  LinearLayout.LayoutParams ep=new LinearLayout.LayoutParams(-1,dp(height));
-  ep.setMargins(dp(theme.style==1?23:4),dp(theme.style==2?4:14),dp(theme.style==1?23:4),dp(theme.style==2?9:4));
-  buttons.addView(end,ep);
-  end.setContentDescription(tr("סיום שיחה"));
-  TouchFeedback.bind(end,prefs);
-  end.setOnClickListener(v->{
-   if(call!=PhoneSessionService.current)return;
-   feedback(end);try{call.disconnect();}catch(Exception e){callError();}
-  });
+  if(theme.style==1){
+   FrameLayout end=new FrameLayout(this);
+   GradientDrawable red=new GradientDrawable();
+   red.setColor(0xFFF45B61);red.setCornerRadius(dp(999));
+   end.setBackground(red);
+   int size=compact()?57:65;
+   LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(dp(size),dp(size));
+   params.gravity=Gravity.CENTER_HORIZONTAL;
+   params.topMargin=dp(compact()?11:17);params.bottomMargin=dp(8);
+   buttons.addView(end,params);
+   ImageView handset=new ImageView(this);
+   handset.setImageResource(R.drawable.ic_phone_line);
+   handset.setImageTintList(ColorStateList.valueOf(0xFF521A22));
+   handset.setRotation(135f);
+   end.addView(handset,new FrameLayout.LayoutParams(dp(29),dp(29),Gravity.CENTER));
+   end.setContentDescription(tr("סיום שיחה"));
+   TouchFeedback.bind(end,prefs);
+   end.setOnClickListener(v->disconnect(call,end));
+  }else{
+   TextView end=text(tr("סיום שיחה"),16,Color.WHITE,true);
+   GradientDrawable red=new GradientDrawable();
+   red.setColor(theme.decline);red.setCornerRadius(dp(32));
+   end.setBackground(red);end.setGravity(Gravity.CENTER);
+   int height=compact()?52:59;
+   LinearLayout.LayoutParams ep=new LinearLayout.LayoutParams(-1,dp(height));
+   ep.setMargins(dp(20),dp(13),dp(20),dp(7));buttons.addView(end,ep);
+   end.setContentDescription(tr("סיום שיחה"));
+   TouchFeedback.bind(end,prefs);
+   end.setOnClickListener(v->disconnect(call,end));
+  }
+ }
+ private void disconnect(Call call,View control){
+  if(call!=PhoneSessionService.current)return;
+  feedback(control);
+  try{call.disconnect();}catch(RuntimeException failure){callError();}
  }
  private void addOptional(LinearLayout parent,String id,Call call,int state,int height){
   switch(id){
