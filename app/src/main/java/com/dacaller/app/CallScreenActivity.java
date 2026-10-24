@@ -238,6 +238,17 @@ public final class CallScreenActivity extends Activity {
  }
  private void refresh(){
   if(isFinishing()||isDestroyed())return;
+  // Debug-only visual reference. The test uses synthetic contact data, never real calls.
+  if(BuildConfig.DEBUG&&getIntent()!=null&&getIntent().getBooleanExtra("preview_ui",false)){
+   if(!currentThemeKey().equals(themeKey)){createShell();drawnState="";}
+   caller.setText("DA CALLER");
+   identity.setText("050-123-4567");
+   phase.setText(tr("שיחה פעילה"));
+   timer.setText("02:18");badge.setVisibility(View.GONE);
+   buttons.removeAllViews();
+   active(null,Call.STATE_ACTIVE);
+   return;
+  }
   Call call=PhoneSessionService.current;
   if(call==null||call.getState()==Call.STATE_DISCONNECTED){finish();return;}
   if(!currentThemeKey().equals(themeKey)){createShell();drawnState="";}
