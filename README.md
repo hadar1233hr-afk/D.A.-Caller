@@ -1,6 +1,6 @@
-# DA CALLER · 0.11.0-beta.4 DEBUG TEST PREVIEW
+# DA CALLER · 0.11.0-beta.5 DEBUG TEST PREVIEW
 
-**[Installable debug test build on GitHub Releases](https://github.com/hadar1233hr-afk/D.A.-Caller/releases/tag/v0.11.0-beta.4-debug)** — not a stable release. It cannot update differently signed installations; never uninstall before preserving the archive and settings.
+**[Installable debug test build on GitHub Releases](https://github.com/hadar1233hr-afk/D.A.-Caller/releases/tag/v0.11.0-beta.5-debug)** — not a stable release. It cannot update differently signed installations; never uninstall before preserving the archive and settings.
 
 ## Improvements in the 0.11 preview
 - Call requests ask to make DA CALLER the Android default dialer, then resume the exact number; widget calls follow the same flow.
