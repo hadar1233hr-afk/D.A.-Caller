@@ -28,6 +28,8 @@ final class SettingsScreen {
  private final boolean dark;
  private final int bg,ink,subtle,surface,accent,divider;
  private LinearLayout root,card;
+ private LinearLayout sectionHeader;
+ private int sectionNumber=0;
  private int dp(float n){return (int)(host.getResources().getDisplayMetrics().density*n+0.5f);}
  private String tr(String heb){return I18n.text(host,heb);}
  SettingsScreen(MainActivity host){
@@ -95,7 +97,7 @@ final class SettingsScreen {
    String description=I18n.isEnglish(host)?new String[]{
     "Two-column command deck","Google Expressive-inspired action dock","Oversized vertical controls",
     "Three-column dashboard","Minimal two-column arrangement"}[i]:CallThemes.DESCRIPTIONS[i];
-   String val=prefs.getString("call_theme","graphite");
+   String val=prefs.getString("call_theme","pixel");
    int[] shades={0xFFD1AD70,0xFF6198E9,0xFF23B188,0xFF9AA1E9,0xFFC5956D};
    LinearLayout item=row();item.setPadding(dp(12),dp(6),dp(12),dp(6));
    item.setMinimumHeight(dp(69));
@@ -223,17 +225,49 @@ final class SettingsScreen {
   return scroll;
  }
  private void section(String label,String symbol){
-  LinearLayout line=row();
-  LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,dp(46));
-  p.topMargin=dp(13);root.addView(line,p);
-  TextView bullet=text(symbol,22,true,accent);
-  line.addView(bullet,new LinearLayout.LayoutParams(dp(37),dp(43)));
+  final String key="settings_group_open_"+sectionNumber++;
+  LinearLayout header=row();
+  header.setPadding(dp(15),dp(3),dp(12),dp(3));
+  header.setBackground(card(surface,19));
+  LinearLayout.LayoutParams hp=new LinearLayout.LayoutParams(-1,dp(57));
+  hp.topMargin=dp(12);
+  root.addView(header,hp);
+  TextView bullet=text(symbol,20,true,accent);
+  header.addView(bullet,new LinearLayout.LayoutParams(dp(36),-1));
   TextView name=text(label,16,true,ink);
-  line.addView(name,new LinearLayout.LayoutParams(0,-2,1));
+  header.addView(name,new LinearLayout.LayoutParams(0,-1,1));
+  TextView arrow=text(prefs.getBoolean(key,false)?"⌃":"⌄",23,true,accent);
+  arrow.setGravity(Gravity.CENTER);
+  header.addView(arrow,new LinearLayout.LayoutParams(dp(35),-1));
+  header.setContentDescription(tr(label));
+  header.setFocusable(true);
+  sectionHeader=header;
+  header.setTag(new Object[]{key,arrow});
  }
  private void cardStart(){
-  card=column();card.setBackground(card(surface,18));card.setPadding(dp(6),dp(3),dp(6),dp(3));
-  root.addView(card,new LinearLayout.LayoutParams(-1,-2));
+  card=column();
+  card.setBackground(card(surface,18));
+  card.setPadding(dp(6),dp(8),dp(6),dp(8));
+  LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(-1,-2);
+  cp.topMargin=dp(4);
+  root.addView(card,cp);
+  if(sectionHeader!=null){
+   final LinearLayout content=card;
+   final LinearLayout header=sectionHeader;
+   final Object[] state=(Object[])header.getTag();
+   final String key=(String)state[0];
+   final TextView arrow=(TextView)state[1];
+   content.setVisibility(prefs.getBoolean(key,false)?View.VISIBLE:View.GONE);
+   header.setOnClickListener(v->{
+    TouchFeedback.pulse(host,prefs,header);
+    boolean expanded=content.getVisibility()!=View.VISIBLE;
+    android.transition.TransitionManager.beginDelayedTransition(root);
+    content.setVisibility(expanded?View.VISIBLE:View.GONE);
+    arrow.setText(expanded?"⌃":"⌄");
+    prefs.edit().putBoolean(key,expanded).apply();
+   });
+  }
+  sectionHeader=null;
  }
  private void cardEnd(){card=null;}
  private void sep(){
