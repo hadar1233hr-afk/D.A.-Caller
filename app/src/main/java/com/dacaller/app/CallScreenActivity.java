@@ -286,7 +286,7 @@ public final class CallScreenActivity extends Activity {
     addOptional(primary,id,call,state,height);index++;
    }
    if(index%columns==0){primary=row();buttons.addView(primary,new LinearLayout.LayoutParams(-1,-2));}
-   tile(primary,R.drawable.ic_control_add,expressiveMoreExpanded?"פחות":"עוד",0,height,()->{
+   tile(primary,R.drawable.ic_control_more,expressiveMoreExpanded?"פחות":"עוד",0,height,()->{
     expressiveMoreExpanded=!expressiveMoreExpanded;drawnState="";refresh();
    });
    if(expressiveMoreExpanded){
