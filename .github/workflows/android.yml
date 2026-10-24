@@ -48,6 +48,7 @@ jobs:
           java-version: '17'
       - uses: gradle/actions/wrapper-validation@v4
       - uses: gradle/actions/setup-gradle@v4
+      - uses: android-actions/setup-android@v3
       - name: Install pinned Android SDK components
         run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
       - name: Build, test and lint DA CALLER only
@@ -109,6 +110,7 @@ jobs:
           distribution: temurin
           java-version: '17'
       - uses: gradle/actions/setup-gradle@v4
+      - uses: android-actions/setup-android@v3
       - name: Install compile SDK
         run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
       - name: Enable emulator acceleration
@@ -124,7 +126,10 @@ jobs:
           arch: x86_64
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: ./gradlew --no-daemon :app:connectedDebugAndroidTest
+          script: |
+            adb shell wm size 480x854
+            adb shell wm density 240
+            ./gradlew --no-daemon :app:connectedDebugAndroidTest
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -155,6 +160,7 @@ jobs:
           java-version: '17'
       - uses: gradle/actions/wrapper-validation@v4
       - uses: gradle/actions/setup-gradle@v4
+      - uses: android-actions/setup-android@v3
       - name: Install pinned Android SDK components
         run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
       - name: Build and verify permanent signed beta
