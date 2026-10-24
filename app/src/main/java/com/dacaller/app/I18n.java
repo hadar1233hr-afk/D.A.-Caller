@@ -9,6 +9,7 @@ import java.util.Map;
 final class I18n {
  private static final Map<String,String> english=new HashMap<>();
  static{
+  put("עוד","More");put("פחות","Less");put("חמישה עיצובים שונים למסך שיחה","Five distinct in-call layouts");
   put("שיחות","Calls");put("אנשי קשר","Contacts");put("מועדפים","Favorites");put("הגדרות","Settings");
   put("שיחות אחרונות","Recents");put("כל השיחות","Recent calls");put("ארכיון שיחות","Call archive");
   put("שיחות שנשמרו לאחר שנעלמו מיומן המכשיר","Saved calls no longer in the system log");
