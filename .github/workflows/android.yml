@@ -230,3 +230,53 @@ jobs:
           gh release create "v$VERSION" "DA-CALLER-v$VERSION.apk" "DA-CALLER-v$VERSION.apk.sha256" \
             --target "$GITHUB_SHA" --prerelease --title "DA CALLER v$VERSION beta" \
             --notes-file release-notes.md
+
+  # Explicitly marked TEST prerelease. It does NOT claim field validation or
+  # use permanent signing and cannot update a differently signed install.
+  # Never publishes on forks or changes the separately gated stable-beta process.
+  preview-debug:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'codex/da-caller-hardening-20261023' && github.event.pull_request.head.repo.full_name == github.repository
+    needs: [validate, android-ui]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: DA-CALLER-${{ needs.validate.outputs.version }}-debug-${{ github.sha }}
+          path: candidate
+      - name: Publish explicitly unverified debug prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          VERSION: ${{ needs.validate.outputs.version }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$VERSION" = "0.11.0-beta.1"
+          APK=$(find candidate -name app-debug.apk -type f -print -quit)
+          test -n "$APK"
+          cp "$APK" "DA-CALLER-v$VERSION-debug.apk"
+          sha256sum "DA-CALLER-v$VERSION-debug.apk" > "DA-CALLER-v$VERSION-debug.apk.sha256"
+          if gh release view "v$VERSION-debug" >/dev/null 2>&1; then
+            echo 'Debug preview already exists; never overwrite a release.' >&2
+            exit 0
+          fi
+          cat > preview-notes.md <<'NOTES'
+          # DA CALLER — UNVERIFIED DEBUG TEST BUILD
+          This is **not** a stable or device-verified release.
+          The Android build, unit tests and emulator UI checks passed, but
+          actual cellular calls, answering, ringing, lock screen, SIM and
+          Unihertz Jelly Star behavior have NOT been verified on hardware.
+          It is signed with an ephemeral CI debug certificate and cannot
+          update a differently signed v0.9/v0.10 installation in place.
+          **DO NOT uninstall your existing installation unless all private
+          data and settings have been safely preserved.**
+          Keep a working alternative dialer installed. Test on a spare device.
+          No APK in this preview should be considered production ready.
+          NOTES
+          gh release create "v$VERSION-debug" "DA-CALLER-v$VERSION-debug.apk" "DA-CALLER-v$VERSION-debug.apk.sha256" \
+            --target "$HEAD_SHA" --prerelease --title "DA CALLER v$VERSION (DEBUG TEST — UNVERIFIED)" \
+            --notes-file preview-notes.md
