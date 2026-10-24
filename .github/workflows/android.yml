@@ -135,7 +135,8 @@ jobs:
             adb shell wm density 240
             ./gradlew --no-daemon :app:connectedDebugAndroidTest
             mkdir -p app/build/ui-snapshots
-            adb pull /sdcard/Android/data/com.dacaller.app/files/snapshots/ app/build/ui-snapshots/ || true
+            adb pull /sdcard/Download/DA-CALLER-snapshots/ app/build/ui-snapshots/
+            test "$(find app/build/ui-snapshots/ -name 'call-*.png' | wc -l)" -eq 5
       - uses: actions/upload-artifact@v4
         if: always()
         with:
