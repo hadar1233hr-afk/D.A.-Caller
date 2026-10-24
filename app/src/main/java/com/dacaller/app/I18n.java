@@ -10,6 +10,10 @@ final class I18n {
  private static final Map<String,String> english=new HashMap<>();
  static{
   put("עוד","More");put("פחות","Less");put("חמישה עיצובים שונים למסך שיחה","Five distinct in-call layouts");
+  put("סיכום פעילות","Call activity");put("תקופת הסיכום","Summary period");
+  put("סך שיחות לתקופה","Total calls this period");put("זמן דיבור כולל","Total talk time");
+  put("יוצאות","Outgoing");put("נכנסות","Incoming");put("שלא נענו","Missed");
+  put("משך שיחה ממוצע","Average call length");put("שעות","h");put("שניות","sec");
   put("שיחות","Calls");put("אנשי קשר","Contacts");put("מועדפים","Favorites");put("הגדרות","Settings");
   put("שיחות אחרונות","Recents");put("כל השיחות","Recent calls");put("ארכיון שיחות","Call archive");
   put("שיחות שנשמרו לאחר שנעלמו מיומן המכשיר","Saved calls no longer in the system log");
