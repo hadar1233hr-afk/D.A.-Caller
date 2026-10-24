@@ -35,6 +35,16 @@ public final class CallLayoutSnapshotTest extends InstrumentationTestCase {
     assertTrue(screenshot.compress(Bitmap.CompressFormat.PNG,100,out));
    }
    screenshot.recycle();
+   // Gradle uninstalls the app after tests. Keep reference screenshots in a public
+   // shell-owned directory so the CI job can pull them after test teardown.
+   String publicPath="/sdcard/Download/DA-CALLER-snapshots";
+   String command="mkdir -p "+publicPath+" && screencap -p "+publicPath+"/call-"+i+"-"+theme+".png";
+   android.os.ParcelFileDescriptor result=getInstrumentation().getUiAutomation().executeShellCommand(command);
+   try(android.os.ParcelFileDescriptor.AutoCloseInputStream output=
+       new android.os.ParcelFileDescriptor.AutoCloseInputStream(result)){
+    byte[] buffer=new byte[128];
+    while(output.read(buffer)!=-1){}
+   }
    getInstrumentation().runOnMainSync(activity::finish);
    getInstrumentation().waitForIdleSync();
   }
