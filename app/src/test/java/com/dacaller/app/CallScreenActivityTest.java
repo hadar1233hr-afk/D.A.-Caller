@@ -46,6 +46,42 @@ public class CallScreenActivityTest {
  private void send(View view,int action,float x,float y){
   MotionEvent event=MotionEvent.obtain(10,20,action,x,y,0);view.dispatchTouchEvent(event);event.recycle();
  }
+ @Test public void dialingAndConnectedScreensRenderAllFiveLayoutsWithoutCrashing(){
+  // Previous tests only covered RINGING. Real outgoing calls reach DIALING first.
+  for(String theme:CallThemes.IDS){
+   preferences.edit().putString("call_theme",theme).commit();
+   for(int state:new int[]{Call.STATE_DIALING,Call.STATE_ACTIVE,Call.STATE_HOLDING}){
+    when(call.getState()).thenReturn(state);
+    controller=Robolectric.buildActivity(CallScreenActivity.class).setup();
+    CallScreenActivity activity=controller.get();
+    assertFalse("crashed with "+theme+" state "+state,activity.isFinishing());
+    assertNotNull("missing end-call control "+theme,
+      find(activity,I18n.text(activity,"סיום שיחה")));
+    controller.pause().stop().destroy();
+    controller=null;
+   }
+  }
+ }
+ @Test public void emergencyCallControlsHaveCallEndAction(){
+  when(call.getState()).thenReturn(Call.STATE_DIALING);
+  CallScreenActivity activity=open();
+  try{
+   java.lang.reflect.Method emergency=CallScreenActivity.class.getDeclaredMethod("showEmergencyCallControls");
+   emergency.setAccessible(true);emergency.invoke(activity);
+  }catch(ReflectiveOperationException e){throw new AssertionError(e);}
+  ViewGroup root=(ViewGroup)activity.findViewById(android.R.id.content);
+  assertNotNull(root);
+  assertTrue("emergency UI must show an end-call label",hasText(root,I18n.text(activity,"סיום שיחה")));
+ }
+ private boolean hasText(View view,String value){
+  if(view instanceof android.widget.TextView&&value.equals(((android.widget.TextView)view).getText()))return true;
+  if(view instanceof ViewGroup){
+   ViewGroup group=(ViewGroup)view;
+   for(int i=0;i<group.getChildCount();i++)
+    if(hasText(group.getChildAt(i),value))return true;
+  }
+  return false;
+ }
  @Test public void iosModeKeepsAnAccessibleAnswerAndDeclineButton(){
   CallScreenActivity activity=open();View answer=find(activity,"Answer"),decline=find(activity,"Decline");
   assertNotNull(answer);assertNotNull(decline);
