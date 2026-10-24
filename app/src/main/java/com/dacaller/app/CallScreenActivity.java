@@ -44,6 +44,7 @@ public final class CallScreenActivity extends Activity {
  private TextView caller,phase,timer,badge,identity;
  private ImageView portrait;
  private Call toneCall;
+ private boolean expressiveMoreExpanded=false;
  private final Runnable stopTone=()->{
   if(toneCall!=null){try{toneCall.stopDtmfTone();}catch(Exception ignored){}toneCall=null;}
  };
@@ -104,7 +105,8 @@ public final class CallScreenActivity extends Activity {
   shell.addView(brand,new LinearLayout.LayoutParams(-1,dp(compact()?24:29)));
   phase=text("",14,theme.muted,false);
   shell.addView(phase,new LinearLayout.LayoutParams(-1,dp(compact()?25:32)));
-  caller=text("",compact()?23:29,theme.ink,true);
+  caller=text("",theme.style==1?(compact()?26:36):theme.style==4?(compact()?21:26):compact()?23:29,theme.ink,true);
+  if(theme.style==3||theme.style==4)caller.setGravity(Gravity.START|Gravity.CENTER_VERTICAL);
   caller.setSingleLine(true);caller.setEllipsize(android.text.TextUtils.TruncateAt.MIDDLE);
   shell.addView(caller,new LinearLayout.LayoutParams(-1,dp(compact()?41:52)));
   identity=text("",13,theme.muted,false);
@@ -118,10 +120,15 @@ public final class CallScreenActivity extends Activity {
   metadata.addView(badge,bp);badge.setVisibility(View.GONE);
   FrameLayout portraitFrame=new FrameLayout(this);
   portraitFrame.setBackground(theme.card(this,0));
-  int avatar=compact()?75:100;
+  int avatar=CallLayouts.avatarSize(theme.style,compact());
   LinearLayout.LayoutParams avatarP=new LinearLayout.LayoutParams(dp(avatar),dp(avatar));
   avatarP.topMargin=dp(compact()?7:15);avatarP.bottomMargin=dp(compact()?5:12);
+  if(theme.style==4)avatarP.gravity=Gravity.END;
+  else if(theme.style==3)avatarP.gravity=Gravity.START;
   shell.addView(portraitFrame,avatarP);
+  // The layouts differ in portrait position, button order and geometry.
+  if(theme.style==2){shell.removeView(portraitFrame);shell.addView(portraitFrame,1,avatarP);}
+  else if(theme.style==3){shell.removeView(portraitFrame);shell.addView(portraitFrame,2,avatarP);}
   portrait=new ImageView(this);portrait.setScaleType(ImageView.ScaleType.CENTER_CROP);
   portrait.setClipToOutline(true);
   portraitFrame.addView(portrait,new FrameLayout.LayoutParams(-1,-1));
@@ -188,7 +195,7 @@ public final class CallScreenActivity extends Activity {
       state==Call.STATE_ACTIVE?"שיחה פעילה":"שיחה";
   phase.setText(tr(stage));updateCaller(call);updateTimer();updateBadge();
   String config=System.identityHashCode(call)+"/"+state+"/"+PhoneSessionService.muted()+"/"+PhoneSessionService.speaker()+"/"+
-    PhoneSessionService.bluetooth()+"/"+prefs.getString("answer_mode","ios")+"/"+prefs.getInt("call_button_height",64);
+    PhoneSessionService.bluetooth()+"/"+prefs.getString("answer_mode","ios")+"/"+prefs.getInt("call_button_height",64)+"/"+expressiveMoreExpanded;
   for(String id:InCallControls.IDS)config+="/"+InCallControls.enabled(prefs,id);
   if(config.equals(drawnState))return;
   drawnState=config;
@@ -198,13 +205,16 @@ public final class CallScreenActivity extends Activity {
  }
  private TextView tile(LinearLayout line,int res,String caption,int kind,int height,Runnable click){
   LinearLayout box=col();box.setBackground(theme.card(this,kind));
+  if(theme.style==2){box.setOrientation(LinearLayout.HORIZONTAL);box.setPadding(dp(12),0,dp(12),0);}
   box.setElevation(dp(theme.amoled?0:2));
   ImageView icon=new ImageView(this);
   icon.setImageResource(res);icon.setImageTintList(ColorStateList.valueOf(kind==2?Color.WHITE:theme.accent));
   icon.setScaleType(ImageView.ScaleType.FIT_CENTER);
-  box.addView(icon,new LinearLayout.LayoutParams(dp(compact()?24:28),dp(compact()?24:28)));
-  TextView desc=text(tr(caption),compact()?11:12,kind==2?Color.WHITE:theme.ink,true);
-  LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(-1,dp(25));cp.topMargin=dp(5);
+  box.addView(icon,new LinearLayout.LayoutParams(dp(theme.style==1?22:compact()?24:28),dp(theme.style==1?22:compact()?24:28)));
+  TextView desc=text(tr(caption),theme.style==1?10:compact()?11:12,kind==2?Color.WHITE:theme.ink,true);
+  LinearLayout.LayoutParams cp=theme.style==2?new LinearLayout.LayoutParams(0,-2,1):new LinearLayout.LayoutParams(-1,dp(25));
+  if(theme.style==2){cp.leftMargin=dp(10);desc.setGravity(Gravity.START|Gravity.CENTER_VERTICAL);}
+  else cp.topMargin=dp(5);
   box.addView(desc,cp);
   LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(0,dp(height),1);
   params.setMargins(dp(4),dp(4),dp(4),dp(4));line.addView(box,params);
@@ -261,24 +271,51 @@ public final class CallScreenActivity extends Activity {
  }
  private void callError(){Toast.makeText(this,tr("פעולת השיחה לא הצליחה"),Toast.LENGTH_SHORT).show();}
  private void active(Call call,int state){
-  ArrayList<String> ids=new ArrayList<>();
-  for(String id:InCallControls.IDS)if(InCallControls.enabled(prefs,id))ids.add(id);
-  int columns=ids.size()<=4?2:3;
+  ArrayList<String> allowed=new ArrayList<>();
+  for(String id:InCallControls.IDS)if(InCallControls.enabled(prefs,id))allowed.add(id);
+  java.util.List<String> ids=CallLayouts.ordered(theme.style,allowed);
+  int height=CallLayouts.buttonHeight(theme.style,compact(),prefs.getInt("call_button_height",64));
+  if(CallLayouts.endAboveControls(theme.style))addEndCall(call);
+  if(theme.style==1){
+   // Expressive-inspired dock: first actions stay visible; secondary commands expand.
+   LinearLayout primary=null;
+   int index=0,columns=narrow()?2:4;
+   String[] dock={"keypad","mute","speaker"};
+   for(String id:dock)if(ids.contains(id)){
+    if(index%columns==0){primary=row();buttons.addView(primary,new LinearLayout.LayoutParams(-1,-2));}
+    addOptional(primary,id,call,state,height);index++;
+   }
+   if(index%columns==0){primary=row();buttons.addView(primary,new LinearLayout.LayoutParams(-1,-2));}
+   tile(primary,R.drawable.ic_control_add,expressiveMoreExpanded?"פחות":"עוד",0,height,()->{
+    expressiveMoreExpanded=!expressiveMoreExpanded;drawnState="";refresh();
+   });
+   if(expressiveMoreExpanded){
+    ArrayList<String> secondary=new ArrayList<>(ids);
+    for(String id:dock)secondary.remove(id);
+    renderOptions(secondary,narrow()?2:3,Math.max(58,height-5),call,state);
+   }
+  }else{
+   renderOptions(ids,CallLayouts.columns(theme.style,narrow(),ids.size()),height,call,state);
+  }
+  if(!CallLayouts.endAboveControls(theme.style))addEndCall(call);
+ }
+ private void renderOptions(java.util.List<String> ids,int columns,int height,Call call,int state){
   LinearLayout line=null;
-  int height=Math.max(52,Math.min(76,prefs.getInt("call_button_height",64)));
   for(int i=0;i<ids.size();i++){
    if(i%columns==0){line=row();buttons.addView(line,new LinearLayout.LayoutParams(-1,-2));}
    addOptional(line,ids.get(i),call,state,height);
   }
-  if(ids.size()%columns!=0 && line!=null){
+  if(ids.size()%columns!=0 && line!=null)
    for(int i=ids.size()%columns;i<columns;i++)
     line.addView(new View(this),new LinearLayout.LayoutParams(0,dp(height),1));
-  }
-  TextView end=text(tr("סיום שיחה")+"   ✕",16,Color.WHITE,true);
-  end.setBackgroundColor(theme.decline);
+ }
+ private void addEndCall(Call call){
+  TextView end=text(tr("סיום שיחה")+"   ✕",theme.style==1?17:16,Color.WHITE,true);
   end.setBackground(theme.card(this,2));
-  LinearLayout.LayoutParams ep=new LinearLayout.LayoutParams(-1,dp(compact()?53:62));
-  ep.setMargins(dp(4),dp(14),dp(4),dp(4));buttons.addView(end,ep);
+  int height=theme.style==1?(compact()?54:66):theme.style==2?(compact()?58:72):(compact()?53:62);
+  LinearLayout.LayoutParams ep=new LinearLayout.LayoutParams(-1,dp(height));
+  ep.setMargins(dp(theme.style==1?23:4),dp(theme.style==2?4:14),dp(theme.style==1?23:4),dp(theme.style==2?9:4));
+  buttons.addView(end,ep);
   end.setContentDescription(tr("סיום שיחה"));
   TouchFeedback.bind(end,prefs);
   end.setOnClickListener(v->{
