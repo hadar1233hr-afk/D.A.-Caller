@@ -1,4 +1,15 @@
-# DA CALLER · 0.10.0-beta.1 validation candidate
+# DA CALLER · 0.11.0-beta.1 DEBUG TEST PREVIEW
+
+**[Installable debug test build on GitHub Releases](https://github.com/hadar1233hr-afk/D.A.-Caller/releases/tag/v0.11.0-beta.1-debug)** — not a stable release. It cannot update differently signed installations; never uninstall before preserving the archive and settings.
+
+## Improvements in the 0.11 preview
+- Call requests ask to make DA CALLER the Android default dialer, then resume the exact number; widget calls follow the same flow.
+- Five actually different live-call screen layouts with distinct caller portrait sizes/positions, command ordering, buttons, column counts and end-call hierarchy. The Pixel layout draws inspiration from Google Material 3 Expressive.
+- Cleaned up 3×3 dialpad icon and outgoing keypad dimensions, legends and large touch targets.
+- Additional layout and default-role regression tests. New pre-release publication is clearly labeled **unverified** and only occurs after CI unit/emulator checks succeed.
+- No claim that live cellular telephony has been physically tested on Unihertz Jelly Star. The permanent signed release still needs hardware verification.
+
+## Previous v0.10 candidate and engineering details
 
 Offline Android dialer, package `com.dacaller.app`, with Hebrew RTL and English UI. `:app` is DA CALLER; `:businessbook` and `:offline` remain separate products and APKs.
 
