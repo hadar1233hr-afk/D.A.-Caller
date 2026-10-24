@@ -49,6 +49,9 @@ public final class ContactEditorActivity extends Activity {
  private TextView avatarText;
  private byte[] newPhoto;
  private long existingPhotoId=-1;
+ private boolean loading, saving, photoLoading;
+ private final HashMap<String,String> originalTypes=new HashMap<>();
+ private Bundle restored;
  private android.content.SharedPreferences prefs;
  private boolean dark(){return prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);}
  private int background(){return prefs.getBoolean("amoled",false)?Color.BLACK:dark()?0xFF141414:0xFFF7F7F5;}
@@ -70,6 +73,7 @@ public final class ContactEditorActivity extends Activity {
  @Override public void onCreate(Bundle b){
   super.onCreate(b);
   prefs=getSharedPreferences("da_caller",MODE_PRIVATE);
+  restored=b;
   contactId=getIntent().getLongExtra("contact_id",-1);
   getWindow().setStatusBarColor(background());getWindow().setNavigationBarColor(background());
   getWindow().getDecorView().setSystemUiVisibility(dark()?0:View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
@@ -81,8 +85,8 @@ public final class ContactEditorActivity extends Activity {
   }else load();
  }
  private void createUi(){
-  LinearLayout root=new LinearLayout(this);root.setOrientation(1);
-  root.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);root.setBackgroundColor(background());
+  LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);
+  root.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);root.setBackgroundColor(background());
   setContentView(root);
   LinearLayout toolbar=new LinearLayout(this);toolbar.setGravity(Gravity.CENTER_VERTICAL);
   toolbar.setPadding(dp(17),dp(9),dp(17),dp(9));root.addView(toolbar,new LinearLayout.LayoutParams(-1,dp(64)));
@@ -93,8 +97,8 @@ public final class ContactEditorActivity extends Activity {
   TextView mark=text("DA",15,accent(),true);toolbar.addView(mark);
   ScrollView scroll=new ScrollView(this);scroll.setFillViewport(false);
   scroll.setVerticalScrollBarEnabled(false);root.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));
-  LinearLayout form=new LinearLayout(this);form.setOrientation(1);
-  form.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+  LinearLayout form=new LinearLayout(this);form.setOrientation(LinearLayout.VERTICAL);
+  form.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);
   form.setPadding(dp(17),dp(10),dp(17),dp(22));scroll.addView(form);
   FrameLayout photoHolder=new FrameLayout(this);
   photoHolder.setBackground(shape(dark()?0xFF383328:0xFFEDE1CD,58));
@@ -113,7 +117,7 @@ public final class ContactEditorActivity extends Activity {
   form.addView(pictureHint,new LinearLayout.LayoutParams(-1,dp(33)));
   pictureHint.setOnClickListener(v->pickPhoto());
   if(contactId>0)ContactPhotos.load(this,contactId,bmp->{
-   if(!isFinishing()&&!isDestroyed()&&bmp!=null){avatar.setImageBitmap(bmp);avatar.setVisibility(View.VISIBLE);}
+   if(!isFinishing()&&!isDestroyed()&&newPhoto==null&&bmp!=null){avatar.setImageBitmap(bmp);avatar.setVisibility(View.VISIBLE);}
   });
   section(form,"פרטים אישיים");
   field(form,"first","שם פרטי",InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_CAP_WORDS);
@@ -143,6 +147,10 @@ public final class ContactEditorActivity extends Activity {
   field(form,"birthday","תאריך יום הולדת (YYYY-MM-DD)",InputType.TYPE_CLASS_TEXT);
   field(form,"anniversary","תאריך לציון (YYYY-MM-DD)",InputType.TYPE_CLASS_TEXT);
   field(form,"notes","הערות",InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+  TextView nativeEdit=text("פתיחה בעורך אנשי הקשר",14,accent(),true);
+  nativeEdit.setGravity(Gravity.CENTER);nativeEdit.setBackground(shape(surface(),13));nativeEdit.setMinHeight(dp(48));
+  form.addView(nativeEdit,new LinearLayout.LayoutParams(-1,dp(52)));
+  nativeEdit.setOnClickListener(v->NativeContacts.open(this,contactId,(get("first")+" "+get("last")).trim(),get("phone0")));
   progress=text("",12,accent(),false);form.addView(progress);
   saveButton=text("שמירת איש הקשר",16,Color.WHITE,true);
   saveButton.setGravity(Gravity.CENTER);saveButton.setBackground(shape(0xFF178F61,16));
@@ -156,6 +164,7 @@ public final class ContactEditorActivity extends Activity {
  }
  private void field(LinearLayout parent,String key,String hint,int inputType){
   EditText entry=new EditText(this);controls.put(key,entry);
+  entry.setId(0x01000000 | (key.hashCode() & 0x00ffffff));
   entry.setSingleLine(!key.equals("notes"));entry.setHint(tr(hint));entry.setInputType(inputType);
   entry.setTextSize(15);entry.setTextColor(ink());entry.setHintTextColor(muted());
   entry.setPadding(dp(13),dp(6),dp(13),dp(6));entry.setBackground(shape(surface(),13));
@@ -174,61 +183,30 @@ public final class ContactEditorActivity extends Activity {
   super.onRequestPermissionsResult(r,p,grants);
   if(r==42 && grants.length>0 && grants[0]==PackageManager.PERMISSION_GRANTED)load();
   else if(r==45 && grants.length>0&&grants[0]==PackageManager.PERMISSION_GRANTED)save();
-  else if(r==42||r==45)Toast.makeText(this,"נדרשת הרשאת אנשי קשר כדי לשמור את השינויים",Toast.LENGTH_LONG).show();
+  else if(r==42||r==45)Toast.makeText(this,tr("נדרשת הרשאת אנשי קשר כדי לשמור את השינויים"),Toast.LENGTH_LONG).show();
  }
  private void load(){
-  if(contactId<1){if(!extraPhone.isEmpty())value("phone0",extraPhone,-1);return;}
-  progress.setText("טוען פרטי איש קשר…");
+  if(contactId<1){if(!extraPhone.isEmpty())value("phone0",extraPhone,-1);restoreDraft();return;}
+  loading=true;saveButton.setEnabled(false);for(EditText field:controls.values())field.setEnabled(false);
+  progress.setText(tr("טוען פרטי איש קשר…"));
   IO.execute(()->{
-   final HashMap<String,String> values=new HashMap<>();
-   final HashMap<String,Long> ids=new HashMap<>();
-   long raw=-1;
-   String[] cols={ContactsContract.Data._ID,ContactsContract.Data.RAW_CONTACT_ID,
-     ContactsContract.Data.MIMETYPE,ContactsContract.Data.DATA1,ContactsContract.Data.DATA2,
-     ContactsContract.Data.DATA3,ContactsContract.Data.DATA4,ContactsContract.Data.DATA5,
-     ContactsContract.Data.DATA7,ContactsContract.Data.DATA8,ContactsContract.Data.DATA9};
-   int phoneIndex=0,emailIndex=0;
+   ContactData loaded=null;
+   String[] cols=ContactData.PROJECTION;
    try(Cursor cursor=getContentResolver().query(ContactsContract.Data.CONTENT_URI,cols,
-     ContactsContract.Data.CONTACT_ID+"=?",new String[]{String.valueOf(contactId)},null)){
-    if(cursor!=null)while(cursor.moveToNext()){
-     long id=cursor.getLong(0);long rowRaw=cursor.getLong(1);
-     if(raw<0)raw=rowRaw;
-     String mime=cursor.getString(2);
-     String data1=cursor.getString(3),data2=cursor.getString(4),data3=cursor.getString(5);
-     if(ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE.equals(mime)){
-      put(values,ids,"first",data2,id);put(values,ids,"last",data3,id);
-      ids.put("name",id);
-     }else if(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE.equals(mime)){
-      if(phoneIndex<4)put(values,ids,"phone"+phoneIndex++,data1,id);
-     }else if(ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE.equals(mime)){
-      if(emailIndex<3)put(values,ids,"email"+emailIndex++,data1,id);
-     }else if(ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE.equals(mime)){
-      existingPhotoId=id;
-     }else if(ContactsContract.CommonDataKinds.Nickname.CONTENT_ITEM_TYPE.equals(mime)){
-      put(values,ids,"nickname",data1,id);
-     }else if(ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE.equals(mime)){
-      put(values,ids,"company",data1,id);put(values,ids,"job",data2,id);put(values,ids,"department",data3,id);
-     }else if(ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE.equals(mime)){
-      put(values,ids,"street",cursor.getString(6),id);
-      put(values,ids,"city",cursor.getString(7),id);
-      put(values,ids,"region",cursor.getString(8),id);
-      put(values,ids,"zipcode",cursor.getString(9),id);
-      put(values,ids,"country",cursor.getString(10),id);
-     }else if(ContactsContract.CommonDataKinds.Website.CONTENT_ITEM_TYPE.equals(mime)){
-      put(values,ids,"website",data1,id);
-     }else if(ContactsContract.CommonDataKinds.Note.CONTENT_ITEM_TYPE.equals(mime)){
-      put(values,ids,"notes",data1,id);
-     }else if(ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE.equals(mime)){
-      if("3".equals(data2))put(values,ids,"birthday",data1,id);
-      else if("1".equals(data2))put(values,ids,"anniversary",data1,id);
-     }
-    }
+     ContactsContract.Data.CONTACT_ID+"=?",new String[]{String.valueOf(contactId)},
+     ContactsContract.Data.IS_SUPER_PRIMARY+" DESC, "+ContactsContract.Data._ID+" ASC")){
+    if(cursor!=null)loaded=ContactData.read(cursor);
    }catch(Exception ignored){}
-   final long loadedRaw=raw;
+   final ContactData result=loaded;
    runOnUiThread(()->{
     if(isFinishing()||isDestroyed())return;
-    rawId=loadedRaw;dataIds.putAll(ids);
-    for(Map.Entry<String,String> item:values.entrySet()){
+    loading=false;
+    if(result==null||result.rawId<1){
+     progress.setText(tr("לא נמצא מזהה איש קשר שניתן לעריכה"));return;
+    }
+    rawId=result.rawId;existingPhotoId=result.photoId;dataIds.clear();dataIds.putAll(result.ids);
+    originalTypes.clear();originalTypes.putAll(result.types);
+    for(Map.Entry<String,String> item:result.values.entrySet()){
      EditText view=controls.get(item.getKey());if(view!=null)view.setText(item.getValue());
     }
     if(!extraPhone.isEmpty()){
@@ -238,9 +216,23 @@ public final class ContactEditorActivity extends Activity {
       for(int i=0;i<4;i++)if(get("phone"+i).isEmpty()){controls.get("phone"+i).setText(extraPhone);break;}
      }
     }
-    progress.setText("");
+    restoreDraft();progress.setText("");saveButton.setEnabled(!photoLoading);for(EditText field:controls.values())field.setEnabled(true);
    });
   });
+ }
+ @Override protected void onSaveInstanceState(Bundle out){
+  super.onSaveInstanceState(out);
+  for(Map.Entry<String,EditText> field:controls.entrySet())out.putString("draft_"+field.getKey(),field.getValue().getText().toString());
+  if(newPhoto!=null)out.putByteArray("draft_photo",newPhoto);
+ }
+ private void restoreDraft(){
+  if(restored==null)return;
+  for(Map.Entry<String,EditText> field:controls.entrySet()){
+   String value=restored.getString("draft_"+field.getKey());if(value!=null)field.getValue().setText(value);
+  }
+  newPhoto=restored.getByteArray("draft_photo");
+  if(newPhoto!=null){Bitmap picture=BitmapFactory.decodeByteArray(newPhoto,0,newPhoto.length);avatar.setImageBitmap(picture);avatar.setVisibility(View.VISIBLE);}
+  restored=null;
  }
  private void pickPhoto(){
   Intent select=new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -251,14 +243,17 @@ public final class ContactEditorActivity extends Activity {
  }
  @Override protected void onActivityResult(int req,int result,Intent data){
   super.onActivityResult(req,result,data);
+  if(req==NativeContacts.REQUEST_EDIT){if(result==RESULT_OK){ContactPhotos.clearCache();setResult(RESULT_OK);finish();}return;}
   if(req!=86||result!=RESULT_OK||data==null||data.getData()==null)return;
   Uri uri=data.getData();
-  progress.setText(tr("טוען תמונה…"));
+  photoLoading=true;saveButton.setEnabled(false);progress.setText(tr("טוען תמונה…"));
   IO.execute(()->{
-   try(InputStream stream=getContentResolver().openInputStream(uri)){
-    BitmapFactory.Options options=new BitmapFactory.Options();
-    options.inSampleSize=2;
-    Bitmap decoded=BitmapFactory.decodeStream(stream,null,options);
+   try{
+    BitmapFactory.Options options=new BitmapFactory.Options();options.inJustDecodeBounds=true;
+    try(InputStream bounds=getContentResolver().openInputStream(uri)){BitmapFactory.decodeStream(bounds,null,options);}
+    options.inSampleSize=ContactPhotos.sampleSize(options.outWidth,options.outHeight,512);options.inJustDecodeBounds=false;
+    Bitmap decoded;
+    try(InputStream stream=getContentResolver().openInputStream(uri)){decoded=BitmapFactory.decodeStream(stream,null,options);}
     if(decoded==null)throw new Exception("Invalid picture");
     int w=decoded.getWidth(),h=decoded.getHeight();
     float scale=Math.min(1f,512f/Math.max(w,h));
@@ -266,22 +261,27 @@ public final class ContactEditorActivity extends Activity {
          Math.max(1,(int)(h*scale)),true):decoded;
     ByteArrayOutputStream bytes=new ByteArrayOutputStream();
     small.compress(Bitmap.CompressFormat.JPEG,83,bytes);
-    newPhoto=bytes.toByteArray();
+    final byte[] photoBytes=bytes.toByteArray();
+    if(small!=decoded)decoded.recycle();
     runOnUiThread(()->{
-     avatar.setImageBitmap(small);avatar.setVisibility(View.VISIBLE);progress.setText("");
+     if(isFinishing()||isDestroyed())return;
+     photoLoading=false;saveButton.setEnabled(!loading);newPhoto=photoBytes;avatar.setImageBitmap(small);avatar.setVisibility(View.VISIBLE);progress.setText("");
     });
    }catch(Exception error){
-    runOnUiThread(()->{progress.setText("");Toast.makeText(this,tr("לא ניתן לטעון תמונה"),Toast.LENGTH_SHORT).show();});
+    runOnUiThread(()->{if(isFinishing()||isDestroyed())return;photoLoading=false;saveButton.setEnabled(!loading);progress.setText("");Toast.makeText(this,tr("לא ניתן לטעון תמונה"),Toast.LENGTH_SHORT).show();});
    }
   });
  }
  private static void put(Map<String,String> values,Map<String,Long> ids,String key,String val,long id){
   if(!values.containsKey(key)){values.put(key,val==null?"":val);ids.put(key,id);}
  }
- private static void addData(ArrayList<ContentProviderOperation> operations,long raw,boolean creating,
+ static void addData(ArrayList<ContentProviderOperation> operations,long raw,boolean creating,
                               long currentId,String mime,String[] columns,String[] values){
   boolean has=false;
-  for(String value:values)if(value!=null&&!value.trim().isEmpty())has=true;
+  for(int i=0;i<values.length;i++){
+   if(ContactsContract.Data.DATA2.equals(columns[i]) && (ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE.equals(mime)||ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE.equals(mime)||ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE.equals(mime)))continue;
+   if(values[i]!=null&&!values[i].trim().isEmpty())has=true;
+  }
   if(!has&&currentId<1)return;
   ContentProviderOperation.Builder builder;
   if(currentId>0){
@@ -301,17 +301,21 @@ public final class ContactEditorActivity extends Activity {
   operations.add(builder.build());
  }
  private void save(){
+  if(loading||saving||photoLoading||(contactId>0&&rawId<1))return;
   if(get("first").isEmpty()&&get("last").isEmpty()){
-   Toast.makeText(this,"נא להזין שם פרטי או שם משפחה",Toast.LENGTH_SHORT).show();return;
+   Toast.makeText(this,tr("נא להזין שם פרטי או שם משפחה"),Toast.LENGTH_SHORT).show();return;
   }
   if(checkSelfPermission(Manifest.permission.WRITE_CONTACTS)!=PackageManager.PERMISSION_GRANTED){
    requestPermissions(new String[]{Manifest.permission.WRITE_CONTACTS},45);return;
   }
-  saveButton.setEnabled(false);progress.setText("שומר איש קשר…");
+  saving=true;saveButton.setEnabled(false);progress.setText(tr("שומר איש קשר…"));
   final HashMap<String,String> values=new HashMap<>();
   for(Map.Entry<String,EditText> e:controls.entrySet())values.put(e.getKey(),e.getValue().getText().toString().trim());
   final HashMap<String,Long> ids=new HashMap<>(dataIds);
   final long useRaw=rawId;
+  final byte[] photoBytes=newPhoto;
+  final long photoId=existingPhotoId;
+  final HashMap<String,String> types=new HashMap<>(originalTypes);
   IO.execute(()->{
    try{
     boolean creating=contactId<1;
@@ -333,7 +337,7 @@ public final class ContactEditorActivity extends Activity {
       i==2?ContactsContract.CommonDataKinds.Phone.TYPE_WORK:ContactsContract.CommonDataKinds.Phone.TYPE_OTHER;
      addData(ops,useRaw,creating,id(ids,key),ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE,
       new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER,ContactsContract.CommonDataKinds.Phone.TYPE},
-      new String[]{getVal(values,key),String.valueOf(type)});
+      new String[]{getVal(values,key),types.containsKey(key)?types.get(key):String.valueOf(type)});
     }
     for(int i=0;i<3;i++){
      String key="email"+i;
@@ -341,7 +345,7 @@ public final class ContactEditorActivity extends Activity {
         i==1?ContactsContract.CommonDataKinds.Email.TYPE_WORK:ContactsContract.CommonDataKinds.Email.TYPE_OTHER;
      addData(ops,useRaw,creating,id(ids,key),ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE,
       new String[]{ContactsContract.CommonDataKinds.Email.ADDRESS,ContactsContract.CommonDataKinds.Email.TYPE},
-      new String[]{getVal(values,key),String.valueOf(type)});
+      new String[]{getVal(values,key),types.containsKey(key)?types.get(key):String.valueOf(type)});
     }
     addData(ops,useRaw,creating,id(ids,"nickname"),ContactsContract.CommonDataKinds.Nickname.CONTENT_ITEM_TYPE,
      new String[]{ContactsContract.CommonDataKinds.Nickname.NAME},new String[]{getVal(values,"nickname")});
@@ -368,35 +372,32 @@ public final class ContactEditorActivity extends Activity {
     addData(ops,useRaw,creating,id(ids,"anniversary"),ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE,
      new String[]{ContactsContract.CommonDataKinds.Event.START_DATE,ContactsContract.CommonDataKinds.Event.TYPE},
      new String[]{getVal(values,"anniversary"),String.valueOf(ContactsContract.CommonDataKinds.Event.TYPE_ANNIVERSARY)});
-    android.content.ContentProviderResult[] applied=getContentResolver().applyBatch(ContactsContract.AUTHORITY,ops);
-    if(newPhoto!=null){
-     long updatedRaw=useRaw;
-     if(creating && applied.length>0 && applied[0].uri!=null){
-      updatedRaw=android.content.ContentUris.parseId(applied[0].uri);
+    if(photoBytes!=null){
+     ContentProviderOperation.Builder photo;
+     if(photoId>0)photo=ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
+      .withSelection(ContactsContract.Data._ID+"=?",new String[]{String.valueOf(photoId)});
+     else{
+      photo=ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+       .withValue(ContactsContract.Data.MIMETYPE,ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE);
+      if(creating)photo.withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID,0);
+      else photo.withValue(ContactsContract.Data.RAW_CONTACT_ID,useRaw);
      }
-     if(updatedRaw>0){
-      android.content.ContentValues photo=new android.content.ContentValues();
-      photo.put(ContactsContract.Data.MIMETYPE,ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE);
-      photo.put(ContactsContract.CommonDataKinds.Photo.PHOTO,newPhoto);
-      if(existingPhotoId>0){
-       getContentResolver().update(ContactsContract.Data.CONTENT_URI,photo,
-        ContactsContract.Data._ID+"=?",new String[]{String.valueOf(existingPhotoId)});
-      }else{
-       photo.put(ContactsContract.Data.RAW_CONTACT_ID,updatedRaw);
-       getContentResolver().insert(ContactsContract.Data.CONTENT_URI,photo);
-      }
-     }
+     ops.add(photo.withValue(ContactsContract.CommonDataKinds.Photo.PHOTO,photoBytes).build());
     }
+    // All fields and the photo commit together; a failed photo cannot create a duplicate on retry.
+    getContentResolver().applyBatch(ContactsContract.AUTHORITY,ops);
     ContactPhotos.clearCache();
     runOnUiThread(()->{
-     Toast.makeText(this,"איש הקשר נשמר בהצלחה",Toast.LENGTH_SHORT).show();
+     if(isFinishing()||isDestroyed())return;
+     Toast.makeText(this,tr("איש הקשר נשמר בהצלחה"),Toast.LENGTH_SHORT).show();
      setResult(RESULT_OK);finish();
     });
    }catch(Exception e){
     String message=e.getMessage()==null?"שגיאה לא ידועה":e.getMessage();
     runOnUiThread(()->{
-     saveButton.setEnabled(true);progress.setText("השמירה לא הצליחה");
-     Toast.makeText(this,"לא ניתן לשמור: "+message,Toast.LENGTH_LONG).show();
+     if(isFinishing()||isDestroyed())return;
+     saving=false;saveButton.setEnabled(true);progress.setText(tr("השמירה לא הצליחה"));
+     Toast.makeText(this,tr("לא ניתן לשמור: ")+tr(message),Toast.LENGTH_LONG).show();
     });
    }
   });

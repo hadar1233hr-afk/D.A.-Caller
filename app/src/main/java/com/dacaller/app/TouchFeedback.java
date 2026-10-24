@@ -6,11 +6,9 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.RippleDrawable;
-import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.HapticFeedbackConstants;
-import android.view.MotionEvent;
 import android.view.View;
 
 /** Fast visual press indication and short tactile feedback without dependencies. */
@@ -23,19 +21,10 @@ final class TouchFeedback {
   target.setForeground(new RippleDrawable(
    ColorStateList.valueOf(0x32CDB47F),null,mask));
   target.setClickable(true);
-  target.setOnTouchListener((view,event)->{
-   switch(event.getActionMasked()){
-    case MotionEvent.ACTION_DOWN:
-     view.animate().cancel();
-     view.animate().scaleX(0.96f).scaleY(0.96f).setDuration(58).start();
-     break;
-    case MotionEvent.ACTION_UP:
-    case MotionEvent.ACTION_CANCEL:
-     view.animate().scaleX(1f).scaleY(1f).setDuration(90).start();
-     break;
-   }
-   return false;
-  });
+  // Let View own pressed/click/cancel semantics. Transforming a live row or its
+  // hit regions during DOWN made taps fragile while ListView was scrolling.
+  // The foreground ripple supplies feedback without intercepting touch events.
+  target.setOnTouchListener(null);
  }
  static void pulse(Context context,SharedPreferences preferences,View target){
   if(preferences==null||!preferences.getBoolean("haptics",true))return;

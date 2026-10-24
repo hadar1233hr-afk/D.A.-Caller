@@ -3,12 +3,14 @@ package com.dacaller.app;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.telecom.Call;
@@ -33,7 +35,7 @@ public final class CallScreenActivity extends Activity {
  private final Handler clockHandler=new Handler(Looper.getMainLooper());
  private final Runnable changed=()->runOnUiThread(this::refresh);
  private final Runnable tickTask=new Runnable(){public void run(){
-  updateTimer();updateBadge();clockHandler.postDelayed(this,1500);
+  updateTimer();updateBadge();clockHandler.postDelayed(this,1000);
  }};
  private SharedPreferences prefs;
  private CallThemes theme;
@@ -41,42 +43,63 @@ public final class CallScreenActivity extends Activity {
  private LinearLayout shell,body,buttons;
  private TextView caller,phase,timer,badge,identity;
  private ImageView portrait;
+ private Call toneCall;
+ private final Runnable stopTone=()->{
+  if(toneCall!=null){try{toneCall.stopDtmfTone();}catch(Exception ignored){}toneCall=null;}
+ };
  private long shownContactId=-1;
  private int dp(float x){return (int)(getResources().getDisplayMetrics().density*x+0.5f);}
  private boolean compact(){return getResources().getDisplayMetrics().heightPixels/getResources().getDisplayMetrics().density<640;}
  private boolean narrow(){return getResources().getDisplayMetrics().widthPixels/getResources().getDisplayMetrics().density<340;}
+ private static final class GesturePrompt extends TextView {
+  GesturePrompt(Context context){super(context);}
+  @Override public boolean performClick(){return super.performClick();}
+ }
  private TextView text(String s,int size,int color,boolean bold){
-  TextView v=new TextView(this);v.setText(s);v.setTextSize(size);v.setTextColor(color);
+  return styledText(new TextView(this),s,size,color,bold);
+ }
+ private <T extends TextView>T styledText(T v,String s,int size,int color,boolean bold){
+  v.setText(s);v.setTextSize(size);v.setTextColor(color);
   v.setIncludeFontPadding(false);v.setGravity(Gravity.CENTER);
   v.setTypeface(Typeface.create(bold?"sans-serif-medium":"sans-serif",Typeface.NORMAL));return v;
  }
- private LinearLayout col(){LinearLayout a=new LinearLayout(this);a.setOrientation(1);a.setGravity(Gravity.CENTER);return a;}
+ private LinearLayout col(){LinearLayout a=new LinearLayout(this);a.setOrientation(LinearLayout.VERTICAL);a.setGravity(Gravity.CENTER);return a;}
  private LinearLayout row(){LinearLayout a=new LinearLayout(this);a.setGravity(Gravity.CENTER);return a;}
  private String tr(String heb){return I18n.text(this,heb);}
  private void feedback(View view){TouchFeedback.pulse(this,prefs,view);}
  private String currentThemeKey(){
-  return prefs.getString("call_theme","graphite")+"/"+prefs.getBoolean("dark",false)+"/"+prefs.getBoolean("amoled",false);
+  return prefs.getString("call_theme","graphite")+"/"+prefs.getBoolean("dark",false)+"/"+prefs.getBoolean("amoled",false)+"/"+prefs.getString("language","he");
  }
  @Override public void onCreate(Bundle b){
   super.onCreate(b);prefs=getSharedPreferences("da_caller",MODE_PRIVATE);
-  setShowWhenLocked(true);setTurnScreenOn(true);
-  getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+  if(Build.VERSION.SDK_INT>=27){setShowWhenLocked(true);setTurnScreenOn(true);}
+  else getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED|WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
   theme=new CallThemes(this);themeKey=currentThemeKey();
-  createShell();PhoneSessionService.register(changed);
-  clockHandler.post(tickTask);refresh();
+  createShell();PhoneSessionService.register(changed);refresh();
  }
  @Override protected void onNewIntent(Intent intent){
   super.onNewIntent(intent);setIntent(intent);drawnState="";refresh();
  }
- @Override protected void onResume(){super.onResume();drawnState="";refresh();}
+ @Override protected void onResume(){
+  super.onResume();PhoneSessionService.setScreenVisible(true);
+  clockHandler.removeCallbacks(tickTask);clockHandler.post(tickTask);drawnState="";refresh();
+ }
+ @Override protected void onPause(){
+  clockHandler.removeCallbacks(tickTask);clockHandler.removeCallbacks(stopTone);stopTone.run();
+  PhoneSessionService.setScreenVisible(false);super.onPause();
+ }
  private void createShell(){
   theme=new CallThemes(this);themeKey=currentThemeKey();
   getWindow().setStatusBarColor(theme.background);
   getWindow().setNavigationBarColor(theme.background);
-  getWindow().getDecorView().setSystemUiVisibility(theme.dark?0:
-    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
-  shell=col();shell.setPadding(dp(narrow()?11:18),dp(compact()?7:14),dp(narrow()?11:18),dp(9));
-  shell.setBackgroundColor(theme.background);setContentView(shell);
+  int lightBars=View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+  lightBars|=View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+  getWindow().getDecorView().setSystemUiVisibility(theme.dark?0:lightBars);
+  shell=col();shell.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);shell.setPadding(dp(narrow()?11:18),dp(compact()?7:14),dp(narrow()?11:18),dp(9));
+  shell.setBackgroundColor(theme.background);
+  ScrollView viewport=new ScrollView(this);viewport.setFillViewport(true);
+  viewport.setBackgroundColor(theme.background);viewport.addView(shell);
+  setContentView(viewport);
   TextView brand=text("DA",12,theme.accent,true);brand.setLetterSpacing(0.2f);
   shell.addView(brand,new LinearLayout.LayoutParams(-1,dp(compact()?24:29)));
   phase=text("",14,theme.muted,false);
@@ -105,16 +128,14 @@ public final class CallScreenActivity extends Activity {
   TextView monogram=text("DA",compact()?28:34,theme.accent,true);
   portraitFrame.addView(monogram,new FrameLayout.LayoutParams(-1,-1));
   portrait.setTag(monogram);
-  ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);
-  scroll.setVerticalScrollBarEnabled(false);
-  shell.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));
-  body=col();body.setGravity(Gravity.CENTER);scroll.addView(body);
+  body=col();body.setGravity(Gravity.CENTER);
+  shell.addView(body,new LinearLayout.LayoutParams(-1,-2));
   buttons=col();body.addView(buttons,new LinearLayout.LayoutParams(-1,-2));
   shownContactId=-1;lastNumber="";
  }
  private String lastNumber="";
  private void updateCaller(Call call){
-  String number="מספר לא מזוהה";
+  String number=tr("מספר לא מזוהה");
   try{
    if(call.getDetails()!=null&&call.getDetails().getHandle()!=null)
     number=call.getDetails().getHandle().getSchemeSpecificPart();
@@ -152,18 +173,23 @@ public final class CallScreenActivity extends Activity {
   badge.setVisibility(VolteStatus.isVoiceOnLte(this)?View.VISIBLE:View.GONE);
  }
  private void refresh(){
+  if(isFinishing()||isDestroyed())return;
   Call call=PhoneSessionService.current;
   if(call==null||call.getState()==Call.STATE_DISCONNECTED){finish();return;}
   if(!currentThemeKey().equals(themeKey)){createShell();drawnState="";}
   int state=call.getState();
+  if(state==Call.STATE_RINGING||state==Call.STATE_DIALING||state==Call.STATE_CONNECTING)
+   getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+  else getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
   String stage=state==Call.STATE_RINGING?"שיחה נכנסת":
       state==Call.STATE_DIALING?"מחייג…":
       state==Call.STATE_CONNECTING?"מתחבר…":
       state==Call.STATE_HOLDING?"בהמתנה":
       state==Call.STATE_ACTIVE?"שיחה פעילה":"שיחה";
   phase.setText(tr(stage));updateCaller(call);updateTimer();updateBadge();
-  String config=state+"/"+PhoneSessionService.muted()+"/"+PhoneSessionService.speaker()+"/"+
-    PhoneSessionService.bluetooth();
+  String config=System.identityHashCode(call)+"/"+state+"/"+PhoneSessionService.muted()+"/"+PhoneSessionService.speaker()+"/"+
+    PhoneSessionService.bluetooth()+"/"+prefs.getString("answer_mode","ios")+"/"+prefs.getInt("call_button_height",64);
+  for(String id:InCallControls.IDS)config+="/"+InCallControls.enabled(prefs,id);
   if(config.equals(drawnState))return;
   drawnState=config;
   buttons.removeAllViews();
@@ -174,10 +200,10 @@ public final class CallScreenActivity extends Activity {
   LinearLayout box=col();box.setBackground(theme.card(this,kind));
   box.setElevation(dp(theme.amoled?0:2));
   ImageView icon=new ImageView(this);
-  icon.setImageResource(res);icon.setImageTintList(ColorStateList.valueOf(kind==2?theme.decline:theme.accent));
+  icon.setImageResource(res);icon.setImageTintList(ColorStateList.valueOf(kind==2?Color.WHITE:theme.accent));
   icon.setScaleType(ImageView.ScaleType.FIT_CENTER);
   box.addView(icon,new LinearLayout.LayoutParams(dp(compact()?24:28),dp(compact()?24:28)));
-  TextView desc=text(tr(caption),compact()?11:12,theme.ink,true);
+  TextView desc=text(tr(caption),compact()?11:12,kind==2?Color.WHITE:theme.ink,true);
   LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(-1,dp(25));cp.topMargin=dp(5);
   box.addView(desc,cp);
   LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(0,dp(height),1);
@@ -188,57 +214,52 @@ public final class CallScreenActivity extends Activity {
   return desc;
  }
  private void incoming(Call call){
-  String mode=prefs.getString("answer_mode","ios");
-  if(mode.equals("ios")||mode.equals("right")||mode.equals("left")||mode.equals("vertical")){
-   TextView prompt=text("",compact()?16:18,theme.accent,true);
-   prompt.setBackground(theme.card(this,1));
-   String title=mode.equals("vertical")?"↑  החלק למעלה כדי לענות  ↓":
-    mode.equals("left")?"←  החלק שמאלה כדי לענות":"החלק ימינה כדי לענות  →";
-   prompt.setText(tr(title));
-   LinearLayout.LayoutParams gesture=new LinearLayout.LayoutParams(-1,dp(compact()?78:100));
-   gesture.setMargins(dp(7),dp(6),dp(7),dp(13));
-   buttons.addView(prompt,gesture);
-   final float[] down={0,0};
-   prompt.setOnTouchListener((v,event)->{
-    switch(event.getActionMasked()){
-     case MotionEvent.ACTION_DOWN:down[0]=event.getX();down[1]=event.getY();return true;
-     case MotionEvent.ACTION_UP:
-      float dx=event.getX()-down[0],dy=event.getY()-down[1];
-      int distance=dp(64);
-      boolean accept=false,decline=false;
-      if(mode.equals("vertical")){
-       accept=dy< -distance&&Math.abs(dy)>Math.abs(dx)*1.2f;
-       decline=dy>distance&&Math.abs(dy)>Math.abs(dx)*1.2f;
-      }else{
-       if(mode.equals("left")){
-        accept=dx< -distance&&Math.abs(dx)>Math.abs(dy)*1.2f;
-        decline=dx>distance&&Math.abs(dx)>Math.abs(dy)*1.2f;
-       }else{
-        accept=dx>distance&&Math.abs(dx)>Math.abs(dy)*1.2f;
-        decline=!mode.equals("ios")&&dx< -distance&&Math.abs(dx)>Math.abs(dy)*1.2f;
-       }
-      }
-      if(accept){feedback(prompt);try{call.answer(VideoProfile.STATE_AUDIO_ONLY);}catch(Exception ignored){}}
-      else if(decline){feedback(prompt);try{call.reject(false,null);}catch(Exception ignored){}}
-      return true;
-     case MotionEvent.ACTION_CANCEL:return true;
-    }
-    return true;
-   });
-  }
-  LinearLayout controls=row();buttons.addView(controls,new LinearLayout.LayoutParams(-1,-2));
-  if(!mode.equals("ios")){
-   tile(controls,R.drawable.ic_phone_line,"ענה",1,compact()?65:77,()->{
-    try{call.answer(VideoProfile.STATE_AUDIO_ONLY);}catch(Exception ignored){}
-   });
-  }else{
-   TextView instruction=text(tr("החלק בכרטיס כדי לענות"),12,theme.muted,false);
-   controls.addView(instruction,new LinearLayout.LayoutParams(0,dp(64),1));
-  }
-  tile(controls,R.drawable.ic_control_close,"דחה",2,compact()?65:77,()->{
-   try{call.reject(false,null);}catch(Exception ignored){}
+  String mode=IncomingGesture.mode(prefs.getString("answer_mode","ios"));
+  GesturePrompt prompt=styledText(new GesturePrompt(this),"",compact()?14:16,theme.accent,true);
+  prompt.setBackground(theme.card(this,1));
+  String title=mode.equals("vertical")?"↑ למעלה למענה · למטה לדחייה ↓":
+    mode.equals("left")?"← שמאלה למענה · ימינה לדחייה →":
+    mode.equals("right")?"→ ימינה למענה · שמאלה לדחייה ←":"החלק ימינה כדי לענות  →";
+  // Keep both safety actions reachable by TalkBack, switch access and a simple tap.
+  prompt.setText(tr(title));prompt.setContentDescription(tr(title));prompt.setFocusable(true);
+  prompt.setOnClickListener(v->v.announceForAccessibility(tr(title)));
+  LinearLayout.LayoutParams gesture=new LinearLayout.LayoutParams(-1,dp(compact()?78:100));
+  gesture.setMargins(dp(7),dp(6),dp(7),dp(13));buttons.addView(prompt,gesture);
+  final float[] down={0,0};final boolean[] tracking={false};
+  prompt.setOnTouchListener((v,event)->{
+   switch(event.getActionMasked()){
+    case MotionEvent.ACTION_DOWN:
+     tracking[0]=true;down[0]=event.getX();down[1]=event.getY();
+     v.getParent().requestDisallowInterceptTouchEvent(true);return true;
+    case MotionEvent.ACTION_POINTER_DOWN:
+    case MotionEvent.ACTION_CANCEL:tracking[0]=false;return true;
+    case MotionEvent.ACTION_UP:
+     v.getParent().requestDisallowInterceptTouchEvent(false);
+     if(!tracking[0])return true;
+     tracking[0]=false;
+     IncomingGesture.Action action=IncomingGesture.resolve(mode,event.getX()-down[0],event.getY()-down[1],dp(64));
+     if(action==IncomingGesture.Action.ANSWER)answer(call,prompt);
+     else if(action==IncomingGesture.Action.DECLINE)decline(call,prompt);
+     else v.performClick();
+     return true;
+    default:return true;
+   }
   });
+  LinearLayout controls=row();buttons.addView(controls,new LinearLayout.LayoutParams(-1,-2));
+  tile(controls,R.drawable.ic_phone_line,"ענה",1,compact()?65:77,()->answer(call,prompt));
+  tile(controls,R.drawable.ic_control_close,"דחה",2,compact()?65:77,()->decline(call,prompt));
  }
+ private void answer(Call call,View view){
+  if(call!=PhoneSessionService.current||call.getState()!=Call.STATE_RINGING)return;
+  feedback(view);
+  try{call.answer(VideoProfile.STATE_AUDIO_ONLY);}catch(Exception e){callError();}
+ }
+ private void decline(Call call,View view){
+  if(call!=PhoneSessionService.current||call.getState()!=Call.STATE_RINGING)return;
+  feedback(view);
+  try{call.reject(false,null);}catch(Exception e){callError();}
+ }
+ private void callError(){Toast.makeText(this,tr("פעולת השיחה לא הצליחה"),Toast.LENGTH_SHORT).show();}
  private void active(Call call,int state){
   ArrayList<String> ids=new ArrayList<>();
   for(String id:InCallControls.IDS)if(InCallControls.enabled(prefs,id))ids.add(id);
@@ -253,14 +274,17 @@ public final class CallScreenActivity extends Activity {
    for(int i=ids.size()%columns;i<columns;i++)
     line.addView(new View(this),new LinearLayout.LayoutParams(0,dp(height),1));
   }
-  TextView end=text(tr("סיום שיחה")+"   ✕",16,theme.dark?Color.WHITE:Color.WHITE,true);
+  TextView end=text(tr("סיום שיחה")+"   ✕",16,Color.WHITE,true);
   end.setBackgroundColor(theme.decline);
   end.setBackground(theme.card(this,2));
   LinearLayout.LayoutParams ep=new LinearLayout.LayoutParams(-1,dp(compact()?53:62));
   ep.setMargins(dp(4),dp(14),dp(4),dp(4));buttons.addView(end,ep);
   end.setContentDescription(tr("סיום שיחה"));
   TouchFeedback.bind(end,prefs);
-  end.setOnClickListener(v->{feedback(end);try{call.disconnect();}catch(Exception ignored){}finish();});
+  end.setOnClickListener(v->{
+   if(call!=PhoneSessionService.current)return;
+   feedback(end);try{call.disconnect();}catch(Exception e){callError();}
+  });
  }
  private void addOptional(LinearLayout parent,String id,Call call,int state,int height){
   switch(id){
@@ -275,6 +299,11 @@ public final class CallScreenActivity extends Activity {
    case "hold":
     tile(parent,state==Call.STATE_HOLDING?R.drawable.ic_control_play:R.drawable.ic_control_pause,
       state==Call.STATE_HOLDING?"המשך":"המתן",state==Call.STATE_HOLDING?1:0,height,()->{
+       if(call!=PhoneSessionService.current)return;
+       Call.Details details=call.getDetails();
+       if(details==null||!details.can(Call.Details.CAPABILITY_HOLD)){
+        Toast.makeText(this,tr("המתנה לא זמינה"),Toast.LENGTH_SHORT).show();return;
+       }
        try{if(call.getState()==Call.STATE_HOLDING)call.unhold();else call.hold();}
        catch(Exception e){Toast.makeText(this,tr("המתנה לא זמינה"),Toast.LENGTH_SHORT).show();}
       });break;
@@ -330,9 +359,11 @@ public final class CallScreenActivity extends Activity {
     p.setMargins(dp(3),dp(2),dp(3),dp(2));line.addView(btn,p);
     TouchFeedback.bind(btn,prefs);
     btn.setOnClickListener(v->{
+     if(call!=PhoneSessionService.current||call.getState()!=Call.STATE_ACTIVE)return;
      feedback(btn);try{
-      call.playDtmfTone(digit.charAt(0));
-      clockHandler.postDelayed(()->{try{call.stopDtmfTone();}catch(Exception ignored){}},145);
+      clockHandler.removeCallbacks(stopTone);stopTone.run();
+      toneCall=call;call.playDtmfTone(digit.charAt(0));
+      clockHandler.postDelayed(stopTone,145);
      }catch(Exception ignored){}
     });
    }
@@ -340,12 +371,13 @@ public final class CallScreenActivity extends Activity {
   TextView close=text(tr("סגור"),16,theme.accent,true);
   keypad.addView(close,new LinearLayout.LayoutParams(-1,dp(43)));
   close.setOnClickListener(v->dialog.dismiss());
+  dialog.setOnDismissListener(ignored->{clockHandler.removeCallbacks(stopTone);stopTone.run();});
   dialog.setContentView(keypad);dialog.show();
   Window window=dialog.getWindow();
   if(window!=null){window.setBackgroundDrawableResource(android.R.color.transparent);window.setLayout(-1,-2);window.setGravity(Gravity.BOTTOM);}
  }
  @Override protected void onDestroy(){
-  clockHandler.removeCallbacks(tickTask);PhoneSessionService.unregister(changed);super.onDestroy();
+  clockHandler.removeCallbacksAndMessages(null);stopTone.run();PhoneSessionService.unregister(changed);super.onDestroy();
  }
  @Override public void onBackPressed(){moveTaskToBack(true);}
 }

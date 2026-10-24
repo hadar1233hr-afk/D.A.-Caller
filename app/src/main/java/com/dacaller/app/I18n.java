@@ -177,7 +177,52 @@ final class I18n {
   put("נשמרו ","Saved ");
   put(" שיחות שאינן מופיעות ביומן המכשיר"," calls no longer in Android history");
   put("נדרשת הרשאת אנשי קשר","Contacts permission required");
+  put("↑ למעלה למענה · למטה לדחייה ↓","↑ Up to answer · down to decline ↓");
+  put("← שמאלה למענה · ימינה לדחייה →","← Left to answer · right to decline →");
+  put("→ ימינה למענה · שמאלה לדחייה ←","→ Right to answer · left to decline ←");
+  put("פעולת השיחה לא הצליחה","Call action failed");
+  put("לא נמצאו תוצאות","No results");put("ללא שם","Unnamed");
+  put("חזרה","Back");
+  put("רענון ארכיון","Refresh archive");
+  put("חיפוש מספר בארכיון","Search number in archive");
+  put("תא קולי","Voicemail");
+  put("נענתה במכשיר אחר","Answered on another device");
+  put("לא ניתן לטעון את הארכיון. נסה לרענן.","Unable to load archive. Try refreshing.");
+  put("אין שיחות תואמות בארכיון","No matching archived calls");
+  put("%d מתוך %d שיחות בארכיון","%d of %d archived calls");
+  put("רענון אנשי קשר","Refresh contacts");
+  put("לא נמצאו אנשי קשר","No contacts found");
+  put("הסר מהמועדפים ","Remove from favorites ");
+  put("הוסף למועדפים ","Add to favorites ");
+  put("☆ פתח את המועדפים","☆ Open favorites");
+  put("השתק מיקרופון","Mute microphone");
+  put("מקשי חיוג","Dialpad");
+  put("המתנה","Hold");
+  put("אוזניית Bluetooth","Bluetooth headset");
+  put("הוספת שיחה","Add call");
+  put("הערת שיחה","Call note");
+  put("השתקה והפעלה של המיקרופון","Mute or unmute your microphone");
+  put("מעבר בין רמקול לאפרכסת","Switch between speaker and earpiece");
+  put("שליחת ספרות במהלך השיחה","Send digits during a call");
+  put("העברת שיחה להמתנה וחזרה","Hold or resume the call");
+  put("מעבר לאוזנייה כשהיא זמינה","Switch to an available headset");
+  put("פתיחת חייגן לשיחה נוספת","Open dialpad for another call");
+  put("פתיחת אנשי הקשר במהלך שיחה","Open contacts during a call");
+  put("כתיבת הערה מקומית לשיחה","Write an on-device call note");
+  put("לא ניתן למחוק את הארכיון","Unable to delete archive");
+  put("כבוי מפסיק שמירה חדשה. למחיקת נתונים קיימים בחר מחיקת ארכיון.","Off stops new archiving. Use Delete archive to remove existing data.");
+  put("פתיחה בעורך אנשי הקשר","Open device contact editor");
+  put("עורך אנשי הקשר אינו זמין","Contacts editor unavailable");
+  put("הזן מספר תקין לחיוג","Enter a valid phone number");
+  put("לא ניתן לבצע שיחה","Unable to place call");
+  put("הזן מספר לפני הוספה לאנשי קשר","Enter a number before adding a contact");
+  put("הזן מספר לחיוג","Enter a number to call");
+  put("מחיקת ספרה","Delete digit");put("חיוג למספר","Call number");
+  put("סגירת מקשי החיוג","Close dialpad");
+  put("פתח הגדרות > אפליקציות ברירת מחדל > טלפון","Open Settings > Default apps > Phone");
  }
+ static int direction(Context ctx){return isEnglish(ctx)?android.view.View.LAYOUT_DIRECTION_LTR:android.view.View.LAYOUT_DIRECTION_RTL;}
+ static java.util.Locale locale(Context ctx){return isEnglish(ctx)?java.util.Locale.ENGLISH:java.util.Locale.forLanguageTag("he-IL");}
  private static void put(String he,String en){english.put(he,en);}
  static boolean isEnglish(Context ctx){
   SharedPreferences p=ctx.getSharedPreferences("da_caller",Context.MODE_PRIVATE);

@@ -28,7 +28,7 @@ public final class ContactChooseActivity extends Activity {
  private List<Contacts.Person> all=new ArrayList<>();
  private List<Contacts.Person> matched=new ArrayList<>();
  private ArrayAdapter<String> adapter;
- private String incoming="";
+ private String incoming="",searchQuery="";
  private boolean dark(){android.content.SharedPreferences p=getSharedPreferences("da_caller",0);return p.getBoolean("dark",false)||p.getBoolean("amoled",false);}
  private int bg(){return getSharedPreferences("da_caller",0).getBoolean("amoled",false)?Color.BLACK:dark()?0xFF141414:0xFFF7F7F5;}
  private int ink(){return dark()?Color.WHITE:0xFF1A1A1A;}
@@ -40,8 +40,8 @@ public final class ContactChooseActivity extends Activity {
   super.onCreate(b);
   incoming=getIntent().getStringExtra("incoming_number");
   if(incoming==null)incoming="";
-  LinearLayout root=new LinearLayout(this);root.setOrientation(1);
-  root.setLayoutDirection(android.view.View.LAYOUT_DIRECTION_RTL);
+  LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);
+  root.setLayoutDirection(I18n.isEnglish(this)?android.view.View.LAYOUT_DIRECTION_LTR:android.view.View.LAYOUT_DIRECTION_RTL);
   root.setBackgroundColor(bg());root.setPadding(dp(14),dp(17),dp(14),dp(9));
   setContentView(root);
   TextView title=new TextView(this);title.setText(tr("הוספה לאיש קשר קיים"));
@@ -70,7 +70,7 @@ public final class ContactChooseActivity extends Activity {
   query.addTextChangedListener(new TextWatcher(){
    public void beforeTextChanged(CharSequence text,int a,int b,int c){}
    public void afterTextChanged(Editable value){}
-   public void onTextChanged(CharSequence s,int a,int b,int c){filter(s.toString());}
+   public void onTextChanged(CharSequence s,int a,int b,int c){searchQuery=s.toString();filter(searchQuery);}
   });
   if(checkSelfPermission(Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED)
    requestPermissions(new String[]{Manifest.permission.READ_CONTACTS},71);
@@ -84,7 +84,7 @@ public final class ContactChooseActivity extends Activity {
  private void load(){
   IO.execute(()->{
    List<Contacts.Person> loaded=Contacts.all(getApplicationContext());
-   runOnUiThread(()->{if(isFinishing()||isDestroyed())return;all=loaded;filter("");});
+   runOnUiThread(()->{if(isFinishing()||isDestroyed())return;all=loaded;filter(searchQuery);});
   });
  }
  private void filter(String query){

@@ -9,6 +9,8 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Bundle;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.CallLog;
@@ -18,6 +20,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewConfiguration;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -43,14 +46,20 @@ final class FastPages {
  private final MainActivity host;
  private final SharedPreferences prefs;
  private final Handler handler=new Handler(Looper.getMainLooper());
- private final DateFormat format=DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT,new Locale("he","IL"));
+ private DateFormat format;
  private final int gold=0xFFD2AE69;
  private int period=0;
  private SwipeListView liveRecents,liveContacts;
  private int recentPos=0,recentOffset=0,contactPos=0,contactOffset=0;
+ private long recentId=-1,contactId=-1;
+ private String contactQuery="";
+ private boolean contactQueryChanged;
+ private Runnable filterTask;
  FastPages(MainActivity activity){
   host=activity;
   prefs=activity.getSharedPreferences("da_caller",Context.MODE_PRIVATE);
+  format=DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT,
+    I18n.isEnglish(host)?Locale.ENGLISH:new Locale("he","IL"));
  }
  private int dp(float n){return (int)(host.getResources().getDisplayMetrics().density*n+0.5f);}
  private boolean dark(){return prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);}
@@ -80,11 +89,11 @@ final class FastPages {
   return v;
  }
  private LinearLayout vertical(){
-  LinearLayout v=new LinearLayout(host);v.setOrientation(1);v.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);return v;
+  LinearLayout v=new LinearLayout(host);v.setOrientation(LinearLayout.VERTICAL);v.setLayoutDirection(I18n.isEnglish(host)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);return v;
  }
  private LinearLayout horizontal(){
-  LinearLayout v=new LinearLayout(host);v.setOrientation(0);v.setGravity(Gravity.CENTER_VERTICAL);
-  v.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);return v;
+  LinearLayout v=new LinearLayout(host);v.setOrientation(LinearLayout.HORIZONTAL);v.setGravity(Gravity.CENTER_VERTICAL);
+  v.setLayoutDirection(I18n.isEnglish(host)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);return v;
  }
  private LinearLayout.LayoutParams lp(int w,int h){
   return new LinearLayout.LayoutParams(w<0?w:dp(w),h<0?h:dp(h));
@@ -92,14 +101,36 @@ final class FastPages {
  private void pulse(View v){TouchFeedback.pulse(host,prefs,v);}
  private void touch(View v){TouchFeedback.bind(v,prefs);}
  private String tr(String heb){return I18n.text(host,heb);}
+ void setContactQuery(String query){
+  contactQuery=query==null?"":query;contactPos=0;contactOffset=0;contactId=-1;contactQueryChanged=true;
+ }
+ boolean isInteracting(){
+  return (liveRecents!=null&&liveRecents.touching)||(liveContacts!=null&&liveContacts.touching);
+ }
  void remember(String tab){
+  if(tab.equals("contacts")&&contactQueryChanged)return;
   SwipeListView view=tab.equals("recents")?liveRecents:
     tab.equals("contacts")?liveContacts:null;
   if(view==null||view.getChildCount()==0)return;
   int pos=view.getFirstVisiblePosition();
   int offset=view.getChildAt(0).getTop();
-  if(tab.equals("recents")){recentPos=pos;recentOffset=offset;}
-  else if(tab.equals("contacts")){contactPos=pos;contactOffset=offset;}
+  if(view.getAdapter()==null||pos>=view.getAdapter().getCount())return;
+  long id=view.getAdapter().getItemId(pos);
+  if(tab.equals("recents")){recentPos=pos;recentOffset=offset;recentId=id;}
+  else if(tab.equals("contacts")){contactPos=pos;contactOffset=offset;contactId=id;}
+ }
+ void saveState(Bundle state){
+  state.putInt("recent_position",recentPos);state.putInt("recent_offset",recentOffset);
+  state.putInt("contact_position",contactPos);state.putInt("contact_offset",contactOffset);
+  state.putLong("recent_id",recentId);state.putLong("contact_id",contactId);
+  state.putString("contact_query",contactQuery);state.putInt("stats_period",period);
+ }
+ void restoreState(Bundle state){
+  if(state==null)return;
+  recentPos=state.getInt("recent_position");recentOffset=state.getInt("recent_offset");
+  contactPos=state.getInt("contact_position");contactOffset=state.getInt("contact_offset");
+  recentId=state.getLong("recent_id",-1);contactId=state.getLong("contact_id",-1);
+  contactQuery=state.getString("contact_query","");period=Math.max(0,Math.min(3,state.getInt("stats_period")));
  }
  void restore(String tab){
   SwipeListView view=tab.equals("recents")?liveRecents:
@@ -107,50 +138,99 @@ final class FastPages {
   if(view==null)return;
   int pos=tab.equals("recents")?recentPos:contactPos;
   int offset=tab.equals("recents")?recentOffset:contactOffset;
-  int max=view.getAdapter()==null?0:Math.max(0,view.getAdapter().getCount()-1);
+  long id=tab.equals("recents")?recentId:contactId;
+  android.widget.ListAdapter adapter=view.getAdapter();
+  int max=adapter==null?0:Math.max(0,adapter.getCount()-1);
+  if(adapter!=null&&id>=0&&(pos>=adapter.getCount()||adapter.getItemId(pos)!=id)){
+   for(int i=0;i<adapter.getCount();i++)if(adapter.getItemId(i)==id){pos=i;break;}
+  }
   int finalPos=Math.max(0,Math.min(pos,max));
-  view.post(()->view.setSelectionFromTop(finalPos,offset));
+  // A queued restore must never override a finger/flick that started meanwhile.
+  int revision=view.touchRevision;
+  view.post(()->{
+   if(view.touchRevision==revision&&!view.touching)view.setSelectionFromTop(finalPos,offset);
+  });
  }
  interface NumberAt {String phone(int position);}
  private final class SwipeListView extends ListView {
   private NumberAt numbers;
   private float downX,downY;
   private int touched=-1;
-  private boolean sliding=false;
-  SwipeListView(){super(host);}
+  private String downNumber;
+  private boolean sliding,vertical,actionRegion;
+  private int touchRevision;
+  private boolean touching,fastScrollPaused;
+  private final int slop=ViewConfiguration.get(host).getScaledTouchSlop();
+  SwipeListView(){super(host);setItemsCanFocus(true);}
   void setNumberAt(NumberAt source){numbers=source;}
   private boolean allowed(float dx,float dy){
    String mode=prefs.getString("swipe_direction","right");
-   if(mode.equals("off"))return false;
-   if(Math.abs(dx)<dp(50)||Math.abs(dx)<Math.abs(dy)*1.35f)return false;
+   if(mode.equals("off")||vertical||actionRegion)return false;
+   if(Math.abs(dx)<dp(50)||Math.abs(dx)<Math.abs(dy)*1.5f)return false;
    return (dx>0&&mode.equals("right"))||(dx<0&&mode.equals("left"));
   }
-  @Override public boolean onInterceptTouchEvent(MotionEvent event){
-   switch(event.getActionMasked()){
-    case MotionEvent.ACTION_DOWN:
-     downX=event.getX();downY=event.getY();touched=pointToPosition((int)downX,(int)downY);
-     sliding=false;break;
-    case MotionEvent.ACTION_MOVE:
-     if(allowed(event.getX()-downX,event.getY()-downY)&&touched>=0){
-      sliding=true;
-      getParent().requestDisallowInterceptTouchEvent(true);
-      return true;
-     }
-     break;
-    case MotionEvent.ACTION_UP:
-    case MotionEvent.ACTION_CANCEL:sliding=false;break;
+  private boolean inside(View child,float x,float y){
+   Rect rect=new Rect();child.getDrawingRect(rect);offsetDescendantRectToMyCoords(child,rect);
+   return rect.contains((int)x,(int)y);
+  }
+  private boolean dedicatedControl(float x,float y){
+   View row=getChildAt(touched-getFirstVisiblePosition());
+   if(row==null)return true;
+   Object tag=row.getTag();
+   if(tag instanceof CallRow){
+    CallRow r=(CallRow)tag;return inside(r.avatar,x,y)||inside(r.call,x,y);
    }
+   if(tag instanceof ContactRow){
+    ContactRow r=(ContactRow)tag;return inside(r.avatar,x,y)||inside(r.star,x,y)||inside(r.quick,x,y);
+   }
+   return true; // Footers and non-data rows never initiate a call gesture.
+  }
+  @Override public boolean dispatchTouchEvent(MotionEvent event){
+   if(event.getActionMasked()==MotionEvent.ACTION_DOWN){
+    touchRevision++;touching=true;
+    downX=event.getX();downY=event.getY();touched=pointToPosition((int)downX,(int)downY);
+    downNumber=numbers==null?null:numbers.phone(touched);
+    sliding=false;vertical=false;actionRegion=dedicatedControl(downX,downY);
+    // Android FastScroller intercepts the whole scrollbar edge before child
+    // dispatch. On RTL/small screens that edge overlaps the quick-call icon.
+    // Give explicit row actions priority for this gesture; retain fast scroll
+    // everywhere else, including its visible thumb/track outside row controls.
+    fastScrollPaused=actionRegion&&isFastScrollEnabled();
+    if(fastScrollPaused)setFastScrollEnabled(false);
+   }else if(event.getActionMasked()==MotionEvent.ACTION_POINTER_DOWN){
+    vertical=true;sliding=false;downNumber=null;
+   }
+   boolean handled=super.dispatchTouchEvent(event);
+   if(event.getActionMasked()==MotionEvent.ACTION_UP||event.getActionMasked()==MotionEvent.ACTION_CANCEL){
+    touching=false;sliding=false;downNumber=null;
+    if(fastScrollPaused){fastScrollPaused=false;setFastScrollEnabled(true);}
+   }
+   return handled;
+  }
+  @Override public boolean onInterceptTouchEvent(MotionEvent event){
+   if(event.getActionMasked()==MotionEvent.ACTION_MOVE){
+    float dx=event.getX()-downX,dy=event.getY()-downY;
+    if(!sliding&&Math.abs(dy)>slop&&Math.abs(dy)>=Math.abs(dx))vertical=true;
+    if(sliding||(!vertical&&touched>=0&&allowed(dx,dy))){
+     sliding=true;
+     if(getParent()!=null)getParent().requestDisallowInterceptTouchEvent(true);
+     return true;
+    }
+   }
+   // Never clear sliding on UP here: dispatch still needs it in onTouchEvent.
    return super.onInterceptTouchEvent(event);
   }
+  // Ordinary taps are delegated to ListView, which already performs accessible
+  // child clicks. This override only consumes configured swipes; a second
+  // performClick() here would duplicate a click or turn a swipe into a call.
+  @android.annotation.SuppressLint("ClickableViewAccessibility")
   @Override public boolean onTouchEvent(MotionEvent event){
    if(sliding){
     if(event.getActionMasked()==MotionEvent.ACTION_UP){
      float dx=event.getX()-downX,dy=event.getY()-downY;
-     if(allowed(dx,dy)&&numbers!=null){
-      String phone=numbers.phone(touched);
-      if(phone!=null&&!phone.isEmpty()){
-       pulse(this);host.dialFromList(phone);
-      }
+     String current=numbers==null?null:numbers.phone(touched);
+     if(allowed(dx,dy)&&downNumber!=null&&!downNumber.isEmpty()&&downNumber.equals(current)){
+      pulse(this);host.dialFromList(downNumber);
      }
      sliding=false;return true;
     }
@@ -159,8 +239,10 @@ final class FastPages {
    }
    return super.onTouchEvent(event);
   }
+  @Override public boolean performClick(){return super.performClick();}
  }
  View recents(){
+  format=DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT,I18n.locale(host));
   LinearLayout page=vertical();
   page.setBackgroundColor(background());
   page.setPadding(dp(12),dp(6),dp(12),0);
@@ -191,7 +273,7 @@ final class FastPages {
   TextView count=text(String.valueOf(CallHistory.entries.size()),11,subtle(),false);
   top.addView(count,lp(-2,38));
   ImageView refresh=icon(R.drawable.ic_refresh,tint());top.addView(refresh,lp(42,40));
-  touch(refresh);refresh.setContentDescription("רענון יומן השיחות");
+  touch(refresh);refresh.setContentDescription(tr("רענון יומן השיחות"));
   refresh.setOnClickListener(v->{pulse(refresh);host.reloadCallLog();});
   SwipeListView list=new SwipeListView();
   liveRecents=list;
@@ -200,8 +282,8 @@ final class FastPages {
   list.setFastScrollEnabled(true);list.setSmoothScrollbarEnabled(true);
   list.setVerticalScrollBarEnabled(false);
   list.setSelector(android.R.color.transparent);
-  list.setNumberAt(position->position>=0&&position<CallHistory.entries.size()?
-      CallHistory.entries.get(position).number:null);
+  RecentsAdapter adapter=new RecentsAdapter();
+  list.setNumberAt(position->adapter.phoneAt(position));
   if(CallArchive.enabled(host)){
    int archived=CallArchive.knownMissing();
    TextView archive=text(tr("ארכיון שיחות")+(archived>0?" ("+archived+")":"")+"   ◈",14,tint(),true);
@@ -215,9 +297,12 @@ final class FastPages {
    // Footer appears only AFTER the last current Android call.
    list.addFooterView(archive,null,true);
   }
-  list.setAdapter(new RecentsAdapter());
+  list.setAdapter(adapter);
   page.addView(list,new LinearLayout.LayoutParams(-1,0,1));
-  if(CallHistory.entries.isEmpty()){
+  if(CallHistory.readFailed){
+   TextView error=text(I18n.isEnglish(host)?"Could not refresh call history. Tap refresh to retry.":"לא ניתן לרענן את יומן השיחות. אפשר לנסות שוב בלחצן הרענון.",13,subtle(),false);
+   error.setGravity(Gravity.CENTER);page.addView(error,lp(-1,64));
+  }else if(CallHistory.entries.isEmpty()){
    TextView empty=text("אין שיחות להצגה",14,subtle(),false);
    empty.setGravity(Gravity.CENTER);
    page.addView(empty,lp(-1,80));
@@ -229,6 +314,7 @@ final class FastPages {
   t.setPadding(dp(9),0,dp(9),0);line.addView(t,lp(-2,32));
  }
  View contacts(List<Contacts.Person> contacts,boolean favorites){
+  if(filterTask!=null){handler.removeCallbacks(filterTask);filterTask=null;}
   if(host.checkSelfPermission(Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED){
    return permission("כדי לראות אנשי קשר נדרשת הרשאה","אפשר גישה לאנשי קשר",()->host.requestContacts());
   }
@@ -253,7 +339,7 @@ final class FastPages {
    page.addView(grid,new LinearLayout.LayoutParams(-1,0,1));
    if(chosen.isEmpty()){
     TextView empty=text("עדיין אין מועדפים. סמן ★ באנשי קשר.",14,subtle(),false);
-    empty.setGravity(Gravity.CENTER);grid.setEmptyView(empty);
+    empty.setGravity(Gravity.CENTER);page.addView(empty,lp(-1,100));grid.setEmptyView(empty);
    }
    return page;
   }
@@ -262,17 +348,22 @@ final class FastPages {
   search.setSingleLine(true);search.setHint(tr("חיפוש שם או מספר"));
   search.setHintTextColor(subtle());search.setTextColor(ink());search.setTextSize(15);
   search.setPadding(dp(12),0,dp(12),0);search.setBackground(edge(panel(),14));
-  head.addView(search,new LinearLayout.LayoutParams(0,dp(46),1));
+  head.addView(search,new LinearLayout.LayoutParams(0,dp(48),1));
   TextView add=text("＋",28,tint(),true);add.setGravity(Gravity.CENTER);
-  add.setContentDescription("הוספת איש קשר חדש");
-  head.addView(add,lp(51,46));touch(add);
+  add.setContentDescription(tr("הוספת איש קשר חדש"));
+  head.addView(add,lp(51,48));touch(add);
   add.setOnClickListener(v->{pulse(add);host.newContact(null);});
-  LinearLayout small=horizontal();page.addView(small,lp(-1,31));
+  // Keep the 48dp refresh target inside a matching-height parent on small screens.
+  LinearLayout small=horizontal();page.addView(small,lp(-1,48));
   TextView count=text(I18n.count(host,contacts.size(),"אנשי קשר","contacts"),11,subtle(),false);
   small.addView(count,new LinearLayout.LayoutParams(0,-1,1));
-  ImageView refresh=icon(R.drawable.ic_refresh,tint());small.addView(refresh,lp(38,30));
+  ImageView refresh=icon(R.drawable.ic_refresh,tint());small.addView(refresh,lp(48,48));
+  refresh.setContentDescription(I18n.isEnglish(host)?"Refresh contacts":"רענון אנשי קשר");
   touch(refresh);refresh.setOnClickListener(v->{pulse(refresh);host.reloadContacts();});
+  contactQueryChanged=false;
   ContactAdapter adapter=new ContactAdapter(contacts);
+  adapter.filter(contactQuery);search.setText(contactQuery);
+  count.setText(I18n.count(host,adapter.getCount(),"אנשי קשר","contacts"));
   SwipeListView list=new SwipeListView();
   liveContacts=list;
   list.setDivider(null);list.setFastScrollEnabled(true);list.setVerticalScrollBarEnabled(false);
@@ -286,14 +377,18 @@ final class FastPages {
    public void afterTextChanged(Editable e){}
    public void onTextChanged(CharSequence str,int a,int b,int c){
     String query=str.toString();
-    handler.removeCallbacksAndMessages(null);
-    handler.postDelayed(()->adapter.filter(query),80);
+    contactQuery=query;
+    if(filterTask!=null)handler.removeCallbacks(filterTask);
+    filterTask=()->{
+     adapter.filter(query);contactPos=0;contactOffset=0;contactId=-1;
+     count.setText(I18n.count(host,adapter.getCount(),"אנשי קשר","contacts"));
+     list.setSelectionFromTop(0,0);
+    };
+    handler.postDelayed(filterTask,80);
    }
   });
-  if(contacts.isEmpty()) {
-   TextView empty=text("אנשי הקשר נטענים… אפשר גם לרענן.",14,subtle(),false);
-   empty.setGravity(Gravity.CENTER);list.setEmptyView(empty);
-  }
+  TextView empty=text(I18n.isEnglish(host)?"No matching contacts":"לא נמצאו אנשי קשר",14,subtle(),false);
+  empty.setGravity(Gravity.CENTER);page.addView(empty,lp(-1,100));list.setEmptyView(empty);
   return page;
  }
  private View permission(String info,String action,Runnable callback){
@@ -308,7 +403,7 @@ final class FastPages {
  private String contactName(String number){
   Map<String,String> names=host.nameIndex();
   String name=names.get(Contacts.canonical(number));
-  return name==null||name.isEmpty()?number:name;
+  return name==null||name.isEmpty()?(CallLauncher.isCallable(number)?number:tr("מספר חסוי")):name;
  }
  private String category(int type,long seconds){
   if(type==CallLog.Calls.MISSED_TYPE)return tr("לא נענתה");
@@ -330,13 +425,17 @@ final class FastPages {
   return prefs.getBoolean("recents_green",false)?0xFF128758:tint();
  }
  private final class RecentsAdapter extends BaseAdapter {
-  @Override public int getCount(){return CallHistory.entries.size();}
-  @Override public Object getItem(int p){return CallHistory.entries.get(p);}
-  @Override public long getItemId(int p){return CallHistory.entries.get(p).id;}
+  // CallHistory publishes an immutable snapshot; retain its identity for this adapter.
+  private final List<CallHistory.Entry> entries=CallHistory.entries;
+  @Override public int getCount(){return entries.size();}
+  @Override public Object getItem(int p){return entries.get(p);}
+  @Override public long getItemId(int p){return entries.get(p).id;}
+  @Override public boolean hasStableIds(){return true;}
+  String phoneAt(int p){return p>=0&&p<entries.size()?entries.get(p).number:null;}
   @Override public View getView(int position,View convert,ViewGroup parent){
    CallRow recycled=convert!=null&&convert.getTag() instanceof CallRow?(CallRow)convert.getTag():null;
    final CallRow row=recycled!=null?recycled:new CallRow();
-   CallHistory.Entry entry=CallHistory.entries.get(position);
+   CallHistory.Entry entry=entries.get(position);
    row.bound=entry.number+"|"+entry.date;
    row.initials.setText(entry.number.isEmpty()?"?":entry.number.substring(0,1));
    row.photo.setVisibility(View.GONE);
@@ -346,12 +445,14 @@ final class FastPages {
    row.arrow.setTextColor(color(entry.type,entry.duration));
    row.arrow.setContentDescription(tr(category(entry.type,entry.duration)));
    String phone=entry.number;
-   row.info.setText(category(entry.type,entry.duration)+"  ·  "+
-    format.format(new Date(entry.date))+
-    (entry.duration>0?" · "+Math.max(1,(int)Math.ceil(entry.duration/60.0))+" "+tr("דק׳"):""));
+   String duration=entry.duration>0?String.format(Locale.ROOT," · %d:%02d",entry.duration/60,entry.duration%60):"";
+   row.info.setText(String.format(I18n.isEnglish(host)?Locale.ENGLISH:new Locale("he","IL"),"%s  ·  %s%s",
+    category(entry.type,entry.duration),format.format(new Date(entry.date)),duration));
    row.dialIcon.setImageTintList(ColorStateList.valueOf(recentCallColor()));
    row.avatar.setOnClickListener(v->{pulse(row.avatar);host.openContactFromNumber(phone);});
    row.center.setOnClickListener(v->{pulse(row.center);host.showCallNumber(entry);});
+   row.call.setEnabled(CallLauncher.isCallable(phone));row.call.setAlpha(row.call.isEnabled()?1f:0.35f);
+   row.call.setContentDescription(tr("התקשר")+" "+phone);
    row.call.setOnClickListener(v->{pulse(row.call);host.dialFromList(phone);});
    String expected=row.bound;
    ContactPhotos.lookup(host,phone,(id,n,bitmap)->{
@@ -413,17 +514,28 @@ final class FastPages {
  private final class ContactAdapter extends BaseAdapter {
   private final List<Contacts.Person> all;
   private final ArrayList<Contacts.Person> filtered=new ArrayList<>();
-  ContactAdapter(List<Contacts.Person> contacts){all=contacts;filtered.addAll(all);}
+  private final ArrayList<String> normalizedNumbers=new ArrayList<>();
+  ContactAdapter(List<Contacts.Person> contacts){
+   all=new ArrayList<>(contacts);filtered.addAll(all);
+   for(Contacts.Person person:all)normalizedNumbers.add(Contacts.canonical(person.phone));
+  }
   void filter(String q){
    filtered.clear();String value=q.trim().toLowerCase(Locale.ROOT);
    if(value.isEmpty())filtered.addAll(all);
-   else for(Contacts.Person p:all)if(p.name.toLowerCase(Locale.ROOT).contains(value)||
-      p.phone.contains(value))filtered.add(p);
+   else {
+    String digits=Contacts.canonical(value);
+    for(int i=0;i<all.size();i++){
+     Contacts.Person p=all.get(i);
+     if(p.name.toLowerCase(Locale.ROOT).contains(value)||p.phone.contains(value)||
+       (!digits.isEmpty()&&normalizedNumbers.get(i).contains(digits)))filtered.add(p);
+    }
+   }
    notifyDataSetChanged();
   }
   public int getCount(){return filtered.size();}
   public Object getItem(int p){return filtered.get(p);}
   public long getItemId(int p){return filtered.get(p).id;}
+  @Override public boolean hasStableIds(){return true;}
   String phoneAt(int pos){return pos>=0&&pos<filtered.size()?filtered.get(pos).phone:null;}
   public View getView(int position,View convert,ViewGroup parent){
    ContactRow row=convert!=null && convert.getTag() instanceof ContactRow?(ContactRow)convert.getTag():new ContactRow();
@@ -441,6 +553,10 @@ final class FastPages {
    row.star.setTextColor(favorite?tint():subtle());
    row.root.setOnClickListener(v->{pulse(row.root);host.openContactDetail(person.id);});
    row.quick.setAlpha(person.phone.isEmpty()?0.2f:1);
+   row.quick.setEnabled(!person.phone.isEmpty());
+   row.quick.setContentDescription(tr("התקשר")+" "+person.name+" "+person.phone);
+   row.star.setContentDescription((I18n.isEnglish(host)?(favorite?"Remove favorite ":"Add favorite "):(favorite?"הסר מהמועדפים ":"הוסף למועדפים "))+person.name);
+   row.avatar.setContentDescription(tr("כרטיס איש קשר")+" "+person.name);
    row.quick.setOnClickListener(v->{if(!person.phone.isEmpty()){pulse(row.quick);host.dialFromList(person.phone);}});
    row.star.setOnClickListener(v->{pulse(row.star);host.favoriteFromList(person);});
    row.avatar.setOnClickListener(v->{pulse(row.avatar);host.openContactDetail(person.id);});
@@ -468,7 +584,7 @@ final class FastPages {
    title.setEllipsize(android.text.TextUtils.TruncateAt.END);description.addView(title);
    phone=text("",11,subtle(),false);phone.setSingleLine(true);description.addView(phone);
    star=text("☆",26,subtle(),false);star.setGravity(Gravity.CENTER);
-   root.addView(star,lp(42,51));
+   root.addView(star,lp(48,51));
    quick=new FrameLayout(host);quick.setBackground(bg(dark()?0xFF29352F:0xFFE7F4EA,14));
    ImageView icon=icon(R.drawable.ic_phone_line,0xFF128758);
    quick.addView(icon,new FrameLayout.LayoutParams(dp(49),dp(49),Gravity.CENTER));

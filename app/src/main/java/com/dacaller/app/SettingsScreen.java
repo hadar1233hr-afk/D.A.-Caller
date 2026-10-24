@@ -49,7 +49,7 @@ final class SettingsScreen {
   v.setTypeface(Typeface.create(bold?"sans-serif-medium":"sans-serif",Typeface.NORMAL));
   v.setGravity(Gravity.CENTER_VERTICAL);v.setIncludeFontPadding(false);return v;
  }
- private LinearLayout column(){LinearLayout l=new LinearLayout(host);l.setOrientation(1);
+ private LinearLayout column(){LinearLayout l=new LinearLayout(host);l.setOrientation(LinearLayout.VERTICAL);
   l.setLayoutDirection(I18n.isEnglish(host)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);return l;
  }
  private LinearLayout row(){LinearLayout l=new LinearLayout(host);l.setGravity(Gravity.CENTER_VERTICAL);
@@ -98,7 +98,8 @@ final class SettingsScreen {
    String val=prefs.getString("call_theme","graphite");
    int[] shades={0xFFD1AD70,0xFF6198E9,0xFF23B188,0xFF9AA1E9,0xFFC5956D};
    LinearLayout item=row();item.setPadding(dp(12),dp(6),dp(12),dp(6));
-   LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(-1,dp(69));
+   item.setMinimumHeight(dp(69));
+   LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(-1,-2);
    card.addView(item,params);
    View swatch=new View(host);swatch.setBackground(card(shades[i],14));
    item.addView(swatch,new LinearLayout.LayoutParams(dp(39),dp(39)));
@@ -153,6 +154,8 @@ final class SettingsScreen {
   TextView archiveNote=text("השמירה מתחילה כשהאפליקציה רואה את השיחה ביומן המערכת. התקופה הנוספת נמדדת מהמועד הראשון שבו זוהתה היעלמות הרשומה.",11,false,subtle);
   archiveNote.setPadding(dp(12),dp(10),dp(12),dp(11));
   card.addView(archiveNote);
+  TextView offNote=text("כבוי מפסיק שמירה חדשה. למחיקת נתונים קיימים בחר מחיקת ארכיון.",11,false,subtle);
+  offNote.setPadding(dp(12),0,dp(12),dp(11));card.addView(offNote);
   option("פתיחת ארכיון שיחות","סקירת ההיסטוריה שנשמרה",()->host.openArchive());
   option("מחיקת ארכיון","מחיקה מקומית שאינה משנה את יומן אנדרואיד",()->{
    new AlertDialog.Builder(host)
@@ -160,7 +163,15 @@ final class SettingsScreen {
     .setMessage(tr("הנתונים יימחקו מהמכשיר ולא ניתן יהיה לשחזרם."))
     .setNegativeButton(tr("ביטול"),null)
     .setPositiveButton(tr("מחק"),(dialog,which)->{
-     IO.execute(()->CallArchive.erase(host));
+     Context app=host.getApplicationContext();
+     IO.execute(()->{
+      CallArchive.erase(app);
+      boolean failed=CallArchive.lastOperationFailed;
+      host.runOnUiThread(()->{
+       if(host.isFinishing()||host.isDestroyed())return;
+       android.widget.Toast.makeText(host,tr(failed?"לא ניתן למחוק את הארכיון":"נמחק"),android.widget.Toast.LENGTH_LONG).show();
+      });
+     });
     }).show();
   });
   cardEnd();
@@ -195,7 +206,7 @@ final class SettingsScreen {
   option("הרשאת אנשי קשר","הצגת תמונות, אנשי קשר ועריכה",()->host.requestContacts());
   option("התראות שיחה","התראות במסך הנעילה ובשורת המצב",()->host.openNotificationSettings());
   cardEnd();
-  TextView bottom=text("DA CALLER · v0.8.0",11,false,subtle);
+  TextView bottom=text("DA CALLER · v"+BuildConfig.VERSION_NAME,11,false,subtle);
   bottom.setGravity(Gravity.CENTER);
   LinearLayout.LayoutParams foot=new LinearLayout.LayoutParams(-1,dp(51));root.addView(bottom,foot);
   return scroll;
@@ -223,7 +234,7 @@ final class SettingsScreen {
  }
  private void option(String label,String description,Runnable click){
   LinearLayout item=row();item.setPadding(dp(12),dp(12),dp(12),dp(12));
-  card.addView(item,new LinearLayout.LayoutParams(-1,dp(69)));
+  item.setMinimumHeight(dp(69));card.addView(item,new LinearLayout.LayoutParams(-1,-2));
   LinearLayout descriptionBlock=column();
   item.addView(descriptionBlock,new LinearLayout.LayoutParams(0,-2,1));
   descriptionBlock.addView(text(label,14,true,ink));
@@ -234,12 +245,12 @@ final class SettingsScreen {
  }
  private void toggle(String label,String description,String key,boolean checked){
   LinearLayout item=row();item.setPadding(dp(12),dp(5),dp(12),dp(5));
-  card.addView(item,new LinearLayout.LayoutParams(-1,dp(65)));
+  item.setMinimumHeight(dp(65));card.addView(item,new LinearLayout.LayoutParams(-1,-2));
   LinearLayout descriptionBlock=column();
   item.addView(descriptionBlock,new LinearLayout.LayoutParams(0,-2,1));
   descriptionBlock.addView(text(label,14,true,ink));
   descriptionBlock.addView(text(description,11,false,subtle));
-  Switch sw=new Switch(host);sw.setChecked(checked);item.addView(sw);
+  Switch sw=new Switch(host);sw.setChecked(checked);sw.setContentDescription(tr(label));item.addView(sw);
   sw.setOnCheckedChangeListener((widget,value)->{
    prefs.edit().putBoolean(key,value).apply();
    TouchFeedback.pulse(host,prefs,sw);
@@ -251,7 +262,7 @@ final class SettingsScreen {
  private interface Change {void value(String value);}
  private void choice(String label,String description,String key,String[] names,String[] values,String selected,Change changed){
   LinearLayout item=row();item.setPadding(dp(12),dp(7),dp(12),dp(7));
-  card.addView(item,new LinearLayout.LayoutParams(-1,dp(72)));
+  item.setMinimumHeight(dp(72));card.addView(item,new LinearLayout.LayoutParams(-1,-2));
   LinearLayout copy=column();item.addView(copy,new LinearLayout.LayoutParams(0,-2,1));
   copy.addView(text(label,14,true,ink));
   String found="";for(int i=0;i<values.length;i++)if(selected.equals(values[i]))found=tr(names[i]);
