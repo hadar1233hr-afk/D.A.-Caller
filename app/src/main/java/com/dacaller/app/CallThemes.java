@@ -8,9 +8,9 @@ import android.graphics.drawable.GradientDrawable;
 /** Five distinct call-screen layouts, each with its own visual kit. */
 final class CallThemes {
  static final String[] IDS={"graphite","pixel","emerald","frost","ivory"};
- static final String[] NAMES={"Graphite Luxe","Pixel Clean","Emerald AMOLED","Frosted Slate","Ivory Studio"};
+ static final String[] NAMES={"Graphite Luxe","Google Phone · Pixel","Emerald AMOLED","Frosted Slate","Ivory Studio"};
  static final String[] DESCRIPTIONS={
-  "עמדת שליטה: שתי עמודות, דיוק ושליטה","בהשראת Google Material 3 Expressive: כפתורי גלולה, פריסה רוחבית",
+  "עמדת שליטה: שתי עמודות, דיוק ושליטה","Google Phone: ארבע פעולות, גווני ורוד בהיר, ניתוק עגול",
   "מיקוד: מקשים גדולים בטור אחד וסיום שיחה בולט","לוח פעולות: שלוש עמודות ומידע מיושר לצד","מינימליסטי: שתי עמודות, תמונת מתקשר קטנה"
  };
  final int background,surface,surface2,ink,muted,accent,call,decline,line;
@@ -25,14 +25,14 @@ final class CallThemes {
   String id=p.getString("call_theme","graphite");
   int index=0;for(int i=0;i<IDS.length;i++)if(IDS[i].equals(id))index=i;
   style=index;name=NAMES[index];radius=new int[]{20,40,14,28,18}[index];
-  int[] lights={0xFFFAF8F4,0xFFF7F9FC,0xFFF4FAF7,0xFFF5F7FA,0xFFFAF7EF};
-  int[] darks={0xFF121212,0xFF111820,0xFF0A1712,0xFF131A27,0xFF191611};
-  int[] accents={0xFFCDA668,0xFF6EA2F4,0xFF28BB8C,0xFF9FA6E8,0xFFCD9664};
-  int[] lightAccents={0xFF8B6026,0xFF285CB5,0xFF087451,0xFF565FA5,0xFF8D5B2F};
+  int[] lights={0xFFFAF8F4,0xFFFFF8F5,0xFFF4FAF7,0xFFF5F7FA,0xFFFAF7EF};
+  int[] darks={0xFF121212,0xFF141921,0xFF0A1712,0xFF131A27,0xFF191611};
+  int[] accents={0xFFCDA668,0xFFACCBEB,0xFF28BB8C,0xFF9FA6E8,0xFFCD9664};
+  int[] lightAccents={0xFF8B6026,0xFF67584F,0xFF087451,0xFF565FA5,0xFF8D5B2F};
   background=amoled?Color.BLACK:dark?darks[index]:lights[index];
-  surface=amoled?0xFF0C0C0C:dark?new int[]{0xFF22211F,0xFF1D2734,0xFF172820,0xFF263042,0xFF2A241E}[index]:Color.WHITE;
+  surface=amoled?0xFF0C0C0C:dark?new int[]{0xFF22211F,0xFF252B36,0xFF172820,0xFF263042,0xFF2A241E}[index]:Color.WHITE;
   surface2=amoled?0xFF151515:dark?new int[]{0xFF302E2A,0xFF283749,0xFF243B32,0xFF323F59,0xFF3A3027}[index]:
-   new int[]{0xFFF2EDE5,0xFFE9F1FE,0xFFE7F6ED,0xFFEAEDFA,0xFFF7EDE0}[index];
+   new int[]{0xFFF2EDE5,0xFFF8E9E0,0xFFE7F6ED,0xFFEAEDFA,0xFFF7EDE0}[index];
   ink=dark?Color.WHITE:0xFF222323;
   muted=dark?0xFFB0B5BC:0xFF666D78;
   accent=dark?accents[index]:lightAccents[index];
