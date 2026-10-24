@@ -21,6 +21,13 @@ public class WidgetTap extends Activity {
    });return;
   }
   if(!CallLauncher.isCallable(phone)){finish();return;}
+  // Widget calls must use the same in-app role request flow as list and keypad calls.
+  android.telecom.TelecomManager telecom=getSystemService(android.telecom.TelecomManager.class);
+  if(telecom==null||!getPackageName().equals(telecom.getDefaultDialerPackage())){
+   startActivity(new Intent(this,MainActivity.class)
+     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP)
+     .putExtra("place_call",phone));finish();return;
+  }
   if(checkSelfPermission(Manifest.permission.CALL_PHONE)==PackageManager.PERMISSION_GRANTED)call();
   else requestPermissions(new String[]{Manifest.permission.CALL_PHONE},12);
  }
