@@ -33,9 +33,11 @@ import java.util.Locale;
 
 public final class CallScreenActivity extends Activity {
  private final Handler clockHandler=new Handler(Looper.getMainLooper());
- private final Runnable changed=()->runOnUiThread(this::refresh);
+ private final Runnable changed=()->runOnUiThread(this::refreshSafely);
  private final Runnable tickTask=new Runnable(){public void run(){
-  updateTimer();updateBadge();clockHandler.postDelayed(this,1000);
+  try{updateTimer();updateBadge();}
+  catch(RuntimeException failure){CallFailureReporter.record(CallScreenActivity.this,"incall-timer",failure);}
+  clockHandler.postDelayed(this,1000);
  }};
  private SharedPreferences prefs;
  private CallThemes theme;
@@ -76,14 +78,16 @@ public final class CallScreenActivity extends Activity {
   if(Build.VERSION.SDK_INT>=27){setShowWhenLocked(true);setTurnScreenOn(true);}
   else getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED|WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
   theme=new CallThemes(this);themeKey=currentThemeKey();
-  createShell();PhoneSessionService.register(changed);refresh();
+  try{createShell();}
+  catch(RuntimeException failure){CallFailureReporter.record(this,"incall-create-ui",failure);showEmergencyCallControls();}
+  PhoneSessionService.register(changed);refreshSafely();
  }
  @Override protected void onNewIntent(Intent intent){
-  super.onNewIntent(intent);setIntent(intent);drawnState="";refresh();
+  super.onNewIntent(intent);setIntent(intent);drawnState="";refreshSafely();
  }
  @Override protected void onResume(){
   super.onResume();PhoneSessionService.setScreenVisible(true);
-  clockHandler.removeCallbacks(tickTask);clockHandler.post(tickTask);drawnState="";refresh();
+  clockHandler.removeCallbacks(tickTask);clockHandler.post(tickTask);drawnState="";refreshSafely();
  }
  @Override protected void onPause(){
   clockHandler.removeCallbacks(tickTask);clockHandler.removeCallbacks(stopTone);stopTone.run();
@@ -178,6 +182,51 @@ public final class CallScreenActivity extends Activity {
   Call call=PhoneSessionService.current;
   if(badge==null||call==null||call.getState()!=Call.STATE_ACTIVE){if(badge!=null)badge.setVisibility(View.GONE);return;}
   badge.setVisibility(VolteStatus.isVoiceOnLte(this)?View.VISIBLE:View.GONE);
+ }
+ private void refreshSafely(){
+  try{refresh();}
+  catch(RuntimeException failure){
+   // Telecom must remain bound even if a customized UI breaks on an OEM device.
+   CallFailureReporter.record(this,"incall-render",failure);
+   showEmergencyCallControls();
+  }
+ }
+ private void showEmergencyCallControls(){
+  // Independent of custom themes, graphics, animations and contact providers.
+  try{
+   final Call call=PhoneSessionService.current;
+   if(call==null){finish();return;}
+   LinearLayout fallback=new LinearLayout(this);
+   fallback.setOrientation(LinearLayout.VERTICAL);
+   fallback.setGravity(Gravity.CENTER);
+   fallback.setPadding(dp(18),dp(18),dp(18),dp(18));
+   fallback.setBackgroundColor(Color.BLACK);
+   TextView status=new TextView(this);
+   status.setText("DA CALLER · "+tr("שיחה פעילה"));
+   status.setTextColor(Color.WHITE);status.setTextSize(24);
+   status.setGravity(Gravity.CENTER);
+   fallback.addView(status,new LinearLayout.LayoutParams(-1,0,1));
+   boolean ringing=call.getState()==Call.STATE_RINGING;
+   if(ringing){
+    TextView accept=new TextView(this);accept.setText(tr("ענה"));accept.setTextSize(21);
+    accept.setTextColor(Color.WHITE);accept.setGravity(Gravity.CENTER);
+    accept.setBackgroundColor(0xFF16875B);
+    fallback.addView(accept,new LinearLayout.LayoutParams(-1,dp(68)));
+    accept.setOnClickListener(v->{if(call==PhoneSessionService.current)
+     try{call.answer(VideoProfile.STATE_AUDIO_ONLY);}catch(RuntimeException ignored){}});
+   }
+   TextView end=new TextView(this);end.setText(tr(ringing?"דחה":"סיום שיחה"));
+   end.setTextSize(21);end.setTextColor(Color.WHITE);end.setGravity(Gravity.CENTER);
+   end.setBackgroundColor(0xFFB33E43);
+   LinearLayout.LayoutParams ep=new LinearLayout.LayoutParams(-1,dp(72));
+   ep.topMargin=dp(16);fallback.addView(end,ep);
+   end.setOnClickListener(v->{if(call==PhoneSessionService.current)
+    try{if(call.getState()==Call.STATE_RINGING)call.reject(false,null);else call.disconnect();}
+    catch(RuntimeException ignored){}});
+   setContentView(fallback);
+  }catch(RuntimeException secondary){
+   CallFailureReporter.record(this,"incall-emergency-screen",secondary);
+  }
  }
  private void refresh(){
   if(isFinishing()||isDestroyed())return;
@@ -287,7 +336,7 @@ public final class CallScreenActivity extends Activity {
    }
    if(index%columns==0){primary=row();buttons.addView(primary,new LinearLayout.LayoutParams(-1,-2));}
    tile(primary,R.drawable.ic_control_more,expressiveMoreExpanded?"פחות":"עוד",0,height,()->{
-    expressiveMoreExpanded=!expressiveMoreExpanded;drawnState="";refresh();
+    expressiveMoreExpanded=!expressiveMoreExpanded;drawnState="";refreshSafely();
    });
    if(expressiveMoreExpanded){
     ArrayList<String> secondary=new ArrayList<>(ids);
