@@ -48,6 +48,7 @@ public class MainActivity extends Activity {
  private static final java.util.concurrent.ExecutorService CONTACTS_IO=java.util.concurrent.Executors.newSingleThreadExecutor();
  private String dialpadNumber=null;
  private String requestedCallNumber=null;
+ private String pendingRoleCallNumber=null;
  private long lastCallRequestAt=-1;
  private final Runnable reloadChangedContacts=()->{ContactPhotos.clearCache();loadContacts(true);};
  private final Runnable reloadChangedCalls=()->refreshLog(true);
@@ -109,7 +110,7 @@ public class MainActivity extends Activity {
   CallArchive.schedule(this);
   page=validPage(saved==null?prefs.getString("start_page","recents"):saved.getString("page","recents"));
   if(saved==null)handleIntent(getIntent());
-  else {requestedCallNumber=saved.getString("requested_call");dialpadNumber=saved.getString("dialpad");}
+  else {requestedCallNumber=saved.getString("requested_call");pendingRoleCallNumber=saved.getString("pending_role_call");dialpadNumber=saved.getString("dialpad");}
   if(saved!=null){fastPages=new FastPages(this);fastPages.restoreState(saved);}
   render();loadContacts();
   handler.postDelayed(()->{
@@ -129,6 +130,11 @@ public class MainActivity extends Activity {
    page="contacts";
    if(fastPages==null)fastPages=new FastPages(this);
    fastPages.setContactQuery(intent.getStringExtra("contact_search"));
+  }
+  if(intent.hasExtra("place_call")){
+   String number=intent.getStringExtra("place_call");
+   if(CallLauncher.isCallable(number))handler.post(()->makeCall(number));
+   return;
   }
   if(Intent.ACTION_DIAL.equals(intent.getAction())||intent.hasExtra("phone")){page="recents";dialpadNumber=intent.getStringExtra("phone");
    if(Intent.ACTION_DIAL.equals(intent.getAction())&&dialpadNumber==null)dialpadNumber="";
@@ -176,7 +182,16 @@ public class MainActivity extends Activity {
  @Override protected void onActivityResult(int code,int result,Intent data){
   super.onActivityResult(code,result,data);
   if(code==100){
+   String resumeNumber=pendingRoleCallNumber;
+   pendingRoleCallNumber=null;
    render();refreshLog();
+   if(resumeNumber!=null){
+    if(isDefault())handler.post(()->makeCall(resumeNumber));
+    else{
+     Toast.makeText(this,I18n.text(this,"כדי להציג שיחות בתוך DA CALLER יש להגדיר אותה כחייגן ברירת המחדל"),Toast.LENGTH_LONG).show();
+     showKeypad(resumeNumber);
+    }
+   }
    if(isDefault()){
     if(checkSelfPermission(Manifest.permission.READ_CALL_LOG)!=PackageManager.PERMISSION_GRANTED)ensureCallLogPermission();
     else ensureCallNotifications();
@@ -431,9 +446,24 @@ public class MainActivity extends Activity {
   prefs.edit().putStringSet("favorites",set).apply();
   FavoritesWidget.refresh(this);render();
  }
+ private boolean shouldRequestPhoneRole(){
+  try{
+   if(android.os.Build.VERSION.SDK_INT>=29){
+    RoleManager rm=getSystemService(RoleManager.class);
+    return rm!=null&&rm.isRoleAvailable(RoleManager.ROLE_DIALER)&&!rm.isRoleHeld(RoleManager.ROLE_DIALER);
+   }
+   TelecomManager tm=getSystemService(TelecomManager.class);
+   return tm!=null&&!getPackageName().equals(tm.getDefaultDialerPackage());
+  }catch(Exception e){return false;}
+ }
  private void makeCall(String phone){
   if(!CallLauncher.isCallable(phone)){Toast.makeText(this,I18n.text(this,"הזן מספר תקין לחיוג"),Toast.LENGTH_SHORT).show();return;}
-  if(requestedCallNumber!=null)return; // One permission request retains one exact destination.
+  if(requestedCallNumber!=null||pendingRoleCallNumber!=null)return; // Never mix destination across prompts.
+  if(shouldRequestPhoneRole()){
+   pendingRoleCallNumber=phone;
+   askDefault();
+   return;
+  }
   if(checkSelfPermission(Manifest.permission.CALL_PHONE)!=PackageManager.PERMISSION_GRANTED){
    requestedCallNumber=phone;requestPermissions(new String[]{Manifest.permission.CALL_PHONE},23);return;
   }
@@ -581,7 +611,7 @@ public class MainActivity extends Activity {
   return "contacts".equals(value)||"favorites".equals(value)||"settings".equals(value)?value:"recents";
  }
  @Override protected void onSaveInstanceState(Bundle state){
-  state.putString("page",page);state.putString("requested_call",requestedCallNumber);
+  state.putString("page",page);state.putString("requested_call",requestedCallNumber);state.putString("pending_role_call",pendingRoleCallNumber);
   if(fastPages!=null){fastPages.remember(page);fastPages.saveState(state);}
   if(keypadDialog!=null&&keypadDialog.isShowing())state.putString("dialpad",keypadInput==null?"":keypadInput.getText().toString());
   super.onSaveInstanceState(state);
