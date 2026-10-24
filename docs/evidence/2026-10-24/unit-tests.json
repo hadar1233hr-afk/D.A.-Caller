@@ -1,0 +1,451 @@
+{
+  "source_commit": "35b4c215f4ae5292f81d22f8ec5f3523948a4a8c",
+  "base_implementation_commit": "63a122b40e628f78c61e5a529f0eab5ae4c6f261",
+  "candidate_version": "0.10.0-beta.1",
+  "version_code": 10,
+  "commands": [
+    ":app:testDebugUnitTest",
+    ":app:lintDebug",
+    ":app:assembleDebug",
+    ":app:assembleDebugAndroidTest"
+  ],
+  "tests": 79,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "suites": [
+    {
+      "suite": "com.dacaller.app.ArchiveActivityTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "normalizedNumberSearchAndRestorationKeepCorrectArchiveSubset",
+          "passed": true
+        },
+        {
+          "name": "englishArchiveUsesLtrAndRecycledRowDialogDialsItsBoundNumber",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "suite": "com.dacaller.app.CallArchiveTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "offStopsObservationWithoutErasingExistingPrivateArchive",
+          "passed": true
+        },
+        {
+          "name": "disappearanceDuringSameMillisecondIsDetected",
+          "passed": true
+        },
+        {
+          "name": "migrationMergesOnlyAliasesAndKeepsEarliestArchivedRetention",
+          "passed": true
+        },
+        {
+          "name": "reappearingSystemRowLeavesArchiveAndCanDisappearAgain",
+          "passed": true
+        },
+        {
+          "name": "migrationFromV1PreservesSnapshotAndMissingTimestamp",
+          "passed": true
+        },
+        {
+          "name": "permissionDenialCannotMarkSystemRowsMissing",
+          "passed": true
+        },
+        {
+          "name": "repeatedMissingSyncDoesNotRestartRetentionAndCurrentRowsNeverExpire",
+          "passed": true
+        },
+        {
+          "name": "allPoliciesUseCalendarMonthsAndForeverIsUnbounded",
+          "passed": true
+        },
+        {
+          "name": "migrationCanonicalizesHiddenCurrentRowsWithoutCreatingFalseArchive",
+          "passed": true
+        },
+        {
+          "name": "monthEndExpiresAtForwardCalendarBoundary",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "suite": "com.dacaller.app.CallHistoryTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "completeLogIsNotTruncatedAndHiddenNumberRemainsUndialable",
+          "passed": true
+        },
+        {
+          "name": "revokedPermissionDuringReadCannotRepublishSensitiveHistory",
+          "passed": true
+        },
+        {
+          "name": "nullOrPartialCursorCannotArchiveEveryCurrentCall",
+          "passed": true
+        },
+        {
+          "name": "forcedRefreshWhileReadingIsNotLost",
+          "passed": true
+        },
+        {
+          "name": "legacyPrivateNumberSentinelsCannotBecomeDialableNumbers",
+          "passed": true
+        },
+        {
+          "name": "permissionRevocationClearsSensitiveCachedHistoryAndCallsCallback",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "suite": "com.dacaller.app.CallLauncherTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "deniedPermissionSelectsExternalDialerAndNeverRecurses",
+          "passed": true
+        },
+        {
+          "name": "formattedInternationalAndServiceNumbersAreSupported",
+          "passed": true
+        },
+        {
+          "name": "grantedCallUsesExactDisplayedDestination",
+          "passed": true
+        },
+        {
+          "name": "hiddenAndMissingNumbersNeverLaunchCalls",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "suite": "com.dacaller.app.CallScreenActivityTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "iosModeKeepsAnAccessibleAnswerAndDeclineButton",
+          "passed": true
+        },
+        {
+          "name": "tappingOrCancellingGestureDoesNotAnswer",
+          "passed": true
+        },
+        {
+          "name": "staleAnswerButtonCannotAnswerReplacementCall",
+          "passed": true
+        },
+        {
+          "name": "completedSwipeAnswersExactlyOnce",
+          "passed": true
+        },
+        {
+          "name": "android26UsesCompatibleLockscreenFlags",
+          "passed": true
+        },
+        {
+          "name": "allFiveThemesRespectLightDarkAndAmoled",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "suite": "com.dacaller.app.CallThemesContrastTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "labelsAndGesturePromptsRemainReadableInEveryPaletteAndMode",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "suite": "com.dacaller.app.ContactDataTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "contactsWithoutPhonesHaveDistinctFavoriteKeys",
+          "passed": true
+        },
+        {
+          "name": "updateKeepsExactNumberAndStoredType",
+          "passed": true
+        },
+        {
+          "name": "organizationAndPostalUseTheirActualProviderColumns",
+          "passed": true
+        },
+        {
+          "name": "clearingExistingNumberDeletesOnlyItsDataRow",
+          "passed": true
+        },
+        {
+          "name": "highResolutionPhotoIsSampledBeforeDecoding",
+          "passed": true
+        },
+        {
+          "name": "customPhoneAndEmailTypesAndRowIdentitiesSurviveLoading",
+          "passed": true
+        },
+        {
+          "name": "serviceNumberLookupAndSearchKeysDoNotAliasOrdinaryNumbers",
+          "passed": true
+        },
+        {
+          "name": "serviceNumbersDoNotShareFavoriteKeysWithOrdinaryNumbers",
+          "passed": true
+        },
+        {
+          "name": "emptyPhoneEmailAndEventDoNotInsertTypeOnlyRows",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "suite": "com.dacaller.app.ContactPhotosTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "invalidationAndPermissionRevocationPreventQueuedCachedPhotoDelivery",
+          "passed": true
+        },
+        {
+          "name": "simultaneousRequestsForSameContactReadProviderOnce",
+          "passed": true
+        },
+        {
+          "name": "deniedPermissionNeverQueriesProviderAndReturnsNull",
+          "passed": true
+        },
+        {
+          "name": "cacheInvalidationDuringProviderReadRetriesBeforeDelivering",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "suite": "com.dacaller.app.FastPagesTouchTest",
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "contactSearchSurvivesPageRebuild",
+          "passed": true
+        },
+        {
+          "name": "contactDetailsAndFavoriteStarNeverPlaceCalls",
+          "passed": true
+        },
+        {
+          "name": "horizontalSwipeCallsCorrectRowOnce",
+          "passed": true
+        },
+        {
+          "name": "recentAvatarDetailsAndCallHaveIndependentActions",
+          "passed": true
+        },
+        {
+          "name": "contactCallButtonDispatchesExactlyOneNumberWithoutMovingList",
+          "passed": true
+        },
+        {
+          "name": "asynchronousRecentSnapshotReplacementCannotChangeBoundRowNumber",
+          "passed": true
+        },
+        {
+          "name": "stalePostedRestoreCannotJumpAfterTouchStarts",
+          "passed": true
+        },
+        {
+          "name": "delayedPhotoForOldContactNeverAppearsInRecycledRow",
+          "passed": true
+        },
+        {
+          "name": "filteredAndRecycledRowsCallDisplayedPerson",
+          "passed": true
+        },
+        {
+          "name": "recentCallButtonDispatchesExactlyOneNumberWithoutMovingList",
+          "passed": true
+        },
+        {
+          "name": "configuredLeftSwipeCallsAndWrongDirectionDoesNot",
+          "passed": true
+        },
+        {
+          "name": "disabledSwipeDoesNotCall",
+          "passed": true
+        },
+        {
+          "name": "topMiddleAndEndContactsUseDisplayedNumbersAndKeepPosition",
+          "passed": true
+        },
+        {
+          "name": "swipeBeginningOnDedicatedCallControlDoesNotCall",
+          "passed": true
+        },
+        {
+          "name": "archiveIsOnlyAnOptionalFinalFooterOutsideCurrentRows",
+          "passed": true
+        },
+        {
+          "name": "verticalFlickStartingAtDialControlNeverCalls",
+          "passed": true
+        },
+        {
+          "name": "verticalGestureCannotTurnIntoAccidentalDiagonalCall",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "suite": "com.dacaller.app.IncomingGestureTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "allFourModesHaveExplicitPhysicalDirections",
+          "passed": true
+        },
+        {
+          "name": "tapsShortDragsAndDiagonalScrollCannotAnswer",
+          "passed": true
+        },
+        {
+          "name": "unknownStoredModeSafelyFallsBackToIos",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "suite": "com.dacaller.app.MainActivityRegressionTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "repeatedTapWhilePermissionPendingKeepsFirstDestination",
+          "passed": true
+        },
+        {
+          "name": "tabAndPendingPermissionSurviveActivityRecreation",
+          "passed": true
+        },
+        {
+          "name": "providerRefreshDuringFingerDownDefersRebuildAndStillCallsCorrectNumber",
+          "passed": true
+        },
+        {
+          "name": "rerenderCannotConsumePendingPermissionDestination",
+          "passed": true
+        },
+        {
+          "name": "secondDialIntentUpdatesAlreadyVisibleKeypad",
+          "passed": true
+        },
+        {
+          "name": "englishNavigationIsLeftToRightAndSettingsUsesActualVersion",
+          "passed": true
+        },
+        {
+          "name": "rapidRepeatedGrantedTapsPlaceOnlyOneCall",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "suite": "com.dacaller.app.NativeContactsTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "nativeEditTargetsExactContactInsteadOfCreatingDuplicate",
+          "passed": true
+        },
+        {
+          "name": "unavailableNativeEditorShowsEnglishFailureWithoutCrashing",
+          "passed": true
+        },
+        {
+          "name": "nativeCreatePrefillsExactNameAndPhone",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "suite": "com.dacaller.app.PhoneSessionServiceTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "delayedNotificationAnswerCannotAnswerAnotherCall",
+          "passed": true
+        },
+        {
+          "name": "removingSecondCallRestoresFirstAndKeepsNotification",
+          "passed": true
+        },
+        {
+          "name": "proximityOnlyProtectsEarpieceCalls",
+          "passed": true
+        },
+        {
+          "name": "speakerOffRespectsWiredHeadset",
+          "passed": true
+        },
+        {
+          "name": "proximityLockReleasesOnSpeakerCallEndAndServiceDestroy",
+          "passed": true
+        },
+        {
+          "name": "visibleIncomingScreenUsesQuietNotificationWithoutFullscreen",
+          "passed": true
+        },
+        {
+          "name": "outgoingNotificationIsAlwaysQuiet",
+          "passed": true
+        }
+      ]
+    }
+  ]
+}

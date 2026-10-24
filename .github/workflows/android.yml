@@ -1,5 +1,14 @@
-name: Build DA CALLER Android APK
+name: Validate DA CALLER
 on:
+  pull_request:
+    paths:
+      - 'app/**'
+      - 'build.gradle'
+      - 'settings.gradle'
+      - 'gradle.properties'
+      - 'gradle/**'
+      - 'gradlew*'
+      - '.github/workflows/android.yml'
   push:
     branches: [main]
     paths:
@@ -7,15 +16,93 @@ on:
       - 'build.gradle'
       - 'settings.gradle'
       - 'gradle.properties'
+      - 'gradle/**'
+      - 'gradlew*'
       - '.github/workflows/android.yml'
   workflow_dispatch:
+    inputs:
+      publish_beta:
+        description: 'Publish a NEW prerelease after validation (main branch only)'
+        type: boolean
+        default: false
+      device_verified:
+        description: 'Android 13 physical-device telephony checklist passed for this commit'
+        type: boolean
+        default: false
 concurrency:
-  group: da-caller-release-${{ github.ref }}
+  group: da-caller-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 permissions:
-  contents: write
+  contents: read
 jobs:
-  build:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      version: ${{ steps.metadata.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/wrapper-validation@v4
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+      - name: Install pinned Android SDK components
+        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - name: Build, test and lint DA CALLER only
+        run: ./gradlew --no-daemon :app:testDebugUnitTest :app:lintDebug :app:assembleDebug
+      - name: Verify APK identity, version and signature
+        id: metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          APK=app/build/outputs/apk/debug/app-debug.apk
+          TOOLS="$ANDROID_HOME/build-tools/35.0.0"
+          "$TOOLS/apksigner" verify --verbose --print-certs "$APK" | tee app/build/debug-signature.txt
+          "$TOOLS/aapt" dump badging "$APK" > app/build/apk-metadata.txt
+          python3 - <<'PY'
+          import os, re, zipfile
+          from pathlib import Path
+          with zipfile.ZipFile('app/build/outputs/apk/debug/app-debug.apk') as apk:
+              for name in apk.namelist():
+                  if re.fullmatch(r'classes[0-9]*\.dex', name):
+                      dex = apk.read(name)
+                      assert b'Lcom/dabusinessbook/' not in dex and b'Lcom/dacaller/offline/' not in dex, 'Separate app code included'
+          metadata = Path('app/build/apk-metadata.txt').read_text()
+          assert "package: name='com.dacaller.app'" in metadata, 'Wrong Android product'
+          version = re.search(r"versionName='([^']+)'", metadata).group(1)
+          assert re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+(?:-[A-Za-z0-9.]+)?', version), 'Unsafe version'
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              print(f'version={version}', file=output)
+          PY
+          sha256sum "$APK" > app/build/debug-apk.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DA-CALLER-${{ steps.metadata.outputs.version }}-debug-${{ github.sha }}
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            app/build/debug-signature.txt
+            app/build/debug-apk.sha256
+            app/build/apk-metadata.txt
+          if-no-files-found: error
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: DA-CALLER-checks-${{ github.sha }}
+          path: |
+            app/build/reports/tests/
+            app/build/test-results/
+            app/build/reports/lint-results-debug.*
+          if-no-files-found: warn
+          retention-days: 30
+
+  android-ui:
+    needs: validate
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -24,56 +111,176 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - name: Ensure Android SDK platforms
-        run: |
-          SDKM=$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager | head -n 1)
-          test -n "$SDKM"
-          yes | "$SDKM" --licenses >/dev/null || true
-          yes | "$SDKM" "platforms;android-35" "build-tools;35.0.0" >/dev/null || test -d "$ANDROID_HOME/platforms/android-35"
-          test -d "$ANDROID_HOME/platforms/android-35"
       - uses: gradle/actions/setup-gradle@v4
+      - uses: android-actions/setup-android@v3
         with:
-          gradle-version: '8.9'
-      - name: Restore optional permanent signing key
+          packages: platform-tools
+      - name: Install compile SDK
+        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Android 13 list touch regression tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          target: google_apis
+          arch: x86_64
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: |
+            adb shell wm size 480x854
+            adb shell wm density 240
+            ./gradlew --no-daemon :app:connectedDebugAndroidTest
+            mkdir -p app/build/ui-snapshots
+            adb pull /sdcard/Download/DA-CALLER-snapshots/ app/build/ui-snapshots/
+            test "$(find app/build/ui-snapshots/ -name 'call-*.png' | wc -l)" -eq 5
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: DA-CALLER-Android13-UI-${{ github.sha }}
+          path: |
+            app/build/reports/androidTests/
+            app/build/outputs/androidTest-results/
+            app/build/ui-snapshots/
+          if-no-files-found: warn
+          retention-days: 30
+
+  # A push/PR can never publish or replace a release. This separately gated job
+  # requires an explicitly verified main commit, a permanent key and its pinned
+  # certificate fingerprint. Configure the da-caller-release environment to
+  # require a reviewer before supplying signing secrets.
+  beta:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.publish_beta && inputs.device_verified
+    needs: [validate, android-ui]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: da-caller-release
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/wrapper-validation@v4
+      - uses: gradle/actions/setup-gradle@v4
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+      - name: Install pinned Android SDK components
+        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - name: Build and verify permanent signed beta
         env:
           KEYSTORE_B64: ${{ secrets.DA_CALLER_KEYSTORE_BASE64 }}
-          STORE_PASSWORD: ${{ secrets.DA_CALLER_KEYSTORE_PASSWORD }}
+          DA_CALLER_KEYSTORE_PASSWORD: ${{ secrets.DA_CALLER_KEYSTORE_PASSWORD }}
+          EXPECTED_CERT_SHA256: ${{ secrets.DA_CALLER_CERT_SHA256 }}
+          VERSION: ${{ needs.validate.outputs.version }}
+        shell: bash
         run: |
-          if [ -n "$KEYSTORE_B64" ] && [ -n "$STORE_PASSWORD" ]; then
-            printf '%s' "$KEYSTORE_B64" | base64 --decode > app/release.jks
-            echo "DA_CALLER_KEYSTORE_PATH=$GITHUB_WORKSPACE/app/release.jks" >> "$GITHUB_ENV"
-            echo "DA_CALLER_KEYSTORE_PASSWORD=$STORE_PASSWORD" >> "$GITHUB_ENV"
-            echo "APK_PATH=app/build/outputs/apk/release/app-release.apk" >> "$GITHUB_ENV"
-            echo "SIGNING_FLAVOR=PERMANENT" >> "$GITHUB_ENV"
-          else
-            echo "APK_PATH=app/build/outputs/apk/debug/app-debug.apk" >> "$GITHUB_ENV"
-            echo "SIGNING_FLAVOR=TEMPORARY_DEBUG" >> "$GITHUB_ENV"
-            echo "::warning::Permanent signing secrets are missing. This APK may require a reinstall."
-          fi
-      - name: Build Android APK
-        run: |
-          if [ "$SIGNING_FLAVOR" = "PERMANENT" ]; then
-            gradle --no-daemon :app:assembleRelease
-          else
-            gradle --no-daemon :app:assembleDebug
-          fi
-      - name: Verify signature
-        run: |
-          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose "$APK_PATH"
-          test -s "$APK_PATH"
-      - uses: actions/upload-artifact@v4
-        with:
-          name: DA-CALLER-v0.9.0-APK
-          path: ${{ env.APK_PATH }}
-      - name: Publish APK release
+          set -euo pipefail
+          test -n "$KEYSTORE_B64"
+          test -n "$DA_CALLER_KEYSTORE_PASSWORD"
+          test -n "$EXPECTED_CERT_SHA256"
+          export DA_CALLER_KEYSTORE_PATH="$RUNNER_TEMP/da-caller-release.jks"
+          trap 'rm -f "$DA_CALLER_KEYSTORE_PATH"' EXIT
+          printf '%s' "$KEYSTORE_B64" | base64 --decode > "$DA_CALLER_KEYSTORE_PATH"
+          chmod 600 "$DA_CALLER_KEYSTORE_PATH"
+          ./gradlew --no-daemon :app:assembleRelease
+          APK=app/build/outputs/apk/release/app-release.apk
+          TOOLS="$ANDROID_HOME/build-tools/35.0.0"
+          "$TOOLS/apksigner" verify --verbose --print-certs "$APK" > app/build/release-signature.txt
+          "$TOOLS/aapt" dump badging "$APK" > app/build/release-metadata.txt
+          python3 - <<'PY'
+          import os, re
+          from pathlib import Path
+          normalize = lambda value: value.replace(':', '').strip().lower()
+          cert = re.search(r'Signer #1 certificate SHA-256 digest: (\S+)', Path('app/build/release-signature.txt').read_text()).group(1)
+          assert normalize(cert) == normalize(os.environ['EXPECTED_CERT_SHA256']), 'Unexpected signing certificate'
+          metadata = Path('app/build/release-metadata.txt').read_text()
+          assert "package: name='com.dacaller.app'" in metadata
+          version = re.search(r"versionName='([^']+)'", metadata).group(1)
+          assert version == os.environ['VERSION']
+          assert tuple(map(int, version.split('-')[0].split('.'))) > (0, 9, 0), 'Never replace 0.8.0/0.9.0'
+          PY
+          cp "$APK" "DA-CALLER-v$VERSION.apk"
+          sha256sum "DA-CALLER-v$VERSION.apk" > "DA-CALLER-v$VERSION.apk.sha256"
+      - name: Publish immutable beta
         env:
           GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.validate.outputs.version }}
+        shell: bash
         run: |
-          cp "$APK_PATH" DA-CALLER-v0.9.0.apk
-          if gh release view v0.9.0 >/dev/null 2>&1; then
-            gh release upload v0.9.0 DA-CALLER-v0.9.0.apk --clobber
-          else
-            gh release create v0.9.0 DA-CALLER-v0.9.0.apk \
-              --title 'DA CALLER v0.9.0' \
-              --notes 'Dialer-only update from current main: improved favorite contact photos, preserved Recents and Contacts scroll position, call controls and notification fixes, archive visibility, expanded bilingual strings, and visual consistency. Business Book is a separate Android module and is not part of this APK. Debug signing may require reinstall unless permanent signing secrets are configured.'
+          set -euo pipefail
+          # Existing tags/releases are an error. No --clobber or force updates.
+          EXISTING_TAG=$(git ls-remote --tags origin "refs/tags/v$VERSION")
+          if [ -n "$EXISTING_TAG" ]; then
+            echo 'Version tag already exists; choose a new version.' >&2
+            exit 1
           fi
+          if gh release view "v$VERSION" >/dev/null 2>&1; then
+            echo 'Release already exists; choose a new version.' >&2
+            exit 1
+          fi
+          cat > release-notes.md <<'NOTES'
+          DA CALLER beta. Built from the linked verified commit, with unit tests,
+          lint, package identity and permanent certificate checks. The operator
+          confirmed the Android 13 physical-device checklist for this commit.
+          Business Book and DA ID Offline are separate applications.
+          NOTES
+          gh release create "v$VERSION" "DA-CALLER-v$VERSION.apk" "DA-CALLER-v$VERSION.apk.sha256" \
+            --target "$GITHUB_SHA" --prerelease --title "DA CALLER v$VERSION beta" \
+            --notes-file release-notes.md
+
+  # Explicitly marked TEST prerelease. It does NOT claim field validation or
+  # use permanent signing and cannot update a differently signed install.
+  # Never publishes on forks or changes the separately gated stable-beta process.
+  preview-debug:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'codex/da-caller-hardening-20261023' && github.event.pull_request.head.repo.full_name == github.repository
+    needs: [validate, android-ui]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: DA-CALLER-${{ needs.validate.outputs.version }}-debug-${{ github.sha }}
+          path: candidate
+      - name: Publish explicitly unverified debug prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          VERSION: ${{ needs.validate.outputs.version }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$VERSION" =~ ^0[.]11[.]0-beta[.][0-9]+$ ]]
+          APK=$(find candidate -name app-debug.apk -type f -print -quit)
+          test -n "$APK"
+          cp "$APK" "DA-CALLER-v$VERSION-debug.apk"
+          sha256sum "DA-CALLER-v$VERSION-debug.apk" > "DA-CALLER-v$VERSION-debug.apk.sha256"
+          if gh release view "v$VERSION-debug" >/dev/null 2>&1; then
+            echo 'Debug preview already exists; never overwrite a release.' >&2
+            exit 0
+          fi
+          cat > preview-notes.md <<'NOTES'
+          # DA CALLER — UNVERIFIED DEBUG TEST BUILD
+          This is **not** a stable or device-verified release.
+          The Android build, unit tests and emulator UI checks passed, but
+          actual cellular calls, answering, ringing, lock screen, SIM and
+          Unihertz Jelly Star behavior have NOT been verified on hardware.
+          It is signed with an ephemeral CI debug certificate and cannot
+          update a differently signed v0.9/v0.10 installation in place.
+          **DO NOT uninstall your existing installation unless all private
+          data and settings have been safely preserved.**
+          Keep a working alternative dialer installed. Test on a spare device.
+          No APK in this preview should be considered production ready.
+          NOTES
+          gh release create "v$VERSION-debug" "DA-CALLER-v$VERSION-debug.apk" "DA-CALLER-v$VERSION-debug.apk.sha256" \
+            --target "$HEAD_SHA" --prerelease --title "DA CALLER v$VERSION (DEBUG TEST — UNVERIFIED)" \
+            --notes-file preview-notes.md

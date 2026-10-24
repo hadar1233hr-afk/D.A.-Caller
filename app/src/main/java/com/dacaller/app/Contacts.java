@@ -25,13 +25,16 @@ final class Contacts {
   Person(String name,String phone,long id){
    this.name=name==null||name.trim().isEmpty()?"ללא שם":name.trim();
    this.phone=phone==null?"":phone.trim();
-   this.key=this.phone.replaceAll("[^+0-9]","");
+   this.key=this.phone.isEmpty()?"contact:"+id:this.phone.replaceAll("[^+0-9*#,;]","");
    this.id=id;
   }
   Person(String name,String phone){this(name,phone,-1);}
  }
  static String canonical(String phone){
   if(phone==null)return "";
+  // Service codes and post-dial sequences have distinct identities from plain numbers.
+  String dial=phone.replaceAll("[^+0-9*#,;]","");
+  if(dial.indexOf('*')>=0||dial.indexOf('#')>=0||dial.indexOf(',')>=0||dial.indexOf(';')>=0)return dial;
   String digits=phone.replaceAll("[^0-9]","");
   if(digits.startsWith("972") && digits.length()>=11)digits="0"+digits.substring(3);
   if(digits.startsWith("00972") && digits.length()>=13)digits="0"+digits.substring(5);
@@ -76,7 +79,7 @@ final class Contacts {
    ContactsContract.CommonDataKinds.Phone.NUMBER
   };
   try(Cursor numbers=context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-      numbersProjection,null,null,null)){
+      numbersProjection,null,null,ContactsContract.CommonDataKinds.Phone.IS_SUPER_PRIMARY+" DESC, "+ContactsContract.CommonDataKinds.Phone.IS_PRIMARY+" DESC, "+ContactsContract.CommonDataKinds.Phone._ID+" ASC")){
    if(numbers!=null)while(numbers.moveToNext()){
     long id=numbers.getLong(0);
     String n=numbers.getString(1);
@@ -105,7 +108,7 @@ final class Contacts {
     }
    }catch(Exception ignored){}
   }
-  Collator collator=Collator.getInstance(new Locale("he","IL"));
+  Collator collator=Collator.getInstance(I18n.isEnglish(context)?Locale.ENGLISH:new Locale("he","IL"));
   Collections.sort(found,(left,right)->collator.compare(left.name,right.name));
   return found;
  }

@@ -1,0 +1,20 @@
+Original source: ce815efd2f9a20a43eee9a6eb03c8cbeda9ae178 (original PR #2 head)
+Original FastPages blob verified equal: e8d41c454d2511f3d5765006bd06a516f9548652
+Original TouchFeedback blob verified equal: c1eb9af52392e06246d70d3acd9797bb91bcf0ed
+No production source modified for isolation; test runtime toggles only native fast scroll and removes TouchFeedback listeners/transforms.
+Tap helper requires fully visible row and asserts target center inside visible list. 1000 rows. Calls are host callback records; no real call.
+
+reliableRecentsPair: PASS
+reliableContactsPair: PASS
+reliableContactsOriginal: EXPECTED BASELINE FAILURE java.lang.AssertionError: expected:<[050000397]> but was:<[]>
+reliableRecentsOriginal: EXPECTED BASELINE FAILURE java.lang.AssertionError: expected:<[050100597]> but was:<[]>
+
+LIST=recents FAST_AND_FEEDBACK_FIX=true POSITION=597 TAP=41.0,72.0 SIZE=576x653 FIRST_BEFORE=596 FIRST_AFTER=596 CALLS=[050100597]
+LIST=contacts FAST_AND_FEEDBACK_FIX=true POSITION=397 TAP=29.5,66.0 SIZE=576x614 FIRST_BEFORE=396 FIRST_AFTER=396 CALLS=[050000397]
+LIST=contacts FAST_AND_FEEDBACK_FIX=false POSITION=397 TAP=29.5,66.0 SIZE=576x614 FIRST_BEFORE=396 FIRST_AFTER=396 CALLS=[]
+LIST=recents FAST_AND_FEEDBACK_FIX=false POSITION=597 TAP=41.0,72.0 SIZE=576x653 FIRST_BEFORE=596 FIRST_AFTER=596 CALLS=[]
+
+Other original-source isolation: FastScroll off only FAIL; focusable items only FAIL; feedback removal only FAIL; FastScroll+focus FAIL; focus+feedback FAIL; FastScroll+feedback PASS; all three PASS.
+Stale position restore independent reproduction (corrected baseline suite): expected first visible 26 after touch, original queued restore changes to 0.
+Logs: work/touch-reliable-cause.log; work/touch-visible-pair-isolation.log; work/touch-visible-isolation.log; work/touch-visible-baseline.log.
+This is Android 13 Robolectric View dispatch evidence, not physical Unihertz or actual telephony verification.

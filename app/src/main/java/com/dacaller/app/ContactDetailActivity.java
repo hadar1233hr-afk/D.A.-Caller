@@ -39,6 +39,7 @@ public final class ContactDetailActivity extends Activity {
  private ImageView photo;
  private TextView initials;
  private String title="";
+ private int fetchGeneration;
  private int d(float n){return (int)(getResources().getDisplayMetrics().density*n+.5f);}
  private boolean dark(){return prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);}
  private int page(){return prefs.getBoolean("amoled",false)?Color.BLACK:dark()?0xFF141414:0xFFF8F8F7;}
@@ -55,8 +56,8 @@ public final class ContactDetailActivity extends Activity {
   t.setTypeface(Typeface.create(bold?"sans-serif-medium":"sans-serif",Typeface.NORMAL));
   t.setGravity(Gravity.CENTER_VERTICAL);t.setIncludeFontPadding(false);return t;
  }
- private LinearLayout row(){LinearLayout l=new LinearLayout(this);l.setGravity(Gravity.CENTER_VERTICAL);l.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);return l;}
- private LinearLayout col(){LinearLayout l=new LinearLayout(this);l.setOrientation(1);l.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);return l;}
+ private LinearLayout row(){LinearLayout l=new LinearLayout(this);l.setGravity(Gravity.CENTER_VERTICAL);l.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);return l;}
+ private LinearLayout col(){LinearLayout l=new LinearLayout(this);l.setOrientation(LinearLayout.VERTICAL);l.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);return l;}
  @Override public void onCreate(Bundle b){
   super.onCreate(b);prefs=getSharedPreferences("da_caller",MODE_PRIVATE);
   contactId=getIntent().getLongExtra("contact_id",-1);
@@ -64,7 +65,7 @@ public final class ContactDetailActivity extends Activity {
  }
  @Override protected void onActivityResult(int request,int result,Intent intent){
   super.onActivityResult(request,result,intent);
-  if(request==51){ContactPhotos.clearCache();fetch();}
+  if(request==51||request==NativeContacts.REQUEST_EDIT){ContactPhotos.clearCache();fetch();}
  }
  private void build(){
   getWindow().setStatusBarColor(page());getWindow().setNavigationBarColor(page());
@@ -82,6 +83,10 @@ public final class ContactDetailActivity extends Activity {
  }
  private void fetch(){
   if(contactId<0){finish();return;}
+  if(checkSelfPermission(Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED){
+   requestPermissions(new String[]{Manifest.permission.READ_CONTACTS},52);return;
+  }
+  final int generation=++fetchGeneration;
   IO.execute(()->{
    String name="";
    final ArrayList<String[]> phones=new ArrayList<>();
@@ -116,12 +121,16 @@ public final class ContactDetailActivity extends Activity {
      if(c!=null&&c.moveToFirst())name=c.getString(0);
     }catch(Exception ignored){}
    }
-   final String display=name==null||name.isEmpty()?"איש קשר":name;
+   final String display=name==null||name.isEmpty()?tr("איש קשר"):name;
    runOnUiThread(()->{
-    if(isFinishing()||isDestroyed())return;
+    if(isFinishing()||isDestroyed()||generation!=fetchGeneration)return;
     title=display;populate(display,phones,emails,misc);
    });
   });
+ }
+ @Override public void onRequestPermissionsResult(int request,String[] permissions,int[] results){
+  super.onRequestPermissionsResult(request,permissions,results);
+  if(request==52){if(results.length>0&&results[0]==PackageManager.PERMISSION_GRANTED)fetch();else{Toast.makeText(this,tr("נדרשת הרשאת אנשי קשר"),Toast.LENGTH_LONG).show();finish();}}
  }
  private void populate(String name,ArrayList<String[]> phones,ArrayList<String[]> emails,ArrayList<String[]> misc){
   content.removeAllViews();
@@ -130,17 +139,17 @@ public final class ContactDetailActivity extends Activity {
   FrameLayout avatar=new FrameLayout(this);
   avatar.setBackground(shape(dark()?0xFF343029:0xFFF1E8D8,70));
   hero.addView(avatar,new LinearLayout.LayoutParams(d(116),d(116)));
-  initials=label(name.isEmpty()?"?":name.substring(0,1).toUpperCase(),45,true,accent());
+  initials=label(name.isEmpty()?"?":name.substring(0,name.offsetByCodePoints(0,1)).toUpperCase(I18n.locale(this)),45,true,accent());
   initials.setGravity(Gravity.CENTER);avatar.addView(initials,new FrameLayout.LayoutParams(-1,-1));
-  photo=new ImageView(this);photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
+  photo=new ImageView(this);final ImageView requestedPhoto=photo;photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
   photo.setBackground(shape(surface(),60));photo.setClipToOutline(true);
   photo.setVisibility(View.GONE);avatar.addView(photo,new FrameLayout.LayoutParams(-1,-1));
   ContactPhotos.load(this,contactId,image->{
-   if(isFinishing()||isDestroyed())return;
-   if(image!=null){photo.setImageBitmap(image);photo.setVisibility(View.VISIBLE);}
-   else photo.setVisibility(View.GONE);
+   if(isFinishing()||isDestroyed()||photo!=requestedPhoto)return;
+   if(image!=null){requestedPhoto.setImageBitmap(image);requestedPhoto.setVisibility(View.VISIBLE);}
+   else requestedPhoto.setVisibility(View.GONE);
   });
-  TextView fullName=label(name,25,true,ink());
+  TextView fullName=label("",25,true,ink());fullName.setText(name);
   fullName.setGravity(Gravity.CENTER);fullName.setSingleLine(true);
   fullName.setEllipsize(android.text.TextUtils.TruncateAt.END);
   LinearLayout.LayoutParams n=new LinearLayout.LayoutParams(-1,d(55));n.topMargin=d(8);
@@ -166,11 +175,12 @@ public final class ContactDetailActivity extends Activity {
     line.setBackground(shape(surface(),15));
     LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,d(75));lp.bottomMargin=d(8);content.addView(line,lp);
     LinearLayout left=col();line.addView(left,new LinearLayout.LayoutParams(0,-2,1));
-    left.addView(label(phone[0],17,true,ink()));
+    TextView numberLabel=label("",17,true,ink());numberLabel.setText(phone[0]);numberLabel.setTextDirection(View.TEXT_DIRECTION_LTR);left.addView(numberLabel);
     left.addView(label(tr("מספר טלפון"),12,false,muted()));
     ImageView call=new ImageView(this);call.setImageResource(R.drawable.ic_phone_line);
     call.setImageTintList(ColorStateList.valueOf(accent()));call.setPadding(d(11),d(11),d(11),d(11));
     line.addView(call,new LinearLayout.LayoutParams(d(51),d(51)));
+    call.setContentDescription(tr("התקשר")+" "+phone[0]);
     call.setOnClickListener(v->call(phone[0]));left.setOnClickListener(v->new AlertDialog.Builder(this)
      .setTitle(phone[0])
      .setItems(new String[]{tr("התקשר"),tr("העתק")},(dialog,which)->{
@@ -190,6 +200,10 @@ public final class ContactDetailActivity extends Activity {
    section("פרטים נוספים");
    for(String[] pair:misc)info(pair[0]+" · "+pair[1],"◈");
   }
+  TextView nativeEdit=label("פתיחה בעורך אנשי הקשר",14,true,accent());
+  nativeEdit.setGravity(Gravity.CENTER);nativeEdit.setBackground(shape(surface(),15));
+  LinearLayout.LayoutParams nativeParams=new LinearLayout.LayoutParams(-1,d(52));nativeParams.topMargin=d(10);content.addView(nativeEdit,nativeParams);
+  nativeEdit.setOnClickListener(v->NativeContacts.open(this,contactId,name,phones.isEmpty()?"":phones.get(0)[0]));
  }
  private void section(String name){
   TextView section=label(name,15,true,accent());
@@ -209,15 +223,13 @@ public final class ContactDetailActivity extends Activity {
   col.addView(desc,new LinearLayout.LayoutParams(-1,d(23)));
   LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(0,d(63),1);
   params.setMargins(d(6),0,d(6),0);group.addView(col,params);
-  col.setBackground(shape(surface(),15));col.setOnClickListener(v->run.run());
+  col.setContentDescription(title);col.setBackground(shape(surface(),15));col.setOnClickListener(v->run.run());
  }
  private void editContact(){
   Intent edit=new Intent(this,ContactEditorActivity.class);
   edit.putExtra("contact_id",contactId);startActivityForResult(edit,51);
  }
  private void call(String number){
-  if(number==null||number.isEmpty())return;
-  try{startActivity(new Intent(Intent.ACTION_DIAL,Uri.fromParts("tel",number,null)));}
-  catch(Exception e){Toast.makeText(this,tr("לא ניתן להתקשר"),Toast.LENGTH_LONG).show();}
+  if(!CallLauncher.place(this,number))Toast.makeText(this,tr("לא ניתן להתקשר"),Toast.LENGTH_LONG).show();
  }
 }

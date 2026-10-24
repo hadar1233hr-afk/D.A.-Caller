@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/widget_root"
- android:orientation="horizontal" android:gravity="center_vertical" android:layoutDirection="rtl"
+ android:orientation="horizontal" android:gravity="center_vertical" android:layoutDirection="locale"
  android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/widget_bg" android:padding="12dp">
- <TextView android:id="@+id/widget_icon" android:layout_width="43dp" android:layout_height="match_parent" android:gravity="center" android:text="☎" android:textColor="#E2C385" android:textSize="27sp"/>
- <TextView android:id="@+id/widget_name" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="בחר איש קשר" android:textColor="#F7F7F7" android:textSize="15sp" android:textStyle="bold" android:maxLines="2"/>
+ <TextView android:id="@+id/widget_icon" android:layout_width="43dp" android:layout_height="match_parent" android:gravity="center" android:text="@string/widget_phone_symbol" android:textColor="#E2C385" android:textSize="27sp"/>
+ <TextView android:id="@+id/widget_name" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="@string/widget_choose_contact" android:textColor="#F7F7F7" android:textSize="15sp" android:textStyle="bold" android:maxLines="2"/>
  </LinearLayout>
