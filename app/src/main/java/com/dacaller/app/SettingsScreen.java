@@ -95,7 +95,7 @@ final class SettingsScreen {
    final String id=CallThemes.IDS[i];
    String label=CallThemes.NAMES[i];
    String description=I18n.isEnglish(host)?new String[]{
-    "Two-column command deck","Google Expressive-inspired action dock","Oversized vertical controls",
+    "Two-column command deck","Google Phone-inspired dock, blush palette and prominent hang-up","Oversized vertical controls",
     "Three-column dashboard","Minimal two-column arrangement"}[i]:CallThemes.DESCRIPTIONS[i];
    String val=prefs.getString("call_theme","pixel");
    int[] shades={0xFFD1AD70,0xFF6198E9,0xFF23B188,0xFF9AA1E9,0xFFC5956D};
