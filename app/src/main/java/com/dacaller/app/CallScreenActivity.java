@@ -71,7 +71,7 @@ public final class CallScreenActivity extends Activity {
  private String tr(String heb){return I18n.text(this,heb);}
  private void feedback(View view){TouchFeedback.pulse(this,prefs,view);}
  private String currentThemeKey(){
-  return prefs.getString("call_theme","graphite")+"/"+prefs.getBoolean("dark",false)+"/"+prefs.getBoolean("amoled",false)+"/"+prefs.getString("language","he");
+  return prefs.getString("call_theme","pixel")+"/"+prefs.getBoolean("dark",false)+"/"+prefs.getBoolean("amoled",false)+"/"+prefs.getString("language","he");
  }
  @Override public void onCreate(Bundle b){
   super.onCreate(b);prefs=getSharedPreferences("da_caller",MODE_PRIVATE);
@@ -383,7 +383,7 @@ public final class CallScreenActivity extends Activity {
    for(int i=first.size();i<3;i++){
     View empty=new View(this);primary.addView(empty,new LinearLayout.LayoutParams(0,dp(68),1));
    }
-   googleTile(primary,R.drawable.ic_control_more,expressiveMoreExpanded,expressiveMoreExpanded?"פחות":"עוד",()->{
+   googleTile(primary,R.drawable.ic_control_more,expressiveMoreExpanded?"פחות":"עוד",expressiveMoreExpanded,()->{
     expressiveMoreExpanded=!expressiveMoreExpanded;drawnState="";refreshSafely();
    });
   }else{
