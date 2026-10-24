@@ -42,11 +42,13 @@ public final class PhoneSessionService extends InCallService {
  static void notifyViews(){for(Runnable cb:listeners){try{cb.run();}catch(Exception ignored){}}}
  @Override public void onCreate(){
   super.onCreate();instance=this;
-  PowerManager power=getSystemService(PowerManager.class);
-  if(power!=null&&power.isWakeLockLevelSupported(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK)){
-   proximityLock=power.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK,"DA_CALLER:proximity");
-   proximityLock.setReferenceCounted(false);
-  }
+  try{
+   PowerManager power=getSystemService(PowerManager.class);
+   if(power!=null&&power.isWakeLockLevelSupported(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK)){
+    proximityLock=power.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK,"DA_CALLER:proximity");
+    proximityLock.setReferenceCounted(false);
+   }
+  }catch(RuntimeException failure){CallFailureReporter.record(this,"incall-create-proximity",failure);proximityLock=null;}
  }
  @Override public void onDestroy(){
   for(Call call:new ArrayList<>(order))call.unregisterCallback(callback);
@@ -60,12 +62,16 @@ public final class PhoneSessionService extends InCallService {
   super.onCallAdded(call);
   if(call==null||calls.containsKey(call))return;
   calls.put(call,UUID.randomUUID().toString());order.add(call);
-  call.registerCallback(callback);
-  changed();
-  // Incoming calls use the notification full-screen intent. Telecom owns ringing.
-  if(call.getState()!=Call.STATE_RINGING){
-   showCallScreen();
+  current=call;
+  try{call.registerCallback(callback);}
+  catch(RuntimeException failure){CallFailureReporter.record(this,"incall-register-callback",failure);}
+  try{changed();}
+  catch(RuntimeException failure){
+   CallFailureReporter.record(this,"incall-call-added",failure);
+   current=call;notifyViews();
   }
+  try{if(call.getState()!=Call.STATE_RINGING)showCallScreen();}
+  catch(RuntimeException failure){CallFailureReporter.record(this,"incall-open-screen",failure);}
  }
  @Override public void onCallRemoved(Call call){
   clear(call);super.onCallRemoved(call);
@@ -76,11 +82,15 @@ public final class PhoneSessionService extends InCallService {
  private void showCallScreen(){
   try{startActivity(new Intent(this,CallScreenActivity.class)
     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP));}
-  catch(android.content.ActivityNotFoundException|SecurityException ignored){}
+  catch(RuntimeException failure){CallFailureReporter.record(this,"incall-start-activity",failure);}
  }
  private void changed(){
-  current=preferredCall();updateProximity();
-  updateNotification(current);notifyViews();
+  current=preferredCall();
+  try{updateProximity();}
+  catch(RuntimeException failure){CallFailureReporter.record(this,"incall-proximity",failure);releaseProximity();}
+  try{updateNotification(current);}
+  catch(RuntimeException failure){CallFailureReporter.record(this,"incall-notification",failure);}
+  notifyViews();
  }
  static boolean useProximity(int state,int route){
   return (state==Call.STATE_ACTIVE||state==Call.STATE_DIALING||state==Call.STATE_CONNECTING)
@@ -160,13 +170,18 @@ public final class PhoneSessionService extends InCallService {
  }
  static void setScreenVisible(boolean visible){
   PhoneSessionService service=instance;
-  if(service!=null){service.screenVisible=visible;service.updateNotification(current);}
+  if(service!=null){service.screenVisible=visible;
+   try{service.updateNotification(current);}
+   catch(RuntimeException failure){CallFailureReporter.record(service,"incall-screen-notification",failure);}
+  }
  }
  static boolean intrusiveNotification(int state,boolean visible){return state==Call.STATE_RINGING&&!visible;}
  static void notifyChanged(){PhoneSessionService service=instance;if(service!=null)service.changed();else notifyViews();}
  private void clear(Call call){
   if(!calls.containsKey(call))return;
-  call.unregisterCallback(callback);calls.remove(call);order.remove(call);
+  try{call.unregisterCallback(callback);}
+  catch(RuntimeException failure){CallFailureReporter.record(this,"incall-unregister-callback",failure);}
+  calls.remove(call);order.remove(call);
   CallHistory.fetchedAt=0;
   handler.removeCallbacks(refreshHistory);handler.postDelayed(refreshHistory,2500);
   changed();
