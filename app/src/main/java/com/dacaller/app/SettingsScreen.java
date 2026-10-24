@@ -87,14 +87,14 @@ final class SettingsScreen {
   toggle("הצגת סיכום פעילות","סיכום דקות ושיחות בשורה קומפקטית",
      "show_stats",prefs.getBoolean("show_stats",true));
   cardEnd();
-  section("ערכות מסך שיחה","✦");
+  section("חמישה עיצובים שונים למסך שיחה","✦");
   cardStart();
   for(int i=0;i<CallThemes.IDS.length;i++){
    final String id=CallThemes.IDS[i];
    String label=CallThemes.NAMES[i];
    String description=I18n.isEnglish(host)?new String[]{
-    "Graphite and champagne gold","Airy, clean blue","Deep black and emerald",
-    "Soft slate and frosted glass","Ivory and warm copper"}[i]:CallThemes.DESCRIPTIONS[i];
+    "Two-column command deck","Google Expressive-inspired action dock","Oversized vertical controls",
+    "Three-column dashboard","Minimal two-column arrangement"}[i]:CallThemes.DESCRIPTIONS[i];
    String val=prefs.getString("call_theme","graphite");
    int[] shades={0xFFD1AD70,0xFF6198E9,0xFF23B188,0xFF9AA1E9,0xFFC5956D};
    LinearLayout item=row();item.setPadding(dp(12),dp(6),dp(12),dp(6));
