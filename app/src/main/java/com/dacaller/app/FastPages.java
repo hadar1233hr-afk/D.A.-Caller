@@ -250,22 +250,49 @@ final class FastPages {
    return permission("יומן השיחות דורש הרשאה","אפשר גישה לשיחות",()->host.requestLog());
   }
   if(prefs.getBoolean("show_stats",true)){
-   android.widget.HorizontalScrollView stats=new android.widget.HorizontalScrollView(host);
-   stats.setHorizontalScrollBarEnabled(false);stats.setFillViewport(true);
-   LinearLayout line=horizontal();line.setPadding(dp(7),dp(3),dp(7),dp(3));line.setBackground(edge(panel(),13));
-   stats.addView(line,new android.widget.FrameLayout.LayoutParams(-2,dp(39)));
-   CallHistory.Summary s=CallHistory.summary;
+   CallHistory.Summary statsData=CallHistory.summary;
+   LinearLayout summary=vertical();
+   summary.setPadding(dp(12),dp(9),dp(12),dp(10));
+   summary.setBackground(edge(panel(),18));
+   LinearLayout.LayoutParams block=new LinearLayout.LayoutParams(-1,-2);
+   block.bottomMargin=dp(8);page.addView(summary,block);
+   LinearLayout header=horizontal();
+   summary.addView(header,lp(-1,dp(33)));
+   TextView heading=text(tr("סיכום פעילות"),14,ink(),true);
+   header.addView(heading,new LinearLayout.LayoutParams(0,-1,1));
    String[] periods={tr("היום"),tr("השבוע"),tr("החודש"),tr("השנה")};
-   TextView selector=text(periods[period]+" ▾",12,tint(),true);selector.setPadding(dp(10),0,dp(10),0);
-   selector.setBackground(bg(soft(),9));line.addView(selector,lp(-2,31));
+   TextView selector=text(periods[period]+"  ▾",12,tint(),true);
+   selector.setPadding(dp(11),0,dp(10),0);
+   selector.setGravity(Gravity.CENTER);
+   selector.setBackground(bg(soft(),12));
+   header.addView(selector,lp(-2,31));
+   selector.setContentDescription(tr("תקופת הסיכום")+": "+periods[period]);
    touch(selector);
    selector.setOnClickListener(v->{pulse(selector);period=(period+1)%4;host.refreshPage();});
-   stat(line,Math.round(s.seconds[period]/60.0)+" "+tr("דק׳"),true);
-   stat(line,s.calls[period]+" "+tr("שיחות"),false);
-   stat(line,"↗ "+s.outgoing[period],false);
-   stat(line,"↙ "+s.incoming[period],false);
-   stat(line,"✕ "+s.missed[period],false);
-   page.addView(stats,lp(-1,42));
+   LinearLayout totals=horizontal();
+   totals.setGravity(Gravity.CENTER_VERTICAL);
+   LinearLayout.LayoutParams totalsParams=lp(-1,49);
+   totalsParams.topMargin=dp(4);summary.addView(totals,totalsParams);
+   LinearLayout countBlock=vertical();
+   totals.addView(countBlock,new LinearLayout.LayoutParams(0,-2,1));
+   countBlock.addView(text(statsData.calls[period]+" "+tr("שיחות"),20,ink(),true));
+   countBlock.addView(text(tr("סך שיחות לתקופה"),10,subtle(),false));
+   LinearLayout timeBlock=vertical();
+   totals.addView(timeBlock,new LinearLayout.LayoutParams(0,-2,1));
+   TextView duration=text(durationText(statsData.seconds[period]),18,tint(),true);
+   duration.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);timeBlock.addView(duration);
+   TextView timeLabel=text(tr("זמן דיבור כולל"),10,subtle(),false);
+   timeLabel.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);timeBlock.addView(timeLabel);
+   LinearLayout breakdown=horizontal();
+   LinearLayout.LayoutParams bp=lp(-1,53);bp.topMargin=dp(7);summary.addView(breakdown,bp);
+   summaryMetric(breakdown,tr("יוצאות"),"↗",statsData.outgoing[period],0xFF2375B4);
+   summaryMetric(breakdown,tr("נכנסות"),"↙",statsData.incoming[period],0xFF25815F);
+   summaryMetric(breakdown,tr("שלא נענו"),"×",statsData.missed[period],0xFFBD4748);
+   int answered=statsData.outgoing[period]+statsData.incoming[period];
+   TextView average=text(tr("משך שיחה ממוצע")+": "+
+     durationText(answered>0?statsData.seconds[period]/answered:0),11,subtle(),false);
+   LinearLayout.LayoutParams ap=lp(-1,24);ap.topMargin=dp(3);
+   summary.addView(average,ap);
   }
   LinearLayout top=horizontal();page.addView(top,lp(-1,41));
   TextView title=text(tr("כל השיחות"),15,ink(),true);
@@ -309,9 +336,26 @@ final class FastPages {
   }
   return page;
  }
- private void stat(LinearLayout line,String value,boolean strong){
-  TextView t=text(value,11,strong?tint():subtle(),strong);
-  t.setPadding(dp(9),0,dp(9),0);line.addView(t,lp(-2,32));
+ private String durationText(long seconds){
+  long total=Math.max(0,seconds);
+  long hours=total/3600,minutes=(total%3600)/60;
+  if(hours>0)return hours+" "+tr("שעות")+" "+minutes+" "+tr("דק׳");
+  if(minutes>0)return minutes+" "+tr("דק׳");
+  return total+" "+tr("שניות");
+ }
+ private void summaryMetric(LinearLayout parent,String title,String symbol,int value,int baseColor){
+  LinearLayout item=vertical();
+  item.setGravity(Gravity.CENTER);
+  item.setPadding(dp(1),dp(2),dp(1),dp(2));
+  item.setBackground(bg(dark()?0xFF262626:0xFFF5F3F0,12));
+  LinearLayout.LayoutParams ip=new LinearLayout.LayoutParams(0,-1,1);
+  ip.leftMargin=dp(3);ip.rightMargin=dp(3);
+  parent.addView(item,ip);
+  int tone=dark()?ink():baseColor;
+  TextView count=text(symbol+" "+value,16,tone,true);
+  count.setGravity(Gravity.CENTER);item.addView(count);
+  TextView label=text(title,10,subtle(),false);
+  label.setGravity(Gravity.CENTER);item.addView(label);
  }
  View contacts(List<Contacts.Person> contacts,boolean favorites){
   if(filterTask!=null){handler.removeCallbacks(filterTask);filterTask=null;}
