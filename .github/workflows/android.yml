@@ -255,7 +255,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "$VERSION" = "0.11.0-beta.1"
+          [[ "$VERSION" =~ ^0\\.11\\.0-beta\\.[0-9]+$ ]]
           APK=$(find candidate -name app-debug.apk -type f -print -quit)
           test -n "$APK"
           cp "$APK" "DA-CALLER-v$VERSION-debug.apk"
