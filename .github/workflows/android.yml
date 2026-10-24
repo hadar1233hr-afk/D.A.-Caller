@@ -49,6 +49,8 @@ jobs:
       - uses: gradle/actions/wrapper-validation@v4
       - uses: gradle/actions/setup-gradle@v4
       - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
       - name: Install pinned Android SDK components
         run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
       - name: Build, test and lint DA CALLER only
@@ -111,6 +113,8 @@ jobs:
           java-version: '17'
       - uses: gradle/actions/setup-gradle@v4
       - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
       - name: Install compile SDK
         run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
       - name: Enable emulator acceleration
@@ -161,6 +165,8 @@ jobs:
       - uses: gradle/actions/wrapper-validation@v4
       - uses: gradle/actions/setup-gradle@v4
       - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
       - name: Install pinned Android SDK components
         run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
       - name: Build and verify permanent signed beta
