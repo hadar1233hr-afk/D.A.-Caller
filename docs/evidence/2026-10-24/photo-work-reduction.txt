@@ -1,0 +1,9 @@
+Original source: ce815efd2f9a20a43eee9a6eb03c8cbeda9ae178
+Fixture: ContactPhotosTest.simultaneousRequestsForSameContactReadProviderOnce
+Identical workload: 16 simultaneous requests for one uncached contact thumbnail, all 16 callbacks completed.
+Original implementation: 16 provider reads (expected1, actual16 assertion).
+Patched implementation: 1 provider read (passing assertion).
+Reduction: 15 provider reads / 93.75% less provider work in this workload.
+This is deterministic provider-work measurement, not measured phone speed, startup latency, frame time or GC.
+Original evidence: work/photo-baseline-result.log; work/photo-baseline/app/build/test-results/testDebugUnitTest/TEST-com.dacaller.app.ContactPhotosTest.xml
+Patched evidence: app/build/test-results/testDebugUnitTest/TEST-com.dacaller.app.ContactPhotosTest.xml

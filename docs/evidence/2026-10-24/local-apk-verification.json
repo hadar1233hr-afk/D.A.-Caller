@@ -1,0 +1,17 @@
+{
+  "artifact": "LOCAL debug candidate; remote CI artifacts are separately built/signed and may have different hashes/certificates",
+  "package": "com.dacaller.app",
+  "version_name": "0.10.0-beta.1",
+  "version_code": 10,
+  "bytes": 281827,
+  "sha256": "9b23354451cbfa1b97d86a376372c3181fb88f7ef344a437446c543a9e008591",
+  "signer_sha256": "fb4a138563caff0c59a35327a8e2865c91fea72c6d28c667c56623b1ba9110fc",
+  "previous_public_v0_9_0_signer_sha256": "a39f17e89e411d9c97bb9316fdcdae5bd43912764100bfbd03c5eedfde80502c",
+  "in_place_update_of_public_v0_9_0": false,
+  "signing": "Android Debug; permanent key unavailable",
+  "separate_product_namespaces_absent": true,
+  "internet_and_audio_recording_permissions_absent": true,
+  "metadata": "package: name='com.dacaller.app' versionCode='10' versionName='0.10.0-beta.1' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'",
+  "signature_verification": "Verifies\nVerified using v1 scheme (JAR signing): false\nVerified using v2 scheme (APK Signature Scheme v2): true\nVerified using v3 scheme (APK Signature Scheme v3): false\nVerified using v3.1 scheme (APK Signature Scheme v3.1): false\nVerified using v4 scheme (APK Signature Scheme v4): false\nVerified for SourceStamp: false\nNumber of signers: 1\nSigner #1 certificate DN: C=US, O=Android, CN=Android Debug\nSigner #1 certificate SHA-256 digest: fb4a138563caff0c59a35327a8e2865c91fea72c6d28c667c56623b1ba9110fc\nSigner #1 certificate SHA-1 digest: 4aad5fdac2e5940a12113be869f2000a1aaac9fe\nSigner #1 certificate MD5 digest: bbc2d31fe09d80a563c7b0ab18683be5\nSigner #1 key algorithm: RSA\nSigner #1 key size (bits): 2048\nSigner #1 public key SHA-256 digest: 95ed5dbc4dc1fa29ca384aff390793b63a869895c5b48bc4d1f7dd0aa53e1f01\nSigner #1 public key SHA-1 digest: 257fcdb1878bfa6d93a6c2e592924aa411975dfa\nSigner #1 public key MD5 digest: 0a7f33c6501c5f9a4d43c46793c47ea8\n",
+  "permissions": "package: com.dacaller.app\nuses-permission: name='android.permission.READ_CONTACTS'\nuses-permission: name='android.permission.WRITE_CONTACTS'\nuses-permission: name='android.permission.READ_CALL_LOG'\nuses-permission: name='android.permission.CALL_PHONE'\nuses-permission: name='android.permission.READ_PHONE_STATE'\nuses-permission: name='android.permission.VIBRATE'\nuses-permission: name='android.permission.WAKE_LOCK'\nuses-permission: name='android.permission.RECEIVE_BOOT_COMPLETED'\nuses-permission: name='android.permission.POST_NOTIFICATIONS'\nuses-permission: name='android.permission.USE_FULL_SCREEN_INTENT'\n"
+}

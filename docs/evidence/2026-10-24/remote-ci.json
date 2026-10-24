@@ -1,0 +1,50 @@
+{
+  "run_id": 40126005232,
+  "run_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/actions/runs/40126005232",
+  "head_commit": "35b4c215f4ae5292f81d22f8ec5f3523948a4a8c",
+  "tested_merge_commit": "4adc424e0f85c71d29a048a3f695cdcda42d1879",
+  "validate_job_id": 120967428511,
+  "validate": "PASS",
+  "native_job_id": 120967871288,
+  "native": "PASS",
+  "artifact_id": 12573116996,
+  "download_page": "https://github.com/hadar1233hr-afk/D.A.-Caller/actions/runs/40126005232/artifacts/12573116996",
+  "artifact_name": "DA-CALLER-0.10.0-beta.1-debug-4adc424e0f85c71d29a048a3f695cdcda42d1879",
+  "artifact_zip_sha256": "f56eac17bcaba262c876bcc5bd92eda8495c673c3f04e5696838d5cf291031c8",
+  "artifact_expires_at": "2026-11-23T19:37:24Z",
+  "signing": "Android Debug",
+  "certificate_sha256": "98478f34d9acca3fa2ea0babda4e9d27bf05f9027f04549d9eaa4aadf7662dec",
+  "identity_and_signature_checks": "PASS in CI",
+  "separate_product_namespaces": "absent, asserted in CI",
+  "apk_sha256": "Included as debug-apk.sha256 inside CI artifact; remote ZIP payload not independently extracted in local workspace",
+  "local_candidate_is_same_binary": false,
+  "ci_build_log_excerpt": [
+    "2026-10-24T19:36:01.8969318Z ##[group]Run ./gradlew --no-daemon :app:testDebugUnitTest :app:lintDebug :app:assembleDebug",
+    "2026-10-24T19:36:01.8970113Z \u001b[36;1m./gradlew --no-daemon :app:testDebugUnitTest :app:lintDebug :app:assembleDebug\u001b[0m",
+    "2026-10-24T19:37:00.0792053Z > Task :app:testDebugUnitTest",
+    "2026-10-24T19:37:23.4781777Z > Task :app:lintDebug",
+    "2026-10-24T19:37:23.5553223Z BUILD SUCCESSFUL in 1m 21s",
+    "2026-10-24T19:37:24.4089751Z Signer #1 certificate DN: C=US, O=Android, CN=Android Debug",
+    "2026-10-24T19:37:24.4094540Z Signer #1 certificate SHA-256 digest: 98478f34d9acca3fa2ea0babda4e9d27bf05f9027f04549d9eaa4aadf7662dec"
+  ],
+  "native_tests": 5,
+  "native_android_api": 33,
+  "viewport": {
+    "width_px": 480,
+    "height_px": 854,
+    "density_dpi": 240
+  },
+  "native_log_excerpt": [
+    "2026-10-24T19:37:47.7637569Z   script: adb shell wm size 480x854",
+    "adb shell wm density 240",
+    "2026-10-24T19:37:47.8011323Z adb shell wm size 480x854",
+    "2026-10-24T19:37:47.8011601Z adb shell wm density 240",
+    "2026-10-24T19:39:46.7677571Z [command]/usr/bin/sh -c adb shell wm size 480x854",
+    "2026-10-24T19:39:47.0853124Z [command]/usr/bin/sh -c adb shell wm density 240",
+    "2026-10-24T19:40:28.7632218Z Starting 5 tests on emulator-5554 - 13",
+    "2026-10-24T19:40:34.2667950Z Finished 5 tests on emulator-5554 - 13",
+    "2026-10-24T19:40:35.2659190Z BUILD SUCCESSFUL in 47s"
+  ],
+  "release_job": "SKIPPED as intended; test artifact only",
+  "completed_at": "2026-10-24T19:41:26Z"
+}
