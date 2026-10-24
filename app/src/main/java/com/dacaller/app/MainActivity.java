@@ -499,26 +499,15 @@ public class MainActivity extends Activity {
   input.setHint(I18n.text(this,"מספר טלפון"));
   if(preset!=null)input.setText(preset);
   entryBar.addView(input,new LinearLayout.LayoutParams(0,d(56),1));
-  ImageView addIcon=icon(R.drawable.ic_control_add,tint(),23,23);
-  FrameLayout addContact=new FrameLayout(this);
-  addContact.setBackground(rounded(soft(),14));
-  addContact.addView(addIcon,new FrameLayout.LayoutParams(d(31),d(31),Gravity.CENTER));
-  entryBar.addView(addContact,lp(51,49));
-  addContact.setContentDescription(I18n.text(this,"הוספת מספר לאנשי קשר"));
-  decorate(addContact);
-  addContact.setOnClickListener(v->{
-   haptic(addContact);
-   String number=input.getText().toString().trim();
-   if(number.isEmpty()){Toast.makeText(this,I18n.text(this,"הזן מספר לפני הוספה לאנשי קשר"),Toast.LENGTH_SHORT).show();return;}
-   new android.app.AlertDialog.Builder(this)
-    .setTitle(I18n.text(this,"הוספת מספר לאנשי קשר"))
-    .setItems(new String[]{I18n.text(this,"יצירת איש קשר חדש"),I18n.text(this,"הוספה לאיש קשר קיים")},
-      (chooser,index)->{
-       dialog.dismiss();
-       if(index==0)newContact(number);else chooseExistingContact(number);
-      })
-    .setNegativeButton(I18n.text(this,"ביטול"),null).show();
-  });
+  // Close belongs in the title row; the primary action row now has symmetrical utilities.
+  ImageView closeIcon=icon(R.drawable.ic_control_close,muted(),20,20);
+  FrameLayout dismiss=new FrameLayout(this);
+  dismiss.setBackground(rounded(soft(),16));
+  dismiss.addView(closeIcon,new FrameLayout.LayoutParams(d(24),d(24),Gravity.CENTER));
+  entryBar.addView(dismiss,lp(44,44));
+  dismiss.setContentDescription(I18n.text(this,"סגירת מקשי החיוג"));
+  decorate(dismiss);
+  dismiss.setOnClickListener(v->{haptic(dismiss);dialog.dismiss();});
   gap(sheet,8);
   String[] digit={"1","2","3","4","5","6","7","8","9","*","0","#"};
   String[] letters={"","ABC","DEF","GHI","JKL","MNO","PQRS","TUV","WXYZ","","+",""};
@@ -532,9 +521,9 @@ public class MainActivity extends Activity {
     String key=digit[idx];
     LinearLayout tile=column();tile.setGravity(Gravity.CENTER);
     GradientDrawable glass=new GradientDrawable(GradientDrawable.Orientation.TL_BR,
-      dark()?new int[]{0xFF2C2C2C,0xFF1B1B1B}:new int[]{0xFFFDFDFD,0xFFEFEFEF});
-    glass.setCornerRadius(d(18));
-    glass.setStroke(d(1),dark()?0xFF464646:0xFFDADFE4);
+      dark()?new int[]{0xFF30353D,0xFF20242B}:new int[]{0xFFFFFEFC,0xFFF3F4F7});
+    glass.setCornerRadius(d(24));
+    glass.setStroke(d(1),dark()?0xFF3F4752:0xFFE7E8ED);
     tile.setBackground(glass);tile.setMinimumHeight(d(48));
     LinearLayout.LayoutParams tileP=new LinearLayout.LayoutParams(0,d(buttonHeight),1);
     tileP.setMargins(d(5),d(2),d(5),d(2));row.addView(tile,tileP);
@@ -557,8 +546,11 @@ public class MainActivity extends Activity {
   sheet.addView(actions,lp(-1,73));
   ImageView removeIcon=icon(R.drawable.ic_backspace,tint(),28,28);
   FrameLayout remove=new FrameLayout(this);
-  remove.addView(removeIcon,new FrameLayout.LayoutParams(d(34),d(34),Gravity.CENTER));
-  actions.addView(remove,new LinearLayout.LayoutParams(0,d(68),1));
+  remove.setBackground(stroked(soft(),22));
+  remove.addView(removeIcon,new FrameLayout.LayoutParams(d(32),d(32),Gravity.CENTER));
+  LinearLayout.LayoutParams removeP=new LinearLayout.LayoutParams(0,d(64),1);
+  removeP.setMargins(d(3),0,d(6),0);
+  actions.addView(remove,removeP);
   remove.setContentDescription(I18n.text(this,"מחיקת ספרה"));
   decorate(remove);
   remove.setOnClickListener(v->{
@@ -568,7 +560,7 @@ public class MainActivity extends Activity {
   });
   remove.setOnLongClickListener(v->{haptic(remove);input.setText("");return true;});
   FrameLayout call=new FrameLayout(this);
-  call.setBackground(rounded(0xFF17A763,29));call.setElevation(d(7));
+  call.setBackground(rounded(0xFF168D61,31));call.setElevation(d(3));
   ImageView callIcon=icon(R.drawable.ic_phone_line,Color.WHITE,38,38);
   call.addView(callIcon,new FrameLayout.LayoutParams(d(44),d(44),Gravity.CENTER));
   LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(0,d(68),2);
@@ -581,12 +573,30 @@ public class MainActivity extends Activity {
    if(number.isEmpty()){Toast.makeText(this,I18n.text(this,"הזן מספר לחיוג"),Toast.LENGTH_SHORT).show();return;}
    dialog.dismiss();makeCall(number);
   });
-  ImageView closeIcon=icon(R.drawable.ic_control_close,muted(),25,25);
-  FrameLayout close=new FrameLayout(this);
-  close.addView(closeIcon,new FrameLayout.LayoutParams(d(34),d(34),Gravity.CENTER));
-  actions.addView(close,new LinearLayout.LayoutParams(0,d(68),1));
-  close.setContentDescription(I18n.text(this,"סגירת מקשי החיוג"));
-  decorate(close);close.setOnClickListener(v->{haptic(close);dialog.dismiss();});
+  ImageView addIcon=icon(R.drawable.ic_control_add,tint(),26,26);
+  FrameLayout addContact=new FrameLayout(this);
+  addContact.setBackground(stroked(soft(),22));
+  addContact.addView(addIcon,new FrameLayout.LayoutParams(d(32),d(32),Gravity.CENTER));
+  LinearLayout.LayoutParams addP=new LinearLayout.LayoutParams(0,d(64),1);
+  addP.setMargins(d(6),0,d(3),0);
+  actions.addView(addContact,addP);
+  addContact.setContentDescription(I18n.text(this,"הוספת מספר לאנשי קשר"));
+  decorate(addContact);
+  addContact.setOnClickListener(v->{
+   haptic(addContact);
+   String number=input.getText().toString().trim();
+   if(number.isEmpty()){
+    Toast.makeText(this,I18n.text(this,"הזן מספר לפני הוספה לאנשי קשר"),Toast.LENGTH_SHORT).show();return;
+   }
+   new android.app.AlertDialog.Builder(this)
+    .setTitle(I18n.text(this,"הוספת מספר לאנשי קשר"))
+    .setItems(new String[]{I18n.text(this,"יצירת איש קשר חדש"),I18n.text(this,"הוספה לאיש קשר קיים")},
+      (chooser,index)->{
+       dialog.dismiss();
+       if(index==0)newContact(number);else chooseExistingContact(number);
+      })
+    .setNegativeButton(I18n.text(this,"ביטול"),null).show();
+  });
   ScrollView keypadScroll=new ScrollView(this);keypadScroll.setFillViewport(true);keypadScroll.addView(sheet);
   dialog.setContentView(keypadScroll);
   dialog.show();
