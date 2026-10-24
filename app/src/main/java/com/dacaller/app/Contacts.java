@@ -32,6 +32,9 @@ final class Contacts {
  }
  static String canonical(String phone){
   if(phone==null)return "";
+  // Service codes and post-dial sequences have distinct identities from plain numbers.
+  String dial=phone.replaceAll("[^+0-9*#,;]","");
+  if(dial.indexOf('*')>=0||dial.indexOf('#')>=0||dial.indexOf(',')>=0||dial.indexOf(';')>=0)return dial;
   String digits=phone.replaceAll("[^0-9]","");
   if(digits.startsWith("972") && digits.length()>=11)digits="0"+digits.substring(3);
   if(digits.startsWith("00972") && digits.length()>=13)digits="0"+digits.substring(5);

@@ -23,6 +23,12 @@ public class ContactDataTest {
   Object[] row=new Object[ContactData.PROJECTION.length];row[0]=id;row[1]=5L;row[2]=mime;
   for(int i=0;i<fields.length;i++)row[3+i]=fields[i];cursor.addRow(row);
  }
+ @Test public void serviceNumberLookupAndSearchKeysDoNotAliasOrdinaryNumbers(){
+  assertNotEquals(Contacts.canonical("*123#"),Contacts.canonical("123"));
+  assertNotEquals(Contacts.canonical("123,45"),Contacts.canonical("12345"));
+  assertEquals("*123#",Contacts.canonical("* 123 #"));
+  assertEquals(Contacts.canonical("+972501234567"),Contacts.canonical("050-123-4567"));
+ }
  @Test public void organizationAndPostalUseTheirActualProviderColumns(){
   MatrixCursor cursor=data();
   add(cursor,21,ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE,"Company","1","custom label","Engineer","Research");
