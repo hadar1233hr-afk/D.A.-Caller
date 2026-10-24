@@ -71,6 +71,15 @@ public class PhoneSessionServiceTest {
   }
   verify(next).answer(VideoProfile.STATE_AUDIO_ONLY);
  }
+ @Test public void providerFailureCannotCrashInCallBindingOrForceSystemFallback(){
+  // A real OEM may throw while fetching Telecom details during early binding.
+  Call dialing=call(Call.STATE_DIALING);
+  when(dialing.getDetails()).thenThrow(new IllegalStateException("Simulated OEM Telecom failure"));
+  service.onCallAdded(dialing);
+  assertSame("keep ownership of the call despite notification failure",dialing,PhoneSessionService.current);
+  service.onCallRemoved(dialing);
+  assertNull(PhoneSessionService.current);
+ }
  @Test public void outgoingNotificationIsAlwaysQuiet(){
   service.onCallAdded(call(Call.STATE_DIALING));assertNull(notification().fullScreenIntent);
   assertEquals(NotificationManager.IMPORTANCE_LOW,manager.getNotificationChannel(notification().getChannelId()).getImportance());
