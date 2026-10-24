@@ -522,31 +522,32 @@ public class MainActivity extends Activity {
   gap(sheet,8);
   String[] digit={"1","2","3","4","5","6","7","8","9","*","0","#"};
   String[] letters={"","ABC","DEF","GHI","JKL","MNO","PQRS","TUV","WXYZ","","+",""};
-  int buttonHeight=screenHeight()<650?47:57;
+  int buttonHeight=screenHeight()<650?53:62;
   for(int r=0;r<4;r++){
    LinearLayout row= row();
    row.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
-   sheet.addView(row,lp(-1,buttonHeight+5));
+   sheet.addView(row,lp(-1,buttonHeight+6));
    for(int c=0;c<3;c++){
     final int idx=r*3+c;
     String key=digit[idx];
     LinearLayout tile=column();tile.setGravity(Gravity.CENTER);
     GradientDrawable glass=new GradientDrawable(GradientDrawable.Orientation.TL_BR,
       dark()?new int[]{0xFF2C2C2C,0xFF1B1B1B}:new int[]{0xFFFDFDFD,0xFFEFEFEF});
-    glass.setCornerRadius(d(99));
-    tile.setBackground(glass);
+    glass.setCornerRadius(d(18));
+    glass.setStroke(d(1),dark()?0xFF464646:0xFFDADFE4);
+    tile.setBackground(glass);tile.setMinimumHeight(d(48));
     LinearLayout.LayoutParams tileP=new LinearLayout.LayoutParams(0,d(buttonHeight),1);
     tileP.setMargins(d(5),d(2),d(5),d(2));row.addView(tile,tileP);
-    TextView number=center(key,29,false,text());
+    TextView number=center(key,key.equals("*")||key.equals("#")?26:29,true,text());
     number.setTypeface(Typeface.create("sans-serif-light",Typeface.NORMAL));
-    tile.addView(number,lp(-1,33));
+    tile.addView(number,lp(-1,35));
     if(!letters[idx].isEmpty()){
-     TextView subtitle=center(letters[idx],9,true,muted());
+     TextView subtitle=center(letters[idx],10,true,muted());
      subtitle.setLetterSpacing(0.1f);
-     tile.addView(subtitle,lp(-1,12));
+     tile.addView(subtitle,lp(-1,14));
     }
     decorate(tile);
-    tile.setContentDescription(key);
+    tile.setContentDescription(key.equals("0")?"0, לחיצה ארוכה לסימן פלוס":key);
     tile.setOnClickListener(v->{haptic(tile);input.append(key);});
     if(key.equals("0"))tile.setOnLongClickListener(v->{haptic(tile);input.append("+");return true;});
    }
