@@ -34,6 +34,16 @@ public final class CallLayoutSnapshotTest extends InstrumentationTestCase {
    try(FileOutputStream out=new FileOutputStream(image)){
     assertTrue(screenshot.compress(Bitmap.CompressFormat.PNG,100,out));
    }
+   // CI test logs survive automatic emulator app uninstall. Log small JPEG
+   // chunks of synthetic layout screenshots only (never private call data).
+   java.io.ByteArrayOutputStream jpeg=new java.io.ByteArrayOutputStream();
+   assertTrue(screenshot.compress(Bitmap.CompressFormat.JPEG,70,jpeg));
+   String base64=android.util.Base64.encodeToString(jpeg.toByteArray(),android.util.Base64.NO_WRAP);
+   int part=0;
+   for(int cursor=0;cursor<base64.length();cursor+=2500){
+    android.util.Log.i("DA_UI_SHOT","SCREEN:"+theme+":"+part+++":"+
+      base64.substring(cursor,Math.min(cursor+2500,base64.length())));
+   }
    screenshot.recycle();
    // Gradle uninstalls the app after tests. Keep reference screenshots in a public
    // shell-owned directory so the CI job can pull them after test teardown.
