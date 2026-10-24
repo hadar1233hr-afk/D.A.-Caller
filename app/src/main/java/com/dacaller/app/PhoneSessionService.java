@@ -51,7 +51,8 @@ public final class PhoneSessionService extends InCallService {
   }catch(RuntimeException failure){CallFailureReporter.record(this,"incall-create-proximity",failure);proximityLock=null;}
  }
  @Override public void onDestroy(){
-  for(Call call:new ArrayList<>(order))call.unregisterCallback(callback);
+  for(Call call:new ArrayList<>(order))try{call.unregisterCallback(callback);}
+   catch(RuntimeException failure){CallFailureReporter.record(this,"incall-destroy",failure);}
   calls.clear();order.clear();handler.removeCallbacksAndMessages(null);releaseProximity();
   if(instance==this){instance=null;current=null;notifyViews();}
   NotificationManager manager=getSystemService(NotificationManager.class);
@@ -85,9 +86,10 @@ public final class PhoneSessionService extends InCallService {
   catch(RuntimeException failure){CallFailureReporter.record(this,"incall-start-activity",failure);}
  }
  private void changed(){
-  current=preferredCall();
+  try{current=preferredCall();}
+  catch(RuntimeException failure){CallFailureReporter.record(this,"incall-select-call",failure);}
   try{updateProximity();}
-  catch(RuntimeException failure){CallFailureReporter.record(this,"incall-proximity",failure);releaseProximity();}
+  catch(RuntimeException failure){CallFailureReporter.record(this,"incall-proximity",failure);safeReleaseProximity();}
   try{updateNotification(current);}
   catch(RuntimeException failure){CallFailureReporter.record(this,"incall-notification",failure);}
   notifyViews();
@@ -106,6 +108,8 @@ public final class PhoneSessionService extends InCallService {
   }else if(!needed)releaseProximity();
  }
  private void releaseProximity(){if(proximityLock!=null&&proximityLock.isHeld())proximityLock.release();}
+ private void safeReleaseProximity(){try{releaseProximity();}
+  catch(RuntimeException failure){CallFailureReporter.record(this,"incall-release-proximity",failure);}}
  private Call preferredCall(){
   Call best=null;int priority=-1;
   for(int i=order.size()-1;i>=0;i--){
@@ -121,7 +125,12 @@ public final class PhoneSessionService extends InCallService {
   if(state==Call.STATE_HOLDING)return 1;
   return state==Call.STATE_DISCONNECTED||state==Call.STATE_DISCONNECTING?-1:0;
  }
- @Override public void onCallAudioStateChanged(CallAudioState state){super.onCallAudioStateChanged(state);updateProximity();notifyViews();}
+ @Override public void onCallAudioStateChanged(CallAudioState state){
+  super.onCallAudioStateChanged(state);
+  try{updateProximity();}
+  catch(RuntimeException failure){CallFailureReporter.record(this,"incall-audio-route",failure);safeReleaseProximity();}
+  notifyViews();
+ }
  @Override public void onMuteStateChanged(boolean muted){super.onMuteStateChanged(muted);notifyViews();}
  static boolean muted(){CallAudioState state=audioState();return state!=null&&state.isMuted();}
  static boolean speaker(){CallAudioState state=audioState();return state!=null&&(state.getRoute()&CallAudioState.ROUTE_SPEAKER)!=0;}
