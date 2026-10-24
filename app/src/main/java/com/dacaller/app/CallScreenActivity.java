@@ -386,6 +386,7 @@ public final class CallScreenActivity extends Activity {
    GradientDrawable panel=new GradientDrawable();
    panel.setColor(theme.dark?0xFF222934:0xFFF8E9E0);
    panel.setCornerRadius(dp(26));
+   actionPanel.setBackground(panel);
    buttons.addView(actionPanel,new LinearLayout.LayoutParams(-1,-2));
    LinearLayout primary=row();
    actionPanel.addView(primary,new LinearLayout.LayoutParams(-1,-2));
