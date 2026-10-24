@@ -30,7 +30,9 @@ final class CallLauncher {
    }
    activity.startActivity(new Intent(Intent.ACTION_CALL,tel));return true;
   }catch(SecurityException|android.content.ActivityNotFoundException|IllegalStateException failure){
-   return dialExternally(activity,number);
+   // Never silently transfer an outgoing call to another dialer after DA CALLER fails.
+   CallFailureReporter.record(activity,"outgoing-place-call",failure);
+   return false;
   }
  }
  static boolean dialExternally(Activity activity,String number){
