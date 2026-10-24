@@ -34,8 +34,8 @@ public final class CallLayoutSnapshotTest extends InstrumentationTestCase {
    assertFalse(activity.isFinishing());
    Bitmap screenshot=getInstrumentation().getUiAutomation().takeScreenshot();
    assertNotNull("No screenshot "+theme,screenshot);
-   assertNotEquals("Blank white activity frame for "+theme,android.graphics.Color.WHITE,
-      screenshot.getPixel(screenshot.getWidth()/2,screenshot.getHeight()-95));
+   assertTrue("Blank white activity frame for "+theme,
+      screenshot.getPixel(screenshot.getWidth()/2,screenshot.getHeight()-95)!=android.graphics.Color.WHITE);
    File image=new File(destination,"call-"+i+"-"+theme+".png");
    try(FileOutputStream out=new FileOutputStream(image)){
     assertTrue(screenshot.compress(Bitmap.CompressFormat.PNG,100,out));
