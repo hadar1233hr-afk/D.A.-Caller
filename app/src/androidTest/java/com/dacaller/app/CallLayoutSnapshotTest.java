@@ -27,9 +27,15 @@ public final class CallLayoutSnapshotTest extends InstrumentationTestCase {
    intent.putExtra("preview_ui",true);
    Activity activity=getInstrumentation().startActivitySync(intent);
    getInstrumentation().waitForIdleSync();
+   // Launch/finish transitions can show a temporary white splash even with
+   // animations disabled; wait for the full window, not Activity.onCreate.
+   Thread.sleep(650);
+   getInstrumentation().waitForIdleSync();
    assertFalse(activity.isFinishing());
    Bitmap screenshot=getInstrumentation().getUiAutomation().takeScreenshot();
    assertNotNull("No screenshot "+theme,screenshot);
+   assertNotEquals("Blank white activity frame for "+theme,android.graphics.Color.WHITE,
+      screenshot.getPixel(screenshot.getWidth()/2,screenshot.getHeight()-95));
    File image=new File(destination,"call-"+i+"-"+theme+".png");
    try(FileOutputStream out=new FileOutputStream(image)){
     assertTrue(screenshot.compress(Bitmap.CompressFormat.PNG,100,out));
