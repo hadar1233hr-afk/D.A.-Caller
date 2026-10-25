@@ -1,0 +1,26 @@
+{
+  "screenshot_source_sha": "ff93d07e087250829bc739a3154792e9f243e617",
+  "screenshot_run_id": 40236822484,
+  "reviewed_app_tree": "33fb4df56942172e5d18756db58b498229e2ce29",
+  "status": "FAIL",
+  "unit_tests": {
+    "tests": 210,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_tests": {
+    "tests": 26,
+    "passed": 25,
+    "failed": 1
+  },
+  "real_png_count": 177,
+  "required_png_count": 183,
+  "confirmed": [
+    "Native phoneCall foreground service starts with actual FLAG_FOREGROUND_SERVICE and the default dialer role; Android no longer rejects CallStyle",
+    "All 53 personalization screenshots captured, including fully visible fifth icon in light/dark picker bottom states",
+    "Back test retains the real MainActivity contact query/stable row ID/offset and settings ScrollView"
+  ],
+  "remaining_failure": "Return-to-call action was not visible in SystemUI; expansion of the collapsed notification was not verified. Android13 CallStyle puts actions in expanded/headsup layouts. The next test waits for the caller window, retries its native expansion action and saves a failure PNG/accessibility tree.",
+  "limits": "No notification button dispatch or six notification PNGs certified by this run; physical carrier/hardware untested."
+}

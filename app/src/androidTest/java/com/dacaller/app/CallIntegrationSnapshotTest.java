@@ -25,6 +25,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.view.accessibility.AccessibilityWindowInfo;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -32,6 +33,7 @@ import android.widget.TextView;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.StringWriter;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
@@ -42,6 +44,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import org.json.JSONObject;
+import org.xmlpull.v1.XmlSerializer;
 
 /** Real SystemUI and Back events. Call state is synthetic; this suite never places a call. */
 @SuppressWarnings({"deprecation","unchecked"})
@@ -63,7 +66,8 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
   original=settings.getAll();originalFont=shell("settings get system font_scale").trim();
   originalNavigation=target.getSharedPreferences(CallReturnNavigation.PREFERENCES,Context.MODE_PRIVATE).getAll();
   AccessibilityServiceInfo accessibility=getInstrumentation().getUiAutomation().getServiceInfo();
-  originalAccessibilityFlags=accessibility.flags;accessibility.flags|=AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS;
+  originalAccessibilityFlags=accessibility.flags;accessibility.flags|=AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS
+    |AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS;
   getInstrumentation().getUiAutomation().setServiceInfo(accessibility);
   shell("mkdir -p "+DIRECTORY);shell("settings put system font_scale 1.3");
   // Disposable CI emulator grants. Revoking these mid-instrumentation would kill
@@ -128,13 +132,29 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
   return null;
  }
  private AccessibilityNodeInfo text(String label){
-  AccessibilityNodeInfo root=getInstrumentation().getUiAutomation().getRootInActiveWindow();if(root==null)return null;
+  return text(systemUiRoot(),label);
+ }
+ private AccessibilityNodeInfo text(AccessibilityNodeInfo root,String label){
+  if(root==null)return null;
   List<AccessibilityNodeInfo> nodes=root.findAccessibilityNodeInfosByText(label);
   for(AccessibilityNodeInfo node:nodes){
    String value=node.getText()==null?"":node.getText().toString();
    if(node.isVisibleToUser()&&(value.equalsIgnoreCase(label)||value.contains(label)))return node;
   }
   return null;
+ }
+ private AccessibilityNodeInfo systemUiRoot(){
+  AccessibilityNodeInfo active=getInstrumentation().getUiAutomation().getRootInActiveWindow();
+  String caller=NotificationFixtureReceiver.state(target).getString("name","");
+  if(isSystemUi(active)&&text(active,caller)!=null)return active;
+  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+   AccessibilityNodeInfo root=window.getRoot();
+   if(isSystemUi(root)&&text(root,caller)!=null)return root;
+  }
+  return isSystemUi(active)?active:null;
+ }
+ private boolean isSystemUi(AccessibilityNodeInfo root){
+  return root!=null&&root.getPackageName()!=null&&"com.android.systemui".contentEquals(root.getPackageName());
  }
  private void clickText(String label)throws Exception{
   await(()->text(label)!=null,"Missing native notification action: "+label);
@@ -144,18 +164,60 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
  }
  private void shade(String action)throws Exception{
   shell("cmd statusbar expand-notifications");settle();
-  if(text(action)!=null)return;
-  AccessibilityNodeInfo root=getInstrumentation().getUiAutomation().getRootInActiveWindow();
-  expand(root);settle();
-  await(()->text(action)!=null,"Native CallStyle action not visible: "+action);
+  String caller=NotificationFixtureReceiver.state(target).getString("name","");
+  // SystemUI inflates notification RemoteViews asynchronously. First locate this
+  // particular call; expanding a different row or Quick Settings proves nothing.
+  await(()->text(caller)!=null,"SystemUI did not expose the posted caller before expansion: "+caller);
+  long deadline=SystemClock.uptimeMillis()+7000,nextAttempt=0;boolean arrowClicked=false;
+  while(SystemClock.uptimeMillis()<deadline){
+   if(text(action)!=null)return;
+   if(SystemClock.uptimeMillis()>=nextAttempt){
+    AccessibilityNodeInfo root=systemUiRoot(),identity=text(root,caller);
+    boolean requested=expandAncestor(identity);
+    if(!requested&&!arrowClicked)arrowClicked=expandOwnArrow(identity);
+    nextAttempt=SystemClock.uptimeMillis()+500;
+   }
+   getInstrumentation().waitForIdleSync();Thread.sleep(80);
+  }
+  fail("Native CallStyle action not visible after expanding its notification: "+action);
  }
- private boolean expand(AccessibilityNodeInfo node){
+ private boolean expandAncestor(AccessibilityNodeInfo caller){
+  // ExpandableNotificationRow publishes ACTION_EXPAND. The arrow ImageView is
+  // often not independently clickable or important for accessibility on API 33.
+  AccessibilityNodeInfo node=caller;
+  for(int depth=0;node!=null&&depth<20;depth++,node=node.getParent()){
+   if(notificationStack(node))break;
+   for(AccessibilityNodeInfo.AccessibilityAction action:node.getActionList())
+    if(action.getId()==AccessibilityNodeInfo.ACTION_EXPAND&&node.performAction(AccessibilityNodeInfo.ACTION_EXPAND))return true;
+  }
+  return false;
+ }
+ private boolean expandOwnArrow(AccessibilityNodeInfo caller){
+  AccessibilityNodeInfo node=caller;
+  for(int depth=0;node!=null&&depth<20;depth++,node=node.getParent()){
+   if(notificationStack(node))break;
+   if(expandArrow(node))return true;
+  }
+  return false;
+ }
+ private boolean notificationStack(AccessibilityNodeInfo node){
+  String id=String.valueOf(node.getViewIdResourceName()).toLowerCase(java.util.Locale.ROOT);
+  String type=String.valueOf(node.getClassName()).toLowerCase(java.util.Locale.ROOT);
+  return id.contains("notification_stack_scroller")||type.contains("notificationstackscrolllayout");
+ }
+ private boolean expandArrow(AccessibilityNodeInfo node){
   if(node==null)return false;
   String description=node.getContentDescription()==null?"":node.getContentDescription().toString();
   String id=node.getViewIdResourceName()==null?"":node.getViewIdResourceName();
   boolean notificationArrow=id.endsWith("/expand_button")||description.toLowerCase(java.util.Locale.ROOT).contains("expand notification");
-  if(notificationArrow&&node.isClickable()&&node.performAction(AccessibilityNodeInfo.ACTION_CLICK))return true;
-  for(int i=0;i<node.getChildCount();i++)if(expand(node.getChild(i)))return true;return false;
+  if(notificationArrow&&!description.toLowerCase(java.util.Locale.ROOT).contains("collapse")){
+   // Only the exact native arrow and its bounded container chain may be
+   // clicked. Clicking the caller/content row would open the app instead.
+   AccessibilityNodeInfo target=node;
+   for(int depth=0;target!=null&&depth<3;depth++,target=target.getParent())
+    if(target.isVisibleToUser()&&target.isClickable()&&target.performAction(AccessibilityNodeInfo.ACTION_CLICK))return true;
+  }
+  for(int i=0;i<node.getChildCount();i++)if(expandArrow(node.getChild(i)))return true;return false;
  }
  private void post(int state,String language,boolean speaker)throws Exception{
   settings.edit().putString("language",language).commit();
@@ -182,11 +244,12 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
   String name="he".equals(language)?"דנה בדיקת התראה":"Dana Notification Test";
   await(()->text(name)!=null,"SystemUI did not display contact name");
   String label=CallNotifications.stateLabel(target,state);await(()->text(label)!=null,"SystemUI did not display call state: "+label);
-  AccessibilityNodeInfo active=getInstrumentation().getUiAutomation().getRootInActiveWindow();
+  AccessibilityNodeInfo active=systemUiRoot();
   assertNotNull(active);assertEquals("com.android.systemui",active.getPackageName().toString());
  }
 
  public void testNativeNotificationStatesActionsAndDirectReturn()throws Exception{
+  try{
   // The disposable emulator grants the legitimate phoneCall FGS qualifier. The
   // role is retained until the emulator is discarded: revocation can terminate
   // the instrumentation UID and would invalidate later test cases.
@@ -226,6 +289,51 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
   await(()->posted()==null,"Hang-up action did not remove ended notification");
   assertEquals("HANGUP",NotificationFixtureReceiver.state(target).getString("last_action",""));
   notificationsPassed=true;writeEvidence();
+  }catch(Throwable failure){
+   try{notificationFailureDiagnostics(failure);}catch(Exception diagnostic){failure.addSuppressed(diagnostic);}
+   if(failure instanceof Exception)throw (Exception)failure;
+   if(failure instanceof Error)throw (Error)failure;
+   throw new AssertionError(failure);
+  }
+ }
+
+ private void notificationFailureDiagnostics(Throwable failure)throws Exception{
+  shell("screencap -p "+DIRECTORY+"/call-integration-failed-notification-shade.png");
+  StringWriter xml=new StringWriter();XmlSerializer serializer=android.util.Xml.newSerializer();
+  serializer.setOutput(xml);serializer.startDocument("UTF-8",true);serializer.startTag(null,"accessibility-windows");
+  serializer.attribute(null,"failure",failure.toString());
+  StringBuilder text=new StringBuilder(failure.toString()).append('\n');int[] budget={5000};
+  serializer.startTag(null,"active-window");
+  dumpNode(getInstrumentation().getUiAutomation().getRootInActiveWindow(),serializer,text,0,budget);
+  serializer.endTag(null,"active-window");
+  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+   serializer.startTag(null,"window");serializer.attribute(null,"id",String.valueOf(window.getId()));
+   serializer.attribute(null,"type",String.valueOf(window.getType()));serializer.attribute(null,"active",String.valueOf(window.isActive()));
+   dumpNode(window.getRoot(),serializer,text,0,budget);serializer.endTag(null,"window");
+  }
+  serializer.endTag(null,"accessibility-windows");serializer.endDocument();
+  diagnosticFile("call-integration-failed-notification-shade.xml",xml.toString());
+  diagnosticFile("call-integration-failed-notification-shade.txt",text.toString());
+ }
+ private void dumpNode(AccessibilityNodeInfo node,XmlSerializer xml,StringBuilder text,int depth,int[] budget)throws Exception{
+  if(node==null||depth>80||--budget[0]<0)return;
+  android.graphics.Rect bounds=new android.graphics.Rect();node.getBoundsInScreen(bounds);
+  String actions=node.getActionList().toString();xml.startTag(null,"node");
+  String[] names={"class","id","package","text","description","bounds","visible","clickable","actions"};
+  String[] values={String.valueOf(node.getClassName()),String.valueOf(node.getViewIdResourceName()),String.valueOf(node.getPackageName()),
+   String.valueOf(node.getText()),String.valueOf(node.getContentDescription()),bounds.toShortString(),String.valueOf(node.isVisibleToUser()),
+   String.valueOf(node.isClickable()),actions};
+  for(int i=0;i<names.length;i++)xml.attribute(null,names[i],values[i]);
+  for(int i=0;i<depth;i++)text.append("  ");text.append(values[0]).append(' ').append(values[1]).append(" text=").append(values[3])
+   .append(" description=").append(values[4]).append(" bounds=").append(values[5]).append(" visible=").append(values[6])
+   .append(" clickable=").append(values[7]).append(" actions=").append(actions).append('\n');
+  for(int i=0;i<node.getChildCount();i++)dumpNode(node.getChild(i),xml,text,depth+1,budget);
+  xml.endTag(null,"node");
+ }
+ private void diagnosticFile(String name,String content)throws Exception{
+  File file=new File(target.getExternalFilesDir(null),name);
+  try(FileOutputStream out=new FileOutputStream(file)){out.write(content.getBytes(StandardCharsets.UTF_8));}
+  shell("cp "+file.getAbsolutePath()+" "+DIRECTORY+"/"+name);
  }
 
  private void seedContacts()throws Exception{

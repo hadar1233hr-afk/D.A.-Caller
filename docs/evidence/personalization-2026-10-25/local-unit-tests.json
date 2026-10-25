@@ -1,14 +1,20 @@
 {
-  "source_sha": "e7a58ca06df731b1890079293087a3c7d1802299",
-  "app_tree": "c4aa1d1ac02de41df5dae27eb7ff584afdf4e937",
-  "command": ":app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleDebugAndroidTest",
+  "source_sha": "ff93d07e087250829bc739a3154792e9f243e617",
+  "app_tree": "33fb4df56942172e5d18756db58b498229e2ce29",
   "result": "PASS",
   "counts": {
-    "tests": 205,
+    "tests": 210,
     "failures": 0,
     "errors": 0,
     "skipped": 0
   },
+  "commands": [
+    ":app:testDebugUnitTest",
+    ":app:lintDebug",
+    ":app:assembleDebug",
+    ":app:assembleDebugAndroidTest",
+    ":app:assembleRelease"
+  ],
   "suites": [
     {
       "name": "com.dacaller.app.CallArchiveTest",
@@ -19,7 +25,7 @@
     },
     {
       "name": "com.dacaller.app.FavoritesPresentationTest",
-      "tests": "8",
+      "tests": "9",
       "failures": "0",
       "errors": "0",
       "skipped": "0"
@@ -96,7 +102,7 @@
     },
     {
       "name": "com.dacaller.app.CallNotificationsTest",
-      "tests": "13",
+      "tests": "17",
       "failures": "0",
       "errors": "0",
       "skipped": "0"

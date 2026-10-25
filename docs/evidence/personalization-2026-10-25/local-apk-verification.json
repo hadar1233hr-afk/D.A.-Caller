@@ -1,36 +1,36 @@
 {
-  "source": "e7a58ca06df731b1890079293087a3c7d1802299",
+  "source": "ff93d07e087250829bc739a3154792e9f243e617",
   "records": [
     {
       "kind": "debug",
-      "file": "app/build/outputs/apk/debug/app-debug.apk",
-      "sha256": "e14da2ac4bfd87a84be5006c102600cc98d033688632c3f4bcd9885eda0b413c",
-      "bytes": 414715,
+      "sha256": "ade0e655bcf30dfa48de810cc1da1cf53cc0e422cb982f4069ea3f187d892def",
+      "bytes": 415738,
       "package": "com.dacaller.app",
       "versionCode": 17,
       "versionName": "0.11.0-beta.7",
       "minSdk": 26,
       "targetSdk": 34,
       "offline": true,
+      "foreground_service_permissions": true,
       "module_isolation": true,
-      "test_apk_provider_excluded": true,
-      "release_debug_fixture_exclusion": false
+      "test_provider_excluded": true,
+      "debug_fixtures_excluded_in_unsigned_release": false
     },
     {
       "kind": "release_unsigned",
-      "file": "app/build/outputs/apk/release/app-release-unsigned.apk",
-      "sha256": "8e830b4867d3a6a648be159466236bd784f3adb13ae6389562df5fc0ab42d1a3",
-      "bytes": 196766,
+      "sha256": "b320abddebfc766c4afb2e9285dd646b78343e1f9ffd3ecd0083c83bd48bc694",
+      "bytes": 197002,
       "package": "com.dacaller.app",
       "versionCode": 17,
       "versionName": "0.11.0-beta.7",
       "minSdk": 26,
       "targetSdk": 34,
       "offline": true,
+      "foreground_service_permissions": true,
       "module_isolation": true,
-      "test_apk_provider_excluded": true,
-      "release_debug_fixture_exclusion": true
+      "test_provider_excluded": true,
+      "debug_fixtures_excluded_in_unsigned_release": true
     }
   ],
-  "note": "Local build hashes only; final CI/release APK uses its own signature and must be verified separately. Unsigned production APK is build/isolation evidence, not an installable release."
+  "note": "Local hashes only. Published CI debug APK has separate signature/hash; unsigned release is compilation/isolation evidence, not an installable artifact."
 }

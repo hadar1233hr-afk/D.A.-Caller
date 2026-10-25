@@ -1,22 +1,12 @@
 {
-  "source_sha": "e7a58ca06df731b1890079293087a3c7d1802299",
+  "source_sha": "ff93d07e087250829bc739a3154792e9f243e617",
   "errors": 0,
   "issues": [
     {
       "id": "OldTargetApi",
       "severity": "Warning",
       "message": "Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the `android.os.Build.VERSION_CODES` javadoc for details."
-    },
-    {
-      "id": "UnusedAttribute",
-      "severity": "Warning",
-      "message": "Attribute `enableOnBackInvokedCallback` is only used in API level 33 and higher (current min is 26)"
-    },
-    {
-      "id": "ObsoleteSdkInt",
-      "severity": "Warning",
-      "message": "This folder configuration (`v26`) is unnecessary; `minSdkVersion` is 26. Merge all the resources in this folder into `mipmap-anydpi`."
     }
   ],
-  "note": "ObsoleteSdkInt refers only to a leftover empty local directory; git does not track it, and the directory has been removed."
+  "scoped_exception": "ForegroundServicePermission only: framework ROLE_DIALER is the documented alternative to MANAGE_OWN_CALLS. Native fixture must acquire and verify this role; main service is system-bound InCallService. No global lint suppression/baseline."
 }
