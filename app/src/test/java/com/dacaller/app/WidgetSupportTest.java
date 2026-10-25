@@ -40,6 +40,7 @@ public final class WidgetSupportTest {
   View quick=apply(WidgetSupport.renderSingle(context,42,true));
   View card=apply(WidgetSupport.renderSingle(context,42,false));
   assertNull(quick.findViewById(R.id.widget_subtitle));assertNotNull(card.findViewById(R.id.widget_subtitle));
+  assertTrue(((TextView)card.findViewById(R.id.widget_subtitle)).getText().toString().contains("0501234567"));
   assertEquals("דנה לדוגמה",((TextView)quick.findViewById(R.id.widget_name)).getText().toString());
   assertTrue(quick.performClick());Intent quickTap=Shadows.shadowOf(context).getNextStartedActivity();
   assertEquals(WidgetTap.class.getName(),quickTap.getComponent().getClassName());

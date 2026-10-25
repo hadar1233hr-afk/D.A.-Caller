@@ -307,5 +307,6 @@
       ]
     }
   ],
-  "notes": "Includes exact Bluetooth endpoint and capability-change regressions; final source changes validated locally after initial CI push."
+  "notes": "Final substantive source with visual clipping fixes, exact endpoint and capability regressions; JVM simulation only.",
+  "source_commit": "1781cee196d9686a8257bf60883c58f5f3db387c"
 }

@@ -209,7 +209,7 @@ public final class CallScreenActivity extends Activity {
   caller.setTag(condensed?"call-caller-primary":"call-caller");compactCaller.setTag(condensed?"call-caller":"call-caller-condensed");
   identity.setTag(condensed?"call-identity-primary":"call-identity");compactIdentity.setTag(condensed?"call-identity":"call-identity-condensed");
   timer.setTag(condensed?"call-timer-primary":"call-timer");compactTimer.setTag(condensed?"call-timer":"call-timer-condensed");
-  LinearLayout.LayoutParams time=(LinearLayout.LayoutParams)compactTimer.getLayoutParams();time.topMargin=dp(keypad?(theme.style==1?(largeType()?40:48):24):(theme.style==1?(largeType()?18:32):4));compactTimer.setLayoutParams(time);
+  LinearLayout.LayoutParams time=(LinearLayout.LayoutParams)compactTimer.getLayoutParams();time.topMargin=dp(keypad?(theme.style==1?(largeType()?40:48):24):(theme.style==1?(largeType()?12:32):4));compactTimer.setLayoutParams(time);
   syncCompactHeader();
  }
  private void showEmergencyCallControls(){
@@ -322,7 +322,8 @@ public final class CallScreenActivity extends Activity {
    inside.addView(icon(resource,selected?theme.selectedInk:theme.ink,25),new LinearLayout.LayoutParams(dp(25),dp(25)));
    TextView label=text(visibleTitle,13,selected?theme.selectedInk:theme.ink,true);label.setTag("call-action-label-"+id);label.setSingleLine(true);label.setEllipsize(android.text.TextUtils.TruncateAt.END);LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(0,-2,1);lp.leftMargin=dp(8);inside.addView(label,lp);
   }else{
-   FrameLayout circle=new FrameLayout(this);int diameter=condensed?(theme.style==2?52:largeType()?54:60):theme.style==2?56:54;
+   FrameLayout circle=new FrameLayout(this);// Leave a complete scaled font line below the icon; do not borrow glyph rows.
+   int diameter=condensed?(theme.style==2?52:largeType()?52:56):theme.style==2?56:54;
    GradientDrawable bg=rounded(selected?theme.selected:theme.surface2,selected&&theme.style==1?16:999);
    if(theme.style==2&&!selected){bg.setStroke(dp(1),theme.dark?0xFF7A8A9E:0xFFFFFFFF);circle.setElevation(dp(2));}
    circle.setBackground(bg);cell.addView(circle,new LinearLayout.LayoutParams(dp(diameter),dp(diameter)));

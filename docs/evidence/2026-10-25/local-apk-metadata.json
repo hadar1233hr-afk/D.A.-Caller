@@ -5,8 +5,10 @@
   "min_sdk": 26,
   "target_sdk": 34,
   "internet_permission": false,
-  "apk_sha256": "b5b9c28879e0c48681d62936a14a67d5179997744a8aecb570eb351a749d3d24",
+  "apk_sha256": "2599562d42758e28084cda3d53c73a5e3b9d41e6c8c4c00ffaefa911906f8246",
   "certificate_sha256": "fb4a138563caff0c59a35327a8e2865c91fea72c6d28c667c56623b1ba9110fc",
   "signing": "Local debug certificate; not an in-place update guarantee",
-  "historical_beta5_certificate_sha256": "4095a4b6becbcd8fb592687b50dac2620b8996585973d9a108d040a45e3db904"
+  "historical_beta5_certificate_sha256": "4095a4b6becbcd8fb592687b50dac2620b8996585973d9a108d040a45e3db904",
+  "source_commit": "1781cee196d9686a8257bf60883c58f5f3db387c",
+  "metadata_first_line": "package: name='com.dacaller.app' versionCode='16' versionName='0.11.0-beta.6' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'"
 }

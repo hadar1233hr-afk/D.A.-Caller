@@ -91,7 +91,7 @@ public final class WidgetSnapshotTest extends InstrumentationTestCase {
     TextView text=(TextView)view;
     assertNotNull("Widget label has no text layout",text.getLayout());
     int textHeight=text.getLayout().getHeight()+text.getCompoundPaddingTop()+text.getCompoundPaddingBottom();
-    assertTrue("Widget label glyph rows are clipped: "+text.getText(),textHeight<=text.getHeight());
+    assertTrue("Widget label glyph rows are clipped: "+text.getText()+" "+textHeight+"/"+text.getHeight(),textHeight<=text.getHeight());
    }
   });
  }
@@ -124,9 +124,9 @@ public final class WidgetSnapshotTest extends InstrumentationTestCase {
    activity.getSharedPreferences("da_caller",Context.MODE_PRIVATE).edit().putBoolean("dark",dark).putBoolean("amoled",false).putString("language","he").commit();
    manager.updateAppWidgetOptions(favorites,options(132,144));Thread.sleep(300);
    AppWidgetHostView view=show(favorites,"מועדפים · גופן מוגדל",148,160,WidgetSupport.renderFavorites(activity,favorites,manager.getAppWidgetOptions(favorites),people(5),true));
+   screenshot((dark?"dark":"light")+"-favorites-2x2-largefont");
    for(int name:new int[]{R.id.widget_favorites_title,R.id.fav1_name,R.id.fav2_name,R.id.fav3_name,R.id.fav4_name})visibleWithin(view.findViewById(name),view);
    for(int photo:new int[]{R.id.fav1_photo,R.id.fav2_photo,R.id.fav3_photo,R.id.fav4_photo})visibleWithin(view.findViewById(photo),view);
-   screenshot((dark?"dark":"light")+"-favorites-2x2-largefont");
   }
  }
  public void testRealHostAdditionResizeThemeEmptyAndRemoval()throws Exception{

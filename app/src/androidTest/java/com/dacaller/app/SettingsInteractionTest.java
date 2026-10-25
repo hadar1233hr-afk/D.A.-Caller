@@ -61,15 +61,35 @@ public final class SettingsInteractionTest extends InstrumentationTestCase {
    });
    reveal(viewport[0],header[0]);Thread.sleep(220);getInstrumentation().waitForIdleSync();
    snapshot("settings-"+(dark?"dark":"light"));
-   ui(()->viewport[0].fullScroll(View.FOCUS_DOWN));getInstrumentation().waitForIdleSync();
-   ui(()->{
-    View diagnostic=(View)find(viewport[0],"אבחון תקלה בחיוג").getParent().getParent();
-    android.graphics.Rect visible=new android.graphics.Rect();
-    assertTrue("Diagnostic action must be reachable on the small display",diagnostic.getGlobalVisibleRect(visible));
-    assertTrue(visible.height()>0);assertTrue(diagnostic.isClickable());
-   });
+   // fullScroll delegates to smoothScrollBy on Android 13. An idle message
+   // queue does not mean its future Choreographer animation frames have run.
+   ui(()->viewport[0].fullScroll(View.FOCUS_DOWN));
+   awaitBottomAndDiagnostic(viewport[0],"settings-"+(dark?"dark":"light"));
    snapshot("settings-"+(dark?"dark":"light")+"-bottom");
   }
+ }
+ private void awaitBottomAndDiagnostic(ScrollView viewport,String screenshotPrefix)throws Exception{
+  final boolean[] reached=new boolean[1];
+  final String[] geometry=new String[1];
+  long deadline=SystemClock.uptimeMillis()+1500;
+  do{
+   getInstrumentation().waitForIdleSync();
+   ui(()->{
+    View diagnostic=(View)find(viewport,"אבחון תקלה בחיוג").getParent().getParent();
+    int maximum=Math.max(0,viewport.getChildAt(0).getHeight()-viewport.getHeight()
+      +viewport.getPaddingTop()+viewport.getPaddingBottom());
+    android.graphics.Rect visible=new android.graphics.Rect();
+    boolean shown=diagnostic.getGlobalVisibleRect(visible);
+    reached[0]=viewport.getScrollY()==maximum&&shown&&visible.height()==diagnostic.getHeight()
+      &&diagnostic.getHeight()>0&&diagnostic.isClickable();
+    geometry[0]="scroll="+viewport.getScrollY()+"/"+maximum+", diagnostic visible="+visible.height()
+      +"/"+diagnostic.getHeight()+", viewport="+viewport.getHeight();
+   });
+   if(reached[0])return;
+   Thread.sleep(20);
+  }while(SystemClock.uptimeMillis()<deadline);
+  snapshot(screenshotPrefix+"-unreachable");
+  fail("Diagnostic action must be fully reachable after the scroll animation settles: "+geometry[0]);
  }
  private void reveal(ScrollView viewport,View target)throws Exception{
   ui(()->{

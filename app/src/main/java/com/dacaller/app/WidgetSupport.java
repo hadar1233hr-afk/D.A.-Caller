@@ -98,7 +98,7 @@ final class WidgetSupport {
   r.setContentDescription(R.id.widget_root,action);
   if(!call){
    r.setTextColor(R.id.widget_subtitle,secondary(c));
-   r.setTextViewText(R.id.widget_subtitle,configured?label(c,"פתיחת כרטיס איש קשר","Open contact card"):label(c,"הקשה להגדרה","Tap to configure"));
+   r.setTextViewText(R.id.widget_subtitle,configured?(phone.isEmpty()?label(c,"איש קשר","Contact"):"\u2066"+phone+"\u2069"):label(c,"הקשה להגדרה","Tap to configure"));
   }
   r.setOnClickPendingIntent(R.id.widget_root,configured?target(c,id,0,contactId,display,phone,call):configure(c,id));
   return r;
