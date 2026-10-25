@@ -641,8 +641,10 @@ final class FastPages {
  private void addFavorites(LinearLayout page,List<Contacts.Person> contacts){
   boolean expanded=prefs.getBoolean("favorites_expanded",true);
   Set<String> starred=new HashSet<>(prefs.getStringSet("favorites",java.util.Collections.emptySet()));
-  ArrayList<Contacts.Person> chosen=new ArrayList<>();Set<String> added=new HashSet<>();
-  for(Contacts.Person person:contacts)if(!person.phone.isEmpty()&&starred.contains(person.key)&&added.add(person.key))chosen.add(person);
+  ArrayList<Contacts.Person> chosen=new ArrayList<>();
+  // Preserve every starred contact, including two people sharing a phone number.
+  // The legacy favorite identity is a number; deduplicating it hides real cards.
+  for(Contacts.Person person:contacts)if(!person.phone.isEmpty()&&starred.contains(person.key))chosen.add(person);
   LinearLayout band=horizontal();band.setTag("favorites_strip");band.setBackground(edge(panel(),14));
   LinearLayout.LayoutParams block=lp(-1,expanded&&!chosen.isEmpty()?82:48);block.bottomMargin=dp(6);page.addView(band,block);
   TextView toggle=text(tr("מועדפים")+" ★\n"+chosen.size()+"  "+(expanded?"⌃":"⌄"),11,tint(),true);

@@ -153,6 +153,20 @@ public class FavoritesPresentationTest {
   }
   Shadows.shadowOf(Looper.getMainLooper()).idleFor(java.time.Duration.ofMillis(300));assertTrue(host.calls.isEmpty());
  }
+ @Test public void contactsSharingOneStarredNumberRemainIndividuallyVisibleAndCallable(){
+  Contacts.Person first=new Contacts.Person("Dana","0500012345",51);
+  Contacts.Person second=new Contacts.Person("Family line","0500012345",52);
+  host.people.add(first);host.people.add(second);
+  prefs.edit().putStringSet("favorites",Collections.singleton(first.key)).commit();
+  View page=attach(pages.contacts(host.people,false));
+  View a=tag(page,"favorite_tile:51"),b=tag(page,"favorite_tile:52");
+  assertNotNull("The first starred contact must remain visible",a);
+  assertNotNull("A shared number must not hide the second contact",b);
+  assertTrue(hasText(a,"Dana"));assertTrue(hasText(b,"Family line"));
+  assertTrue(host.calls.isEmpty());a.performClick();b.performClick();
+  assertEquals(java.util.Arrays.asList(first.phone,second.phone),host.calls);
+  assertEquals(Collections.singleton(first.key),prefs.getStringSet("favorites",Collections.emptySet()));
+ }
  @Test public void favoriteScrollSurvivesRecreationAndEmptyFavoritesRemainUseful(){
   people(30);View page=attach(pages.contacts(host.people,false));HorizontalScrollView scroll=(HorizontalScrollView)tag(page,"favorites_scroll");
   scroll.scrollTo(dp(10*76),0);Bundle saved=new Bundle();pages.saveState(saved);

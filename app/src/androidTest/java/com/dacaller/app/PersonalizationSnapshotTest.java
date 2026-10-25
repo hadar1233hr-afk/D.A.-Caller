@@ -232,6 +232,8 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
     awaitAccessible(first);screenshot("chooser-"+(dark?"dark":"light")+"-"+kind);
     String last="icons".equals(kind)?AppIcons.label(host,AppIcons.IDS[4]):AvatarShapes.label(host,AvatarShapes.IDS[3]);
     // Native scroll accessibility must expose the final choice even when the dialog is short.
+    revealChoiceRow(("icons".equals(kind)?"launcher-icon-":"avatar-shape-")+
+      ("icons".equals(kind)?AppIcons.IDS[4]:AvatarShapes.IDS[3]));
     revealAccessible(last);assertNotNull(accessible(last));
     screenshot("chooser-"+(dark?"dark":"light")+"-"+kind+"-bottom");clickAccessible(last);
     if("icons".equals(kind)){
@@ -411,6 +413,27 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
    AccessibilityNodeInfo match=accessible(text);if(match!=null)return;
    AccessibilityNodeInfo root=getInstrumentation().getUiAutomation().getRootInActiveWindow();scrollAccessible(root);settle();
   }
+ }
+ private void revealChoiceRow(String tag)throws Exception{
+  final View[] row={null};
+  ui(()->{
+   // A label may already be visible while its taller sibling icon is clipped.
+   // Inspect this process's real dialog window, then reveal the entire row.
+   for(View window:android.view.inspector.WindowInspector.getGlobalWindowViews()){
+    View candidate=window.findViewWithTag(tag);
+    if(candidate==null||!candidate.isShown())continue;
+    row[0]=candidate;
+    android.view.ViewParent parent=candidate.getParent();
+    while(parent!=null&&!(parent instanceof ScrollView))parent=parent.getParent();
+    assertNotNull("Picker choices need a scroll viewport",parent);
+    ScrollView viewport=(ScrollView)parent;viewport.scrollTo(0,viewport.getChildAt(0).getHeight());break;
+   }
+   assertNotNull("Missing native dialog choice row "+tag,row[0]);
+  });settle();
+  ui(()->{
+   fullyVisible(row[0]);ImageView preview=find(row[0],ImageView.class);
+   assertNotNull("Choice preview must be present",preview);fullyVisible(preview);
+  });
  }
  private boolean scrollAccessible(AccessibilityNodeInfo node){
   if(node==null)return false;if(node.isScrollable()&&node.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD))return true;

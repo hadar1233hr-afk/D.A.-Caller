@@ -7,6 +7,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ServiceInfo;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -55,10 +56,9 @@ public final class PhoneSessionService extends InCallService {
  @Override public void onDestroy(){
   for(Call call:new ArrayList<>(order))try{call.unregisterCallback(callback);}
    catch(RuntimeException failure){CallFailureReporter.record(this,"incall-destroy",failure);}
-  calls.clear();order.clear();identities.clear();handler.removeCallbacksAndMessages(null);releaseProximity();
+  calls.clear();order.clear();identities.clear();handler.removeCallbacksAndMessages(null);safeReleaseProximity();
   if(instance==this){instance=null;current=null;notifyViews();}
-  NotificationManager manager=getSystemService(NotificationManager.class);
-  if(manager!=null)manager.cancel(NOTIFICATION_ID);
+  removeCallNotification();
   super.onDestroy();
  }
  @Override public void onCallAdded(Call call){
@@ -228,8 +228,7 @@ public final class PhoneSessionService extends InCallService {
   changed();
  }
  private void updateNotification(Call call){
-  NotificationManager nm=getSystemService(NotificationManager.class);if(nm==null)return;
-  if(call==null||call.getState()==Call.STATE_DISCONNECTED){nm.cancel(NOTIFICATION_ID);return;}
+  if(call==null||call.getState()==Call.STATE_DISCONNECTED){removeCallNotification();return;}
   boolean intrusive=intrusiveNotification(call.getState(),screenVisible);
   Intent intent=new Intent(this,CallScreenActivity.class)
     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -241,7 +240,30 @@ public final class PhoneSessionService extends InCallService {
   Notification notification=CallNotifications.create(this,call.getState(),caller.name(),caller.number,intrusive,
     audio==null?0:audio.getRoute(),audio==null?0:audio.getSupportedRouteMask(),connected,open,
     (action,code)->command(action,code,call));
-  try{nm.notify(NOTIFICATION_ID,notification);}catch(SecurityException ignored){}
+  try{
+   // Android 13 accepts a quiet CallStyle only for an actual foreground service.
+   // Telecom keeps this service bound; the phone-call foreground lifecycle lasts
+   // exactly as long as at least one tracked call, including a waiting call.
+   if(Build.VERSION.SDK_INT>=29)startForeground(NOTIFICATION_ID,notification,ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL);
+   else startForeground(NOTIFICATION_ID,notification);
+  }catch(RuntimeException failure){
+   CallFailureReporter.record(this,"incall-start-foreground",failure);
+   // A ringing fullscreen notification remains a permitted fallback. Quiet
+   // ongoing notifications must never fake foreground flags or add a fullscreen
+   // intent merely to evade the platform's CallStyle requirement.
+   if(notification.fullScreenIntent!=null)try{
+    NotificationManager manager=getSystemService(NotificationManager.class);
+    if(manager!=null)manager.notify(NOTIFICATION_ID,notification);
+   }catch(RuntimeException fallback){CallFailureReporter.record(this,"incall-ringing-notification",fallback);}
+  }
+ }
+ private void removeCallNotification(){
+  try{stopForeground(STOP_FOREGROUND_REMOVE);}
+  catch(RuntimeException failure){CallFailureReporter.record(this,"incall-stop-foreground",failure);}
+  try{
+   NotificationManager manager=getSystemService(NotificationManager.class);
+   if(manager!=null)manager.cancel(NOTIFICATION_ID);
+  }catch(RuntimeException failure){CallFailureReporter.record(this,"incall-cancel-notification",failure);}
  }
  private static final class CallerIdentity {
   final String key,number,fallback;final boolean contactsAllowed;

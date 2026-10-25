@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.role.RoleManager;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
@@ -12,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.pm.ServiceInfo;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.os.SystemClock;
@@ -76,7 +78,8 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
  }
  @Override protected void tearDown()throws Exception{
   try{
-   shell("cmd statusbar collapse");target.getSystemService(NotificationManager.class).cancel(NotificationFixtureReceiver.ID);
+   shell("cmd statusbar collapse");ui(()->DebugNotificationFixtureService.stop(target));
+   await(()->posted()==null,"Native foreground fixture notification was not cleaned up");
    for(int i=launched.size()-1;i>=0;i--){Activity activity=launched.get(i);if(activity!=null&&!activity.isDestroyed())ui(activity::finish);}
    settle();
    if(!rawContacts.isEmpty()){
@@ -157,11 +160,23 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
  private void post(int state,String language,boolean speaker)throws Exception{
   settings.edit().putString("language",language).commit();
   String name="he".equals(language)?"דנה בדיקת התראה":"Dana Notification Test";
+  String label=CallNotifications.stateLabel(target,state);
   ui(()->NotificationFixtureReceiver.post(target,state,name,speaker));
-  await(()->posted()!=null,"Native notification was not posted");
+  await(()->{
+   StatusBarNotification current=posted();if(current==null)return false;
+   Notification notification=current.getNotification();
+   CharSequence title=notification.extras.getCharSequence(Notification.EXTRA_TITLE);
+   CharSequence phase=notification.extras.getCharSequence(Notification.EXTRA_SUB_TEXT);
+   return title!=null&&name.contentEquals(title)&&phase!=null&&label.contentEquals(phase)
+     &&(notification.flags&Notification.FLAG_FOREGROUND_SERVICE)!=0;
+  },"Native foreground notification did not acknowledge the new identity and state");
   assertEquals(name,posted().getNotification().extras.getCharSequence(Notification.EXTRA_TITLE).toString());
   assertEquals(Notification.CATEGORY_CALL,posted().getNotification().category);
   assertTrue((posted().getNotification().flags&Notification.FLAG_ONGOING_EVENT)!=0);
+  assertTrue("Quiet native CallStyle must be posted by a real foreground service",
+    (posted().getNotification().flags&Notification.FLAG_FOREGROUND_SERVICE)!=0);
+  assertTrue(NotificationFixtureReceiver.state(target).getBoolean("foreground_started",false));
+  assertEquals(ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL,NotificationFixtureReceiver.state(target).getInt("foreground_type",0));
  }
  private void assertNativeIdentity(String language,int state)throws Exception{
   String name="he".equals(language)?"דנה בדיקת התראה":"Dana Notification Test";
@@ -172,9 +187,16 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
  }
 
  public void testNativeNotificationStatesActionsAndDirectReturn()throws Exception{
+  // The disposable emulator grants the legitimate phoneCall FGS qualifier. The
+  // role is retained until the emulator is discarded: revocation can terminate
+  // the instrumentation UID and would invalidate later test cases.
+  shell("cmd role add-role-holder --user 0 android.app.role.DIALER "+target.getPackageName());
+  await(()->target.getSystemService(RoleManager.class).isRoleHeld(RoleManager.ROLE_DIALER),"Disposable emulator did not grant dialer role");
+  assertTrue("Initial FGS start must happen while MainActivity is in the foreground",main.hasWindowFocus());
+  post(Call.STATE_RINGING,"he",false);
   getInstrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_HOME);settle();
   assertFalse("Call notification must also work while the app is in the background",main.hasWindowFocus());
-  post(Call.STATE_RINGING,"he",false);shade("חזרה לשיחה");assertNativeIdentity("he",Call.STATE_RINGING);
+  shade("חזרה לשיחה");assertNativeIdentity("he",Call.STATE_RINGING);
   assertEquals(3,posted().getNotification().actions.length);snapshot("notification-incoming-he");
   post(Call.STATE_DIALING,"he",false);shade("הפעל רמקול");assertNativeIdentity("he",Call.STATE_DIALING);
   assertEquals(3,posted().getNotification().actions.length);snapshot("notification-outgoing-he");
@@ -267,6 +289,9 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
   JSONObject evidence=new JSONObject();evidence.put("api",android.os.Build.VERSION.SDK_INT);evidence.put("real_systemui",notificationsPassed);
   evidence.put("notification_actions_acknowledged",notificationsPassed);evidence.put("native_back_returns_to_app",backPassed);
   evidence.put("call_state_source","debug-only synthetic snapshots, shared production CallNotifications builder");
+  evidence.put("real_phone_call_foreground_service",notificationsPassed);
+  evidence.put("foreground_service_type","phoneCall");
+  evidence.put("dialer_role","Granted with Android role manager on disposable emulator before foreground start; emulator discarded after suite");
   evidence.put("telecom_commands","Unit-tested separately; no physical carrier/SIM assertion");
   evidence.put("native_back_panels","normal/audio/more/keypad; contact query, row identity/offset and settings scroll");
   File file=new File(target.getExternalFilesDir(null),"call-integration-native.json");

@@ -36,6 +36,7 @@ assert len(evidence_files) == 1, "Missing native call notification/navigation as
 evidence = json.loads(evidence_files[0].read_text())
 assert evidence["api"] == 33 and evidence["real_systemui"] is True
 assert evidence["notification_actions_acknowledged"] is True and evidence["native_back_returns_to_app"] is True
+assert evidence["real_phone_call_foreground_service"] is True and evidence["foreground_service_type"] == "phoneCall"
 (root / "call-integration-verification.json").write_text(json.dumps({
     "source_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
     "app_tree": subprocess.check_output(["git", "rev-parse", "HEAD:app"], text=True).strip(),
@@ -43,6 +44,6 @@ assert evidence["notification_actions_acknowledged"] is True and evidence["nativ
     "required_real_png_files": len(expected),
     "sha256": hashes,
     "native_assertions": evidence,
-    "limits": "SystemUI renders the production notification builder with a debug-only synthetic call session. Native button dispatch is acknowledged by the fixture; Telecom/carrier operations are separately unit-tested and require physical-device verification.",
+    "limits": "SystemUI renders the production notification builder from a real debug phoneCall foreground service with Android's dialer role on a disposable emulator. Call state and command acknowledgements are synthetic; Telecom/carrier operations are separately unit-tested and require physical-device verification.",
 }, indent=2) + "\n")
 print(f"Verified {len(expected)} native notification/Back PNG files")

@@ -11,6 +11,7 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.ProviderInfo;
+import android.content.pm.ServiceInfo;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
@@ -198,6 +199,47 @@ public class CallNotificationsTest {
   Intent screen=shadowOf(service).getNextStartedActivity();assertNotNull(screen);
   assertEquals(CallScreenActivity.class.getName(),screen.getComponent().getClassName());
   assertNull("No permission or role prompt is launched by the service",shadowOf(service).getNextStartedActivity());
+ }
+ @Test public void phoneCallForegroundLifecycleKeepsTheRemainingCallAndStopsAfterTheLast(){
+  Call active=call(Call.STATE_ACTIVE,"0500099000","Dana");service.onCallAdded(active);
+  assertTrue(shadowOf(service).isLastForegroundNotificationAttached());
+  assertEquals(1502,shadowOf(service).getLastForegroundNotificationId());
+  assertEquals(ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL,service.getForegroundServiceType());
+  assertTrue((notification().flags&Notification.FLAG_FOREGROUND_SERVICE)!=0);
+  assertNull("Ongoing calls remain quiet",notification().fullScreenIntent);
+  Call waiting=call(Call.STATE_RINGING,"0500099001","Alex");service.onCallAdded(waiting);
+  assertEquals("Alex",person());assertTrue(shadowOf(service).isLastForegroundNotificationAttached());
+  service.onCallRemoved(waiting);
+  assertEquals("Dana",person());assertFalse(shadowOf(service).isForegroundStopped());
+  assertTrue(shadowOf(service).isLastForegroundNotificationAttached());
+  service.onCallRemoved(active);
+  assertTrue(shadowOf(service).isForegroundStopped());assertTrue(shadowOf(service).getNotificationShouldRemoved());
+  assertFalse(shadowOf(service).isLastForegroundNotificationAttached());assertNull(notification());
+ }
+ @Test public void serviceDestroyRemovesForegroundCallNotificationWithoutStoppingTelecomItself(){
+  service.onCallAdded(call(Call.STATE_ACTIVE,"0500099000","Dana"));
+  assertTrue(shadowOf(service).isLastForegroundNotificationAttached());
+  controller.destroy();controller=null;
+  assertTrue(shadowOf(service).isForegroundStopped());assertTrue(shadowOf(service).getNotificationShouldRemoved());
+  assertFalse(shadowOf(service).isLastForegroundNotificationAttached());assertNull(notification());
+  assertFalse("Telecom owns binding and service lifetime",shadowOf(service).isStoppedBySelf());
+ }
+ @Test @Config(sdk=26) public void android26StartsForegroundWithoutANewerApiTypeAndCleansUp(){
+  Call active=call(Call.STATE_ACTIVE,"0500099000","Dana");service.onCallAdded(active);
+  assertTrue(shadowOf(service).isLastForegroundNotificationAttached());assertNotNull(notification());
+  assertTrue((notification().flags&Notification.FLAG_FOREGROUND_SERVICE)!=0);
+  assertNull(notification().fullScreenIntent);
+  service.onCallRemoved(active);assertTrue(shadowOf(service).isForegroundStopped());assertNull(notification());
+ }
+ @Test public void deniedForegroundStartKeepsCallOwnershipAndOnlyRingingUsesFullscreenFallback(){
+  PhoneSessionService denied=spy(service);PhoneSessionService.instance=denied;
+  doThrow(new SecurityException("Simulated platform foreground rejection")).when(denied)
+   .startForeground(anyInt(),any(Notification.class),eq(ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL));
+  Call active=call(Call.STATE_ACTIVE,"0500099000","Dana");denied.onCallAdded(active);
+  assertSame(active,PhoneSessionService.current);assertNull(notification());verify(active,never()).disconnect();
+  assertTrue(app.getSharedPreferences("da_caller",0).getString("last_call_failure","").contains("incall-start-foreground"));
+  denied.onCallRemoved(active);Call incoming=call(Call.STATE_RINGING,"0500099001","Alex");denied.onCallAdded(incoming);
+  assertSame(incoming,PhoneSessionService.current);assertNotNull(notification());assertNotNull(notification().fullScreenIntent);
  }
  private NameProvider provider(){
   NameProvider provider=new NameProvider();ProviderInfo info=new ProviderInfo();info.authority=ContactsContract.AUTHORITY;
