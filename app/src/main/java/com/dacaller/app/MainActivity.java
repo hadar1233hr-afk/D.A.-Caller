@@ -107,13 +107,21 @@ public class MainActivity extends Activity {
  @Override public void onCreate(Bundle saved){
   super.onCreate(saved);
   prefs=getSharedPreferences("da_caller",MODE_PRIVATE);
+  boolean returning=CallReturnNavigation.isReturn(getIntent());
+  Intent returnDestination=returning&&saved==null?CallReturnNavigation.lastDestination(this):null;
+  CallReturnNavigation.install(this);
   AppIcons.ensure(this);
   CallArchive.schedule(this);
-  page=validPage(saved==null?prefs.getString("start_page","recents"):saved.getString("page","recents"));
-  if(saved==null)handleIntent(getIntent());
+  Bundle uiState=returning?(saved==null?CallReturnNavigation.mainState(this):saved):saved;
+  page=validPage(uiState==null?prefs.getString("start_page","recents"):uiState.getString("page","recents"));
+  if(returning){/* A return restores UI only, never old permission/call destinations. */}
+  else if(saved==null)handleIntent(getIntent());
   else {requestedCallNumber=saved.getString("requested_call");pendingRoleCallNumber=saved.getString("pending_role_call");dialpadNumber=saved.getString("dialpad");}
-  if(saved!=null){fastPages=new FastPages(this);fastPages.restoreState(saved);}
+  if(uiState!=null){fastPages=new FastPages(this);fastPages.restoreState(uiState);}
   render();loadContacts();
+  if(returning&&pageScroll!=null){ScrollView scroll=pageScroll;int y=Math.max(0,uiState.getInt("settings_scroll",0));scroll.post(()->scroll.scrollTo(0,y));}
+  if(returnDestination!=null)handler.post(()->{if(!isFinishing()&&!isDestroyed())startActivity(returnDestination);});
+  if(returning)return;
   handler.postDelayed(()->{
    if(!prefs.getBoolean("role_prompted",false)&&!isDefault()){
     prefs.edit().putBoolean("role_prompted",true).apply();askDefault();
@@ -122,7 +130,11 @@ public class MainActivity extends Activity {
    }
   },650);
  }
- @Override protected void onNewIntent(Intent intent){super.onNewIntent(intent);setIntent(intent);handleIntent(intent);render();}
+ @Override protected void onNewIntent(Intent intent){
+  super.onNewIntent(intent);setIntent(intent);
+  if(CallReturnNavigation.isReturn(intent))return;
+  handleIntent(intent);render();
+ }
  private void handleIntent(Intent intent){
   if(intent==null)return;
   if(intent.getBooleanExtra("favorites",false)){page="contacts";prefs.edit().putBoolean("favorites_expanded",true).apply();}
@@ -163,6 +175,10 @@ public class MainActivity extends Activity {
  }
  @Override protected void onStop(){
   if(fastPages!=null)fastPages.remember(lastPage);
+  Bundle navigation=new Bundle();navigation.putString("page",page);
+  if(fastPages!=null)fastPages.saveState(navigation);
+  if(pageScroll!=null)navigation.putInt("settings_scroll",pageScroll.getScrollY());
+  CallReturnNavigation.saveMain(this,navigation);
   try{getContentResolver().unregisterContentObserver(contactsObserver);}catch(Exception ignored){}
   try{getContentResolver().unregisterContentObserver(callsObserver);}catch(Exception ignored){}
   handler.removeCallbacks(reloadChangedContacts);handler.removeCallbacks(reloadChangedCalls);

@@ -12,6 +12,7 @@ on:
       - 'scripts/run-android-ui.sh'
       - 'scripts/verify-ui-matrix.py'
       - 'scripts/verify-personalization-matrix.py'
+      - 'scripts/verify-call-integration-matrix.py'
       - 'scripts/verify-visual-review.py'
       - 'docs/evidence/2026-10-25/**'
       - 'docs/evidence/personalization-2026-10-25/**'
@@ -28,6 +29,7 @@ on:
       - 'scripts/run-android-ui.sh'
       - 'scripts/verify-ui-matrix.py'
       - 'scripts/verify-personalization-matrix.py'
+      - 'scripts/verify-call-integration-matrix.py'
       - 'scripts/verify-visual-review.py'
   workflow_dispatch:
     inputs:
@@ -272,7 +274,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: python3 scripts/verify-visual-review.py
-      - name: Require review of all six personalization features for this exact source
+      - name: Require review of all eight continuation features for this exact source
         if: github.event.pull_request.head.ref == 'codex/da-caller-personalization-20261025'
         env:
           GH_TOKEN: ${{ github.token }}
@@ -325,6 +327,8 @@ jobs:
           - Collapsible horizontal favorites above contacts and recents, and a compact expandable summary.
           - Circle contact photos by default, with three more shapes shared across screens and widgets.
           - Archived calls resolve current contact names and photos, with name/number search.
+          - Native call notifications show contact identity and state, return, hang-up and speaker actions.
+          - Back returns from the call screen to the last DA CALLER screen without ending the call.
           - Google Phone-inspired normal, audio, More and DTMF screens in light/dark.
           - Distinct One UI, iOS 26 glass, HyperOS and Nothing-inspired layouts.
           - Icon-only hang-up, capability-aware controls and exact Bluetooth endpoint selection.

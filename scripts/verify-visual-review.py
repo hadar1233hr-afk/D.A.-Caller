@@ -21,8 +21,9 @@ if "personalization" in str(review_path):
     assert expected > 122, "Personalization screenshots must be reviewed as well"
     assert set(review.get("verified_features", [])) == {
         "settings_backup_restore", "five_launcher_icons", "favorites_strip",
-        "compact_summary", "avatar_shapes", "archive_contact_identity"
-    }, "Review must cover all six requested features"
+        "compact_summary", "avatar_shapes", "archive_contact_identity",
+        "call_notifications", "return_from_call"
+    }, "Review must cover all eight requested features"
 source = str(review.get("screenshot_source_sha", ""))
 run_id = str(review.get("screenshot_run_id", ""))
 tree = str(review.get("reviewed_app_tree", ""))

@@ -19,8 +19,9 @@ presentation = {
                          ("recents", ("compact", "expanded")))
     for state in states
 }
-choosers = {f"personalization-chooser-{theme}-{kind}.png"
-            for theme in ("light", "dark") for kind in ("icons", "avatar_shapes")}
+choosers = {f"personalization-chooser-{theme}-{kind}{suffix}.png"
+            for theme in ("light", "dark") for kind in ("icons", "avatar_shapes")
+            for suffix in ("", "-bottom")}
 shapes = {f"personalization-{page}-shape-{shape}.png"
           for page in ("contacts", "widgets")
           for shape in ("circle", "rounded_square", "square", "hexagon")}
@@ -28,7 +29,7 @@ archive = {f"personalization-archive-{theme}.png" for theme in ("light", "dark")
 backup = {"personalization-backup-saved-light.png", "personalization-backup-saved-dark.png",
           "personalization-backup-restore-confirmation.png"}
 required = presentation | choosers | shapes | archive | backup
-assert len(required) == 49
+assert len(required) == 53
 all_files = [file for file in root.rglob("*.png") if file.is_file()]
 counts = collections.Counter(file.name for file in all_files)
 duplicates = sorted(name for name in required if counts[name] > 1)

@@ -336,7 +336,8 @@ final class FastPages {
   item.setGravity(Gravity.CENTER);
   item.setPadding(dp(1),dp(2),dp(1),dp(2));
   item.setBackground(bg(dark()?0xFF262626:0xFFF5F3F0,12));
-  LinearLayout.LayoutParams ip=new LinearLayout.LayoutParams(0,-1,1);
+  item.setMinimumHeight(dp(42));
+  LinearLayout.LayoutParams ip=new LinearLayout.LayoutParams(0,-2,1);
   ip.leftMargin=dp(3);ip.rightMargin=dp(3);
   parent.addView(item,ip);
   int tone=dark()?ink():baseColor;
@@ -628,7 +629,8 @@ final class FastPages {
   header.addView(toggle,lp(48,48));touch(toggle);
   toggle.setOnClickListener(v->{pulse(toggle);prefs.edit().putBoolean("stats_expanded",!expanded).apply();host.refreshPage();});
   if(!expanded)return;
-  LinearLayout breakdown=horizontal();summary.addView(breakdown,lp(-1,42));
+  LinearLayout breakdown=horizontal();breakdown.setBaselineAligned(false);
+  breakdown.setMinimumHeight(dp(42));summary.addView(breakdown,lp(-1,-2));
   summaryMetric(breakdown,tr("יוצאות"),"↗",data.outgoing[period],0xFF2375B4);
   summaryMetric(breakdown,tr("נכנסות"),"↙",data.incoming[period],0xFF25815F);
   summaryMetric(breakdown,tr("שלא נענו"),"×",data.missed[period],0xFFBD4748);

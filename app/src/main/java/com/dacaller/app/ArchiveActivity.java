@@ -67,6 +67,19 @@ public final class ArchiveActivity extends Activity {
  private int gold(){return dark()?0xFFE1C58D:0xFF8D672E;}
  private Locale locale(){return I18n.isEnglish(this)?Locale.ENGLISH:new Locale("he","IL");}
  private String tr(String he,String en){return I18n.isEnglish(this)?en:he;}
+ private void applySystemBars(){
+  getWindow().setStatusBarColor(surface());getWindow().setNavigationBarColor(surface());
+  View decor=getWindow().getDecorView();
+  decor.setSystemUiVisibility(dark()?0:View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+  if(android.os.Build.VERSION.SDK_INT>=30){
+   android.view.WindowInsetsController controller=getWindow().getInsetsController();
+   if(controller!=null){
+    int mask=android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS|
+      android.view.WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS;
+    controller.setSystemBarsAppearance(dark()?0:mask,mask);
+   }
+  }
+ }
  private GradientDrawable shape(int color,int radius){GradientDrawable bg=new GradientDrawable();bg.setColor(color);bg.setCornerRadius(dp(radius));return bg;}
  private TextView text(String s,int sp,boolean bold,int color){
   TextView view=new TextView(this);view.setText(I18n.text(this,s));view.setTextColor(color);view.setTextSize(sp);
@@ -74,8 +87,7 @@ public final class ArchiveActivity extends Activity {
  }
  @Override public void onCreate(Bundle state){
   super.onCreate(state);prefs=getSharedPreferences("da_caller",MODE_PRIVATE);
-  getWindow().setStatusBarColor(surface());getWindow().setNavigationBarColor(surface());
-  getWindow().getDecorView().setSystemUiVisibility(dark()?0:View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+  applySystemBars();
   LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);
   root.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);
   root.setBackgroundColor(surface());setContentView(root);
@@ -241,6 +253,9 @@ public final class ArchiveActivity extends Activity {
  }
  @Override protected void onResume(){
   super.onResume();refreshContactAccess();
+  // Reapply after the decor attaches: an early legacy visibility flag can be
+  // replaced while Android transfers system-bar ownership from the last window.
+  getWindow().getDecorView().post(this::applySystemBars);
   if(ArchiveContacts.allowed(this))try{
    getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI,true,contactChanges);observing=true;
   }catch(RuntimeException unavailable){/* Refresh on return remains available. */}

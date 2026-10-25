@@ -30,10 +30,12 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.Shadows;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.annotation.Config;
+import org.robolectric.annotation.GraphicsMode;
 import org.robolectric.annotation.LooperMode;
 
 /** Presentation controls must never dispatch telephony or lose the favorite dataset. */
 @RunWith(RobolectricTestRunner.class) @Config(sdk=33) @LooperMode(LooperMode.Mode.PAUSED)
+@GraphicsMode(GraphicsMode.Mode.NATIVE)
 public class FavoritesPresentationTest {
  public static class Host extends MainActivity {
   final List<Contacts.Person> people=new ArrayList<>();
@@ -68,10 +70,11 @@ public class FavoritesPresentationTest {
   prefs.edit().putStringSet("favorites",favorites).commit();
  }
  private int dp(int value){return Math.round(value*host.getResources().getDisplayMetrics().density);}
- private View attach(View page){
-  FrameLayout parent=new FrameLayout(host);parent.addView(page,new FrameLayout.LayoutParams(480,720));host.setContentView(parent);controller.visible();
-  parent.measure(View.MeasureSpec.makeMeasureSpec(480,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(720,View.MeasureSpec.EXACTLY));
-  parent.layout(0,0,480,720);Shadows.shadowOf(Looper.getMainLooper()).idle();return page;
+ private View attach(View page){return attach(page,480);}
+ private View attach(View page,int width){
+  FrameLayout parent=new FrameLayout(host);parent.addView(page,new FrameLayout.LayoutParams(width,720));host.setContentView(parent);controller.visible();
+  parent.measure(View.MeasureSpec.makeMeasureSpec(width,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(720,View.MeasureSpec.EXACTLY));
+  parent.layout(0,0,width,720);Shadows.shadowOf(Looper.getMainLooper()).idle();return page;
  }
  private View tag(View view,String expected){
   if(expected.equals(view.getTag()))return view;
@@ -89,10 +92,33 @@ public class FavoritesPresentationTest {
   assertNotNull(tag(summary,"stats_toggle"));tag(summary,"stats_toggle").performClick();
   assertTrue(prefs.getBoolean("stats_expanded",false));assertTrue(host.calls.isEmpty());
   page=attach(pages.recents());summary=tag(page,"stats_summary");
-  assertTrue(summary.getHeight()>dp(48));assertTrue("Expanded summary remains well below previous ~205dp",summary.getHeight()<dp(150));
+  assertTrue(summary.getHeight()>dp(48));assertTrue("Expanded summary remains below150dp: "+summaryGeometry(summary),summary.getHeight()<dp(150));
   assertTrue(hasText(summary,"Outgoing"));assertTrue(hasText(summary,"Incoming"));assertTrue(hasText(summary,"Missed"));assertTrue(hasText(summary,"Average call"));
   assertTrue(hasText(summary,"5"));assertTrue(hasText(summary,"6"));assertTrue(hasText(summary,"1"));
   tag(summary,"stats_toggle").performClick();assertFalse(prefs.getBoolean("stats_expanded",true));
+ }
+ @Test public void expandedHebrewSummaryFitsNativeLineHeightsAtLargeFont(){
+  float original=RuntimeEnvironment.getApplication().getResources().getConfiguration().fontScale;
+  RuntimeEnvironment.setFontScale(1.3f);
+  try{
+   prefs.edit().putString("language","he").putBoolean("stats_expanded",true).commit();
+   View summary=tag(attach(pages.recents(),dp(320)),"stats_summary");
+   assertTrue("Large-font summary remains below150dp: "+summaryGeometry(summary),summary.getHeight()<dp(150));assertMeasuredTextFits(summary);
+  }finally{RuntimeEnvironment.setFontScale(original);}
+ }
+ private String summaryGeometry(View view){
+  StringBuilder geometry=new StringBuilder(view.getClass().getSimpleName()+"["+view.getWidth()+"x"+view.getHeight()+"]");
+  if(view instanceof TextView)geometry.append(' ').append(((TextView)view).getText());
+  if(view instanceof ViewGroup)for(int i=0;i<((ViewGroup)view).getChildCount();i++)geometry.append(" { ").append(summaryGeometry(((ViewGroup)view).getChildAt(i))).append(" }");
+  return geometry.toString();
+ }
+ private void assertMeasuredTextFits(View view){
+  if(view instanceof TextView){
+   TextView text=(TextView)view;assertNotNull(text.getLayout());
+   assertTrue("Text cropped: "+text.getText()+" line height="+text.getLayout().getHeight()+" view="+text.getHeight(),
+    text.getLayout().getHeight()<=text.getHeight()-text.getCompoundPaddingTop()-text.getCompoundPaddingBottom());
+  }
+  if(view instanceof ViewGroup)for(int i=0;i<((ViewGroup)view).getChildCount();i++)assertMeasuredTextFits(((ViewGroup)view).getChildAt(i));
  }
  @Test public void sameFavoriteBandAppearsAboveBothListsAndRemembersCollapse(){
   people(12);View contacts=attach(pages.contacts(host.people,false));

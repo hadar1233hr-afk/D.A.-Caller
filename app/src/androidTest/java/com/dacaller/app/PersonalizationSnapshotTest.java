@@ -143,6 +143,13 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
   if(root instanceof ViewGroup)for(int i=0;i<((ViewGroup)root).getChildCount();i++)if(containsText(((ViewGroup)root).getChildAt(i),value))return true;
   return false;
  }
+ private TextView exactText(View root,String value){
+  if(root instanceof TextView&&value.equalsIgnoreCase(((TextView)root).getText().toString()))return (TextView)root;
+  if(root instanceof ViewGroup)for(int i=0;i<((ViewGroup)root).getChildCount();i++){
+   TextView result=exactText(((ViewGroup)root).getChildAt(i),value);if(result!=null)return result;
+  }
+  return null;
+ }
  private void fullyVisible(View view){
   assertNotNull(view);Rect visible=new Rect();assertTrue("Hidden "+view.getTag(),view.isShown()&&view.getGlobalVisibleRect(visible));
   assertTrue("Vertically clipped "+view.getTag()+" "+visible.height()+"/"+view.getHeight(),visible.height()>=view.getHeight()-1);
@@ -188,7 +195,12 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
    tap(tagged(host,"stats_toggle"));
    ui(()->{
     View summary=tagged(host,"stats_summary");assertTrue(summary.getHeight()>dp(48));assertTrue("Expanded summary wastes space",summary.getHeight()<=dp(150));
-    fullyVisible(summary);textFits(summary);assertTrue(containsText(summary,"en".equals(language)?"Average call duration":"משך שיחה ממוצע"));
+    fullyVisible(summary);textFits(summary);
+    String average="en".equals(language)?"Average call length":"משך שיחה ממוצע";
+    assertTrue("Expanded summary must retain its average-duration label in "+language,containsText(summary,average));
+    assertNotNull("Outgoing count must remain visible after expansion",exactText(summary,"↗ 4"));
+    assertNotNull("Incoming count must remain visible after expansion",exactText(summary,"↙ 5"));
+    assertNotNull("Missed count must remain visible after expansion",exactText(summary,"× 3"));
     assertTrue(host.requestedNumbers.isEmpty());
    });screenshot("recents-"+suffix+"-expanded");
   }
@@ -220,13 +232,16 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
     awaitAccessible(first);screenshot("chooser-"+(dark?"dark":"light")+"-"+kind);
     String last="icons".equals(kind)?AppIcons.label(host,AppIcons.IDS[4]):AvatarShapes.label(host,AvatarShapes.IDS[3]);
     // Native scroll accessibility must expose the final choice even when the dialog is short.
-    revealAccessible(last);assertNotNull(accessible(last));clickAccessible(last);
+    revealAccessible(last);assertNotNull(accessible(last));
+    screenshot("chooser-"+(dark?"dark":"light")+"-"+kind+"-bottom");clickAccessible(last);
     if("icons".equals(kind)){
-     assertEquals("wave",AppIcons.selected(host));
+     await(()->"wave".equals(AppIcons.selected(host)),"Icon choice was not saved");settle();
      List<ResolveInfo> matches=target.getPackageManager().queryIntentActivities(new Intent(Intent.ACTION_MAIN)
        .addCategory(Intent.CATEGORY_LAUNCHER).setPackage(target.getPackageName()),0);
      assertEquals(1,matches.size());assertEquals(AppIcons.component(host,"wave").getClassName(),matches.get(0).activityInfo.name);
-    }else assertEquals("hexagon",AvatarShapes.selected(host));
+    }else{
+     await(()->"hexagon".equals(AvatarShapes.selected(host)),"Avatar shape choice was not saved");settle();
+    }
    }
   }
  }
@@ -302,7 +317,14 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
     ui(()->find(archive.getWindow().getDecorView(),EditText.class).setText("דנה בדיקת"));
     await(()->find(archive.getWindow().getDecorView(),ListView.class).getAdapter().getCount()==1,"Name search did not find the saved contact");
     await(()->{ListView list=find(archive.getWindow().getDecorView(),ListView.class);ImageView photo=find(list,ImageView.class);return photo!=null&&photo.getVisibility()==View.VISIBLE&&photo.getDrawable()!=null;},"Real provider contact photo did not appear");
-    ui(()->{ListView list=find(archive.getWindow().getDecorView(),ListView.class);assertEquals(1,list.getAdapter().getCount());assertTrue(containsText(list,name));assertTrue(containsText(list,phone));textFits(list);});
+    ui(()->{
+     ListView list=find(archive.getWindow().getDecorView(),ListView.class);assertEquals(1,list.getAdapter().getCount());
+     assertTrue(containsText(list,name));assertTrue(containsText(list,phone));textFits(list);
+     int lightMask=android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS|
+       android.view.WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS;
+     int appearance=archive.getWindow().getInsetsController().getSystemBarsAppearance();
+     assertEquals("Archive system icons must contrast with the actual theme",dark?0:lightMask,appearance&lightMask);
+    });
     screenshot("archive-"+(dark?"dark":"light"));ui(archive::finish);settle();
    }
   }finally{
@@ -322,9 +344,16 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
    Activity export=backup(true,Activity.RESULT_OK);await(()->containsText(export.getWindow().getDecorView(),"Backup saved to the file you selected."),"Export did not complete");
    try(InputStream input=target.getContentResolver().openInputStream(BackupDocumentProvider.DOCUMENT)){saved=readAll(input);}
    assertTrue(saved.length>100);assertEquals("DA_CALLER_SETTINGS",new JSONObject(new String(saved,java.nio.charset.StandardCharsets.UTF_8)).getString("format"));
+   ui(()->{
+    TextView result=exactText(export.getWindow().getDecorView(),"Backup saved to the file you selected.");
+    assertNotNull("Export outcome must be present",result);fullyVisible(result);textFits(result);
+   });
    screenshot("backup-saved-"+(dark?"dark":"light"));
-   ui(()->{ScrollView viewport=find(export.getWindow().getDecorView(),ScrollView.class);viewport.fullScroll(View.FOCUS_DOWN);});settle();
-   awaitAccessible("Close");clickAccessible("Close");settle();
+   final TextView[] close={null};
+   ui(()->{
+    close[0]=exactText(export.getWindow().getDecorView(),"Close");assertNotNull("Export must provide Close",close[0]);
+    close[0].requestRectangleOnScreen(new Rect(0,0,close[0].getWidth(),close[0].getHeight()),true);
+   });settle();tap(close[0]);
   }
   assertNotNull(saved);
   settings.edit().putBoolean("dark",false).putString("avatar_shape","square").putBoolean("stats_expanded",false).commit();

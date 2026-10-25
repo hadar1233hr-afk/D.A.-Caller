@@ -34,7 +34,7 @@
    <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
   </activity-alias>
   <activity android:name=".SettingsBackupActivity" android:exported="false"/>
-  <activity android:name=".CallScreenActivity" android:exported="false" android:launchMode="singleTop" android:excludeFromRecents="true"/>
+  <activity android:name=".CallScreenActivity" android:exported="false" android:launchMode="singleTop" android:excludeFromRecents="true" android:enableOnBackInvokedCallback="true"/>
   <service android:name=".PhoneSessionService" android:exported="true" android:permission="android.permission.BIND_INCALL_SERVICE">
     <meta-data android:name="android.telecom.IN_CALL_SERVICE_UI" android:value="true"/>
     <intent-filter><action android:name="android.telecom.InCallService"/></intent-filter>

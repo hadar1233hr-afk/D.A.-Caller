@@ -14,7 +14,10 @@ public final class CallCommandReceiver extends BroadcastReceiver {
   try{
    if("com.dacaller.app.CALL_ANSWER".equals(action)&&call.getState()==Call.STATE_RINGING)call.answer(VideoProfile.STATE_AUDIO_ONLY);
    else if("com.dacaller.app.CALL_DECLINE".equals(action)&&call.getState()==Call.STATE_RINGING)call.reject(false,null);
-   else if("com.dacaller.app.CALL_HANGUP".equals(action)&&call.getState()!=Call.STATE_RINGING)call.disconnect();
+   else if("com.dacaller.app.CALL_HANGUP".equals(action)&&call.getState()!=Call.STATE_RINGING&&
+     call.getState()!=Call.STATE_DISCONNECTED&&call.getState()!=Call.STATE_DISCONNECTING)call.disconnect();
+   else if("com.dacaller.app.CALL_SPEAKER_ON".equals(action)){PhoneSessionService.notificationSpeaker(call,true);return;}
+   else if("com.dacaller.app.CALL_SPEAKER_OFF".equals(action)){PhoneSessionService.notificationSpeaker(call,false);return;}
   }catch(Exception ignored){}
   PhoneSessionService.notifyChanged();
  }

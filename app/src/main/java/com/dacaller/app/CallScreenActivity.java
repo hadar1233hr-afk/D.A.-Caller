@@ -53,6 +53,7 @@ public final class CallScreenActivity extends Activity {
  private Call toneCall,displayedCall;
  private View animatedSheet;
  private boolean previewMuted;
+ private Runnable unregisterBack;
  private int previewRoute=CallAudioState.ROUTE_EARPIECE;
  private final Runnable stopTone=()->{
   if(toneCall!=null){try{toneCall.stopDtmfTone();}catch(RuntimeException ignored){}toneCall=null;}
@@ -91,6 +92,8 @@ public final class CallScreenActivity extends Activity {
  }
  @Override public void onCreate(Bundle saved){
   super.onCreate(saved);prefs=getSharedPreferences("da_caller",MODE_PRIVATE);
+  CallReturnNavigation.install(this);
+  if(Build.VERSION.SDK_INT>=33)unregisterBack=BackApi33.register(this,this::returnToApp);
   panel=saved==null?initialPanel():saved.getString("call_panel","normal");
   previewRoute=previewBluetooth()?CallAudioState.ROUTE_BLUETOOTH:CallAudioState.ROUTE_EARPIECE;
   if(Build.VERSION.SDK_INT>=27){setShowWhenLocked(true);setTurnScreenOn(true);}
@@ -477,6 +480,21 @@ public final class CallScreenActivity extends Activity {
   dialog.setContentView(wrap);dialog.show();
   Window window=dialog.getWindow();if(window!=null){window.setBackgroundDrawableResource(android.R.color.transparent);window.setLayout(-1,-2);}
  }
- @Override protected void onDestroy(){cancelSheetAnimation();clockHandler.removeCallbacksAndMessages(null);stopTone.run();PhoneSessionService.unregister(changed);super.onDestroy();}
- @Override public void onBackPressed(){if(!"normal".equals(panel)){setPanel(panel);return;}moveTaskToBack(true);}
+ @Override protected void onDestroy(){
+  if(unregisterBack!=null)unregisterBack.run();
+  cancelSheetAnimation();clockHandler.removeCallbacksAndMessages(null);stopTone.run();PhoneSessionService.unregister(changed);super.onDestroy();
+ }
+ private void returnToApp(){
+  clockHandler.removeCallbacks(stopTone);stopTone.run();CallReturnNavigation.returnToApp(this);
+ }
+ @Override public void onBackPressed(){returnToApp();}
+ @android.annotation.TargetApi(33)
+ private static final class BackApi33 {
+  static Runnable register(Activity activity,Runnable action){
+   android.window.OnBackInvokedDispatcher dispatcher=activity.getOnBackInvokedDispatcher();
+   android.window.OnBackInvokedCallback callback=action::run;
+   dispatcher.registerOnBackInvokedCallback(android.window.OnBackInvokedDispatcher.PRIORITY_DEFAULT,callback);
+   return ()->dispatcher.unregisterOnBackInvokedCallback(callback);
+  }
+ }
 }

@@ -42,20 +42,20 @@ public final class SettingsBackupActivity extends Activity {
   int ink=dark?0xFFF6F3EC:0xFF17291F;
   getWindow().setStatusBarColor(background);getWindow().setNavigationBarColor(background);
   getWindow().getDecorView().setSystemUiVisibility(dark?0:View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
-  LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setGravity(Gravity.CENTER_VERTICAL);
+  LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setGravity(Gravity.TOP);
   root.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);
   root.setPadding(dp(24),dp(24),dp(24),dp(24));root.setBackgroundColor(background);
   ScrollView viewport=new ScrollView(this);viewport.setFillViewport(true);viewport.setBackgroundColor(background);
   viewport.addView(root,new ScrollView.LayoutParams(-1,-2));setContentView(viewport);
   TextView title=new TextView(this);title.setText(tr("גיבוי ושחזור הגדרות","Settings backup and restore"));title.setTextSize(24);title.setTextColor(ink);
   root.addView(title,new LinearLayout.LayoutParams(-1,-2));
+  status=new TextView(this);status.setTextSize(16);status.setTextColor(ink);status.setPadding(0,dp(18),0,dp(18));root.addView(status,new LinearLayout.LayoutParams(-1,-2));
+  progress=new ProgressBar(this);progress.setContentDescription(tr("מעבד קובץ","Processing file"));root.addView(progress,new LinearLayout.LayoutParams(dp(48),dp(48)));
+  close=new Button(this);close.setText(tr("סגור","Close"));close.setMinHeight(dp(48));close.setOnClickListener(v->finish());root.addView(close,new LinearLayout.LayoutParams(-1,-2));
   TextView note=new TextView(this);note.setText(tr(
     "הקובץ כולל הגדרות, מועדפים והערות שיחה מקומיות. הוא עשוי לכלול מספרי טלפון. אנשי הקשר, תמונותיהם, יומן השיחות והארכיון אינם נכללים ואינם נמחקים. הרשאות מערכת ומיקומי ווידג׳טים אינם ניתנים להעברה. ניתן לשמור קובץ במכשיר ללא אינטרנט.",
     "The file includes settings, favorites and local call notes, and may contain phone numbers. Contacts, photos, call history and the archive are not included or deleted. System permissions and launcher widget placements cannot be transferred. Save locally to work offline."));
   note.setTextSize(14);note.setTextColor(ink);note.setPadding(0,dp(18),0,dp(18));root.addView(note,new LinearLayout.LayoutParams(-1,-2));
-  progress=new ProgressBar(this);progress.setContentDescription(tr("מעבד קובץ","Processing file"));root.addView(progress,new LinearLayout.LayoutParams(dp(48),dp(48)));
-  status=new TextView(this);status.setTextSize(16);status.setTextColor(ink);status.setPadding(0,dp(18),0,dp(18));root.addView(status,new LinearLayout.LayoutParams(-1,-2));
-  close=new Button(this);close.setText(tr("סגור","Close"));close.setMinHeight(dp(48));close.setOnClickListener(v->finish());root.addView(close,new LinearLayout.LayoutParams(-1,-2));
   Object retained=getLastNonConfigurationInstance();
   if(retained instanceof Session)session=(Session)retained;
   else{
