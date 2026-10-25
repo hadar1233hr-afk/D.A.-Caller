@@ -309,14 +309,27 @@ jobs:
           fi
           cat > preview-notes.md <<'NOTES'
           # DA CALLER — UNVERIFIED DEBUG TEST BUILD
+          ## Implemented changes
+          - Google Phone-inspired normal, audio, More and DTMF screens in light/dark.
+          - Distinct One UI, iOS 26 glass, HyperOS and Nothing-inspired layouts.
+          - Icon-only hang-up, capability-aware controls and exact Bluetooth endpoint selection.
+          - Compact quick/contact widgets and four/five independently callable favorites.
+          - Stable contact return position and live permission/phone-integration settings.
+
+          ## Verification and installation limits
+          The linked source passed unit tests, lint, APK verification and the
+          Android 13 emulator suite at 480x854/240dpi with native three-button
+          navigation, RTL, font1.3 and 122 required PNG captures. The exact app
+          tree was visually reviewed before publication; see PR #3 and its report.
           This is **not** a stable or device-verified release.
           The Android build, unit tests and emulator UI checks passed, but
           actual cellular calls, answering, ringing, lock screen, SIM and
           Unihertz Jelly Star behavior have NOT been verified on hardware.
           It is signed with an ephemeral CI debug certificate and cannot
-          update a differently signed v0.9/v0.10 installation in place.
-          **DO NOT uninstall your existing installation unless all private
-          data and settings have been safely preserved.**
+          update any differently signed installation in place, including
+          earlier 0.11 betas. **Do not uninstall your existing installation:
+          uninstalling deletes its private archive and settings.** A matching
+          secure signing key is required for a guaranteed data-preserving update.
           Keep a working alternative dialer installed. Test on a spare device.
           No APK in this preview should be considered production ready.
           NOTES
