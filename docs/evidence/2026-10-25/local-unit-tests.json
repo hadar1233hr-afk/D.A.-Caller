@@ -1,0 +1,299 @@
+{
+  "kind": "JVM Robolectric Android framework simulation; not device/telephony proof",
+  "command": "gradle --init-script work/settings-test.init.gradle --no-daemon --max-workers=2 :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleDebugAndroidTest",
+  "totals": {
+    "tests": 125,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "suites": [
+    {
+      "class": "com.dacaller.app.ArchiveActivityTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "normalizedNumberSearchAndRestorationKeepCorrectArchiveSubset",
+        "englishArchiveUsesLtrAndRecycledRowDialogDialsItsBoundNumber"
+      ]
+    },
+    {
+      "class": "com.dacaller.app.CallArchiveTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "offStopsObservationWithoutErasingExistingPrivateArchive",
+        "disappearanceDuringSameMillisecondIsDetected",
+        "migrationMergesOnlyAliasesAndKeepsEarliestArchivedRetention",
+        "reappearingSystemRowLeavesArchiveAndCanDisappearAgain",
+        "migrationFromV1PreservesSnapshotAndMissingTimestamp",
+        "permissionDenialCannotMarkSystemRowsMissing",
+        "repeatedMissingSyncDoesNotRestartRetentionAndCurrentRowsNeverExpire",
+        "allPoliciesUseCalendarMonthsAndForeverIsUnbounded",
+        "migrationCanonicalizesHiddenCurrentRowsWithoutCreatingFalseArchive",
+        "monthEndExpiresAtForwardCalendarBoundary"
+      ]
+    },
+    {
+      "class": "com.dacaller.app.CallAudioRoutesTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "deniedBluetoothNamePermissionKeepsGenericRealRouteLabel",
+        "stateProviderFailureIsSafe",
+        "bluetoothIsHiddenWhenTelecomDoesNotSupportItEvenWithStaleDevice",
+        "arbitraryMasksCannotBeSubmittedAsARoute",
+        "supportedSelectionWaitsForTelecomAcknowledgementBeforeChangingUiState",
+        "availableBluetoothLabelUsesSupportedDeviceWhenSpeakerIsActive",
+        "bluetoothLabelUsesTheActualActiveDevice",
+        "unboundServiceNeverOffersOrSelectsPhantomRoutes",
+        "rejectedRouteCommandDoesNotCrashOrInventSelection"
+      ]
+    },
+    {
+      "class": "com.dacaller.app.CallHistoryTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "completeLogIsNotTruncatedAndHiddenNumberRemainsUndialable",
+        "revokedPermissionDuringReadCannotRepublishSensitiveHistory",
+        "nullOrPartialCursorCannotArchiveEveryCurrentCall",
+        "forcedRefreshWhileReadingIsNotLost",
+        "legacyPrivateNumberSentinelsCannotBecomeDialableNumbers",
+        "permissionRevocationClearsSensitiveCachedHistoryAndCallsCallback"
+      ]
+    },
+    {
+      "class": "com.dacaller.app.CallLauncherTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "deniedPermissionSelectsExternalDialerAndNeverRecurses",
+        "formattedInternationalAndServiceNumbersAreSupported",
+        "grantedCallUsesExactDisplayedDestination",
+        "hiddenAndMissingNumbersNeverLaunchCalls"
+      ]
+    },
+    {
+      "class": "com.dacaller.app.CallLayoutsTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "eachCallScreenHasADistinctControlOrder",
+        "adaptiveColumnsAreSafeOnNarrowPhone",
+        "orderRetainsOnlyEnabledActions",
+        "largeTypeLayoutsHaveReachableControls"
+      ]
+    },
+    {
+      "class": "com.dacaller.app.CallScreenActivityTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "iosModeKeepsAnAccessibleAnswerAndDeclineButton",
+        "sheetTransitionsAreExclusiveAndBackClosesSheet",
+        "tappingOrCancellingGestureDoesNotAnswer",
+        "staleAnswerButtonCannotAnswerReplacementCall",
+        "allEndButtonsAreIconOnlyAccessibleAndDisconnectTheRightCall",
+        "holdUsesCapabilityAndNewCallPreservesExistingDialerEntryPoint",
+        "emergencyCallControlsHaveCallEndAction",
+        "dialingAndConnectedScreensRenderAllFiveLayoutsWithoutCrashing",
+        "newInstallDefaultsToGoogleWithoutOverwritingSavedChoice",
+        "completedSwipeAnswersExactlyOnce",
+        "android26UsesCompatibleLockscreenFlags",
+        "replacingCallStopsToneAndStaleKeyCannotAffectSuccessor",
+        "closingKeypadAndPausingStopsDtmf",
+        "unsupportedHoldDoesNotIssueTelecomCommand",
+        "allFiveThemesRespectLightDarkAndAmoled",
+        "noBluetoothOptionWithoutAnActualSupportedRoute"
+      ]
+    },
+    {
+      "class": "com.dacaller.app.CallThemesContrastTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "labelsAndGesturePromptsRemainReadableInEveryPaletteAndMode"
+      ]
+    },
+    {
+      "class": "com.dacaller.app.ContactDataTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "contactsWithoutPhonesHaveDistinctFavoriteKeys",
+        "updateKeepsExactNumberAndStoredType",
+        "organizationAndPostalUseTheirActualProviderColumns",
+        "clearingExistingNumberDeletesOnlyItsDataRow",
+        "highResolutionPhotoIsSampledBeforeDecoding",
+        "customPhoneAndEmailTypesAndRowIdentitiesSurviveLoading",
+        "serviceNumberLookupAndSearchKeysDoNotAliasOrdinaryNumbers",
+        "serviceNumbersDoNotShareFavoriteKeysWithOrdinaryNumbers",
+        "emptyPhoneEmailAndEventDoNotInsertTypeOnlyRows"
+      ]
+    },
+    {
+      "class": "com.dacaller.app.ContactPhotosTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "invalidationAndPermissionRevocationPreventQueuedCachedPhotoDelivery",
+        "simultaneousRequestsForSameContactReadProviderOnce",
+        "deniedPermissionNeverQueriesProviderAndReturnsNull",
+        "cacheInvalidationDuringProviderReadRetriesBeforeDelivering"
+      ]
+    },
+    {
+      "class": "com.dacaller.app.ContactScrollRestoreTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "accessibilityScrollCancelsQueuedRestore",
+        "detailReturnAndTwoRefreshesBeforeRestoreKeepSameContactAndOffset",
+        "recreatedStateAndChangedProviderOrderRestoreIdRatherThanIndex",
+        "userTouchCancelsRestoreAcrossReleaseAndNextFrame",
+        "searchDebounceCannotCarryOldQueryAnchorIntoNewFilter",
+        "emptyLoadingPageDoesNotConsumeRestoredIdentity"
+      ]
+    },
+    {
+      "class": "com.dacaller.app.FastPagesTouchTest",
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "contactSearchSurvivesPageRebuild",
+        "contactDetailsAndFavoriteStarNeverPlaceCalls",
+        "horizontalSwipeCallsCorrectRowOnce",
+        "recentAvatarDetailsAndCallHaveIndependentActions",
+        "contactCallButtonDispatchesExactlyOneNumberWithoutMovingList",
+        "asynchronousRecentSnapshotReplacementCannotChangeBoundRowNumber",
+        "stalePostedRestoreCannotJumpAfterTouchStarts",
+        "delayedPhotoForOldContactNeverAppearsInRecycledRow",
+        "filteredAndRecycledRowsCallDisplayedPerson",
+        "recentCallButtonDispatchesExactlyOneNumberWithoutMovingList",
+        "configuredLeftSwipeCallsAndWrongDirectionDoesNot",
+        "disabledSwipeDoesNotCall",
+        "topMiddleAndEndContactsUseDisplayedNumbersAndKeepPosition",
+        "swipeBeginningOnDedicatedCallControlDoesNotCall",
+        "archiveIsOnlyAnOptionalFinalFooterOutsideCurrentRows",
+        "verticalFlickStartingAtDialControlNeverCalls",
+        "verticalGestureCannotTurnIntoAccidentalDiagonalCall"
+      ]
+    },
+    {
+      "class": "com.dacaller.app.IncomingGestureTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "allFourModesHaveExplicitPhysicalDirections",
+        "tapsShortDragsAndDiagonalScrollCannotAnswer",
+        "unknownStoredModeSafelyFallsBackToIos"
+      ]
+    },
+    {
+      "class": "com.dacaller.app.MainActivityRegressionTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "repeatedTapWhilePermissionPendingKeepsFirstDestination",
+        "tabAndPendingPermissionSurviveActivityRecreation",
+        "providerRefreshDuringFingerDownDefersRebuildAndStillCallsCorrectNumber",
+        "rerenderCannotConsumePendingPermissionDestination",
+        "phoneRoleMustBeGrantedBeforeCallAndPreservesNumber",
+        "secondDialIntentUpdatesAlreadyVisibleKeypad",
+        "englishNavigationIsLeftToRightAndSettingsUsesActualVersion",
+        "rapidRepeatedGrantedTapsPlaceOnlyOneCall"
+      ]
+    },
+    {
+      "class": "com.dacaller.app.NativeContactsTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "nativeEditTargetsExactContactInsteadOfCreatingDuplicate",
+        "unavailableNativeEditorShowsEnglishFailureWithoutCrashing",
+        "nativeCreatePrefillsExactNameAndPhone"
+      ]
+    },
+    {
+      "class": "com.dacaller.app.PhoneSessionServiceTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "delayedNotificationAnswerCannotAnswerAnotherCall",
+        "removingSecondCallRestoresFirstAndKeepsNotification",
+        "proximityOnlyProtectsEarpieceCalls",
+        "providerFailureCannotCrashInCallBindingOrForceSystemFallback",
+        "speakerOffRespectsWiredHeadset",
+        "proximityLockReleasesOnSpeakerCallEndAndServiceDestroy",
+        "visibleIncomingScreenUsesQuietNotificationWithoutFullscreen",
+        "outgoingNotificationIsAlwaysQuiet"
+      ]
+    },
+    {
+      "class": "com.dacaller.app.SettingsScreenTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "narrowRtlHeaderAndPermissionCardKeepTouchTargets",
+        "returningFromPermissionUiRefreshesStatusWithoutReplacingOrScrollingCard",
+        "callsHeaderHasNoTelephoneAndLastSectionRepeatedlyOpensAndCloses",
+        "grantedPermissionAndPermanentlyDeniedPermissionHaveUsefulSettingsAction",
+        "defaultRoleAndNotificationPermissionUseActualAndroidState"
+      ]
+    },
+    {
+      "class": "com.dacaller.app.WidgetSupportTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        "quickAndContactCardPreserveConfiguredIdentityAndHaveDifferentLayouts",
+        "pendingIntentIdentityIncludesWidgetSlotContactAndAction",
+        "fewerFavoritesCannotLeaveAStaleCallableCell",
+        "unconfiguredWidgetReopensItsOwnConfiguration",
+        "noPermissionOrNoFavoritesProvidesAnExplicitSafeOpenAction",
+        "permissionDenialNeverDispatchesACallFromWidgetTap",
+        "resizeExposesFourFavoritesAtTwoCellsAndFiveAtFourCells",
+        "deletionOnlyRemovesTheDeletedWidgetsConfiguration",
+        "initialsSupportHebrewAndSurrogatePairsWithoutContactsPermission",
+        "eachFavoriteSlotCarriesItsExactNumberAndContactId"
+      ]
+    }
+  ]
+}

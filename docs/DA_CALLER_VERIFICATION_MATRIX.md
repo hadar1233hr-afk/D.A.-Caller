@@ -1,5 +1,7 @@
 # DA CALLER — requirement verification matrix
 
+> Historical audit below (2026-10-24). The newly attached 2026-10-25 continuation is preserved verbatim in [DA_CALLER_VISUAL_SPEC_HE.md](DA_CALLER_VISUAL_SPEC_HE.md). Current work and its separate acceptance evidence are tracked in [DA_CALLER_VISUAL_VERIFICATION_2026-10-25.md](DA_CALLER_VISUAL_VERIFICATION_2026-10-25.md) and [the source-paragraph traceability file](evidence/2026-10-25/spec-traceability.json). Historical PASS statements below do not certify the new implementation.
+
 Work order dated 2026-10-23; implementation evidence recorded 2026-10-24. Scope: `:app`, package `com.dacaller.app`. Related issue: [#1](https://github.com/hadar1233hr-afk/D.A.-Caller/issues/1); implementation branch/PR: [#2](https://github.com/hadar1233hr-afk/D.A.-Caller/pull/2), `codex/da-caller-hardening-20261023`. Baseline: `a88b3d7dab043be365391f1a2a08f07719835aeb`; PR instructions commit: `ce815efd2f9a20a43eee9a6eb03c8cbeda9ae178`.
 
 This matrix expands every reconstructed REQ paragraph, engineering-process instruction and suggested acceptance scenario in `CODEX_DA_CALLER_PRODUCTION_AUDIT_2026-10-23.md`. The earlier uploaded original specification is **not available in the visible conversation, repository or attached workspace**. Its literal line-by-line comparison is BLOCKED; reconstructed coverage must not be called 100% original-spec completion.
