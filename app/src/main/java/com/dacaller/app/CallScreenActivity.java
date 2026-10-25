@@ -84,7 +84,7 @@ public final class CallScreenActivity extends Activity {
   LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(width<0?width:dp(width),height<0?height:dp(height));
   p.topMargin=dp(top);parent.addView(child,p);
  }
- private String currentThemeKey(){return prefs.getString("call_theme","pixel")+"/"+prefs.getBoolean("dark",false)+"/"+prefs.getBoolean("amoled",false)+"/"+prefs.getString("language","he");}
+ private String currentThemeKey(){return prefs.getString("call_theme","pixel")+"/"+prefs.getBoolean("dark",false)+"/"+prefs.getBoolean("amoled",false)+"/"+prefs.getString("language","he")+"/"+AvatarShapes.selected(this);}
  private String initialPanel(){
   String value=preview()?getIntent().getStringExtra("preview_panel"):null;
   return "audio".equals(value)||"more".equals(value)||"keypad".equals(value)?value:"normal";
@@ -117,7 +117,7 @@ public final class CallScreenActivity extends Activity {
   identity=text("",15,theme.muted,false);identity.setTag("call-identity");identity.setSingleLine(true);identity.setEllipsize(android.text.TextUtils.TruncateAt.END);
   phase=text("",14,theme.muted,false);phase.setTag("call-phase");phase.setSingleLine(true);timer=text("",theme.style==4?38:theme.style==3?34:17,theme.muted,false);timer.setTag("call-timer");
   badge=text("VoLTE",10,theme.accent,true);badge.setVisibility(View.GONE);
-  portraitFrame=new FrameLayout(this);portraitFrame.setTag("call-portrait");portraitFrame.setBackground(rounded(theme.surface2,theme.style==4?12:999));portraitFrame.setClipToOutline(true);
+  portraitFrame=AvatarShapes.frame(this);portraitFrame.setTag("call-portrait");portraitFrame.setBackgroundColor(theme.surface2);
   portrait=new ImageView(this);portrait.setScaleType(ImageView.ScaleType.CENTER_CROP);portrait.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
   portraitFrame.addView(portrait,new FrameLayout.LayoutParams(-1,-1));initials=text("DA",theme.style==4?18:28,theme.accent,true);portraitFrame.addView(initials,new FrameLayout.LayoutParams(-1,-1));
   if(theme.style==1){
@@ -134,6 +134,7 @@ public final class CallScreenActivity extends Activity {
    LinearLayout.LayoutParams avatar=new LinearLayout.LayoutParams(dp(theme.style==4?48:62),dp(theme.style==4?48:62));avatar.leftMargin=dp(12);profile.addView(portraitFrame,avatar);
    timer.setGravity(Gravity.START);phase.setGravity(Gravity.START);add(hero,timer,-1,-2,theme.style==4?28:22);add(hero,phase,-1,-2,7);
   }
+  AvatarShapes.apply(portraitFrame);
   add(hero,badge,-2,-2,4);
   compactHero=col();compactHero.setPadding(dp(20),0,dp(20),0);compactHero.setVisibility(View.GONE);
   boolean google=theme.style==1;

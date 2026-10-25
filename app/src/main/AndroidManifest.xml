@@ -13,12 +13,27 @@
  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
  <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
  <queries><intent><action android:name="android.intent.action.DIAL"/><data android:scheme="tel"/></intent></queries>
- <application android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:allowBackup="false" android:label="DA CALLER" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round" android:theme="@style/AppTheme" android:supportsRtl="true">
+ <application android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:allowBackup="false" android:label="DA CALLER" android:icon="@mipmap/ic_launcher_crest" android:roundIcon="@mipmap/ic_launcher_crest" android:theme="@style/AppTheme" android:supportsRtl="true">
   <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:windowSoftInputMode="adjustResize">
-   <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
    <intent-filter><action android:name="android.intent.action.DIAL"/><category android:name="android.intent.category.DEFAULT"/></intent-filter>
    <intent-filter><action android:name="android.intent.action.DIAL"/><category android:name="android.intent.category.DEFAULT"/><data android:scheme="tel"/></intent-filter>
   </activity>
+  <activity-alias android:name=".LauncherCrest" android:targetActivity=".MainActivity" android:enabled="true" android:exported="true" android:icon="@mipmap/ic_launcher_crest" android:label="DA CALLER">
+   <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+  </activity-alias>
+  <activity-alias android:name=".LauncherOrbit" android:targetActivity=".MainActivity" android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_orbit" android:label="DA CALLER">
+   <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+  </activity-alias>
+  <activity-alias android:name=".LauncherMonogram" android:targetActivity=".MainActivity" android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_monogram" android:label="DA CALLER">
+   <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+  </activity-alias>
+  <activity-alias android:name=".LauncherPrism" android:targetActivity=".MainActivity" android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_prism" android:label="DA CALLER">
+   <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+  </activity-alias>
+  <activity-alias android:name=".LauncherWave" android:targetActivity=".MainActivity" android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_wave" android:label="DA CALLER">
+   <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+  </activity-alias>
+  <activity android:name=".SettingsBackupActivity" android:exported="false"/>
   <activity android:name=".CallScreenActivity" android:exported="false" android:launchMode="singleTop" android:excludeFromRecents="true"/>
   <service android:name=".PhoneSessionService" android:exported="true" android:permission="android.permission.BIND_INCALL_SERVICE">
     <meta-data android:name="android.telecom.IN_CALL_SERVICE_UI" android:value="true"/>

@@ -136,13 +136,13 @@ public final class ContactDetailActivity extends Activity {
   content.removeAllViews();
   LinearLayout hero=col();hero.setGravity(Gravity.CENTER);hero.setPadding(d(8),d(13),d(8),d(20));
   content.addView(hero,new LinearLayout.LayoutParams(-1,-2));
-  FrameLayout avatar=new FrameLayout(this);
+  FrameLayout avatar=AvatarShapes.frame(this);
   avatar.setBackground(shape(dark()?0xFF343029:0xFFF1E8D8,70));
   hero.addView(avatar,new LinearLayout.LayoutParams(d(116),d(116)));
   initials=label(name.isEmpty()?"?":name.substring(0,name.offsetByCodePoints(0,1)).toUpperCase(I18n.locale(this)),45,true,accent());
   initials.setGravity(Gravity.CENTER);avatar.addView(initials,new FrameLayout.LayoutParams(-1,-1));
   photo=new ImageView(this);final ImageView requestedPhoto=photo;photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
-  photo.setBackground(shape(surface(),60));photo.setClipToOutline(true);
+  AvatarShapes.apply(avatar);
   photo.setVisibility(View.GONE);avatar.addView(photo,new FrameLayout.LayoutParams(-1,-1));
   ContactPhotos.load(this,contactId,image->{
    if(isFinishing()||isDestroyed()||photo!=requestedPhoto)return;

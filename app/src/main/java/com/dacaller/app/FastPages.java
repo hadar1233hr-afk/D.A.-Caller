@@ -24,7 +24,8 @@ import android.view.ViewConfiguration;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.GridView;
+import android.widget.HorizontalScrollView;
+import android.util.SparseArray;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -55,6 +56,8 @@ final class FastPages {
  private String contactQuery="";
  private boolean contactQueryChanged;
  private Runnable filterTask;
+ private FavoriteStrip liveFavoriteStrip;
+ private int favoriteScroll;
  FastPages(MainActivity activity){
   host=activity;
   prefs=activity.getSharedPreferences("da_caller",Context.MODE_PRIVATE);
@@ -105,7 +108,8 @@ final class FastPages {
   contactQuery=query==null?"":query;contactPos=0;contactOffset=0;contactId=-1;contactQueryChanged=true;
  }
  boolean isInteracting(){
-  return (liveRecents!=null&&liveRecents.touching)||(liveContacts!=null&&liveContacts.touching);
+  return (liveRecents!=null&&liveRecents.touching)||(liveContacts!=null&&liveContacts.touching)||
+    (liveFavoriteStrip!=null&&liveFavoriteStrip.touching);
  }
  void remember(String tab){
   if(tab.equals("contacts")&&contactQueryChanged)return;
@@ -127,6 +131,7 @@ final class FastPages {
   state.putInt("contact_position",contactPos);state.putInt("contact_offset",contactOffset);
   state.putLong("recent_id",recentId);state.putLong("contact_id",contactId);
   state.putString("contact_query",contactQuery);state.putInt("stats_period",period);
+  state.putInt("favorite_scroll",favoriteScroll);
  }
  void restoreState(Bundle state){
   if(state==null)return;
@@ -134,6 +139,7 @@ final class FastPages {
   contactPos=state.getInt("contact_position");contactOffset=state.getInt("contact_offset");
   recentId=state.getLong("recent_id",-1);contactId=state.getLong("contact_id",-1);
   contactQuery=state.getString("contact_query","");period=Math.max(0,Math.min(3,state.getInt("stats_period")));
+  favoriteScroll=Math.max(0,state.getInt("favorite_scroll"));
  }
  void restore(String tab){
   SwipeListView view=tab.equals("recents")?liveRecents:
@@ -274,51 +280,8 @@ final class FastPages {
   if(host.checkSelfPermission(Manifest.permission.READ_CALL_LOG)!=PackageManager.PERMISSION_GRANTED){
    return permission("יומן השיחות דורש הרשאה","אפשר גישה לשיחות",()->host.requestLog());
   }
-  if(prefs.getBoolean("show_stats",true)){
-   CallHistory.Summary statsData=CallHistory.summary;
-   LinearLayout summary=vertical();
-   summary.setPadding(dp(12),dp(9),dp(12),dp(10));
-   summary.setBackground(edge(panel(),18));
-   LinearLayout.LayoutParams block=new LinearLayout.LayoutParams(-1,-2);
-   block.bottomMargin=dp(8);page.addView(summary,block);
-   LinearLayout header=horizontal();
-   summary.addView(header,lp(-1,dp(33)));
-   TextView heading=text(tr("סיכום פעילות"),14,ink(),true);
-   header.addView(heading,new LinearLayout.LayoutParams(0,-1,1));
-   String[] periods={tr("היום"),tr("השבוע"),tr("החודש"),tr("השנה")};
-   TextView selector=text(periods[period]+"  ▾",12,tint(),true);
-   selector.setPadding(dp(11),0,dp(10),0);
-   selector.setGravity(Gravity.CENTER);
-   selector.setBackground(bg(soft(),12));
-   header.addView(selector,lp(-2,31));
-   selector.setContentDescription(tr("תקופת הסיכום")+": "+periods[period]);
-   touch(selector);
-   selector.setOnClickListener(v->{pulse(selector);period=(period+1)%4;host.refreshPage();});
-   LinearLayout totals=horizontal();
-   totals.setGravity(Gravity.CENTER_VERTICAL);
-   LinearLayout.LayoutParams totalsParams=lp(-1,49);
-   totalsParams.topMargin=dp(4);summary.addView(totals,totalsParams);
-   LinearLayout countBlock=vertical();
-   totals.addView(countBlock,new LinearLayout.LayoutParams(0,-2,1));
-   countBlock.addView(text(statsData.calls[period]+" "+tr("שיחות"),20,ink(),true));
-   countBlock.addView(text(tr("סך שיחות לתקופה"),10,subtle(),false));
-   LinearLayout timeBlock=vertical();
-   totals.addView(timeBlock,new LinearLayout.LayoutParams(0,-2,1));
-   TextView duration=text(durationText(statsData.seconds[period]),18,tint(),true);
-   duration.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);timeBlock.addView(duration);
-   TextView timeLabel=text(tr("זמן דיבור כולל"),10,subtle(),false);
-   timeLabel.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);timeBlock.addView(timeLabel);
-   LinearLayout breakdown=horizontal();
-   LinearLayout.LayoutParams bp=lp(-1,53);bp.topMargin=dp(7);summary.addView(breakdown,bp);
-   summaryMetric(breakdown,tr("יוצאות"),"↗",statsData.outgoing[period],0xFF2375B4);
-   summaryMetric(breakdown,tr("נכנסות"),"↙",statsData.incoming[period],0xFF25815F);
-   summaryMetric(breakdown,tr("שלא נענו"),"×",statsData.missed[period],0xFFBD4748);
-   int answered=statsData.outgoing[period]+statsData.incoming[period];
-   TextView average=text(tr("משך שיחה ממוצע")+": "+
-     durationText(answered>0?statsData.seconds[period]/answered:0),11,subtle(),false);
-   LinearLayout.LayoutParams ap=lp(-1,24);ap.topMargin=dp(3);
-   summary.addView(average,ap);
-  }
+  addFavorites(page,host.contactsSnapshot());
+  if(prefs.getBoolean("show_stats",true))addSummary(page);
   LinearLayout top=horizontal();page.addView(top,lp(-1,41));
   TextView title=text(tr("כל השיחות"),15,ink(),true);
   top.addView(title,new LinearLayout.LayoutParams(0,-1,1));
@@ -390,29 +353,8 @@ final class FastPages {
   LinearLayout page=vertical();page.setBackgroundColor(background());
   page.setFocusableInTouchMode(true);page.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
   page.setPadding(dp(12),dp(7),dp(12),0);
-  if(favorites){
-   LinearLayout header=horizontal();page.addView(header,lp(-1,41));
-   header.addView(text(tr("חיוג מיידי למועדפים"),14,ink(),true),new LinearLayout.LayoutParams(0,-1,1));
-   TextView edit=text(tr("ניהול ★"),12,tint(),true);
-   edit.setGravity(Gravity.CENTER);header.addView(edit,lp(83,38));
-   touch(edit);edit.setOnClickListener(v->{pulse(edit);host.openContactsTab();});
-   GridView grid=new GridView(host);
-   grid.setNumColumns(host.getResources().getDisplayMetrics().widthPixels/dp(170)>=2?2:1);
-   grid.setColumnWidth(dp(152));grid.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
-   grid.setHorizontalSpacing(dp(10));grid.setVerticalSpacing(dp(10));
-   grid.setPadding(0,dp(7),0,dp(18));grid.setClipToPadding(false);
-   grid.setSelector(android.R.color.transparent);
-   Set<String> starred=new HashSet<>(prefs.getStringSet("favorites",java.util.Collections.emptySet()));
-   ArrayList<Contacts.Person> chosen=new ArrayList<>();
-   for(Contacts.Person c:contacts)if(!c.phone.isEmpty()&&starred.contains(c.key))chosen.add(c);
-   grid.setAdapter(new FavoriteAdapter(chosen));
-   page.addView(grid,new LinearLayout.LayoutParams(-1,0,1));
-   if(chosen.isEmpty()){
-    TextView empty=text("עדיין אין מועדפים. סמן ★ באנשי קשר.",14,subtle(),false);
-    empty.setGravity(Gravity.CENTER);page.addView(empty,lp(-1,100));grid.setEmptyView(empty);
-   }
-   return page;
-  }
+  if(favorites)prefs.edit().putBoolean("favorites_expanded",true).apply(); // Legacy deep link.
+  addFavorites(page,contacts);
   LinearLayout head=horizontal();page.addView(head,lp(-1,48));
   EditText search=new EditText(host);
   search.setSingleLine(true);search.setHint(tr("חיפוש שם או מספר"));
@@ -549,15 +491,15 @@ final class FastPages {
    root.setPadding(dp(6),dp(6),dp(6),dp(6));
    root.setBackground(bg(panel(),16));
    root.setMinimumHeight(dp(76));
-   avatar=new FrameLayout(host);
-   avatar.setBackground(bg(soft(),16));
+   avatar=AvatarShapes.frame(host);
+   avatar.setBackground(bg(soft(),16));AvatarShapes.apply(avatar);
    LinearLayout.LayoutParams avatarParams=lp(52,52);
    avatarParams.setMargins(dp(2),0,dp(5),0);
    root.addView(avatar,avatarParams);
    initials=text("?",20,tint(),true);initials.setGravity(Gravity.CENTER);
    avatar.addView(initials,new FrameLayout.LayoutParams(-1,-1));
    photo=new ImageView(host);photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
-   photo.setClipToOutline(true);photo.setVisibility(View.GONE);
+   photo.setVisibility(View.GONE);
    avatar.addView(photo,new FrameLayout.LayoutParams(-1,-1));
    View lineA=new View(host);lineA.setBackgroundColor(dark()?0xFF3A3A3A:0xFFE6E6E6);
    root.addView(lineA,lp(1,34));
@@ -646,12 +588,12 @@ final class FastPages {
   String bound="";
   ContactRow(){
    root=horizontal();root.setMinimumHeight(dp(71));root.setPadding(dp(5),dp(4),dp(5),dp(4));
-   avatar=new FrameLayout(host);avatar.setBackground(bg(soft(),17));
+   avatar=AvatarShapes.frame(host);avatar.setBackground(bg(soft(),17));AvatarShapes.apply(avatar);
    root.addView(avatar,lp(49,49));
    letter=text("",19,tint(),true);letter.setGravity(Gravity.CENTER);
    avatar.addView(letter,new FrameLayout.LayoutParams(-1,-1));
    photo=new ImageView(host);photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
-   photo.setClipToOutline(true);photo.setVisibility(View.GONE);
+   photo.setVisibility(View.GONE);
    avatar.addView(photo,new FrameLayout.LayoutParams(-1,-1));
    LinearLayout description=vertical();description.setPadding(dp(11),0,dp(5),0);
    root.addView(description,new LinearLayout.LayoutParams(0,-2,1));
@@ -667,52 +609,122 @@ final class FastPages {
    touch(star);touch(quick);touch(root);touch(avatar);root.setTag(this);
   }
  }
- private final class FavoriteAdapter extends BaseAdapter {
-  final ArrayList<Contacts.Person> favorite;
-  FavoriteAdapter(ArrayList<Contacts.Person> favorites){favorite=favorites;}
-  public int getCount(){return favorite.size();}
-  public Object getItem(int position){return favorite.get(position);}
-  public long getItemId(int position){return favorite.get(position).id;}
-  public View getView(int position,View convert,ViewGroup parent){
-   FavoriteTile tile=convert!=null&&convert.getTag() instanceof FavoriteTile?(FavoriteTile)convert.getTag():new FavoriteTile();
-   Contacts.Person who=favorite.get(position);
-   tile.avatar.setText(who.name.isEmpty()?"?":who.name.substring(0,1));
-   String expected=String.valueOf(who.id);
-   tile.bound=expected;tile.photo.setVisibility(View.GONE);
-   ContactPhotos.load(host,who.id,image->{
-    if(expected.equals(tile.bound)&&image!=null){
-     tile.photo.setImageBitmap(image);tile.photo.setVisibility(View.VISIBLE);
-    }
+ private void addSummary(LinearLayout page){
+  CallHistory.Summary data=CallHistory.summary;
+  boolean expanded=prefs.getBoolean("stats_expanded",false);
+  String[] periods={tr("היום"),tr("השבוע"),tr("החודש"),tr("השנה")};
+  LinearLayout summary=vertical();summary.setTag("stats_summary");
+  summary.setPadding(dp(10),0,dp(3),expanded?dp(5):0);summary.setBackground(edge(panel(),14));
+  LinearLayout.LayoutParams block=lp(-1,-2);block.bottomMargin=dp(6);page.addView(summary,block);
+  LinearLayout header=horizontal();header.setMinimumHeight(dp(48));summary.addView(header,lp(-1,-2));
+  String compact=periods[period]+" · "+data.calls[period]+" "+tr("שיחות")+" · "+durationText(data.seconds[period]);
+  TextView selector=text(compact,12,ink(),true);selector.setTag("stats_period");
+  selector.setSingleLine(!expanded);selector.setMaxLines(expanded?2:1);selector.setEllipsize(android.text.TextUtils.TruncateAt.END);
+  selector.setMinimumHeight(dp(48));selector.setContentDescription(tr("סיכום פעילות")+". "+compact+". "+tr("תקופת הסיכום"));
+  header.addView(selector,new LinearLayout.LayoutParams(0,-2,1));touch(selector);
+  selector.setOnClickListener(v->{pulse(selector);period=(period+1)%4;host.refreshPage();});
+  TextView toggle=text(expanded?"⌃":"⌄",24,tint(),true);toggle.setTag("stats_toggle");toggle.setGravity(Gravity.CENTER);
+  toggle.setContentDescription(I18n.isEnglish(host)?(expanded?"Collapse call summary":"Expand call summary"):(expanded?"הקטנת סיכום שיחות":"הרחבת סיכום שיחות"));
+  header.addView(toggle,lp(48,48));touch(toggle);
+  toggle.setOnClickListener(v->{pulse(toggle);prefs.edit().putBoolean("stats_expanded",!expanded).apply();host.refreshPage();});
+  if(!expanded)return;
+  LinearLayout breakdown=horizontal();summary.addView(breakdown,lp(-1,42));
+  summaryMetric(breakdown,tr("יוצאות"),"↗",data.outgoing[period],0xFF2375B4);
+  summaryMetric(breakdown,tr("נכנסות"),"↙",data.incoming[period],0xFF25815F);
+  summaryMetric(breakdown,tr("שלא נענו"),"×",data.missed[period],0xFFBD4748);
+  int answered=data.outgoing[period]+data.incoming[period];
+  TextView average=text(tr("משך שיחה ממוצע")+": "+durationText(answered>0?data.seconds[period]/answered:0),11,subtle(),false);
+  average.setPadding(dp(4),dp(6),dp(4),dp(3));summary.addView(average,lp(-1,-2));
+ }
+ private void addFavorites(LinearLayout page,List<Contacts.Person> contacts){
+  boolean expanded=prefs.getBoolean("favorites_expanded",true);
+  Set<String> starred=new HashSet<>(prefs.getStringSet("favorites",java.util.Collections.emptySet()));
+  ArrayList<Contacts.Person> chosen=new ArrayList<>();Set<String> added=new HashSet<>();
+  for(Contacts.Person person:contacts)if(!person.phone.isEmpty()&&starred.contains(person.key)&&added.add(person.key))chosen.add(person);
+  LinearLayout band=horizontal();band.setTag("favorites_strip");band.setBackground(edge(panel(),14));
+  LinearLayout.LayoutParams block=lp(-1,expanded&&!chosen.isEmpty()?82:48);block.bottomMargin=dp(6);page.addView(band,block);
+  TextView toggle=text(tr("מועדפים")+" ★\n"+chosen.size()+"  "+(expanded?"⌃":"⌄"),11,tint(),true);
+  toggle.setTag("favorites_toggle");toggle.setGravity(Gravity.CENTER);toggle.setPadding(dp(3),0,dp(3),0);
+  toggle.setContentDescription((I18n.isEnglish(host)?(expanded?"Collapse favorites":"Expand favorites"):(expanded?"הקטנת מועדפים":"הרחבת מועדפים"))+" · "+chosen.size());
+  band.addView(toggle,lp(expanded&&!chosen.isEmpty()?68:96,-1));touch(toggle);
+  toggle.setOnClickListener(v->{pulse(toggle);prefs.edit().putBoolean("favorites_expanded",!expanded).apply();host.refreshPage();});
+  liveFavoriteStrip=null;
+  if(expanded&&!chosen.isEmpty()){
+   FavoriteStrip strip=new FavoriteStrip(chosen);strip.setTag("favorites_scroll");liveFavoriteStrip=strip;
+   band.addView(strip,new LinearLayout.LayoutParams(0,-1,1));
+  }else{
+   TextView hint=text(chosen.isEmpty()?(I18n.isEnglish(host)?"Star contacts to add favorites":"סמן ★ באנשי קשר"):
+     (I18n.isEnglish(host)?"Tap to expand":"הקש להרחבה"),11,subtle(),false);
+   hint.setSingleLine(true);hint.setEllipsize(android.text.TextUtils.TruncateAt.END);hint.setPadding(dp(8),0,dp(8),0);
+   band.addView(hint,new LinearLayout.LayoutParams(0,-1,1));
+   if(!chosen.isEmpty()){
+    touch(hint);hint.setOnClickListener(v->{pulse(hint);prefs.edit().putBoolean("favorites_expanded",true).apply();host.refreshPage();});
+   }
+  }
+ }
+ /** Only visible favorite tiles exist; even thousands of favorites keep a small view tree. */
+ private final class FavoriteStrip extends HorizontalScrollView {
+  final ArrayList<Contacts.Person> people;
+  final FrameLayout track;
+  final SparseArray<FavoriteTile> tiles=new SparseArray<>();
+  final int cell=dp(76);
+  final boolean rtl=!I18n.isEnglish(host);
+  boolean touching,initialized;
+  FavoriteStrip(ArrayList<Contacts.Person> chosen){
+   super(host);people=chosen;setLayoutDirection(View.LAYOUT_DIRECTION_LTR);setHorizontalScrollBarEnabled(false);
+   setOverScrollMode(View.OVER_SCROLL_IF_CONTENT_SCROLLS);setContentDescription(I18n.isEnglish(host)?"Favorites. Swipe horizontally for all contacts":"מועדפים. החלק ימינה ושמאלה לכל אנשי הקשר");
+   track=new FrameLayout(host);track.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+   // HorizontalScrollView measures its child with UNSPECIFIED width; reserve the
+   // whole virtual track before the first visible tile is created.
+   track.setMinimumWidth(cell*chosen.size());
+   addView(track,new HorizontalScrollView.LayoutParams(cell*chosen.size(),-1));
+  }
+  @Override protected void onSizeChanged(int w,int h,int oldw,int oldh){
+   super.onSizeChanged(w,h,oldw,oldh);
+   post(()->{
+    if(liveFavoriteStrip!=this||getWidth()==0)return;
+    int max=Math.max(0,cell*people.size()-getWidth());
+    scrollTo(rtl?Math.max(0,max-favoriteScroll):Math.min(max,favoriteScroll),0);
+    initialized=true;populate();
    });
-   tile.name.setText(who.name);
-   tile.number.setText(who.phone);
-   tile.root.setOnClickListener(v->{pulse(tile.root);host.dialFromList(who.phone);});
-   tile.root.setOnLongClickListener(v->{pulse(tile.root);host.editContact(who.id,null);return true;});
-   return tile.root;
+  }
+  @Override protected void onScrollChanged(int x,int y,int oldx,int oldy){
+   super.onScrollChanged(x,y,oldx,oldy);
+   if(initialized&&liveFavoriteStrip==this){favoriteScroll=rtl?Math.max(0,cell*people.size()-getWidth()-x):x;populate();}
+  }
+  @Override public boolean dispatchTouchEvent(MotionEvent event){
+   if(event.getActionMasked()==MotionEvent.ACTION_DOWN)touching=true;
+   boolean handled=super.dispatchTouchEvent(event);
+   if(event.getActionMasked()==MotionEvent.ACTION_UP||event.getActionMasked()==MotionEvent.ACTION_CANCEL)touching=false;
+   return handled;
+  }
+  private void populate(){
+   if(getWidth()==0)return;
+   int first=Math.max(0,getScrollX()/cell-1),last=Math.min(people.size()-1,(getScrollX()+getWidth())/cell+1);
+   for(int at=tiles.size()-1;at>=0;at--){int index=tiles.keyAt(at);if(index<first||index>last){track.removeView(tiles.valueAt(at).root);tiles.removeAt(at);}}
+   for(int index=first;index<=last;index++)if(tiles.get(index)==null){
+    Contacts.Person person=people.get(rtl?people.size()-1-index:index);FavoriteTile tile=new FavoriteTile(person);tiles.put(index,tile);
+    FrameLayout.LayoutParams params=new FrameLayout.LayoutParams(cell,ViewGroup.LayoutParams.MATCH_PARENT);params.leftMargin=index*cell;
+    track.addView(tile.root,params);
+   }
   }
  }
  private final class FavoriteTile {
-  final LinearLayout root; final TextView avatar,name,number;
-  final ImageView photo;
-  String bound="";
-  FavoriteTile(){
-   root=vertical();root.setGravity(Gravity.CENTER);
-   root.setBackground(edge(panel(),22));root.setPadding(dp(8),dp(10),dp(8),dp(8));
-   root.setMinimumHeight(dp(155));
-   FrameLayout picture=new FrameLayout(host);
-   picture.setBackground(bg(soft(),40));root.addView(picture,lp(62,62));
-   avatar=text("",27,tint(),true);avatar.setGravity(Gravity.CENTER);
-   picture.addView(avatar,new FrameLayout.LayoutParams(-1,-1));
-   photo=new ImageView(host);photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
-   photo.setClipToOutline(true);photo.setVisibility(View.GONE);
+  final LinearLayout root;
+  FavoriteTile(Contacts.Person person){
+   root=vertical();root.setTag("favorite_tile:"+person.id);root.setGravity(Gravity.CENTER);root.setPadding(dp(3),dp(4),dp(3),dp(3));
+   FrameLayout picture=AvatarShapes.frame(host);picture.setBackground(bg(soft(),24));AvatarShapes.apply(picture);
+   root.addView(picture,lp(40,40));
+   TextView initials=text(person.name.isEmpty()?"?":person.name.substring(0,1),19,tint(),true);initials.setGravity(Gravity.CENTER);
+   picture.addView(initials,new FrameLayout.LayoutParams(-1,-1));
+   ImageView photo=new ImageView(host);photo.setScaleType(ImageView.ScaleType.CENTER_CROP);photo.setVisibility(View.GONE);
    picture.addView(photo,new FrameLayout.LayoutParams(-1,-1));
-   name=text("",14,ink(),true);name.setGravity(Gravity.CENTER);name.setSingleLine(true);
-   name.setEllipsize(android.text.TextUtils.TruncateAt.END);
-   root.addView(name,lp(-1,29));
-   number=text("",12,subtle(),false);number.setGravity(Gravity.CENTER);
-   number.setSingleLine(true);root.addView(number,lp(-1,24));
-   ImageView call=icon(R.drawable.ic_phone_line,tint());
-   root.addView(call,lp(35,35));touch(root);root.setTag(this);
+   ContactPhotos.load(host,person.id,image->{if(image!=null){photo.setImageBitmap(image);photo.setVisibility(View.VISIBLE);}});
+   TextView name=text(person.name,11,ink(),true);name.setGravity(Gravity.CENTER);name.setSingleLine(true);name.setEllipsize(android.text.TextUtils.TruncateAt.END);
+   root.addView(name,lp(-1,27));
+   root.setContentDescription(tr("התקשר")+" "+person.name+" "+person.phone);touch(root);
+   root.setOnClickListener(v->{pulse(root);host.dialFromList(person.phone);});
+   root.setOnLongClickListener(v->{pulse(root);host.openContactDetail(person.id);return true;});
   }
  }
 }

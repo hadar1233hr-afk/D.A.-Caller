@@ -248,6 +248,18 @@ final class I18n {
   put("סגירת מקשי החיוג","Close dialpad");
   put("פתח הגדרות > אפליקציות ברירת מחדל > טלפון","Open Settings > Default apps > Phone");
  }
+ static {
+  put("סמל האפליקציה","App icon");
+  put("חמישה סמלים בירוק כהה וזהב","Five icons in dark green and gold");
+  put("צורת תמונות אנשי קשר","Contact photo shape");
+  put("הצורה תחול בכל המסכים ובווידג׳טים","Used across all screens and widgets");
+  put("גיבוי הגדרות לקובץ","Back up settings to a file");
+  put("שמירת התאמות אישיות ומועדפים במיקום לבחירתך","Save your preferences and favorites to a location you choose");
+  put("שחזור הגדרות מקובץ","Restore settings from a file");
+  put("תצוגה מקדימה ואישור לפני החלת הגדרות","Preview and confirm before applying settings");
+  put("לא ניתן לשמור את הבחירה. נסה שוב.","Could not save your choice. Please try again.");
+  put("בחר","Choose");
+ }
  static int direction(Context ctx){return isEnglish(ctx)?android.view.View.LAYOUT_DIRECTION_LTR:android.view.View.LAYOUT_DIRECTION_RTL;}
  static java.util.Locale locale(Context ctx){return isEnglish(ctx)?java.util.Locale.ENGLISH:java.util.Locale.forLanguageTag("he-IL");}
  private static void put(String he,String en){english.put(he,en);}
