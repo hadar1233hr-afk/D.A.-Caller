@@ -5,50 +5,45 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 
-/** Five distinct call-screen layouts, each with its own visual kit. */
+/** Independent visual kits. Stable IDs preserve every existing user's choice. */
 final class CallThemes {
  static final String[] IDS={"graphite","pixel","emerald","frost","ivory"};
- static final String[] NAMES={"Graphite Luxe","Google Phone · Pixel","Emerald AMOLED","Frosted Slate","Ivory Studio"};
+ static final String[] NAMES={"Samsung · One UI","Google Phone","iOS 26 · Glass","Xiaomi · HyperOS","Nothing OS"};
  static final String[] DESCRIPTIONS={
-  "עמדת שליטה: שתי עמודות, דיוק ושליטה","Google Phone: ארבע פעולות, גווני ורוד בהיר, ניתוק עגול",
-  "מיקוד: מקשים גדולים בטור אחד וסיום שיחה בולט","לוח פעולות: שלוש עמודות ומידע מיושר לצד","מינימליסטי: שתי עמודות, תמונת מתקשר קטנה"
+  "פרופיל עגול ומערך פעולות רחב", "ארבע פעולות ומגשים מעוגלים בהשראת Google Phone",
+  "משטחי זכוכית קלים ומערך סימטרי", "כרטיסי פעולה ופרופיל במבנה אופקי", "טיפוגרפיה טכנית, נקודות ושחור־לבן"
  };
- final int background,surface,surface2,ink,muted,accent,call,decline,line;
- final int radius;
+ final int background,surface,surface2,ink,muted,accent,call,decline,line,selected,selectedInk,end,endInk;
+ final int radius,style;
  final String name;
  final boolean dark,amoled;
- final int style;
  CallThemes(Context context){
   SharedPreferences p=context.getSharedPreferences("da_caller",Context.MODE_PRIVATE);
-  amoled=p.getBoolean("amoled",false);
-  dark=amoled||p.getBoolean("dark",false);
-  String id=p.getString("call_theme","graphite");
-  int index=0;for(int i=0;i<IDS.length;i++)if(IDS[i].equals(id))index=i;
-  style=index;name=NAMES[index];radius=new int[]{20,40,14,28,18}[index];
-  int[] lights={0xFFFAF8F4,0xFFFFF8F5,0xFFF4FAF7,0xFFF5F7FA,0xFFFAF7EF};
-  int[] darks={0xFF121212,0xFF141921,0xFF0A1712,0xFF131A27,0xFF191611};
-  int[] accents={0xFFCDA668,0xFFACCBEB,0xFF28BB8C,0xFF9FA6E8,0xFFCD9664};
-  int[] lightAccents={0xFF8B6026,0xFF67584F,0xFF087451,0xFF565FA5,0xFF8D5B2F};
-  background=amoled?Color.BLACK:dark?darks[index]:lights[index];
-  surface=amoled?0xFF0C0C0C:dark?new int[]{0xFF22211F,0xFF252B36,0xFF172820,0xFF263042,0xFF2A241E}[index]:Color.WHITE;
-  surface2=amoled?0xFF151515:dark?new int[]{0xFF302E2A,0xFF283749,0xFF243B32,0xFF323F59,0xFF3A3027}[index]:
-   new int[]{0xFFF2EDE5,0xFFF8E9E0,0xFFE7F6ED,0xFFEAEDFA,0xFFF7EDE0}[index];
-  ink=dark?Color.WHITE:0xFF222323;
-  muted=dark?0xFFB0B5BC:0xFF666D78;
-  accent=dark?accents[index]:lightAccents[index];
-  call=0xFF138D5D;
-  decline=dark?0xFFB23E46:0xFFAF383C;
-  line=dark?0xFF484A4A:0xFFE0E3E6;
+  amoled=p.getBoolean("amoled",false);dark=amoled||p.getBoolean("dark",false);
+  String id=p.getString("call_theme","pixel");int index=1;
+  for(int i=0;i<IDS.length;i++)if(IDS[i].equals(id))index=i;
+  style=index;name=NAMES[index];radius=new int[]{28,32,30,22,12}[index];
+  int[] lightBg={0xFFF5F7FC,0xFFFFF9F3,0xFFE9EDF4,0xFFF3F5F9,0xFFF8F8F6};
+  int[] darkBg={0xFF10141B,0xFF1F2020,0xFF17212F,0xFF111620,0xFF101010};
+  int[] lightSurface={0xFFFFFFFF,0xFFF1EFEB,0xFFF7F9FC,0xFFFFFFFF,0xFFEDEDEB};
+  int[] darkSurface={0xFF202631,0xFF292A2A,0xFF293747,0xFF232C3A,0xFF222222};
+  int[] lightButton={0xFFE7ECF6,0xFFE5E3DF,0xFFDFE6EF,0xFFE8EDF6,0xFFE5E5E2};
+  int[] darkButton={0xFF2B3443,0xFF121313,0xFF354559,0xFF303D50,0xFF171717};
+  background=amoled?Color.BLACK:dark?darkBg[index]:lightBg[index];
+  surface=dark?darkSurface[index]:lightSurface[index];surface2=dark?darkButton[index]:lightButton[index];
+  ink=dark?0xFFE4E5E7:0xFF1D2229;muted=dark?0xFFC3C6CB:0xFF555C66;
+  accent=dark?new int[]{0xFFB6D1FF,0xFFFFDDBD,0xFFD5E5FF,0xFFC3D8FF,0xFFF3F3EF}[index]:
+   new int[]{0xFF244E8A,0xFF655042,0xFF354F71,0xFF2E4F81,0xFF30302E}[index];
+  selected=new int[]{0xFFBDD5FF,0xFFFFDDBD,0xFFEEF4FC,0xFFC5D8FF,0xFFECECEA}[index];
+  selectedInk=0xFF25272B;call=0xFF14784D;decline=0xFFAC343D;
+  end=index==1?0xFFF46359:index==4?0xFFE44343:0xFFE84F59;
+  endInk=index==1?0xFF242222:Color.WHITE;
+  line=dark?0xFF526074:0xFFB8C1CF;
  }
  GradientDrawable card(Context context,int kind){
   float density=context.getResources().getDisplayMetrics().density;
-  // Selected controls retain readable surfaces; accent belongs to their border/icons.
-  int front=kind==2?decline:surface;
-  int back=kind==2?decline:kind==1?surface:surface2;
-  int[] stops=new int[]{front,back};
-  GradientDrawable drawable=new GradientDrawable(GradientDrawable.Orientation.TL_BR,stops);
-  drawable.setCornerRadius(radius*density);
-  drawable.setStroke(Math.max(1,(int)density),kind==1?accent:kind==2?decline:line);
-  return drawable;
+  int front=kind==2?decline:surface,back=kind==2?decline:surface2;
+  GradientDrawable d=new GradientDrawable(GradientDrawable.Orientation.TL_BR,new int[]{front,back});
+  d.setCornerRadius(radius*density);d.setStroke(Math.max(1,(int)density),kind==1?accent:kind==2?decline:line);return d;
  }
 }

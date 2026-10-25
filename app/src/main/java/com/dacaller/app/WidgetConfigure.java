@@ -49,6 +49,8 @@ public class WidgetConfigure extends Activity {
   if(request==25){if(grants.length>0&&grants[0]==PackageManager.PERMISSION_GRANTED)load();else finish();}
  }
  private void populate(){
+  getWindow().setStatusBarColor(bg());getWindow().setNavigationBarColor(bg());
+  getWindow().getDecorView().setSystemUiVisibility(dark()?0:View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
   LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setBackgroundColor(bg());
   root.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);root.setPadding(dp(14),dp(16),dp(14),dp(8));setContentView(root);
   TextView heading=new TextView(this);heading.setText(tr("בחר איש קשר"));heading.setTextSize(21);heading.setTextColor(ink());root.addView(heading);

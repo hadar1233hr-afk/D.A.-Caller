@@ -35,7 +35,11 @@ public class WidgetTap extends Activity {
   startActivity(new Intent(this,ContactDetailActivity.class).putExtra("contact_id",id));finish();
  }
  @Override public void onRequestPermissionsResult(int request,String[] permissions,int[] results){
-  super.onRequestPermissionsResult(request,permissions,results);if(request==12)call();
+  super.onRequestPermissionsResult(request,permissions,results);
+  if(request==12){
+   if(results.length>0&&results[0]==PackageManager.PERMISSION_GRANTED)call();
+   else{android.widget.Toast.makeText(this,I18n.isEnglish(this)?"Call permission is required":"נדרשת הרשאת שיחות",android.widget.Toast.LENGTH_LONG).show();finish();}
+  }
  }
  private void call(){if(!CallLauncher.place(this,phone))android.widget.Toast.makeText(this,I18n.text(this,"לא ניתן להתקשר"),android.widget.Toast.LENGTH_LONG).show();finish();}
 }

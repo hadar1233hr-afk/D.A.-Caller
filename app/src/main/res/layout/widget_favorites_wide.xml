@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:id="@+id/widget_favorites_root"
+ android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:layoutDirection="locale" android:padding="8dp" android:background="@drawable/widget_bg">
+ <TextView android:id="@+id/widget_favorites_title" android:layout_width="match_parent" android:layout_height="24dp" android:gravity="center_vertical" android:text="@string/widget_favorites_title" android:fontFamily="sans-serif-medium" android:singleLine="true" android:ellipsize="end" android:textSize="13sp" android:textColor="#DCE9DF"/>
+ <TextView android:id="@+id/widget_empty" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:gravity="center" android:textSize="13sp" android:textColor="#F7F7F7" android:visibility="gone"/>
+ <!-- Bounded RemoteViews: four/five cells total. Orthogonal row-height/column-width weights keep cells equal on launcher resize; baseline measurement is disabled. -->
+ <LinearLayout tools:ignore="NestedWeights" android:baselineAligned="false" android:id="@+id/widget_favorites_grid" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="horizontal">
+  <LinearLayout android:id="@+id/fav1" android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center" android:padding="2dp">
+   <ImageView android:id="@+id/fav1_photo" android:layout_width="36dp" android:layout_height="36dp" android:scaleType="fitCenter" android:importantForAccessibility="no"/>
+   <TextView android:id="@+id/fav1_name" android:importantForAccessibility="no" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:layout_marginTop="2dp" android:includeFontPadding="false" android:textSize="12sp" android:fontFamily="sans-serif-medium" android:textColor="#F7F7F7" android:maxLines="1" android:ellipsize="end"/>
+  </LinearLayout>
+  <LinearLayout android:id="@+id/fav2" android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center" android:padding="2dp">
+   <ImageView android:id="@+id/fav2_photo" android:layout_width="36dp" android:layout_height="36dp" android:scaleType="fitCenter" android:importantForAccessibility="no"/>
+   <TextView android:id="@+id/fav2_name" android:importantForAccessibility="no" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:layout_marginTop="2dp" android:includeFontPadding="false" android:textSize="12sp" android:fontFamily="sans-serif-medium" android:textColor="#F7F7F7" android:maxLines="1" android:ellipsize="end"/>
+  </LinearLayout>
+  <LinearLayout android:id="@+id/fav3" android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center" android:padding="2dp">
+   <ImageView android:id="@+id/fav3_photo" android:layout_width="36dp" android:layout_height="36dp" android:scaleType="fitCenter" android:importantForAccessibility="no"/>
+   <TextView android:id="@+id/fav3_name" android:importantForAccessibility="no" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:layout_marginTop="2dp" android:includeFontPadding="false" android:textSize="12sp" android:fontFamily="sans-serif-medium" android:textColor="#F7F7F7" android:maxLines="1" android:ellipsize="end"/>
+  </LinearLayout>
+  <LinearLayout android:id="@+id/fav4" android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center" android:padding="2dp">
+   <ImageView android:id="@+id/fav4_photo" android:layout_width="36dp" android:layout_height="36dp" android:scaleType="fitCenter" android:importantForAccessibility="no"/>
+   <TextView android:id="@+id/fav4_name" android:importantForAccessibility="no" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:layout_marginTop="2dp" android:includeFontPadding="false" android:textSize="12sp" android:fontFamily="sans-serif-medium" android:textColor="#F7F7F7" android:maxLines="1" android:ellipsize="end"/>
+  </LinearLayout>
+  <LinearLayout android:id="@+id/fav5" android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center" android:padding="2dp">
+   <ImageView android:id="@+id/fav5_photo" android:layout_width="36dp" android:layout_height="36dp" android:scaleType="fitCenter" android:importantForAccessibility="no"/>
+   <TextView android:id="@+id/fav5_name" android:importantForAccessibility="no" android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:layout_marginTop="2dp" android:includeFontPadding="false" android:textSize="12sp" android:fontFamily="sans-serif-medium" android:textColor="#F7F7F7" android:maxLines="1" android:ellipsize="end"/>
+  </LinearLayout>
+ </LinearLayout>
+</LinearLayout>

@@ -111,7 +111,10 @@ final class FastPages {
   if(tab.equals("contacts")&&contactQueryChanged)return;
   SwipeListView view=tab.equals("recents")?liveRecents:
     tab.equals("contacts")?liveContacts:null;
-  if(view==null||view.getChildCount()==0)return;
+  // A freshly rebuilt list can still show its temporary first row until the
+  // queued selection has completed a layout. Never replace the saved ID with
+  // that transient top row when another provider/navigation refresh arrives.
+  if(view==null||view.restorePending||view.getChildCount()==0)return;
   int pos=view.getFirstVisiblePosition();
   int offset=view.getChildAt(0).getTop();
   if(view.getAdapter()==null||pos>=view.getAdapter().getCount())return;
@@ -144,11 +147,20 @@ final class FastPages {
   if(adapter!=null&&id>=0&&(pos>=adapter.getCount()||adapter.getItemId(pos)!=id)){
    for(int i=0;i<adapter.getCount();i++)if(adapter.getItemId(i)==id){pos=i;break;}
   }
+  if(adapter==null||adapter.getCount()==0)return; // Retain the anchor while data loads.
   int finalPos=Math.max(0,Math.min(pos,max));
-  // A queued restore must never override a finger/flick that started meanwhile.
-  int revision=view.touchRevision;
+  // Do not capture this list's default top position until selection is laid out.
+  // Two render callbacks in the same frame must retain the original contact ID.
+  int revision=view.touchRevision,restore=++view.restoreRevision;
+  view.restorePending=true;
   view.post(()->{
-   if(view.touchRevision==revision&&!view.touching)view.setSelectionFromTop(finalPos,offset);
+   SwipeListView current=tab.equals("recents")?liveRecents:liveContacts;
+   if(current!=view||view.touchRevision!=revision||view.touching||view.restoreRevision!=restore){
+    if(view.restoreRevision==restore)view.restorePending=false;
+    return;
+   }
+   view.restoreRequested=true;
+   view.setSelectionFromTop(finalPos,offset);
   });
  }
  interface NumberAt {String phone(int position);}
@@ -158,11 +170,24 @@ final class FastPages {
   private int touched=-1;
   private String downNumber;
   private boolean sliding,vertical,actionRegion;
-  private int touchRevision;
-  private boolean touching,fastScrollPaused;
+  private int touchRevision,restoreRevision;
+  private boolean touching,fastScrollPaused,restorePending,restoreRequested;
   private final int slop=ViewConfiguration.get(host).getScaledTouchSlop();
   SwipeListView(){super(host);setItemsCanFocus(true);}
   void setNumberAt(NumberAt source){numbers=source;}
+  private void cancelRestore(){
+   restoreRevision++;restorePending=false;restoreRequested=false;
+  }
+  @Override protected void onLayout(boolean changed,int left,int top,int right,int bottom){
+   super.onLayout(changed,left,top,right,bottom);
+   if(restoreRequested){restoreRequested=false;restorePending=false;}
+  }
+  @Override public boolean performAccessibilityAction(int action,Bundle arguments){
+   // Accessibility scrolling need not generate a touch-down event.
+   if(action==android.view.accessibility.AccessibilityNodeInfo.ACTION_SCROLL_FORWARD||
+      action==android.view.accessibility.AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD)cancelRestore();
+   return super.performAccessibilityAction(action,arguments);
+  }
   private boolean allowed(float dx,float dy){
    String mode=prefs.getString("swipe_direction","right");
    if(mode.equals("off")||vertical||actionRegion)return false;
@@ -187,7 +212,7 @@ final class FastPages {
   }
   @Override public boolean dispatchTouchEvent(MotionEvent event){
    if(event.getActionMasked()==MotionEvent.ACTION_DOWN){
-    touchRevision++;touching=true;
+    touchRevision++;touching=true;cancelRestore();
     downX=event.getX();downY=event.getY();touched=pointToPosition((int)downX,(int)downY);
     downNumber=numbers==null?null:numbers.phone(touched);
     sliding=false;vertical=false;actionRegion=dedicatedControl(downX,downY);
@@ -363,6 +388,7 @@ final class FastPages {
    return permission("כדי לראות אנשי קשר נדרשת הרשאה","אפשר גישה לאנשי קשר",()->host.requestContacts());
   }
   LinearLayout page=vertical();page.setBackgroundColor(background());
+  page.setFocusableInTouchMode(true);page.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
   page.setPadding(dp(12),dp(7),dp(12),0);
   if(favorites){
    LinearLayout header=horizontal();page.addView(header,lp(-1,41));
@@ -422,9 +448,14 @@ final class FastPages {
    public void onTextChanged(CharSequence str,int a,int b,int c){
     String query=str.toString();
     contactQuery=query;
+    // A render during the debounce must use the new query's top, not remember
+    // the old query's visible ID. Old detached search callbacks cannot restore.
+    contactPos=0;contactOffset=0;contactId=-1;contactQueryChanged=true;
+    list.cancelRestore();
     if(filterTask!=null)handler.removeCallbacks(filterTask);
     filterTask=()->{
-     adapter.filter(query);contactPos=0;contactOffset=0;contactId=-1;
+     if(liveContacts!=list||!query.equals(contactQuery))return;
+     adapter.filter(query);contactQueryChanged=false;
      count.setText(I18n.count(host,adapter.getCount(),"אנשי קשר","contacts"));
      list.setSelectionFromTop(0,0);
     };

@@ -20,7 +20,7 @@ final class InCallControls {
  };
  static boolean enabled(SharedPreferences p,String id){
   boolean defaultValue=id.equals("mute")||id.equals("speaker")||
-    id.equals("keypad")||id.equals("hold");
+    id.equals("keypad")||id.equals("hold")||id.equals("addcall");
   return p.getBoolean("call_btn_"+id,defaultValue);
  }
  static int count(SharedPreferences p){

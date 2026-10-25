@@ -13,6 +13,15 @@ final class CallLayouts {
   {"notes","contacts","keypad","speaker","mute","hold","addcall","bluetooth"},
   {"hold","mute","keypad","speaker","notes","contacts","bluetooth","addcall"}
  };
+ static String[] primary(int style){
+  switch(style){
+   case 0:return new String[]{"mute","keypad","audio","more"};
+   case 1:return new String[]{"more","audio","mute","keypad"};
+   case 2:return new String[]{"audio","mute","keypad","more"};
+   case 3:return new String[]{"keypad","audio","more","mute"};
+   default:return new String[]{"mute","audio","keypad","more"};
+  }
+ }
  static List<String> ordered(int style,List<String> enabled){
   int which=Math.max(0,Math.min(ORDERS.length-1,style));
   List<String> result=new ArrayList<>();

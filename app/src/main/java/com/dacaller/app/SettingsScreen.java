@@ -1,20 +1,25 @@
 package com.dacaller.app;
 
+import android.Manifest;
+import android.animation.ValueAnimator;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.role.RoleManager;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
+import android.telecom.TelecomManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import java.util.concurrent.ExecutorService;
@@ -23,6 +28,8 @@ import java.util.concurrent.Executors;
 /** Organized Material-inspired settings, fully scoped to the app's theme/language. */
 final class SettingsScreen {
  private static final ExecutorService IO=Executors.newSingleThreadExecutor();
+ private static final int ROOT_ID=View.generateViewId();
+ private final java.util.ArrayList<Runnable> permissionUpdates=new java.util.ArrayList<>();
  private final MainActivity host;
  private final SharedPreferences prefs;
  private final boolean dark;
@@ -60,7 +67,8 @@ final class SettingsScreen {
  ScrollView create(){
   ScrollView scroll=new ScrollView(host);scroll.setVerticalScrollBarEnabled(false);
   scroll.setBackgroundColor(bg);scroll.setFillViewport(true);
-  root=column();root.setPadding(dp(13),dp(14),dp(13),dp(24));scroll.addView(root);
+  root=column();root.setId(ROOT_ID);root.setTag(this);
+  root.setPadding(dp(13),dp(14),dp(13),dp(24));scroll.addView(root);
   TextView headline=text("התאמה אישית",23,true,ink);
   root.addView(headline,new LinearLayout.LayoutParams(-1,dp(40)));
   TextView sub=text("כל ההגדרות נשמרות במכשיר",11,false,subtle);
@@ -72,13 +80,13 @@ final class SettingsScreen {
     prefs.getBoolean("amoled",false)?"amoled":prefs.getBoolean("dark",false)?"dark":"light",value->{
      prefs.edit().putBoolean("dark",!value.equals("light"))
        .putBoolean("amoled",value.equals("amoled")).apply();
-     host.refreshPagePreserveScroll();
+     WidgetSupport.refreshAll(host);host.refreshPagePreserveScroll();
     });
   choice("שפה","עברית או English","language",
     new String[]{"עברית","אנגלית"},new String[]{"he","en"},
     prefs.getString("language","he"),value->{
      prefs.edit().putString("language",value).apply();
-     host.refreshPagePreserveScroll();
+     WidgetSupport.refreshAll(host);host.refreshPagePreserveScroll();
     });
   choice("צבע לחצן חיוג ביומן","זהב או ירוק","recent_color",
     new String[]{"זהב","ירוק"},new String[]{"gold","green"},
@@ -95,10 +103,10 @@ final class SettingsScreen {
    final String id=CallThemes.IDS[i];
    String label=CallThemes.NAMES[i];
    String description=I18n.isEnglish(host)?new String[]{
-    "Two-column command deck","Google Phone-inspired dock, blush palette and prominent hang-up","Oversized vertical controls",
-    "Three-column dashboard","Minimal two-column arrangement"}[i]:CallThemes.DESCRIPTIONS[i];
+    "Round profile and spacious action grid","Four actions and rounded in-call sheets","Lightweight glass surfaces and a symmetric grid",
+    "Horizontal profile and large action cards","Technical typography, original dots and monochrome"}[i]:CallThemes.DESCRIPTIONS[i];
    String val=prefs.getString("call_theme","pixel");
-   int[] shades={0xFFD1AD70,0xFF6198E9,0xFF23B188,0xFF9AA1E9,0xFFC5956D};
+   int[] shades={0xFF95BCEB,0xFFFFDCC1,0xFFC6D3E5,0xFFA4D6C7,0xFFE85454};
    LinearLayout item=row();item.setPadding(dp(12),dp(6),dp(12),dp(6));
    item.setMinimumHeight(dp(69));
    LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(-1,-2);
@@ -119,7 +127,7 @@ final class SettingsScreen {
    sep();
   }
   cardEnd();
-  section("שיחות ומענה","☎");
+  section("שיחות ומענה","");
   cardStart();
   choice("אופן מענה לשיחה","מחוות החלקה לבחירה","answer_mode",
     new String[]{"החלקה ימינה למענה","החלקה שמאלה למענה",
@@ -135,6 +143,8 @@ final class SettingsScreen {
      prefs.edit().putInt("call_button_height",Integer.parseInt(v)).apply();
      host.refreshPagePreserveScroll();
     });
+  TextView controlNote=text("בעיצוב Google Phone ארבע פעולות הליבה נשארות זמינות תמיד; הגדרות הכפתורים חלות על פעולות נוספות ועל שאר העיצובים.",11,false,subtle);
+  controlNote.setPadding(dp(12),dp(10),dp(12),dp(10));card.addView(controlNote);
   for(int i=0;i<InCallControls.IDS.length;i++){
    String id=InCallControls.IDS[i];
    toggle(InCallControls.NAMES[i],InCallControls.EXPLAIN[i],
@@ -201,45 +211,118 @@ final class SettingsScreen {
      host.refreshPagePreserveScroll();
     });
   cardEnd();
-  section("מצב המערכת","✓");
+  section("הרשאות וחיבור למערכת","✓");
   cardStart();
-  option("הגדר כחייגן ברירת מחדל","ניהול שיחות נכנסות ויוצאות",()->host.requestDefaultDialer());
-  option("הרשאת יומן שיחות","לקריאת ההיסטוריה ואחסון ארכיון",()->host.requestLog());
-  option("הרשאת אנשי קשר","הצגת תמונות, אנשי קשר ועריכה",()->host.requestContacts());
-  option("התראות שיחה","התראות במסך הנעילה ובשורת המצב",()->host.openNotificationSettings());
+  permissionOption("חייגן ברירת מחדל","ניהול שיחות נכנסות ויוצאות",
+    this::isDefaultDialer,()->{
+     if(isDefaultDialer())openSystemSettings(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS);
+     else host.requestDefaultDialer();
+    });
+  permissionOption("הרשאת שיחות","חיוג מאובטח דרך מערכת הטלפון",
+    ()->granted(Manifest.permission.CALL_PHONE),()->requestPermission(Manifest.permission.CALL_PHONE,26));
+  permissionOption("הרשאת אנשי קשר","הצגת תמונות, אנשי קשר ועריכה",
+    ()->granted(Manifest.permission.READ_CONTACTS),()->requestPermission(Manifest.permission.READ_CONTACTS,21));
+  permissionOption("הרשאת יומן שיחות","לקריאת ההיסטוריה ואחסון ארכיון",
+    ()->granted(Manifest.permission.READ_CALL_LOG),()->requestPermission(Manifest.permission.READ_CALL_LOG,22));
+  permissionOption("התראות שיחה","התראות במסך הנעילה ובשורת המצב",
+    this::notificationsEnabled,()->{
+     if(Build.VERSION.SDK_INT>=33&&!granted(Manifest.permission.POST_NOTIFICATIONS))
+      requestPermission(Manifest.permission.POST_NOTIFICATIONS,24);
+     else host.openNotificationSettings();
+    });
+  if(Build.VERSION.SDK_INT>=31)permissionOption("שם התקן Bluetooth","רשות אופציונלית להצגת שם האוזנייה המחוברת",
+    ()->granted(Manifest.permission.BLUETOOTH_CONNECT),()->requestPermission(Manifest.permission.BLUETOOTH_CONNECT,27));
   option("אבחון תקלה בחיוג","סוג התקלה ומיקום בקוד, ללא מספר טלפון",()->{
-   String report=prefs.getString("last_call_failure","לא נרשמה תקלה בשירות השיחות בגרסה זו.");
+   String report=prefs.getString("last_call_failure",tr("לא נרשמה תקלה בשירות השיחות בגרסה זו."));
    new AlertDialog.Builder(host)
-     .setTitle("DA CALLER — אבחון שיחה")
+     .setTitle(tr("אבחון שיחה"))
      .setMessage(report)
-     .setPositiveButton("העתק",(dialog,which)->{
+     .setPositiveButton(tr("העתק"),(dialog,which)->{
       android.content.ClipboardManager clipboard=(android.content.ClipboardManager)host.getSystemService(Context.CLIPBOARD_SERVICE);
       if(clipboard!=null)clipboard.setPrimaryClip(android.content.ClipData.newPlainText("DA CALLER diagnostic",report));
      })
-     .setNegativeButton("סגור",null).show();
+     .setNegativeButton(tr("סגור"),null).show();
   });
   cardEnd();
   TextView bottom=text("DA CALLER · v"+BuildConfig.VERSION_NAME,11,false,subtle);
   bottom.setGravity(Gravity.CENTER);
   LinearLayout.LayoutParams foot=new LinearLayout.LayoutParams(-1,dp(51));root.addView(bottom,foot);
-  return scroll;
+  refreshPermissions();return scroll;
  }
+ /** Refresh the visible status rows after returning from Android permission/role UI.
+  * Updates in place, preserving the open card and the user's exact scroll position. */
+ static void refreshAttached(MainActivity activity){
+  View root=activity.findViewById(ROOT_ID);
+  if(root!=null&&root.getTag() instanceof SettingsScreen)((SettingsScreen)root.getTag()).refreshPermissions();
+ }
+ private interface Status {boolean active();}
+ private boolean granted(String permission){return host.checkSelfPermission(permission)==PackageManager.PERMISSION_GRANTED;}
+ private boolean isDefaultDialer(){
+  try{
+   if(Build.VERSION.SDK_INT>=29){RoleManager roles=host.getSystemService(RoleManager.class);
+    return roles!=null&&roles.isRoleHeld(RoleManager.ROLE_DIALER);}
+   TelecomManager telecom=host.getSystemService(TelecomManager.class);
+   return telecom!=null&&host.getPackageName().equals(telecom.getDefaultDialerPackage());
+  }catch(RuntimeException ignored){return false;}
+ }
+ private boolean notificationsEnabled(){
+  if(Build.VERSION.SDK_INT>=33&&!granted(Manifest.permission.POST_NOTIFICATIONS))return false;
+  NotificationManager notifications=host.getSystemService(NotificationManager.class);
+  return notifications!=null&&notifications.areNotificationsEnabled();
+ }
+ private void openSystemSettings(String action){
+  try{host.startActivity(new Intent(action));}
+  catch(RuntimeException ignored){openAppSettings();}
+ }
+ private void openAppSettings(){
+  try{host.startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,Uri.parse("package:"+host.getPackageName())));}
+  catch(RuntimeException ignored){android.widget.Toast.makeText(host,tr("פתח את הרשאות האפליקציה בהגדרות המכשיר"),android.widget.Toast.LENGTH_LONG).show();}
+ }
+ private void requestPermission(String permission,int code){
+  String asked="settings_permission_asked_"+permission;
+  if(granted(permission)||(prefs.getBoolean(asked,false)&&!host.shouldShowRequestPermissionRationale(permission))){openAppSettings();return;}
+  prefs.edit().putBoolean(asked,true).apply();host.requestPermissions(new String[]{permission},code);
+ }
+ private void permissionOption(String label,String description,Status status,Runnable action){
+  LinearLayout item=row();item.setPadding(dp(12),dp(12),dp(12),dp(12));item.setMinimumHeight(dp(76));
+  card.addView(item,new LinearLayout.LayoutParams(-1,-2));
+  LinearLayout copy=column();item.addView(copy,new LinearLayout.LayoutParams(0,-2,1));
+  copy.addView(text(label,14,true,ink));
+  TextView detail=text(description,11,false,subtle);detail.setPadding(0,dp(3),dp(6),0);copy.addView(detail);
+  LinearLayout state=column();state.setPadding(dp(8),0,0,0);state.setGravity(Gravity.CENTER);
+  item.addView(state,new LinearLayout.LayoutParams(-2,-2));
+  TextView current=text("",11,true,subtle);state.addView(current);
+  TextView control=text("",12,true,accent);control.setPadding(dp(6),dp(5),dp(6),0);state.addView(control);
+  permissionUpdates.add(()->{
+   boolean active=status.active();current.setText(tr(active?"פעיל":"נדרש אישור"));
+   current.setTextColor(active?(dark?0xFF9ED8AC:0xFF2C653C):subtle);
+   control.setText(tr(active?"ניהול":"אשר"));
+   item.setContentDescription(tr(label)+", "+current.getText()+", "+control.getText());
+  });
+  item.setFocusable(true);TouchFeedback.bind(item,prefs);
+  item.setOnClickListener(v->{TouchFeedback.pulse(host,prefs,item);action.run();});sep();
+ }
+ private void refreshPermissions(){for(Runnable update:permissionUpdates)update.run();}
  private void section(String label,String symbol){
   final String key="settings_group_open_"+sectionNumber++;
   LinearLayout header=row();
   header.setPadding(dp(15),dp(3),dp(12),dp(3));
   header.setBackground(card(surface,19));
-  LinearLayout.LayoutParams hp=new LinearLayout.LayoutParams(-1,dp(57));
+  header.setMinimumHeight(dp(57));
+  LinearLayout.LayoutParams hp=new LinearLayout.LayoutParams(-1,-2);
   hp.topMargin=dp(12);
   root.addView(header,hp);
-  TextView bullet=text(symbol,20,true,accent);
-  header.addView(bullet,new LinearLayout.LayoutParams(dp(36),-1));
+  if(!symbol.isEmpty()){
+   TextView bullet=text(symbol,20,true,accent);
+   header.addView(bullet,new LinearLayout.LayoutParams(dp(36),dp(48)));
+  }
   TextView name=text(label,16,true,ink);
-  header.addView(name,new LinearLayout.LayoutParams(0,-1,1));
+  header.addView(name,new LinearLayout.LayoutParams(0,-2,1));
   TextView arrow=text(prefs.getBoolean(key,false)?"⌃":"⌄",23,true,accent);
   arrow.setGravity(Gravity.CENTER);
-  header.addView(arrow,new LinearLayout.LayoutParams(dp(35),-1));
+  header.addView(arrow,new LinearLayout.LayoutParams(dp(35),dp(48)));
   header.setContentDescription(tr(label));
+  if(Build.VERSION.SDK_INT>=30)header.setStateDescription(tr(prefs.getBoolean(key,false)?"מורחב":"מכווץ"));
   header.setFocusable(true);
   sectionHeader=header;
   header.setTag(new Object[]{key,arrow});
@@ -261,8 +344,15 @@ final class SettingsScreen {
    header.setOnClickListener(v->{
     TouchFeedback.pulse(host,prefs,header);
     boolean expanded=content.getVisibility()!=View.VISIBLE;
-    android.transition.TransitionManager.beginDelayedTransition(root);
+    // Whole-tree AutoTransition used to animate every setting row and suppress
+    // layout in this ScrollView while the last, tall section changed size. Apply
+    // visibility immediately; fade only the new card without moving hit regions.
+    content.animate().cancel();content.setAlpha(1f);
     content.setVisibility(expanded?View.VISIBLE:View.GONE);
+    if(expanded&&ValueAnimator.areAnimatorsEnabled()){
+     content.setAlpha(0f);content.animate().alpha(1f).setDuration(170).start();
+    }
+    if(Build.VERSION.SDK_INT>=30)header.setStateDescription(tr(expanded?"מורחב":"מכווץ"));
     arrow.setText(expanded?"⌃":"⌄");
     prefs.edit().putBoolean(key,expanded).apply();
    });
