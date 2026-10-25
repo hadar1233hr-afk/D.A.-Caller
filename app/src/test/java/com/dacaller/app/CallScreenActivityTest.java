@@ -181,4 +181,40 @@ public class CallScreenActivityTest {
   hold.performClick();verify(call,never()).hold();
  }
 
+ @Test public void capabilityChangesInTheSameCallStateRefreshAndGuardCommands(){
+  preferences.edit().putBoolean("call_btn_addcall",true).commit();
+  when(call.getState()).thenReturn(Call.STATE_ACTIVE);
+  Call.Details details=mock(Call.Details.class);when(call.getDetails()).thenReturn(details);
+  PhoneSessionService service=mock(PhoneSessionService.class);PhoneSessionService.instance=service;
+  CallScreenActivity a=open();tagged(a,"call-action-more").performClick();
+  assertFalse(tagged(a,"call-option-hold").isEnabled());assertFalse(tagged(a,"call-option-addcall").isEnabled());
+  when(details.can(Call.Details.CAPABILITY_HOLD)).thenReturn(true);when(service.canAddCall()).thenReturn(true);
+  PhoneSessionService.notifyViews();
+  View hold=tagged(a,"call-option-hold"),add=tagged(a,"call-option-addcall");
+  assertTrue(hold.isEnabled());assertTrue(add.isEnabled());hold.performClick();verify(call).hold();
+  when(details.can(Call.Details.CAPABILITY_HOLD)).thenReturn(false);when(service.canAddCall()).thenReturn(false);
+  PhoneSessionService.notifyViews();
+  assertFalse(tagged(a,"call-option-hold").isEnabled());assertFalse(tagged(a,"call-option-addcall").isEnabled());
+  // A queued click on the previous rendering must recheck the live capability.
+  hold.performClick();add.performClick();verify(call,times(1)).hold();
+  assertNull(org.robolectric.Shadows.shadowOf(a).getNextStartedActivity());
+ }
+
+ @Test public void audioPickerTargetsTheHeadsetWhoseNameWasDisplayed(){
+  when(call.getState()).thenReturn(Call.STATE_ACTIVE);
+  PhoneSessionService service=mock(PhoneSessionService.class);PhoneSessionService.instance=service;
+  android.telecom.CallAudioState audio=mock(android.telecom.CallAudioState.class);
+  when(audio.getRoute()).thenReturn(android.telecom.CallAudioState.ROUTE_EARPIECE);
+  when(audio.getSupportedRouteMask()).thenReturn(android.telecom.CallAudioState.ROUTE_EARPIECE|android.telecom.CallAudioState.ROUTE_BLUETOOTH);
+  android.bluetooth.BluetoothDevice shown=mock(android.bluetooth.BluetoothDevice.class),other=mock(android.bluetooth.BluetoothDevice.class);
+  when(shown.getName()).thenReturn("Shown headset");when(other.getName()).thenReturn("Other headset");
+  when(audio.getSupportedBluetoothDevices()).thenReturn(java.util.Arrays.asList(shown,other));when(service.getCallAudioState()).thenReturn(audio);
+  CallScreenActivity a=open();tagged(a,"call-action-audio").performClick();
+  View option=tagged(a,"audio-route-"+android.telecom.CallAudioState.ROUTE_BLUETOOTH);
+  assertTrue(option.getContentDescription().toString().contains("Shown headset"));
+  // Telecom may reorder its supported endpoints while the user is reading the picker.
+  when(audio.getSupportedBluetoothDevices()).thenReturn(java.util.Arrays.asList(other,shown));option.performClick();
+  verify(service).requestBluetoothAudio(shown);verify(service,never()).requestBluetoothAudio(other);
+ }
+
 }

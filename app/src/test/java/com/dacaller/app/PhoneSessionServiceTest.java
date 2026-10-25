@@ -108,4 +108,13 @@ public class PhoneSessionServiceTest {
   assertEquals(CallAudioState.ROUTE_EARPIECE,PhoneSessionService.privateRoute(CallAudioState.ROUTE_EARPIECE|CallAudioState.ROUTE_BLUETOOTH));
   assertEquals(CallAudioState.ROUTE_BLUETOOTH,PhoneSessionService.privateRoute(CallAudioState.ROUTE_BLUETOOTH));
  }
+ @Test public void telecomAddCallAvailabilityNotifiesVisibleControlsWithoutStateChange(){
+  java.util.concurrent.atomic.AtomicInteger updates=new java.util.concurrent.atomic.AtomicInteger();
+  Runnable listener=updates::incrementAndGet;
+  PhoneSessionService.register(listener);
+  try{
+   service.onCanAddCallChanged(false);service.onCanAddCallChanged(true);
+   assertEquals(2,updates.get());
+  }finally{PhoneSessionService.unregister(listener);}
+ }
 }

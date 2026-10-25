@@ -1,0 +1,12 @@
+{
+  "application_id": "com.dacaller.app",
+  "version_code": 16,
+  "version_name": "0.11.0-beta.6",
+  "min_sdk": 26,
+  "target_sdk": 34,
+  "internet_permission": false,
+  "apk_sha256": "b5b9c28879e0c48681d62936a14a67d5179997744a8aecb570eb351a749d3d24",
+  "certificate_sha256": "fb4a138563caff0c59a35327a8e2865c91fea72c6d28c667c56623b1ba9110fc",
+  "signing": "Local debug certificate; not an in-place update guarantee",
+  "historical_beta5_certificate_sha256": "4095a4b6becbcd8fb592687b50dac2620b8996585973d9a108d040a45e3db904"
+}

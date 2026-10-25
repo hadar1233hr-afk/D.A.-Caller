@@ -2,6 +2,7 @@ package com.dacaller.app;
 
 import android.bluetooth.BluetoothDevice;
 import android.telecom.CallAudioState;
+import java.util.Arrays;
 import java.util.Collections;
 import org.junit.After;
 import org.junit.Before;
@@ -82,6 +83,81 @@ public class CallAudioRoutesTest {
   assertFalse(CallAudioRoutes.select(0));
   assertFalse(CallAudioRoutes.select(CallAudioState.ROUTE_SPEAKER|0x4000));
   assertFalse(CallAudioRoutes.select(CallAudioState.ROUTE_SPEAKER|CallAudioState.ROUTE_EARPIECE));
+  verify(service,never()).setAudioRoute(anyInt());
+ }
+ @Test public void activeBluetoothSelectionTargetsTheDeviceWhoseNameIsShown(){
+  CallAudioState state=state(CallAudioState.ROUTE_BLUETOOTH,CallAudioState.ROUTE_BLUETOOTH|CallAudioState.ROUTE_SPEAKER);
+  BluetoothDevice active=mock(BluetoothDevice.class),other=mock(BluetoothDevice.class);
+  when(active.getName()).thenReturn("Test active headset");
+  when(state.getActiveBluetoothDevice()).thenReturn(active);
+  when(state.getSupportedBluetoothDevices()).thenReturn(Arrays.asList(other,active));
+  CallAudioRoutes.BluetoothTarget shown=CallAudioRoutes.bluetoothTarget();
+  assertEquals("Test active headset",shown.name);assertSame(active,shown.device);
+  assertTrue(CallAudioRoutes.selectBluetooth(shown));
+  verify(service).requestBluetoothAudio(active);verify(service,never()).requestBluetoothAudio(other);
+  verify(service,never()).setAudioRoute(anyInt());
+ }
+ @Test public void displayedBluetoothTargetSurvivesSupportedDeviceReordering(){
+  CallAudioState state=state(CallAudioState.ROUTE_SPEAKER,CallAudioState.ROUTE_BLUETOOTH|CallAudioState.ROUTE_SPEAKER);
+  BluetoothDevice shownDevice=mock(BluetoothDevice.class),other=mock(BluetoothDevice.class);
+  when(shownDevice.getName()).thenReturn("Test displayed headset");
+  when(state.getSupportedBluetoothDevices()).thenReturn(Arrays.asList(shownDevice,other));
+  CallAudioRoutes.BluetoothTarget shown=CallAudioRoutes.bluetoothTarget();
+  assertEquals("Test displayed headset",shown.name);
+  when(state.getSupportedBluetoothDevices()).thenReturn(Arrays.asList(other,shownDevice));
+  assertTrue(CallAudioRoutes.selectBluetooth(shown));
+  verify(service).requestBluetoothAudio(shownDevice);verify(service,never()).requestBluetoothAudio(other);
+ }
+ @Test public void disconnectedDisplayedHeadsetCannotRedirectTapToAnotherHeadset(){
+  CallAudioState state=state(CallAudioState.ROUTE_SPEAKER,CallAudioState.ROUTE_BLUETOOTH|CallAudioState.ROUTE_SPEAKER);
+  BluetoothDevice old=mock(BluetoothDevice.class),next=mock(BluetoothDevice.class);
+  when(state.getSupportedBluetoothDevices()).thenReturn(Collections.singletonList(old));
+  CallAudioRoutes.BluetoothTarget shown=CallAudioRoutes.bluetoothTarget();
+  when(state.getSupportedBluetoothDevices()).thenReturn(Collections.singletonList(next));
+  assertFalse(CallAudioRoutes.selectBluetooth(shown));
+  verify(service,never()).requestBluetoothAudio(any());verify(service,never()).setAudioRoute(anyInt());
+ }
+ @Test public void deviceRequestPermissionDenialFallsBackToTheSupportedGenericRoute(){
+  CallAudioState state=state(CallAudioState.ROUTE_SPEAKER,CallAudioState.ROUTE_BLUETOOTH|CallAudioState.ROUTE_SPEAKER);
+  BluetoothDevice device=mock(BluetoothDevice.class);
+  when(state.getSupportedBluetoothDevices()).thenReturn(Collections.singletonList(device));
+  doThrow(new SecurityException("BLUETOOTH_CONNECT denied")).when(service).requestBluetoothAudio(device);
+  assertTrue(CallAudioRoutes.selectBluetooth(CallAudioRoutes.bluetoothTarget()));
+  verify(service).setAudioRoute(CallAudioState.ROUTE_BLUETOOTH);
+  assertEquals("no synthetic acknowledgement",CallAudioState.ROUTE_SPEAKER,CallAudioRoutes.route());
+ }
+ @Test public void deniedDeviceAndGenericCommandsReturnFailureWithoutChangingSelection(){
+  CallAudioState state=state(CallAudioState.ROUTE_SPEAKER,CallAudioState.ROUTE_BLUETOOTH|CallAudioState.ROUTE_SPEAKER);
+  BluetoothDevice device=mock(BluetoothDevice.class);
+  when(state.getSupportedBluetoothDevices()).thenReturn(Collections.singletonList(device));
+  doThrow(new SecurityException("device denied")).when(service).requestBluetoothAudio(device);
+  doThrow(new SecurityException("route denied")).when(service).setAudioRoute(CallAudioState.ROUTE_BLUETOOTH);
+  assertFalse(CallAudioRoutes.selectBluetooth(CallAudioRoutes.bluetoothTarget()));
+  assertEquals(CallAudioState.ROUTE_SPEAKER,CallAudioRoutes.route());
+ }
+ @Test public void genericBluetoothRouteRemainsUsableWithoutEndpointDetails(){
+  state(CallAudioState.ROUTE_SPEAKER,CallAudioState.ROUTE_BLUETOOTH|CallAudioState.ROUTE_SPEAKER);
+  CallAudioRoutes.BluetoothTarget shown=CallAudioRoutes.bluetoothTarget();
+  assertNotNull(shown);assertNull(shown.device);assertEquals("Bluetooth",shown.name);
+  assertTrue(CallAudioRoutes.selectBluetooth(shown));
+  verify(service).setAudioRoute(CallAudioState.ROUTE_BLUETOOTH);verify(service,never()).requestBluetoothAudio(any());
+ }
+ @Test public void deniedDeviceNameDoesNotPreventSelectingThatExactEndpoint(){
+  CallAudioState state=state(CallAudioState.ROUTE_SPEAKER,CallAudioState.ROUTE_BLUETOOTH|CallAudioState.ROUTE_SPEAKER);
+  BluetoothDevice device=mock(BluetoothDevice.class);
+  when(state.getSupportedBluetoothDevices()).thenReturn(Collections.singletonList(device));
+  when(device.getName()).thenThrow(new SecurityException("name denied"));
+  CallAudioRoutes.BluetoothTarget shown=CallAudioRoutes.bluetoothTarget();
+  assertEquals("Bluetooth",shown.name);assertSame(device,shown.device);
+  assertTrue(CallAudioRoutes.selectBluetooth(shown));
+  verify(service).requestBluetoothAudio(device);verify(service,never()).setAudioRoute(anyInt());
+ }
+ @Test public void endpointFailureOtherThanPermissionDoesNotRedirectToAnotherDevice(){
+  CallAudioState state=state(CallAudioState.ROUTE_SPEAKER,CallAudioState.ROUTE_BLUETOOTH|CallAudioState.ROUTE_SPEAKER);
+  BluetoothDevice device=mock(BluetoothDevice.class);
+  when(state.getSupportedBluetoothDevices()).thenReturn(Collections.singletonList(device));
+  doThrow(new IllegalStateException("endpoint disconnected")).when(service).requestBluetoothAudio(device);
+  assertFalse(CallAudioRoutes.selectBluetooth(CallAudioRoutes.bluetoothTarget()));
   verify(service,never()).setAudioRoute(anyInt());
  }
 }

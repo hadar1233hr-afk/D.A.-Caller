@@ -25,9 +25,13 @@ public final class WidgetSnapshotTest extends InstrumentationTestCase {
  private ListDispatchHostActivity activity;
  private AppWidgetHost host;
  private AppWidgetManager manager;
+ private String originalFontScale;
  private final List<Integer> allocated=new ArrayList<>();
  @Override protected void setUp()throws Exception{
   super.setUp();
+  originalFontScale=shell("settings get system font_scale").trim();
+  shell("settings put system font_scale "+(getName().equals("testNarrowFavoritesFitAtLargeSystemFont")?"1.3":"1.0"));
+  Thread.sleep(350);
   getInstrumentation().getUiAutomation().adoptShellPermissionIdentity("android.permission.BIND_APPWIDGET");
   Intent intent=new Intent(getInstrumentation().getTargetContext(),ListDispatchHostActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
   activity=(ListDispatchHostActivity)getInstrumentation().startActivitySync(intent);
@@ -38,7 +42,11 @@ public final class WidgetSnapshotTest extends InstrumentationTestCase {
   try{
    ui(()->{for(int id:allocated)host.deleteAppWidgetId(id);host.stopListening();activity.finish();});
    for(int id:allocated)assertNull("Widget id survived removal",manager.getAppWidgetInfo(id));
-  }finally{getInstrumentation().getUiAutomation().dropShellPermissionIdentity();super.tearDown();}
+  }finally{
+   getInstrumentation().getUiAutomation().dropShellPermissionIdentity();
+   shell("settings put system font_scale "+(originalFontScale!=null&&originalFontScale.matches("[0-9.]+")?originalFontScale:"1.0"));
+   super.tearDown();
+  }
  }
  private void ui(Runnable r)throws Exception{
   AtomicReference<Throwable> failure=new AtomicReference<>();
@@ -79,15 +87,47 @@ public final class WidgetSnapshotTest extends InstrumentationTestCase {
    assertTrue(view.getGlobalVisibleRect(a));assertTrue(boundary.getGlobalVisibleRect(b));
    assertTrue("Widget content outside host: "+a+" / "+b,b.contains(a));
    assertTrue("Widget content clipped vertically",a.height()>=view.getHeight()-1);
+   if(view instanceof TextView){
+    TextView text=(TextView)view;
+    assertNotNull("Widget label has no text layout",text.getLayout());
+    int textHeight=text.getLayout().getHeight()+text.getCompoundPaddingTop()+text.getCompoundPaddingBottom();
+    assertTrue("Widget label glyph rows are clipped: "+text.getText(),textHeight<=text.getHeight());
+   }
   });
  }
  private void screenshot(String name)throws Exception{
-  android.os.ParcelFileDescriptor fd=getInstrumentation().getUiAutomation().executeShellCommand("mkdir -p /sdcard/Download/DA-CALLER-snapshots && screencap -p /sdcard/Download/DA-CALLER-snapshots/widget-"+name+".png");
-  try(android.os.ParcelFileDescriptor.AutoCloseInputStream in=new android.os.ParcelFileDescriptor.AutoCloseInputStream(fd)){byte[] buffer=new byte[1024];while(in.read(buffer)!=-1){}}
+  String directory="/sdcard/Download/DA-CALLER-snapshots";
+  String path=directory+"/widget-"+name+".png";
+  // UiAutomation executes one command directly; shell operators would become literal mkdir arguments.
+  shell("mkdir -p "+directory);shell("screencap -p "+path);
+  assertEquals("Widget screenshot must be a regular PNG file", "regular file",shell("stat -c %F "+path).trim());
+  String bytes=shell("stat -c %s "+path).trim();
+  assertTrue("Widget screenshot was not written: "+path+" ("+bytes+")",bytes.matches("[0-9]+"));
+  assertTrue("Widget screenshot is empty: "+path,Long.parseLong(bytes)>1000);
+ }
+ private String shell(String command)throws Exception{
+  android.os.ParcelFileDescriptor fd=getInstrumentation().getUiAutomation().executeShellCommand(command);
+  try(android.os.ParcelFileDescriptor.AutoCloseInputStream in=new android.os.ParcelFileDescriptor.AutoCloseInputStream(fd);
+      java.io.ByteArrayOutputStream result=new java.io.ByteArrayOutputStream()){
+   byte[] buffer=new byte[1024];int count;while((count=in.read(buffer))!=-1)result.write(buffer,0,count);
+   return result.toString("UTF-8");
+  }
  }
  private List<Contacts.Person> people(int count){
   String[] names={"דנה","אורי","נועה","אדם","שירה"};ArrayList<Contacts.Person> result=new ArrayList<>();
   for(int i=0;i<count;i++)result.add(new Contacts.Person(names[i],"050000000"+i,-1));return result;
+ }
+ public void testNarrowFavoritesFitAtLargeSystemFont()throws Exception{
+  assertEquals("Actual widget host must use the large system font",1.3f,activity.getResources().getConfiguration().fontScale,0.05f);
+  int favorites=add(FavoritesWidget.class);
+  for(boolean dark:new boolean[]{false,true}){
+   activity.getSharedPreferences("da_caller",Context.MODE_PRIVATE).edit().putBoolean("dark",dark).putBoolean("amoled",false).putString("language","he").commit();
+   manager.updateAppWidgetOptions(favorites,options(132,144));Thread.sleep(300);
+   AppWidgetHostView view=show(favorites,"מועדפים · גופן מוגדל",148,160,WidgetSupport.renderFavorites(activity,favorites,manager.getAppWidgetOptions(favorites),people(5),true));
+   for(int name:new int[]{R.id.widget_favorites_title,R.id.fav1_name,R.id.fav2_name,R.id.fav3_name,R.id.fav4_name})visibleWithin(view.findViewById(name),view);
+   for(int photo:new int[]{R.id.fav1_photo,R.id.fav2_photo,R.id.fav3_photo,R.id.fav4_photo})visibleWithin(view.findViewById(photo),view);
+   screenshot((dark?"dark":"light")+"-favorites-2x2-largefont");
+  }
  }
  public void testRealHostAdditionResizeThemeEmptyAndRemoval()throws Exception{
   android.graphics.Bitmap initials=WidgetSupport.avatar(activity,-1,"דנה לדוגמה",96);

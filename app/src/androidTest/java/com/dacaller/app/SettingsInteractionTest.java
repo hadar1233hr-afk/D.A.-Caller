@@ -38,6 +38,10 @@ public final class SettingsInteractionTest extends InstrumentationTestCase {
      .putBoolean("amoled",false).putBoolean("settings_group_open_2",false)
      .putBoolean("settings_group_open_5",false).apply();
     viewport[0]=new SettingsScreen(host).create();host.setContentView(viewport[0]);
+    host.getWindow().setStatusBarColor(dark?0xFF141414:0xFFF7F7F5);
+    host.getWindow().setNavigationBarColor(dark?0xFF141414:0xFFF7F7F5);
+    host.getWindow().getDecorView().setSystemUiVisibility(dark?0:
+      View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
     ViewGroup calls=(ViewGroup)find(viewport[0],"שיחות ומענה").getParent();
     assertEquals(2,calls.getChildCount());
     header[0]=(View)find(viewport[0],"הרשאות וחיבור למערכת").getParent();
@@ -83,13 +87,20 @@ public final class SettingsInteractionTest extends InstrumentationTestCase {
   getInstrumentation().waitForIdleSync();
  }
  private void snapshot(String name)throws Exception{
-  shell("mkdir -p /sdcard/Download/DA-CALLER-snapshots && screencap -p /sdcard/Download/DA-CALLER-snapshots/"+name+".png");
+  String directory="/sdcard/Download/DA-CALLER-snapshots";
+  String path=directory+"/"+name+".png";
+  // UiAutomation executes one argv command; it does not interpret shell &&.
+  shell("mkdir -p "+directory);shell("screencap -p "+path);
+  String size=shell("stat -c %s "+path).trim();
+  assertTrue("Missing or empty settings screenshot: "+path,Long.parseLong(size)>1000);
  }
- private void shell(String command)throws Exception{
+ private String shell(String command)throws Exception{
+  java.io.ByteArrayOutputStream output=new java.io.ByteArrayOutputStream();
   ParcelFileDescriptor fd=getInstrumentation().getUiAutomation().executeShellCommand(command);
   try(ParcelFileDescriptor.AutoCloseInputStream in=new ParcelFileDescriptor.AutoCloseInputStream(fd)){
-   byte[] buffer=new byte[256];while(in.read(buffer)!=-1){}
+   byte[] buffer=new byte[256];int read;while((read=in.read(buffer))!=-1)output.write(buffer,0,read);
   }
+  return output.toString("UTF-8");
  }
  private TextView find(View node,String text){
   if(node instanceof TextView&&text.contentEquals(((TextView)node).getText()))return (TextView)node;

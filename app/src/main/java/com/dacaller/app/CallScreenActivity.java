@@ -47,16 +47,19 @@ public final class CallScreenActivity extends Activity {
  private CallThemes theme;
  private String themeKey="",drawnState="",panel="normal",lastNumber="";
  private FrameLayout shell,portraitFrame;
- private LinearLayout buttons;
- private TextView caller,phase,timer,badge,identity,initials;
+ private LinearLayout buttons,hero,compactHero;
+ private TextView caller,phase,timer,badge,identity,initials,compactCaller,compactIdentity,compactTimer;
  private ImageView portrait;
  private Call toneCall,displayedCall;
+ private View animatedSheet;
  private boolean previewMuted;
  private int previewRoute=CallAudioState.ROUTE_EARPIECE;
  private final Runnable stopTone=()->{
   if(toneCall!=null){try{toneCall.stopDtmfTone();}catch(RuntimeException ignored){}toneCall=null;}
  };
  private int dp(float value){return (int)(getResources().getDisplayMetrics().density*value+0.5f);}
+ private boolean largeType(){return compact()&&getResources().getConfiguration().fontScale>1.15f;}
+ private String previewHeadsetName(){String name=getIntent().getStringExtra("preview_headset_name");return name==null?"F901":name;}
  private boolean compact(){return getResources().getDisplayMetrics().heightPixels/getResources().getDisplayMetrics().density<640;}
  private boolean preview(){return BuildConfig.DEBUG&&getIntent()!=null&&getIntent().getBooleanExtra("preview_ui",false);}
  private boolean previewBluetooth(){return preview()&&getIntent().getBooleanExtra("preview_bluetooth",false);}
@@ -75,7 +78,7 @@ public final class CallScreenActivity extends Activity {
  private GradientDrawable rounded(int color,float radius){GradientDrawable d=new GradientDrawable();d.setColor(color);d.setCornerRadius(dp(radius));return d;}
  private ImageView icon(int resource,int color,int size){
   ImageView v=new ImageView(this);v.setImageResource(resource);v.setImageTintList(ColorStateList.valueOf(color));
-  v.setScaleType(ImageView.ScaleType.FIT_CENTER);v.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);return v;
+  v.setScaleType(ImageView.ScaleType.FIT_CENTER);if(resource==R.drawable.ic_control_more)v.setRotation(90);v.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);return v;
  }
  private void add(LinearLayout parent,View child,int width,int height,int top){
   LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(width<0?width:dp(width),height<0?height:dp(height));
@@ -98,7 +101,7 @@ public final class CallScreenActivity extends Activity {
  @Override protected void onSaveInstanceState(Bundle out){out.putString("call_panel",panel);super.onSaveInstanceState(out);}
  @Override protected void onNewIntent(Intent intent){super.onNewIntent(intent);setIntent(intent);if(preview())panel=initialPanel();drawnState="";refreshSafely();}
  @Override protected void onResume(){super.onResume();PhoneSessionService.setScreenVisible(true);clockHandler.removeCallbacks(tickTask);clockHandler.post(tickTask);drawnState="";refreshSafely();}
- @Override protected void onPause(){clockHandler.removeCallbacks(tickTask);clockHandler.removeCallbacks(stopTone);stopTone.run();PhoneSessionService.setScreenVisible(false);super.onPause();}
+ @Override protected void onPause(){cancelSheetAnimation();clockHandler.removeCallbacks(tickTask);clockHandler.removeCallbacks(stopTone);stopTone.run();PhoneSessionService.setScreenVisible(false);super.onPause();}
  private void createShell(){
   theme=new CallThemes(this);themeKey=currentThemeKey();
   getWindow().setStatusBarColor(theme.background);getWindow().setNavigationBarColor(theme.style==1?theme.surface:theme.background);
@@ -108,11 +111,11 @@ public final class CallScreenActivity extends Activity {
    GradientDrawable glass=new GradientDrawable(GradientDrawable.Orientation.TL_BR,new int[]{theme.background,theme.dark?0xFF344451:0xFFD9E4EF,theme.background});shell.setBackground(glass);
   }
   if(theme.style==4)shell.addView(new DotField(this,theme.dark?0xFF252525:0xFFE1E1DE),new FrameLayout.LayoutParams(-1,-1));
-  LinearLayout hero=col();hero.setPadding(dp(theme.style==1?18:24),0,dp(theme.style==1?18:24),0);
+  hero=col();hero.setPadding(dp(theme.style==1?18:24),0,dp(theme.style==1?18:24),0);
   FrameLayout.LayoutParams hp=new FrameLayout.LayoutParams(-1,-2,Gravity.TOP);shell.addView(hero,hp);
   caller=text("",compact()?28:34,theme.ink,theme.style==0||theme.style==3);caller.setTag("call-caller");caller.setSingleLine(true);caller.setEllipsize(android.text.TextUtils.TruncateAt.END);
   identity=text("",15,theme.muted,false);identity.setTag("call-identity");identity.setSingleLine(true);identity.setEllipsize(android.text.TextUtils.TruncateAt.END);
-  phase=text("",14,theme.muted,false);phase.setSingleLine(true);timer=text("",theme.style==4?38:theme.style==3?34:17,theme.muted,false);timer.setTag("call-timer");
+  phase=text("",14,theme.muted,false);phase.setTag("call-phase");phase.setSingleLine(true);timer=text("",theme.style==4?38:theme.style==3?34:17,theme.muted,false);timer.setTag("call-timer");
   badge=text("VoLTE",10,theme.accent,true);badge.setVisibility(View.GONE);
   portraitFrame=new FrameLayout(this);portraitFrame.setTag("call-portrait");portraitFrame.setBackground(rounded(theme.surface2,theme.style==4?12:999));portraitFrame.setClipToOutline(true);
   portrait=new ImageView(this);portrait.setScaleType(ImageView.ScaleType.CENTER_CROP);portrait.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
@@ -132,6 +135,13 @@ public final class CallScreenActivity extends Activity {
    timer.setGravity(Gravity.START);phase.setGravity(Gravity.START);add(hero,timer,-1,-2,theme.style==4?28:22);add(hero,phase,-1,-2,7);
   }
   add(hero,badge,-2,-2,4);
+  compactHero=col();compactHero.setPadding(dp(20),0,dp(20),0);compactHero.setVisibility(View.GONE);
+  boolean google=theme.style==1;
+  compactTimer=text("",google?15:14,theme.muted,false);
+  compactCaller=text("",google?24:21,theme.ink,theme.style==0||theme.style==3);compactCaller.setSingleLine(true);compactCaller.setEllipsize(android.text.TextUtils.TruncateAt.END);
+  compactIdentity=text("",google?13:12,theme.muted,false);compactIdentity.setSingleLine(true);compactIdentity.setEllipsize(android.text.TextUtils.TruncateAt.END);
+  add(compactHero,compactTimer,-1,-2,google?14:4);add(compactHero,compactCaller,-1,-2,google?6:4);add(compactHero,compactIdentity,-1,-2,4);
+  shell.addView(compactHero,new FrameLayout.LayoutParams(-1,-2,Gravity.TOP));
   buttons=col();buttons.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL);
   FrameLayout.LayoutParams controls=new FrameLayout.LayoutParams(-1,-2,Gravity.BOTTOM);shell.addView(buttons,controls);
   setContentView(shell);lastNumber="";
@@ -150,14 +160,14 @@ public final class CallScreenActivity extends Activity {
    if(isFinishing()||isDestroyed()||!expected.equals(lastNumber))return;
    boolean named=name!=null&&!name.equals(expected)&&!name.trim().isEmpty();caller.setText(named?name:expected);identity.setText(named?expected:"");
    initials.setText(named?name.substring(0,name.offsetByCodePoints(0,Math.min(2,name.codePointCount(0,name.length())))):"DA");
-   portrait.setImageBitmap(picture);initials.setVisibility(picture==null?View.VISIBLE:View.GONE);
+   portrait.setImageBitmap(picture);initials.setVisibility(picture==null?View.VISIBLE:View.GONE);syncCompactHeader();
   });
  }
  private void updateTimer(){
   if(timer==null||preview())return;Call call=PhoneSessionService.current;if(call==null)return;
   if(call.getState()!=Call.STATE_ACTIVE){timer.setText("");return;}
   long connected=0;try{if(call.getDetails()!=null)connected=call.getDetails().getConnectTimeMillis();}catch(RuntimeException ignored){}
-  long seconds=connected>0?Math.max(0,(System.currentTimeMillis()-connected)/1000):0;timer.setText(String.format(Locale.US,"%02d:%02d",seconds/60,seconds%60));
+  long seconds=connected>0?Math.max(0,(System.currentTimeMillis()-connected)/1000):0;timer.setText(String.format(Locale.US,"%02d:%02d",seconds/60,seconds%60));if(compactTimer!=null)compactTimer.setText(timer.getText());
  }
  private void updateBadge(){
   if(badge==null||preview())return;Call call=PhoneSessionService.current;
@@ -174,18 +184,33 @@ public final class CallScreenActivity extends Activity {
   if(state!=Call.STATE_ACTIVE){clockHandler.removeCallbacks(stopTone);stopTone.run();}
   if(state==Call.STATE_RINGING||state==Call.STATE_DIALING||state==Call.STATE_CONNECTING)getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);else getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
   String stage=state==Call.STATE_RINGING?"שיחה נכנסת":state==Call.STATE_DIALING?"מחייג…":state==Call.STATE_CONNECTING?"מתחבר…":state==Call.STATE_HOLDING?"בהמתנה":"שיחה פעילה";
-  phase.setText(tr(stage));phase.setVisibility(theme.style==1&&state==Call.STATE_ACTIVE?View.GONE:View.VISIBLE);
+  phase.setText(tr(stage));phase.setVisibility(state==Call.STATE_ACTIVE&&(theme.style==1||largeType()&&theme.style!=4)?View.GONE:View.VISIBLE);
   if(preview())setPreviewIdentity();
   else{updateCaller(call);updateTimer();updateBadge();}
-  String config=System.identityHashCode(call)+"/"+state+"/"+muted()+"/"+speaker()+"/"+CallAudioRoutes.route()+"/"+CallAudioRoutes.supported()+"/"+CallAudioRoutes.bluetoothName()+"/"+panel+"/"+prefs.getString("answer_mode","ios");
+  applyPanelHeader();
+  String config=System.identityHashCode(call)+"/"+state+"/"+muted()+"/"+speaker()+"/"+CallAudioRoutes.route()+"/"+CallAudioRoutes.supported()+"/"+CallAudioRoutes.bluetoothName()+"/"+panel+"/"+prefs.getString("answer_mode","ios")+"/"+canHold(call,state)+"/"+canAdd(call,state);
   for(String id:InCallControls.IDS)config+="/"+InCallControls.enabled(prefs,id);
-  if(config.equals(drawnState))return;drawnState=config;buttons.removeAllViews();
+  if(config.equals(drawnState))return;drawnState=config;cancelSheetAnimation();buttons.removeAllViews();
   if(state==Call.STATE_RINGING){panel="normal";buttons.setPadding(dp(18),dp(10),dp(18),dp(20));incoming(call);}else active(call,state);
  }
  /** Synthetic strings are fixture data, never production caller information. */
  @android.annotation.SuppressLint("SetTextI18n")
  private void setPreviewIdentity(){
-  caller.setText(I18n.isEnglish(this)?"Dana Abraham":"דנה אברהם");identity.setText("050-123-4567");timer.setText("00:11");initials.setText("DA");badge.setVisibility(View.GONE);
+  String name=getIntent().getStringExtra("preview_name");caller.setText(name==null?(I18n.isEnglish(this)?"Dana Abraham":"דנה אברהם"):name);identity.setText("050-123-4567");timer.setText("00:11");initials.setText("DA");badge.setVisibility(View.GONE);
+ }
+ private void syncCompactHeader(){
+  if(compactCaller==null)return;compactCaller.setText(caller.getText());compactIdentity.setText(identity.getText());compactTimer.setText(timer.getText());
+ }
+ private void applyPanelHeader(){
+  boolean condensed=!"normal".equals(panel)&&!("more".equals(panel)&&theme.style==1&&!largeType());
+  hero.setVisibility(condensed?View.GONE:View.VISIBLE);compactHero.setVisibility(condensed?View.VISIBLE:View.GONE);
+  boolean keypad="keypad".equals(panel);compactCaller.setVisibility(keypad?View.GONE:View.VISIBLE);compactIdentity.setVisibility(keypad?View.GONE:View.VISIBLE);
+  // Canonical tags always describe the visible presentation (or a wholly hidden keypad title).
+  caller.setTag(condensed?"call-caller-primary":"call-caller");compactCaller.setTag(condensed?"call-caller":"call-caller-condensed");
+  identity.setTag(condensed?"call-identity-primary":"call-identity");compactIdentity.setTag(condensed?"call-identity":"call-identity-condensed");
+  timer.setTag(condensed?"call-timer-primary":"call-timer");compactTimer.setTag(condensed?"call-timer":"call-timer-condensed");
+  LinearLayout.LayoutParams time=(LinearLayout.LayoutParams)compactTimer.getLayoutParams();time.topMargin=dp(keypad?(theme.style==1?(largeType()?40:48):24):(theme.style==1?(largeType()?18:32):4));compactTimer.setLayoutParams(time);
+  syncCompactHeader();
  }
  private void showEmergencyCallControls(){
   try{
@@ -295,14 +320,15 @@ public final class CallScreenActivity extends Activity {
    cell.setBackground(rounded(selected?theme.selected:theme.surface2,theme.style==4?8:18));
    LinearLayout inside=row();inside.setGravity(Gravity.CENTER);inside.setPadding(dp(9),0,dp(9),0);cell.addView(inside,new LinearLayout.LayoutParams(-1,-1));
    inside.addView(icon(resource,selected?theme.selectedInk:theme.ink,25),new LinearLayout.LayoutParams(dp(25),dp(25)));
-   TextView label=text(visibleTitle,13,selected?theme.selectedInk:theme.ink,true);label.setSingleLine(true);label.setEllipsize(android.text.TextUtils.TruncateAt.END);LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(0,-2,1);lp.leftMargin=dp(8);inside.addView(label,lp);
+   TextView label=text(visibleTitle,13,selected?theme.selectedInk:theme.ink,true);label.setTag("call-action-label-"+id);label.setSingleLine(true);label.setEllipsize(android.text.TextUtils.TruncateAt.END);LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(0,-2,1);lp.leftMargin=dp(8);inside.addView(label,lp);
   }else{
-   FrameLayout circle=new FrameLayout(this);int diameter=condensed?(theme.style==2?52:60):theme.style==2?56:54;
+   FrameLayout circle=new FrameLayout(this);int diameter=condensed?(theme.style==2?52:largeType()?54:60):theme.style==2?56:54;
    GradientDrawable bg=rounded(selected?theme.selected:theme.surface2,selected&&theme.style==1?16:999);
    if(theme.style==2&&!selected){bg.setStroke(dp(1),theme.dark?0xFF7A8A9E:0xFFFFFFFF);circle.setElevation(dp(2));}
    circle.setBackground(bg);cell.addView(circle,new LinearLayout.LayoutParams(dp(diameter),dp(diameter)));
-   circle.addView(icon(resource,selected?theme.selectedInk:theme.ink,27),new FrameLayout.LayoutParams(dp(27),dp(27),Gravity.CENTER));
-   TextView label=text(visibleTitle,12,theme.style==1?theme.muted:theme.ink,false);label.setSingleLine(true);label.setEllipsize(android.text.TextUtils.TruncateAt.END);add(cell,label,-1,-2,5);
+   ImageView glyph=icon(resource,selected?theme.selectedInk:theme.ink,27);circle.addView(glyph,new FrameLayout.LayoutParams(dp(27),dp(27),Gravity.CENTER));
+   if(theme.style==1&&"audio".equals(id)&&route()==CallAudioState.ROUTE_BLUETOOTH){glyph.setTranslationX(dp(7));ImageView arrow=icon(R.drawable.ic_call_chevron,selected?theme.selectedInk:theme.ink,13);arrow.setTranslationX(dp(-14));circle.addView(arrow,new FrameLayout.LayoutParams(dp(13),dp(13),Gravity.CENTER));}
+   TextView label=text(visibleTitle,12,theme.style==1?theme.muted:theme.ink,false);label.setTag("call-action-label-"+id);label.setSingleLine(true);label.setEllipsize(android.text.TextUtils.TruncateAt.END);add(cell,label,-1,-2,5);
   }
   if(!enabled){cell.setAlpha(0.45f);cell.setContentDescription(title+" · "+tr("לא זמין בשיחה זו"));cell.setEnabled(false);}
   final boolean allowed=enabled;TouchFeedback.bind(cell,prefs);
@@ -318,25 +344,39 @@ public final class CallScreenActivity extends Activity {
  }
  private int actionIcon(String id,int state){
   switch(id){case "audio":return (route()==CallAudioState.ROUTE_BLUETOOTH)?R.drawable.ic_control_bluetooth:speaker()?R.drawable.ic_control_speaker:R.drawable.ic_phone_line;
-   case "mute":return muted()?R.drawable.ic_control_mic_off:R.drawable.ic_control_mic;case "keypad":return R.drawable.ic_control_dialpad;case "more":return R.drawable.ic_control_more;
-   case "hold":return state==Call.STATE_HOLDING?R.drawable.ic_control_play:R.drawable.ic_control_pause;case "addcall":return R.drawable.ic_control_add;case "contacts":return R.drawable.ic_contacts;default:return R.drawable.ic_control_note;}
+   case "mute":return muted()?R.drawable.ic_control_mic_off:R.drawable.ic_control_mic;case "keypad":return theme.style==1?R.drawable.ic_call_dialpad:R.drawable.ic_control_dialpad;case "more":return R.drawable.ic_control_more;
+   case "hold":return state==Call.STATE_HOLDING?R.drawable.ic_control_play:R.drawable.ic_control_pause;case "addcall":return R.drawable.ic_call_add;case "contacts":return R.drawable.ic_contacts;default:return R.drawable.ic_control_note;}
  }
- private String audioTitle(){if(preview()&&route()==CallAudioState.ROUTE_BLUETOOTH)return "Demo headset";if(route()==CallAudioState.ROUTE_BLUETOOTH)return CallAudioRoutes.bluetoothName();return tr(speaker()?"רמקול":"טלפון");}
+ private String audioTitle(){if(preview()&&route()==CallAudioState.ROUTE_BLUETOOTH)return previewHeadsetName();if(route()==CallAudioState.ROUTE_BLUETOOTH)return CallAudioRoutes.bluetoothName();return tr(speaker()?"רמקול":"טלפון");}
  private boolean canHold(Call call,int state){if(preview())return true;return call!=null&&call.getDetails()!=null&&(state==Call.STATE_ACTIVE||state==Call.STATE_HOLDING)&&call.getDetails().can(Call.Details.CAPABILITY_HOLD);}
  private boolean canAdd(Call call,int state){return preview()||call!=null&&(state==Call.STATE_ACTIVE||state==Call.STATE_HOLDING)&&PhoneSessionService.instance!=null&&PhoneSessionService.instance.canAddCall();}
  private void performAction(String id,Call call,int state){
   switch(id){
    case "more":setPanel("more");break;case "audio":setPanel("audio");break;case "keypad":setPanel("keypad");break;
    case "mute":if(preview()){previewMuted=!previewMuted;drawnState="";refreshSafely();}else PhoneSessionService.mute(!PhoneSessionService.muted());break;
-   case "hold":if(call!=PhoneSessionService.current||call==null)return;try{if(state==Call.STATE_HOLDING)call.unhold();else call.hold();}catch(RuntimeException e){callError();}break;
-   case "addcall":if(!preview()){Intent dial=new Intent(this,MainActivity.class).setAction(Intent.ACTION_DIAL).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);startActivity(dial);}break;
+   case "hold":if(call!=PhoneSessionService.current||call==null||!canHold(call,call.getState()))return;try{if(call.getState()==Call.STATE_HOLDING)call.unhold();else call.hold();}catch(RuntimeException e){callError();}break;
+   case "addcall":if(!preview()&&call==PhoneSessionService.current&&call!=null&&canAdd(call,call.getState())){Intent dial=new Intent(this,MainActivity.class).setAction(Intent.ACTION_DIAL).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);startActivity(dial);}break;
    case "contacts":if(!preview()){Intent open=new Intent(this,MainActivity.class).putExtra("show_contacts",true).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);startActivity(open);}break;
    case "notes":if(!preview())openNote(call);break;
   }
  }
  private void setPanel(String value){
-  String next=value.equals(panel)?"normal":value;clockHandler.removeCallbacks(stopTone);stopTone.run();panel=next;drawnState="";refreshSafely();
-  View sheet=shell.findViewWithTag("call-sheet-"+panel);if(sheet!=null&&ValueAnimator.areAnimatorsEnabled()){sheet.setAlpha(0.35f);sheet.setTranslationY(dp(10));sheet.animate().alpha(1).translationY(0).setDuration(180).start();}
+  cancelSheetAnimation();String next=value.equals(panel)?"normal":value;clockHandler.removeCallbacks(stopTone);stopTone.run();panel=next;drawnState="";refreshSafely();
+  View sheet=shell.findViewWithTag("call-sheet-"+panel);
+  if(sheet!=null&&ValueAnimator.areAnimatorsEnabled()){
+   animatedSheet=sheet;sheet.setAlpha(0.35f);
+   android.view.ViewPropertyAnimator animation=sheet.animate().alpha(1).setDuration(180);
+   switch(theme.style){
+    case 0:sheet.setTranslationX(dp(10));animation.translationX(0);break;
+    case 2:sheet.setScaleX(0.97f);sheet.setScaleY(0.97f);animation.scaleX(1).scaleY(1);break;
+    case 4:break; // A clean fade suits the monochrome geometry.
+    default:sheet.setTranslationY(dp(theme.style==3?8:10));animation.translationY(0);break;
+   }
+   animation.start();
+  }
+ }
+ private void cancelSheetAnimation(){
+  if(animatedSheet==null)return;animatedSheet.animate().cancel();animatedSheet.setAlpha(1);animatedSheet.setTranslationX(0);animatedSheet.setTranslationY(0);animatedSheet.setScaleX(1);animatedSheet.setScaleY(1);animatedSheet=null;
  }
  private FrameLayout endButton(Call call){
   FrameLayout end=new FrameLayout(this);end.setTag("call-end");end.setContentDescription(tr("סיום שיחה"));end.setFocusable(true);
@@ -344,6 +384,9 @@ public final class CallScreenActivity extends Activity {
   end.setBackground(rounded(fill,theme!=null&&theme.style==4?12:999));end.addView(icon(R.drawable.ic_call_hangup,ink,31),new FrameLayout.LayoutParams(dp(31),dp(31),Gravity.CENTER));
   TouchFeedback.bind(end,prefs);end.setOnClickListener(v->{if(call==null||call!=PhoneSessionService.current)return;feedback(end);try{if(call.getState()==Call.STATE_RINGING)call.reject(false,null);else call.disconnect();}catch(RuntimeException e){callError();}});return end;
  }
+ /** Physical right matches the reference's fixed LTR row; Hebrew retains its text direction. */
+ @android.annotation.SuppressLint("RtlHardcoded")
+ private void alignSheetTextRight(TextView text){text.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);text.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);}
  private void addSheet(LinearLayout deck,Call call,int state){
   LinearLayout sheet=col();sheet.setTag("call-sheet-"+panel);sheet.setPadding(dp(theme.style==1?6:0),0,dp(theme.style==1?6:0),0);
   if(theme.style!=1){sheet.setBackground(rounded(theme.surface,theme.style==4?8:24));}
@@ -351,13 +394,16 @@ public final class CallScreenActivity extends Activity {
   LinearLayout header=row();header.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);add(sheet,header,-1,48,0);
   FrameLayout close=new FrameLayout(this);close.setTag("call-sheet-close");close.setContentDescription(tr("סגור"));close.setFocusable(true);
   close.addView(icon(R.drawable.ic_control_close,theme.muted,23),new FrameLayout.LayoutParams(dp(23),dp(23),Gravity.CENTER));header.addView(close,new LinearLayout.LayoutParams(dp(48),dp(48)));TouchFeedback.bind(close,prefs);close.setOnClickListener(v->setPanel(panel));
-  TextView title=text("audio".equals(panel)?(previewBluetooth()||CallAudioRoutes.supported()==CallAudioState.ROUTE_BLUETOOTH?"Bluetooth":tr("פלט שמע")):"more".equals(panel)?tr("אפשרויות נוספות"):"",15,theme.ink,"audio".equals(panel));title.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
+  TextView title=text("audio".equals(panel)?(previewBluetooth()||CallAudioRoutes.supported()==CallAudioState.ROUTE_BLUETOOTH?"Bluetooth":tr("פלט שמע")):"more".equals(panel)?tr("אפשרויות נוספות"):"",15,theme.ink,"audio".equals(panel));alignSheetTextRight(title);
   header.addView(title,new LinearLayout.LayoutParams(0,-1,1));
   if("keypad".equals(panel))addKeypad(sheet,call);else{
    ScrollView viewport=new ScrollView(this);viewport.setVerticalScrollBarEnabled(false);LinearLayout options=col();options.setPadding(0,dp(4),0,dp(2));viewport.addView(options);
    if("audio".equals(panel)){
     int supported=preview()?CallAudioState.ROUTE_EARPIECE|CallAudioState.ROUTE_SPEAKER|(previewBluetooth()?CallAudioState.ROUTE_BLUETOOTH:0):CallAudioRoutes.supported();
-    if((supported&CallAudioState.ROUTE_BLUETOOTH)!=0)addAudioOption(options,previewBluetooth()?"Demo headset":CallAudioRoutes.bluetoothName(),CallAudioState.ROUTE_BLUETOOTH,R.drawable.ic_control_bluetooth);
+    if((supported&CallAudioState.ROUTE_BLUETOOTH)!=0){
+     CallAudioRoutes.BluetoothTarget endpoint=preview()?null:CallAudioRoutes.bluetoothTarget();
+     if(preview()||endpoint!=null)addAudioOption(options,previewBluetooth()?previewHeadsetName():endpoint.name,CallAudioState.ROUTE_BLUETOOTH,R.drawable.ic_control_bluetooth,endpoint);
+    }
     if((supported&CallAudioState.ROUTE_SPEAKER)!=0)addAudioOption(options,tr("רמקול"),CallAudioState.ROUTE_SPEAKER,R.drawable.ic_control_speaker);
     if((supported&CallAudioState.ROUTE_WIRED_HEADSET)!=0)addAudioOption(options,tr("אוזניות קוויות"),CallAudioState.ROUTE_WIRED_HEADSET,R.drawable.ic_phone_line);
     if((supported&CallAudioState.ROUTE_EARPIECE)!=0)addAudioOption(options,tr("טלפון"),CallAudioState.ROUTE_EARPIECE,R.drawable.ic_phone_line);
@@ -372,11 +418,12 @@ public final class CallScreenActivity extends Activity {
    add(sheet,viewport,-1,height,0);
   }
  }
- private void addAudioOption(LinearLayout options,String label,int route,int resource){
+ private void addAudioOption(LinearLayout options,String label,int route,int resource){addAudioOption(options,label,route,resource,null);}
+ private void addAudioOption(LinearLayout options,String label,int route,int resource,CallAudioRoutes.BluetoothTarget endpoint){
   boolean selected=route()==route;
   LinearLayout option=optionRow(options,label,resource,selected);option.setTag("audio-route-"+route);
   option.setContentDescription(label+(selected?" · "+tr("נבחר"):""));option.setSelected(selected);TouchFeedback.bind(option,prefs);
-  option.setOnClickListener(v->{feedback(option);if(preview()){previewRoute=route;}else if(!CallAudioRoutes.select(route)){callError();return;}panel="normal";drawnState="";refreshSafely();});
+  option.setOnClickListener(v->{feedback(option);if(preview()){previewRoute=route;}else if(!(route==CallAudioState.ROUTE_BLUETOOTH&&endpoint!=null?CallAudioRoutes.selectBluetooth(endpoint):CallAudioRoutes.select(route))){callError();return;}panel="normal";drawnState="";refreshSafely();});
  }
  private void addMoreOption(LinearLayout options,String id,Call call,int state,boolean enabled){
   LinearLayout option=optionRow(options,actionTitle(id,state),actionIcon(id,state),false);option.setTag("call-option-"+id);
@@ -387,8 +434,8 @@ public final class CallScreenActivity extends Activity {
  private LinearLayout optionRow(LinearLayout parent,String label,int resource,boolean selected){
   LinearLayout option=row();option.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);option.setPadding(dp(12),0,dp(12),0);option.setBackground(rounded(theme.surface2,theme.style==4?6:18));
   LinearLayout.LayoutParams op=new LinearLayout.LayoutParams(-1,dp(compact()?52:58));op.topMargin=dp(2);parent.addView(option,op);
-  TextView check=text(selected?"✓":"",20,theme.selected,false);option.addView(check,new LinearLayout.LayoutParams(dp(24),-2));
-  TextView name=text(label,16,theme.ink,false);name.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);name.setSingleLine(true);name.setEllipsize(android.text.TextUtils.TruncateAt.END);LinearLayout.LayoutParams np=new LinearLayout.LayoutParams(0,-1,1);np.rightMargin=dp(12);option.addView(name,np);
+  TextView check=text(selected?"✓":"",20,theme.dark?theme.selected:theme.selectedInk,false);option.addView(check,new LinearLayout.LayoutParams(dp(24),-2));
+  TextView name=text(label,16,theme.ink,false);alignSheetTextRight(name);name.setSingleLine(true);name.setEllipsize(android.text.TextUtils.TruncateAt.END);LinearLayout.LayoutParams np=new LinearLayout.LayoutParams(0,-1,1);np.rightMargin=dp(12);option.addView(name,np);
   FrameLayout round=new FrameLayout(this);round.setBackground(rounded(selected?theme.selected:theme.surface,999));round.addView(icon(resource,selected?theme.selectedInk:theme.ink,23),new FrameLayout.LayoutParams(dp(23),dp(23),Gravity.CENTER));option.addView(round,new LinearLayout.LayoutParams(dp(36),dp(36)));option.setFocusable(true);return option;
  }
  private void addKeypad(LinearLayout sheet,Call call){
@@ -401,7 +448,8 @@ public final class CallScreenActivity extends Activity {
     boolean available=preview()||call!=null&&call.getState()==Call.STATE_ACTIVE;
     if(!available){key.setEnabled(false);key.setAlpha(0.4f);key.setContentDescription(digit+" · "+tr("לא זמין בשיחה זו"));}
     key.setBackground(rounded(theme.surface2,theme.style==4?8:theme.style==3?18:999));LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(0,dp(compact()?48:60),1);p.setMargins(dp(3),dp(2),dp(3),dp(2));line.addView(key,p);
-    add(key,text(digit,compact()?26:30,theme.ink,false),-1,-2,0);if(!letters[i].isEmpty())add(key,text(letters[i],10,theme.muted,false),-1,-2,0);
+    TextView number=text(digit,largeType()?21:compact()?26:30,theme.ink,false);number.setTag("dtmf-digit-"+digit);add(key,number,-1,-2,0);
+    if(!letters[i].isEmpty()){TextView caption=text(letters[i],largeType()?9:10,theme.muted,false);caption.setTag("dtmf-caption-"+digit);add(key,caption,-1,-2,0);}
     TouchFeedback.bind(key,prefs);key.setOnClickListener(v->playDigit(call,digit.charAt(0),key));
    }
   }
@@ -427,6 +475,6 @@ public final class CallScreenActivity extends Activity {
   dialog.setContentView(wrap);dialog.show();
   Window window=dialog.getWindow();if(window!=null){window.setBackgroundDrawableResource(android.R.color.transparent);window.setLayout(-1,-2);}
  }
- @Override protected void onDestroy(){clockHandler.removeCallbacksAndMessages(null);stopTone.run();PhoneSessionService.unregister(changed);super.onDestroy();}
+ @Override protected void onDestroy(){cancelSheetAnimation();clockHandler.removeCallbacksAndMessages(null);stopTone.run();PhoneSessionService.unregister(changed);super.onDestroy();}
  @Override public void onBackPressed(){if(!"normal".equals(panel)){setPanel(panel);return;}moveTaskToBack(true);}
 }

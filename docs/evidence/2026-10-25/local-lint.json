@@ -1,0 +1,11 @@
+{
+  "errors": 0,
+  "warnings": 1,
+  "findings": [
+    {
+      "id": "OldTargetApi",
+      "severity": "Warning",
+      "message": "Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the `android.os.Build.VERSION_CODES` javadoc for details."
+    }
+  ]
+}

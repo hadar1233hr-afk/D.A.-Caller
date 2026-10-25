@@ -11,6 +11,8 @@ on:
       - '.github/workflows/android.yml'
       - 'scripts/run-android-ui.sh'
       - 'scripts/verify-ui-matrix.py'
+      - 'scripts/verify-visual-review.py'
+      - 'docs/evidence/2026-10-25/**'
   push:
     branches: [main]
     paths:
@@ -23,6 +25,7 @@ on:
       - '.github/workflows/android.yml'
       - 'scripts/run-android-ui.sh'
       - 'scripts/verify-ui-matrix.py'
+      - 'scripts/verify-visual-review.py'
   workflow_dispatch:
     inputs:
       publish_beta:
@@ -141,7 +144,7 @@ jobs:
           target: google_apis
           arch: x86_64
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -prop qemu.hw.mainkeys=0
           # This action executes each input line in a separate shell.
           script: bash scripts/run-android-ui.sh
       - uses: actions/upload-artifact@v4
@@ -152,6 +155,7 @@ jobs:
             app/build/reports/androidTests/
             app/build/outputs/androidTest-results/
             app/build/ui-snapshots/
+            app/build/ui-device-config.txt
           if-no-files-found: warn
           retention-days: 30
 
@@ -256,6 +260,15 @@ jobs:
       contents: write
       actions: read
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Require visual review of this exact application source
+        if: github.event.pull_request.head.ref == 'codex/da-caller-visual-20261025'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: python3 scripts/verify-visual-review.py
       - uses: actions/download-artifact@v4
         with:
           name: DA-CALLER-${{ needs.validate.outputs.version }}-debug-${{ github.sha }}
@@ -288,6 +301,11 @@ jobs:
           if gh release view "v$VERSION-debug" >/dev/null 2>&1; then
             echo 'Debug preview already exists; never overwrite a release.' >&2
             exit 0
+          fi
+          EXISTING_PREVIEW_TAG=$(git ls-remote --tags origin "refs/tags/v$VERSION-debug")
+          if [ -n "$EXISTING_PREVIEW_TAG" ]; then
+            echo 'Debug preview tag already exists without a release; choose a new version.' >&2
+            exit 1
           fi
           cat > preview-notes.md <<'NOTES'
           # DA CALLER — UNVERIFIED DEBUG TEST BUILD

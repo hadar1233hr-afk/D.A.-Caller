@@ -1,0 +1,19 @@
+{
+  "review_status": "FAIL",
+  "screenshot_source_sha": "9cc0be7d187aa5c1e6a1149ddf9e77bc67bd384c",
+  "screenshot_run_id": 40174363561,
+  "instrumentation_result": {"tests": 14, "failures": 0, "errors": 0},
+  "real_call_png_count": 81,
+  "reviewed_matrix_png_count": 80,
+  "findings": [
+    {"id": "VIS-01", "observed": "DTMF Latin captions and plus clipped at fontScale1.3 across all styles", "example": "call-pixel-dark-keypad-largefont.png"},
+    {"id": "VIS-02", "observed": "Condensed main-dock label baselines clipped at fontScale1.3", "example": "call-graphite-light-keypad-largefont.png"},
+    {"id": "VIS-03", "observed": "Open sheets partially cover caller, number or timer; partial text must be replaced by a coherent compact header", "example": "call-frost-dark-more-largefont.png"},
+    {"id": "VIS-04", "observed": "Hebrew sheet titles and route names align physically left rather than the reference's right", "example": "call-pixel-dark-audio-standard.png"},
+    {"id": "VIS-05", "observed": "Selected checkmark has weak contrast in light audio list", "example": "call-ivory-light-audio-largefont.png"},
+    {"id": "VIS-06", "observed": "Widget/settings capture commands created directories named .png; green interaction tests and matrix filename list were not proof of valid images", "resolution": "Separate shell commands, stat regular-file assertions and verifier requiring real PNG bytes for every supplemental image"},
+    {"id": "VIS-07", "observed": "Google More glyph horizontal; reference uses vertical dots; audio control lacks dropdown affordance", "example": "call-pixel-dark-normal-standard.png"}
+  ],
+  "release_allowed": false,
+  "note": "Observed images were inspected at full size and contact sheets. No visual-reviewed label applied. No physical/SIM validation claimed."
+}

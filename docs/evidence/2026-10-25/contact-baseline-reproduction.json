@@ -1,0 +1,7 @@
+{
+  "baseline_commit": "cff9ac462ca3cdccc4387b28416a18204336e806",
+  "test": "detailReturnAndTwoRefreshesBeforeRestoreKeepSameContactAndOffset",
+  "failure": "java.lang.AssertionError: The visible contact ID must survive same-frame page replacement expected:<47> but was:<1>",
+  "kind": "Reproduced old-code contact anchor overwrite in Robolectric; no real contact data",
+  "current_result": "Same regression passes in consolidated 136-test run"
+}

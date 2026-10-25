@@ -2,7 +2,7 @@
   "kind": "JVM Robolectric Android framework simulation; not device/telephony proof",
   "command": "gradle --init-script work/settings-test.init.gradle --no-daemon --max-workers=2 :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleDebugAndroidTest",
   "totals": {
-    "tests": 125,
+    "tests": 136,
     "failures": 0,
     "errors": 0,
     "skipped": 0
@@ -40,19 +40,27 @@
     },
     {
       "class": "com.dacaller.app.CallAudioRoutesTest",
-      "tests": 9,
+      "tests": 17,
       "failures": 0,
       "errors": 0,
       "skipped": 0,
       "cases": [
+        "deniedDeviceAndGenericCommandsReturnFailureWithoutChangingSelection",
         "deniedBluetoothNamePermissionKeepsGenericRealRouteLabel",
+        "disconnectedDisplayedHeadsetCannotRedirectTapToAnotherHeadset",
         "stateProviderFailureIsSafe",
+        "activeBluetoothSelectionTargetsTheDeviceWhoseNameIsShown",
+        "deniedDeviceNameDoesNotPreventSelectingThatExactEndpoint",
         "bluetoothIsHiddenWhenTelecomDoesNotSupportItEvenWithStaleDevice",
         "arbitraryMasksCannotBeSubmittedAsARoute",
+        "endpointFailureOtherThanPermissionDoesNotRedirectToAnotherDevice",
         "supportedSelectionWaitsForTelecomAcknowledgementBeforeChangingUiState",
         "availableBluetoothLabelUsesSupportedDeviceWhenSpeakerIsActive",
         "bluetoothLabelUsesTheActualActiveDevice",
+        "deviceRequestPermissionDenialFallsBackToTheSupportedGenericRoute",
+        "genericBluetoothRouteRemainsUsableWithoutEndpointDetails",
         "unboundServiceNeverOffersOrSelectsPhantomRoutes",
+        "displayedBluetoothTargetSurvivesSupportedDeviceReordering",
         "rejectedRouteCommandDoesNotCrashOrInventSelection"
       ]
     },
@@ -99,7 +107,7 @@
     },
     {
       "class": "com.dacaller.app.CallScreenActivityTest",
-      "tests": 16,
+      "tests": 18,
       "failures": 0,
       "errors": 0,
       "skipped": 0,
@@ -113,12 +121,14 @@
         "emergencyCallControlsHaveCallEndAction",
         "dialingAndConnectedScreensRenderAllFiveLayoutsWithoutCrashing",
         "newInstallDefaultsToGoogleWithoutOverwritingSavedChoice",
+        "audioPickerTargetsTheHeadsetWhoseNameWasDisplayed",
         "completedSwipeAnswersExactlyOnce",
         "android26UsesCompatibleLockscreenFlags",
         "replacingCallStopsToneAndStaleKeyCannotAffectSuccessor",
         "closingKeypadAndPausingStopsDtmf",
         "unsupportedHoldDoesNotIssueTelecomCommand",
         "allFiveThemesRespectLightDarkAndAmoled",
+        "capabilityChangesInTheSameCallStateRefreshAndGuardCommands",
         "noBluetoothOptionWithoutAnActualSupportedRoute"
       ]
     },
@@ -247,11 +257,12 @@
     },
     {
       "class": "com.dacaller.app.PhoneSessionServiceTest",
-      "tests": 8,
+      "tests": 9,
       "failures": 0,
       "errors": 0,
       "skipped": 0,
       "cases": [
+        "telecomAddCallAvailabilityNotifiesVisibleControlsWithoutStateChange",
         "delayedNotificationAnswerCannotAnswerAnotherCall",
         "removingSecondCallRestoresFirstAndKeepsNotification",
         "proximityOnlyProtectsEarpieceCalls",
@@ -295,5 +306,6 @@
         "eachFavoriteSlotCarriesItsExactNumberAndContactId"
       ]
     }
-  ]
+  ],
+  "notes": "Includes exact Bluetooth endpoint and capability-change regressions; final source changes validated locally after initial CI push."
 }
