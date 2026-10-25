@@ -33,9 +33,9 @@ public class CallScreenActivityTest {
   preferences=application.getSharedPreferences("da_caller",Context.MODE_PRIVATE);
   preferences.edit().clear().putString("language","en").commit();
   call=mock(Call.class);when(call.getState()).thenReturn(Call.STATE_RINGING);
-  PhoneSessionService.current=call;
+  PhoneSessionService.current=call;PhoneSessionService.instance=null;
  }
- @After public void clean(){if(controller!=null)controller.pause().stop().destroy();PhoneSessionService.current=null;}
+ @After public void clean(){if(controller!=null)controller.pause().stop().destroy();PhoneSessionService.current=null;PhoneSessionService.instance=null;}
  private CallScreenActivity open(){controller=Robolectric.buildActivity(CallScreenActivity.class).setup();return controller.get();}
  private View find(View view,String description){
   if(description.contentEquals(view.getContentDescription()==null?"":view.getContentDescription()))return view;
@@ -55,6 +55,7 @@ public class CallScreenActivityTest {
     controller=Robolectric.buildActivity(CallScreenActivity.class).setup();
     CallScreenActivity activity=controller.get();
     assertFalse("crashed with "+theme+" state "+state,activity.isFinishing());
+    assertNotNull("custom layout fell back unexpectedly "+theme,activity.findViewById(android.R.id.content).findViewWithTag("call-root"));
     assertNotNull("missing end-call control "+theme,
       find(activity,I18n.text(activity,"סיום שיחה")));
     controller.pause().stop().destroy();
@@ -71,7 +72,9 @@ public class CallScreenActivityTest {
   }catch(ReflectiveOperationException e){throw new AssertionError(e);}
   ViewGroup root=(ViewGroup)activity.findViewById(android.R.id.content);
   assertNotNull(root);
-  assertTrue("emergency UI must show an end-call label",hasText(root,I18n.text(activity,"סיום שיחה")));
+  assertNotNull("emergency UI must retain accessible end action",find(activity,"End call"));
+  assertFalse("end label is TalkBack-only",hasText(root,"End call"));
+  find(activity,"End call").performClick();verify(call).disconnect();
  }
  private boolean hasText(View view,String value){
   if(view instanceof android.widget.TextView&&value.equals(((android.widget.TextView)view).getText()))return true;
@@ -115,4 +118,103 @@ public class CallScreenActivityTest {
    CallThemes amoled=new CallThemes(RuntimeEnvironment.getApplication());assertTrue(amoled.dark);assertTrue(amoled.amoled);assertEquals(android.graphics.Color.BLACK,amoled.background);
   }
  }
+ private View tagged(CallScreenActivity activity,String tag){return activity.findViewById(android.R.id.content).findViewWithTag(tag);}
+ @Test public void newInstallDefaultsToGoogleWithoutOverwritingSavedChoice(){
+  assertEquals(1,new CallThemes(RuntimeEnvironment.getApplication()).style);
+  preferences.edit().putString("call_theme","graphite").commit();
+  assertEquals(0,new CallThemes(RuntimeEnvironment.getApplication()).style);
+  open();assertEquals("graphite",preferences.getString("call_theme",""));
+ }
+ @Test public void sheetTransitionsAreExclusiveAndBackClosesSheet(){
+  when(call.getState()).thenReturn(Call.STATE_ACTIVE);CallScreenActivity a=open();
+  for(String next:new String[]{"more","audio","keypad","more"}){
+   tagged(a,"call-action-"+next).performClick();
+   for(String sheet:new String[]{"more","audio","keypad"})assertEquals(sheet.equals(next),tagged(a,"call-sheet-"+sheet)!=null);
+   assertNotNull(tagged(a,"call-end"));assertNotNull(tagged(a,"call-sheet-close"));
+  }
+  a.onBackPressed();assertNull(tagged(a,"call-sheet-more"));assertFalse(a.isFinishing());
+ }
+ @Test public void noBluetoothOptionWithoutAnActualSupportedRoute(){
+  when(call.getState()).thenReturn(Call.STATE_ACTIVE);CallScreenActivity a=open();
+  tagged(a,"call-action-audio").performClick();
+  assertNull(tagged(a,"audio-route-"+android.telecom.CallAudioState.ROUTE_BLUETOOTH));
+ }
+ @Test public void allEndButtonsAreIconOnlyAccessibleAndDisconnectTheRightCall(){
+  when(call.getState()).thenReturn(Call.STATE_ACTIVE);
+  for(String theme:CallThemes.IDS){
+   preferences.edit().putString("call_theme",theme).commit();CallScreenActivity a=open();
+   View end=tagged(a,"call-end");assertNotNull(end);assertEquals("End call",end.getContentDescription());
+   assertFalse(hasText(end,"End call"));end.performClick();
+   controller.pause().stop().destroy();controller=null;
+  }
+  verify(call,times(5)).disconnect();
+ }
+ @Test public void closingKeypadAndPausingStopsDtmf(){
+  when(call.getState()).thenReturn(Call.STATE_ACTIVE);CallScreenActivity a=open();
+  tagged(a,"call-action-keypad").performClick();tagged(a,"dtmf-5").performClick();verify(call).playDtmfTone('5');
+  tagged(a,"call-sheet-close").performClick();verify(call).stopDtmfTone();
+  tagged(a,"call-action-keypad").performClick();tagged(a,"dtmf-0").performClick();
+  controller.pause();verify(call,times(2)).stopDtmfTone();
+ }
+ @Test public void replacingCallStopsToneAndStaleKeyCannotAffectSuccessor(){
+  when(call.getState()).thenReturn(Call.STATE_ACTIVE);CallScreenActivity a=open();
+  tagged(a,"call-action-keypad").performClick();View key=tagged(a,"dtmf-5");key.performClick();
+  Call next=mock(Call.class);when(next.getState()).thenReturn(Call.STATE_ACTIVE);PhoneSessionService.current=next;
+  PhoneSessionService.notifyViews();verify(call).stopDtmfTone();key.performClick();
+  verify(call,times(1)).playDtmfTone('5');verify(next,never()).playDtmfTone(anyChar());
+ }
+ @Test public void holdUsesCapabilityAndNewCallPreservesExistingDialerEntryPoint(){
+  when(call.getState()).thenReturn(Call.STATE_ACTIVE);
+  Call.Details details=mock(Call.Details.class);when(call.getDetails()).thenReturn(details);when(details.can(Call.Details.CAPABILITY_HOLD)).thenReturn(true);
+  preferences.edit().putBoolean("call_btn_addcall",true).commit();
+  PhoneSessionService service=mock(PhoneSessionService.class);when(service.canAddCall()).thenReturn(true);PhoneSessionService.instance=service;
+  CallScreenActivity a=open();tagged(a,"call-action-more").performClick();
+  tagged(a,"call-option-hold").performClick();verify(call).hold();
+  tagged(a,"call-option-addcall").performClick();
+  android.content.Intent launched=org.robolectric.Shadows.shadowOf(a).getNextStartedActivity();
+  assertNotNull(launched);assertEquals(android.content.Intent.ACTION_DIAL,launched.getAction());
+  assertEquals(MainActivity.class.getName(),launched.getComponent().getClassName());
+ }
+ @Test public void unsupportedHoldDoesNotIssueTelecomCommand(){
+  when(call.getState()).thenReturn(Call.STATE_ACTIVE);CallScreenActivity a=open();tagged(a,"call-action-more").performClick();
+  View hold=tagged(a,"call-option-hold");assertTrue(hold.getContentDescription().toString().contains("Unavailable"));
+  hold.performClick();verify(call,never()).hold();
+ }
+
+ @Test public void capabilityChangesInTheSameCallStateRefreshAndGuardCommands(){
+  preferences.edit().putBoolean("call_btn_addcall",true).commit();
+  when(call.getState()).thenReturn(Call.STATE_ACTIVE);
+  Call.Details details=mock(Call.Details.class);when(call.getDetails()).thenReturn(details);
+  PhoneSessionService service=mock(PhoneSessionService.class);PhoneSessionService.instance=service;
+  CallScreenActivity a=open();tagged(a,"call-action-more").performClick();
+  assertFalse(tagged(a,"call-option-hold").isEnabled());assertFalse(tagged(a,"call-option-addcall").isEnabled());
+  when(details.can(Call.Details.CAPABILITY_HOLD)).thenReturn(true);when(service.canAddCall()).thenReturn(true);
+  PhoneSessionService.notifyViews();
+  View hold=tagged(a,"call-option-hold"),add=tagged(a,"call-option-addcall");
+  assertTrue(hold.isEnabled());assertTrue(add.isEnabled());hold.performClick();verify(call).hold();
+  when(details.can(Call.Details.CAPABILITY_HOLD)).thenReturn(false);when(service.canAddCall()).thenReturn(false);
+  PhoneSessionService.notifyViews();
+  assertFalse(tagged(a,"call-option-hold").isEnabled());assertFalse(tagged(a,"call-option-addcall").isEnabled());
+  // A queued click on the previous rendering must recheck the live capability.
+  hold.performClick();add.performClick();verify(call,times(1)).hold();
+  assertNull(org.robolectric.Shadows.shadowOf(a).getNextStartedActivity());
+ }
+
+ @Test public void audioPickerTargetsTheHeadsetWhoseNameWasDisplayed(){
+  when(call.getState()).thenReturn(Call.STATE_ACTIVE);
+  PhoneSessionService service=mock(PhoneSessionService.class);PhoneSessionService.instance=service;
+  android.telecom.CallAudioState audio=mock(android.telecom.CallAudioState.class);
+  when(audio.getRoute()).thenReturn(android.telecom.CallAudioState.ROUTE_EARPIECE);
+  when(audio.getSupportedRouteMask()).thenReturn(android.telecom.CallAudioState.ROUTE_EARPIECE|android.telecom.CallAudioState.ROUTE_BLUETOOTH);
+  android.bluetooth.BluetoothDevice shown=mock(android.bluetooth.BluetoothDevice.class),other=mock(android.bluetooth.BluetoothDevice.class);
+  when(shown.getName()).thenReturn("Shown headset");when(other.getName()).thenReturn("Other headset");
+  when(audio.getSupportedBluetoothDevices()).thenReturn(java.util.Arrays.asList(shown,other));when(service.getCallAudioState()).thenReturn(audio);
+  CallScreenActivity a=open();tagged(a,"call-action-audio").performClick();
+  View option=tagged(a,"audio-route-"+android.telecom.CallAudioState.ROUTE_BLUETOOTH);
+  assertTrue(option.getContentDescription().toString().contains("Shown headset"));
+  // Telecom may reorder its supported endpoints while the user is reading the picker.
+  when(audio.getSupportedBluetoothDevices()).thenReturn(java.util.Arrays.asList(other,shown));option.performClick();
+  verify(service).requestBluetoothAudio(shown);verify(service,never()).requestBluetoothAudio(other);
+ }
+
 }

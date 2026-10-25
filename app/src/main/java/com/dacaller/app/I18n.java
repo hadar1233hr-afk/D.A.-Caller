@@ -9,6 +9,28 @@ import java.util.Map;
 final class I18n {
  private static final Map<String,String> english=new HashMap<>();
  static{
+  put("הרשאות וחיבור למערכת","Permissions and phone integration");
+  put("חייגן ברירת מחדל","Default phone app");
+  put("הרשאת שיחות","Phone call permission");
+  put("חיוג מאובטח דרך מערכת הטלפון","Place calls through Android Telecom");
+  put("פעיל","Active");put("נדרש אישור","Permission required");
+  put("ניהול","Manage");put("אשר","Allow");put("מורחב","Expanded");put("מכווץ","Collapsed");
+  put("פתח את הרשאות האפליקציה בהגדרות המכשיר","Open this app's permissions in device settings");
+  put("לא נרשמה תקלה בשירות השיחות בגרסה זו.","No call-service failure recorded in this version.");
+  put("אבחון שיחה","Call diagnostic");put("העתק","Copy");
+  put("אבחון תקלה בחיוג","Call failure diagnostic");
+  put("סוג התקלה ומיקום בקוד, ללא מספר טלפון","Failure type and code location, without phone numbers");
+  put("לוח חיוג","Keypad");put("השתקה","Mute");put("טלפון","Phone");
+  put("פלט שמע","Audio output");put("אפשרויות נוספות","More options");
+  put("שיחה חדשה","New call");put("בחירת פלט שמע","Choose audio output");
+  put("שם התקן Bluetooth","Bluetooth device name");
+  put("לא זמין בשיחה זו","Unavailable for this call");
+  put("אוזניות קוויות","Wired headset");
+  put("פלט השמע אינו זמין כרגע","Audio output is currently unavailable");
+  put("נבחר","Selected");
+  put("לא נבחר","Not selected");put("לא זמין","Unavailable");
+  put("רשות אופציונלית להצגת שם האוזנייה המחוברת","Optional permission to show the connected headset's name");
+  put("בעיצוב Google Phone ארבע פעולות הליבה נשארות זמינות תמיד; הגדרות הכפתורים חלות על פעולות נוספות ועל שאר העיצובים.","Google Phone always keeps its four core actions available; button preferences apply to secondary actions and other designs.");
   put("עוד","More");put("פחות","Less");put("חמישה עיצובים שונים למסך שיחה","Five distinct in-call layouts");
   put("סיכום פעילות","Call activity");put("תקופת הסיכום","Summary period");
   put("סך שיחות לתקופה","Total calls this period");put("זמן דיבור כולל","Total talk time");

@@ -9,6 +9,10 @@ on:
       - 'gradle/**'
       - 'gradlew*'
       - '.github/workflows/android.yml'
+      - 'scripts/run-android-ui.sh'
+      - 'scripts/verify-ui-matrix.py'
+      - 'scripts/verify-visual-review.py'
+      - 'docs/evidence/2026-10-25/**'
   push:
     branches: [main]
     paths:
@@ -19,6 +23,9 @@ on:
       - 'gradle/**'
       - 'gradlew*'
       - '.github/workflows/android.yml'
+      - 'scripts/run-android-ui.sh'
+      - 'scripts/verify-ui-matrix.py'
+      - 'scripts/verify-visual-review.py'
   workflow_dispatch:
     inputs:
       publish_beta:
@@ -42,6 +49,9 @@ jobs:
       version: ${{ steps.metadata.outputs.version }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Publish exactly the source SHA that validation and screenshots used.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -74,6 +84,8 @@ jobs:
                       assert b'Lcom/dabusinessbook/' not in dex and b'Lcom/dacaller/offline/' not in dex, 'Separate app code included'
           metadata = Path('app/build/apk-metadata.txt').read_text()
           assert "package: name='com.dacaller.app'" in metadata, 'Wrong Android product'
+          assert "sdkVersion:'26'" in metadata, 'Unexpected minimum Android API'
+          assert "android.permission.INTERNET" not in metadata, 'DA CALLER must remain offline'
           version = re.search(r"versionName='([^']+)'", metadata).group(1)
           assert re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+(?:-[A-Za-z0-9.]+)?', version), 'Unsafe version'
           with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
@@ -107,6 +119,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Publish exactly the source SHA that validation and screenshots used.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -122,21 +137,16 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Android 13 list touch regression tests
+      - name: Android 13 visual matrix and interaction regressions
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 33
           target: google_apis
           arch: x86_64
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: |
-            adb shell wm size 480x854
-            adb shell wm density 240
-            ./gradlew --no-daemon :app:connectedDebugAndroidTest
-            mkdir -p app/build/ui-snapshots
-            adb pull /sdcard/Download/DA-CALLER-snapshots/ app/build/ui-snapshots/
-            test "$(find app/build/ui-snapshots/ -name 'call-*.png' | wc -l)" -eq 5
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -prop qemu.hw.mainkeys=0
+          # This action executes each input line in a separate shell.
+          script: bash scripts/run-android-ui.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -145,6 +155,7 @@ jobs:
             app/build/reports/androidTests/
             app/build/outputs/androidTest-results/
             app/build/ui-snapshots/
+            app/build/ui-device-config.txt
           if-no-files-found: warn
           retention-days: 30
 
@@ -162,6 +173,9 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Publish exactly the source SHA that validation and screenshots used.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -239,17 +253,30 @@ jobs:
   # use permanent signing and cannot update a differently signed install.
   # Never publishes on forks or changes the separately gated stable-beta process.
   preview-debug:
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'codex/da-caller-hardening-20261023' && github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'codex/da-caller-hardening-20261023' || (github.event.pull_request.head.ref == 'codex/da-caller-visual-20261025' && contains(github.event.pull_request.labels.*.name, 'visual-reviewed')))
     needs: [validate, android-ui]
     runs-on: ubuntu-latest
     permissions:
       contents: write
       actions: read
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Require visual review of this exact application source
+        if: github.event.pull_request.head.ref == 'codex/da-caller-visual-20261025'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: python3 scripts/verify-visual-review.py
       - uses: actions/download-artifact@v4
         with:
           name: DA-CALLER-${{ needs.validate.outputs.version }}-debug-${{ github.sha }}
           path: candidate
+      - uses: actions/download-artifact@v4
+        with:
+          name: DA-CALLER-Android13-UI-${{ github.sha }}
+          path: visual-review
       - name: Publish explicitly unverified debug prerelease
         env:
           GH_TOKEN: ${{ github.token }}
@@ -264,23 +291,49 @@ jobs:
           test -n "$APK"
           cp "$APK" "DA-CALLER-v$VERSION-debug.apk"
           sha256sum "DA-CALLER-v$VERSION-debug.apk" > "DA-CALLER-v$VERSION-debug.apk.sha256"
+          python3 -m zipfile -c "DA-CALLER-v$VERSION-Android13-screenshots.zip" visual-review
+          SIGNATURE=$(find candidate -name debug-signature.txt -type f -print -quit)
+          METADATA=$(find candidate -name apk-metadata.txt -type f -print -quit)
+          test -n "$SIGNATURE"
+          test -n "$METADATA"
+          cp "$SIGNATURE" "DA-CALLER-v$VERSION-signature.txt"
+          cp "$METADATA" "DA-CALLER-v$VERSION-metadata.txt"
           if gh release view "v$VERSION-debug" >/dev/null 2>&1; then
             echo 'Debug preview already exists; never overwrite a release.' >&2
             exit 0
           fi
+          EXISTING_PREVIEW_TAG=$(git ls-remote --tags origin "refs/tags/v$VERSION-debug")
+          if [ -n "$EXISTING_PREVIEW_TAG" ]; then
+            echo 'Debug preview tag already exists without a release; choose a new version.' >&2
+            exit 1
+          fi
           cat > preview-notes.md <<'NOTES'
           # DA CALLER — UNVERIFIED DEBUG TEST BUILD
+          ## Implemented changes
+          - Google Phone-inspired normal, audio, More and DTMF screens in light/dark.
+          - Distinct One UI, iOS 26 glass, HyperOS and Nothing-inspired layouts.
+          - Icon-only hang-up, capability-aware controls and exact Bluetooth endpoint selection.
+          - Compact quick/contact widgets and four/five independently callable favorites.
+          - Stable contact return position and live permission/phone-integration settings.
+
+          ## Verification and installation limits
+          The linked source passed unit tests, lint, APK verification and the
+          Android 13 emulator suite at 480x854/240dpi with native three-button
+          navigation, RTL, font1.3 and 122 required PNG captures. The exact app
+          tree was visually reviewed before publication; see PR #3 and its report.
           This is **not** a stable or device-verified release.
           The Android build, unit tests and emulator UI checks passed, but
           actual cellular calls, answering, ringing, lock screen, SIM and
           Unihertz Jelly Star behavior have NOT been verified on hardware.
           It is signed with an ephemeral CI debug certificate and cannot
-          update a differently signed v0.9/v0.10 installation in place.
-          **DO NOT uninstall your existing installation unless all private
-          data and settings have been safely preserved.**
+          update any differently signed installation in place, including
+          earlier 0.11 betas. **Do not uninstall your existing installation:
+          uninstalling deletes its private archive and settings.** A matching
+          secure signing key is required for a guaranteed data-preserving update.
           Keep a working alternative dialer installed. Test on a spare device.
           No APK in this preview should be considered production ready.
           NOTES
           gh release create "v$VERSION-debug" "DA-CALLER-v$VERSION-debug.apk" "DA-CALLER-v$VERSION-debug.apk.sha256" \
+            "DA-CALLER-v$VERSION-Android13-screenshots.zip" "DA-CALLER-v$VERSION-signature.txt" "DA-CALLER-v$VERSION-metadata.txt" \
             --target "$HEAD_SHA" --prerelease --title "DA CALLER v$VERSION (DEBUG TEST — UNVERIFIED)" \
             --notes-file preview-notes.md

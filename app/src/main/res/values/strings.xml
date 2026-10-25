@@ -1,5 +1,4 @@
 <resources>
  <string name="widget_favorites_title">DA CALLER   ★  Favorites</string>
- <string name="widget_phone_symbol" translatable="false">☎</string>
  <string name="widget_choose_contact">Choose contact</string>
 </resources>

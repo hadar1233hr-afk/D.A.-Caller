@@ -1,0 +1,36 @@
+{
+  "review_run_id": 40201648675,
+  "source_sha": "67ddfc6bb90f11a10fb3ef0b93392a67013d389e",
+  "app_tree": "0444d22c08abc22969fff129b8f2d707afcb63ed",
+  "run_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/actions/runs/40201648675",
+  "validate": "success",
+  "android_ui": "success",
+  "unit_tests": {
+    "tests": 136,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "android_instrumentation": {
+    "tests": 17,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "ui_artifact_id": 12601964035,
+  "reviewed_real_png_count": 122,
+  "preview_publication": "Gated separately after this visual review; final report links immutable release",
+  "previous_runs": [
+    {
+      "id": 40174363561,
+      "tests": 14,
+      "outcome": "CI green; visual review failed. Widget/settings evidence files were invalid directories."
+    },
+    {
+      "id": 40200676419,
+      "tests": 17,
+      "failures": 6,
+      "outcome": "Native navigation/strong glyph tests exposed remaining spacing and fixture-scroll timing; subsequently fixed."
+    }
+  ]
+}

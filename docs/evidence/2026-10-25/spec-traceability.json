@@ -1,0 +1,1214 @@
+{
+  "source": "docs/DA_CALLER_VISUAL_SPEC_HE.md",
+  "source_sha256": "6513bde8403160f6f5f03b21ef862488e11c561f9279fde87f0397224e51157f",
+  "baseline_commit": "cff9ac462ca3cdccc4387b28416a18204336e806",
+  "requirements": [
+    {
+      "id": "SPEC-L004",
+      "source_line": 4,
+      "requirement": "**הנחיה לקודקס: זוהי משימת פיתוח בפועל, לא בקשה לכתוב תוכנית בלבד.** קרא את המאגר, בצע את השינויים, בדוק אותם, פתח Pull Request והפק APK בדיקה תקין באמצעות תהליך הבנייה הקיים. אל תדווח שמשהו הושלם אם בוצע רק שינוי קוד ללא בדיקה. אין להמציא תוצאות של בדיקות חומרה או של שיחות סלולריות אמיתיות.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java",
+        "WidgetSupport.java",
+        "QuickWidget.java",
+        "ContactWidget.java",
+        "FavoritesWidget.java",
+        "WidgetConfigure.java",
+        "WidgetTap.java",
+        "res/xml*",
+        "res/layout/widget*",
+        "SettingsScreen.java",
+        "MainActivity.java",
+        "I18n.java",
+        "app/build.gradle",
+        ".github/workflows/android.yml",
+        "scripts/verify-ui-matrix.py",
+        "scripts/verify-visual-review.py"
+      ],
+      "verification_scope": "Implemented and tested; debug preview is separate from permanent/physical-device release.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L006",
+      "source_line": 6,
+      "requirement": "**המאגר:** https://github.com/hadar1233hr-afk/D.A.-Caller  ",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/remote-ci.json"
+      ],
+      "sources": [
+        "git origin"
+      ],
+      "verification_scope": "Repository and branch verified through GitHub and git.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L007",
+      "source_line": 7,
+      "requirement": "**בסיס העבודה:** הגרסה האחרונה במאגר, הכוללת את תיקון הקריסה בעת חיוג ואת `InCallService`. בתחילת העבודה בדוק מהו הענף, ה-PR וה-commit העדכניים. ככל שמתאים, המשך מענף `codex/da-caller-hardening-20261023` ומ-PR #2, אך הימנע מדריסת שינויים אחרים. גרסת בדיקה קודמת: `0.11.0-beta.5`. שחרר גרסה חדשה ומובחנת בלבד (למשל `0.11.0-beta.6` אם לא תפוסה), עם `versionCode` גבוה יותר; אל תדרוס תג או Release קיימים.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/release-policy.json"
+      ],
+      "sources": [
+        "app/build.gradle",
+        ".github/workflows/android.yml",
+        "scripts/verify-ui-matrix.py",
+        "scripts/verify-visual-review.py"
+      ],
+      "verification_scope": "Continued from cff9ac4 beta.5 on separate PR3, version16 beta.6; immutable new debug tag.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L009",
+      "source_line": 9,
+      "requirement": "**הקשר טכני:** אפליקציית חייגן Android בשפת Java, עובדת במצב Offline, עם יומן שיחות, אנשי קשר, ארכיון שיחות, ווידג'טים וחמישה מסכי שיחה. מכשיר יעד חשוב: **Unihertz Jelly Star, Android 13, מסך קטן**. יש לשמור על חייגן ברירת המחדל, ביצוע וקבלת שיחות, הרשאות, ערוץ שמע, לחצני סיום/מענה, DTMF, יומן שיחות, ארכיון והגדרות ללא רגרסיה.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java",
+        "FastPages.java",
+        "MainActivity.java"
+      ],
+      "verification_scope": "Java/offline architecture and Android13 viewport preserved. Physical Jelly Star is not tested.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L015",
+      "source_line": 15,
+      "requirement": "1. **לשחזר בצורה נאמנה מאוד את מסך השיחה של Google Phone על סמך ארבע התמונות המצורפות**, כולל מצב בהיר וכהה, ארבעת מצבי המסך, שמות/אייקונים, סידור, גופנים, מרווחים ואנימציות. זה יהיה העיצוב המוגדר כברירת מחדל בהתקנות חדשות, בלי לדרוס בחירה קיימת של משתמש.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "Google default for absent preference; existing stored IDs preserved. Four states visually reviewed.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L016",
+      "source_line": 16,
+      "requirement": "2. **להחליף את ארבעת מסכי השיחה הנוספים** בעיצובים מקוריים נבדלים *בהשראת* Samsung One UI, iOS 26, Xiaomi HyperOS ו-Nothing OS — לא חמישה שילובי צבעים לאותו מסך.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "Five distinct grayscale structures; light/dark and all panels reviewed.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L017",
+      "source_line": 17,
+      "requirement": "3. **סיום שיחה = אייקון ניתוק בלבד** (שפופרת מוטה/מנותקת), ללא הכיתוב \"סיום שיחה\". להשאיר `contentDescription` נגיש \"סיום שיחה\" עבור TalkBack בלבד.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "res/drawable/ic_call_hangup.xml"
+      ],
+      "verification_scope": "Icon-only disconnect in every style and emergency fallback; TalkBack label retained.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L018",
+      "source_line": 18,
+      "requirement": "4. **לבנות מחדש את שלושת הווידג'טים**, עם מידות הגיוניות במסך הבית ותפעול נכון.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "WidgetSupport.java",
+        "QuickWidget.java",
+        "ContactWidget.java",
+        "FavoritesWidget.java",
+        "WidgetConfigure.java",
+        "WidgetTap.java",
+        "res/xml*",
+        "res/layout/widget*"
+      ],
+      "verification_scope": "Three widgets rebuilt, actual AppWidgetHost interactions and seventeen widget captures.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L019",
+      "source_line": 19,
+      "requirement": "5. **להוסיף הנפשות עדינות וקלות לביצועים.**",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "SettingsScreen.java",
+        "TouchFeedback.java"
+      ],
+      "verification_scope": "180ms style-specific sheet entry, 170ms settings fade and native ripple; global animation-disable honored. No device frame-time claim.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L020",
+      "source_line": 20,
+      "requirement": "6. **לתקן קפיצה ברשימת אנשי הקשר** אחרי פתיחה של איש קשר וחזרה אחורה.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/contact-baseline-reproduction.json",
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json"
+      ],
+      "sources": [
+        "FastPages.java",
+        "MainActivity.java"
+      ],
+      "verification_scope": "Old source returns ID1 rather than47; fixed stable ID/offset/query survives same-frame rebuilds, reorder and user cancellation.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L021",
+      "source_line": 21,
+      "requirement": "7. **לנקות את ההגדרות:** להסיר את אייקון הטלפון האדום שבקטגוריית \"שיחות ומענה\", ולתקן את קטגוריית \"מצב מערכת\" שלא נפתחת/נתקעת.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "SettingsScreen.java",
+        "MainActivity.java",
+        "I18n.java"
+      ],
+      "verification_scope": "Calls header icon removed; permissions category opens repeatedly with accurate statuses.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L023",
+      "source_line": 23,
+      "requirement": "אין להוסיף בשלב זה תכונות לא קשורות, ואין לבצע כתיבה מחדש של כל האפליקציה רק מטעמי מראה.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/remote-ci.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java",
+        "WidgetSupport.java",
+        "QuickWidget.java",
+        "ContactWidget.java",
+        "FavoritesWidget.java",
+        "WidgetConfigure.java",
+        "WidgetTap.java",
+        "res/xml*",
+        "res/layout/widget*",
+        "SettingsScreen.java",
+        "MainActivity.java",
+        "I18n.java",
+        "FastPages.java",
+        "MainActivity.java"
+      ],
+      "verification_scope": "Changes limited to requested app functionality; other products and core CallLauncher unchanged.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L027",
+      "source_line": 27,
+      "requirement": "התמונות כלולות בחבילה, וקובצי המקור שלהם מסומנים כך:",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/evidence/2026-10-25/first-visual-review.json"
+      ],
+      "sources": [
+        "docs/DA_CALLER_VISUAL_SPEC_HE.md"
+      ],
+      "verification_scope": "Attachment is Markdown, not ZIP. Four references were visible in chat, but original named PNG files were not downloadable.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L031",
+      "source_line": 31,
+      "requirement": "| `reference_google_01_normal.png` | מסך שיחה פעילה במצב בסיסי |",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "Normal layout visually compared against visible chat reference.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L032",
+      "source_line": 32,
+      "requirement": "| `reference_google_02_audio.png` | חלונית בחירת פלט שמע: Bluetooth / רמקול / טלפון |",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/visual-review.json",
+        "docs/evidence/2026-10-25/local-unit-tests.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "Actual supported audio routes; captured endpoint label/selection is revalidated, no fake real-call headset.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L033",
+      "source_line": 33,
+      "requirement": "| `reference_google_03_more.png` | חלונית \"עוד\": שיחה נוספת, המתנה ופעולות נוספות |",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/visual-review.json",
+        "docs/evidence/2026-10-25/local-unit-tests.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "More sheet, capability-aware hold/new call, optional contacts/notes, one panel at a time.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L034",
+      "source_line": 34,
+      "requirement": "| `reference_google_04_keypad.png` | לוח ספרות DTMF בזמן שיחה |",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/visual-review.json",
+        "docs/evidence/2026-10-25/local-unit-tests.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "3x4 DTMF, letters/+ fit enlarged font, no stuck tones in lifecycle regression.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L036",
+      "source_line": 36,
+      "requirement": "**סידור במצב בסיסי (RTL בעברית):** שמור על פס המצב הסטנדרטי של Android בחלק העליון. מתחתיו טיימר שיחה ממורכז, שם איש קשר גדול ובהיר, מידע משני/מספר מתחתיו, תמונת איש קשר עגולה במרכז, ואזור פעולות מעוגן לתחתית. באזור התחתון: סרגל בגוון כהה מעט בהיר מהרקע הראשי, ובו **ארבע פעולות בשורה אחת** לפי מראה התמונה: \"עוד\", אפשרויות שמע (עם שם המכשיר המחובר כשהוא זמין, למשל F901), \"השתקה\" ו\"לוח חיוג\". האייקונים בגוון בהיר, הכפתורים מעוגלים כהים, פעולה פעילה מסומנת ברקע אפרסק/שמנת. מתחת לסרגל כפתור ניתוק אלמוגי/אדמדם, עם סמל שפופרת בלבד, ממורכז. אין להוסיף טקסט קבוע בתוכו.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "Timer/name/number/avatar and fixed physical More/audio/mute/keypad dock, peach selection and coral icon-only end.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L038",
+      "source_line": 38,
+      "requirement": "**מצב כהה:** דגום צבעים מתוך התמונות המצורפות במקום להסתמך על ערכי HEX שרירותיים; שחור-אפור פחמי לרקע, אפור מעט בהיר למגש הפעולות, כפתורים כמעט שחורים, טקסט אפור-לבן, גוון אפרסק לבחירה ואלמוג לניתוק. שכבות עם עומק מדויק, פינות וסידור עקביים. **מצב בהיר:** אותה היררכיה, גדלים ומרווחים; רקע קרמי/לבן, מגש בגוון ניטרלי, אייקונים כהים, הדגשת בחירה רכה וכפתור ניתוק אדמדם בולט. שים לב לניגודיות ולאייקונים קריאים.",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallThemes.java"
+      ],
+      "verification_scope": "Palette matched visually, not falsely claimed pixel-sampled: original PNG bytes absent. Both palettes reviewed and contrast unit tests passed.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L040",
+      "source_line": 40,
+      "requirement": "**בחירת פלט שמע:** בלחיצה על כפתור שמע יש לפתוח חלונית מעוגלת מעל החלק התחתון, עם כותרת, X לסגירה ושלוש אפשרויות כשהן זמינות: התקן Bluetooth מחובר עם שמו האמיתי, רמקול המכשיר, אפרכסת/טלפון. הדגש את האפשרות הפעילה בסימון ברור ובצבע רקע. כפתור הניתוק והפעולות העיקריות יישארו נגישים. אין להציג Bluetooth מזויף אם אין התקן זמין. יש לסנכרן מצב UI למצב האמיתי של Telecom/CallAudioState או API מתאים למערכת ולגרסת Android.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "Telecom source of truth, active route marking, actual Bluetooth name when permission permits, wired/phone/speaker and reachable end.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L042",
+      "source_line": 42,
+      "requirement": "**חלונית \"עוד\":** מגש נפתח מעל שורת הפעולות, עם X לסגירה וכפתורי פעולה גדולים ונקיים כדוגמת \"שיחה חדשה\" ו\"המתנה\". פעולות נוספות קיימות באפליקציה (אנשי קשר, הערה וכו') נשמרות וניתנות לגישה בתכנון מסודר בלי לדחוס הכול למסך הראשי. כשפעולה אינה נתמכת במצב שיחה נתון — השבת אותה עם הסבר ברור, לא כפתור תקול. בפתיחה/סגירה של חלונית אחת, סגור חלוניות אחרות כדי שלא יהיו מגשים חופפים.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "Exclusive scrollable More sheet; live capabilities update and stale command guard. Unsupported controls disabled with explanation.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L044",
+      "source_line": 44,
+      "requirement": "**לוח ספרות בזמן שיחה:** פתיחת מגש DTMF מעוגל ורחב בחלק המרכזי/התחתון, כפתור X ברור, מערך 3×4 עם ספרות 0–9, `*`, `#`, כיתוב אותיות לטיני קטנות מתחת לכל ספרה במקום המתאים. צורות הכפתורים, משקל הגופן, הריווחים והגובה תואמים ככל האפשר לצילום, לרבות מסך צר. פס ארבע הפעולות וכפתור הניתוק נשארים למטה. מגע בספרה שולח DTMF לשיחה הפעילה; יש להפסיק צליל תקוע בעת סגירת המגש, החלפת שיחה או `onPause`.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "DTMF touch semantics, 145ms bounded tone and stop on close/pause/state/call replacement. 48dp keys and glyph-fit checks.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L046",
+      "source_line": 46,
+      "requirement": "**התנהגות מחייבת:** `מצב בסיסי → שמע / עוד / מקשים → חזרה למצב בסיסי`, מעבר בין מצבים ללא קפיצות מוזרות או שכבות חופפות, ללא קריסה וללא איבוד מצב שיחה. השתמש במדידות `dp/sp`, במבנה מותאם למסך קטן, ולא בגדלים קבועים בפיקסלים. כאשר יש תמונה ושם איש קשר — השם הוא הכותרת הראשית והמספר משני. כאשר אין תמונה/איש קשר, השתמש בחלופה נקייה.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "Sequential panel/back transitions; dp/sp and responsive compact header avoid partial occlusion. Full long name model retained with visual ellipsis.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L048",
+      "source_line": 48,
+      "requirement": "**אין להעתיק קוד קנייני או משאבים מוגנים של Google** או של מותגים אחרים. אפשר לבדוק קוד פתוח דומה ולהשתמש רק ברכיבים עם רישיון המתיר שימוש, תוך שמירה על תנאי הרישיון וקרדיט מתאים. המטרה היא התאמה חזותית גבוהה דרך מימוש עצמאי.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "res/drawable/ic_call_*",
+        "CallScreenActivity.java"
+      ],
+      "verification_scope": "Independent platform/vector implementation; no added branded fonts, proprietary code or copied image resources.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L052",
+      "source_line": 52,
+      "requirement": "לכל אחד מהעיצובים יש גרסה בהירה וכהה, ושמירת כל פונקציות השיחה, כולל פלט שמע, השתקה, המתנה, לוח ספרות, שיחה נוספת וניתוק. אפשר להשתמש באותו מודל נתונים/שליטת Telecom, אך בכל עיצוב יש לייצר פריסה, טיפוגרפיה, צבעוניות, מידות לחצנים, אנימציות ואופן פתיחת המגשים שונים בבירור:",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "Five light/dark structures share safe Telecom model; key shapes, action order, surfaces and entry animation differ.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L054",
+      "source_line": 54,
+      "requirement": "- **Samsung / One UI:** פרופיל שיחה נקי ועגול, כפתורי פעולה במערך מאוזן, שטחי מגע גדולים, כפתור ניתוק תחתון מובחן ופרטי מתקשר קריאים. לעצב בהשראת שפת One UI העדכנית, בלי להעתיק אייקונים קנייניים.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "One UI circular profile and free 3x2 controls/circular end.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L055",
+      "source_line": 55,
+      "requirement": "- **iOS 26:** עיצוב בהשראת **Liquid Glass** של iOS 26 — משטחים מעוגלים ונעימים, תחושת שכבות עדינה, סימטריה בולטת, טקסט מאופק וכפתור ניתוק ברור. להשתמש בהדמיה יעילה באנדרואיד, לא בטשטוש כבד שיפגע במכשיר קטן. לא להסתפק בעיצוב של גרסאות iOS ישנות.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "iOS26 layered gradient glass/edge simulation and symmetric controls/wide end; no expensive blur.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L056",
+      "source_line": 56,
+      "requirement": "- **Xiaomi / HyperOS:** היררכיה מודגשת, כרטיסיות נקיות, פקדים נגישים, מיקום ברור לפרטי איש קשר ומגשי שמע/מקשים בגישה עצמאית.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "HyperOS horizontal profile and card controls/large timer.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L057",
+      "source_line": 57,
+      "requirement": "- **Nothing / Nothing OS:** שחור-לבן דומיננטי, הדגשות אדומות מדודות, גיאומטריה טכנולוגית מינימליסטית, מוטיב נקודות רק אם הוא מקורי וברישיון. אין להשתמש בגופנים מסחריים שאין רשות להפיץ.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "Nothing monochrome technical/dot field/strips; original vector dots and system monospace.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L059",
+      "source_line": 59,
+      "requirement": "**מבחן השונות:** במבט על צילום מסך שחור-לבן של כל עיצוב, עדיין ניתן להבחין ביניהם דרך סדר הפעולות, הגודל, פריסת התמונה והמגשים — ולא רק לפי צבע. עם זאת, פעולות ליבה יישארו במקומות נגישים בכל עיצוב.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "Grayscale comparison reviewed; structure remains distinguishable without color.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L063",
+      "source_line": 63,
+      "requirement": "בדוק את המחלקות הקיימות, כגון `QuickWidget`, `ContactWidget`, `FavoritesWidget`, `WidgetConfigure`, `WidgetTap`, לפני שינוי. אל תשכפל מנגנוני חיוג אם קיים מסלול חיוג תקין ומאובטח.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json"
+      ],
+      "sources": [
+        "WidgetSupport.java",
+        "QuickWidget.java",
+        "ContactWidget.java",
+        "FavoritesWidget.java",
+        "WidgetConfigure.java",
+        "WidgetTap.java",
+        "res/xml*",
+        "res/layout/widget*"
+      ],
+      "verification_scope": "Existing widget flow inspected and safe CallLauncher reused; no duplicate Telecom implementation.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L065",
+      "source_line": 65,
+      "requirement": "1. **קיצור דרך לאיש קשר:** ווידג'ט קומפקטי ברוחב/גובה משבצת מסך בית אחת ככל שה-Launcher מאפשר, מציג תמונה עגולה ושם מתחת. הקשה = חיוג ישיר לאותו אדם באמצעות מסלול החיוג התקין של DA CALLER. בהיעדר הרשאות או תפקיד חייגן ברירת מחדל, להציג בקשת הרשאה/הגדרה ולא לקרוס.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "WidgetSupport.java",
+        "QuickWidget.java",
+        "ContactWidget.java",
+        "FavoritesWidget.java",
+        "WidgetConfigure.java",
+        "WidgetTap.java",
+        "res/xml*",
+        "res/layout/widget*"
+      ],
+      "verification_scope": "1x1 target hint plus min-size fallback, round photo/initials, safe exact destination, denied permissions handled.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L066",
+      "source_line": 66,
+      "requirement": "2. **כרטיס איש קשר:** ווידג'ט קטן יותר מהקיים ובו תמונה, שם ופרט משני קצר; הקשה פותחת את כרטיס איש הקשר באפליקציה. ניתן להציע קיצור חיוג נפרד רק אם אזורי המגע נבדלים בבירור.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "WidgetSupport.java",
+        "QuickWidget.java",
+        "ContactWidget.java",
+        "FavoritesWidget.java",
+        "WidgetConfigure.java",
+        "WidgetTap.java",
+        "res/xml*",
+        "res/layout/widget*"
+      ],
+      "verification_scope": "2x1 compact card opens exact contact; preserved legacy phone fallback.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L067",
+      "source_line": 67,
+      "requirement": "3. **מועדפים:** ווידג'ט גדול יותר ובו לפחות **4–5 מועדפים נראים יחד** (בהתאם לגודל שנבחר), עם תמונה/אותיות ראשונות ושם. כל פריט נלחץ בנפרד, ומחייג למספר הנכון. להתאים למידות 2×2, 4×2 וכו' לפי מגבלות ה-Launcher ולתמוך בשינוי גודל אם אפשר.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "WidgetSupport.java",
+        "QuickWidget.java",
+        "ContactWidget.java",
+        "FavoritesWidget.java",
+        "WidgetConfigure.java",
+        "WidgetTap.java",
+        "res/xml*",
+        "res/layout/widget*"
+      ],
+      "verification_scope": "Four narrow/five wide independent favorites, responsive resize and real-host addition/removal.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L069",
+      "source_line": 69,
+      "requirement": "השתמש ב-`AppWidgetProviderInfo` וב-`RemoteViews` תקניים, תמיכה ב-RTL, תמונות באיכות נכונה, מצבי ריק/הרשאה, התאמה בהיר/כהה, `PendingIntent` ייחודי לכל פריט ותמיכה ב-Android 13. אל תצא לרשת לצורך תמונות או מידע; הכול Offline. אל תגרום לחיוג למספר שגוי בגלל שימוש חוזר באותו PendingIntent. אין לשמור נתונים רגישים בלוגים.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "WidgetSupport.java",
+        "QuickWidget.java",
+        "ContactWidget.java",
+        "FavoritesWidget.java",
+        "WidgetConfigure.java",
+        "WidgetTap.java",
+        "res/xml*",
+        "res/layout/widget*"
+      ],
+      "verification_scope": "RemoteViews/API31 metadata, RTL/light/dark, regular PNG evidence, collision-proof PendingIntent identities, worker thumbnails and no network/logged numbers.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L073",
+      "source_line": 73,
+      "requirement": "אנימציות קצרות (לרוב כ-150–220 אלפיות השנייה) לפתיחת מגשי שמע/\"עוד\"/לוח הספרות, בחירת פלט שמע, לחיצה על כפתורים ומעברי מסכים. הימנע מהבהובים, רעידות, קפיצות, חסימת מגע ואנימציות מיותרות. כבד הגדרות נגישות/ביטול אנימציות ואת מגבלות המכשיר הקטן. השתמש ב-VectorDrawable/אייקונים וקטוריים, אנטי-אליאסינג, ריווחים ב-`dp`, גופנים ב-`sp` ומשטחי צבע מדויקים; **אין אפשרות להגדיל פיזית את מספר הפיקסלים במסך**, אבל אפשר לשפר חדות ומראה ע\"י נכסים וקטוריים ורינדור נכון.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java",
+        "WidgetSupport.java",
+        "QuickWidget.java",
+        "ContactWidget.java",
+        "FavoritesWidget.java",
+        "WidgetConfigure.java",
+        "WidgetTap.java",
+        "res/xml*",
+        "res/layout/widget*",
+        "SettingsScreen.java",
+        "MainActivity.java",
+        "I18n.java"
+      ],
+      "verification_scope": "Original vectors, dp/sp, bounded 180ms entries and 170ms card fades. Closing panels remains immediate to keep state/touch safe; hardware animation performance not measured.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L077",
+      "source_line": 77,
+      "requirement": "**קפיצה אחרי חזרה מאיש קשר:** שחזר את המסלול `אנשי קשר → כרטיס איש קשר → חזרה`. שמור את זהות הפריט/עוגן הגלילה (`contact ID`, היסט אנכי), שאילתת החיפוש ומצב הסינון. שחזר את המיקום לאחר שהנתונים נטענו, ולא על בסיס אינדקס לא יציב; בטל פעולות restore ישנות אם המשתמש כבר גלל בעצמו. הוסף בדיקת רגרסיה שחוזרת לאותו שם ובאותו מיקום בלי קפיצה לראש הרשימה.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/contact-baseline-reproduction.json",
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json"
+      ],
+      "sources": [
+        "FastPages.java",
+        "MainActivity.java"
+      ],
+      "verification_scope": "Stable ID/top/query saved; stale restores cancelled after touch/accessibility scrolling and generation replacement. Unit6 plus native4 regressions.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L079",
+      "source_line": 79,
+      "requirement": "**שיחות ומענה בהגדרות:** הסר את *אייקון הטלפון האדום באזור הגדרות זה בלבד*. אל תסיר את כפתור הניתוק האדום ממסך השיחה. ודא שכותרות ההגדרות המתקפלות עדיין לחיצות ונפתחות/נסגרות בלי קיפאון.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "SettingsScreen.java",
+        "MainActivity.java",
+        "I18n.java"
+      ],
+      "verification_scope": "Only settings header handset removed. In-call red hangup preserved. Repeated actual category taps pass.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L081",
+      "source_line": 81,
+      "requirement": "**מצב מערכת בסוף ההגדרות:** שנה את הכותרת ל-**\"הרשאות וחיבור למערכת\"**. מטרת האזור היא להציג/לנהל באופן ברור: האם DA CALLER היא אפליקציית הטלפון כברירת מחדל, הרשאת שיחות, הרשאת אנשי קשר, הרשאת יומן שיחות, התראות וכלי אבחון תקלה. בדוק למה האזור נתקע — מאזיני לחיצה, אנימציית פתיחת סעיף, קריאות סינכרוניות, ניווט להגדרות מערכת וחזרה. הצג ליד כל הרשאה מצב אמיתי כגון \"פעיל\"/\"נדרש אישור\", כפתור פעולה ברור ומידע קצר. אל תבצע בדיקות כבדות על ה-UI thread. שמור את האבחון המקומי הקיים ללא מספרי טלפון. ודא שאזור ההגדרות נגיש גם במסך צר.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "SettingsScreen.java",
+        "MainActivity.java",
+        "I18n.java"
+      ],
+      "verification_scope": "Actual role/call/contacts/log/notifications/optional Bluetooth states and Allow/Manage actions refresh in place. Local diagnostic has no numbers.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L085",
+      "source_line": 85,
+      "requirement": "- לא לשבור את **החיוג מתוך האפליקציה**, שתוקן ואושר כמוצלח על ידי המשתמש. שמור על `RoleManager`, `TelecomManager`, `InCallService`, מסך השיחה ועל כל ההרשאות המתאימות.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json"
+      ],
+      "sources": [
+        "MainActivity.java",
+        "CallLauncher.java",
+        "PhoneSessionService.java",
+        "WidgetTap.java"
+      ],
+      "verification_scope": "Core CallLauncher/RoleManager/Telecom outgoing path retained; original contact/recents dispatch regressions pass. Real carrier path still needs hardware.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L086",
+      "source_line": 86,
+      "requirement": "- לא לאבד היסטוריית שיחות, אנשי קשר, מועדפים, תיעוד שיחות, ארכיון או הגדרות קיימות. אין למחוק נתונים, לבצע התקנה נקייה אוטומטית או לשנות מזהה חבילה (`com.dacaller.app`). אם דרוש שינוי סכמת נתונים, בצע migration בטוח.",
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/release-policy.json"
+      ],
+      "sources": [
+        "CallArchive.java",
+        "CallHistory.java",
+        "Contacts.java",
+        "app/build.gradle"
+      ],
+      "verification_scope": "No data/schema/package reset; saved theme/widget keys remain. DEBUG certificate differs from beta.5, so in-place update continuity is blocked pending matching secure signing key.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L087",
+      "source_line": 87,
+      "requirement": "- לא להוסיף גישה לאינטרנט. כל הפעילות Offline.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-apk-metadata.json",
+        "docs/evidence/2026-10-25/release-policy.json",
+        "docs/evidence/2026-10-25/remote-ci.json"
+      ],
+      "sources": [
+        "AndroidManifest.xml",
+        "WidgetSupport.java"
+      ],
+      "verification_scope": "No INTERNET permission, all images/providers/SQLite local; emulator app has no internet capability.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L088",
+      "source_line": 88,
+      "requirement": "- לא לבצע `git force push`, מחיקת Release קיימים או דריסת גרסאות קודמות. אל תציג APK חתום ב-debug כעדכון התקנה מובטח לגרסה בעלת חתימה אחרת.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/release-policy.json"
+      ],
+      "sources": [
+        "app/build.gradle",
+        ".github/workflows/android.yml",
+        "scripts/verify-ui-matrix.py",
+        "scripts/verify-visual-review.py"
+      ],
+      "verification_scope": "No force push/tag replacement/release overwrite; immutable debug prerelease explicitly marked with certificate limitation.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L089",
+      "source_line": 89,
+      "requirement": "- לא להכניס העתקת קוד קנייני או משאבי מותג ללא רישיון.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "res/drawable/ic_call_*"
+      ],
+      "verification_scope": "Original vectors/system fonts; no new copied proprietary assets.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L090",
+      "source_line": 90,
+      "requirement": "- שמור על נגישות: תוויות TalkBack, לחצנים בגודל נגיעה סביר, התאמה להגדלת גופן, מצב RTL ובהיר/כהה.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java",
+        "WidgetSupport.java",
+        "QuickWidget.java",
+        "ContactWidget.java",
+        "FavoritesWidget.java",
+        "WidgetConfigure.java",
+        "WidgetTap.java",
+        "res/xml*",
+        "res/layout/widget*",
+        "SettingsScreen.java",
+        "MainActivity.java",
+        "I18n.java"
+      ],
+      "verification_scope": "RTL, English, font1.3, touch targets, accessible labels/selected/disabled state. Physical TalkBack traversal not executed.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L094",
+      "source_line": 94,
+      "requirement": "**מסכי שיחה:** צור תצוגת בדיקה עם נתונים פיקטיביים בלבד, וצילומי מסך אוטומטיים מכל 5 העיצובים × 2 ערכות צבע × 4 מצבים (בסיסי, שמע, עוד, ספרות). יעד ראשי: Android 13 ברזולוציה `480×854` ובצפיפות `240dpi` לפחות; בדוק גם תרחישי גופן מוגדל ופריסת RTL. אמת שאין תוכן חתוך, חפיפה, מסך לבן, כפתור בלתי נגיש או ניתוק שמוסתר. יש לבדוק חזותית את התמונות עצמן — \"הבדיקות עברו\" לבדו אינו תחליף לסקירה חזותית. הוסף בדיקות מעבר רציף בין מצבים וחזרה מהם.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java",
+        "scripts/verify-ui-matrix.py"
+      ],
+      "verification_scope": "80 matrix PNG plus twenty long-name and English fixture reviewed; API33 480x854/240dpi native navigation and glyph/overlay assertions.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L096",
+      "source_line": 96,
+      "requirement": "**תפעול:** בדיקות יחידה ו-UI עבור מצב שיחה נכנסת, יוצאת, פעילה, בהמתנה, ניתוק, DTMF, השתקה, מעבר פלט שמע, \"עוד\" ופתיחת שיחה נוספת. ודא שבמצב ללא Bluetooth אין לחצן שגוי. בדוק מצבי כשל/הרשאות/מסך נעילה. לא להסתמך על אמולטור כהוכחה לשיחה סלולרית אמיתית; בדיקת שיחה מול SIM ומכשיר פיזי נשארת נדרשת.",
+      "status": "NOT TESTED",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java",
+        "PhoneSessionService.java"
+      ],
+      "verification_scope": "Automated incoming/outgoing/holding/end/DTMF/mute/routing/More/add and failure cases pass. No physical SIM, ringtone, lock screen, carrier or real Bluetooth integration proof.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L098",
+      "source_line": 98,
+      "requirement": "**ווידג'טים:** הוספה, הסרה, שינוי גודל, מעבר בהיר/כהה, החלפת איש קשר וקישור כל פריט למספר הנכון. בדוק מכשיר עם מספר מועדפים שונה מ-5, בלי תמונות ובלי הרשאות.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "WidgetSupport.java",
+        "QuickWidget.java",
+        "ContactWidget.java",
+        "FavoritesWidget.java",
+        "WidgetConfigure.java",
+        "WidgetTap.java",
+        "res/xml*",
+        "res/layout/widget*"
+      ],
+      "verification_scope": "Actual AppWidgetHost add/delete/resize/reconfigure/light/dark; five/two/zero favorites, denied permission and enlarged-font narrow grid. OEM launcher/real contact photo checks remain physical.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L100",
+      "source_line": 100,
+      "requirement": "**אנשי קשר והגדרות:** חזרה מכרטיס איש קשר אינה משנה מיקום גלילה. פתיחת/סגירת \"שיחות ומענה\" ו\"הרשאות וחיבור למערכת\" ללא תקיעה; בקשת הרשאות והרשאה שניתנה משתקפות בממשק מיד.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "FastPages.java",
+        "MainActivity.java",
+        "SettingsScreen.java",
+        "MainActivity.java",
+        "I18n.java"
+      ],
+      "verification_scope": "Stable contact anchors, repeated category touches and actual permission-state refresh tested; real system role grant remains device checklist.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L102",
+      "source_line": 102,
+      "requirement": "**בדיקות בנייה:** הרץ `assembleDebug`, את בדיקות היחידה, lint ובדיקות מכשיר/אמולטור של GitHub Actions. בדוק ב-APK את `applicationId`, `versionCode`, `versionName`, `minSdk` וחתימה. תן קישור ל-PR וקישור ל-GitHub Release/Artifact עם APK חדש, וודא שהקישור עובד. גרסת debug נפרדת אינה נחשבת גרסה חתומה להפצה.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/local-unit-tests.json",
+        "docs/evidence/2026-10-25/local-lint.json",
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/release-policy.json"
+      ],
+      "sources": [
+        "app/build.gradle",
+        ".github/workflows/android.yml",
+        "scripts/verify-ui-matrix.py",
+        "scripts/verify-visual-review.py"
+      ],
+      "verification_scope": "Build/unit/lint/instrumentation/package/version/minSdk/signature/download link validated; debug is not permanent-signed distribution.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L106",
+      "source_line": 106,
+      "requirement": "ספק **באותה תשובה**: (1) פירוט השינויים שבוצעו באמת; (2) צילומי מסך לכל חמשת העיצובים לפחות במצב הכהה, כולל ארבעת מצבי Google; (3) תוצאות בדיקות מדויקות, כולל כשלים שנותרו; (4) קישור ל-Pull Request; (5) קישור להורדת APK חדש; (6) אזהרה ברורה אם חתימת APK שונה והתקנתו על גרסה קיימת עלולה לדרוש הסרה שתגרום לאובדן נתונים; (7) נקודות שמחייבות בדיקה על המכשיר הפיזי.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/remote-ci.json",
+        "docs/evidence/2026-10-25/visual-review.json",
+        "docs/evidence/2026-10-25/release-policy.json"
+      ],
+      "sources": [
+        "docs/DA_CALLER_VISUAL_VERIFICATION_2026-10-25.md"
+      ],
+      "verification_scope": "Final Hebrew report links PR, release APK, screenshots, exact tests, signature warning and physical checklist.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    },
+    {
+      "id": "SPEC-L108",
+      "source_line": 108,
+      "requirement": "**העדפת המשתמש:** עיצוב ברמה גבוהה ונאמן מאוד לצילומי Google; לא לקבל עוד חמש גרסאות לא מגובשות או שינויי צבע בלבד. שמור קודם כול על אמינות החיוג. אם חלה התנגשות בין דיוק חזותי לבין תפקוד חיוני/נגישות, העדף תפקוד בטוח ותעד את הפשרה במפורש.",
+      "status": "PASS",
+      "evidence": [
+        "docs/evidence/2026-10-25/first-visual-review.json",
+        "docs/evidence/2026-10-25/visual-review.json"
+      ],
+      "sources": [
+        "CallScreenActivity.java",
+        "CallThemes.java",
+        "CallLayouts.java",
+        "CallAudioRoutes.java"
+      ],
+      "verification_scope": "Visual review caught real failures despite green firstCI; fixes re-rendered and reviewed. Functional safety prioritized; no pixel-identical/proven-hardware claim.",
+      "implementation_commits": [
+        "37e9f99",
+        "1781cee",
+        "67ddfc6"
+      ]
+    }
+  ],
+  "reviewed_app_tree": "0444d22c08abc22969fff129b8f2d707afcb63ed",
+  "review_run": 40201648675,
+  "status_meaning": "PASS is bounded by verification_scope. BLOCKED is absent source PNG bytes or signing continuity. NOT TESTED denotes physical telephony. No blanket production-readiness claim."
+}

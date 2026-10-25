@@ -1,0 +1,55 @@
+{
+  "review_status": "FAIL",
+  "screenshot_source_sha": "1781cee196d9686a8257bf60883c58f5f3db387c",
+  "screenshot_run_id": 40200676419,
+  "tests": 17,
+  "failures": 6,
+  "errors": 0,
+  "real_png_files": 117,
+  "native_insets": {
+    "api": 33,
+    "density_dpi": 240,
+    "status_bar_top_px": 36,
+    "navigation_bar_bottom_px": 72,
+    "navigation_bar_visible": true
+  },
+  "failed_cases": [
+    {
+      "class": "com.dacaller.app.CallLayoutSnapshotTest",
+      "test": "testAudioSelectionAndMuteRemainSynchronizedInEveryDesign",
+      "message": "junit.framework.AssertionFailedError: Text glyph rows clipped: call-action-label-more 'עוד' 24/22"
+    },
+    {
+      "class": "com.dacaller.app.CallLayoutSnapshotTest",
+      "test": "testFiveDesignsBothThemesFourPanelsAndLargeFonts",
+      "message": "junit.framework.ComparisonFailure: Visual bounds failures (all captures retained) expected:<[]> but was:<[call-graphite-light-audio-standard: Text glyph rows clipped: call-action-label-more 'עוד' 24/22"
+    },
+    {
+      "class": "com.dacaller.app.CallLayoutSnapshotTest",
+      "test": "testLongCallerNamesInBothLanguagesAtLargeFont",
+      "message": "junit.framework.ComparisonFailure: Long caller layout failures (all captures retained) expected:<[]> but was:<[call-pixel-dark-audio-longname-he: Sheet slices visible hero text: call-identity Rect(30, 174 - 450, 204) / Rect(24, 203 - 456, 527)"
+    },
+    {
+      "class": "com.dacaller.app.CallLayoutSnapshotTest",
+      "test": "testSequentialPanelsCloseAndNeverOverlap",
+      "message": "junit.framework.AssertionFailedError: Text glyph rows clipped: call-action-label-more 'עוד' 24/22"
+    },
+    {
+      "class": "com.dacaller.app.SettingsInteractionTest",
+      "test": "testLastSettingsCategoryStaysInteractiveAndCallsCategoryHasNoPhoneSymbol",
+      "message": "java.lang.AssertionError: junit.framework.AssertionFailedError: Diagnostic action must be reachable on the small display"
+    },
+    {
+      "class": "com.dacaller.app.WidgetSnapshotTest",
+      "test": "testNarrowFavoritesFitAtLargeSystemFont",
+      "message": "java.lang.AssertionError: junit.framework.AssertionFailedError: Widget label glyph rows are clipped: מועדפים  ·  DA CALLER"
+    }
+  ],
+  "classification": {
+    "call_label": "Conservative native fallback-font line box24px exceeds22px innerheight; ink looks complete, but reserve more space rather than weaken assertion.",
+    "caller_identity": "Actual1px overlap with sheet for large Hebrew long name.",
+    "settings": "Test used waitForIdleSync after animated fullScroll; idle does not guarantee OverScroller finished. Keep actual fullScroll and wait for exact bottom+fully visible diagnostic.",
+    "widget": "Narrow header fixed20dp too short for enlarged fallback-font line. Height24dp and smaller avatars preserve >=48dp targets."
+  },
+  "release_allowed": false
+}

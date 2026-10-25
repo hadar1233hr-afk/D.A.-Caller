@@ -1,0 +1,23 @@
+{
+  "version_name": "0.11.0-beta.6",
+  "version_code": 16,
+  "application_id": "com.dacaller.app",
+  "min_sdk": 26,
+  "target_sdk": 34,
+  "release_kind": "Explicit DEBUG test prerelease; not permanent-signed production",
+  "reviewed_app_tree": "0444d22c08abc22969fff129b8f2d707afcb63ed",
+  "permanent_signing_key_available": false,
+  "in_place_upgrade_guaranteed": false,
+  "historical_beta5_certificate_sha256": "4095a4b6becbcd8fb592687b50dac2620b8996585973d9a108d040a45e3db904",
+  "existing_data_action": "Do not uninstall or reset an existing installation. Matching installed signing key is required before promising update continuity.",
+  "release_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/tag/v0.11.0-beta.6-debug",
+  "metadata_asset": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.11.0-beta.6-debug/DA-CALLER-v0.11.0-beta.6-metadata.txt",
+  "signature_asset": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.11.0-beta.6-debug/DA-CALLER-v0.11.0-beta.6-signature.txt",
+  "publication_checks": [
+    "Exact reviewed app tree",
+    "Successful recorded screenshot CI",
+    "Current unit/lint/build/identity/signature and emulator success",
+    "New immutable version tag, never force/clobber"
+  ],
+  "physical_testing": "NOT TESTED"
+}

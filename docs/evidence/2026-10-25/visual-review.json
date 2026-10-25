@@ -1,0 +1,535 @@
+{
+  "review_status": "PASS",
+  "reviewed_png_count": 122,
+  "reviewed_app_tree": "0444d22c08abc22969fff129b8f2d707afcb63ed",
+  "screenshot_source_sha": "67ddfc6bb90f11a10fb3ef0b93392a67013d389e",
+  "screenshot_run_id": 40201648675,
+  "scope": "Visual acceptance of synthetic API33 fixtures only; no physical/carrier guarantee",
+  "environment": {
+    "api": 33,
+    "density_dpi": 240,
+    "status_bar_top_px": 36,
+    "navigation_bar_bottom_px": 72,
+    "navigation_bar_visible": true
+  },
+  "required_png_breakdown": {
+    "call_matrix": 80,
+    "long_names": 20,
+    "english_no_bluetooth": 1,
+    "widgets": 17,
+    "settings": 4
+  },
+  "review_method": "Root opened all five 16-frame call sheets, both ten-frame long-name sheets, English/no-Bluetooth frame, seventeen-widget sheet and four-settings sheet. Independent call/widget/settings reviewers also inspected sheets and full-resolution examples. Grayscale five-design comparison inspected.",
+  "resolved_findings": [
+    "VIS-01",
+    "VIS-02",
+    "VIS-03",
+    "VIS-04",
+    "VIS-05",
+    "VIS-06",
+    "VIS-07",
+    "Native three-button font-line clearance",
+    "Large Hebrew caller identity clearance",
+    "Widget header enlarged-font bounds",
+    "Settings actual scroll-completion test timing"
+  ],
+  "deliberate_adaptations": [
+    "Long contact names and narrow widget branding may ellipsize horizontally; full contact name remains accessible.",
+    "Open panels use compact caller header to keep all core controls reachable on native 497dp content height.",
+    "Keypad keeps timer and hides the larger caller block, matching the reference hierarchy.",
+    "Panel closing is immediate; bounded style-specific entry effects honor system animation settings.",
+    "Source reference PNG bytes were absent; palette matched visually to inline references, not claimed pixel-sampled."
+  ],
+  "physical_testing": "NOT TESTED: SIM/carrier calls, ringtone, real headset routes, lock screen, Jelly Star, TalkBack/OEM launcher and in-place upgrade",
+  "artifact_sha256": "0990f71149028a71e07af4f7a64b5071346f30ada9fa3d6ba33246f32edcf0a1",
+  "images": [
+    {
+      "file": "call-emerald-dark-audio-largefont.png",
+      "sha256": "1e8d25a316a8e2a29e36e7a8a0c89df84668dde2b5cf913bd06f4d3151e26f8d"
+    },
+    {
+      "file": "call-emerald-dark-audio-longname-en.png",
+      "sha256": "19cb770119d7152e398d916c464988e4d5f6a9d86d5f730f57b911971611864a"
+    },
+    {
+      "file": "call-emerald-dark-audio-longname-he.png",
+      "sha256": "c56626b5e2bc404f6f5d4ac7833747aaa926135603a9f3ef6dc0bcad2d9965a5"
+    },
+    {
+      "file": "call-emerald-dark-audio-standard.png",
+      "sha256": "790304910615cacbc57942abe5e7f0c60f699f2339c9941458f1d2f68b3b873c"
+    },
+    {
+      "file": "call-emerald-dark-keypad-largefont.png",
+      "sha256": "8caec1d52581d922b2ecc0673e0767343e4402d8f0d6b533c4448723744b1b3d"
+    },
+    {
+      "file": "call-emerald-dark-keypad-standard.png",
+      "sha256": "21c291c8a1f4ab2584b5c4d6b6f3a698ae62cbf1d27116d86e40ec4b95d994f6"
+    },
+    {
+      "file": "call-emerald-dark-more-largefont.png",
+      "sha256": "b4b75b0ff1c78fa5b468edc855868ce9841619f5fdf9f94ed5d5f45886bab0e7"
+    },
+    {
+      "file": "call-emerald-dark-more-standard.png",
+      "sha256": "48151dd739a5a8250f8b61312c553d081e373879cdb07547658130b0f71d61da"
+    },
+    {
+      "file": "call-emerald-dark-normal-largefont.png",
+      "sha256": "c3bbb7ee57ac19eb00600dfb57d8178d6d18368f7a05a90a11057f2266cb211c"
+    },
+    {
+      "file": "call-emerald-dark-normal-longname-en.png",
+      "sha256": "200c53a937b8bbad83cf26f504b1cc2217592dca597d0a673b5cfa54927032ad"
+    },
+    {
+      "file": "call-emerald-dark-normal-longname-he.png",
+      "sha256": "da8335f1bf5c1df6bbf5c0068603816bb881edf3dd9e31c57c46a9aff1386e1b"
+    },
+    {
+      "file": "call-emerald-dark-normal-standard.png",
+      "sha256": "e14f1d68d124817a943d36ed1ee20fdca367ca7a237bbbb358a5f0123efcef8a"
+    },
+    {
+      "file": "call-emerald-light-audio-largefont.png",
+      "sha256": "a384f66fd5e8a28bdc387fd511640cbcd2e0e8a83feb95eaee7019b6eb1e6420"
+    },
+    {
+      "file": "call-emerald-light-audio-standard.png",
+      "sha256": "aecc8413ed2c56efa0d69673e6905fea8f7260cb8b7def2a4478e866365a7469"
+    },
+    {
+      "file": "call-emerald-light-keypad-largefont.png",
+      "sha256": "1a878c7077da29b3698341193b1a2bf7362fcfc1cb4399c3ef4b8e2b4f14865c"
+    },
+    {
+      "file": "call-emerald-light-keypad-standard.png",
+      "sha256": "4f42c225b1736275c006f792084fb2f440791a5441053e3f3645a6b96ba02fe6"
+    },
+    {
+      "file": "call-emerald-light-more-largefont.png",
+      "sha256": "dae86fd93e81fe5492c3e24b408f9d775973cfd13dd71795b7ec090e2d907601"
+    },
+    {
+      "file": "call-emerald-light-more-standard.png",
+      "sha256": "a5f51b9d7e887dacc946494ea97800d4e1b65170f1c67816d7d8386f9c1d1973"
+    },
+    {
+      "file": "call-emerald-light-normal-largefont.png",
+      "sha256": "0d48904404dada911142375fdaddee26088dc0fc47396ff8eb4beb9dd5bda9ab"
+    },
+    {
+      "file": "call-emerald-light-normal-standard.png",
+      "sha256": "fe6ec333492d86b5ef95fcac6c8b99d45ed0383f8de9ad4f510f20f8a39f9b04"
+    },
+    {
+      "file": "call-frost-dark-audio-largefont.png",
+      "sha256": "f642be2710692c1dbab998f4dfedafc0c1c59df7a225fd2582a96818cba33cba"
+    },
+    {
+      "file": "call-frost-dark-audio-longname-en.png",
+      "sha256": "9baeb315993f280175d68b3dda17533a46843dcabcac3326d32b36e84a79cf41"
+    },
+    {
+      "file": "call-frost-dark-audio-longname-he.png",
+      "sha256": "7189e50bbcc5fd3b2a38224fce45bd39a21b443aec31952b3b9548b337fc7cdc"
+    },
+    {
+      "file": "call-frost-dark-audio-standard.png",
+      "sha256": "a02e3de1025031da8ed65ac2892841844a1dca47918c066a44f46d040a161ca1"
+    },
+    {
+      "file": "call-frost-dark-keypad-largefont.png",
+      "sha256": "f17cf47a19325ee33394efe4975fb2323cc705d7fed54976c7c08b19e6e5d3bf"
+    },
+    {
+      "file": "call-frost-dark-keypad-standard.png",
+      "sha256": "110b3d849a7e29eaaea23c613a9c1e75a0178462383b4a978c44c33993f0fc9c"
+    },
+    {
+      "file": "call-frost-dark-more-largefont.png",
+      "sha256": "fab4d3369d8413f44a20fbd82b2db99468e8eee3694a806b26b44a0edf126367"
+    },
+    {
+      "file": "call-frost-dark-more-standard.png",
+      "sha256": "227bcc9b3c1c2d35b6c6bf68e6abcb2a4c2918dffc2e65ef0ea33d05c76e686b"
+    },
+    {
+      "file": "call-frost-dark-normal-largefont.png",
+      "sha256": "f92e428e4b23dcea65110a7214033165d94012dccd011231823bcf2dda026518"
+    },
+    {
+      "file": "call-frost-dark-normal-longname-en.png",
+      "sha256": "2198660155a7867b0fd7efc13444268c563bbd8947e5c46a5d017538d3b54786"
+    },
+    {
+      "file": "call-frost-dark-normal-longname-he.png",
+      "sha256": "938302e9575838f72eb01bc7bb793050fac1103821989a0362f896b711b94312"
+    },
+    {
+      "file": "call-frost-dark-normal-standard.png",
+      "sha256": "8eb3026482e64e43ee8c61bd3475a3972f31faeac950c1170e34df2f4050135e"
+    },
+    {
+      "file": "call-frost-light-audio-largefont.png",
+      "sha256": "d5cb5a7cd23db4f61ead6f091db0d728cd8f20f56893edd08b96b905cdfed4e1"
+    },
+    {
+      "file": "call-frost-light-audio-standard.png",
+      "sha256": "2f96a3deede5745d33793e9483a8441a06110326f05fd7cb7e2571a45c0dd885"
+    },
+    {
+      "file": "call-frost-light-keypad-largefont.png",
+      "sha256": "69c7d2c70901202107626324395d085adf9a3eb3031edf43995a81ac3bd961cb"
+    },
+    {
+      "file": "call-frost-light-keypad-standard.png",
+      "sha256": "1eea0b64fc84f00f16590c57414797db41bbebc6378778617d8593a55205c084"
+    },
+    {
+      "file": "call-frost-light-more-largefont.png",
+      "sha256": "dc83d213f91d881017671b7e6ae361aec706b10b7bb7849e2374f24d53e62fe2"
+    },
+    {
+      "file": "call-frost-light-more-standard.png",
+      "sha256": "2f4299cd0fc3bb7aac95e1b680e395447c9f75698052032dc537cc6b371ed149"
+    },
+    {
+      "file": "call-frost-light-normal-largefont.png",
+      "sha256": "db6b35e1e1a0bcf2d3f4445f47535745082826eeeebc2d8b12a9e5154cd547ba"
+    },
+    {
+      "file": "call-frost-light-normal-standard.png",
+      "sha256": "d546fa8db01323edd83091c1399daeaf84a34dc60d63d46a7f3efe12b72b3c76"
+    },
+    {
+      "file": "call-graphite-dark-audio-largefont.png",
+      "sha256": "22b12ade7a73b113536327be676b738741c44020c8431a83dd521b749374cace"
+    },
+    {
+      "file": "call-graphite-dark-audio-longname-en.png",
+      "sha256": "730f2cfb3df1939658df946ba7e482cfb6853ec90afac4f1e10052303eb602ed"
+    },
+    {
+      "file": "call-graphite-dark-audio-longname-he.png",
+      "sha256": "754d6c5c55ee96d1b146eb9987633f22717a3678ccedfbb4bd0d858159dd712c"
+    },
+    {
+      "file": "call-graphite-dark-audio-standard.png",
+      "sha256": "04107de152ca93370e242e6f262dff153d8798f5e73664425943dc5daa55cfe3"
+    },
+    {
+      "file": "call-graphite-dark-keypad-largefont.png",
+      "sha256": "cbc3888d49b8b31bc2badcfbc05396319fed10f2433058d347ce1f4076fe434c"
+    },
+    {
+      "file": "call-graphite-dark-keypad-standard.png",
+      "sha256": "b581a537ee00a4afe16e42c4b5386a80c49b0cace18884196861b2d6ddc43ef5"
+    },
+    {
+      "file": "call-graphite-dark-more-largefont.png",
+      "sha256": "af0b081b166825960be678463b3f9faa85e7b0e068be7913d76f5adeb22bff94"
+    },
+    {
+      "file": "call-graphite-dark-more-standard.png",
+      "sha256": "92cfe1826ab31c0149f4770e84c7bbd98e77e7028bc0feba868b1cb6fafefab8"
+    },
+    {
+      "file": "call-graphite-dark-normal-largefont.png",
+      "sha256": "5dfd91759373f68e927352f940b19ec35ad246b4f3a92bf45513136525307803"
+    },
+    {
+      "file": "call-graphite-dark-normal-longname-en.png",
+      "sha256": "9ddf7724c283b7e74897749913dd5216bb031dbd34e4fac97a4b4c57d6154bc5"
+    },
+    {
+      "file": "call-graphite-dark-normal-longname-he.png",
+      "sha256": "d031caa0ad94d1a0764355d8816fd6b24cdbff65607bcef1e55443dd05a017ed"
+    },
+    {
+      "file": "call-graphite-dark-normal-standard.png",
+      "sha256": "afd861baee31172d7a0d05204028b4c1766b38d101e1391f769c2d0bc62e1867"
+    },
+    {
+      "file": "call-graphite-light-audio-largefont.png",
+      "sha256": "5714c830181d4801a559207a13a9505e1a081bf41e6c0f468471af9fe191f1e7"
+    },
+    {
+      "file": "call-graphite-light-audio-standard.png",
+      "sha256": "1a58e844c2a8623052bd89f13ea6158fbff37580eb8d9f5e62ed8bda0e98b9a9"
+    },
+    {
+      "file": "call-graphite-light-keypad-largefont.png",
+      "sha256": "9459e0eea491b4d92e44237f45e05764926d1c3f6c3639b5226a2cc31924c121"
+    },
+    {
+      "file": "call-graphite-light-keypad-standard.png",
+      "sha256": "10a51a02b7bdf4d46866edd01c2f5bed98deccfc7655284babeec4dfc69f75e4"
+    },
+    {
+      "file": "call-graphite-light-more-largefont.png",
+      "sha256": "6d40f2d5744d9ba08f42d175efe0d162cee1e025ef7746fc0a3675ed0f2d60c2"
+    },
+    {
+      "file": "call-graphite-light-more-standard.png",
+      "sha256": "912ef4330213042022cd14e5f5591d0c4bfa62291e9231859d62abc0ba9f90fb"
+    },
+    {
+      "file": "call-graphite-light-normal-largefont.png",
+      "sha256": "46c00e7dfefc52bfb7ea80fbf32a73d27d984091162ea4d82e3b4f8aae166b1b"
+    },
+    {
+      "file": "call-graphite-light-normal-standard.png",
+      "sha256": "7387634293b86e8a9165535ba9f56d2c76f323349783e0e910dd50ee9dde0eb3"
+    },
+    {
+      "file": "call-ivory-dark-audio-largefont.png",
+      "sha256": "4307401d84733c89533c43425bc7db8138950702188457eab0b9a3d45096dea7"
+    },
+    {
+      "file": "call-ivory-dark-audio-longname-en.png",
+      "sha256": "0496709f4a110bead975f39bbc5da33cd4e5bc48907d65e3f92ef948a58db4f1"
+    },
+    {
+      "file": "call-ivory-dark-audio-longname-he.png",
+      "sha256": "e82119e7da40ce17c4f9836cb91e6d47a8a01729ef323b87eecab6229a452eef"
+    },
+    {
+      "file": "call-ivory-dark-audio-standard.png",
+      "sha256": "25e5b487fa18cfc9484d39533cbd24e94574c601b9aad0508083b1746f9a3e08"
+    },
+    {
+      "file": "call-ivory-dark-keypad-largefont.png",
+      "sha256": "78c7b3c1a36a781a1c0aa5c97345f201ac3bba014e4797807b5f6cf1dcfff0e4"
+    },
+    {
+      "file": "call-ivory-dark-keypad-standard.png",
+      "sha256": "43430b8704807360f808b5dd8fbbadf3f53a4ceb85813f4529dc001e59eed1b3"
+    },
+    {
+      "file": "call-ivory-dark-more-largefont.png",
+      "sha256": "794c0c7f55f428055318839526108a395e69afd8f507c4e0fdd13807861ce92d"
+    },
+    {
+      "file": "call-ivory-dark-more-standard.png",
+      "sha256": "775750c07ca8b81b5ff983bba8bbb5834070fb78290ce82844ea995a6bc4dd2c"
+    },
+    {
+      "file": "call-ivory-dark-normal-largefont.png",
+      "sha256": "a56b10568ebca9360ac0959289e7411739cd1aa08a1330ff707794ca8781058d"
+    },
+    {
+      "file": "call-ivory-dark-normal-longname-en.png",
+      "sha256": "cf8a5072e5311c61e73c99f20995dee67cb924d17e01a437687265c6dce44190"
+    },
+    {
+      "file": "call-ivory-dark-normal-longname-he.png",
+      "sha256": "ed86762a597706064a4aea29c36ff7fa13340aba338de313a9145af5264665a1"
+    },
+    {
+      "file": "call-ivory-dark-normal-standard.png",
+      "sha256": "a49d26a96bac6be3466dc629ecaa69dca5eaf527b369cd4f1f0120e7b01fb5a3"
+    },
+    {
+      "file": "call-ivory-light-audio-largefont.png",
+      "sha256": "0b7cc917291b425142e2369cb6369bc3cc018271a49b89dc9bfd4b3b9efe20ea"
+    },
+    {
+      "file": "call-ivory-light-audio-standard.png",
+      "sha256": "294350507a4ad46036c2935fd12fd85043fe3416be960cfcb762fd0d4179fd83"
+    },
+    {
+      "file": "call-ivory-light-keypad-largefont.png",
+      "sha256": "c726812398e8fe5de75adc3da5490b474f90a483d9b646cd649ebb22977d30d2"
+    },
+    {
+      "file": "call-ivory-light-keypad-standard.png",
+      "sha256": "91852e978cb34545bd6290f0ef7b7be435e6656ab457931ad93db3bc86795b1f"
+    },
+    {
+      "file": "call-ivory-light-more-largefont.png",
+      "sha256": "b6f71b8d82885f587491b5085245ce424eff12d0e3e2e693808e3fdcd6086f95"
+    },
+    {
+      "file": "call-ivory-light-more-standard.png",
+      "sha256": "744ccb6a9b8a8801620da5954a8ce472bb618c46a6dc7da7c22438f0ed87af49"
+    },
+    {
+      "file": "call-ivory-light-normal-largefont.png",
+      "sha256": "01828a8d52274b8ea13b90f2b991028b72c76ac97b6ff41ce3b1f80ecb365fa0"
+    },
+    {
+      "file": "call-ivory-light-normal-standard.png",
+      "sha256": "aa38d6298899de5cd7bea9f2cab392022362df0974590b2ac9921ab8405c35b6"
+    },
+    {
+      "file": "call-pixel-dark-audio-largefont.png",
+      "sha256": "8cd709584c70444cce3be0dd12e499689f8e0958720340477d97f03272c2d4dd"
+    },
+    {
+      "file": "call-pixel-dark-audio-longname-en.png",
+      "sha256": "f770c7dc1e4cf1cf432c45801a6a8529ff2253ce47992387619dd5423c3050ae"
+    },
+    {
+      "file": "call-pixel-dark-audio-longname-he.png",
+      "sha256": "db497fba9deed61965e5bbccd3c35ec21fc1c7f6526167de804094d5ba8733b6"
+    },
+    {
+      "file": "call-pixel-dark-audio-standard.png",
+      "sha256": "58f3f1a11e9db9637544757b397aaa3a8ab0b302a51c4d97143b5f27ef73141a"
+    },
+    {
+      "file": "call-pixel-dark-keypad-largefont.png",
+      "sha256": "ed410c7e0c70a97fa386a3aa5fff7f2656abf80fd1ac549686025bee682b2e81"
+    },
+    {
+      "file": "call-pixel-dark-keypad-standard.png",
+      "sha256": "365c6dfe140a57a7397a09da18fee0bf5899fce9ed694612010e248de7d2a649"
+    },
+    {
+      "file": "call-pixel-dark-more-largefont.png",
+      "sha256": "afc138f1c105be7580a1a385b194ba443aec8d6c1b87c77f40d7fa889cd48026"
+    },
+    {
+      "file": "call-pixel-dark-more-standard.png",
+      "sha256": "7c2fb041d3e1e18397951bb66b2991f06f1ad3118f6d5728ef0e6d25cced90d3"
+    },
+    {
+      "file": "call-pixel-dark-normal-largefont.png",
+      "sha256": "a3af792547de2ef54597b28121e8bd43ff0bf5ee21457d192a5006e121f3b7de"
+    },
+    {
+      "file": "call-pixel-dark-normal-longname-en.png",
+      "sha256": "c5ca497b30f3e1a793253362043be75e28c340f78145ff7035ff6285cf63b31b"
+    },
+    {
+      "file": "call-pixel-dark-normal-longname-he.png",
+      "sha256": "96e2d595319454404651cc4e58ce078a3124dfd3ee34e95fd8591eed4b9fe77b"
+    },
+    {
+      "file": "call-pixel-dark-normal-standard.png",
+      "sha256": "51cac618ce72b019c8d0da5293d14631231a1b27b2777da820e9cc8b1c4cb925"
+    },
+    {
+      "file": "call-pixel-light-audio-english-no-bluetooth.png",
+      "sha256": "37dea2df92cbabf2d96ab1555a39a1c385e57f41a06de153cee108e4896ad25c"
+    },
+    {
+      "file": "call-pixel-light-audio-largefont.png",
+      "sha256": "d34dc5cf23904654331e272516cb84b529b1353b219c34cdc727807cfedfc882"
+    },
+    {
+      "file": "call-pixel-light-audio-standard.png",
+      "sha256": "b09509346735c7e69b4ed207d085d5f656d4a94d4269e0a055c1b674bea5db29"
+    },
+    {
+      "file": "call-pixel-light-keypad-largefont.png",
+      "sha256": "cba37a136b97775f411793ffc4f55953a23ef745eabfd9225f280099de7490a9"
+    },
+    {
+      "file": "call-pixel-light-keypad-standard.png",
+      "sha256": "678088b6bd16ac492b93b66f8395ae1ae573c445f77e0d9296fd70d941cbac57"
+    },
+    {
+      "file": "call-pixel-light-more-largefont.png",
+      "sha256": "32a1760dffa966e9fda6267c3d129f894851da6eeab748b4feada08e9417c40a"
+    },
+    {
+      "file": "call-pixel-light-more-standard.png",
+      "sha256": "4ac5a11027fc80c5eaf72a0ef7b09825d69203662b1e4c68d099291ec9e36ad6"
+    },
+    {
+      "file": "call-pixel-light-normal-largefont.png",
+      "sha256": "f8aad48785b8db13b43e4f75dea16fe20ae7074b57d2ae58dda7c340f2749d54"
+    },
+    {
+      "file": "call-pixel-light-normal-standard.png",
+      "sha256": "475b91f798f646f992f84fb3ada126acbd98f789b859ac3bb574dc32984d091d"
+    },
+    {
+      "file": "settings-dark-bottom.png",
+      "sha256": "f216b4ee718fc4abd8ac654b1f4f619d7283ab63523bf70923e9b2e388940cfd"
+    },
+    {
+      "file": "settings-dark.png",
+      "sha256": "481239ad83f2440c330f8f07112711c7343cf97b5a5eb78ac6fc5f77afb5497a"
+    },
+    {
+      "file": "settings-light-bottom.png",
+      "sha256": "44b5db56dcdd6cb316801f530baf626aea1efc9a5ab3622ff0b263415cc96ebf"
+    },
+    {
+      "file": "settings-light.png",
+      "sha256": "29dfc8fdcc6506f7355bb12bee397baadb9a010703e5cd783b66bc5c41d72139"
+    },
+    {
+      "file": "widget-dark-contact-2x1.png",
+      "sha256": "f8f47612d58096ac837e8324125a1cf26f3328cd624045185df3ae82f55b88b7"
+    },
+    {
+      "file": "widget-dark-empty.png",
+      "sha256": "8f94061198615a6db78e2984a59d422412221b20117ac1b2084c2c1a4badb6c8"
+    },
+    {
+      "file": "widget-dark-favorites-2x2-largefont.png",
+      "sha256": "530028c5ac428a2989222ec41f332754bb8b037705bc28f96ca563c1bf780ed5"
+    },
+    {
+      "file": "widget-dark-favorites-2x2.png",
+      "sha256": "7f427d2f9b22817a661ee92e71434c859cad421e54c5306e8602223195d5623a"
+    },
+    {
+      "file": "widget-dark-favorites-4x2.png",
+      "sha256": "9b50d44438be467a74b72b599c48279d43855fb84d7e02d209d9ce603d11a934"
+    },
+    {
+      "file": "widget-dark-permission.png",
+      "sha256": "f5aa6629a5ad8f1f977b88dab146ee5fdf358513804176b92c60b6ba74acddf4"
+    },
+    {
+      "file": "widget-dark-quick-1x1.png",
+      "sha256": "1be11db4f4f7ceba0c195b7b95d9026ba4fda951ce50cbb2dc5b1ca3453aa728"
+    },
+    {
+      "file": "widget-dark-two-favorites.png",
+      "sha256": "221b94644ea3f6b6f7ce86de45d3bf8c5c4db384db7824884ae3858efc5b9b39"
+    },
+    {
+      "file": "widget-light-contact-2x1.png",
+      "sha256": "330a4eee169a1f5e23e9157aee2463a29a989aad14e4dd40e2b0839703bfbff5"
+    },
+    {
+      "file": "widget-light-empty.png",
+      "sha256": "00fd76ebbcf74473e26b2f1ded0ec6f251403354708340221a90733fb6a7ae95"
+    },
+    {
+      "file": "widget-light-favorites-2x2-largefont.png",
+      "sha256": "c76568daf83f143ee825c1d051c46d26ac22f2059984d4fcbc0bfa8cd8bf3084"
+    },
+    {
+      "file": "widget-light-favorites-2x2.png",
+      "sha256": "27b3f772edb2e4804113ff677758b95a0845fa1417a6822e8ea3d6fe76594fd8"
+    },
+    {
+      "file": "widget-light-favorites-4x2.png",
+      "sha256": "a8a3317b563a32ac0d8a3515a93fbdaea4ec84a6eae04cddc46855b28d1db137"
+    },
+    {
+      "file": "widget-light-permission.png",
+      "sha256": "34efb20e1ec2b1238fed684a0404c1df2a344a7187240ff604f6f4d57f3e6ee1"
+    },
+    {
+      "file": "widget-light-quick-1x1.png",
+      "sha256": "985261f62ccab8f00c90a9d9750c524a6e204f8955b07daf5b7554769e63007a"
+    },
+    {
+      "file": "widget-light-two-favorites.png",
+      "sha256": "d4f22e5432719d6f26604015eba87b3c276b557c5561ca831f64b9cf3dcd3bbf"
+    },
+    {
+      "file": "widget-reconfigured.png",
+      "sha256": "b09d1e4d48939d6bc7b4676cf6e110e230b3717608383785d633ab4b673c7088"
+    }
+  ]
+}

@@ -132,6 +132,9 @@ public final class PhoneSessionService extends InCallService {
   notifyViews();
  }
  @Override public void onMuteStateChanged(boolean muted){super.onMuteStateChanged(muted);notifyViews();}
+ @Override public void onCanAddCallChanged(boolean canAddCall){
+  super.onCanAddCallChanged(canAddCall);notifyViews();
+ }
  static boolean muted(){CallAudioState state=audioState();return state!=null&&state.isMuted();}
  static boolean speaker(){CallAudioState state=audioState();return state!=null&&(state.getRoute()&CallAudioState.ROUTE_SPEAKER)!=0;}
  private static CallAudioState audioState(){

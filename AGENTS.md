@@ -1,6 +1,6 @@
 # DA CALLER repository instructions for coding agents
 
-- **Current owner-authorized priority:** Read `docs/CODEX_DA_CALLER_PRODUCTION_AUDIT_2026-10-23.md` in full and follow its requirements REQ-01..REQ-17 and traceability/reporting rules. Related issue: #1.
+- **Current owner-authorized priority (2026-10-25):** Read `docs/DA_CALLER_VISUAL_SPEC_HE.md`, the newly supplied continuation after 0.11.0-beta.5. Google Phone's four states and four additional distinct layouts are the first priority. The red phone icon is removed only from the calls settings header; in-call hang-up remains a coral/red icon-only control. Preserve existing theme preference IDs, dialing and all stored data. Read `docs/CODEX_DA_CALLER_PRODUCTION_AUDIT_2026-10-23.md` as historical requirements REQ-01..REQ-17 where consistent with the new request. Related issue: #1.
 - **Blocker:** Clicking the dial/call icon in both `Contacts` and `Recent Calls` jumps list rows rather than placing a call. Reproduce, find root cause, fix click/touch/scroll interaction, and add regression coverage. Never claim verified without test evidence.
 - **Quality gate:** Test against Android 13 (target Unihertz Jelly Star/Helio G99, 8GB RAM, small screen) as far as possible. Test every requirement and report `PASS / FAIL / BLOCKED / NOT TESTED`. Device-only checks must remain `NOT TESTED` without device access.
 - **Module isolation:** `:app` is DA CALLER. `:businessbook` and `:offline` are separate products: no accidental code/data/release mixing.

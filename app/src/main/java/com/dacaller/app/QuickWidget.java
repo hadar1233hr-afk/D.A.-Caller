@@ -1,7 +1,13 @@
 package com.dacaller.app;
-import android.appwidget.*;
-import android.content.*;
+import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProvider;
+import android.content.Context;
+import android.os.Bundle;
 public class QuickWidget extends AppWidgetProvider {
- @Override public void onUpdate(Context c,AppWidgetManager m,int[] ids){for(int id:ids)WidgetSupport.update(c,m,id,true);}
- @Override public void onDeleted(Context c,int[] ids){SharedPreferences.Editor e=WidgetSupport.prefs(c).edit();for(int id:ids){e.remove("widget_contact_"+id);e.remove("widget_name_"+id);e.remove("widget_phone_"+id);}e.apply();}
+ @Override public void onUpdate(Context c,AppWidgetManager m,int[] ids){
+  final android.content.BroadcastReceiver.PendingResult pending=goAsync();
+  WidgetSupport.update(c,m,ids,true,()->{if(pending!=null)pending.finish();});
+ }
+ @Override public void onAppWidgetOptionsChanged(Context c,AppWidgetManager m,int id,Bundle options){onUpdate(c,m,new int[]{id});}
+ @Override public void onDeleted(Context c,int[] ids){WidgetSupport.delete(c,ids);}
 }

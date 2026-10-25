@@ -1,0 +1,4 @@
+<resources>
+ <!-- Both values are localized by the offline I18n catalog; punctuation is neutral. -->
+ <string name="call_action_status" translatable="false">%1$s · %2$s</string>
+</resources>

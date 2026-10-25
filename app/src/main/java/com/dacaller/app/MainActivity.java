@@ -151,6 +151,7 @@ public class MainActivity extends Activity {
    contactsGeneration++;contactsLoaded=false;contacts=Collections.emptyList();contactNames.clear();
    ContactPhotos.clearCache();render();
   }
+  SettingsScreen.refreshAttached(this);
  }
  @Override protected void onStart(){
   super.onStart();
@@ -160,6 +161,7 @@ public class MainActivity extends Activity {
   }catch(SecurityException ignored){}
  }
  @Override protected void onStop(){
+  if(fastPages!=null)fastPages.remember(lastPage);
   try{getContentResolver().unregisterContentObserver(contactsObserver);}catch(Exception ignored){}
   try{getContentResolver().unregisterContentObserver(callsObserver);}catch(Exception ignored){}
   handler.removeCallbacks(reloadChangedContacts);handler.removeCallbacks(reloadChangedCalls);
@@ -178,6 +180,7 @@ public class MainActivity extends Activity {
     if(!CallLauncher.dialExternally(this,number))showKeypad(number);
    }
   }
+  SettingsScreen.refreshAttached(this);
  }
  @Override protected void onActivityResult(int code,int result,Intent data){
   super.onActivityResult(code,result,data);
@@ -369,6 +372,7 @@ public class MainActivity extends Activity {
  }
  void openContactDetail(long id){
   if(id<=0){Toast.makeText(this,I18n.text(this,"אין איש קשר תואם"),Toast.LENGTH_SHORT).show();return;}
+  if(fastPages!=null)fastPages.remember(lastPage);
   Intent detail=new Intent(this,ContactDetailActivity.class);
   detail.putExtra("contact_id",id);startActivityForResult(detail,201);
  }
@@ -623,7 +627,7 @@ public class MainActivity extends Activity {
  }
  @Override protected void onSaveInstanceState(Bundle state){
   state.putString("page",page);state.putString("requested_call",requestedCallNumber);state.putString("pending_role_call",pendingRoleCallNumber);
-  if(fastPages!=null){fastPages.remember(page);fastPages.saveState(state);}
+  if(fastPages!=null){fastPages.remember(lastPage);fastPages.saveState(state);}
   if(keypadDialog!=null&&keypadDialog.isShowing())state.putString("dialpad",keypadInput==null?"":keypadInput.getText().toString());
   super.onSaveInstanceState(state);
  }
