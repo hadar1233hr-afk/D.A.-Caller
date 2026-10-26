@@ -101,10 +101,9 @@ public final class CallLayoutSnapshotTest extends InstrumentationTestCase {
     }
     click(tagged(activity,"call-sheet-close"));
     assertPanels(activity,"normal");
-    // A system Back closes the current sheet rather than losing the call UI.
+    // The explicit close remains local; system Back now returns to the app.
     click(tagged(activity,"call-action-keypad"));
-    getInstrumentation().runOnMainSync(activity::onBackPressed);
-    settle();
+    click(tagged(activity,"call-sheet-close"));
     assertFalse(activity.isFinishing());
     assertPanels(activity,"normal");
    }finally{finish(activity);}

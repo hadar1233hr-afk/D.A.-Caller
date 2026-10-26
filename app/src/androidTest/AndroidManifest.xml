@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
  <application>
   <uses-library android:name="android.test.runner" android:required="true"/>
+  <!-- Isolated document fixture installed only with the Android test APK. -->
+  <provider android:name="com.dacaller.app.BackupDocumentProvider"
+    android:authorities="com.dacaller.app.instrumentation.backupfixture" android:exported="true"/>
  </application>
 </manifest>

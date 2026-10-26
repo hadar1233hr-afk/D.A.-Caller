@@ -212,7 +212,10 @@ public class FastPagesTouchTest {
  @Test public void topMiddleAndEndContactsUseDisplayedNumbersAndKeepPosition(){
   ListView list=contacts();list.setFastScrollAlwaysVisible(true);
   for(int requested:new int[]{0,500,999}){
-   list.setSelectionFromTop(requested,0);list.layout(0,0,576,600);
+   // Keep the measured viewport: a forced 600px height beyond the parent
+   // shrinks on the next traversal and legitimately reanchors the last row.
+   int width=list.getWidth(),height=list.getHeight();
+   list.setSelectionFromTop(requested,0);list.layout(0,0,width,height);
    int first=list.getFirstVisiblePosition();View row=visibleRow(list);
    if(requested==999)for(int i=list.getChildCount()-1;i>=0;i--){View candidate=list.getChildAt(i);if(candidate.getTop()>=0&&candidate.getBottom()<=list.getHeight()){row=candidate;break;}}
    String expected=((Contacts.Person)list.getAdapter().getItem(list.getPositionForView(row))).phone;

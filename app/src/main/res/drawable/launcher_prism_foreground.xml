@@ -1,0 +1,8 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+ <path android:fillColor="#103D2F" android:pathData="M54,24 L80,39 V69 L54,84 L28,69 V39 Z" android:strokeColor="#E7C77F" android:strokeWidth="1.6" android:strokeLineCap="round" android:strokeLineJoin="round" />
+ <path android:fillColor="#00000000" android:pathData="M54,24 L54,34 L71,44 V64 L54,74 V84 M80,39 L71,44 M80,69 L71,64 M28,69 L37,64 M28,39 L37,44 M54,34 L37,44 V64 L54,74" android:strokeColor="#9B7D42" android:strokeWidth="0.85" android:strokeLineCap="round" android:strokeLineJoin="round" />
+ <path android:fillColor="#3C5737" android:pathData="M54,24 L80,39 L71,44 L54,34 Z" />
+ <group android:translateX="36.9" android:translateY="35.4" android:scaleX="1.45" android:scaleY="1.45">
+ <path android:fillColor="#FFE7AF" android:pathData="M6.62,10.79 C8.06,13.62 10.38,15.94 13.21,17.38 L15.41,15.18 C15.68,14.91 16.08,14.82 16.43,14.94 C17.55,15.31 18.75,15.51 20,15.51 C20.55,15.51 21,15.96 21,16.51 L21,20 C21,20.55 20.55,21 20,21 C10.61,21 3,13.39 3,4 C3,3.45 3.45,3 4,3 L7.5,3 C8.05,3 8.5,3.45 8.5,4 C8.5,5.25 8.7,6.45 9.07,7.57 C9.18,7.92 9.1,8.31 8.82,8.59 L6.62,10.79 Z" />
+</group>
+</vector>

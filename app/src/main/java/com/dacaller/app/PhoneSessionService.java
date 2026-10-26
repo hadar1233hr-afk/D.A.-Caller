@@ -1,12 +1,13 @@
 package com.dacaller.app;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Person;
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ServiceInfo;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,6 +15,7 @@ import android.os.PowerManager;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.telecom.InCallService;
+import android.telecom.TelecomManager;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.UUID;
@@ -26,6 +28,7 @@ public final class PhoneSessionService extends InCallService {
  private static final CopyOnWriteArrayList<Runnable> listeners=new CopyOnWriteArrayList<>();
  private final IdentityHashMap<Call,String> calls=new IdentityHashMap<>();
  private final ArrayList<Call> order=new ArrayList<>();
+ private final IdentityHashMap<Call,CallerIdentity> identities=new IdentityHashMap<>();
  private final Handler handler=new Handler(Looper.getMainLooper());
  private boolean screenVisible;
  private PowerManager.WakeLock proximityLock;
@@ -53,10 +56,9 @@ public final class PhoneSessionService extends InCallService {
  @Override public void onDestroy(){
   for(Call call:new ArrayList<>(order))try{call.unregisterCallback(callback);}
    catch(RuntimeException failure){CallFailureReporter.record(this,"incall-destroy",failure);}
-  calls.clear();order.clear();handler.removeCallbacksAndMessages(null);releaseProximity();
+  calls.clear();order.clear();identities.clear();handler.removeCallbacksAndMessages(null);safeReleaseProximity();
   if(instance==this){instance=null;current=null;notifyViews();}
-  NotificationManager manager=getSystemService(NotificationManager.class);
-  if(manager!=null)manager.cancel(NOTIFICATION_ID);
+  removeCallNotification();
   super.onDestroy();
  }
  @Override public void onCallAdded(Call call){
@@ -71,7 +73,9 @@ public final class PhoneSessionService extends InCallService {
    CallFailureReporter.record(this,"incall-call-added",failure);
    current=call;notifyViews();
   }
-  try{if(call.getState()!=Call.STATE_RINGING)showCallScreen();}
+  try{
+   if(call.getState()!=Call.STATE_RINGING||(!screenVisible&&!incomingNotificationAvailable()))showCallScreen();
+  }
   catch(RuntimeException failure){CallFailureReporter.record(this,"incall-open-screen",failure);}
  }
  @Override public void onCallRemoved(Call call){
@@ -84,6 +88,16 @@ public final class PhoneSessionService extends InCallService {
   try{startActivity(new Intent(this,CallScreenActivity.class)
     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP));}
   catch(RuntimeException failure){CallFailureReporter.record(this,"incall-start-activity",failure);}
+ }
+ private boolean incomingNotificationAvailable(){
+  try{
+   NotificationManager manager=getSystemService(NotificationManager.class);
+   if(manager==null||!manager.areNotificationsEnabled())return false;
+   android.app.NotificationChannel channel=manager.getNotificationChannel(CallNotifications.INCOMING_CHANNEL);
+   return channel==null||channel.getImportance()!=NotificationManager.IMPORTANCE_NONE;
+  }catch(RuntimeException failure){
+   CallFailureReporter.record(this,"incall-notification-availability",failure);return false;
+  }
  }
  private void changed(){
   try{current=preferredCall();}
@@ -129,6 +143,8 @@ public final class PhoneSessionService extends InCallService {
   super.onCallAudioStateChanged(state);
   try{updateProximity();}
   catch(RuntimeException failure){CallFailureReporter.record(this,"incall-audio-route",failure);safeReleaseProximity();}
+  try{updateNotification(current);}
+  catch(RuntimeException failure){CallFailureReporter.record(this,"incall-audio-notification",failure);}
   notifyViews();
  }
  @Override public void onMuteStateChanged(boolean muted){super.onMuteStateChanged(muted);notifyViews();}
@@ -155,6 +171,19 @@ public final class PhoneSessionService extends InCallService {
   if(service==null||state==null)return;
   try{service.setAudioRoute(value?CallAudioState.ROUTE_SPEAKER:privateRoute(state.getSupportedRouteMask()));}
   catch(SecurityException ignored){}
+ }
+ /** Explicit notification actions never invert a later route or act on a replacement call. */
+ static boolean notificationSpeaker(Call expected,boolean enable){
+  PhoneSessionService service=instance;
+  if(service==null||current!=expected||expected==null||!CallNotifications.controllable(expected.getState()))return false;
+  CallAudioState state;
+  try{state=service.getCallAudioState();}catch(RuntimeException unavailable){return false;}
+  if(state==null)return false;
+  if(!enable&&state.getRoute()!=CallAudioState.ROUTE_SPEAKER)return false;
+  int target=CallNotifications.speakerDestination(enable,state.getSupportedRouteMask());
+  if(target==0||state.getRoute()==target)return false;
+  // Audio callbacks, rather than an optimistic local flag, acknowledge the change.
+  return CallAudioRoutes.select(target);
  }
  static boolean bluetooth(){CallAudioState state=audioState();return state!=null&&(state.getRoute()&CallAudioState.ROUTE_BLUETOOTH)!=0;}
  static boolean bluetoothAvailable(){CallAudioState state=audioState();return state!=null&&(state.getSupportedRouteMask()&CallAudioState.ROUTE_BLUETOOTH)!=0;}
@@ -193,45 +222,88 @@ public final class PhoneSessionService extends InCallService {
   if(!calls.containsKey(call))return;
   try{call.unregisterCallback(callback);}
   catch(RuntimeException failure){CallFailureReporter.record(this,"incall-unregister-callback",failure);}
-  calls.remove(call);order.remove(call);
+  calls.remove(call);order.remove(call);identities.remove(call);
   CallHistory.fetchedAt=0;
   handler.removeCallbacks(refreshHistory);handler.postDelayed(refreshHistory,2500);
   changed();
  }
  private void updateNotification(Call call){
-  NotificationManager nm=getSystemService(NotificationManager.class);if(nm==null)return;
-  if(call==null||call.getState()==Call.STATE_DISCONNECTED){nm.cancel(NOTIFICATION_ID);return;}
-  boolean ringing=call.getState()==Call.STATE_RINGING;
+  if(call==null||call.getState()==Call.STATE_DISCONNECTED){removeCallNotification();return;}
   boolean intrusive=intrusiveNotification(call.getState(),screenVisible);
-  String channel=intrusive?"dacaller_incoming_v5":"dacaller_ongoing_v5";
-  NotificationChannel ch=new NotificationChannel(channel,
-    I18n.text(this,intrusive?"שיחה נכנסת":"שיחה פעילה"),
-    intrusive?NotificationManager.IMPORTANCE_HIGH:NotificationManager.IMPORTANCE_LOW);
-  // Telecom plays the ringtone, independently of notification permission/channel sound.
-  ch.setSound(null,null);ch.enableVibration(false);
-  ch.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);nm.createNotificationChannel(ch);
   Intent intent=new Intent(this,CallScreenActivity.class)
     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+  intent.setData(android.net.Uri.parse("dacaller-call-screen:"+calls.get(call)));
   PendingIntent open=PendingIntent.getActivity(this,NOTIFICATION_ID,intent,PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
-  String number=I18n.text(this,"מספר לא מזוהה");
+  CallerIdentity caller=callerIdentity(call);
+  CallAudioState audio=getCallAudioState();Call.Details details=call.getDetails();
+  long connected=details==null?0:details.getConnectTimeMillis();
+  Notification notification=CallNotifications.create(this,call.getState(),caller.name(),caller.number,intrusive,
+    audio==null?0:audio.getRoute(),audio==null?0:audio.getSupportedRouteMask(),connected,open,
+    (action,code)->command(action,code,call));
+  try{
+   // Android 13 accepts a quiet CallStyle only for an actual foreground service.
+   // Telecom keeps this service bound; the phone-call foreground lifecycle lasts
+   // exactly as long as at least one tracked call, including a waiting call.
+   if(Build.VERSION.SDK_INT>=29)startForeground(NOTIFICATION_ID,notification,ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL);
+   else startForeground(NOTIFICATION_ID,notification);
+  }catch(RuntimeException failure){
+   CallFailureReporter.record(this,"incall-start-foreground",failure);
+   // A ringing fullscreen notification remains a permitted fallback. Quiet
+   // ongoing notifications must never fake foreground flags or add a fullscreen
+   // intent merely to evade the platform's CallStyle requirement.
+   if(notification.fullScreenIntent!=null)try{
+    NotificationManager manager=getSystemService(NotificationManager.class);
+    if(manager!=null)manager.notify(NOTIFICATION_ID,notification);
+   }catch(RuntimeException fallback){CallFailureReporter.record(this,"incall-ringing-notification",fallback);}
+  }
+ }
+ private void removeCallNotification(){
+  try{stopForeground(STOP_FOREGROUND_REMOVE);}
+  catch(RuntimeException failure){CallFailureReporter.record(this,"incall-stop-foreground",failure);}
+  try{
+   NotificationManager manager=getSystemService(NotificationManager.class);
+   if(manager!=null)manager.cancel(NOTIFICATION_ID);
+  }catch(RuntimeException failure){CallFailureReporter.record(this,"incall-cancel-notification",failure);}
+ }
+ private static final class CallerIdentity {
+  final String key,number,fallback;final boolean contactsAllowed;
+  String contactName;boolean requested;
+  CallerIdentity(String key,String number,String fallback,boolean contactsAllowed){
+   this.key=key;this.number=number;this.fallback=fallback;this.contactsAllowed=contactsAllowed;
+  }
+  String name(){return contactName==null?fallback:contactName;}
+ }
+ private String text(String he,String en){return I18n.isEnglish(this)?en:he;}
+ private CallerIdentity callerIdentity(Call call){
   Call.Details details=call.getDetails();
-  if(details!=null&&details.getHandle()!=null)number=details.getHandle().getSchemeSpecificPart();
-  Notification.Builder b=new Notification.Builder(this,channel);
-  b.setSmallIcon(R.drawable.ic_stat_call)
-   .setContentTitle(I18n.text(this,ringing?"שיחה נכנסת":"שיחה פעילה")+" · DA CALLER")
-   .setContentText(number).setContentIntent(open).setVisibility(Notification.VISIBILITY_PUBLIC)
-   .setCategory(Notification.CATEGORY_CALL).setOnlyAlertOnce(true)
-   .setPriority(intrusive?Notification.PRIORITY_HIGH:Notification.PRIORITY_LOW).setOngoing(true);
-  if(intrusive)b.setFullScreenIntent(open,true);
-  if(Build.VERSION.SDK_INT>=31){
-   Person caller=new Person.Builder().setName(number.isEmpty()?I18n.text(this,"מספר לא מזוהה"):number).setImportant(true).build();
-   b.setStyle(ringing?Notification.CallStyle.forIncomingCall(caller,
-      command("DECLINE",2001,call),command("ANSWER",2002,call)):
-      Notification.CallStyle.forOngoingCall(caller,command("HANGUP",2003,call)));
-  }else if(ringing){
-   b.addAction(android.R.drawable.ic_menu_close_clear_cancel,I18n.text(this,"דחה"),command("DECLINE",2001,call));
-   b.addAction(android.R.drawable.sym_action_call,I18n.text(this,"ענה"),command("ANSWER",2002,call));
-  }else b.addAction(android.R.drawable.ic_menu_close_clear_cancel,I18n.text(this,"סיום שיחה"),command("HANGUP",2003,call));
-  try{nm.notify(NOTIFICATION_ID,b.build());}catch(SecurityException ignored){}
+  boolean allowed=details!=null&&details.getHandlePresentation()==TelecomManager.PRESENTATION_ALLOWED;
+  String raw=allowed&&details.getHandle()!=null?details.getHandle().getSchemeSpecificPart():"";
+  if(!CallLauncher.isCallable(raw))raw="";
+  String fallback=raw.isEmpty()?text(details!=null&&details.getHandlePresentation()==TelecomManager.PRESENTATION_RESTRICTED?
+    "מספר חסוי":"מספר לא מזוהה",details!=null&&details.getHandlePresentation()==TelecomManager.PRESENTATION_RESTRICTED?
+    "Private number":"Unknown caller"):raw;
+  boolean contacts=checkSelfPermission(Manifest.permission.READ_CONTACTS)==PackageManager.PERMISSION_GRANTED;
+  if(allowed){
+   String telecomName=Build.VERSION.SDK_INT>=30&&contacts?details.getContactDisplayName():null;
+   if(telecomName==null||telecomName.trim().isEmpty())telecomName=
+    details.getCallerDisplayNamePresentation()==TelecomManager.PRESENTATION_ALLOWED?details.getCallerDisplayName():null;
+   if(telecomName!=null&&!telecomName.trim().isEmpty())fallback=telecomName.trim();
+  }
+  String key=raw+"/"+fallback+"/"+contacts;
+  CallerIdentity identity=identities.get(call);
+  if(identity==null||!identity.key.equals(key)){
+   identity=new CallerIdentity(key,raw,fallback,contacts);identities.put(call,identity);
+  }
+  if(contacts&&!raw.isEmpty()&&identity.contactName==null&&!identity.requested){
+   identity.requested=true;CallerIdentity expected=identity;String number=raw;
+   ContactPhotos.lookup(this,number,(id,name,image)->{
+    if(instance!=this||!calls.containsKey(call)||identities.get(call)!=expected||
+      checkSelfPermission(Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED)return;
+    if(id>0&&name!=null&&!name.trim().isEmpty()&&!name.equals(number))expected.contactName=name.trim();
+    if(current==call)try{updateNotification(call);}
+     catch(RuntimeException failure){CallFailureReporter.record(this,"incall-contact-notification",failure);}
+   });
+  }
+  return identity;
  }
 }

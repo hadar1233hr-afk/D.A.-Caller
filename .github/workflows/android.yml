@@ -11,8 +11,11 @@ on:
       - '.github/workflows/android.yml'
       - 'scripts/run-android-ui.sh'
       - 'scripts/verify-ui-matrix.py'
+      - 'scripts/verify-personalization-matrix.py'
+      - 'scripts/verify-call-integration-matrix.py'
       - 'scripts/verify-visual-review.py'
       - 'docs/evidence/2026-10-25/**'
+      - 'docs/evidence/personalization-2026-10-25/**'
   push:
     branches: [main]
     paths:
@@ -25,6 +28,8 @@ on:
       - '.github/workflows/android.yml'
       - 'scripts/run-android-ui.sh'
       - 'scripts/verify-ui-matrix.py'
+      - 'scripts/verify-personalization-matrix.py'
+      - 'scripts/verify-call-integration-matrix.py'
       - 'scripts/verify-visual-review.py'
   workflow_dispatch:
     inputs:
@@ -147,6 +152,37 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -prop qemu.hw.mainkeys=0
           # This action executes each input line in a separate shell.
           script: bash scripts/run-android-ui.sh
+      - name: Verify the exact APK installed by the emulator test task
+        shell: bash
+        run: |
+          set -euo pipefail
+          APK=app/build/outputs/apk/debug/app-debug.apk
+          TOOLS="$ANDROID_HOME/build-tools/35.0.0"
+          mkdir -p app/build/native-tested
+          "$TOOLS/apksigner" verify --verbose --print-certs "$APK" > app/build/native-tested/debug-signature.txt
+          "$TOOLS/aapt" dump badging "$APK" > app/build/native-tested/apk-metadata.txt
+          sha256sum "$APK" > app/build/native-tested/debug-apk.sha256
+          python3 - <<'PY'
+          import re, zipfile
+          from pathlib import Path
+          metadata = Path('app/build/native-tested/apk-metadata.txt').read_text()
+          assert "package: name='com.dacaller.app'" in metadata
+          assert "sdkVersion:'26'" in metadata and "android.permission.INTERNET" not in metadata
+          with zipfile.ZipFile('app/build/outputs/apk/debug/app-debug.apk') as apk:
+              for name in apk.namelist():
+                  if re.fullmatch(r'classes[0-9]*\.dex', name):
+                      dex = apk.read(name)
+                      assert b'Lcom/dabusinessbook/' not in dex and b'Lcom/dacaller/offline/' not in dex
+                      assert b'Lcom/dacaller/app/BackupDocumentProvider;' not in dex
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DA-CALLER-${{ needs.validate.outputs.version }}-tested-debug-${{ github.sha }}
+          path: |
+            app/build/outputs/apk/debug/app-debug.apk
+            app/build/native-tested/
+          if-no-files-found: error
+          retention-days: 30
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -253,7 +289,7 @@ jobs:
   # use permanent signing and cannot update a differently signed install.
   # Never publishes on forks or changes the separately gated stable-beta process.
   preview-debug:
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'codex/da-caller-hardening-20261023' || (github.event.pull_request.head.ref == 'codex/da-caller-visual-20261025' && contains(github.event.pull_request.labels.*.name, 'visual-reviewed')))
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'codex/da-caller-hardening-20261023' || ((github.event.pull_request.head.ref == 'codex/da-caller-visual-20261025' || github.event.pull_request.head.ref == 'codex/da-caller-personalization-20261025') && contains(github.event.pull_request.labels.*.name, 'visual-reviewed')))
     needs: [validate, android-ui]
     runs-on: ubuntu-latest
     permissions:
@@ -269,9 +305,18 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: python3 scripts/verify-visual-review.py
+      - name: Require review of all eight continuation features for this exact source
+        if: github.event.pull_request.head.ref == 'codex/da-caller-personalization-20261025'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          DA_CALLER_VISUAL_REVIEW: docs/evidence/personalization-2026-10-25/visual-review.json
+        run: python3 scripts/verify-visual-review.py
       - uses: actions/download-artifact@v4
         with:
-          name: DA-CALLER-${{ needs.validate.outputs.version }}-debug-${{ github.sha }}
+          # Publish the emulator-tested binary, rather than a separate job's
+          # rebuild signed with a different ephemeral debug certificate.
+          name: DA-CALLER-${{ needs.validate.outputs.version }}-tested-debug-${{ github.sha }}
           path: candidate
       - uses: actions/download-artifact@v4
         with:
@@ -310,6 +355,13 @@ jobs:
           cat > preview-notes.md <<'NOTES'
           # DA CALLER — UNVERIFIED DEBUG TEST BUILD
           ## Implemented changes
+          - Offline settings backup/restore with a validated file and explicit confirmation.
+          - Five selectable original dark-green/gold launcher icons.
+          - Collapsible horizontal favorites above contacts and recents, and a compact expandable summary.
+          - Circle contact photos by default, with three more shapes shared across screens and widgets.
+          - Archived calls resolve current contact names and photos, with name/number search.
+          - Native call notifications show contact identity and state, return, hang-up and speaker actions.
+          - Back returns from the call screen to the last DA CALLER screen without ending the call.
           - Google Phone-inspired normal, audio, More and DTMF screens in light/dark.
           - Distinct One UI, iOS 26 glass, HyperOS and Nothing-inspired layouts.
           - Icon-only hang-up, capability-aware controls and exact Bluetooth endpoint selection.
@@ -319,8 +371,11 @@ jobs:
           ## Verification and installation limits
           The linked source passed unit tests, lint, APK verification and the
           Android 13 emulator suite at 480x854/240dpi with native three-button
-          navigation, RTL, font1.3 and 122 required PNG captures. The exact app
-          tree was visually reviewed before publication; see PR #3 and its report.
+          navigation, RTL, font1.3 and 183 required PNG captures. The published
+          APK is the exact debug binary installed by the emulator test task.
+          The exact app
+          tree and the additional personalization captures were visually reviewed
+          before publication; see the linked pull request and its verification report.
           This is **not** a stable or device-verified release.
           The Android build, unit tests and emulator UI checks passed, but
           actual cellular calls, answering, ringing, lock screen, SIM and

@@ -100,7 +100,7 @@ public final class ContactEditorActivity extends Activity {
   LinearLayout form=new LinearLayout(this);form.setOrientation(LinearLayout.VERTICAL);
   form.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);
   form.setPadding(dp(17),dp(10),dp(17),dp(22));scroll.addView(form);
-  FrameLayout photoHolder=new FrameLayout(this);
+  FrameLayout photoHolder=AvatarShapes.frame(this);
   photoHolder.setBackground(shape(dark()?0xFF383328:0xFFEDE1CD,58));
   LinearLayout.LayoutParams holderParams=new LinearLayout.LayoutParams(dp(105),dp(105));
   holderParams.gravity=Gravity.CENTER_HORIZONTAL;holderParams.bottomMargin=dp(9);
@@ -108,7 +108,7 @@ public final class ContactEditorActivity extends Activity {
   avatarText=text("＋",37,accent(),true);avatarText.setGravity(Gravity.CENTER);
   photoHolder.addView(avatarText,new FrameLayout.LayoutParams(-1,-1));
   avatar=new ImageView(this);avatar.setScaleType(ImageView.ScaleType.CENTER_CROP);
-  avatar.setClipToOutline(true);avatar.setVisibility(View.GONE);
+  AvatarShapes.apply(photoHolder);avatar.setVisibility(View.GONE);
   photoHolder.addView(avatar,new FrameLayout.LayoutParams(-1,-1));
   photoHolder.setContentDescription(tr("הוספת תמונת איש קשר"));
   photoHolder.setOnClickListener(v->pickPhoto());

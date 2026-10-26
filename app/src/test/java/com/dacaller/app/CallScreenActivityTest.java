@@ -125,14 +125,14 @@ public class CallScreenActivityTest {
   assertEquals(0,new CallThemes(RuntimeEnvironment.getApplication()).style);
   open();assertEquals("graphite",preferences.getString("call_theme",""));
  }
- @Test public void sheetTransitionsAreExclusiveAndBackClosesSheet(){
+ @Test public void sheetTransitionsAreExclusiveAndExplicitCloseKeepsCallVisible(){
   when(call.getState()).thenReturn(Call.STATE_ACTIVE);CallScreenActivity a=open();
   for(String next:new String[]{"more","audio","keypad","more"}){
    tagged(a,"call-action-"+next).performClick();
    for(String sheet:new String[]{"more","audio","keypad"})assertEquals(sheet.equals(next),tagged(a,"call-sheet-"+sheet)!=null);
    assertNotNull(tagged(a,"call-end"));assertNotNull(tagged(a,"call-sheet-close"));
   }
-  a.onBackPressed();assertNull(tagged(a,"call-sheet-more"));assertFalse(a.isFinishing());
+  tagged(a,"call-sheet-close").performClick();assertNull(tagged(a,"call-sheet-more"));assertFalse(a.isFinishing());
  }
  @Test public void noBluetoothOptionWithoutAnActualSupportedRoute(){
   when(call.getState()).thenReturn(Call.STATE_ACTIVE);CallScreenActivity a=open();

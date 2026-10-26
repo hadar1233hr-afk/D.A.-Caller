@@ -151,7 +151,7 @@ final class WidgetSupport {
   }
   return r;
  }
- /** Thumbnail only, anti-aliased circle and original system-font initials; never accesses a network URI. */
+ /** Thumbnail only, shared avatar geometry and original initials; never accesses a network URI. */
  static Bitmap avatar(Context c,long contactId,String name,int size){
   Bitmap photo=null;
   if(contactId>0&&c.checkSelfPermission(Manifest.permission.READ_CONTACTS)==PackageManager.PERMISSION_GRANTED){
@@ -166,10 +166,10 @@ final class WidgetSupport {
    BitmapShader shader=new BitmapShader(photo,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
    float scale=(float)size/Math.min(photo.getWidth(),photo.getHeight());Matrix matrix=new Matrix();
    matrix.setScale(scale,scale);matrix.postTranslate((size-photo.getWidth()*scale)/2f,(size-photo.getHeight()*scale)/2f);
-   shader.setLocalMatrix(matrix);p.setShader(shader);canvas.drawCircle(center,center,center,p);
+   shader.setLocalMatrix(matrix);p.setShader(shader);canvas.drawPath(AvatarShapes.path(AvatarShapes.selected(c),size,size),p);
    photo.recycle();
   }else{
-   p.setColor(dark(c)?0xFF405646:0xFFDCEADA);canvas.drawCircle(center,center,center,p);
+   p.setColor(dark(c)?0xFF405646:0xFFDCEADA);canvas.drawPath(AvatarShapes.path(AvatarShapes.selected(c),size,size),p);
    p.setColor(dark(c)?0xFFECF4E7:0xFF28452E);p.setTypeface(Typeface.create("sans-serif-medium",Typeface.NORMAL));p.setTextSize(size*.35f);p.setTextAlign(Paint.Align.CENTER);
    Paint.FontMetrics f=p.getFontMetrics();canvas.drawText(initials(name),center,center-(f.ascent+f.descent)/2f,p);
   }

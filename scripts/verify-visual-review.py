@@ -11,9 +11,19 @@ def output(*args):
     return subprocess.check_output(args, text=True).strip()
 
 
-review = json.loads(Path("docs/evidence/2026-10-25/visual-review.json").read_text())
+review_path = Path(os.environ.get("DA_CALLER_VISUAL_REVIEW", "docs/evidence/2026-10-25/visual-review.json"))
+review = json.loads(review_path.read_text())
 assert review.get("review_status") == "PASS", "Visual review has not passed"
-assert review.get("reviewed_png_count") == 122, "Visual review must cover all 122 required PNGs"
+expected = int(review.get("expected_png_count", 122))
+assert expected >= 122, "Existing visual regression coverage must be preserved"
+assert review.get("reviewed_png_count") == expected, "Visual review must cover every required PNG"
+if "personalization" in str(review_path):
+    assert expected > 122, "Personalization screenshots must be reviewed as well"
+    assert set(review.get("verified_features", [])) == {
+        "settings_backup_restore", "five_launcher_icons", "favorites_strip",
+        "compact_summary", "avatar_shapes", "archive_contact_identity",
+        "call_notifications", "return_from_call"
+    }, "Review must cover all eight requested features"
 source = str(review.get("screenshot_source_sha", ""))
 run_id = str(review.get("screenshot_run_id", ""))
 tree = str(review.get("reviewed_app_tree", ""))

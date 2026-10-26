@@ -19,6 +19,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -88,6 +89,10 @@ final class SettingsScreen {
      prefs.edit().putString("language",value).apply();
      WidgetSupport.refreshAll(host);host.refreshPagePreserveScroll();
     });
+  option("סמל האפליקציה","חמישה סמלים בירוק כהה וזהב",this::chooseLauncherIcon);
+  lastOption().setTag("settings_icons");
+  option("צורת תמונות אנשי קשר","הצורה תחול בכל המסכים ובווידג׳טים",this::chooseAvatarShape);
+  lastOption().setTag("settings_avatar_shapes");
   choice("צבע לחצן חיוג ביומן","זהב או ירוק","recent_color",
     new String[]{"זהב","ירוק"},new String[]{"gold","green"},
     prefs.getBoolean("recents_green",false)?"green":"gold",value->{
@@ -169,6 +174,12 @@ final class SettingsScreen {
   TextView offNote=text("כבוי מפסיק שמירה חדשה. למחיקת נתונים קיימים בחר מחיקת ארכיון.",11,false,subtle);
   offNote.setPadding(dp(12),0,dp(12),dp(11));card.addView(offNote);
   option("פתיחת ארכיון שיחות","סקירת ההיסטוריה שנשמרה",()->host.openArchive());
+  option("גיבוי הגדרות לקובץ","שמירת התאמות אישיות ומועדפים במיקום לבחירתך",()->
+    host.startActivityForResult(SettingsBackupActivity.intent(host,true),310));
+  lastOption().setTag("settings_export");
+  option("שחזור הגדרות מקובץ","תצוגה מקדימה ואישור לפני החלת הגדרות",()->
+    host.startActivityForResult(SettingsBackupActivity.intent(host,false),310));
+  lastOption().setTag("settings_import");
   option("מחיקת ארכיון","מחיקה מקומית שאינה משנה את יומן אנדרואיד",()->{
    new AlertDialog.Builder(host)
     .setTitle(tr("מחיקת כל שיחות הארכיון?"))
@@ -204,9 +215,9 @@ final class SettingsScreen {
      host.refreshPagePreserveScroll();
     });
   choice("מסך פתיחה","לאיזו לשונית לעבור בעת פתיחת האפליקציה","start_page",
-    new String[]{"שיחות","אנשי קשר","מועדפים"},
-    new String[]{"recents","contacts","favorites"},
-    prefs.getString("start_page","recents"),v->{
+    new String[]{"שיחות","אנשי קשר"},
+    new String[]{"recents","contacts"},
+    "favorites".equals(prefs.getString("start_page","recents"))?"contacts":prefs.getString("start_page","recents"),v->{
      prefs.edit().putString("start_page",v).apply();
      host.refreshPagePreserveScroll();
     });
@@ -395,6 +406,58 @@ final class SettingsScreen {
   sep();
  }
  private interface Change {void value(String value);}
+ private View lastOption(){return card.getChildAt(card.getChildCount()-2);}
+ private void chooseLauncherIcon(){
+  chooseVisual("סמל האפליקציה",AppIcons.IDS,true);
+ }
+ private void chooseAvatarShape(){
+  chooseVisual("צורת תמונות אנשי קשר",AvatarShapes.IDS,false);
+ }
+ @android.annotation.SuppressLint("ApplySharedPref") // Choice is committed on IO, with a visible failure result.
+ private void chooseVisual(String title,String[] ids,boolean icons){
+  ScrollView scroll=new ScrollView(host);
+  scroll.setBackgroundColor(surface);
+  LinearLayout choices=column();choices.setPadding(dp(8),dp(8),dp(8),dp(8));scroll.addView(choices);
+  android.content.Context dialogTheme=new android.view.ContextThemeWrapper(host,dark?
+    android.R.style.Theme_Material_Dialog_Alert:android.R.style.Theme_Material_Light_Dialog_Alert);
+  AlertDialog dialog=new AlertDialog.Builder(dialogTheme).setTitle(tr(title)).setView(scroll)
+    .setNegativeButton(tr("ביטול"),null).create();
+  String selected=icons?AppIcons.selected(host):AvatarShapes.selected(host);
+  java.util.concurrent.atomic.AtomicBoolean saving=new java.util.concurrent.atomic.AtomicBoolean();
+  for(String id:ids){
+   LinearLayout item=row();item.setPadding(dp(12),dp(8),dp(12),dp(8));item.setMinimumHeight(dp(76));
+   item.setTag((icons?"launcher-icon-":"avatar-shape-")+id);
+   ImageView preview=new ImageView(host);preview.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+   if(icons)preview.setImageResource(AppIcons.iconResource(id));
+   else preview.setImageBitmap(AvatarShapes.preview(host,id,dp(56)));
+   item.addView(preview,new LinearLayout.LayoutParams(dp(56),dp(56)));
+   String label=icons?AppIcons.label(host,id):AvatarShapes.label(host,id);
+   TextView name=text(label,15,true,ink);name.setPadding(dp(12),0,dp(12),0);
+   item.addView(name,new LinearLayout.LayoutParams(0,-2,1));
+   TextView mark=text(selected.equals(id)?"●":"○",23,true,selected.equals(id)?accent:subtle);
+   item.addView(mark,new LinearLayout.LayoutParams(dp(30),-2));
+   item.setContentDescription(label+", "+tr(selected.equals(id)?"נבחר":"בחר"));
+   item.setFocusable(true);TouchFeedback.bind(item,prefs);choices.addView(item,new LinearLayout.LayoutParams(-1,-2));
+   item.setOnClickListener(v->{
+    if(!saving.compareAndSet(false,true))return;
+    TouchFeedback.pulse(host,prefs,item);
+    for(int i=0;i<choices.getChildCount();i++)choices.getChildAt(i).setEnabled(false);
+    Context app=host.getApplicationContext();
+    IO.execute(()->{
+     boolean applied=icons?AppIcons.select(app,id):prefs.edit().putString("avatar_shape",id).commit();
+     host.runOnUiThread(()->{
+      if(host.isFinishing()||host.isDestroyed())return;
+      if(!applied){
+       saving.set(false);for(int i=0;i<choices.getChildCount();i++)choices.getChildAt(i).setEnabled(true);
+       android.widget.Toast.makeText(host,tr("לא ניתן לשמור את הבחירה. נסה שוב."),android.widget.Toast.LENGTH_LONG).show();return;
+      }
+      dialog.dismiss();WidgetSupport.refreshAll(app);host.refreshPagePreserveScroll();
+     });
+    });
+   });
+  }
+  dialog.show();
+ }
  private void choice(String label,String description,String key,String[] names,String[] values,String selected,Change changed){
   LinearLayout item=row();item.setPadding(dp(12),dp(7),dp(12),dp(7));
   item.setMinimumHeight(dp(72));card.addView(item,new LinearLayout.LayoutParams(-1,-2));

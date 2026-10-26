@@ -1,0 +1,12 @@
+{
+  "source_sha": "849c0975bf967e94fd584cb64b74c2eb86cf098e",
+  "errors": 0,
+  "issues": [
+    {
+      "id": "OldTargetApi",
+      "severity": "Warning",
+      "message": "Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the `android.os.Build.VERSION_CODES` javadoc for details."
+    }
+  ],
+  "scoped_exception": "ForegroundServicePermission only: framework ROLE_DIALER is the documented alternative to MANAGE_OWN_CALLS. Native fixture must acquire and verify this role; main service is system-bound InCallService. No global lint suppression/baseline."
+}

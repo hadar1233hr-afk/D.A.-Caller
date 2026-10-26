@@ -1,0 +1,36 @@
+{
+  "source": "849c0975bf967e94fd584cb64b74c2eb86cf098e",
+  "records": [
+    {
+      "kind": "debug",
+      "sha256": "c7a99ca138e61362ab57ca1e0c2243dd7e672e64628faf9dd8caf7848c06c7ec",
+      "bytes": 416002,
+      "package": "com.dacaller.app",
+      "versionCode": 17,
+      "versionName": "0.11.0-beta.7",
+      "minSdk": 26,
+      "targetSdk": 34,
+      "offline": true,
+      "foreground_service_permissions": true,
+      "module_isolation": true,
+      "test_provider_excluded": true,
+      "debug_fixtures_excluded_in_unsigned_release": false
+    },
+    {
+      "kind": "release_unsigned",
+      "sha256": "59420c1e5b78c1428c97b14c001721418193b546120178c1c1fa7ea1993d5c2a",
+      "bytes": 197250,
+      "package": "com.dacaller.app",
+      "versionCode": 17,
+      "versionName": "0.11.0-beta.7",
+      "minSdk": 26,
+      "targetSdk": 34,
+      "offline": true,
+      "foreground_service_permissions": true,
+      "module_isolation": true,
+      "test_provider_excluded": true,
+      "debug_fixtures_excluded_in_unsigned_release": true
+    }
+  ],
+  "note": "Local hashes only. Published CI debug APK has separate signature/hash; unsigned release is compilation/isolation evidence, not an installable artifact."
+}
