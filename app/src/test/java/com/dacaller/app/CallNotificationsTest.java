@@ -94,14 +94,23 @@ public class CallNotificationsTest {
   assertEquals("Dana Example",person());assertEquals(Notification.CATEGORY_CALL,notification().category);
   assertTrue((notification().flags&Notification.FLAG_ONGOING_EVENT)!=0);
   assertEquals(3,notification().actions.length);assertNotNull(action("HANGUP"));assertNotNull(action("SPEAKER_ON"));
+  assertEquals("Dana Example · Active call",notification().extras.getCharSequence(Notification.EXTRA_TEXT).toString());
+  assertEquals("On",action("SPEAKER_ON").title.toString());
+  assertSpokenAction("Speaker on",action("SPEAKER_ON").title);
   Notification.Action returnAction=null;
-  for(Notification.Action action:notification().actions)if("Return to call".contentEquals(action.title))returnAction=action;
+  for(Notification.Action action:notification().actions)if("Call".contentEquals(action.title))returnAction=action;
   assertNotNull(returnAction);assertEquals(notification().contentIntent,returnAction.actionIntent);
+  assertSpokenAction("Return to call",returnAction.title);
   Intent intent=shadowOf(returnAction.actionIntent).getSavedIntent();
   assertEquals(CallScreenActivity.class.getName(),intent.getComponent().getClassName());
   assertTrue((intent.getFlags()&Intent.FLAG_ACTIVITY_NEW_TASK)!=0);
   assertEquals("dacaller-call-screen",intent.getData().getScheme());
   send(action("HANGUP"));verify(call).disconnect();
+ }
+ private void assertSpokenAction(String expected,CharSequence title){
+  assertTrue("Compact native action keeps full spoken semantics",title instanceof android.text.Spanned);
+  android.text.style.TtsSpan[] spans=((android.text.Spanned)title).getSpans(0,title.length(),android.text.style.TtsSpan.class);
+  assertEquals(1,spans.length);assertEquals(expected,spans[0].getArgs().getString(android.text.style.TtsSpan.ARG_TEXT));
  }
  @Test public void outgoingAndIncomingAreDistinctAndBackgroundRingingKeepsAnswerDecline(){
   Call outgoing=call(Call.STATE_DIALING,"0500099000","Dana");service.onCallAdded(outgoing);
@@ -119,6 +128,7 @@ public class CallNotificationsTest {
   assertEquals(CallAudioState.ROUTE_SPEAKER,service.getCallAudioState().getRoute());
   assertNotNull("A request is not an audio-state acknowledgement",action("SPEAKER_ON"));assertNull(action("SPEAKER_OFF"));
   service.onCallAudioStateChanged(service.getCallAudioState());assertNotNull(action("SPEAKER_OFF"));assertNull(action("SPEAKER_ON"));
+  assertEquals("Off",action("SPEAKER_OFF").title.toString());assertSpokenAction("Speaker off",action("SPEAKER_OFF").title);
   send(on);assertEquals("A delayed explicit ON must never toggle speaker off",CallAudioState.ROUTE_SPEAKER,service.getCallAudioState().getRoute());
   send(action("SPEAKER_OFF"));assertEquals(CallAudioState.ROUTE_EARPIECE,service.getCallAudioState().getRoute());
   service.onCallAudioStateChanged(service.getCallAudioState());assertNotNull(action("SPEAKER_ON"));

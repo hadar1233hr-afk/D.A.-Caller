@@ -1,0 +1,1167 @@
+{
+  "review_status": "FAIL",
+  "screenshot_source_sha": "63c43f3ae06f3cb3f96ee087a8dbe347258c77ec",
+  "screenshot_run_id": "40347848775",
+  "reviewed_app_tree": "9502ef4610373daaa961aef118e81a57d43a87a4",
+  "expected_png_count": 183,
+  "reviewed_png_count": 183,
+  "verified_features": [
+    "settings_backup_restore",
+    "five_launcher_icons",
+    "favorites_strip",
+    "compact_summary",
+    "avatar_shapes",
+    "archive_contact_identity",
+    "call_notifications",
+    "return_from_call"
+  ],
+  "native_dimensions": {
+    "width": 480,
+    "height": 854,
+    "density": 240,
+    "api": 33,
+    "navigation": "three_button"
+  },
+  "method": "Visually inspected all 183 actual native PNG screenshots: 82 non-call images in 14 full-resolution contact sheets and 101 call styles independently reviewed in 26 full-resolution sheets preserving each source at 1:1 pixel size. No generated evidence.",
+  "findings": [
+    {
+      "severity": "resolved",
+      "file": "personalization-archive-light.png",
+      "description": "Both native system bars now have visible dark icons on the light background. The previous white-on-white contrast bug is fixed and verified visually."
+    },
+    {
+      "severity": "blocking_visual",
+      "files": [
+        "call-integration-notification-active-private-en.png",
+        "call-integration-notification-active-private-he.png",
+        "call-integration-notification-active-speaker-en.png",
+        "call-integration-notification-active-speaker-he.png",
+        "call-integration-notification-incoming-he.png",
+        "call-integration-notification-outgoing-he.png"
+      ],
+      "description": "At 320dp width and font scale 1.3, Android 13 CallStyle abbreviates long contact names in its header. The active-call header shows only ellipsis because the app name and chronometer consume the header width. Incoming and outgoing calls show the first Hebrew name prefix. Native action text also ellipsizes, while handset, speaker, answer and end icons remain clear. Full accessible descriptions and dispatch are asserted by the native suite, but visual caller identification remains inadequate for the user request.",
+      "decision": "Repeat the caller first in the notification body so a meaningful name remains visible. Requires a product fix and fresh native captures before PASS."
+    },
+    {
+      "severity": "minor",
+      "files": [
+        "call-emerald-dark-normal-largefont.png",
+        "call-emerald-dark-normal-longname-he.png",
+        "call-emerald-light-normal-largefont.png"
+      ],
+      "description": "At font1.3 Hebrew New call label ellipsizes in normal three-column control grid. Target and icon remain fully visible. Full accessibility text is asserted in instrumentation per parent context; pixels alone cannot prove it."
+    },
+    {
+      "severity": "expected",
+      "description": "Intentionally long names ellipsize; their phone number remains fully readable. No control overlap or vertical clipping observed."
+    }
+  ],
+  "not_tested": [
+    "Physical SIM/carrier calls and audio route transitions",
+    "Unihertz Jelly Star physical device",
+    "OEM launcher caching",
+    "In-place upgrade with existing signing key",
+    "TalkBack user walkthrough"
+  ],
+  "files": [
+    {
+      "name": "call-emerald-dark-audio-largefont.png",
+      "sha256": "690fa5febe3c9fa51bf0020751dd7d103804b4d06f48da6121ffefc431a36fc2",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-dark-audio-longname-en.png",
+      "sha256": "e03a2a3dd6b273122ad73159e7d9f0ee7ce8dce62383a6bcdd4f350d67d9d12a",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-dark-audio-longname-he.png",
+      "sha256": "82ab630ee374271e0e9fce92598c4afcd2f86adf4636e91564821070e9f81331",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-dark-audio-standard.png",
+      "sha256": "0b6d4e34d405e996d3fdcdfb3dc01f3ada496610314155168306f6b8f3839a0e",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-dark-keypad-largefont.png",
+      "sha256": "6bd8cd726ae1faba5c3c6ebe4975abd43337a68960e163482d465ed2660ed468",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-dark-keypad-standard.png",
+      "sha256": "2366783155b28770a1d4f128d7cfc9d66e76b4667a975af658b5a861b6d2008b",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-dark-more-largefont.png",
+      "sha256": "feb3f662af3112f13e0d89ea31ae3f33be6f0944ce92cb16c70649f3918a2241",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-dark-more-standard.png",
+      "sha256": "0170c2cf8f67d989d55085a8d3c50213ebe7456e46fe4e4e3fb751f642a2ab88",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-dark-normal-largefont.png",
+      "sha256": "b5372928598836ddcd58fc7e12fd486fd5baa5cb44ec89515aa5736a18307895",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-dark-normal-longname-en.png",
+      "sha256": "78682767e3ceed5f7435403f82510893cd4446630f5b484d60e8244abda09927",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-dark-normal-longname-he.png",
+      "sha256": "7b1a29184d589c7e9874615c7fd16718a285bbe7b0400248014bd03471b5ca9b",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-dark-normal-standard.png",
+      "sha256": "0d829d4e1b840457e4dcc51f23c8808d6dd6b6a71dba97795eb5b95f79cba603",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-light-audio-largefont.png",
+      "sha256": "ba294d9a1042c4e6a589219b1ac9199b5d4b335732ae091405f5a06e2a20f44c",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-light-audio-standard.png",
+      "sha256": "85b45d77a56c773f7fefc638b3b074dba2b0676549646816fe54c8173b55d3d7",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-light-keypad-largefont.png",
+      "sha256": "ae7ad4fab62a5150c8e6008d2bb4a053f5dd8ebe53cce393c986e587be28009e",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-light-keypad-standard.png",
+      "sha256": "97243588f3e912a80578b4c364f26e6329dcb89f81ac3e439d825e475dbaef65",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-light-more-largefont.png",
+      "sha256": "e1aaf3a8b3a2eb37d0d9945e43bc4ebd12b05abd2f2ffba31e60be52438c53fb",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-light-more-standard.png",
+      "sha256": "5c78b4dc95959668947b1b5621086f1978cc5f1d7fadb6dfbb218aad406a513a",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-light-normal-largefont.png",
+      "sha256": "bf8c5ebcc44e3c13d9daa8819c91ea4d603f2e6f9ebe12c88b5bef62ffc9cd13",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-emerald-light-normal-standard.png",
+      "sha256": "1b4263374f2c508bc49b30fadbeb1c74f7180c833480e33d987de0754b82f3e3",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-dark-audio-largefont.png",
+      "sha256": "96e38bc2a4421cfe7482348ca07559a9379f068e9304077743b4e975aebcd990",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-dark-audio-longname-en.png",
+      "sha256": "eb282a21c7bf697ce5ea7eb7339fe7273c61b889963c08e73d8aab63df3e64b2",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-dark-audio-longname-he.png",
+      "sha256": "830638da55a482aaf503237bf7d4619adefff1906516a25d09605ed8830521c9",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-dark-audio-standard.png",
+      "sha256": "c7707cd1e9eec2f85349ababde536c18a78337614fb5e6f6f52664535503a817",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-dark-keypad-largefont.png",
+      "sha256": "50abd371b5759c7c69406ec90b02af646a6df91a0b4b3ac3d86248d392a47f64",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-dark-keypad-standard.png",
+      "sha256": "1537aaa6115f9b77298f00fbe9c9086fc1b6a7c42cb8f4ce77b54503fc5d4e23",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-dark-more-largefont.png",
+      "sha256": "e5d3adf14f4a745c592fa7b13a22d4ac70f108361069916a01c3aff51f4c27af",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-dark-more-standard.png",
+      "sha256": "999eea0ad0281c2b95c8f78ab7c3b3c62d9bed973a5e1caa4431b694c56940d6",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-dark-normal-largefont.png",
+      "sha256": "14da820ff63e92cac9d0dc47b8aaaf1be94de6d8a5075e07c52345f38c32b967",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-dark-normal-longname-en.png",
+      "sha256": "2f90d1234321f1beb361210e9d64bc5155ab04544cb9f4d5c184979a299d58c3",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-dark-normal-longname-he.png",
+      "sha256": "20e2ef580ca107a5cd7b71556b2be9baaef631af11d0e632f5752e72fa034b3d",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-dark-normal-standard.png",
+      "sha256": "0a72eeccb116fccace0633ed365ace0891b622256a8cc2e7e58e5e64e47bc051",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-light-audio-largefont.png",
+      "sha256": "2cd8c046a0882504d1f0e61d79cc7050c9a938322f5c754ae76785e7b9cbdbae",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-light-audio-standard.png",
+      "sha256": "1db39f56886dbabe45b7839874b8c3763da1615a50cde1cc8d66ae551923fc77",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-light-keypad-largefont.png",
+      "sha256": "3b40214501f5fe96842a703256a71d00e2e37153eb1b7314d0138e517aea4c74",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-light-keypad-standard.png",
+      "sha256": "54a08320f58e057755b8adc7ec7470d3718293368c96aa2e744f8a25379d515c",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-light-more-largefont.png",
+      "sha256": "99c42579a9cbbaca75fbc5c526683bfee97ecdd7bd7c3a94d3b7c47818a484b7",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-light-more-standard.png",
+      "sha256": "591c920aa49ba5ea97c167fe5ce727af7f0551eb936fb40fadb7e2f978c82e5b",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-light-normal-largefont.png",
+      "sha256": "52c03b3680fb5b14d479ff50b78a1875f9a092615308ffcabbea8afd3340320a",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-frost-light-normal-standard.png",
+      "sha256": "8cdc65d27ab37c7b5986e42565c446946c52c7e87c6a1241f5cb205359058089",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-dark-audio-largefont.png",
+      "sha256": "793486fe46798d0181f6a8dee25854ee5576bc61ae7367c629ebf36c5c6c5b62",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-dark-audio-longname-en.png",
+      "sha256": "8e66edf7d628c859b258dca3a6db4f30bd51a5c2cc4c36eb70b60ac47ab22446",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-dark-audio-longname-he.png",
+      "sha256": "49cc132a93339940699a440f5fda97035b712b3e5079fcf1a05b61e4f89eddca",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-dark-audio-standard.png",
+      "sha256": "0505b56a4eeee470f665734f4745e3a88637e1f14cfec2b2aa031e7a3bb6d78f",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-dark-keypad-largefont.png",
+      "sha256": "74cfa08c7aac958f10d60db3e3c936e9518de4ae45aa0d4183702eb6aaf52a12",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-dark-keypad-standard.png",
+      "sha256": "4cd52f47696b3dc56628c489278488980c60f0492ebe3101e4c69cab8e61065f",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-dark-more-largefont.png",
+      "sha256": "45baf81d0befa20eac7903d2e6f3c668f68e0a787c7f6ce0e2add566320ae990",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-dark-more-standard.png",
+      "sha256": "dfaa51410da25be910740949ec7a0fbfe6b5cf01a1547375562a458bcd600148",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-dark-normal-largefont.png",
+      "sha256": "d74ec4a156ba1729d052118159116de5952f3c8c00cf0957840cd5ba7270e52d",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-dark-normal-longname-en.png",
+      "sha256": "1ee82f8549571d9d9386c735f53d084c83134b2ea34231bfe9693b8092710194",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-dark-normal-longname-he.png",
+      "sha256": "965fc48e0918f6b040557154f4d4925714b6c2aa91bf45a124ce2aa333380e6a",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-dark-normal-standard.png",
+      "sha256": "107bfd219e5eb4d910144a25c716783eaec0efc2429828c2ace1c5de042f546f",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-light-audio-largefont.png",
+      "sha256": "8ec44eb367e657d73b293e63701ccb7734c3e3076527bc5f09da6b536ffacd18",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-light-audio-standard.png",
+      "sha256": "72ffdb29e1cc729c4a570eae1da9a1477870e8417d8472af3d2065b7c96e9df7",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-light-keypad-largefont.png",
+      "sha256": "fc51116657ee90236dc8f1c73aa9d1b5b47eb99e850ddff613a494efcc36ee2e",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-light-keypad-standard.png",
+      "sha256": "68b19ff5853b2656947492ee4821087200e20535845490e886da806798d6fa1a",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-light-more-largefont.png",
+      "sha256": "09b98560e4c94c87da2ff709bc24ef8bd133d4775e37ee8f70f16f5198570315",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-light-more-standard.png",
+      "sha256": "de2542f2dbe3a03019a24c1f144eee64a0e4ad944d6bc055e290bacef2e57c72",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-light-normal-largefont.png",
+      "sha256": "ba0dabe3027ee33f4852760304b5f946c0fbcdd26b5b8ca3707c63e1f04c9297",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-graphite-light-normal-standard.png",
+      "sha256": "8235190060a39e4acd841dbbe9f33f0e6e680acac0e2dabe9e0763a0b5b9a3ca",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-integration-notification-active-private-en.png",
+      "sha256": "7601ea6b188dcdf78bfad3ee72ee4dbfe0eae4314811bb006c692ae8cf8e24d3",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-integration-notification-active-private-he.png",
+      "sha256": "96de107ce05bdbbf1995cf6b725dcbc4cde2dd3757b56573a6d6896e33639a52",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-integration-notification-active-speaker-en.png",
+      "sha256": "7601ea6b188dcdf78bfad3ee72ee4dbfe0eae4314811bb006c692ae8cf8e24d3",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-integration-notification-active-speaker-he.png",
+      "sha256": "70f7a60088b01bb23298c698f22fd91a3d59f1bc31719e6d2e6001a441d81791",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-integration-notification-incoming-he.png",
+      "sha256": "ce601e689609dbc7be071741557d36ca51495eaf02fed9056ba25a5f25584b71",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-integration-notification-outgoing-he.png",
+      "sha256": "109c90765041901765293515cfb4f4e1fa280202c65a4361dd338314416184e4",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-integration-return-contacts.png",
+      "sha256": "0b5baff31ff0c6e7e0c301c18bbae9ffafde5c1e0e7ab9381f983b6b40fb339b",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-integration-return-settings.png",
+      "sha256": "f1da659196a1bed19f4b7e9062ef5624b43deffbce0a7bfb48130af087c8ebc4",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-dark-audio-largefont.png",
+      "sha256": "bcfc495dcbc1cebf9984d72b8099792c20d95a539ad426e4f57e8e53049579a5",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-dark-audio-longname-en.png",
+      "sha256": "e72cf57a8767d1b12aa685f1722e02410e1d0cf60677214c6218415068c08f3c",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-dark-audio-longname-he.png",
+      "sha256": "cb3d79b5c0870afea0d027af1bbc08e9f793bee4d564391d1240f33ad5e513fa",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-dark-audio-standard.png",
+      "sha256": "9bb19bcefd9fbdbfce0117a114abb7f9a791faf19fc99c380003d557b10c3cd0",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-dark-keypad-largefont.png",
+      "sha256": "f53d45023721f26747dfaa1047def52dd32540de231402c225b021542a00d18f",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-dark-keypad-standard.png",
+      "sha256": "5b19e37692f9298ac125e1b2ef77f1c1bdb03065ce0f68081de59b136379afea",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-dark-more-largefont.png",
+      "sha256": "89830071f3fb7bf4d69b550a46b0ec2277db219d949c7bd490b69059ddd65f2d",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-dark-more-standard.png",
+      "sha256": "a68ab9f22853c3a19eca7af8bbe527bd3fc2fed27c5cd6d71ac078cb33ed7f40",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-dark-normal-largefont.png",
+      "sha256": "f5d9dc74c15768ac97498593f08a0bd8a14e25a7ac2995d5a07d60789f2d6817",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-dark-normal-longname-en.png",
+      "sha256": "69c933b7e2050be3eedbac24156a2495a45b2e9195be831d179457672f9a9b3f",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-dark-normal-longname-he.png",
+      "sha256": "4455140cc219b4097647f45aa4c385cb87fac1231e63e9b2806d18375a3476ce",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-dark-normal-standard.png",
+      "sha256": "bbd933c586234c256caa050bfeabc50b37a4633b37a4bd2acdaa89dc8cd710da",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-light-audio-largefont.png",
+      "sha256": "655d7f4444019b5a6239b01495fa60b606ff0fc9b36cbd3842a985f497e6b43b",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-light-audio-standard.png",
+      "sha256": "af800ec6d30a8cbc5e61d1da1521d8cdea5533d84b0a69cff2b11adfd4c2dcf9",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-light-keypad-largefont.png",
+      "sha256": "526d3489f76ce44ecf4e942bb843d21c03f0659a662b6b33561d4dec961f01cc",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-light-keypad-standard.png",
+      "sha256": "648b562586b387bb20155855dd07e1db4d0811919bea826ad51c3294b6327f26",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-light-more-largefont.png",
+      "sha256": "4ec6acd239e04a6e640887f515a9dd5bbae0aac7e60f4c56ba5a46f25ce96bb8",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-light-more-standard.png",
+      "sha256": "edb98bdac292285553e160fffc3098d67b83cbc303e582445678db2e084fb956",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-light-normal-largefont.png",
+      "sha256": "14144fcc43a72044d90cb16e5a9d2bc402e71cc96bad554f4a14213b6e3d2266",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-ivory-light-normal-standard.png",
+      "sha256": "20d9eca7b2abcb136175d23a2c82de3354958983e9dca42f150dafa018c989b8",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-dark-audio-largefont.png",
+      "sha256": "fd84fc3f6e094fa6b8e73b1ca8bcc50fb3c766bd68a4585028a085858288a016",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-dark-audio-longname-en.png",
+      "sha256": "5bd268f12d251f060894261319f8c2570737fd8fe2ec662c928be72f7e6a2030",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-dark-audio-longname-he.png",
+      "sha256": "a232202af79b64d617abdc3dd1f236ed146c99daf1d54dd903903a4c1ebfda01",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-dark-audio-standard.png",
+      "sha256": "89b8ee5dde05b38450a33bccbb65c526ac2831ef119212a36370ad84a3d6c008",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-dark-keypad-largefont.png",
+      "sha256": "37641195293bcc2e8d647146e4aff8c1cd053ab2cda1569718abb846e073ab65",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-dark-keypad-standard.png",
+      "sha256": "2876d33422845f95cdef856b38b5f87391806d66c04a822f33062aff3dc5dfe2",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-dark-more-largefont.png",
+      "sha256": "ed2ad95ffc5d36e4a2b7783080fed5fc7f6cfa4d08f83414142d5f1cfb85fffc",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-dark-more-standard.png",
+      "sha256": "2aa80fdee8d3998ee97f66b752f8261f9559a0ed9789b95c706276acc2ba22e5",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-dark-normal-largefont.png",
+      "sha256": "4602932aca4cdd7a2656deb0a7b62239453d9f39171621e6af7010131b5b3dfb",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-dark-normal-longname-en.png",
+      "sha256": "2008d640d2319580c810cecc2f387601e8ab67aebe2f3077f83ee001e81c794e",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-dark-normal-longname-he.png",
+      "sha256": "858cc6d7d168559bddd300a25b07cbdd7d7bc5a7ef0b6be0abb97fd3863f6333",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-dark-normal-standard.png",
+      "sha256": "1f43ed1d59c4a0025de4214cfc92d84bee6512d87dc96bebaa07c2b31241f082",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-light-audio-english-no-bluetooth.png",
+      "sha256": "efe5bf73664dcc136812c877fe92fefa75f6430c81c3e1fda5641bdb4e044236",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-light-audio-largefont.png",
+      "sha256": "300e3fd6d8fb93e09b9252da98f830b7cb48ce345405696d6d2394b0e7969f2c",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-light-audio-standard.png",
+      "sha256": "0490e7f9f874c17ef79023866fe0f8910e2ad470330c1e9e2f940941e15aca14",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-light-keypad-largefont.png",
+      "sha256": "44915a7c8ba5bf47eee442ee81c6ed9478e28c63b24b2b4860a4133b34edbe52",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-light-keypad-standard.png",
+      "sha256": "ddfc1071c8aab610940f7b211147d147fe656bd54851f5d27211fe7d4838f6fa",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-light-more-largefont.png",
+      "sha256": "6ca8141dc915c04054d2097fb19a435d9e449ff3f224f209abcd287138c06fed",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-light-more-standard.png",
+      "sha256": "b3e1cb822037195481065f15b876e7706a4032adeb7fb891eef219accac4d85d",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-light-normal-largefont.png",
+      "sha256": "b6de7b5077c43d6c21a2bf5fee2924595560f142b8af137572fac2cfb2033dd2",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "call-pixel-light-normal-standard.png",
+      "sha256": "06821392b4951dd3c6e8c55b3010a78d2f87cb5fc9264479842d2e780642fcfd",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-archive-dark.png",
+      "sha256": "fae32479e545fa1d226e4a3f6b7acb459afe7d82ba5c97a7360f66837b6e69b0",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-archive-light.png",
+      "sha256": "c24c7127a876ad361ce5765946343be60a4e9880adc46d7c8af84af04c651cb5",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-backup-restore-confirmation.png",
+      "sha256": "8df34757cfaaefc853c88dda069ffe0b6d97803c75c152382c377184647694d8",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-backup-saved-dark.png",
+      "sha256": "87a40fa7886d03102dd3346f80c0f7727335672a65a59c70e3954f90e7261333",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-backup-saved-light.png",
+      "sha256": "87679e7e33e0e7f7e1f700539f5dff35b931503fe34810b4c9097e25323c80bc",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-chooser-dark-avatar_shapes-bottom.png",
+      "sha256": "a6746790be49b7d092107f354a62fdc59451664df263a228a20458fb7c6fed41",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-chooser-dark-avatar_shapes.png",
+      "sha256": "a6746790be49b7d092107f354a62fdc59451664df263a228a20458fb7c6fed41",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-chooser-dark-icons-bottom.png",
+      "sha256": "abe9f631d4f6e32fc20db0840a963f2a61897b06b72ed968fb7cf843fac2fe0b",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-chooser-dark-icons.png",
+      "sha256": "78449248d93c24f23d224a3923ef4b06eca5de4e9e6f6e7fb84376632288286d",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-chooser-light-avatar_shapes-bottom.png",
+      "sha256": "e7ce21c4d16cd3b542bacf4f642a2e851c0d115d7ded2ce19e4b5e4b7dbe2490",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-chooser-light-avatar_shapes.png",
+      "sha256": "e7ce21c4d16cd3b542bacf4f642a2e851c0d115d7ded2ce19e4b5e4b7dbe2490",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-chooser-light-icons-bottom.png",
+      "sha256": "f3d5d869d2fc2632beb6c635013f8cb3c8bf3af5b5b906da44af36ea199c46b3",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-chooser-light-icons.png",
+      "sha256": "d9c188cbee5c1ef4884f3e9501996eb0e18c0d3cf22723d65cd7df36ab4e85bd",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-dark-en-largefont-collapsed.png",
+      "sha256": "f8127bde7064974b7b702faed48b1ca55b2d900142b18b00ab1527b9a00d6e17",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-dark-en-largefont-expanded.png",
+      "sha256": "1f50b21b3888347c6b31a5e79c39ffd67e6f106ac2801ec06a6097eea13913f0",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-dark-en-standard-collapsed.png",
+      "sha256": "02e674f4696f0ad15cd1407a58258d46b91db10940bd07d2c9cfa876998857ac",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-dark-en-standard-expanded.png",
+      "sha256": "c85e9505862db149740cccd454c2307cd3f84486598d36af346a597f37a9ce23",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-dark-he-largefont-collapsed.png",
+      "sha256": "80cf3863981b0507b19cde89f96b9026c5d461076b638d8327e493a067b23bce",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-dark-he-largefont-expanded.png",
+      "sha256": "a2f30275cc9965b4c584edc9b1384622f44fc0a3456ce2df22097670259e5701",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-dark-he-standard-collapsed.png",
+      "sha256": "9cbd3e3a8a58450c143d025359d02f126598523d8fc7946335e9f9e4905452eb",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-dark-he-standard-expanded.png",
+      "sha256": "163923db6805253f2d096aaeda1810b67983f99f4b599e1dc57b07ab1d649d2f",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-light-en-largefont-collapsed.png",
+      "sha256": "25846c474998767be8cd3c6e3191236b6bbb67a51392ba3f005f8d3763d71467",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-light-en-largefont-expanded.png",
+      "sha256": "057cf349213c3e50e091902f466358d8eda83b899e7ac10b7b21cd2419cc565a",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-light-en-standard-collapsed.png",
+      "sha256": "a7d31fef7562a443904bbd6d6f8b98b0c0928f017106dfc1ae4ad8be6116e493",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-light-en-standard-expanded.png",
+      "sha256": "0ca3694ae0e0d8d3d7df20ec3fdf5b7867f166c1ce4f90c094eca72015f42058",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-light-he-largefont-collapsed.png",
+      "sha256": "221589649ed87860408e962c50998f8014a0287c108886fbfb2d3ca4b636c70c",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-light-he-largefont-expanded.png",
+      "sha256": "1dde7740b69721fb353e6af81dfdfcad58c8e95a144f97be67112e9a2997a79a",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-light-he-standard-collapsed.png",
+      "sha256": "7852c13a8c77fd503c9a02d11e33d95bdcb8d58de67274c0a96a964546abac9f",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-light-he-standard-expanded.png",
+      "sha256": "c570a7773dc56401ee7853ecd534dfccf4d748fa3f7253c91acd8117ddd86d6a",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-shape-circle.png",
+      "sha256": "543f2c5785e396eb3cc3c9fdff1b770633449018f14e810560e82ec491ab0d83",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-shape-hexagon.png",
+      "sha256": "ef2f2c2ea121570ae6e1fb9ec6f8e9511c8aef256578084c8a3aaf27ce88b098",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-shape-rounded_square.png",
+      "sha256": "c6f213310099f5895927165eb897ea17b0e346ef17edabc5b730005cf775493f",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-contacts-shape-square.png",
+      "sha256": "44e9a6616831a26d3f9c5c8abc4cc57fcf6b5f2a1540c0bc8cd6b21e56c2ffab",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-recents-dark-en-largefont-compact.png",
+      "sha256": "bd59a95d361c2959b626374e6918575adb6ccf61d69703cecbe4207b4fe87f59",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-recents-dark-en-largefont-expanded.png",
+      "sha256": "a55872bc09cc44f1d54e8d0401627e6f9f5bb489da297610a009c293555ed306",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-recents-dark-en-standard-compact.png",
+      "sha256": "3f3ef55a939fb50d6a8aea6a6d624715ea501d4873cb8c684c04b6209c12ac70",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-recents-dark-en-standard-expanded.png",
+      "sha256": "2f534c892b2939a39c7474acf5c9b9315f8f133b56b3a58fce83b6e09ce192d5",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-recents-dark-he-largefont-compact.png",
+      "sha256": "bfbe8ee3f3984952e80798169d8f5363a0a79e19eef2b27a29e2fd84c43535f6",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-recents-dark-he-largefont-expanded.png",
+      "sha256": "1edc7be560d81d635ea2b0665cefc014164437abb74fce88b698840e8d11781b",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-recents-dark-he-standard-compact.png",
+      "sha256": "2d21dc201b2a11fe879ad88e17ad68e20fdba17d24e4d9943c765ff7e17e86c7",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-recents-dark-he-standard-expanded.png",
+      "sha256": "98277689d2c89285b4728012f979fc38c43f801e5a26baa26f3f48eb3abb1546",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-recents-light-en-largefont-compact.png",
+      "sha256": "4e2f67c6c96cc7afca7abd94f2d5cde435dc9fb524aee20402c1b01a51a98198",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-recents-light-en-largefont-expanded.png",
+      "sha256": "216d5329dbdfd6107e285fd8b1181f37e18084043347749ad9392c653e06d0e3",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-recents-light-en-standard-compact.png",
+      "sha256": "70bbe647788e939307adcf89f347650b4e2e71ceae01d1025c890951e75f225c",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-recents-light-en-standard-expanded.png",
+      "sha256": "ca870372bced3663ee336280000b232d8ba784d8061789433a494890459c1d77",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-recents-light-he-largefont-compact.png",
+      "sha256": "d9b9fbec58fe0e12d2ba7d9bb801f994b6394c8645f0446eae699081cc507a53",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-recents-light-he-largefont-expanded.png",
+      "sha256": "6d22158a43ec34e23ffaee40502013075f2933a924b6312e26081fe0c32e6896",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-recents-light-he-standard-compact.png",
+      "sha256": "eebdabb005b476093dbd9d0fabc7099d5ac9871183b259105b2c61edb7320f43",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-recents-light-he-standard-expanded.png",
+      "sha256": "9c589368e238199939695909a25ddf82450a5f0bccb414ad318d8cd29c18f2c1",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-widgets-shape-circle.png",
+      "sha256": "bb41c954cf7875a0854bd408db0261820c6ffd04e9d834b8505aa1e4273ffacb",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-widgets-shape-hexagon.png",
+      "sha256": "68d89128deb15692e6f826dca920942efdb81471740e68a4dd93ead231da2e9a",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-widgets-shape-rounded_square.png",
+      "sha256": "9676dae4bd6eb28a45dc1d0c14c18808dee2db9b3e27aea0f3dd7082cbf639a7",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "personalization-widgets-shape-square.png",
+      "sha256": "2a0c0e1c9f6daaea5850996892c2b58c5370c08f91f911e10c61d32ce45a7c20",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "settings-dark-bottom.png",
+      "sha256": "b54bffd2fbfb60b7bdec75883a80d1f43a03fd863b28ce4bd4fc28a8ccd9ea7e",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "settings-dark.png",
+      "sha256": "319a8d47c2ea11feb65008a65a16cd66269f50e6e5544384b9a155586cb6c693",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "settings-light-bottom.png",
+      "sha256": "c9669fe5d81e4397972f50e3921d2e8f8ac6da4fc994b3904ecb4392dd4d23cd",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "settings-light.png",
+      "sha256": "0b6b3c033c0163acc4d325183f130ddeb3aea2d2287e8c32520a3fa03e616571",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "widget-dark-contact-2x1.png",
+      "sha256": "96ad66ebb6abdaf7cfe684cae14a377ecaa9d94f4a721c6091e6f0541606feb1",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "widget-dark-empty.png",
+      "sha256": "3045ebfa904da7baada4ef114fb4ae9c4b99c496948f7496c387881a01e156d4",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "widget-dark-favorites-2x2-largefont.png",
+      "sha256": "54a98488698df15157d7dfcd233bb51f1b2a3f084dbcad4de67018a82e6a8040",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "widget-dark-favorites-2x2.png",
+      "sha256": "5a99ac40b4a49e7ee2a6022cdc16bb6d369d35e124b9d1d55c3d6c241637c942",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "widget-dark-favorites-4x2.png",
+      "sha256": "4fe4f5493baa647a76faf06134fd530b93a787b991b27e17e358f40b8af02675",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "widget-dark-permission.png",
+      "sha256": "3fed8d6e08a0f7109e79d4b07e55ec271ca17b65e8f41753124abb14cec8f3b1",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "widget-dark-quick-1x1.png",
+      "sha256": "8b8881758a95901a0648ada5fac38e8624eff71f5de29e7010f850148eaa8b66",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "widget-dark-two-favorites.png",
+      "sha256": "4a480471d742bd16047de510f4877aa7178d20e5b2102bc263270b356ce337a6",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "widget-light-contact-2x1.png",
+      "sha256": "205ea46c70302c800ae7aea0e127acb7eeaa5df276638474f3e7166453236245",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "widget-light-empty.png",
+      "sha256": "f1d9c3c9a7079ac34cb217a90974f01758937d6f33979f3c80a4a7caecca32ab",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "widget-light-favorites-2x2-largefont.png",
+      "sha256": "4dfee3b9c0256d0ea43afd48319b53c8a7b4d79868400f59f9bac88efcab9a44",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "widget-light-favorites-2x2.png",
+      "sha256": "00c43412388eaa36664d9e152eac4c59688f52e582334b89ee3a13610b386ab9",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "widget-light-favorites-4x2.png",
+      "sha256": "6de81a5de780c7fc14972f533c54178ba9248d25cfa991543bf49235263398d7",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "widget-light-permission.png",
+      "sha256": "a27fdfd60e04eb316ddfcbc12beb6e22d33279d6650e5f70b68f1a41e11d75b3",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "widget-light-quick-1x1.png",
+      "sha256": "0bdc8dcca1d577a2d12e744ea596b2ec03b55044d74b1bd3d1d33dfc46c8cce6",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "widget-light-two-favorites.png",
+      "sha256": "5c1336b1113da90178ea82de25d2286e04e6204099ca839d33c74c0e0eaf3bfb",
+      "width": 480,
+      "height": 854
+    },
+    {
+      "name": "widget-reconfigured.png",
+      "sha256": "fd83da6e4075a1a10e49a25cb23f74d19fb671241cd6da407ef467a0804a1a2a",
+      "width": 480,
+      "height": 854
+    }
+  ],
+  "call_design_subreview": "/workspace/work/call-style-final-review/result.json"
+}

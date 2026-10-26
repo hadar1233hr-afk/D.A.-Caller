@@ -9,12 +9,23 @@ import android.content.Context;
 import android.os.Build;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.TtsSpan;
 
 /** Native call notification presentation shared by real Telecom sessions and rendering tests. */
 final class CallNotifications {
  interface Commands {PendingIntent action(String action,int code);}
  static final String INCOMING_CHANNEL="dacaller_incoming_v5",ONGOING_CHANNEL="dacaller_ongoing_v5";
  private static String tr(Context context,String he,String en){return I18n.isEnglish(context)?en:he;}
+ private static CharSequence compactAction(Context context,String he,String en,String spokenHe,String spokenEn){
+  // Native CallStyle shares a narrow action row with its mandatory hang-up
+  // button. Short visible labels fit a 320dp screen at font scale 1.3; the
+  // corresponding TTS text preserves the complete action for spoken output.
+  SpannableString title=new SpannableString(tr(context,he,en));
+  title.setSpan(new TtsSpan.TextBuilder(tr(context,spokenHe,spokenEn)).build(),0,title.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+  return title;
+ }
  static String stateLabel(Context context,int state){
   if(state==Call.STATE_RINGING)return tr(context,"שיחה נכנסת","Incoming call");
   if(state==Call.STATE_DIALING||state==Call.STATE_CONNECTING||state==Call.STATE_SELECT_PHONE_ACCOUNT)
@@ -51,7 +62,12 @@ final class CallNotifications {
   String identity=name==null||name.trim().isEmpty()?number:name;
   if(identity==null||identity.trim().isEmpty())identity=tr(context,"מספר לא מזוהה","Unknown caller");
   String label=stateLabel(context,state);
-  String details=label+(number!=null&&!number.isEmpty()&&!number.equals(identity)?" · "+number:"");
+  // On Android 12+ the CallStyle header also contains the app name and active
+  // timer, which can leave only an ellipsis for the caller on small screens.
+  // Put the identity first in the two-line body, alongside the explicit state.
+  // The number remains the identity when there is no known contact name.
+  String details=Build.VERSION.SDK_INT>=31?identity+" · "+label:
+   label+(number!=null&&!number.isEmpty()&&!number.equals(identity)?" · "+number:"");
   Notification.Builder builder=new Notification.Builder(context,channel)
    .setSmallIcon(R.drawable.ic_stat_call).setContentTitle(identity).setContentText(details).setSubText(label)
    .setContentIntent(open).setVisibility(Notification.VISIBILITY_PUBLIC).setCategory(Notification.CATEGORY_CALL)
@@ -72,9 +88,10 @@ final class CallNotifications {
   boolean speaker=route==CallAudioState.ROUTE_SPEAKER;
   if(controllable(state)&&speakerDestination(!speaker,supported)!=0)
    builder.addAction(R.drawable.ic_control_speaker,
-     speaker?tr(context,"כבה רמקול","Speaker off"):tr(context,"הפעל רמקול","Speaker on"),
+     speaker?compactAction(context,"כבה","Off","כבה רמקול","Speaker off"):
+      compactAction(context,"הפעל","On","הפעל רמקול","Speaker on"),
      commands.action(speaker?"SPEAKER_OFF":"SPEAKER_ON",speaker?2005:2004));
-  builder.addAction(R.drawable.ic_phone_line,tr(context,"חזרה לשיחה","Return to call"),open);
+  builder.addAction(R.drawable.ic_phone_line,compactAction(context,"חזור","Call","חזרה לשיחה","Return to call"),open);
   return builder.build();
  }
  private CallNotifications(){}

@@ -132,7 +132,17 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
   return null;
  }
  private AccessibilityNodeInfo text(String label){
-  return text(systemUiRoot(),label);
+  // Compact labels such as "On" also occur in Quick Settings. Only this
+  // synthetic caller's own native notification row may satisfy an assertion
+  // or receive a click; otherwise a test could accidentally toggle a QS tile.
+  return text(notificationRow(systemUiRoot()),label);
+ }
+ private AccessibilityNodeInfo notificationRow(AccessibilityNodeInfo root){
+  String caller=NotificationFixtureReceiver.state(target).getString("name","");
+  AccessibilityNodeInfo node=text(root,caller);
+  for(int depth=0;node!=null&&depth<20;depth++,node=node.getParent())
+   if(String.valueOf(node.getViewIdResourceName()).endsWith("/expandableNotificationRow"))return node;
+  return null;
  }
  private AccessibilityNodeInfo text(AccessibilityNodeInfo root,String label){
   if(root==null||label==null||label.isEmpty())return null;
@@ -253,8 +263,24 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
   String name="he".equals(language)?"דנה בדיקת התראה":"Dana Notification Test";
   await(()->text(name)!=null,"SystemUI did not display contact name");
   String label=CallNotifications.stateLabel(target,state);await(()->text(label)!=null,"SystemUI did not display call state: "+label);
+  // Full identity must also be in the native body. CallStyle's header can
+  // ellipsize completely once the app label and chronometer take its width.
+  await(()->callerBody(notificationRow(systemUiRoot()),name)!=null,"Native body must display the caller independently of the narrow header");
+  AccessibilityNodeInfo body=callerBody(notificationRow(systemUiRoot()),name);
+  android.graphics.Rect bounds=new android.graphics.Rect();body.getBoundsInScreen(bounds);
+  assertTrue("Caller body needs usable horizontal space",bounds.width()>=target.getResources().getDisplayMetrics().density*100);
+  assertTrue("Caller body must have visible height",bounds.height()>0);
   AccessibilityNodeInfo active=systemUiRoot();
   assertNotNull(active);assertEquals("com.android.systemui",active.getPackageName().toString());
+ }
+ private AccessibilityNodeInfo callerBody(AccessibilityNodeInfo node,String caller){
+  if(node==null)return null;
+  if("android:id/text".equals(node.getViewIdResourceName())&&node.isVisibleToUser()
+     &&node.getText()!=null&&node.getText().toString().contains(caller))return node;
+  for(int i=0;i<node.getChildCount();i++){
+   AccessibilityNodeInfo body=callerBody(node.getChild(i),caller);if(body!=null)return body;
+  }
+  return null;
  }
 
  public void testNativeNotificationStatesActionsAndDirectReturn()throws Exception{
@@ -268,28 +294,28 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
   post(Call.STATE_RINGING,"he",false);
   getInstrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_HOME);settle();
   assertFalse("Call notification must also work while the app is in the background",main.hasWindowFocus());
-  shade("חזרה לשיחה");assertNativeIdentity("he",Call.STATE_RINGING);
+  shade("חזור");assertNativeIdentity("he",Call.STATE_RINGING);
   assertEquals(3,posted().getNotification().actions.length);snapshot("notification-incoming-he");
-  post(Call.STATE_DIALING,"he",false);shade("הפעל רמקול");assertNativeIdentity("he",Call.STATE_DIALING);
+  post(Call.STATE_DIALING,"he",false);shade("הפעל");assertNativeIdentity("he",Call.STATE_DIALING);
   assertEquals(3,posted().getNotification().actions.length);snapshot("notification-outgoing-he");
   for(String language:new String[]{"he","en"}){
    post(Call.STATE_ACTIVE,language,false);
-   String on="he".equals(language)?"הפעל רמקול":"Speaker on",off="he".equals(language)?"כבה רמקול":"Speaker off";
+   String on="he".equals(language)?"הפעל":"On",off="he".equals(language)?"כבה":"Off";
    shade(on);assertNativeIdentity(language,Call.STATE_ACTIVE);snapshot("notification-active-private-"+language);
    clickText(on);await(()->NotificationFixtureReceiver.state(target).getBoolean("speaker",false),"Native speaker-on action was not dispatched");
    shade(off);assertNativeIdentity(language,Call.STATE_ACTIVE);snapshot("notification-active-speaker-"+language);
    clickText(off);await(()->!NotificationFixtureReceiver.state(target).getBoolean("speaker",true),"Native speaker-off action was not dispatched");
    assertEquals(2,NotificationFixtureReceiver.state(target).getInt("commands",0));
   }
-  shade("Return to call");
+  shade("Call");
   Instrumentation.ActivityMonitor callMonitor=getInstrumentation().addMonitor(CallScreenActivity.class.getName(),null,false);
   try{
-   clickText("Return to call");Activity call=callMonitor.waitForActivityWithTimeout(7000);assertNotNull("Return must directly open call Activity",call);
+   clickText("Call");Activity call=callMonitor.waitForActivityWithTimeout(7000);assertNotNull("Return must directly open call Activity",call);
    launched.add(call);settle();assertFalse(call.isFinishing());assertNotNull(call.getWindow().getDecorView().findViewWithTag("call-root"));
    assertTrue(call.hasWindowFocus());
    ui(call::finish);settle();
   }finally{getInstrumentation().removeMonitor(callMonitor);}
-  shade("Speaker on");
+  shade("On");
   String hangup=null;
   for(Notification.Action action:posted().getNotification().actions){
    if(action.title!=null&&action.title.toString().toLowerCase(java.util.Locale.ROOT).contains("hang")){hangup=action.title.toString();break;}
