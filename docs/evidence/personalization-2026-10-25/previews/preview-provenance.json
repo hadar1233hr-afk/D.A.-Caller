@@ -1,0 +1,57 @@
+{
+  "screenshot_source_sha": "849c0975bf967e94fd584cb64b74c2eb86cf098e",
+  "screenshot_run_id": "40350904837",
+  "reviewed_app_tree": "45541f829fb6d7af4aa1aff8a41d8e562b822006",
+  "previews": {
+    "launcher-icons-native-top-bottom.png": {
+      "source_screenshots": [
+        "personalization-chooser-dark-icons.png",
+        "personalization-chooser-dark-icons-bottom.png",
+        "personalization-chooser-light-icons.png",
+        "personalization-chooser-light-icons-bottom.png"
+      ],
+      "sha256": "c3ae07ca7d0e21e3007935c00be2abec26bb2fbf44e6bec9b3603c440b2fd8f7",
+      "composition": "Original native screenshots at 1:1 size, arranged on a labeled canvas; source screenshot pixels unchanged."
+    },
+    "favorites-summary-native.png": {
+      "source_screenshots": [
+        "personalization-contacts-light-he-standard-expanded.png",
+        "personalization-contacts-dark-he-largefont-collapsed.png",
+        "personalization-recents-light-he-standard-compact.png",
+        "personalization-recents-dark-he-largefont-expanded.png"
+      ],
+      "sha256": "3d0c3ee568dab8cce664058eaff8f0e0702ce8e6263d59fbb2992046ce6ad561",
+      "composition": "Original native screenshots at 1:1 size, arranged on a labeled canvas; source screenshot pixels unchanged."
+    },
+    "archive-native.png": {
+      "source_screenshots": [
+        "personalization-archive-light.png",
+        "personalization-archive-dark.png"
+      ],
+      "sha256": "053e79e02df34c96589385b4122962233f6971c12c3d58141e3313dcadcee1a5",
+      "composition": "Original native screenshots at 1:1 size, arranged on a labeled canvas; source screenshot pixels unchanged."
+    },
+    "notifications-native.png": {
+      "source_screenshots": [
+        "call-integration-notification-active-private-en.png",
+        "call-integration-notification-active-private-he.png",
+        "call-integration-notification-active-speaker-en.png",
+        "call-integration-notification-active-speaker-he.png",
+        "call-integration-notification-incoming-he.png",
+        "call-integration-notification-outgoing-he.png"
+      ],
+      "sha256": "19f06e93d19a4fc912ef4620d8d05fbb7b65c316da21ea90717a855124b9af8c",
+      "composition": "Original native screenshots at 1:1 size, arranged on a labeled canvas; source screenshot pixels unchanged."
+    },
+    "avatar-shapes-native.png": {
+      "source_screenshots": [
+        "personalization-contacts-shape-circle.png",
+        "personalization-contacts-shape-rounded_square.png",
+        "personalization-contacts-shape-square.png",
+        "personalization-contacts-shape-hexagon.png"
+      ],
+      "sha256": "3b7bb4a534bbadb5bd601eae898298a55d8b7b787b5ceceb6ea14ef10046ca21",
+      "composition": "Original native screenshots at 1:1 size, arranged on a labeled canvas; source screenshot pixels unchanged."
+    }
+  }
+}

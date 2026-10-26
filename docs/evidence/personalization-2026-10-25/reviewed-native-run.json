@@ -1,0 +1,84 @@
+{
+  "status": "PASS_WITH_MINOR_NATIVE_CAPTION_ELLIPSIS",
+  "generated_at_utc": "2026-10-26T15:49:38.268613+00:00",
+  "source_sha": "849c0975bf967e94fd584cb64b74c2eb86cf098e",
+  "app_tree": "45541f829fb6d7af4aa1aff8a41d8e562b822006",
+  "workflow_run_id": "40350904837",
+  "workflow_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/actions/runs/40350904837",
+  "native_job_id": 121671606254,
+  "workflow_validate": "success",
+  "workflow_android_ui": "success",
+  "native_tests": {
+    "tests": 26,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_png_count": 183,
+  "matrix_groups": {
+    "original_call_widget_settings": 122,
+    "personalization": 53,
+    "notification_and_back": 8
+  },
+  "native_assertions": {
+    "api": 33,
+    "real_systemui": true,
+    "notification_actions_acknowledged": true,
+    "native_back_returns_to_app": true,
+    "call_state_source": "debug-only synthetic snapshots, shared production CallNotifications builder",
+    "real_phone_call_foreground_service": true,
+    "foreground_service_type": "phoneCall",
+    "dialer_role": "Granted with Android role manager on disposable emulator before foreground start; emulator discarded after suite",
+    "telecom_commands": "Unit-tested separately; no physical carrier/SIM assertion",
+    "native_back_panels": "normal/audio/more/keypad; contact query, row identity/offset and settings scroll"
+  },
+  "notification_visual_review": {
+    "reviewer": "notification_finish",
+    "reviewed_real_png_count": 6,
+    "resolution": "480x854",
+    "api": 33,
+    "density_dpi": 240,
+    "font_scale": 1.3,
+    "findings": [
+      "Full caller identity is readable in the native body in all six captures, independently of the narrow Android header.",
+      "Incoming, outgoing and active states are readable; native hang-up/answer/decline controls remain present.",
+      "Return labels חזור and Call are fully visible. English On/Off and Hebrew כבה are fully visible and distinct.",
+      "Hebrew הפעל is shortened visually to הפ... by the native action template at font scale 1.3. The speaker icon and full accessible/TTS action remain; bounded minor caption ellipsis accepted by root review."
+    ],
+    "sha256": {
+      "call-integration-notification-active-private-en.png": "fd3135c79099dddb1e04283c679946f92f64168599f4a1592d95132973021933",
+      "call-integration-notification-active-private-he.png": "a27dd0338f53c82a67dde212f6d6038e1d8d5c958c58990e12b202bb1c56a06d",
+      "call-integration-notification-active-speaker-en.png": "33c01d78b4f5a86fe2a2d9bb8e138623623f154b2ff9cdaf10fb51ae0893385e",
+      "call-integration-notification-active-speaker-he.png": "1319291b2c9f594e0e85caa63b55f21d9318a4b1c3515679e37b75f719a4f0a6",
+      "call-integration-notification-incoming-he.png": "816dc18310490714e69dff6809c428d6a92fd47d51cbda99e942a375829283a3",
+      "call-integration-notification-outgoing-he.png": "04d62c2ce1c31febc4454aba6cbb1cd822310804161263df882cfc13b7cf7e83"
+    },
+    "scope": "Only these six notification captures were visually reviewed by this agent; full 183-image review is performed separately by root and visual_finish."
+  },
+  "artifacts": {
+    "ui": {
+      "id": 12663438884
+    },
+    "exact_emulator_tested_apk": {
+      "id": 12664441627,
+      "sha256": "bd0cdec2c8c25396b23976c2286fd157f00492d87047bd0063d1c0f5f08480fe",
+      "native_artifact_hash_matches": true,
+      "signature_verified_locally": true,
+      "signature_scheme_v2": true,
+      "certificate_sha256": "50df67dc508145a8a827d7469e85e9354efee7754d0c7abb4c58fb20558c8995",
+      "debug_signature": true,
+      "package": "com.dacaller.app",
+      "version_name": "0.11.0-beta.7",
+      "version_code": 17,
+      "min_sdk": 26,
+      "target_sdk": 34,
+      "internet_permission": false,
+      "phone_call_foreground_permissions": true
+    }
+  },
+  "limits": [
+    "Native SystemUI uses production notification builder and real debug phoneCall foreground service with actual dialer role.",
+    "Call state and receiver acknowledgements are synthetic; physical Telecom, carrier/SIM, lock screen, Bluetooth, Jelly Star and upgrade signing compatibility are not verified here.",
+    "This is evidence for source849c0975 only, not a published Release verification."
+  ]
+}

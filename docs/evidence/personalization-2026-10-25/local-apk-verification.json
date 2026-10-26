@@ -1,10 +1,10 @@
 {
-  "source": "ff93d07e087250829bc739a3154792e9f243e617",
+  "source": "849c0975bf967e94fd584cb64b74c2eb86cf098e",
   "records": [
     {
       "kind": "debug",
-      "sha256": "ade0e655bcf30dfa48de810cc1da1cf53cc0e422cb982f4069ea3f187d892def",
-      "bytes": 415738,
+      "sha256": "c7a99ca138e61362ab57ca1e0c2243dd7e672e64628faf9dd8caf7848c06c7ec",
+      "bytes": 416002,
       "package": "com.dacaller.app",
       "versionCode": 17,
       "versionName": "0.11.0-beta.7",
@@ -18,8 +18,8 @@
     },
     {
       "kind": "release_unsigned",
-      "sha256": "b320abddebfc766c4afb2e9285dd646b78343e1f9ffd3ecd0083c83bd48bc694",
-      "bytes": 197002,
+      "sha256": "59420c1e5b78c1428c97b14c001721418193b546120178c1c1fa7ea1993d5c2a",
+      "bytes": 197250,
       "package": "com.dacaller.app",
       "versionCode": 17,
       "versionName": "0.11.0-beta.7",

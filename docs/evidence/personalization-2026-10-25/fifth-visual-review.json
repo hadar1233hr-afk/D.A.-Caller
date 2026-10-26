@@ -5,16 +5,6 @@
   "reviewed_app_tree": "9502ef4610373daaa961aef118e81a57d43a87a4",
   "expected_png_count": 183,
   "reviewed_png_count": 183,
-  "verified_features": [
-    "settings_backup_restore",
-    "five_launcher_icons",
-    "favorites_strip",
-    "compact_summary",
-    "avatar_shapes",
-    "archive_contact_identity",
-    "call_notifications",
-    "return_from_call"
-  ],
   "native_dimensions": {
     "width": 480,
     "height": 854,
@@ -1163,5 +1153,15 @@
       "height": 854
     }
   ],
-  "call_design_subreview": "/workspace/work/call-style-final-review/result.json"
+  "call_design_subreview": "/workspace/work/call-style-final-review/result.json",
+  "reviewed_features": [
+    "settings_backup_restore",
+    "five_launcher_icons",
+    "favorites_strip",
+    "compact_summary",
+    "avatar_shapes",
+    "archive_contact_identity",
+    "call_notifications",
+    "return_from_call"
+  ]
 }
