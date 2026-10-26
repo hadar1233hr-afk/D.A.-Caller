@@ -1,0 +1,28 @@
+{
+  "screenshot_source_sha": "42c2d5d15c648cc4c5ae1e6489701f0ebb00cb41",
+  "screenshot_run_id": 40238507902,
+  "reviewed_app_tree": "5de16ad64b5a27ece54ba45277eb204072dcfa1e",
+  "status": "FAIL",
+  "unit_tests": {
+    "tests": 210,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_tests": {
+    "tests": 26,
+    "passed": 25,
+    "failed": 1
+  },
+  "matrix_png_count": 177,
+  "failure_diagnostic_png_count": 1,
+  "required_png_count": 183,
+  "remaining_failure": "Native accessibility findAccessibilityNodeInfosByText did not return the caller. Failure screenshot and recursive accessibility dump prove expanded SystemUI notification with full caller/action node texts; test navigation must traverse those native nodes directly. No action dispatch certified in this run.",
+  "diagnostic_sha256": {
+    "call-integration-failed-notification-shade.png": "e00fc573c59edc49078b1d44e4578286603436405bc73400caaa3ec764ca9591",
+    "call-integration-failed-notification-shade.txt": "8e49205bd16e1f7ccb050ea5e12140c6aec276fc51b007ab8ef12136ce8fa3da",
+    "call-integration-failed-notification-shade.xml": "19f4c065d012582ed814dd8c73a683ab782c0b286bc605b83caa1ccfaecc5093"
+  },
+  "limits": "No physical SIM/carrier/Jelly Star verification; not a release gate PASS.",
+  "additional_visual_failure": "Fresh full-resolution review shows white native status/navigation icons on near-white Archive light background. Requested appearance bits passed, but rendered SystemUI contrast did not. Native focused-window/pixel checks and a focused-window system-bar fix are required before PASS."
+}

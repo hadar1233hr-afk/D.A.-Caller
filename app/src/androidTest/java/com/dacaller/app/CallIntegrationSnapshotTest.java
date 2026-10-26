@@ -135,11 +135,20 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
   return text(systemUiRoot(),label);
  }
  private AccessibilityNodeInfo text(AccessibilityNodeInfo root,String label){
-  if(root==null)return null;
-  List<AccessibilityNodeInfo> nodes=root.findAccessibilityNodeInfosByText(label);
-  for(AccessibilityNodeInfo node:nodes){
-   String value=node.getText()==null?"":node.getText().toString();
-   if(node.isVisibleToUser()&&(value.equalsIgnoreCase(label)||value.contains(label)))return node;
+  if(root==null||label==null||label.isEmpty())return null;
+  // Android 13's native CallStyle RemoteViews expose the exact caller and
+  // action text in their accessibility nodes, but the framework's indexed
+  // findAccessibilityNodeInfosByText query can return no results for that same
+  // subtree. Walk the actual visible nodes: the failure XML from the device
+  // demonstrated full text on conversation_text/action0 in an expanded row.
+  return text(root,label,0,new int[]{5000});
+ }
+ private AccessibilityNodeInfo text(AccessibilityNodeInfo node,String label,int depth,int[] budget){
+  if(node==null||depth>80||--budget[0]<0)return null;
+  CharSequence content=node.getText();String value=content==null?"":content.toString();
+  if(node.isVisibleToUser()&&(value.equalsIgnoreCase(label)||value.contains(label)))return node;
+  for(int i=0;i<node.getChildCount();i++){
+   AccessibilityNodeInfo found=text(node.getChild(i),label,depth+1,budget);if(found!=null)return found;
   }
   return null;
  }

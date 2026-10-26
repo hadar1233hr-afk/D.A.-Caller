@@ -70,7 +70,6 @@ public final class ArchiveActivity extends Activity {
  private void applySystemBars(){
   getWindow().setStatusBarColor(surface());getWindow().setNavigationBarColor(surface());
   View decor=getWindow().getDecorView();
-  decor.setSystemUiVisibility(dark()?0:View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
   if(android.os.Build.VERSION.SDK_INT>=30){
    android.view.WindowInsetsController controller=getWindow().getInsetsController();
    if(controller!=null){
@@ -78,7 +77,7 @@ public final class ArchiveActivity extends Activity {
       android.view.WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS;
     controller.setSystemBarsAppearance(dark()?0:mask,mask);
    }
-  }
+  }else decor.setSystemUiVisibility(dark()?0:View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
  }
  private GradientDrawable shape(int color,int radius){GradientDrawable bg=new GradientDrawable();bg.setColor(color);bg.setCornerRadius(dp(radius));return bg;}
  private TextView text(String s,int sp,boolean bold,int color){
@@ -87,10 +86,10 @@ public final class ArchiveActivity extends Activity {
  }
  @Override public void onCreate(Bundle state){
   super.onCreate(state);prefs=getSharedPreferences("da_caller",MODE_PRIVATE);
-  applySystemBars();
   LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);
   root.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);
   root.setBackgroundColor(surface());setContentView(root);
+  applySystemBars();
   LinearLayout header=new LinearLayout(this);header.setGravity(Gravity.CENTER_VERTICAL);header.setPadding(dp(8),dp(4),dp(8),dp(4));
   root.addView(header,new LinearLayout.LayoutParams(-1,-2));
   TextView back=text(I18n.isEnglish(this)?"‹":"›",32,false,gold());back.setGravity(Gravity.CENTER);
@@ -260,6 +259,13 @@ public final class ArchiveActivity extends Activity {
    getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI,true,contactChanges);observing=true;
   }catch(RuntimeException unavailable){/* Refresh on return remains available. */}
   if(resumedOnce){ContactPhotos.clearCache();load();}else resumedOnce=true;
+ }
+ @Override public void onWindowFocusChanged(boolean hasFocus){
+  super.onWindowFocusChanged(hasFocus);
+  // The focused window owns the rendered SystemUI appearance. Reassert here,
+  // after transfer from the previous Activity/IME, rather than relying only on
+  // the controller's requested bits before its window has gained ownership.
+  if(hasFocus&&prefs!=null)applySystemBars();
  }
  @Override protected void onPause(){
   ui.removeCallbacks(contactReload);

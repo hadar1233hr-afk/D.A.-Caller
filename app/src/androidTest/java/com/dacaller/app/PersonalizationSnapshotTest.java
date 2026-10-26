@@ -43,6 +43,8 @@ import android.widget.RemoteViews;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -175,6 +177,40 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
  private void screenshot(String name)throws Exception{
   settle();String path=DIRECTORY+"/personalization-"+name+".png";shell("screencap -p "+path);
   assertEquals("regular file",shell("stat -c %F "+path).trim());assertTrue(Long.parseLong(shell("stat -c %s "+path).trim())>1000);
+ }
+ private void archiveScreenshot(ArchiveActivity archive,boolean dark)throws Exception{
+  await(archive::hasWindowFocus,"Archive must own the focused window before capturing native bars");settle();
+  final int[] heights={0,0};
+  ui(()->{
+   android.view.WindowInsets insets=archive.getWindow().getDecorView().getRootWindowInsets();assertNotNull(insets);
+   heights[0]=insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.statusBars()).top;
+   heights[1]=insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.navigationBars()).bottom;
+  });
+  assertTrue("Native status bar must be present",heights[0]>0);
+  assertTrue("Native three-button navigation must be present",heights[1]>0);
+  Bitmap capture=null;int statusPixels=0,navigationPixels=0;long deadline=SystemClock.uptimeMillis()+3000;
+  do{
+   if(capture!=null)capture.recycle();capture=getInstrumentation().getUiAutomation().takeScreenshot();assertNotNull(capture);
+   statusPixels=contrastingIconPixels(capture,0,heights[0],dark);
+   navigationPixels=contrastingIconPixels(capture,capture.getHeight()-heights[1],capture.getHeight(),dark);
+   if(statusPixels>=40&&navigationPixels>=40)break;
+   Thread.sleep(100);
+  }while(SystemClock.uptimeMillis()<deadline);
+  // Save exactly the compositor image checked below, including failure evidence.
+  File file=new File(target.getExternalFilesDir(null),"archive-native-bars.png");
+  try(FileOutputStream out=new FileOutputStream(file)){assertTrue(capture.compress(Bitmap.CompressFormat.PNG,100,out));}
+  finally{capture.recycle();}
+  shell("cp "+file.getAbsolutePath()+" "+DIRECTORY+"/personalization-archive-"+(dark?"dark":"light")+".png");
+  assertTrue("Rendered archive status icons have insufficient contrast: "+statusPixels,statusPixels>=40);
+  assertTrue("Rendered archive navigation icons have insufficient contrast: "+navigationPixels,navigationPixels>=40);
+ }
+ private int contrastingIconPixels(Bitmap image,int top,int bottom,boolean dark){
+  int count=0;
+  for(int y=top;y<bottom;y++)for(int x=0;x<image.getWidth();x++){
+   int pixel=image.getPixel(x,y),brightness=Color.red(pixel)+Color.green(pixel)+Color.blue(pixel);
+   if(dark?brightness>600:brightness<384)count++;
+  }
+  return count;
  }
 
  public void testContactsAndRecentsCompactPresentationInBothLanguagesThemesAndFontSizes()throws Exception{
@@ -327,7 +363,7 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
      int appearance=archive.getWindow().getInsetsController().getSystemBarsAppearance();
      assertEquals("Archive system icons must contrast with the actual theme",dark?0:lightMask,appearance&lightMask);
     });
-    screenshot("archive-"+(dark?"dark":"light"));ui(archive::finish);settle();
+    archiveScreenshot(archive,dark);ui(archive::finish);settle();
    }
   }finally{
    if(raw!=null)target.getContentResolver().delete(raw,null,null);
