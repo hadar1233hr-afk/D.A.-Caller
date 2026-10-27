@@ -1,0 +1,60 @@
+{
+  "source_sha": "bc5679102ab57813f1a6585c1395b6bf8ad8dda2",
+  "app_tree": "9a890dff6e2b91c225898c9b6147b3da2c428d32",
+  "workflow_run_id": 40591061923,
+  "native_job_id": 122496207474,
+  "ui_artifact_id": 12775405411,
+  "ui_artifact_sha256": "aa6d368204564e4447a47b67e2f4923a9cbd4d6be8a3bc996cbdf8c66edf154c",
+  "status": "FAIL",
+  "unit_tests": {"tests": 239, "failures": 0, "errors": 0, "skipped": 0},
+  "lint": {"errors": 0, "warnings": 5},
+  "native_tests": {"tests": 29, "passed": 27, "failed": 2},
+  "png_count_including_failure_diagnostics": 221,
+  "required_success_png_count": 219,
+  "native_visual_approval": false,
+  "confirmed_end_native_evidence": {
+    "last_positive_button_tap": [345, 491],
+    "window_to_screen_translation": [12, 261],
+    "native_accessibility_positive_button_screen_bounds": [265, 455, 426, 527],
+    "tap_inside_button": true,
+    "confirmed_session_removal_assertion": "PASS before the later native Recents failure"
+  },
+  "failed_checks": [
+    {
+      "assertion": "Expanded island must leave a usable real app list",
+      "actual_screen": "Actual MainActivity recents, Hebrew dark, font scale 1.3, 320dp width",
+      "density": 1.5,
+      "island_screen_bounds": [18, 48, 462, 387],
+      "content_screen_bounds": [0, 399, 480, 782],
+      "page_viewport_screen_bounds": [0, 399, 480, 687],
+      "list_screen_bounds": [18, 621, 462, 687],
+      "list_height_px": 66,
+      "list_height_dp": 44,
+      "secondary_metadata_visible": false,
+      "floating_keypad_visible": false,
+      "observed_result": "The temporary hiding works and the dark background now matches, but the remaining 44dp recent-call list is below the 48dp minimum. Actual contacts expanded screenshot shows a usable first row without keypad overlap.",
+      "correction": "Compress decorative expanded-island spacing while preserving all 48dp touch targets and captions; require at least 60dp actual app list height in both native states so a real row remains useful."
+    },
+    {
+      "assertion": "Native Recents did not expose this app's own task card",
+      "observed_result": "Failure screenshot and accessibility XML show the same exact Pixel Launcher first-use tutorial. last_raw_tap still records the prior End-call button, so the one-shot tutorial branch did not send Back.",
+      "cause_status": "The one early tutorial check can precede the tutorial appearing. The subsequent card-only wait cannot recover once the tutorial hides the task card. No evidence shows Back closing Recents because no Back was sent in this run.",
+      "correction": "Watch for the exact tutorial throughout a bounded native wait, dismiss it with native Back at most once if observed, then require a stable named DA CALLER task card for 500ms without the tutorial before the raw verified-card tap. Keep all real task and resume assertions."
+    }
+  ],
+  "previous_failure_resolved": {
+    "archive_native_navigation_and_both_theme_contrast": "PASS with stable-inset wait; both real archive screenshots were produced",
+    "dialog_screen_translation_and_confirmed_end": "PASS before the later Recents assertion"
+  },
+  "failure_and_actual_app_files_sha256": {
+    "island-failed-app-main.png": "50a5ca43e960500e79e9aadf16a607fe3e5d108d04a2c9a8257833b91e2a2535",
+    "island-failed-app-main.json": "3fb798dc5310cdbe123feda6a614843a93a30454eb61c6317a2ade6ab349451a",
+    "island-failed-actions.png": "ab5f26863d9755b65e4605ae9ad20ed55fbab7b956c7a45975f64fc3db2c9f17",
+    "island-failed-actions.json": "da62e80f124422c0fd6952e7a9d7fc0256380ad81ab87283d3614c463bf9d111",
+    "island-failed-actions.xml": "64073727d43545c44658187e99b12f9eb2900ed09553d9d9e361ae11883cc36d",
+    "island-app-contacts-expanded.png": "d4cb08de155f2e1fcf7f6c3aefe9155b7524a0d85572fe5063fd6d2998533e37",
+    "personalization-archive-light.png": "9dc3ff0e8a4cbe9a7f1742023c6ceb49c1419fdd7f4acd4412aaf53916322d97",
+    "personalization-archive-dark.png": "078b0f46609f8a535d9b258309148895d390a064b5654aa3ad5c83a4faecda81"
+  },
+  "limits": "No release or complete native/visual approval for this source. All 26 prior native regressions and the island customization test passed. Source4 end-call interaction and prior layout corrections improved, but recents layout and later native return/lifecycle completion still require a new successful run and visual review. Physical SIM/Bluetooth/Jelly Star remain untested."
+}

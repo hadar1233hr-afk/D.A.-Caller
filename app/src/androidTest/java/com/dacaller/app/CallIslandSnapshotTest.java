@@ -302,7 +302,7 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
    Rect islandBounds=new Rect(),pageBounds=new Rect();island.getGlobalVisibleRect(islandBounds);assertTrue(page.getGlobalVisibleRect(pageBounds));
    assertTrue("Actual MainActivity content overlaps call controls",pageBounds.top>=islandBounds.bottom);
    ListView list=find(app.getWindow().getDecorView(),ListView.class);assertNotNull(list);
-   assertTrue((expanded?"Expanded":"Compact")+" island must leave a usable real app list",list.getHeight()>=dp(48));
+   assertTrue((expanded?"Expanded":"Compact")+" island must leave a usable real app list",list.getHeight()>=dp(60));
    View dial=tagged(app,"floating_dial");
    if(dial.isShown()){
     Rect dialBounds=new Rect();assertTrue(dial.getGlobalVisibleRect(dialBounds));
@@ -461,14 +461,30 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   // Reopen the actual existing task as a user would. The test Activity remains
   // non-exported; a shell component launch would be a different permission path.
   nativeKey(KeyEvent.KEYCODE_APP_SWITCH);
-  await(()->recentAppCard()!=null||recentsTutorialVisible(),"Native Recents exposed neither an app task nor its observed first-use tutorial");
-  if(recentsTutorialVisible()){
-   lastTap="native BACK dismisses verified Pixel Launcher Recents tutorial";
-   nativeKey(KeyEvent.KEYCODE_BACK);settle();
-   await(()->!recentsTutorialVisible(),"Native Back did not dismiss the verified Recents tutorial");
+  // A fresh Launcher can expose its task card before the first-use tutorial
+  // appears. Watch for the exact tutorial throughout this bounded wait, rather
+  // than making one early check and then waiting behind the floating window.
+  long deadline=SystemClock.uptimeMillis()+7000,stableSince=0;
+  boolean tutorialDismissed=false;AccessibilityNodeInfo card=null;
+  while(SystemClock.uptimeMillis()<deadline){
+   getInstrumentation().waitForIdleSync();
+   if(recentsTutorialVisible()){
+    stableSince=0;card=null;
+    if(!tutorialDismissed){
+     lastTap="native BACK dismisses verified Pixel Launcher Recents tutorial";
+     nativeKey(KeyEvent.KEYCODE_BACK);tutorialDismissed=true;
+    }
+   }else{
+    card=recentAppCard();long now=SystemClock.uptimeMillis();
+    if(card==null)stableSince=0;
+    else if(stableSince==0)stableSince=now;
+    else if(now-stableSince>=500)break;
+   }
+   Thread.sleep(40);
   }
-  await(()->recentAppCard()!=null,"Native Recents did not expose this app's own task card");settle();
-  AccessibilityNodeInfo card=recentAppCard();assertNotNull(card);assertTrue(launcher(card));
+  assertTrue("Native Recents did not expose this app's own stable task card",card!=null&&stableSince>0&&SystemClock.uptimeMillis()-stableSince>=500);
+  assertFalse("Native Recents tutorial still covers the task card",recentsTutorialVisible());
+  card=recentAppCard();assertNotNull(card);assertTrue(launcher(card));
   Rect bounds=new Rect();card.getBoundsInScreen(bounds);assertTrue(bounds.width()>=dp(120)&&bounds.height()>=dp(150));
   lastTap="native Recents verified DA CALLER task @ "+bounds.centerX()+","+bounds.centerY();
   long touchTime=SystemClock.uptimeMillis();

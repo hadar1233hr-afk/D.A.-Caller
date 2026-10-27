@@ -388,7 +388,7 @@ public class MainActivity extends Activity {
   // Compare with the height BEFORE this temporary adaptation. Using the newly
   // enlarged list directly would repeatedly hide and restore the toolbar.
   int unadaptedHeight=list.getHeight()-(islandContentConstrained?islandSecondaryHeight:0);
-  boolean constrained=unadaptedHeight<d(48);
+  boolean constrained=unadaptedHeight<d(60);
   if(constrained==islandContentConstrained)return;
   islandContentConstrained=constrained;
   secondary.setVisibility(constrained?View.GONE:islandSecondaryVisibility);

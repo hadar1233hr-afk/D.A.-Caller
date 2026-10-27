@@ -79,7 +79,7 @@ final class CallIslandView extends FrameLayout {
   palette();setBackground(surface(open?31:100));setClipToOutline(true);
   setLayoutDirection(I18n.isEnglish(getContext())?LAYOUT_DIRECTION_LTR:LAYOUT_DIRECTION_RTL);
   LinearLayout content=column();content.setGravity(Gravity.CENTER_VERTICAL);
-  content.setPadding(dp(open?15:12),dp(open?14:4),dp(open?15:12),dp(open?12:4));
+  content.setPadding(dp(open?15:12),dp(open?10:4),dp(open?15:12),dp(open?10:4));
   addView(content,new FrameLayout.LayoutParams(-1,-2));
   setMinimumHeight(dp(open?0:comfortable()?64:56));
   String token=next.token;
@@ -198,7 +198,7 @@ final class CallIslandView extends FrameLayout {
   header.setOnClickListener(v->collapse(token));header.setOnLongClickListener(v->{open(token);return true;});
 
   AdaptiveControls controls=new AdaptiveControls(getContext());controls.setTag("island-controls");
-  LinearLayout.LayoutParams controlsParams=new LinearLayout.LayoutParams(-1,-2);controlsParams.topMargin=dp(12);
+  LinearLayout.LayoutParams controlsParams=new LinearLayout.LayoutParams(-1,-2);controlsParams.topMargin=dp(8);
   content.addView(controls,controlsParams);
   if(value.state==Call.STATE_RINGING){
    controls.addView(control(token,"DECLINE",R.drawable.ic_call_hangup,tr("דחה","Decline"),tr("דחיית השיחה","Decline call"),0xFFFF454F,Color.WHITE,56));
@@ -235,11 +235,11 @@ final class CallIslandView extends FrameLayout {
   full.addView(arrow,new LinearLayout.LayoutParams(dp(22),ViewGroup.LayoutParams.WRAP_CONTENT));
   full.setContentDescription(tr("חזרה למסך השיחה המלא","Return to full call screen"));
   full.setOnClickListener(v->open(token));
-  LinearLayout.LayoutParams fullParams=new LinearLayout.LayoutParams(-1,-2);fullParams.topMargin=dp(10);content.addView(full,fullParams);
+  LinearLayout.LayoutParams fullParams=new LinearLayout.LayoutParams(-1,-2);fullParams.topMargin=dp(6);content.addView(full,fullParams);
  }
  private View control(String token,String action,int resource,String label,String description,int color,int tint,int diameter){
   LinearLayout slot=column();slot.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL);slot.setPadding(dp(2),0,dp(2),0);
-  slot.setTag("island-action-"+action);slot.setContentDescription(description);slot.setMinimumHeight(dp(diameter+27));
+  slot.setTag("island-action-"+action);slot.setContentDescription(description);slot.setMinimumHeight(dp(diameter+20));
   slot.setClickable(true);slot.setFocusable(true);slot.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
   FrameLayout circle=new FrameLayout(getContext());circle.setBackground(shape(color,100));circle.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
   ImageView glyph=icon(resource,tint);int inset=diameter==56?15:12;glyph.setPadding(dp(inset),dp(inset),dp(inset),dp(inset));
