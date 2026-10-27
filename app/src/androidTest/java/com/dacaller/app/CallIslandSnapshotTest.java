@@ -119,8 +119,34 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   // getLocationOnScreen maps the local origin through rotations. Adding an
   // untransformed half-size misses rotated controls (the collapse chevron is
   // rotated 180 degrees). Use the actual visible screen bounds instead.
-  int[] point=new int[2];ui(()->{visible(view);Rect bounds=new Rect();assertTrue(view.getGlobalVisibleRect(bounds));point[0]=bounds.centerX();point[1]=bounds.centerY();});
-  lastTap=String.valueOf(view.getTag())+" @ "+point[0]+","+point[1];tapPoint(point[0],point[1]);
+  int[] point=new int[2];String[] details=new String[1];ui(()->{
+   visible(view);Rect bounds=new Rect();assertTrue(view.getGlobalVisibleRect(bounds));
+   int[] screen=new int[2],window=new int[2];view.getLocationOnScreen(screen);view.getLocationInWindow(window);
+   int offsetX=screen[0]-window[0],offsetY=screen[1]-window[1];
+   // A dialog has its own window origin. The same transformed local origin in
+   // both calls cancels rotation while retaining the window-to-screen offset.
+   point[0]=bounds.centerX()+offsetX;point[1]=bounds.centerY()+offsetY;
+   details[0]=String.valueOf(view.getTag())+" visible="+bounds.toShortString()+" window-offset="+offsetX+","+offsetY;
+  });
+  lastTap=details[0]+" @ "+point[0]+","+point[1]
+   +(view.getId()==android.R.id.button1?" native-positive="+nativePositiveButtonBounds():"");
+  tapPoint(point[0],point[1]);
+ }
+ private String nativePositiveButtonBounds(){
+  AccessibilityNodeInfo active=getInstrumentation().getUiAutomation().getRootInActiveWindow();
+  String found=nativePositiveButtonBounds(active,0,new int[]{4000});if(found!=null)return found;
+  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+   found=nativePositiveButtonBounds(window.getRoot(),0,new int[]{4000});if(found!=null)return found;
+  }return "not exposed";
+ }
+ private String nativePositiveButtonBounds(AccessibilityNodeInfo node,int depth,int[] budget){
+  if(node==null||depth>60||--budget[0]<0)return null;
+  if(node.isVisibleToUser()&&"android:id/button1".equals(String.valueOf(node.getViewIdResourceName()))
+    &&target.getPackageName().contentEquals(String.valueOf(node.getPackageName()))){
+   Rect bounds=new Rect();node.getBoundsInScreen(bounds);return bounds.toShortString()+" text="+node.getText();
+  }
+  for(int i=0;i<node.getChildCount();i++){String result=nativePositiveButtonBounds(node.getChild(i),depth+1,budget);if(result!=null)return result;}
+  return null;
  }
  private void tapPoint(int x,int y)throws Exception{
   long now=SystemClock.uptimeMillis();MotionEvent down=MotionEvent.obtain(now,now,MotionEvent.ACTION_DOWN,x,y,0);
@@ -256,6 +282,7 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
     if(list.getHeight()>=dp(48)&&list.getChildCount()>0){assertEquals(identity,list.getAdapter().getItemId(list.getFirstVisiblePosition()));assertEquals(top,list.getChildAt(0).getTop());}
     snapshot("app-"+page+"-expanded");
     tap(tagged(app,"island-collapse"));await(()->!controller.isExpanded(),"Actual MainActivity island did not collapse");settle();
+    visible(tagged(app,"floating_dial"));visible(tagged(app,"call-island-secondary"));
     assertEquals("Main list identity changed after expand/collapse",identity,list.getAdapter().getItemId(list.getFirstVisiblePosition()));
     assertEquals("Main list offset changed after expand/collapse",top,list.getChildAt(0).getTop());
    }
@@ -275,7 +302,16 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
    Rect islandBounds=new Rect(),pageBounds=new Rect();island.getGlobalVisibleRect(islandBounds);assertTrue(page.getGlobalVisibleRect(pageBounds));
    assertTrue("Actual MainActivity content overlaps call controls",pageBounds.top>=islandBounds.bottom);
    ListView list=find(app.getWindow().getDecorView(),ListView.class);assertNotNull(list);
-   if(!expanded)assertTrue("Compact island must leave a usable real app list",list.getHeight()>=dp(48));
+   assertTrue((expanded?"Expanded":"Compact")+" island must leave a usable real app list",list.getHeight()>=dp(48));
+   View dial=tagged(app,"floating_dial");
+   if(dial.isShown()){
+    Rect dialBounds=new Rect();assertTrue(dial.getGlobalVisibleRect(dialBounds));
+    ArrayList<View> protectedControls=new ArrayList<>();protectedControls.add(tagged(app,"favorites_strip"));
+    if(recents)protectedControls.add(tagged(app,"stats_summary"));
+    EditText search=find(page,EditText.class);if(search!=null&&search.isShown())protectedControls.add(search);
+    for(View control:protectedControls){Rect bounds=new Rect();assertTrue(control.getGlobalVisibleRect(bounds));
+     assertFalse("Floating dial overlaps "+control.getTag(),Rect.intersects(dialBounds,bounds));}
+   }
   });
  }
  private View dialogButton(int id){

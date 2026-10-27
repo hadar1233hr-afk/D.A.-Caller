@@ -32,6 +32,8 @@ final class CallIslandController implements CallIslandView.Listener {
  private CallIslandView view;
  private CallIslandState shown;
  private boolean started,expanded,refreshPosted,layingOut;
+ private android.graphics.drawable.Drawable originalContentBackground;
+ private boolean backgroundReserved;
  private String token;
  private AlertDialog confirmation;
  private final Runnable changed=this::scheduleRefresh;
@@ -135,6 +137,7 @@ final class CallIslandController implements CallIslandView.Listener {
   if(content==null||view==null||shown==null||layingOut)return;
   layingOut=true;
   try{
+   reserveBackground();
    int width=view.getLayoutParams().width;
    view.measure(View.MeasureSpec.makeMeasureSpec(width,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED));
    int inset=view.getMeasuredHeight()+dp(16);
@@ -147,7 +150,23 @@ final class CallIslandController implements CallIslandView.Listener {
     if(params.topMargin!=expected){params.topMargin=expected;child.setLayoutParams(params);}
    }
    for(View child:new ArrayList<>(margins.keySet()))if(child.getParent()!=content){restoreMargin(child);margins.remove(child);}
+   if(host instanceof MainActivity)((MainActivity)host).adaptCallIslandContent(expanded);
   }finally{layingOut=false;}
+ }
+ private void reserveBackground(){
+  if(!backgroundReserved){originalContentBackground=content.getBackground();backgroundReserved=true;}
+  int color=prefs.getBoolean("amoled",false)?android.graphics.Color.BLACK:
+    prefs.getBoolean("dark",false)?0xFF131313:0xFFF5F5F4;
+  // The inset exposes android.R.id.content, which otherwise retains the
+  // platform's white window background even above a dark app page.
+  for(int i=0;i<content.getChildCount();i++){
+   View child=content.getChildAt(i);if(child==view)continue;
+   if(child.getBackground() instanceof android.graphics.drawable.ColorDrawable){
+    color=((android.graphics.drawable.ColorDrawable)child.getBackground()).getColor();break;
+   }
+  }
+  if(!(content.getBackground() instanceof android.graphics.drawable.ColorDrawable)||
+    ((android.graphics.drawable.ColorDrawable)content.getBackground()).getColor()!=color)content.setBackground(new android.graphics.drawable.ColorDrawable(color));
  }
  private void restoreMargin(View child){
   ViewGroup.LayoutParams raw=child.getLayoutParams();if(raw instanceof FrameLayout.LayoutParams){
@@ -159,6 +178,8 @@ final class CallIslandController implements CallIslandView.Listener {
   shown=null;handler.removeCallbacks(clock);dismissConfirmation();
   if(view!=null){view.animate().cancel();if(view.getParent() instanceof ViewGroup)((ViewGroup)view.getParent()).removeView(view);}
   for(View child:new ArrayList<>(margins.keySet()))restoreMargin(child);margins.clear();
+  if(backgroundReserved&&content!=null){content.setBackground(originalContentBackground);originalContentBackground=null;backgroundReserved=false;}
+  if(host instanceof MainActivity)((MainActivity)host).adaptCallIslandContent(false);
  }
  @Override public void onExpand(){
   if(BuildConfig.DEBUG)android.util.Log.d("DA_CALLER_ISLAND","expand requested");

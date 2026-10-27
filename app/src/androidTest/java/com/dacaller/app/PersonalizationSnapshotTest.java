@@ -181,13 +181,32 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
  private void archiveScreenshot(ArchiveActivity archive,boolean dark)throws Exception{
   await(archive::hasWindowFocus,"Archive must own the focused window before capturing native bars");settle();
   final int[] heights={0,0};
-  ui(()->{
-   android.view.WindowInsets insets=archive.getWindow().getDecorView().getRootWindowInsets();assertNotNull(insets);
-   heights[0]=insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.statusBars()).top;
-   heights[1]=insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.navigationBars()).bottom;
-  });
+  final boolean[] navigationVisible={false};int stableSamples=0;
+  long barsDeadline=SystemClock.uptimeMillis()+5000;
+  // Changing font scale can recreate SystemUI after the Activity gains focus.
+  // Require the real three-button bar to settle; never synthesize a bar or
+  // accept the transient zero bottom inset observed in the source3 CI logs.
+  do{
+   ui(()->{
+    android.view.WindowInsets insets=archive.getWindow().getDecorView().getRootWindowInsets();
+    heights[0]=insets==null?0:insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.statusBars()).top;
+    heights[1]=insets==null?0:insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.navigationBars()).bottom;
+    navigationVisible[0]=insets!=null&&insets.isVisible(android.view.WindowInsets.Type.navigationBars());
+   });
+   stableSamples=heights[0]>0&&heights[1]>=dp(48)&&navigationVisible[0]&&archive.hasWindowFocus()?stableSamples+1:0;
+   if(stableSamples>=3)break;Thread.sleep(100);
+  }while(SystemClock.uptimeMillis()<barsDeadline);
+  if(stableSamples<3){
+   String prefix="personalization-archive-failed-native-bars-"+(dark?"dark":"light");
+   shell("screencap -p "+DIRECTORY+"/"+prefix+".png");
+   JSONObject evidence=new JSONObject();evidence.put("status_top_px",heights[0]);evidence.put("navigation_bottom_px",heights[1]);
+   evidence.put("navigation_visible",navigationVisible[0]);evidence.put("stable_samples",stableSamples);evidence.put("window_focus",archive.hasWindowFocus());
+   File diagnostic=new File(target.getExternalFilesDir(null),prefix+".json");
+   try(FileOutputStream out=new FileOutputStream(diagnostic)){out.write(evidence.toString(2).getBytes(java.nio.charset.StandardCharsets.UTF_8));}
+   shell("cp "+diagnostic.getAbsolutePath()+" "+DIRECTORY+"/"+prefix+".json");
+  }
   assertTrue("Native status bar must be present",heights[0]>0);
-  assertTrue("Native three-button navigation must be present",heights[1]>0);
+  assertTrue("Native three-button navigation must be present and stable",heights[1]>=dp(48)&&navigationVisible[0]&&stableSamples>=3);
   Bitmap capture=null;int statusPixels=0,navigationPixels=0;long deadline=SystemClock.uptimeMillis()+3000;
   do{
    if(capture!=null)capture.recycle();capture=getInstrumentation().getUiAutomation().takeScreenshot();assertNotNull(capture);
