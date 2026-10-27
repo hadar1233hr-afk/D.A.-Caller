@@ -1,0 +1,40 @@
+{
+  "source_sha": "695ef9aafba20cc748b9304be465bd3325786791",
+  "app_tree": "07e068015b2acb9ee06ec48b4b5658773a5a60fc",
+  "workflow_run_id": 40535579465,
+  "native_job_id": 122301152801,
+  "ui_artifact_id": 12749605390,
+  "ui_artifact_sha256": "8869e15ce91d043499f2e77435f81d14321ed1098704b28eb7e3bce0d84ac286",
+  "status": "FAIL",
+  "unit_tests": {"tests": 239, "failures": 0, "errors": 0, "skipped": 0},
+  "native_tests": {"tests": 29, "passed": 27, "failed": 2},
+  "png_count_including_failure_diagnostics": 191,
+  "required_success_png_count": 219,
+  "failed_checks": [
+    {
+      "assertion": "Header collapse failed",
+      "last_raw_tap": [149, 182],
+      "actual_collapse_visible_bounds": [41, 74, 113, 146],
+      "actual_collapse_center": [77, 110],
+      "hold_control_visible_bounds": [141, 169, 240, 282],
+      "observed_result": "The raw tap missed the collapse chevron and hit Hold. The failure screenshot shows held state and logs contain no collapse-request event.",
+      "cause": "Native test helper used rotated getLocationOnScreen local origin plus untransformed half-size. The chevron is rotated 180 degrees.",
+      "correction": "Compute the actual visible screen-rectangle center and retain real raw touch injection and the collapse assertion."
+    },
+    {
+      "assertion": "Native Recents did not expose this app's own task card",
+      "observed_result": "Screenshot shows the existing DA CALLER task in native Recents behind Pixel Launcher's first-use Select text and images to copy, share, and more tutorial. Accessibility exposes the floating tutorial instead of the task card.",
+      "cause": "Fresh-emulator Launcher onboarding blocks task-card accessibility; this is not evidence of an app resume failure.",
+      "correction": "Recognize only that observed Launcher tutorial by package, resource ID and exact text; dismiss it with native Back once, then require and tap the verified real app task card. Keep the fixture non-exported."
+    }
+  ],
+  "failure_files_sha256": {
+    "island-failed-matrix.png": "d6b249ae9a084a2f5f1e6ac7fcce35433f55cdf4de7ee0df04ea11bf1e9229cc",
+    "island-failed-matrix.json": "3e87f7557c5e4ece6de7676f77fba8647520125d8f6dbb842454d7afbf2b5f1d",
+    "island-failed-matrix.xml": "357dd21acce9e7b1598b9a4fc676f39d0c3a203b31e32ee2ea3158533de1a0b9",
+    "island-failed-actions.png": "be1432355b18a639e83dba62ff69e9082cb442cb7d6e6e81c707770b605b8262",
+    "island-failed-actions.json": "463f68f4e3983e55becb35d2d4bb83354e7e1f317ba74a87ca0eedf1dc923848",
+    "island-failed-actions.xml": "cf27304b2ee02c0712947fe0c379ba2ee292accc4c0a1943af258052586d0b01"
+  },
+  "limits": "Failure diagnostics were inspected visually and against native view/accessibility dumps. All 26 prior native regressions and the island customization test passed. Complete island matrix, actual MainActivity integration and lifecycle/animation completion remain unverified until a later successful run. No production-source change is justified by these two test-harness failures. Physical SIM/Bluetooth/Jelly Star remain untested."
+}

@@ -116,7 +116,10 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   if(root instanceof ViewGroup)for(int i=0;i<((ViewGroup)root).getChildCount();i++)textFits(((ViewGroup)root).getChildAt(i));
  }
  private void tap(View view)throws Exception{
-  int[] point=new int[2];ui(()->{visible(view);view.getLocationOnScreen(point);point[0]+=view.getWidth()/2;point[1]+=view.getHeight()/2;});
+  // getLocationOnScreen maps the local origin through rotations. Adding an
+  // untransformed half-size misses rotated controls (the collapse chevron is
+  // rotated 180 degrees). Use the actual visible screen bounds instead.
+  int[] point=new int[2];ui(()->{visible(view);Rect bounds=new Rect();assertTrue(view.getGlobalVisibleRect(bounds));point[0]=bounds.centerX();point[1]=bounds.centerY();});
   lastTap=String.valueOf(view.getTag())+" @ "+point[0]+","+point[1];tapPoint(point[0],point[1]);
  }
  private void tapPoint(int x,int y)throws Exception{
@@ -396,12 +399,38 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
    AccessibilityNodeInfo root=window.getRoot();if(launcher(root)){AccessibilityNodeInfo card=taskForCaller(root,0,new int[]{4000});if(card!=null)return card;}
   }return null;
  }
+ private boolean recentsTutorial(AccessibilityNodeInfo node,int depth,int[] budget){
+  if(node==null||depth>60||--budget[0]<0)return false;
+  // Observed on a fresh Android 13 Pixel Launcher: this first-use floating
+  // tutorial hides task cards from accessibility until the user dismisses it.
+  if(node.isVisibleToUser()&&launcher(node)
+    &&"com.google.android.apps.nexuslauncher:id/text".equals(String.valueOf(node.getViewIdResourceName()))
+    &&"Select text and images to copy, share, and more".equals(String.valueOf(node.getText())))return true;
+  for(int i=0;i<node.getChildCount();i++)if(recentsTutorial(node.getChild(i),depth+1,budget))return true;
+  return false;
+ }
+ private boolean recentsTutorialVisible(){
+  AccessibilityNodeInfo active=getInstrumentation().getUiAutomation().getRootInActiveWindow();
+  if(launcher(active)&&recentsTutorial(active,0,new int[]{4000}))return true;
+  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+   AccessibilityNodeInfo root=window.getRoot();if(launcher(root)&&recentsTutorial(root,0,new int[]{4000}))return true;
+  }return false;
+ }
+ private void nativeKey(int key)throws Exception{
+  long now=SystemClock.uptimeMillis();
+  assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(new KeyEvent(now,now,KeyEvent.ACTION_DOWN,key,0),true));
+  assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(new KeyEvent(now,now+40,KeyEvent.ACTION_UP,key,0),true));
+ }
  private void returnThroughNativeRecents()throws Exception{
   // Reopen the actual existing task as a user would. The test Activity remains
   // non-exported; a shell component launch would be a different permission path.
-  long keyTime=SystemClock.uptimeMillis();
-  assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(new KeyEvent(keyTime,keyTime,KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_APP_SWITCH,0),true));
-  assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(new KeyEvent(keyTime,keyTime+40,KeyEvent.ACTION_UP,KeyEvent.KEYCODE_APP_SWITCH,0),true));
+  nativeKey(KeyEvent.KEYCODE_APP_SWITCH);
+  await(()->recentAppCard()!=null||recentsTutorialVisible(),"Native Recents exposed neither an app task nor its observed first-use tutorial");
+  if(recentsTutorialVisible()){
+   lastTap="native BACK dismisses verified Pixel Launcher Recents tutorial";
+   nativeKey(KeyEvent.KEYCODE_BACK);settle();
+   await(()->!recentsTutorialVisible(),"Native Back did not dismiss the verified Recents tutorial");
+  }
   await(()->recentAppCard()!=null,"Native Recents did not expose this app's own task card");settle();
   AccessibilityNodeInfo card=recentAppCard();assertNotNull(card);assertTrue(launcher(card));
   Rect bounds=new Rect();card.getBoundsInScreen(bounds);assertTrue(bounds.width()>=dp(120)&&bounds.height()>=dp(150));
