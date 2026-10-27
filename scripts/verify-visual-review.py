@@ -24,6 +24,12 @@ if "personalization" in str(review_path):
         "compact_summary", "avatar_shapes", "archive_contact_identity",
         "call_notifications", "return_from_call"
     }, "Review must cover all eight requested features"
+if "island-" in str(review_path):
+    assert expected == 215, "All 183 regressions and 32 island captures must be reviewed"
+    assert set(review.get("verified_features", [])) == {
+        "compact_expanded_island", "call_actions_guarded", "island_customization_backup",
+        "activity_lifecycle_and_list_state", "offline_no_overlay_permission"
+    }, "Review must cover island controls, customization, lifecycle and permission scope"
 source = str(review.get("screenshot_source_sha", ""))
 run_id = str(review.get("screenshot_run_id", ""))
 tree = str(review.get("reviewed_app_tree", ""))

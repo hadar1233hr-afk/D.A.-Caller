@@ -13,9 +13,11 @@ on:
       - 'scripts/verify-ui-matrix.py'
       - 'scripts/verify-personalization-matrix.py'
       - 'scripts/verify-call-integration-matrix.py'
+      - 'scripts/verify-island-matrix.py'
       - 'scripts/verify-visual-review.py'
       - 'docs/evidence/2026-10-25/**'
       - 'docs/evidence/personalization-2026-10-25/**'
+      - 'docs/evidence/island-2026-10-27/**'
   push:
     branches: [main]
     paths:
@@ -30,6 +32,7 @@ on:
       - 'scripts/verify-ui-matrix.py'
       - 'scripts/verify-personalization-matrix.py'
       - 'scripts/verify-call-integration-matrix.py'
+      - 'scripts/verify-island-matrix.py'
       - 'scripts/verify-visual-review.py'
   workflow_dispatch:
     inputs:
@@ -289,7 +292,7 @@ jobs:
   # use permanent signing and cannot update a differently signed install.
   # Never publishes on forks or changes the separately gated stable-beta process.
   preview-debug:
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'codex/da-caller-hardening-20261023' || ((github.event.pull_request.head.ref == 'codex/da-caller-visual-20261025' || github.event.pull_request.head.ref == 'codex/da-caller-personalization-20261025') && contains(github.event.pull_request.labels.*.name, 'visual-reviewed')))
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'codex/da-caller-hardening-20261023' || ((github.event.pull_request.head.ref == 'codex/da-caller-visual-20261025' || github.event.pull_request.head.ref == 'codex/da-caller-personalization-20261025' || github.event.pull_request.head.ref == 'codex/da-caller-dynamic-island-20261027') && contains(github.event.pull_request.labels.*.name, 'visual-reviewed')))
     needs: [validate, android-ui]
     runs-on: ubuntu-latest
     permissions:
@@ -311,6 +314,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           DA_CALLER_VISUAL_REVIEW: docs/evidence/personalization-2026-10-25/visual-review.json
+        run: python3 scripts/verify-visual-review.py
+      - name: Require island review of this exact application source
+        if: github.event.pull_request.head.ref == 'codex/da-caller-dynamic-island-20261027'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          DA_CALLER_VISUAL_REVIEW: docs/evidence/island-2026-10-27/visual-review.json
         run: python3 scripts/verify-visual-review.py
       - uses: actions/download-artifact@v4
         with:
@@ -355,6 +365,10 @@ jobs:
           cat > preview-notes.md <<'NOTES'
           # DA CALLER — UNVERIFIED DEBUG TEST BUILD
           ## Implemented changes
+          - Apple-inspired call island inside app screens, with compact and expanded controls.
+          - Three island styles, two sizes, optional controls/timer/photo/animation and safe end confirmation.
+          - Explicitly labelled interactive demo and portable island settings backup.
+          - The island reserves space above content, preserves navigation/list state and requires no overlay permission.
           - Offline settings backup/restore with a validated file and explicit confirmation.
           - Five selectable original dark-green/gold launcher icons.
           - Collapsible horizontal favorites above contacts and recents, and a compact expandable summary.
@@ -371,10 +385,10 @@ jobs:
           ## Verification and installation limits
           The linked source passed unit tests, lint, APK verification and the
           Android 13 emulator suite at 480x854/240dpi with native three-button
-          navigation, RTL, font1.3 and 183 required PNG captures. The published
+          navigation, RTL, font1.3 and 215 required PNG captures. The published
           APK is the exact debug binary installed by the emulator test task.
           The exact app
-          tree and the additional personalization captures were visually reviewed
+          tree and the additional personalization/island captures were visually reviewed
           before publication; see the linked pull request and its verification report.
           This is **not** a stable or device-verified release.
           The Android build, unit tests and emulator UI checks passed, but

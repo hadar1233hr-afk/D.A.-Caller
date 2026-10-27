@@ -35,6 +35,11 @@ final class SettingsBackup {
  static {
   bool("dark",false);bool("amoled",false);bool("recents_green",false);bool("show_stats",true);
   bool("haptics",true);bool("favorites_expanded",true);bool("stats_expanded",false);
+  bool("island_enabled",true);bool("island_show_timer",true);bool("island_show_photo",true);
+  bool("island_animations",true);bool("island_show_mute",true);bool("island_show_speaker",true);
+  bool("island_show_hold",true);bool("island_confirm_end",true);
+  option("island_style","apple","apple","glass","emerald");
+  option("island_size","compact","compact","comfortable");
   option("language","he","he","en");option("accent","gold","gold","silver");
   option("call_theme","pixel",CallThemes.IDS);
   option("answer_mode","ios","right","left","vertical","ios");

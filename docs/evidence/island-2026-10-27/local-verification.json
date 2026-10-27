@@ -1,0 +1,58 @@
+{
+  "result": "PASS",
+  "unit_tests": {
+    "tests": 239,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "lint_errors": 0,
+  "lint_issues": [
+    {
+      "id": "OldTargetApi",
+      "severity": "Warning",
+      "message": "Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the `android.os.Build.VERSION_CODES` javadoc for details."
+    },
+    {
+      "id": "SetTextI18n",
+      "severity": "Warning",
+      "message": "Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+    },
+    {
+      "id": "SetTextI18n",
+      "severity": "Warning",
+      "message": "Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+    },
+    {
+      "id": "SetTextI18n",
+      "severity": "Warning",
+      "message": "Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+    },
+    {
+      "id": "SetTextI18n",
+      "severity": "Warning",
+      "message": "Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+    }
+  ],
+  "commands": [
+    ":app:testDebugUnitTest",
+    ":app:lintDebug",
+    ":app:assembleDebug",
+    ":app:assembleDebugAndroidTest",
+    ":app:assembleRelease"
+  ],
+  "apk_identity": {
+    "package": "com.dacaller.app",
+    "versionCode": 18,
+    "versionName": "0.11.0-beta.8",
+    "minSdk": 26,
+    "targetSdk": 34,
+    "internet_permission": false,
+    "system_overlay_permission": false,
+    "module_isolation": true,
+    "debug_fixture_excluded_from_release": true
+  },
+  "native_verification": "PENDING",
+  "physical_device": "NOT TESTED",
+  "matching_existing_signature": "BLOCKED"
+}

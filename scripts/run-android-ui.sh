@@ -25,3 +25,4 @@ if [ "$test_status" -ne 0 ]; then exit "$test_status"; fi
 python3 scripts/verify-ui-matrix.py app/build/ui-snapshots
 python3 scripts/verify-personalization-matrix.py app/build/ui-snapshots
 python3 scripts/verify-call-integration-matrix.py app/build/ui-snapshots
+python3 scripts/verify-island-matrix.py app/build/ui-snapshots
