@@ -19,8 +19,9 @@ presentation = {
 }
 states = {f"island-state-{state}.png" for state in ("incoming", "outgoing", "held", "noaudio")}
 settings = {f"island-settings-{theme}{suffix}.png" for theme in ("light", "dark") for suffix in ("", "-bottom")}
-required = presentation | states | settings
-assert len(required) == 32
+app_layouts = {f"island-app-{page}-{mode}.png" for page in ("contacts", "recents") for mode in ("compact", "expanded")}
+required = presentation | states | settings | app_layouts
+assert len(required) == 36
 files = [p for p in root.rglob("*.png") if p.is_file()]
 counts = collections.Counter(p.name for p in files)
 assert not any(counts[name] != 1 for name in required), "Missing or duplicate island PNG files"
@@ -42,7 +43,7 @@ for flag in ("real_renderer_and_controller", "matrix_native_layout_assertions",
              "pause_stops_surface_and_resume_restores",
              "activity_recreation_preserves_fixture_session_and_query",
              "customization_preview_and_bottom_controls", "animations_lifecycle",
-             "native_preference_persistence"):
+             "native_preference_persistence", "app_main_integration"):
     assert proof.get(flag) is True, f"Native island check did not pass: {flag}"
 insets_files = [p for p in root.rglob("window-insets.json") if p.is_file()]
 assert len(insets_files) == 1
@@ -58,6 +59,7 @@ assert insets.get("navigation_bar_visible") is True and insets.get("navigation_b
     "required_real_png_files": len(required),
     "style_theme_language_presentation_screenshots": len(presentation),
     "additional_state_screenshots": len(states), "settings_screenshots": len(settings),
+    "actual_app_layout_screenshots": len(app_layouts),
     "sha256": hashes, "native_assertions": proof,
     "limits": "Real production in-app island renderer/controller and native windows. A non-exported DEBUG fixture supplies fictional call state and acknowledgements; real Telecom actions are separately unit-tested. No physical SIM, audio, Bluetooth or Jelly Star verification.",
 }, indent=2) + "\n")

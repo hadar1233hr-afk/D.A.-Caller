@@ -3,6 +3,7 @@ package com.dacaller.app;
 import android.app.Activity;
 import android.animation.ValueAnimator;
 import android.app.Instrumentation;
+import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,38 +18,53 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inspector.WindowInspector;
+import android.view.accessibility.AccessibilityNodeInfo;
+import android.view.accessibility.AccessibilityWindowInfo;
 import android.widget.FrameLayout;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import org.json.JSONObject;
+import org.json.JSONArray;
+import org.xmlpull.v1.XmlSerializer;
 
 /** Native window/layout/interaction evidence. Session state is deliberately synthetic. */
 @SuppressWarnings({"deprecation","unchecked"})
 @android.annotation.TargetApi(33)
 public final class CallIslandSnapshotTest extends InstrumentationTestCase {
  private static final String DIRECTORY="/sdcard/Download/DA-CALLER-snapshots";
- private static boolean matrixPassed,actionsPassed,settingsPassed,animationsPassed;
+ private static boolean matrixPassed,actionsPassed,settingsPassed,animationsPassed,appMainPassed;
  private Context target;
  private SharedPreferences prefs;
  private Map<String,?> original;
  private String originalFont,originalDuration;
+ private int originalAccessibilityFlags;
+ private Activity diagnosticHost;
+ private String lastTap="none";
  private CallIslandFixtureActivity host;
  private final List<Activity> launched=new ArrayList<>();
  @Override protected void setUp()throws Exception{
   super.setUp();target=getInstrumentation().getTargetContext();prefs=target.getSharedPreferences("da_caller",Context.MODE_PRIVATE);
   original=prefs.getAll();originalFont=shell("settings get system font_scale").trim();
   originalDuration=shell("settings get global animator_duration_scale").trim();
+  AccessibilityServiceInfo accessibility=getInstrumentation().getUiAutomation().getServiceInfo();originalAccessibilityFlags=accessibility.flags;
+  accessibility.flags|=AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS|AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS;
+  getInstrumentation().getUiAutomation().setServiceInfo(accessibility);
   shell("mkdir -p "+DIRECTORY);shell("settings put system font_scale 1.3");Thread.sleep(300);
   prefs.edit().putBoolean("island_enabled",true).putBoolean("island_animations",false)
    .putBoolean("island_show_timer",true).putBoolean("island_show_photo",true)
@@ -61,7 +77,10 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
    for(int i=launched.size()-1;i>=0;i--){Activity activity=launched.get(i);if(activity!=null&&!activity.isDestroyed())ui(activity::finish);}
    settle();restore(prefs,original);shell("settings put system font_scale "+(originalFont.matches("[0-9.]+")?originalFont:"1.0"));
    shell("settings put global animator_duration_scale "+(originalDuration.matches("[0-9.]+")?originalDuration:"1.0"));
-  }finally{super.tearDown();}
+  }finally{
+   AccessibilityServiceInfo accessibility=getInstrumentation().getUiAutomation().getServiceInfo();accessibility.flags=originalAccessibilityFlags;
+   getInstrumentation().getUiAutomation().setServiceInfo(accessibility);super.tearDown();
+  }
  }
  private void ui(Runnable action)throws Exception{
   AtomicReference<Throwable> error=new AtomicReference<>();getInstrumentation().runOnMainSync(()->{try{action.run();}catch(Throwable failure){error.set(failure);}});
@@ -98,8 +117,11 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
  }
  private void tap(View view)throws Exception{
   int[] point=new int[2];ui(()->{visible(view);view.getLocationOnScreen(point);point[0]+=view.getWidth()/2;point[1]+=view.getHeight()/2;});
-  long now=SystemClock.uptimeMillis();MotionEvent down=MotionEvent.obtain(now,now,MotionEvent.ACTION_DOWN,point[0],point[1],0);
-  MotionEvent up=MotionEvent.obtain(now,now+45,MotionEvent.ACTION_UP,point[0],point[1],0);
+  lastTap=String.valueOf(view.getTag())+" @ "+point[0]+","+point[1];tapPoint(point[0],point[1]);
+ }
+ private void tapPoint(int x,int y)throws Exception{
+  long now=SystemClock.uptimeMillis();MotionEvent down=MotionEvent.obtain(now,now,MotionEvent.ACTION_DOWN,x,y,0);
+  MotionEvent up=MotionEvent.obtain(now,now+45,MotionEvent.ACTION_UP,x,y,0);
   getInstrumentation().sendPointerSync(down);getInstrumentation().sendPointerSync(up);down.recycle();up.recycle();settle();
  }
  private void snapshot(String name)throws Exception{
@@ -112,6 +134,7 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
    .putString("island_style",style).putBoolean("island_enabled",true).commit();
   host=(CallIslandFixtureActivity)getInstrumentation().startActivitySync(new Intent(target,CallIslandFixtureActivity.class)
    .putExtra("state",state).putExtra("no_audio",noAudio).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));launched.add(host);settle();
+  diagnosticHost=host;
   await(()->host.hasWindowFocus()&&view(host,"island-root")!=null,"Island did not attach to the focused native Activity");
   assertEquals(1.3f,host.getResources().getConfiguration().fontScale,0.05f);
  }
@@ -130,6 +153,9 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   });
  }
  public void testAllStylesLanguagesThemesAndCallStatesAtLargeFont()throws Exception{
+  checked("matrix",this::matrixScenario);
+ }
+ private void matrixScenario()throws Exception{
   for(boolean dark:new boolean[]{false,true})for(String language:new String[]{"he","en"})for(String style:new String[]{"apple","glass","emerald"}){
    launch(language,dark,style,Call.STATE_ACTIVE,false);String suffix=style+"-"+(dark?"dark":"light")+"-"+language;
    assertFalse(host.controller.isExpanded());geometry();snapshot(suffix+"-compact");
@@ -145,7 +171,109 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
    if(i==3){assertNull(view(host,"island-action-MUTE_ON"));assertNull(view(host,"island-action-SPEAKER_ON"));}
    snapshot("state-"+labels[i]);
   }
+  actualMainScreens();
   matrixPassed=true;writeEvidence();
+ }
+ private Object mainField(MainActivity main,String name){
+  try{Field field=MainActivity.class.getDeclaredField(name);field.setAccessible(true);return field.get(main);}
+  catch(ReflectiveOperationException failure){throw new AssertionError(failure);}
+ }
+ private void mainField(MainActivity main,String name,Object value){
+  try{Field field=MainActivity.class.getDeclaredField(name);field.setAccessible(true);field.set(main,value);}
+  catch(ReflectiveOperationException failure){throw new AssertionError(failure);}
+ }
+ private void renderMain(MainActivity main,String page){
+  mainField(main,"page",page);
+  try{Method render=MainActivity.class.getDeclaredMethod("render");render.setAccessible(true);render.invoke(main);}
+  catch(ReflectiveOperationException failure){throw new AssertionError(failure);}
+ }
+ private boolean historyLoading(){
+  synchronized(CallHistory.class){
+   try{Field loading=CallHistory.class.getDeclaredField("loading");loading.setAccessible(true);return loading.getBoolean(null);}
+   catch(ReflectiveOperationException failure){throw new AssertionError(failure);}
+  }
+ }
+ /** Real MainActivity/FastPages chrome and lists; only the call state and contact rows are fictional. */
+ private void actualMainScreens()throws Exception{
+  if(host!=null&&!host.isDestroyed()){ui(host::finish);settle();}
+  shell("pm grant "+target.getPackageName()+" android.permission.READ_CONTACTS");
+  shell("pm grant "+target.getPackageName()+" android.permission.READ_CALL_LOG");
+  List<CallHistory.Entry> oldEntries=CallHistory.entries;CallHistory.Summary oldSummary=CallHistory.summary;
+  long oldFetched=CallHistory.fetchedAt;boolean oldFailure=CallHistory.readFailed;
+  SharedPreferences navigation=target.getSharedPreferences(CallReturnNavigation.PREFERENCES,Context.MODE_PRIVATE);
+  Map<String,?> oldNavigation=navigation.getAll();
+  prefs.edit().putString("language","he").putBoolean("dark",true).putBoolean("amoled",false)
+   .putString("island_style","apple").putBoolean("island_enabled",true).putBoolean("island_animations",false)
+   .putBoolean("role_prompted",true).putBoolean("notifications_prompted",true).putBoolean("voice_permission_prompted",true)
+   .putString(CallArchive.PREF,CallArchive.OFF).putString("start_page","contacts")
+   .putBoolean("show_stats",true).putBoolean("favorites_expanded",true).putBoolean("stats_expanded",false).commit();
+  MainActivity main=null;CallIslandController appIsland=null;
+  try{
+   main=(MainActivity)getInstrumentation().startActivitySync(new Intent(target,MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+   diagnosticHost=main;
+   launched.add(main);final MainActivity app=main;
+   await(()->app.hasWindowFocus(),"Actual MainActivity never received window focus");
+   await(()->!Boolean.TRUE.equals(mainField(app,"loadingContacts"))&&!historyLoading(),"Actual MainActivity provider workers did not settle before fictional rows were installed");
+   settle();
+   String[] names={"דנה לדוגמה","אורי לדוגמה","נועה לדוגמה","אדם לדוגמה","שירה לדוגמה","יוסף לדוגמה","תמר לדוגמה","יעל לדוגמה","דניאל לדוגמה","אריאל לדוגמה"};
+   ArrayList<Contacts.Person> people=new ArrayList<>();Set<String> favorites=new HashSet<>();
+   for(int i=0;i<20;i++){Contacts.Person person=new Contacts.Person(names[i%names.length]+" "+String.format(java.util.Locale.ROOT,"%02d",i),"0500098"+String.format(java.util.Locale.ROOT,"%03d",i),640000+i);people.add(person);if(i<6)favorites.add(person.key);}
+   ui(()->{
+    prefs.edit().putStringSet("favorites",favorites).commit();
+    mainField(app,"contacts",Collections.unmodifiableList(people));mainField(app,"contactsLoaded",true);mainField(app,"fastPages",new FastPages(app));
+    app.nameIndex().clear();for(Contacts.Person person:people)app.nameIndex().put(Contacts.canonical(person.phone),person.name);
+    ArrayList<CallHistory.Entry> calls=new ArrayList<>();long now=System.currentTimeMillis();
+    for(int i=0;i<people.size();i++)calls.add(new CallHistory.Entry(880000+i,people.get(i).phone,now-i*60000,60+i*9,i%3+1));
+    CallHistory.entries=Collections.unmodifiableList(calls);CallHistory.readFailed=false;CallHistory.fetchedAt=now;
+    CallHistory.Summary summary=new CallHistory.Summary();
+    for(int period=0;period<4;period++){summary.calls[period]=20;summary.seconds[period]=2400;summary.incoming[period]=11;summary.outgoing[period]=5;summary.missed[period]=4;}
+    CallHistory.summary=summary;renderMain(app,"contacts");
+   });settle();
+   CallIslandState sample=new CallIslandState("island-actual-main","נועה בדיקת אי","0500099971",Call.STATE_ACTIVE,CallAudioState.ROUTE_EARPIECE,
+     CallAudioState.ROUTE_EARPIECE|CallAudioState.ROUTE_SPEAKER,false,true,true,System.currentTimeMillis()-11_000,-1);
+   CallIslandSession readOnly=new CallIslandSession(){
+    public CallIslandState current(){return sample;}
+    public boolean perform(String token,String action){throw new AssertionError("Actual-app screenshot must not dispatch a call command: "+action);}
+    public void open(Activity activity,String token){throw new AssertionError("Actual-app screenshot must not launch a call");}
+   };
+   appIsland=new CallIslandController(app,readOnly);final CallIslandController controller=appIsland;ui(controller::start);settle();
+   assertEquals(1.3f,app.getResources().getConfiguration().fontScale,0.05f);
+   for(String page:new String[]{"contacts","recents"}){
+    ui(()->renderMain(app,page));settle();await(()->view(app,"island-root")!=null,"Island did not reattach to actual MainActivity "+page);
+    if(controller.isExpanded()){tap(tagged(app,"island-collapse"));settle();}
+    if("contacts".equals(page)){ui(()->{EditText search=find(app.getWindow().getDecorView(),EditText.class);assertNotNull(search);search.setShowSoftInputOnFocus(false);search.setText("לדוגמה");});settle();}
+    ListView list=find(app.getWindow().getDecorView(),ListView.class);assertNotNull("Actual FastPages list missing",list);
+    await(()->list.getAdapter()!=null&&list.getAdapter().getCount()==20,"Actual FastPages fictional dataset was overwritten");
+    ui(()->list.setSelectionFromTop(4,-7));settle();
+    long identity=list.getAdapter().getItemId(list.getFirstVisiblePosition());int top=list.getChildAt(0).getTop();
+    actualMainGeometry(app,false,"recents".equals(page));snapshot("app-"+page+"-compact");
+    tap(tagged(app,"island-expand"));await(controller::isExpanded,"Actual MainActivity island did not expand");settle();
+    actualMainGeometry(app,true,"recents".equals(page));
+    if("contacts".equals(page))assertEquals("לדוגמה",find(app.getWindow().getDecorView(),EditText.class).getText().toString());
+    if(list.getHeight()>=dp(48)&&list.getChildCount()>0){assertEquals(identity,list.getAdapter().getItemId(list.getFirstVisiblePosition()));assertEquals(top,list.getChildAt(0).getTop());}
+    snapshot("app-"+page+"-expanded");
+    tap(tagged(app,"island-collapse"));await(()->!controller.isExpanded(),"Actual MainActivity island did not collapse");settle();
+    assertEquals("Main list identity changed after expand/collapse",identity,list.getAdapter().getItemId(list.getFirstVisiblePosition()));
+    assertEquals("Main list offset changed after expand/collapse",top,list.getChildAt(0).getTop());
+   }
+   appMainPassed=true;
+  }catch(Throwable failure){captureFailure("app-main",failure);throwFailure(failure);
+  }finally{
+   final CallIslandController cleanup=appIsland;if(cleanup!=null)ui(cleanup::stop);
+   final MainActivity cleanupActivity=main;if(cleanupActivity!=null&&!cleanupActivity.isDestroyed())ui(cleanupActivity::finish);settle();
+   CallHistory.entries=oldEntries;CallHistory.summary=oldSummary;CallHistory.fetchedAt=oldFetched;CallHistory.readFailed=oldFailure;restore(navigation,oldNavigation);
+  }
+ }
+ private void actualMainGeometry(MainActivity app,boolean expanded,boolean recents)throws Exception{
+  ui(()->{
+   View island=tagged(app,"island-root");visible(island);textFits(island);
+   View page=(View)mainField(app,"root"),nav=(View)mainField(app,"nav");visible(nav);visible(tagged(app,"favorites_strip"));
+   if(recents)visible(tagged(app,"stats_summary"));
+   Rect islandBounds=new Rect(),pageBounds=new Rect();island.getGlobalVisibleRect(islandBounds);assertTrue(page.getGlobalVisibleRect(pageBounds));
+   assertTrue("Actual MainActivity content overlaps call controls",pageBounds.top>=islandBounds.bottom);
+   ListView list=find(app.getWindow().getDecorView(),ListView.class);assertNotNull(list);
+   if(!expanded)assertTrue("Compact island must leave a usable real app list",list.getHeight()>=dp(48));
+  });
  }
  private View dialogButton(int id){
   for(View window:WindowInspector.getGlobalWindowViews()){View button=window.findViewById(id);if(button!=null&&button.isShown())return button;}
@@ -168,6 +296,9 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
  }
  private boolean animationRunning(View waveform){ValueAnimator animator=animator(waveform);return animator!=null&&animator.isRunning();}
  public void testCommandsConfirmationPauseReturnRecreationAndContentRestore()throws Exception{
+  checked("actions",this::interactionScenario);
+ }
+ private void interactionScenario()throws Exception{
   launch("en",false,"apple",Call.STATE_ACTIVE,false);
   ui(()->{host.query.setText("Preserved query");host.list.setSelectionFromTop(28,-9);});settle();
   final long identity=host.list.getAdapter().getItemId(host.list.getFirstVisiblePosition());final int top=host.list.getChildAt(0).getTop();
@@ -215,9 +346,7 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   getInstrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_HOME);await(()->!host.hasWindowFocus(),"Fixture did not pause");settle();
   assertNotNull(host.session.value);assertEquals(actions,host.session.actions);assertNull("Paused island should detach and stop animation",view(host,"island-root"));
   assertFalse(beforePause.isAttachedToWindow());assertNull("Detached activity bars retain no animator",animator(beforePause));
-  // Simulate an explicit launcher/user return, avoiding background-start policy
-  // differences unrelated to this app-owned surface's lifecycle.
-  shell("am start -n "+target.getPackageName()+"/.CallIslandFixtureActivity --activity-reorder-to-front --activity-single-top");
+  returnThroughNativeRecents();
   await(()->host.hasWindowFocus()&&view(host,"island-root")!=null,"Resuming the same app task did not restore the island");settle();
   await(()->animationRunning(view(host,"island-activity")),"Resumed activity bars did not restart");
   assertAnchor(identity,top,"Preserved query");
@@ -233,11 +362,104 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   Instrumentation.ActivityMonitor recreation=getInstrumentation().addMonitor(CallIslandFixtureActivity.class.getName(),null,false);
   String token=host.session.value.token;
   try{
-   ui(host::recreate);Activity next=recreation.waitForActivityWithTimeout(7000);assertNotNull(next);host=(CallIslandFixtureActivity)next;launched.add(host);
+   ui(host::recreate);Activity next=recreation.waitForActivityWithTimeout(7000);assertNotNull(next);host=(CallIslandFixtureActivity)next;diagnosticHost=host;launched.add(host);
    await(()->host.hasWindowFocus()&&view(host,"island-root")!=null,"Recreated window did not restore island");settle();
   }finally{getInstrumentation().removeMonitor(recreation);}
   assertNotNull(host.session.value);assertEquals(token,host.session.value.token);assertEquals(actions,host.session.actions);assertAnchor(identity,top,"Preserved query");
   actionsPassed=true;writeEvidence();
+ }
+ private boolean launcher(AccessibilityNodeInfo node){
+  if(node==null||node.getPackageName()==null)return false;String name=node.getPackageName().toString();
+  return name.equals("com.google.android.apps.nexuslauncher")||name.equals("com.android.launcher3");
+ }
+ private boolean namesOurApp(AccessibilityNodeInfo node){
+  return (String.valueOf(node.getText())+" "+String.valueOf(node.getContentDescription())).toLowerCase(java.util.Locale.ROOT).contains("da caller");
+ }
+ private AccessibilityNodeInfo taskForCaller(AccessibilityNodeInfo node,int depth,int[] budget){
+  if(node==null||depth>60||--budget[0]<0)return null;
+  if(node.isVisibleToUser()&&namesOurApp(node)){
+   AccessibilityNodeInfo candidate=node;
+   for(int level=0;candidate!=null&&level<10;level++,candidate=candidate.getParent()){
+    Rect bounds=new Rect();candidate.getBoundsInScreen(bounds);
+    String kind=(String.valueOf(candidate.getViewIdResourceName())+" "+String.valueOf(candidate.getClassName())).toLowerCase(java.util.Locale.ROOT);
+    if(candidate.isVisibleToUser()&&candidate.isClickable()&&bounds.width()>=dp(120)&&bounds.height()>=dp(150)
+       &&(namesOurApp(candidate)||kind.contains("task")))return candidate;
+   }
+  }
+  for(int i=0;i<node.getChildCount();i++){AccessibilityNodeInfo result=taskForCaller(node.getChild(i),depth+1,budget);if(result!=null)return result;}
+  return null;
+ }
+ private AccessibilityNodeInfo recentAppCard(){
+  AccessibilityNodeInfo active=getInstrumentation().getUiAutomation().getRootInActiveWindow();
+  if(launcher(active)){AccessibilityNodeInfo card=taskForCaller(active,0,new int[]{4000});if(card!=null)return card;}
+  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+   AccessibilityNodeInfo root=window.getRoot();if(launcher(root)){AccessibilityNodeInfo card=taskForCaller(root,0,new int[]{4000});if(card!=null)return card;}
+  }return null;
+ }
+ private void returnThroughNativeRecents()throws Exception{
+  // Reopen the actual existing task as a user would. The test Activity remains
+  // non-exported; a shell component launch would be a different permission path.
+  long keyTime=SystemClock.uptimeMillis();
+  assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(new KeyEvent(keyTime,keyTime,KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_APP_SWITCH,0),true));
+  assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(new KeyEvent(keyTime,keyTime+40,KeyEvent.ACTION_UP,KeyEvent.KEYCODE_APP_SWITCH,0),true));
+  await(()->recentAppCard()!=null,"Native Recents did not expose this app's own task card");settle();
+  AccessibilityNodeInfo card=recentAppCard();assertNotNull(card);assertTrue(launcher(card));
+  Rect bounds=new Rect();card.getBoundsInScreen(bounds);assertTrue(bounds.width()>=dp(120)&&bounds.height()>=dp(150));
+  lastTap="native Recents verified DA CALLER task @ "+bounds.centerX()+","+bounds.centerY();
+  long touchTime=SystemClock.uptimeMillis();
+  MotionEvent down=MotionEvent.obtain(touchTime,touchTime,MotionEvent.ACTION_DOWN,bounds.centerX(),bounds.centerY(),0);
+  MotionEvent up=MotionEvent.obtain(touchTime,touchTime+45,MotionEvent.ACTION_UP,bounds.centerX(),bounds.centerY(),0);
+  down.setSource(android.view.InputDevice.SOURCE_TOUCHSCREEN);up.setSource(android.view.InputDevice.SOURCE_TOUCHSCREEN);
+  try{assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(down,true));assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(up,true));}
+  finally{down.recycle();up.recycle();}settle();
+ }
+ private interface Checked {void run()throws Exception;}
+ private void checked(String name,Checked action)throws Exception{
+  try{action.run();}catch(Throwable failure){
+   try{captureFailure(name,failure);}catch(Exception diagnostic){failure.addSuppressed(diagnostic);}throwFailure(failure);
+  }
+ }
+ private void throwFailure(Throwable failure)throws Exception{
+  if(failure instanceof Exception)throw (Exception)failure;if(failure instanceof Error)throw (Error)failure;throw new AssertionError(failure);
+ }
+ private void captureFailure(String name,Throwable failure)throws Exception{
+  String prefix="island-failed-"+name;shell("screencap -p "+DIRECTORY+"/"+prefix+".png");
+  JSONObject json=new JSONObject();json.put("failure",failure.toString());json.put("last_raw_tap",lastTap);
+  if(host!=null){json.put("fixture_expanded",host.controller!=null&&host.controller.isExpanded());json.put("fixture_focus",host.hasWindowFocus());}
+  JSONArray views=new JSONArray();
+  ui(()->{if(diagnosticHost!=null)dumpView(diagnosticHost.getWindow().getDecorView(),views,0,new int[]{2500});});json.put("activity_views",views);
+  diagnosticFile(prefix+".json",json.toString(2));
+  StringWriter writer=new StringWriter();XmlSerializer xml=android.util.Xml.newSerializer();xml.setOutput(writer);
+  xml.startDocument("UTF-8",true);xml.startTag(null,"accessibility-windows");xml.attribute(null,"failure",failure.toString());
+  int[] budget={5000};xml.startTag(null,"active");dumpAccessibility(getInstrumentation().getUiAutomation().getRootInActiveWindow(),xml,0,budget);xml.endTag(null,"active");
+  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+   xml.startTag(null,"window");xml.attribute(null,"id",String.valueOf(window.getId()));xml.attribute(null,"active",String.valueOf(window.isActive()));
+   dumpAccessibility(window.getRoot(),xml,0,budget);xml.endTag(null,"window");
+  }
+  xml.endTag(null,"accessibility-windows");xml.endDocument();diagnosticFile(prefix+".xml",writer.toString());
+ }
+ private void dumpView(View view,JSONArray result,int depth,int[] budget){
+  if(view==null||depth>60||--budget[0]<0)return;
+  try{
+   Rect bounds=new Rect();view.getGlobalVisibleRect(bounds);JSONObject item=new JSONObject();item.put("class",view.getClass().getName());
+   item.put("tag",String.valueOf(view.getTag()));item.put("bounds",bounds.toShortString());item.put("size",view.getWidth()+"x"+view.getHeight());
+   item.put("clickable",view.isClickable());item.put("shown",view.isShown());item.put("attached",view.isAttachedToWindow());
+   item.put("description",String.valueOf(view.getContentDescription()));if(view instanceof TextView)item.put("text",((TextView)view).getText());result.put(item);
+   if(view instanceof ViewGroup)for(int i=0;i<((ViewGroup)view).getChildCount();i++)dumpView(((ViewGroup)view).getChildAt(i),result,depth+1,budget);
+  }catch(org.json.JSONException error){throw new AssertionError(error);}
+ }
+ private void dumpAccessibility(AccessibilityNodeInfo node,XmlSerializer xml,int depth,int[] budget)throws Exception{
+  if(node==null||depth>70||--budget[0]<0)return;Rect bounds=new Rect();node.getBoundsInScreen(bounds);xml.startTag(null,"node");
+  xml.attribute(null,"class",String.valueOf(node.getClassName()));xml.attribute(null,"id",String.valueOf(node.getViewIdResourceName()));
+  xml.attribute(null,"package",String.valueOf(node.getPackageName()));xml.attribute(null,"text",String.valueOf(node.getText()));
+  xml.attribute(null,"description",String.valueOf(node.getContentDescription()));xml.attribute(null,"bounds",bounds.toShortString());
+  xml.attribute(null,"visible",String.valueOf(node.isVisibleToUser()));xml.attribute(null,"clickable",String.valueOf(node.isClickable()));
+  xml.attribute(null,"actions",node.getActionList().toString());
+  for(int i=0;i<node.getChildCount();i++)dumpAccessibility(node.getChild(i),xml,depth+1,budget);xml.endTag(null,"node");
+ }
+ private void diagnosticFile(String name,String value)throws Exception{
+  File file=new File(target.getExternalFilesDir(null),name);try(FileOutputStream out=new FileOutputStream(file)){out.write(value.getBytes(StandardCharsets.UTF_8));}
+  shell("cp "+file.getAbsolutePath()+" "+DIRECTORY+"/"+name);
  }
  public void testCustomizationPreviewBothThemesAndBottomControlsAtLargeFont()throws Exception{
   for(boolean dark:new boolean[]{false,true}){
@@ -259,7 +481,9 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
  }
  private void writeEvidence()throws Exception{
   JSONObject proof=new JSONObject();proof.put("api",android.os.Build.VERSION.SDK_INT);proof.put("real_renderer_and_controller",true);
-  proof.put("matrix_native_layout_assertions",matrixPassed);proof.put("native_action_dispatch_and_acknowledgement",actionsPassed);
+  proof.put("matrix_native_layout_assertions",matrixPassed);proof.put("app_main_integration",appMainPassed);
+  proof.put("app_main_screens","Actual MainActivity/FastPages contacts and recents, compact/expanded, favorites/summary/navigation, synthetic rows, no call commands");
+  proof.put("native_action_dispatch_and_acknowledgement",actionsPassed);
   proof.put("confirmed_end_cancel_and_accept",actionsPassed);proof.put("disabled_ui_preserves_session",actionsPassed);
   proof.put("content_margin_and_list_anchor_restored",actionsPassed);proof.put("pause_stops_surface_and_resume_restores",actionsPassed);
   proof.put("activity_recreation_preserves_fixture_session_and_query",actionsPassed);proof.put("customization_preview_and_bottom_controls",settingsPassed);

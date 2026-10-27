@@ -95,6 +95,7 @@ final class CallIslandController implements CallIslandView.Listener {
   }
  }
  private void render(){
+  if(BuildConfig.DEBUG)android.util.Log.d("DA_CALLER_ISLAND","render expanded="+expanded);
   CallIslandState state=prefs.getBoolean("island_enabled",true)?session.current():null;
   if(state==null){expanded=false;token=null;hide();return;}
   if(!state.token.equals(token)){expanded=false;token=state.token;dismissConfirmation();}
@@ -159,8 +160,23 @@ final class CallIslandController implements CallIslandView.Listener {
   if(view!=null){view.animate().cancel();if(view.getParent() instanceof ViewGroup)((ViewGroup)view.getParent()).removeView(view);}
   for(View child:new ArrayList<>(margins.keySet()))restoreMargin(child);margins.clear();
  }
- @Override public void onExpand(){if(shown==null)return;expanded=true;refresh();}
- @Override public void onCollapse(){if(shown==null)return;expanded=false;refresh();}
+ @Override public void onExpand(){
+  if(BuildConfig.DEBUG)android.util.Log.d("DA_CALLER_ISLAND","expand requested");
+  if(shown==null)return;
+  // Keep the complete control surface reachable on small phones while searching.
+  // The focused editor and its query remain intact; only the keyboard is hidden.
+  View focus=host.getCurrentFocus();
+  android.view.inputmethod.InputMethodManager keyboard=host.getSystemService(android.view.inputmethod.InputMethodManager.class);
+  if(keyboard!=null&&focus instanceof android.widget.EditText)keyboard.hideSoftInputFromWindow(focus.getWindowToken(),0);
+  expanded=true;scheduleRefresh();
+ }
+ @Override public void onCollapse(){
+  if(BuildConfig.DEBUG)android.util.Log.d("DA_CALLER_ISLAND","collapse requested");
+  if(shown==null)return;
+  // Finish dispatching this gesture before replacing its touched child tree.
+  // Otherwise the same UP can reach the newly installed compact expand target.
+  expanded=false;scheduleRefresh();
+ }
  @Override public void onOpen(){
   if(shown==null)return;CallIslandState live=session.current();
   if(live!=null&&shown.token.equals(live.token))session.open(host,shown.token);else refresh();

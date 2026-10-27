@@ -25,7 +25,7 @@ if "personalization" in str(review_path):
         "call_notifications", "return_from_call"
     }, "Review must cover all eight requested features"
 if "island-" in str(review_path):
-    assert expected == 215, "All 183 regressions and 32 island captures must be reviewed"
+    assert expected == 219, "All 183 regressions and 36 island captures must be reviewed"
     assert set(review.get("verified_features", [])) == {
         "compact_expanded_island", "call_actions_guarded", "island_customization_backup",
         "activity_lifecycle_and_list_state", "offline_no_overlay_permission"

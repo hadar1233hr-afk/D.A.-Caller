@@ -385,7 +385,7 @@ jobs:
           ## Verification and installation limits
           The linked source passed unit tests, lint, APK verification and the
           Android 13 emulator suite at 480x854/240dpi with native three-button
-          navigation, RTL, font1.3 and 215 required PNG captures. The published
+          navigation, RTL, font1.3 and 219 required PNG captures. The published
           APK is the exact debug binary installed by the emulator test task.
           The exact app
           tree and the additional personalization/island captures were visually reviewed
