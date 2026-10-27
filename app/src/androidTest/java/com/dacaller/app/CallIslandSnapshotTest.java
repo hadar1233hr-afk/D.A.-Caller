@@ -7,6 +7,8 @@ import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.ParcelFileDescriptor;
 import android.os.SystemClock;
@@ -48,7 +50,8 @@ import org.xmlpull.v1.XmlSerializer;
 @android.annotation.TargetApi(33)
 public final class CallIslandSnapshotTest extends InstrumentationTestCase {
  private static final String DIRECTORY="/sdcard/Download/DA-CALLER-snapshots";
- private static boolean matrixPassed,actionsPassed,settingsPassed,animationsPassed,appMainPassed;
+ private static boolean matrixPassed,actionsPassed,settingsPassed,animationsPassed,appMainPassed,settingsBarsPassed;
+ private int settingsBarCaptures;
  private Context target;
  private SharedPreferences prefs;
  private Map<String,?> original;
@@ -542,23 +545,81 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   File file=new File(target.getExternalFilesDir(null),name);try(FileOutputStream out=new FileOutputStream(file)){out.write(value.getBytes(StandardCharsets.UTF_8));}
   shell("cp "+file.getAbsolutePath()+" "+DIRECTORY+"/"+name);
  }
+ private int contrastingBarPixels(Bitmap capture,int top,int bottom,boolean dark){
+  int count=0;
+  for(int y=Math.max(0,top);y<Math.min(capture.getHeight(),bottom);y++)for(int x=0;x<capture.getWidth();x++){
+   int pixel=capture.getPixel(x,y),brightness=Color.red(pixel)+Color.green(pixel)+Color.blue(pixel);
+   if(dark?brightness>600:brightness<384)count++;
+  }return count;
+ }
+ private void settingsSnapshot(Activity settings,boolean dark,String name)throws Exception{
+  // Capture the actual compositor, including native status/navigation icons.
+  // Requested appearance flags alone do not prove the rendered icon contrast
+  // while Android transfers bar ownership between Activity windows.
+  long deadline=SystemClock.uptimeMillis()+5000;int stable=0,statusPixels=0,navigationPixels=0;
+  final int[] bars=new int[4];Bitmap capture=null;boolean passed=false;JSONArray samples=new JSONArray();
+  try{
+   do{
+    ui(()->{
+     bars[0]=0;bars[1]=0;bars[2]=0;bars[3]=settings.hasWindowFocus()?1:0;
+     android.view.WindowInsets insets=settings.getWindow().getDecorView().getRootWindowInsets();
+     if(insets!=null){
+      bars[0]=insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.statusBars()).top;
+      bars[1]=insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.navigationBars()).bottom;
+      bars[2]=insets.isVisible(android.view.WindowInsets.Type.navigationBars())?1:0;
+     }
+    });
+    if(capture!=null)capture.recycle();capture=getInstrumentation().getUiAutomation().takeScreenshot();
+    statusPixels=capture==null?0:contrastingBarPixels(capture,0,bars[0],dark);
+    navigationPixels=capture==null?0:contrastingBarPixels(capture,capture.getHeight()-bars[1],capture.getHeight(),dark);
+    boolean good=bars[3]==1&&bars[0]>0&&bars[1]>=dp(48)&&bars[2]==1&&statusPixels>=40&&navigationPixels>=40;
+    stable=good?stable+1:0;
+    JSONObject sample=new JSONObject();sample.put("uptime_ms",SystemClock.uptimeMillis());sample.put("focused",bars[3]==1);
+    sample.put("status_top_px",bars[0]);sample.put("navigation_bottom_px",bars[1]);sample.put("navigation_visible",bars[2]==1);
+    sample.put("contrasting_status_pixels",statusPixels);sample.put("contrasting_navigation_pixels",navigationPixels);
+    sample.put("consecutive_valid_samples",stable);samples.put(sample);
+    if(stable>=3){passed=true;break;}
+    Thread.sleep(100);
+   }while(SystemClock.uptimeMillis()<deadline);
+   // Save precisely the Bitmap whose native bar pixels were checked, on both
+   // success and failure; no editing or separately timed shell capture.
+   String filename="island-"+name+".png";
+   if(capture!=null){
+    File file=new File(target.getExternalFilesDir(null),filename);
+    try(FileOutputStream out=new FileOutputStream(file)){assertTrue(capture.compress(Bitmap.CompressFormat.PNG,100,out));}
+    shell("cp "+file.getAbsolutePath()+" "+DIRECTORY+"/"+filename);
+   }
+   if(!passed){
+    JSONObject diagnostic=new JSONObject();diagnostic.put("screenshot",filename);diagnostic.put("dark",dark);
+    diagnostic.put("required_navigation_px",dp(48));diagnostic.put("required_contrasting_pixels_per_bar",40);
+    diagnostic.put("required_consecutive_valid_samples",3);diagnostic.put("samples",samples);
+    diagnosticFile("island-"+name+"-bars-failed.json",diagnostic.toString(2));
+   }
+   assertNotNull("Native settings compositor screenshot missing",capture);
+   assertTrue("Settings native status/navigation bars must have stable rendered contrast: "+name
+    +" status="+statusPixels+" navigation="+navigationPixels+" navInset="+bars[1],passed);
+   settingsBarCaptures++;
+  }finally{if(capture!=null)capture.recycle();}
+ }
  public void testCustomizationPreviewBothThemesAndBottomControlsAtLargeFont()throws Exception{
+  settingsBarsPassed=false;settingsBarCaptures=0;
   for(boolean dark:new boolean[]{false,true}){
    prefs.edit().putBoolean("dark",dark).putBoolean("amoled",false).putString("language","he").putString("island_style","apple").commit();
    Activity settings=getInstrumentation().startActivitySync(new Intent(target,CallIslandSettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));launched.add(settings);settle();
    await(settings::hasWindowFocus,"Customization must own the window before capture");
    ScrollView scroll=find(settings.getWindow().getDecorView(),ScrollView.class);assertNotNull(scroll);
    ui(()->scroll.scrollTo(0,0));settle();ui(()->visible(tagged(settings,"island-settings-preview")));
-   snapshot("settings-"+(dark?"dark":"light"));
+   settingsSnapshot(settings,dark,"settings-"+(dark?"dark":"light"));
    ui(()->scroll.fullScroll(View.FOCUS_DOWN));settle();
    ui(()->{visible(tagged(settings,"island_confirm_end"));textFits(tagged(settings,"island_confirm_end"));});
-   snapshot("settings-"+(dark?"dark":"light")+"-bottom");
+   settingsSnapshot(settings,dark,"settings-"+(dark?"dark":"light")+"-bottom");
    boolean confirmed=prefs.getBoolean("island_confirm_end",true);tap(tagged(settings,"island_confirm_end"));
    await(()->prefs.getBoolean("island_confirm_end",true)!=confirmed,"Native setting switch did not persist its selection");
    tap(tagged(settings,"island_confirm_end"));await(()->prefs.getBoolean("island_confirm_end",true)==confirmed,"Native setting could not be restored");
    ui(settings::finish);settle();
   }
-  settingsPassed=true;writeEvidence();
+  assertEquals("Both themes and scroll positions require native bar contrast",4,settingsBarCaptures);
+  settingsBarsPassed=true;settingsPassed=true;writeEvidence();
  }
  private void writeEvidence()throws Exception{
   JSONObject proof=new JSONObject();proof.put("api",android.os.Build.VERSION.SDK_INT);proof.put("real_renderer_and_controller",true);
@@ -569,6 +630,7 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   proof.put("content_margin_and_list_anchor_restored",actionsPassed);proof.put("pause_stops_surface_and_resume_restores",actionsPassed);
   proof.put("activity_recreation_preserves_fixture_session_and_query",actionsPassed);proof.put("customization_preview_and_bottom_controls",settingsPassed);
   proof.put("animations_lifecycle",animationsPassed);proof.put("native_preference_persistence",settingsPassed);
+  proof.put("native_settings_bar_contrast",settingsBarsPassed);
   proof.put("session_source","Non-exported DEBUG fixture. Fictional contacts and state; real production renderer/controller. No Telecom call or physical audio route is created.");
   proof.put("full_call_navigation","Real CallScreenActivity in explicit DEBUG preview; system Back returns to same native host and preserved list.");
   File file=new File(target.getExternalFilesDir(null),"island-native.json");try(FileOutputStream out=new FileOutputStream(file)){out.write(proof.toString(2).getBytes(StandardCharsets.UTF_8));}

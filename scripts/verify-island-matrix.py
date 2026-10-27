@@ -43,7 +43,8 @@ for flag in ("real_renderer_and_controller", "matrix_native_layout_assertions",
              "pause_stops_surface_and_resume_restores",
              "activity_recreation_preserves_fixture_session_and_query",
              "customization_preview_and_bottom_controls", "animations_lifecycle",
-             "native_preference_persistence", "app_main_integration"):
+             "native_preference_persistence", "app_main_integration",
+             "native_settings_bar_contrast"):
     assert proof.get(flag) is True, f"Native island check did not pass: {flag}"
 insets_files = [p for p in root.rglob("window-insets.json") if p.is_file()]
 assert len(insets_files) == 1
