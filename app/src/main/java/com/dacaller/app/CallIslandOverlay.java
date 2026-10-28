@@ -34,6 +34,7 @@ final class CallIslandOverlay implements CallIslandView.Listener {
   boolean privateScreen();
   boolean insideApp();
  }
+ interface Visibility {void changed(String token,boolean visible);}
  private static final Set<Application> installed=Collections.newSetFromMap(new WeakHashMap<>());
  private static final Set<Activity> resumed=Collections.newSetFromMap(new WeakHashMap<>());
  private static CallIslandOverlay active;
@@ -41,13 +42,14 @@ final class CallIslandOverlay implements CallIslandView.Listener {
  private final CallIslandSession session;
  private final WindowManager manager;
  private final Privacy privacy;
+ private final Visibility visibility;
  private final SharedPreferences prefs;
  private final Handler handler=new Handler(Looper.getMainLooper());
  private CallIslandView view;
  private ScrollView window;
  private WindowManager.LayoutParams layout;
  private CallIslandState shown;
- private String token;
+ private String token,reportedToken;
  private AlertDialog confirmation;
  private boolean started,attached,expanded,posted,screenOff;
  private final Runnable changed=this::schedule;
@@ -109,11 +111,16 @@ final class CallIslandOverlay implements CallIslandView.Listener {
    }
    public boolean insideApp(){return !resumed.isEmpty();}
   };
-  return new CallIslandOverlay(themed,CallIslandSession.telecom(),themed.getSystemService(WindowManager.class),privacy);
+  return new CallIslandOverlay(themed,CallIslandSession.telecom(),themed.getSystemService(WindowManager.class),privacy,
+    service::islandVisibilityChanged);
  }
 
  CallIslandOverlay(Context context,CallIslandSession session,WindowManager manager,Privacy privacy){
+  this(context,session,manager,privacy,(token,visible)->{});
+ }
+ CallIslandOverlay(Context context,CallIslandSession session,WindowManager manager,Privacy privacy,Visibility visibility){
   this.context=context;this.session=session;this.manager=manager;this.privacy=privacy;
+  this.visibility=visibility;
   prefs=context.getSharedPreferences("da_caller",Context.MODE_PRIVATE);
  }
  void start(){
@@ -172,10 +179,14 @@ final class CallIslandOverlay implements CallIslandView.Listener {
  private int dp(float value){return Math.round(context.getResources().getDisplayMetrics().density*value);}
  private void render(CallIslandState live){
   if(manager==null)return;
-  if(!live.token.equals(token)){expanded=false;token=live.token;dismissConfirmation();}
+  if(!live.token.equals(token)){clearVisibility();expanded=false;token=live.token;dismissConfirmation();}
   if(view==null){
    view=new CallIslandView(context);view.setListener(this);
    window=new ScrollView(context);window.setTag("island-external-window");
+   window.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener(){
+    public void onViewAttachedToWindow(View root){handler.post(CallIslandOverlay.this::reportVisibility);}
+    public void onViewDetachedFromWindow(View root){clearVisibility();}
+   });
    window.setFillViewport(false);window.setClipToPadding(false);window.setVerticalScrollBarEnabled(false);
    window.addView(view,new ScrollView.LayoutParams(-1,-2));
   }
@@ -204,6 +215,22 @@ final class CallIslandOverlay implements CallIslandView.Listener {
   }else if(layout.width!=width||layout.height!=height){
    layout.width=width;layout.height=height;manager.updateViewLayout(window,layout);
   }
+  reportVisibility();
+ }
+ private void clearVisibility(){
+  String previous=reportedToken;reportedToken=null;
+  if(previous!=null)visibility.changed(previous,false);
+ }
+ private void reportVisibility(){
+  try{
+   CallIslandState live=shown==null?null:session.current();
+   if(!attached||window==null||!window.isAttachedToWindow()||!window.isShown()||window.getWindowVisibility()!=View.VISIBLE||
+     live==null||!live.token.equals(shown.token)||!allowed()){
+    clearVisibility();return;
+   }
+   if(live.token.equals(reportedToken))return;
+   clearVisibility();reportedToken=live.token;visibility.changed(live.token,true);
+  }catch(RuntimeException unavailable){CallFailureReporter.record(context,"island-overlay-visibility",unavailable);clearVisibility();}
  }
  private void dismissConfirmation(){
   AlertDialog dialog=confirmation;confirmation=null;
@@ -211,6 +238,7 @@ final class CallIslandOverlay implements CallIslandView.Listener {
    catch(RuntimeException unavailable){CallFailureReporter.record(context,"island-overlay-confirmation-dismiss",unavailable);}
  }
  private void hide(){
+  clearVisibility();
   dismissConfirmation();shown=null;token=null;expanded=false;
   if(attached){
    attached=false;

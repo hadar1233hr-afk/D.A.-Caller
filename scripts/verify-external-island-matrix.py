@@ -4,6 +4,7 @@ import collections
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import struct
 import subprocess
@@ -32,13 +33,65 @@ proof = json.loads(proof_files[0].read_text())
 assert proof.get("api") == 33 and proof.get("density_dpi") == 240 and proof.get("font_scale") == 1.3
 checks = proof.get("checks", {})
 for flag in ("real_modem_telecom_incallservice", "native_answer_acknowledged_by_telecom",
-             "native_mute_speaker_acknowledged_by_telecom",
+             "native_mute_acknowledged_by_telecom", "native_speaker_capability_guard",
              "return_back_preserves_call_query_without_duplicate", "launcher_and_other_app_real_windows",
              "native_end_cancel_confirm_and_cleanup", "disabled_or_permission_denied_preserves_real_call",
-             "modem_end_removes_window"):
+             "modem_end_removes_window", "incoming_notification_handoff_and_fallback"):
     assert checks.get(flag) is True, f"Actual external integration check failed: {flag}"
 assert proof.get("physical_cellular_audio_verified") is False, "Emulator must not claim physical carrier/audio proof"
 observations = proof.get("observations", [])
+role = proof.get("role", {})
+assert role.get("role_held") is True and role.get("default_dialer") == "com.dacaller.app", "Production app must actually hold Telecom's default dialer role"
+speaker = proof.get("speaker_result", {})
+mask = speaker.get("supported_route_mask")
+transitions = speaker.get("transitions")
+assert isinstance(mask, int) and isinstance(transitions, list) and speaker.get("reason"), "Actual speaker capability evidence missing"
+if speaker.get("status") == "PASS":
+    assert mask & 8 and mask & 7, "Both speaker and a private route must really be available"
+    assert any(item.get("action") == "SPEAKER_ON" for item in transitions)
+    assert any(item.get("action") == "SPEAKER_OFF" for item in transitions)
+    route = speaker.get("initial_route")
+    for item in transitions:
+        assert item.get("from") == route and item.get("acknowledged") is True
+        route = item.get("to")
+        assert item.get("supported_route_mask", 0) & route
+        if item.get("action") == "SPEAKER_ON":
+            assert route == 8
+        else:
+            assert item.get("action") == "SPEAKER_OFF" and route in (1, 2, 4) and mask & route
+    assert speaker.get("final_route") == route and route != 8
+else:
+    assert speaker.get("status") == "UNAVAILABLE", "Unknown speaker verification status"
+    assert mask == speaker.get("initial_route") == speaker.get("final_route") == 8
+    assert not transitions and speaker.get("unavailable_controls_absent") is True
+handoff = {item.get("stage"): item for item in observations if item.get("event") == "incoming-notification"}
+for stage, high in {"permission-denied": True, "overlay-attached": False, "second-overlay-attached": False,
+                    "preference-disabled": True, "preference-reenabled": False,
+                    "permission-revoked": True, "permission-regranted": False}.items():
+    item = handoff.get(stage, {})
+    assert item.get("channel") == ("dacaller_incoming_v5" if high else "dacaller_ongoing_v5"), f"Wrong native call channel: {stage}"
+    assert item.get("importance") == (4 if high else 2) and item.get("full_screen_intent") is high
+    assert item.get("heads_up_visible") is high, f"Actual native fallback/handoff visibility failed: {stage}"
+    if high:
+        popup = re.fullmatch(r"\[([0-9]+),([0-9]+)\]\[([0-9]+),([0-9]+)\]", item.get("heads_up_bounds", ""))
+        assert popup
+        left, top, right, bottom = map(int, popup.groups())
+        assert 0 <= left < right <= 480 and 0 <= top < bottom <= 854
+    else:
+        assert item.get("heads_up_bounds") is None
+    assert item.get("overlay_windows") == (0 if high else 1) and item.get("call_state") == 2
+    assert item.get("answer_intent") is True and item.get("decline_intent") is True
+    assert str(item.get("template", "")).endswith("$CallStyle") and item.get("caller") == "נועה שיחת אמולטור"
+    if stage in ("permission-denied", "permission-revoked"):
+        assert item.get("overlay_permission") is False
+clear = {item.get("stage"): item for item in observations if item.get("event") == "unobscured-native-input"}
+for stage in ("first-incoming", "second-incoming"):
+    item = clear.get(stage, {})
+    assert 350 <= item.get("wait_millis", 0) <= 8000 and item.get("blocked_samples", -1) >= 0
+    rectangle = re.fullmatch(r"\[([0-9]+),([0-9]+)\]\[([0-9]+),([0-9]+)\]", item.get("island_bounds", ""))
+    assert rectangle, f"No native unobscured incoming input bounds: {stage}"
+    left, top, right, bottom = map(int, rectangle.groups())
+    assert 0 <= left < right <= 480 and 0 <= top < bottom <= 854
 commands = [item["response"] for item in observations if item.get("event", "").startswith("modem-")]
 assert sum(item.get("operation") == "call" for item in commands) == 2, "Two actual modem calls required"
 assert any(item.get("operation") == "cancel" for item in commands), "Modem cancellation proof missing"

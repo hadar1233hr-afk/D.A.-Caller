@@ -122,6 +122,85 @@ public class CallNotificationsTest {
   assertNotNull(notification().fullScreenIntent);assertNotNull(action("ANSWER"));assertNotNull(action("DECLINE"));
   assertNull(action("SPEAKER_ON"));assertNull(action("HANGUP"));assertEquals(3,notification().actions.length);
  }
+ @Test public void attachedExternalIslandHandsIncomingUiToQuietCallStyleWithoutChangingTelecom(){
+  Call incoming=call(Call.STATE_RINGING,"0500099000","Dana Example");service.onCallAdded(incoming);
+  String token=PhoneSessionService.islandSnapshot().token;
+  assertEquals(CallNotifications.INCOMING_CHANNEL,notification().getChannelId());assertNotNull(notification().fullScreenIntent);
+  int route=service.getCallAudioState().getRoute();boolean muted=service.getCallAudioState().isMuted();
+  service.islandVisibilityChanged(token,true);
+  assertEquals(CallNotifications.ONGOING_CHANNEL,notification().getChannelId());assertNull(notification().fullScreenIntent);
+  assertEquals(NotificationManager.IMPORTANCE_LOW,manager.getNotificationChannel(notification().getChannelId()).getImportance());
+  assertEquals("Dana Example",person());assertEquals("Incoming call",notification().extras.getCharSequence(Notification.EXTRA_SUB_TEXT));
+  assertEquals(1,notification().extras.getInt(Notification.EXTRA_CALL_TYPE));
+  assertNotNull(action("ANSWER"));assertNotNull(action("DECLINE"));assertEquals(3,notification().actions.length);
+  assertTrue((notification().flags&Notification.FLAG_FOREGROUND_SERVICE)!=0);
+  for(String channel:new String[]{CallNotifications.INCOMING_CHANNEL,CallNotifications.ONGOING_CHANNEL}){
+   assertNull(manager.getNotificationChannel(channel).getSound());assertFalse(manager.getNotificationChannel(channel).shouldVibrate());
+  }
+  assertEquals(Call.STATE_RINGING,incoming.getState());assertEquals(route,service.getCallAudioState().getRoute());
+  assertEquals(muted,service.getCallAudioState().isMuted());verify(incoming,never()).answer(anyInt());
+  verify(incoming,never()).reject(anyBoolean(),any());verify(incoming,never()).disconnect();
+  service.islandVisibilityChanged(token,false);
+  assertEquals(CallNotifications.INCOMING_CHANNEL,notification().getChannelId());assertNotNull(notification().fullScreenIntent);
+  assertEquals(NotificationManager.IMPORTANCE_HIGH,manager.getNotificationChannel(notification().getChannelId()).getImportance());
+  assertNotNull(action("ANSWER"));assertNotNull(action("DECLINE"));assertEquals(route,service.getCallAudioState().getRoute());
+ }
+ @Test public void oldWindowCannotSuppressWaitingOrReplacementIncomingCall(){
+  Call first=call(Call.STATE_RINGING,"0500099000","Dana");service.onCallAdded(first);
+  String firstToken=PhoneSessionService.islandSnapshot().token;service.islandVisibilityChanged(firstToken,true);
+  assertNull(notification().fullScreenIntent);
+  Call waiting=call(Call.STATE_RINGING,"0500099001","Alex");service.onCallAdded(waiting);
+  String waitingToken=PhoneSessionService.islandSnapshot().token;
+  assertEquals("Alex",person());assertNotNull(notification().fullScreenIntent);
+  service.islandVisibilityChanged(firstToken,true);assertNotNull(notification().fullScreenIntent);
+  service.islandVisibilityChanged(firstToken,false);assertTrue((notification().flags&Notification.FLAG_ONLY_ALERT_ONCE)!=0);
+  service.islandVisibilityChanged(waitingToken,true);assertNull(notification().fullScreenIntent);
+  service.islandVisibilityChanged(firstToken,false);assertNull(notification().fullScreenIntent);
+  service.onCallRemoved(waiting);assertEquals("Dana",person());assertNotNull(notification().fullScreenIntent);
+  service.islandVisibilityChanged(waitingToken,true);assertNotNull(notification().fullScreenIntent);
+  service.islandVisibilityChanged(firstToken,true);assertNull(notification().fullScreenIntent);
+  verify(first,never()).answer(anyInt());verify(waiting,never()).answer(anyInt());
+  verify(first,never()).disconnect();verify(waiting,never()).disconnect();
+ }
+ @Test public void visibilityHandoffIsIdempotentAndDoesNotNotifyUiListeners(){
+  Call incoming=call(Call.STATE_RINGING,"0500099000","Dana");service.onCallAdded(incoming);
+  String token=PhoneSessionService.islandSnapshot().token;int[] updates={0};Runnable listener=()->updates[0]++;
+  PhoneSessionService.register(listener);
+  try{
+   Notification initial=notification();service.islandVisibilityChanged("stale-token",true);assertSame(initial,notification());
+   assertTrue((initial.flags&Notification.FLAG_ONLY_ALERT_ONCE)!=0);
+   service.islandVisibilityChanged(token,true);Notification quiet=notification();assertNotSame(initial,quiet);
+   assertTrue((quiet.flags&Notification.FLAG_ONLY_ALERT_ONCE)!=0);
+   service.islandVisibilityChanged(token,true);assertSame(quiet,notification());
+   service.islandVisibilityChanged("stale-token",false);assertSame(quiet,notification());
+   service.islandVisibilityChanged(token,false);Notification fallback=notification();assertNotSame(quiet,fallback);
+   assertEquals("Only actual loss of this incoming island permits a new native heads-up",0,fallback.flags&Notification.FLAG_ONLY_ALERT_ONCE);
+   assertNotNull(fallback.fullScreenIntent);service.islandVisibilityChanged(token,false);assertSame(fallback,notification());
+   assertEquals("Handoff updates only the native notification; it cannot feed an island refresh loop",0,updates[0]);
+   PhoneSessionService.setScreenVisible(false);
+   assertTrue("Subsequent ordinary updates retain the global only-alert-once policy",(notification().flags&Notification.FLAG_ONLY_ALERT_ONCE)!=0);
+  }finally{PhoneSessionService.unregister(listener);}
+ }
+ @Test public void islandLossCannotRealertWhileOwnCallScreenIsVisibleOrAfterCallBecomesActive(){
+  Call incoming=call(Call.STATE_RINGING,"0500099000","Dana");service.onCallAdded(incoming);
+  String token=PhoneSessionService.islandSnapshot().token;service.islandVisibilityChanged(token,true);
+  PhoneSessionService.setScreenVisible(true);service.islandVisibilityChanged(token,false);
+  assertNull(notification().fullScreenIntent);assertTrue((notification().flags&Notification.FLAG_ONLY_ALERT_ONCE)!=0);
+  PhoneSessionService.setScreenVisible(false);service.islandVisibilityChanged(token,true);
+  when(incoming.getState()).thenReturn(Call.STATE_ACTIVE);PhoneSessionService.notifyChanged();
+  service.islandVisibilityChanged(token,false);assertNull(notification().fullScreenIntent);
+  assertEquals(CallNotifications.ONGOING_CHANNEL,notification().getChannelId());
+  assertTrue((notification().flags&Notification.FLAG_ONLY_ALERT_ONCE)!=0);
+  verify(incoming,never()).answer(anyInt());verify(incoming,never()).reject(anyBoolean(),any());verify(incoming,never()).disconnect();
+  assertEquals(CallAudioState.ROUTE_EARPIECE,service.getCallAudioState().getRoute());assertFalse(service.getCallAudioState().isMuted());
+ }
+ @Test public void detachedServiceCannotRestoreAnEndedIslandsNotification(){
+  Call incoming=call(Call.STATE_RINGING,"0500099000","Dana");service.onCallAdded(incoming);
+  String token=PhoneSessionService.islandSnapshot().token;service.islandVisibilityChanged(token,true);
+  controller.destroy();controller=null;assertNull(notification());
+  service.islandVisibilityChanged(token,false);service.islandVisibilityChanged(token,true);assertNull(notification());
+  verify(incoming,never()).answer(anyInt());verify(incoming,never()).disconnect();
+ }
  @Test public void speakerActionsUseActualRouteAndRefreshOnlyAfterAudioCallback()throws Exception{
   Call call=call(Call.STATE_ACTIVE,"0500099000","Dana");service.onCallAdded(call);
   Notification.Action on=action("SPEAKER_ON");assertNotNull(on);send(on);

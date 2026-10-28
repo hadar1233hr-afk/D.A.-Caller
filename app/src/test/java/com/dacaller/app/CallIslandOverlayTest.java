@@ -108,6 +108,34 @@ public class CallIslandOverlayTest {
   overlay.onExpand();idle();assertTrue(overlay.isShowing());verify(windows,atLeastOnce()).updateViewLayout(eq(added),any());
   overlay.onCollapse();idle();assertTrue(overlay.isShowing());assertTrue(session.actions.isEmpty());
  }
+ @Test public void successfulAddWithoutActualAttachmentCannotSuppressNativeIncomingUi(){
+  overlay.stop();List<String> visibility=new ArrayList<>();
+  Context context=new ContextThemeWrapper(RuntimeEnvironment.getApplication(),R.style.AppTheme);
+  overlay=new CallIslandOverlay(context,session,windows,privacy,(token,visible)->visibility.add(token+":"+visible));
+  enable();overlay.start();idle();assertTrue(overlay.isShowing());assertFalse(added.isAttachedToWindow());
+  overlay.onExpand();idle();overlay.onCollapse();idle();overlay.stop();assertTrue(visibility.isEmpty());
+ }
+ @Test public void realWindowAttachmentReportsOnceAndPrivacyOrTokenChangesRevokeHandoff()throws Exception{
+  overlay.stop();List<String> visibility=new ArrayList<>();
+  Context context=new ContextThemeWrapper(RuntimeEnvironment.getApplication(),R.style.AppTheme);
+  WindowManager real=context.getSystemService(WindowManager.class);
+  overlay=new CallIslandOverlay(context,session,real,privacy,(token,visible)->visibility.add(token+":"+visible));
+  enable();overlay.start();idle();assertTrue(overlay.isShowing());
+  assertEquals(java.util.Collections.singletonList("owned-call:true"),visibility);
+  refresh();overlay.onExpand();idle();assertEquals(1,visibility.size());
+  java.lang.reflect.Field field=CallIslandOverlay.class.getDeclaredField("window");field.setAccessible(true);
+  View root=(View)field.get(overlay);root.setVisibility(View.INVISIBLE);refresh();
+  assertEquals("An attached but hidden root cannot suppress native incoming UI","owned-call:false",visibility.get(visibility.size()-1));
+  root.setVisibility(View.VISIBLE);refresh();assertEquals("owned-call:true",visibility.get(visibility.size()-1));
+  visibility.clear();
+  session.state=active("next-call");PhoneSessionService.notifyViews();idle();
+  assertEquals(java.util.Arrays.asList("owned-call:false","next-call:true"),visibility);
+  privacy.locked=true;refresh();assertFalse(overlay.isShowing());
+  assertEquals("next-call:false",visibility.get(visibility.size()-1));
+  privacy.locked=false;refresh();assertTrue(overlay.isShowing());assertEquals("next-call:true",visibility.get(visibility.size()-1));
+  overlay.stop();assertEquals("next-call:false",visibility.get(visibility.size()-1));
+  assertNotNull(session.state);assertTrue(session.actions.isEmpty());
+ }
  @Test public void screenPrivacyOwnAppAndPermissionRevocationRemoveTheWindowWithoutEndingCall(){
   enable();overlay.start();assertTrue(overlay.isShowing());
   privacy.locked=true;refresh();assertFalse(overlay.isShowing());assertNotNull(session.state);

@@ -3,6 +3,10 @@ package com.dacaller.app;
 import android.Manifest;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Person;
 import android.app.role.RoleManager;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
@@ -17,6 +21,7 @@ import android.os.ParcelFileDescriptor;
 import android.os.SystemClock;
 import android.provider.ContactsContract;
 import android.provider.Settings;
+import android.service.notification.StatusBarNotification;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.telecom.TelecomManager;
@@ -67,6 +72,7 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
  private final JSONObject checks=new JSONObject();
  private final JSONObject roleAttempt=new JSONObject();
  private final JSONObject homeResolution=new JSONObject();
+ private final JSONObject speakerResult=new JSONObject();
 
  @Override protected void setUp()throws Exception{
   super.setUp();target=getInstrumentation().getTargetContext();
@@ -255,7 +261,8 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
    for(int parents=0;ancestor!=null&&parents<24;parents++,ancestor=ancestor.getParent()){
     String id=String.valueOf(ancestor.getViewIdResourceName()),type=String.valueOf(ancestor.getClassName());
     if((id.endsWith("/expandableNotificationRow")||type.endsWith("ExpandableNotificationRow"))&&ancestor.isVisibleToUser()){
-     Rect bounds=new Rect();ancestor.getBoundsInScreen(bounds);if(Rect.intersects(bounds,island))return bounds;break;
+     Rect bounds=new Rect();ancestor.getBoundsInScreen(bounds);
+     if(!bounds.isEmpty()&&(island==null||Rect.intersects(bounds,island)))return bounds;break;
     }
    }
   }
@@ -271,10 +278,18 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
    Rect found=coveringIncomingRow(root,island,0,new int[]{5000});if(found!=null)return found;
   }return null;
  }
+ private Rect visibleIncomingHeadsUp(){
+  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+   AccessibilityNodeInfo root=window.getRoot();
+   if(root==null||!"com.android.systemui".contentEquals(String.valueOf(root.getPackageName())))continue;
+   Rect found=coveringIncomingRow(root,null,0,new int[]{5000});if(found!=null)return found;
+  }return null;
+ }
  private void awaitUnobscuredIncoming(String stage)throws Exception{
   long start=SystemClock.uptimeMillis(),deadline=start+8000,clearSince=0;int blockedSamples=0;Rect lastBlocking=null;
   while(SystemClock.uptimeMillis()<deadline){
    getInstrumentation().waitForIdleSync();Rect bounds=islandScreenBounds();Rect blocking=incomingNotificationCovering(bounds);
+   if(SystemClock.uptimeMillis()>=deadline)break;
    if(!bounds.isEmpty()&&blocking==null){
     if(clearSince==0)clearSince=SystemClock.uptimeMillis();
     if(SystemClock.uptimeMillis()-clearSince>=350){
@@ -334,10 +349,76 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
  private Call live(){return PhoneSessionService.current;}
  private boolean state(int state){Call call=live();return call!=null&&call.getState()==state;}
  private CallAudioState audio(){PhoneSessionService service=PhoneSessionService.instance;return service==null?null:service.getCallAudioState();}
+ private Notification postedCall(){
+  for(StatusBarNotification item:target.getSystemService(NotificationManager.class).getActiveNotifications())
+   if(item.getId()==1502&&target.getPackageName().equals(item.getPackageName()))return item.getNotification();
+  return null;
+ }
+ private boolean incomingNotificationMatches(boolean intrusive){
+  Notification notification=postedCall();if(notification==null||!state(Call.STATE_RINGING))return false;
+  String expected=intrusive?CallNotifications.INCOMING_CHANNEL:CallNotifications.ONGOING_CHANNEL;
+  if(!expected.equals(notification.getChannelId())||(notification.fullScreenIntent!=null)!=intrusive)return false;
+  android.app.NotificationChannel channel=target.getSystemService(NotificationManager.class).getNotificationChannel(expected);
+  if(channel==null||channel.getImportance()!=(intrusive?NotificationManager.IMPORTANCE_HIGH:NotificationManager.IMPORTANCE_LOW))return false;
+  Person person=notification.extras.getParcelable(Notification.EXTRA_CALL_PERSON,Person.class);
+  return person!=null&&NAME.contentEquals(person.getName())
+   &&notification.extras.getParcelable(Notification.EXTRA_ANSWER_INTENT,PendingIntent.class)!=null
+   &&notification.extras.getParcelable(Notification.EXTRA_DECLINE_INTENT,PendingIntent.class)!=null
+   &&String.valueOf(notification.extras.getString(Notification.EXTRA_TEMPLATE)).endsWith("$CallStyle");
+ }
+ private void notificationMode(String stage,boolean intrusive)throws Exception{
+  await(()->incomingNotificationMatches(intrusive),"Actual native incoming notification must "+(intrusive?"restore high-priority fallback":"hand off to visible external island")+": "+stage);
+  if(intrusive)await(()->visibleIncomingHeadsUp()!=null,"Restored high-priority incoming call must expose an actual native caller row: "+stage);
+  else{
+   awaitUnobscuredIncoming("notification-"+stage);
+   await(()->visibleIncomingHeadsUp()==null,"Low-priority handoff must remove the actual native heads-up caller row: "+stage);
+  }
+  Rect headsUp=visibleIncomingHeadsUp();
+  assertEquals("Native heads-up visibility must match the real incoming presentation: "+stage,intrusive,headsUp!=null);
+  if(headsUp!=null)assertTrue("Native caller row must have real visible screen bounds",headsUp.left>=0&&headsUp.top>=0&&headsUp.right<=480&&headsUp.bottom<=854&&!headsUp.isEmpty());
+  Notification notification=postedCall();String channel=notification.getChannelId();
+  observations.put(new JSONObject().put("event","incoming-notification").put("stage",stage)
+   .put("channel",channel).put("importance",target.getSystemService(NotificationManager.class).getNotificationChannel(channel).getImportance())
+   .put("full_screen_intent",notification.fullScreenIntent!=null).put("template",notification.extras.getString(Notification.EXTRA_TEMPLATE))
+   .put("only_alert_once",(notification.flags&Notification.FLAG_ONLY_ALERT_ONCE)!=0)
+   .put("heads_up_visible",headsUp!=null).put("heads_up_bounds",headsUp==null?JSONObject.NULL:headsUp.toShortString())
+   .put("answer_intent",notification.extras.getParcelable(Notification.EXTRA_ANSWER_INTENT,PendingIntent.class)!=null)
+   .put("decline_intent",notification.extras.getParcelable(Notification.EXTRA_DECLINE_INTENT,PendingIntent.class)!=null)
+   .put("caller",String.valueOf(notification.extras.getParcelable(Notification.EXTRA_CALL_PERSON,Person.class).getName()))
+   .put("call_state",live().getState()).put("overlay_windows",externalCount()).put("overlay_permission",Settings.canDrawOverlays(target)));
+ }
+ private void speakerTransition(String action,int targetRoute,JSONArray transitions)throws Exception{
+  await(()->tag("island-action-"+action)!=null,"Native supported speaker action missing: "+action);
+  int before=audio().getRoute();tap(tag("island-action-"+action));
+  await(()->audio()!=null&&audio().getRoute()==targetRoute,"Actual Telecom route acknowledgement missing: "+action+" -> "+targetRoute);
+  transitions.put(new JSONObject().put("action",action).put("from",before).put("to",audio().getRoute())
+   .put("acknowledged",true).put("supported_route_mask",audio().getSupportedRouteMask()));
+ }
+ private void speakerCapabilities()throws Exception{
+  await(()->audio()!=null&&audio().getSupportedRouteMask()!=0,"Actual active Telecom audio capabilities unavailable");
+  int supported=audio().getSupportedRouteMask(),initial=audio().getRoute();JSONArray transitions=new JSONArray();
+  speakerResult.put("supported_route_mask",supported).put("initial_route",initial).put("transitions",transitions);
+  int privateRoute=CallNotifications.speakerDestination(false,supported);
+  if((supported&CallAudioState.ROUTE_SPEAKER)!=0&&privateRoute!=0){
+   if(initial==CallAudioState.ROUTE_SPEAKER)speakerTransition("SPEAKER_OFF",privateRoute,transitions);
+   speakerTransition("SPEAKER_ON",CallAudioState.ROUTE_SPEAKER,transitions);
+   speakerTransition("SPEAKER_OFF",privateRoute,transitions);
+   speakerResult.put("status","PASS").put("reason","Native controls changed both supported routes and actual Telecom callbacks acknowledged each change.");
+  }else{
+   assertEquals("Unsupported hardware must be explicitly recognized, never given a fabricated private route",CallAudioState.ROUTE_SPEAKER,supported);
+   assertEquals(CallAudioState.ROUTE_SPEAKER,initial);
+   await(()->tag("island-action-SPEAKER_ON")==null&&tag("island-action-SPEAKER_OFF")==null,"Unavailable speaker controls must stay hidden on speaker-only emulator");
+   assertEquals("Checking absent controls must not alter the real route",CallAudioState.ROUTE_SPEAKER,audio().getRoute());
+   assertEquals(CallAudioState.ROUTE_SPEAKER,audio().getSupportedRouteMask());
+   speakerResult.put("status","UNAVAILABLE").put("unavailable_controls_absent",true)
+    .put("reason","Emulator exposes only the speaker route; native on/off transitions cannot be exercised. Physical private-route/audio verification remains required.");
+  }
+  speakerResult.put("final_route",audio().getRoute());checks.put("native_speaker_capability_guard",true);
+ }
  private void note(String event)throws Exception{
   CallIslandState state=PhoneSessionService.islandSnapshot();JSONObject item=new JSONObject().put("event",event)
    .put("overlay_windows",externalCount()).put("overlay_permission",Settings.canDrawOverlays(target));
-  if(state!=null)item.put("token",state.token).put("state",state.state).put("route",state.route).put("muted",state.muted).put("caller",state.name);
+  if(state!=null)item.put("token",state.token).put("state",state.state).put("route",state.route).put("supported_route_mask",state.supportedRoutes).put("muted",state.muted).put("caller",state.name);
   observations.put(item);
  }
  public void testActualTelecomExternalIslandOnLauncherAndSettings()throws Exception{
@@ -352,21 +433,21 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   checks.put("real_modem_telecom_incallservice",true);note("incoming-bound");
   key(KeyEvent.KEYCODE_HOME);await(()->resumed(launcherPackage)&&external()==null,"Denied overlay access must leave actual launcher without an island");
   assertTrue("Lack of optional special access must preserve the ringing Telecom call",state(Call.STATE_RINGING));
+  notificationMode("permission-denied",true);
   snapshot("permission-denied-launcher");
   shell("cmd appops set "+target.getPackageName()+" SYSTEM_ALERT_WINDOW allow");
   await(()->Settings.canDrawOverlays(target)&&external()!=null,"External island did not appear after actual special-access grant");
+  notificationMode("overlay-attached",false);
   awaitUnobscuredIncoming("first-incoming");
   geometry();snapshot("launcher-incoming-compact");
   tap(tag("island-expand"));await(()->tag("island-action-ANSWER")!=null,"Incoming external controls did not expand");geometry();snapshot("launcher-incoming-expanded");
   tap(tag("island-action-ANSWER"));await(()->state(Call.STATE_ACTIVE),"Native external answer did not activate actual Telecom call");
   assertSame(originalCall,live());assertEquals(token,PhoneSessionService.islandSnapshot().token);
-  await(()->tag("island-action-MUTE_ON")!=null&&tag("island-action-SPEAKER_ON")!=null,"Active external controls did not follow actual audio state");
+  await(()->tag("island-action-MUTE_ON")!=null,"Active external mute control did not follow actual audio state");
   geometry();snapshot("launcher-active-expanded");checks.put("native_answer_acknowledged_by_telecom",true);
   tap(tag("island-action-MUTE_ON"));await(()->audio()!=null&&audio().isMuted(),"Actual Telecom mute acknowledgement missing");
   tap(tag("island-action-MUTE_OFF"));await(()->audio()!=null&&!audio().isMuted(),"Actual Telecom unmute acknowledgement missing");
-  tap(tag("island-action-SPEAKER_ON"));await(()->audio()!=null&&audio().getRoute()==CallAudioState.ROUTE_SPEAKER,"Actual Telecom speaker acknowledgement missing");
-  tap(tag("island-action-SPEAKER_OFF"));await(()->audio()!=null&&audio().getRoute()!=CallAudioState.ROUTE_SPEAKER,"Actual Telecom speaker off acknowledgement missing");
-  checks.put("native_mute_speaker_acknowledged_by_telecom",true);note("audio-controls-acknowledged");
+  checks.put("native_mute_acknowledged_by_telecom",true);speakerCapabilities();note("audio-controls-verified");
   tap(tag("island-open"));await(()->resumed(target.getPackageName())&&external()==null,"Opening full call must hide external window");
   assertSame(originalCall,live());key(KeyEvent.KEYCODE_BACK);
   await(()->main.hasWindowFocus()&&main.findViewById(android.R.id.content).findViewWithTag("island-root")!=null,"Back did not restore actual app window and in-app island");
@@ -388,31 +469,48 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   modem("call");await(()->state(Call.STATE_RINGING),"Second actual incoming call did not bind");
   assertFalse("Real second call must receive fresh UUID",token.equals(PhoneSessionService.islandSnapshot().token));
   key(KeyEvent.KEYCODE_HOME);await(()->resumed(launcherPackage)&&external()!=null,"Second call external island missing");
+  notificationMode("second-overlay-attached",false);
   awaitUnobscuredIncoming("second-incoming");
   prefs.edit().putBoolean("island_outside_app",false).commit();await(()->external()==null,"Disabled external preference left a window");
   assertTrue("Disabling external UI must preserve actual call",state(Call.STATE_RINGING));
+  notificationMode("preference-disabled",true);
   prefs.edit().putBoolean("island_outside_app",true).commit();await(()->external()!=null,"Re-enabled external UI did not return");
+  notificationMode("preference-reenabled",false);
   shell("cmd appops set "+target.getPackageName()+" SYSTEM_ALERT_WINDOW ignore");
   await(()->!Settings.canDrawOverlays(target)&&external()==null,"Revoking actual overlay special access did not remove window");
   assertTrue("Permission loss must not decline a call",state(Call.STATE_RINGING));
+  notificationMode("permission-revoked",true);
   shell("cmd appops set "+target.getPackageName()+" SYSTEM_ALERT_WINDOW allow");
   await(()->Settings.canDrawOverlays(target)&&external()!=null,"Regranting actual overlay special access did not restore window");
+  notificationMode("permission-regranted",false);
+  checks.put("incoming_notification_handoff_and_fallback",true);
   checks.put("disabled_or_permission_denied_preserves_real_call",true);note("permission-regranted");
   modem("cancel");await(()->(live()==null||live().getState()==Call.STATE_DISCONNECTED)&&external()==null,"Modem cancellation leaked external window");
   checks.put("modem_end_removes_window",true);
   JSONObject evidence=new JSONObject().put("api",33).put("font_scale",1.3).put("density_dpi",240)
    .put("data_origin","Emulator GSM modem -> Android Telecom -> production PhoneSessionService. No injected Call or session.")
-   .put("physical_cellular_audio_verified",false).put("role",roleAttempt).put("home_resolution",homeResolution).put("checks",checks).put("observations",observations);
+   .put("physical_cellular_audio_verified",false).put("role",roleAttempt).put("home_resolution",homeResolution)
+   .put("speaker_result",speakerResult).put("checks",checks).put("observations",observations);
   writeFile("external-island-native.json",evidence.toString(2));
  }
  private void diagnostics(String message)throws Exception{
   try{snapshot("failed");}catch(Throwable ignored){}
-  JSONObject evidence=new JSONObject().put("failure",message).put("last_tap",lastTap).put("checks",checks).put("observations",observations)
+  JSONObject evidence=new JSONObject().put("failure",message).put("last_tap",lastTap).put("checks",checks).put("observations",observations).put("speaker_result",speakerResult)
    .put("activities",shell("dumpsys activity activities")).put("windows",shell("dumpsys window windows"))
    .put("role",roleAttempt).put("home_resolution",homeResolution).put("role_shell_help",shell("cmd role help")).put("role_service",shell("dumpsys role"))
    .put("default_dialer",target.getSystemService(TelecomManager.class).getDefaultDialerPackage())
    .put("role_held",target.getSystemService(RoleManager.class).isRoleHeld(RoleManager.ROLE_DIALER))
    .put("recent_logcat",shell("logcat -d -t 1000")).put("accessibility_windows",accessibilityDiagnostics());
+  Notification currentNotification=postedCall();
+  if(currentNotification!=null){
+   android.app.NotificationChannel channel=target.getSystemService(NotificationManager.class).getNotificationChannel(currentNotification.getChannelId());
+   evidence.put("current_notification",new JSONObject().put("channel",currentNotification.getChannelId())
+    .put("importance",channel==null?-1:channel.getImportance()).put("full_screen_intent",currentNotification.fullScreenIntent!=null)
+    .put("only_alert_once",(currentNotification.flags&Notification.FLAG_ONLY_ALERT_ONCE)!=0)
+    .put("template",currentNotification.extras.getString(Notification.EXTRA_TEMPLATE))
+    .put("answer_intent",currentNotification.extras.getParcelable(Notification.EXTRA_ANSWER_INTENT,PendingIntent.class)!=null)
+    .put("decline_intent",currentNotification.extras.getParcelable(Notification.EXTRA_DECLINE_INTENT,PendingIntent.class)!=null));
+  }
   writeFile("external-island-failure.json",evidence.toString(2));
  }
  private JSONArray accessibilityDiagnostics()throws Exception{
