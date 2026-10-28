@@ -21,10 +21,13 @@ import android.telecom.CallAudioState;
 import android.telecom.TelecomManager;
 import android.test.InstrumentationTestCase;
 import android.view.KeyEvent;
+import android.view.InputDevice;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.accessibility.AccessibilityNodeInfo;
+import android.view.accessibility.AccessibilityWindowInfo;
 import android.view.inspector.WindowInspector;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -208,6 +211,57 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   }return null;
  }
  private View dialogButton(int id){for(View root:overlayRoots()){View view=root.findViewById(id);if(view!=null&&view.isShown())return view;}return null;}
+ private Rect islandScreenBounds()throws Exception{
+  Rect result=new Rect();ui(()->{
+   View island=external();if(island==null||!island.isShown())return;
+   int[] position=new int[2];island.getLocationOnScreen(position);
+   result.set(position[0],position[1],position[0]+island.getWidth(),position[1]+island.getHeight());
+  });return result;
+ }
+ private boolean callerLabel(AccessibilityNodeInfo node){
+  CharSequence text=node.getText();if(text==null)return false;String value=text.toString();
+  return value.contains(NAME)||value.replaceAll("[^0-9]","").contains(NUMBER);
+ }
+ private Rect coveringIncomingRow(AccessibilityNodeInfo node,Rect island,int depth,int[] budget){
+  if(node==null||depth>70||--budget[0]<0)return null;
+  if(node.isVisibleToUser()&&callerLabel(node)){
+   AccessibilityNodeInfo ancestor=node;
+   for(int parents=0;ancestor!=null&&parents<24;parents++,ancestor=ancestor.getParent()){
+    String id=String.valueOf(ancestor.getViewIdResourceName()),type=String.valueOf(ancestor.getClassName());
+    if((id.endsWith("/expandableNotificationRow")||type.endsWith("ExpandableNotificationRow"))&&ancestor.isVisibleToUser()){
+     Rect bounds=new Rect();ancestor.getBoundsInScreen(bounds);if(Rect.intersects(bounds,island))return bounds;break;
+    }
+   }
+  }
+  for(int i=0;i<node.getChildCount();i++){
+   Rect found=coveringIncomingRow(node.getChild(i),island,depth+1,budget);if(found!=null)return found;
+  }return null;
+ }
+ private Rect incomingNotificationCovering(Rect island){
+  if(island.isEmpty())return null;
+  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+   AccessibilityNodeInfo root=window.getRoot();
+   if(root==null||!"com.android.systemui".contentEquals(String.valueOf(root.getPackageName())))continue;
+   Rect found=coveringIncomingRow(root,island,0,new int[]{5000});if(found!=null)return found;
+  }return null;
+ }
+ private void awaitUnobscuredIncoming(String stage)throws Exception{
+  long start=SystemClock.uptimeMillis(),deadline=start+8000,clearSince=0;int blockedSamples=0;Rect lastBlocking=null;
+  while(SystemClock.uptimeMillis()<deadline){
+   getInstrumentation().waitForIdleSync();Rect bounds=islandScreenBounds();Rect blocking=incomingNotificationCovering(bounds);
+   if(!bounds.isEmpty()&&blocking==null){
+    if(clearSince==0)clearSince=SystemClock.uptimeMillis();
+    if(SystemClock.uptimeMillis()-clearSince>=350){
+     observations.put(new JSONObject().put("event","unobscured-native-input").put("stage",stage)
+      .put("wait_millis",SystemClock.uptimeMillis()-start).put("blocked_samples",blockedSamples)
+      .put("island_bounds",bounds.toShortString()));return;
+    }
+   }else{clearSince=0;if(blocking!=null){blockedSamples++;lastBlocking=blocking;}}
+   Thread.sleep(50);
+  }
+  String message="Actual incoming SystemUI row must clear the external island before native input: "+stage+" blocking="+lastBlocking;
+  diagnostics(message);fail(message);
+ }
  private void tap(View view)throws Exception{
   assertNotNull("Missing native external control",view);int[] point=new int[2];
   ui(()->{
@@ -218,6 +272,9 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   });
   long now=SystemClock.uptimeMillis();MotionEvent down=MotionEvent.obtain(now,now,MotionEvent.ACTION_DOWN,point[0],point[1],0);
   MotionEvent up=MotionEvent.obtain(now,now+50,MotionEvent.ACTION_UP,point[0],point[1],0);
+  // UiAutomation does not add Instrumentation.sendPointerSync's default source.
+  // Pointer hit-testing is essential while a different app owns keyboard focus.
+  down.setSource(InputDevice.SOURCE_TOUCHSCREEN);up.setSource(InputDevice.SOURCE_TOUCHSCREEN);
   try{assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(down,true));assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(up,true));}
   finally{down.recycle();up.recycle();}settle();
  }
@@ -272,6 +329,7 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   snapshot("permission-denied-launcher");
   shell("cmd appops set "+target.getPackageName()+" SYSTEM_ALERT_WINDOW allow");
   await(()->Settings.canDrawOverlays(target)&&external()!=null,"External island did not appear after actual special-access grant");
+  awaitUnobscuredIncoming("first-incoming");
   geometry();snapshot("launcher-incoming-compact");
   tap(tag("island-expand"));await(()->tag("island-action-ANSWER")!=null,"Incoming external controls did not expand");geometry();snapshot("launcher-incoming-expanded");
   tap(tag("island-action-ANSWER"));await(()->state(Call.STATE_ACTIVE),"Native external answer did not activate actual Telecom call");
@@ -304,6 +362,7 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   modem("call");await(()->state(Call.STATE_RINGING),"Second actual incoming call did not bind");
   assertFalse("Real second call must receive fresh UUID",token.equals(PhoneSessionService.islandSnapshot().token));
   key(KeyEvent.KEYCODE_HOME);await(()->resumed(launcherPackage)&&external()!=null,"Second call external island missing");
+  awaitUnobscuredIncoming("second-incoming");
   prefs.edit().putBoolean("island_outside_app",false).commit();await(()->external()==null,"Disabled external preference left a window");
   assertTrue("Disabling external UI must preserve actual call",state(Call.STATE_RINGING));
   prefs.edit().putBoolean("island_outside_app",true).commit();await(()->external()!=null,"Re-enabled external UI did not return");
@@ -327,8 +386,23 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
    .put("role",roleAttempt).put("role_shell_help",shell("cmd role help")).put("role_service",shell("dumpsys role"))
    .put("default_dialer",target.getSystemService(TelecomManager.class).getDefaultDialerPackage())
    .put("role_held",target.getSystemService(RoleManager.class).isRoleHeld(RoleManager.ROLE_DIALER))
-   .put("recent_logcat",shell("logcat -d -t 1000"));
+   .put("recent_logcat",shell("logcat -d -t 1000")).put("accessibility_windows",accessibilityDiagnostics());
   writeFile("external-island-failure.json",evidence.toString(2));
+ }
+ private JSONArray accessibilityDiagnostics()throws Exception{
+  JSONArray windows=new JSONArray();int[] budget={7000};
+  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+   JSONArray nodes=new JSONArray();dumpAccessibility(window.getRoot(),nodes,0,budget);
+   windows.put(new JSONObject().put("id",window.getId()).put("layer",window.getLayer()).put("type",window.getType()).put("nodes",nodes));
+  }return windows;
+ }
+ private void dumpAccessibility(AccessibilityNodeInfo node,JSONArray nodes,int depth,int[] budget)throws Exception{
+  if(node==null||depth>70||--budget[0]<0)return;Rect bounds=new Rect();node.getBoundsInScreen(bounds);
+  nodes.put(new JSONObject().put("package",String.valueOf(node.getPackageName())).put("class",String.valueOf(node.getClassName()))
+   .put("id",String.valueOf(node.getViewIdResourceName())).put("text",String.valueOf(node.getText()))
+   .put("description",String.valueOf(node.getContentDescription())).put("bounds",bounds.toShortString())
+   .put("visible",node.isVisibleToUser()).put("clickable",node.isClickable()));
+  for(int i=0;i<node.getChildCount();i++)dumpAccessibility(node.getChild(i),nodes,depth+1,budget);
  }
  private static void restore(SharedPreferences preferences,Map<String,?> values){
   SharedPreferences.Editor edit=preferences.edit().clear();for(Map.Entry<String,?> entry:values.entrySet()){
