@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.role.RoleManager;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -65,6 +66,7 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
  private final JSONArray observations=new JSONArray();
  private final JSONObject checks=new JSONObject();
  private final JSONObject roleAttempt=new JSONObject();
+ private final JSONObject homeResolution=new JSONObject();
 
  @Override protected void setUp()throws Exception{
   super.setUp();target=getInstrumentation().getTargetContext();
@@ -81,7 +83,19 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   accessibility.flags|=AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS|AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS;
   getInstrumentation().getUiAutomation().setServiceInfo(accessibility);
   Intent home=new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME);
-  launcherPackage=target.getPackageManager().resolveActivity(home,0).activityInfo.packageName;
+  android.content.pm.ResolveInfo local=target.getPackageManager().resolveActivity(home,0);
+  homeResolution.put("target_pm_component",local==null?JSONObject.NULL:
+   new ComponentName(local.activityInfo.packageName,local.activityInfo.name).flattenToString());
+  // The target's package-visibility scope can return a resolver/fallback rather
+  // than the real launcher. Ask the platform resolver under the shell identity.
+  String homeOutput=shell("cmd package resolve-activity --brief --user 0 -a android.intent.action.MAIN -c android.intent.category.HOME");
+  homeResolution.put("shell_output",homeOutput);ComponentName resolvedHome=null;
+  for(String line:homeOutput.split("\\n")){
+   ComponentName candidate=ComponentName.unflattenFromString(line.trim());if(candidate!=null)resolvedHome=candidate;
+  }
+  assertNotNull("Platform must resolve a real HOME component: "+homeOutput,resolvedHome);
+  launcherPackage=resolvedHome.getPackageName();
+  homeResolution.put("shell_component",resolvedHome.flattenToString()).put("expected_package",launcherPackage);
   shell("mkdir -p "+DIRECTORY);shell("settings put system font_scale 1.3");
   for(String permission:new String[]{Manifest.permission.READ_CONTACTS,Manifest.permission.WRITE_CONTACTS,
     Manifest.permission.READ_CALL_LOG,Manifest.permission.READ_PHONE_STATE,Manifest.permission.CALL_PHONE,
@@ -126,10 +140,14 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
     for(String candidate:new String[]{"allow","ignore","deny","default"})if(originalOverlayMode.contains("SYSTEM_ALERT_WINDOW: "+candidate)){mode=candidate;break;}
     shell("cmd appops set "+target.getPackageName()+" SYSTEM_ALERT_WINDOW "+mode);
    }
-   if(originalDialerKnown){
-    shell("cmd role remove-role-holder --user 0 android.app.role.DIALER "+target.getPackageName());
+   if(originalDialerKnown&&!target.getPackageName().equals(originalDialer)){
+    // The preceding native notification test already holds this role for the
+    // disposable emulator. Never revoke/regrant the identical original holder:
+    // permission revocation can terminate the instrumentation UID. Flag1 is the
+    // shell command's DONT_KILL_APP option, not a qualification bypass.
+    shell("cmd role remove-role-holder --user 0 android.app.role.DIALER "+target.getPackageName()+" 1");
     if(originalDialer!=null&&originalDialer.matches("[A-Za-z0-9_.]+"))
-     shell("cmd role add-role-holder --user 0 android.app.role.DIALER "+originalDialer);
+     shell("cmd role add-role-holder --user 0 android.app.role.DIALER "+originalDialer+" 1");
    }
    if(originalFont!=null)shell("settings put system font_scale "+(originalFont.matches("[0-9.]+")?originalFont:"1.0"));
    AccessibilityServiceInfo accessibility=getInstrumentation().getUiAutomation().getServiceInfo();accessibility.flags=originalAccessibilityFlags;
@@ -192,8 +210,16 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(new KeyEvent(now,now+40,KeyEvent.ACTION_UP,code,0),true));settle();
  }
  private boolean resumed(String packageName)throws Exception{
+  boolean resumed=false;
   for(String line:shell("dumpsys activity activities").split("\\n"))
-   if((line.contains("mResumedActivity")||line.contains("topResumedActivity"))&&line.contains(" "+packageName+"/"))return true;
+   if((line.contains("mResumedActivity")||line.contains("topResumedActivity"))&&line.contains(" "+packageName+"/")){resumed=true;break;}
+  if(!resumed)return false;
+  // A text occurrence in dumpsys alone does not establish a visible native app.
+  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+   AccessibilityNodeInfo root=window.getRoot();
+   if(window.getType()==AccessibilityWindowInfo.TYPE_APPLICATION&&root!=null&&root.isVisibleToUser()
+     &&packageName.contentEquals(String.valueOf(root.getPackageName())))return true;
+  }
   return false;
  }
  private List<View> overlayRoots(){
@@ -376,14 +402,14 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   checks.put("modem_end_removes_window",true);
   JSONObject evidence=new JSONObject().put("api",33).put("font_scale",1.3).put("density_dpi",240)
    .put("data_origin","Emulator GSM modem -> Android Telecom -> production PhoneSessionService. No injected Call or session.")
-   .put("physical_cellular_audio_verified",false).put("role",roleAttempt).put("checks",checks).put("observations",observations);
+   .put("physical_cellular_audio_verified",false).put("role",roleAttempt).put("home_resolution",homeResolution).put("checks",checks).put("observations",observations);
   writeFile("external-island-native.json",evidence.toString(2));
  }
  private void diagnostics(String message)throws Exception{
   try{snapshot("failed");}catch(Throwable ignored){}
   JSONObject evidence=new JSONObject().put("failure",message).put("last_tap",lastTap).put("checks",checks).put("observations",observations)
    .put("activities",shell("dumpsys activity activities")).put("windows",shell("dumpsys window windows"))
-   .put("role",roleAttempt).put("role_shell_help",shell("cmd role help")).put("role_service",shell("dumpsys role"))
+   .put("role",roleAttempt).put("home_resolution",homeResolution).put("role_shell_help",shell("cmd role help")).put("role_service",shell("dumpsys role"))
    .put("default_dialer",target.getSystemService(TelecomManager.class).getDefaultDialerPackage())
    .put("role_held",target.getSystemService(RoleManager.class).isRoleHeld(RoleManager.ROLE_DIALER))
    .put("recent_logcat",shell("logcat -d -t 1000")).put("accessibility_windows",accessibilityDiagnostics());
