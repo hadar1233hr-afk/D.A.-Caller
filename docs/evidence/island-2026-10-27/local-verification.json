@@ -52,7 +52,42 @@
     "module_isolation": true,
     "debug_fixture_excluded_from_release": true
   },
-  "native_verification": "PENDING",
+  "native_verification": "PASS",
   "physical_device": "NOT TESTED",
-  "matching_existing_signature": "BLOCKED"
+  "matching_existing_signature": "BLOCKED",
+  "ci_source_sha": "589f1480d16292200b65da9bfe4bbc1c7e81ddc6",
+  "app_tree": "fe9b477a0075318da27e2c918c7ae185d3534451",
+  "ci_run_id": 40595673860,
+  "ci_unit_tests": {
+    "tests": 239,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_tests": {
+    "tests": 29,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "reviewed_native_pngs": 219,
+  "native_settings_system_bar_pixel_contrast": {
+    "island-settings-dark-bottom.png": {
+      "status": 981,
+      "navigation": 1276
+    },
+    "island-settings-dark.png": {
+      "status": 981,
+      "navigation": 1276
+    },
+    "island-settings-light-bottom.png": {
+      "status": 908,
+      "navigation": 1276
+    },
+    "island-settings-light.png": {
+      "status": 953,
+      "navigation": 1276
+    }
+  },
+  "publication_requires_same_reviewed_app_tree": true
 }
