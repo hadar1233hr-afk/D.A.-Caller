@@ -40,6 +40,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -225,6 +227,64 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
    catch(ReflectiveOperationException failure){throw new AssertionError(failure);}
   }
  }
+ private void isolateMainProviderFixture(MainActivity app)throws Exception{
+  assertFalse("Provider fences must never block the UI thread",android.os.Looper.myLooper()==android.os.Looper.getMainLooper());
+  android.os.Handler owner=(android.os.Handler)mainField(app,"handler");
+  Runnable contactsReload=(Runnable)mainField(app,"reloadChangedContacts"),callsReload=(Runnable)mainField(app,"reloadChangedCalls");
+  ui(()->{
+   // Only this screenshot Activity is isolated. A late real-provider refresh
+   // must not replace its fictional rows after the compact capture. Production
+   // observers and provider behavior remain unchanged, including other tests.
+   app.getContentResolver().unregisterContentObserver((android.database.ContentObserver)mainField(app,"contactsObserver"));
+   app.getContentResolver().unregisterContentObserver((android.database.ContentObserver)mainField(app,"callsObserver"));
+   owner.removeCallbacks(contactsReload);owner.removeCallbacks(callsReload);
+   mainField(app,"reloadContactsPending",false);
+  });
+  ExecutorService contactsWorker=(ExecutorService)mainField(app,"CONTACTS_IO");
+  long deadline=SystemClock.uptimeMillis()+5000,quietSince=0;
+  while(SystemClock.uptimeMillis()<deadline){
+   // Unregistration cannot retract observer notifications already posted to
+   // the main Looper. Drain those first, then remove only their debounced work.
+   getInstrumentation().waitForIdleSync();
+   boolean[] pending={false};
+   ui(()->{
+    pending[0]=owner.hasCallbacks(contactsReload)||owner.hasCallbacks(callsReload)
+      ||Boolean.TRUE.equals(mainField(app,"loadingContacts"))||Boolean.TRUE.equals(mainField(app,"reloadContactsPending"));
+    owner.removeCallbacks(contactsReload);owner.removeCallbacks(callsReload);mainField(app,"reloadContactsPending",false);
+   });
+   long remaining=deadline-SystemClock.uptimeMillis();assertTrue("Contacts provider fence exceeded its deadline",remaining>0);
+   contactsWorker.submit(()->{}).get(remaining,TimeUnit.MILLISECONDS);
+   remaining=deadline-SystemClock.uptimeMillis();assertTrue("Call-history provider fence exceeded its deadline",remaining>0);
+   CallHistory.worker.submit(()->{}).get(remaining,TimeUnit.MILLISECONDS);
+   // Worker completion can post cache assignments and renders to the UI. They
+   // must finish before synthetic state is installed, not merely loading=false.
+   getInstrumentation().waitForIdleSync();
+   boolean[] quiet={false};
+   ui(()->quiet[0]=!Boolean.TRUE.equals(mainField(app,"loadingContacts"))
+     &&!Boolean.TRUE.equals(mainField(app,"reloadContactsPending"))
+     &&!owner.hasCallbacks(contactsReload)&&!owner.hasCallbacks(callsReload));
+   long now=SystemClock.uptimeMillis();
+   if(!pending[0]&&quiet[0]&&!historyLoading()){
+    if(quietSince==0)quietSince=now;
+    if(now-quietSince>=500)return;
+   }else quietSince=0;
+   // Observe quiescence longer than the350ms contacts debounce. Three immediate
+   // passes alone could finish before an already-sent Binder callback arrives.
+   Thread.sleep(40);
+  }
+  fail("Screenshot provider workers and observer callbacks did not become quiescent");
+ }
+ private void assertFictionalMainData(MainActivity app,ListView list)throws Exception{
+  ui(()->{
+   assertEquals("A real contacts refresh replaced the isolated fictional dataset",20,((List<?>)mainField(app,"contacts")).size());
+   assertEquals("A real history refresh replaced the isolated fictional calls",20,CallHistory.entries.size());
+   assertSame("Provider refresh rebuilt the screenshot list",tagged(app,"call-island-page-list"),list);
+   assertTrue("The measured screenshot list must remain attached",list.isAttachedToWindow());
+   assertNotNull("The screenshot list lost its fictional adapter",list.getAdapter());
+   assertEquals("The current screenshot adapter must retain all20 fictional rows",20,list.getAdapter().getCount());
+   assertEquals("The six fictional favorites must remain configured",6,prefs.getStringSet("favorites",Collections.emptySet()).size());
+  });
+ }
  /** Real MainActivity/FastPages chrome and lists; only the call state and contact rows are fictional. */
  private void actualMainScreens()throws Exception{
   if(host!=null&&!host.isDestroyed()){ui(host::finish);settle();}
@@ -245,8 +305,7 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
    diagnosticHost=main;
    launched.add(main);final MainActivity app=main;
    await(()->app.hasWindowFocus(),"Actual MainActivity never received window focus");
-   await(()->!Boolean.TRUE.equals(mainField(app,"loadingContacts"))&&!historyLoading(),"Actual MainActivity provider workers did not settle before fictional rows were installed");
-   settle();
+   isolateMainProviderFixture(app);
    String[] names={"דנה לדוגמה","אורי לדוגמה","נועה לדוגמה","אדם לדוגמה","שירה לדוגמה","יוסף לדוגמה","תמר לדוגמה","יעל לדוגמה","דניאל לדוגמה","אריאל לדוגמה"};
    ArrayList<Contacts.Person> people=new ArrayList<>();Set<String> favorites=new HashSet<>();
    for(int i=0;i<20;i++){Contacts.Person person=new Contacts.Person(names[i%names.length]+" "+String.format(java.util.Locale.ROOT,"%02d",i),"0500098"+String.format(java.util.Locale.ROOT,"%03d",i),640000+i);people.add(person);if(i<6)favorites.add(person.key);}
@@ -277,14 +336,18 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
     ListView list=find(app.getWindow().getDecorView(),ListView.class);assertNotNull("Actual FastPages list missing",list);
     await(()->list.getAdapter()!=null&&list.getAdapter().getCount()==20,"Actual FastPages fictional dataset was overwritten");
     ui(()->list.setSelectionFromTop(4,-7));settle();
+    assertFictionalMainData(app,list);
     long identity=list.getAdapter().getItemId(list.getFirstVisiblePosition());int top=list.getChildAt(0).getTop();
     actualMainGeometry(app,false,"recents".equals(page));snapshot("app-"+page+"-compact");
+    assertFictionalMainData(app,list);
     tap(tagged(app,"island-expand"));await(controller::isExpanded,"Actual MainActivity island did not expand");settle();
+    assertFictionalMainData(app,list);
     actualMainGeometry(app,true,"recents".equals(page));
     if("contacts".equals(page))assertEquals("לדוגמה",find(app.getWindow().getDecorView(),EditText.class).getText().toString());
     if(list.getHeight()>=dp(48)&&list.getChildCount()>0){assertEquals(identity,list.getAdapter().getItemId(list.getFirstVisiblePosition()));assertEquals(top,list.getChildAt(0).getTop());}
     snapshot("app-"+page+"-expanded");
     tap(tagged(app,"island-collapse"));await(()->!controller.isExpanded(),"Actual MainActivity island did not collapse");settle();
+    assertFictionalMainData(app,list);
     visible(tagged(app,"floating_dial"));visible(tagged(app,"call-island-secondary"));
     assertEquals("Main list identity changed after expand/collapse",identity,list.getAdapter().getItemId(list.getFirstVisiblePosition()));
     assertEquals("Main list offset changed after expand/collapse",top,list.getChildAt(0).getTop());
