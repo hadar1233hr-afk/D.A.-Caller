@@ -665,14 +665,26 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   }finally{if(capture!=null)capture.recycle();}
  }
  public void testCustomizationPreviewBothThemesAndBottomControlsAtLargeFont()throws Exception{
+  checked("settings",this::customizationScenario);
+ }
+ private void customizationScenario()throws Exception{
   settingsBarsPassed=false;settingsBarCaptures=0;
   for(boolean dark:new boolean[]{false,true}){
    prefs.edit().putBoolean("dark",dark).putBoolean("amoled",false).putString("language","he").putString("island_style","apple").commit();
-   Activity settings=getInstrumentation().startActivitySync(new Intent(target,CallIslandSettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));launched.add(settings);settle();
+   Activity settings=getInstrumentation().startActivitySync(new Intent(target,CallIslandSettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));launched.add(settings);diagnosticHost=settings;settle();
    await(settings::hasWindowFocus,"Customization must own the window before capture");
    ScrollView scroll=find(settings.getWindow().getDecorView(),ScrollView.class);assertNotNull(scroll);
-   ui(()->scroll.scrollTo(0,0));settle();ui(()->visible(tagged(settings,"island-settings-preview")));
+   ui(()->scroll.scrollTo(0,0));settle();
    settingsSnapshot(settings,dark,"settings-"+(dark?"dark":"light"));
+   // Integration/permission controls now precede the demonstration. Keep the
+   // top capture at the true top, then scroll the real preview into view before
+   // retaining the same strict full-visibility and text-layout assertions.
+   ui(()->{
+    View preview=tagged(settings,"island-settings-preview");
+    int[] previewLocation=new int[2],scrollLocation=new int[2];
+    preview.getLocationOnScreen(previewLocation);scroll.getLocationOnScreen(scrollLocation);
+    scroll.scrollTo(0,Math.max(0,scroll.getScrollY()+previewLocation[1]-scrollLocation[1]-dp(12)));
+   });settle();ui(()->{visible(tagged(settings,"island-settings-preview"));textFits(tagged(settings,"island-settings-preview"));});
    ui(()->scroll.fullScroll(View.FOCUS_DOWN));settle();
    ui(()->{visible(tagged(settings,"island_confirm_end"));textFits(tagged(settings,"island_confirm_end"));});
    settingsSnapshot(settings,dark,"settings-"+(dark?"dark":"light")+"-bottom");

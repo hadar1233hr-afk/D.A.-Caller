@@ -3,6 +3,7 @@ package com.dacaller.app;
 import android.Manifest;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.app.Activity;
+import android.app.role.RoleManager;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
 import android.content.Context;
@@ -17,6 +18,7 @@ import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
+import android.telecom.TelecomManager;
 import android.test.InstrumentationTestCase;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -49,7 +51,8 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
  private Context target;
  private SharedPreferences prefs;
  private Map<String,?> original,originalNavigation;
- private String originalFont,originalOverlayMode,originalRoles,launcherPackage;
+ private String originalFont,originalOverlayMode,originalDialer,launcherPackage;
+ private boolean originalDialerKnown;
  private int originalAccessibilityFlags;
  private MainActivity main;
  private Uri insertedContact;
@@ -58,6 +61,7 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
  private String lastTap="none";
  private final JSONArray observations=new JSONArray();
  private final JSONObject checks=new JSONObject();
+ private final JSONObject roleAttempt=new JSONObject();
 
  @Override protected void setUp()throws Exception{
   super.setUp();target=getInstrumentation().getTargetContext();
@@ -67,7 +71,8 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   originalNavigation=target.getSharedPreferences(CallReturnNavigation.PREFERENCES,Context.MODE_PRIVATE).getAll();
   originalFont=shell("settings get system font_scale").trim();
   originalOverlayMode=shell("cmd appops get "+target.getPackageName()+" SYSTEM_ALERT_WINDOW").trim();
-  originalRoles=shell("cmd role get-role-holders --user 0 android.app.role.DIALER").trim();
+  TelecomManager telecom=target.getSystemService(TelecomManager.class);
+  originalDialer=telecom.getDefaultDialerPackage();originalDialerKnown=true;
   AccessibilityServiceInfo accessibility=getInstrumentation().getUiAutomation().getServiceInfo();
   originalAccessibilityFlags=accessibility.flags;
   accessibility.flags|=AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS|AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS;
@@ -78,8 +83,17 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   for(String permission:new String[]{Manifest.permission.READ_CONTACTS,Manifest.permission.WRITE_CONTACTS,
     Manifest.permission.READ_CALL_LOG,Manifest.permission.READ_PHONE_STATE,Manifest.permission.CALL_PHONE,
     Manifest.permission.POST_NOTIFICATIONS})shell("pm grant "+target.getPackageName()+" "+permission);
-  shell("cmd role add-role-holder --user 0 android.app.role.DIALER "+target.getPackageName());
-  assertTrue("Test app must be actual default dialer",shell("cmd role get-role-holders --user 0 android.app.role.DIALER").contains(target.getPackageName()));
+  RoleManager roles=target.getSystemService(RoleManager.class);
+  roleAttempt.put("original_default_dialer",originalDialer==null?JSONObject.NULL:originalDialer)
+   .put("available",roles.isRoleAvailable(RoleManager.ROLE_DIALER))
+   .put("add_output",shell("cmd role add-role-holder --user 0 android.app.role.DIALER "+target.getPackageName()));
+  writeFile("external-role-attempt.json",roleAttempt.toString(2));
+  // Android13's shell interface does not guarantee a get-role-holders command.
+  // Verify actual public APIs, including Telecom's selected dialer, instead.
+  await(()->roles.isRoleHeld(RoleManager.ROLE_DIALER)&&target.getPackageName().equals(telecom.getDefaultDialerPackage()),
+   "Test app must hold the actual dialer role and be Telecom's default dialer");
+  roleAttempt.put("role_held",roles.isRoleHeld(RoleManager.ROLE_DIALER)).put("default_dialer",telecom.getDefaultDialerPackage());
+  writeFile("external-role-attempt.json",roleAttempt.toString(2));
   shell("cmd appops set "+target.getPackageName()+" SYSTEM_ALERT_WINDOW ignore");
   assertFalse("First call must begin without native overlay special access",Settings.canDrawOverlays(target));
   insertContact();
@@ -109,9 +123,10 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
     for(String candidate:new String[]{"allow","ignore","deny","default"})if(originalOverlayMode.contains("SYSTEM_ALERT_WINDOW: "+candidate)){mode=candidate;break;}
     shell("cmd appops set "+target.getPackageName()+" SYSTEM_ALERT_WINDOW "+mode);
    }
-   if(originalRoles!=null){
+   if(originalDialerKnown){
     shell("cmd role remove-role-holder --user 0 android.app.role.DIALER "+target.getPackageName());
-    for(String role:originalRoles.split("\\s+"))if(role.matches("[A-Za-z0-9_.]+"))shell("cmd role add-role-holder --user 0 android.app.role.DIALER "+role);
+    if(originalDialer!=null&&originalDialer.matches("[A-Za-z0-9_.]+"))
+     shell("cmd role add-role-holder --user 0 android.app.role.DIALER "+originalDialer);
    }
    if(originalFont!=null)shell("settings put system font_scale "+(originalFont.matches("[0-9.]+")?originalFont:"1.0"));
    AccessibilityServiceInfo accessibility=getInstrumentation().getUiAutomation().getServiceInfo();accessibility.flags=originalAccessibilityFlags;
@@ -302,13 +317,17 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   checks.put("modem_end_removes_window",true);
   JSONObject evidence=new JSONObject().put("api",33).put("font_scale",1.3).put("density_dpi",240)
    .put("data_origin","Emulator GSM modem -> Android Telecom -> production PhoneSessionService. No injected Call or session.")
-   .put("physical_cellular_audio_verified",false).put("checks",checks).put("observations",observations);
+   .put("physical_cellular_audio_verified",false).put("role",roleAttempt).put("checks",checks).put("observations",observations);
   writeFile("external-island-native.json",evidence.toString(2));
  }
  private void diagnostics(String message)throws Exception{
   try{snapshot("failed");}catch(Throwable ignored){}
   JSONObject evidence=new JSONObject().put("failure",message).put("last_tap",lastTap).put("checks",checks).put("observations",observations)
-   .put("activities",shell("dumpsys activity activities")).put("windows",shell("dumpsys window windows"));
+   .put("activities",shell("dumpsys activity activities")).put("windows",shell("dumpsys window windows"))
+   .put("role",roleAttempt).put("role_shell_help",shell("cmd role help")).put("role_service",shell("dumpsys role"))
+   .put("default_dialer",target.getSystemService(TelecomManager.class).getDefaultDialerPackage())
+   .put("role_held",target.getSystemService(RoleManager.class).isRoleHeld(RoleManager.ROLE_DIALER))
+   .put("recent_logcat",shell("logcat -d -t 1000"));
   writeFile("external-island-failure.json",evidence.toString(2));
  }
  private static void restore(SharedPreferences preferences,Map<String,?> values){
