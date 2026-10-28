@@ -212,6 +212,18 @@ public class CallIslandSessionTest {
    when(call.getState()).thenReturn(Call.STATE_DISCONNECTED);session.open(host.get(),token);assertNull(shadowOf(host.get()).getNextStartedActivity());
   }finally{host.pause().stop().destroy();}
  }
+ @Test public void externalOpenUsesGuardedOwnCallAndNewTaskOnlyForNonActivityContext(){
+  Call call=call(Call.STATE_ACTIVE,"0500099000","Dana");String token=add(call);
+  while(shadowOf(app).getNextStartedActivity()!=null){}
+  session.openOutside(app,"stale-token");assertNull(shadowOf(app).getNextStartedActivity());
+  session.openOutside(app,token);Intent open=shadowOf(app).getNextStartedActivity();assertNotNull(open);
+  assertEquals(CallScreenActivity.class.getName(),open.getComponent().getClassName());
+  assertEquals(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP,open.getFlags());
+  assertEquals("dacaller-call-screen",open.getData().getScheme());assertTrue(open.getData().toString().contains(token));
+  assertNull(open.getAction());assertNull(open.getExtras());verify(call,never()).disconnect();verify(call,never()).answer(anyInt());
+  when(call.getState()).thenReturn(Call.STATE_DISCONNECTED);session.openOutside(app,token);
+  assertNull(shadowOf(app).getNextStartedActivity());
+ }
  private NameProvider provider(){
   NameProvider provider=new NameProvider();ProviderInfo info=new ProviderInfo();info.authority=ContactsContract.AUTHORITY;
   provider.attachInfo(app,info);ShadowContentResolver.registerProviderInternal(ContactsContract.AUTHORITY,provider);return provider;

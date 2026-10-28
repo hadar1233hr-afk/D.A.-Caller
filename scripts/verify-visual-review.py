@@ -24,7 +24,14 @@ if "personalization" in str(review_path):
         "compact_summary", "avatar_shapes", "archive_contact_identity",
         "call_notifications", "return_from_call"
     }, "Review must cover all eight requested features"
-if "island-" in str(review_path):
+if "external-island-" in str(review_path):
+    assert expected == 227, "All219 previous and8 actual Telecom captures must be reviewed"
+    assert set(review.get("verified_features", [])) == {
+        "compact_expanded_island", "call_actions_guarded", "island_customization_backup",
+        "activity_lifecycle_and_list_state", "offline_optional_overlay_permission",
+        "real_telecom_external_island"
+    }, "Review must cover actual external call windows and explicit optional overlay access"
+elif "island-" in str(review_path):
     assert expected == 219, "All 183 regressions and 36 island captures must be reviewed"
     assert set(review.get("verified_features", [])) == {
         "compact_expanded_island", "call_actions_guarded", "island_customization_backup",

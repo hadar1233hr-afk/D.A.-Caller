@@ -38,6 +38,7 @@ final class SettingsBackup {
   bool("island_enabled",true);bool("island_show_timer",true);bool("island_show_photo",true);
   bool("island_animations",true);bool("island_show_mute",true);bool("island_show_speaker",true);
   bool("island_show_hold",true);bool("island_confirm_end",true);
+  bool("island_outside_app",false);
   option("island_style","apple","apple","glass","emerald");
   option("island_size","compact","compact","comfortable");
   option("language","he","he","en");option("accent","gold","gold","silver");

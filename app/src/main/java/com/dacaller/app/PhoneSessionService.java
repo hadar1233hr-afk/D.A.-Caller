@@ -34,6 +34,7 @@ public final class PhoneSessionService extends InCallService {
  private final Handler handler=new Handler(Looper.getMainLooper());
  private boolean screenVisible;
  private PowerManager.WakeLock proximityLock;
+ private CallIslandOverlay islandOverlay;
  private final Runnable refreshHistory=()->CallHistory.refresh(getApplicationContext(),true,null);
  private final Call.Callback callback=new Call.Callback(){
   @Override public void onStateChanged(Call call,int state){
@@ -54,14 +55,20 @@ public final class PhoneSessionService extends InCallService {
     proximityLock.setReferenceCounted(false);
    }
   }catch(RuntimeException failure){CallFailureReporter.record(this,"incall-create-proximity",failure);proximityLock=null;}
+  try{islandOverlay=CallIslandOverlay.create(this);islandOverlay.start();}
+  catch(RuntimeException failure){CallFailureReporter.record(this,"incall-create-island-overlay",failure);if(islandOverlay!=null)islandOverlay.stop();islandOverlay=null;}
  }
  @Override public void onDestroy(){
+  if(islandOverlay!=null){islandOverlay.stop();islandOverlay=null;}
   for(Call call:new ArrayList<>(order))try{call.unregisterCallback(callback);}
    catch(RuntimeException failure){CallFailureReporter.record(this,"incall-destroy",failure);}
   calls.clear();order.clear();identities.clear();handler.removeCallbacksAndMessages(null);safeReleaseProximity();
   if(instance==this){instance=null;current=null;notifyViews();}
   removeCallNotification();
   super.onDestroy();
+ }
+ @Override public void onConfigurationChanged(android.content.res.Configuration configuration){
+  super.onConfigurationChanged(configuration);if(islandOverlay!=null)islandOverlay.configurationChanged();
  }
  @Override public void onCallAdded(Call call){
   super.onCallAdded(call);
@@ -271,12 +278,17 @@ public final class PhoneSessionService extends InCallService {
   }
  }
  static void openIslandCall(Activity host,String token){
+  openIslandCall((Context)host,token);
+ }
+ static void openIslandCall(Context host,String token){
   Call call=current;
-  if(host==null||host.isFinishing()||host.isDestroyed()||!commandMatches(call,token))return;
+  if(host==null||host instanceof Activity&&(((Activity)host).isFinishing()||((Activity)host).isDestroyed())||!commandMatches(call,token))return;
   try{
    if(call.getState()==Call.STATE_DISCONNECTED||call.getState()==Call.STATE_DISCONNECTING)return;
+   int flags=Intent.FLAG_ACTIVITY_SINGLE_TOP;
+   if(!(host instanceof Activity))flags|=Intent.FLAG_ACTIVITY_NEW_TASK;
    host.startActivity(new Intent(host,CallScreenActivity.class)
-     .setData(android.net.Uri.parse("dacaller-call-screen:"+token)).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+     .setData(android.net.Uri.parse("dacaller-call-screen:"+token)).addFlags(flags));
   }catch(RuntimeException unavailable){CallFailureReporter.record(host,"incall-island-open",unavailable);}
  }
  static void setScreenVisible(boolean visible){

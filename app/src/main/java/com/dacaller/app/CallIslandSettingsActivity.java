@@ -2,7 +2,9 @@ package com.dacaller.app;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.role.RoleManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -12,8 +14,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.net.Uri;
+import android.provider.Settings;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
+import android.telecom.TelecomManager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowInsetsController;
@@ -23,7 +28,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/** In-app island customization with a clearly labelled, entirely local demonstration. */
+/** Call island customization, optional system grant and clearly labelled local demonstration. */
 public final class CallIslandSettingsActivity extends Activity {
  private SharedPreferences prefs;
  private boolean dark,expanded,muted,speaker,ended;
@@ -32,6 +37,7 @@ public final class CallIslandSettingsActivity extends Activity {
  private int background,surface,ink,secondary,accent;
  private CallIslandView preview;
  private TextView phaseChoice,styleChoice,sizeChoice,previewToggle,previewEnd;
+ private TextView outsidePermission,phoneRole;
  private final Handler handler=new Handler(Looper.getMainLooper());
  private final Runnable clock=new Runnable(){@Override public void run(){
   if(preview!=null&&!ended)preview.tick(System.currentTimeMillis());handler.postDelayed(this,1000);
@@ -59,8 +65,19 @@ public final class CallIslandSettingsActivity extends Activity {
   TextView back=text(I18n.isEnglish(this)?"‹":"›",32,false,accent);back.setGravity(Gravity.CENTER);back.setContentDescription(tr("חזרה","Back"));
   header.addView(back,new LinearLayout.LayoutParams(dp(48),dp(48)));back.setOnClickListener(v->finish());
   TextView title=text(tr("אי שיחה דינמי","Dynamic call island"),23,true,ink);header.addView(title,new LinearLayout.LayoutParams(0,-2,1));
-  TextView introduction=text(tr("השיחה נשארת בהישג יד, בזמן שממשיכים להשתמש באפליקציה.","Keep your call within reach while using the app."),14,false,secondary);
+  TextView introduction=text(tr("השיחה נשארת בהישג יד באפליקציה, וגם במסך הבית ובאפליקציות אחרות אם בוחרים בכך.","Keep your call within reach in the app, and optionally on Home and above other apps."),14,false,secondary);
   introduction.setPadding(0,dp(4),0,dp(16));root.addView(introduction,new LinearLayout.LayoutParams(-1,-2));
+  LinearLayout outside=group(root,tr("הפעלת האי","Enable the island"));
+  toggle(outside,tr("הצגת האי בזמן שיחה","Show island during calls"),
+    tr("מופיע במסכי האפליקציה לאחר חזרה ממסך השיחה. אפשר להוסיף גם הצגה מחוץ לאפליקציה.","Appears in the app after returning from the full call screen. Outside-app display can also be enabled below."),"island_enabled",true);
+  Switch outsideSwitch=toggle(outside,tr("הצגה במסך הבית ובאפליקציות אחרות","Show on Home and above other apps"),
+    tr("רק בזמן שיחה. נדרשת הרשאת הצגה מעל אפליקציות אחרות; האי מוסתר במסך הנעילה.","Only during a call. Requires display-over-other-apps access; hidden on the lock screen."),"island_outside_app",false);
+  outsideSwitch.setOnCheckedChangeListener((button,value)->{
+   prefs.edit().putBoolean("island_outside_app",value).apply();updateIntegrationStatus();
+   if(value&&!canDrawOutside())openOutsidePermission();
+  });
+  outsidePermission=choice(outside,"","island_overlay_permission",this::openOutsidePermission);
+  phoneRole=choice(outside,"","island_phone_role",this::requestPhoneRole);
   LinearLayout demo=group(root,tr("תצוגה מקדימה","Live preview"));
   TextView demoNote=text(tr("הדגמה בלבד · לא מתבצעת שיחה","Demo only · no call is placed"),12,true,accent);
   demoNote.setTag("island-preview-demo-label");demoNote.setPadding(dp(12),dp(10),dp(12),dp(8));demo.addView(demoNote,new LinearLayout.LayoutParams(-1,-2));
@@ -77,7 +94,6 @@ public final class CallIslandSettingsActivity extends Activity {
   phaseChoice=choice(demo,tr("מצב ההדגמה","Preview state"),"island_preview_state",()->choosePhase());
   previewToggle=choice(demo,"","island_preview_expand",()->{ended=false;expanded=!expanded;renderPreview();});
   LinearLayout visibility=group(root,tr("מתי ואיך להציג","Presentation"));
-  toggle(visibility,tr("הצגת האי בזמן שיחה","Show island during calls"),tr("מופיע בתוך מסכי האפליקציה בזמן שיחה. במסך השיחה המלא נשארים הפקדים הרגילים.","Appears on app screens during a call. The full call screen keeps its regular controls."),"island_enabled",true);
   styleChoice=choice(visibility,tr("סגנון האי","Island style"),"island_style",()->chooseStyle());
   sizeChoice=choice(visibility,tr("גודל האי","Island size"),"island_size",()->chooseSize());
   toggle(visibility,tr("משך השיחה","Call duration"),tr("הצגת הטיימר בשיחה פעילה.","Show the timer during an active call."),"island_show_timer",true);
@@ -90,7 +106,7 @@ public final class CallIslandSettingsActivity extends Activity {
   toggle(controls,tr("אישור לפני סיום שיחה","Confirm before ending a call"),tr("אישור נוסף לסיום או לדחיית שיחה מתוך האי.","Ask before ending or declining a call from the island."),"island_confirm_end",true);
   TextView tip=text(tr("נגיעה באי פותחת את הפקדים. לחיצה ממושכת מחזירה למסך השיחה.","Tap the island for controls. Touch and hold to return to the call screen."),13,false,secondary);
   tip.setPadding(dp(4),dp(18),dp(4),0);root.addView(tip,new LinearLayout.LayoutParams(-1,-2));
-  applySystemBars();renderPreview();
+  applySystemBars();renderPreview();updateIntegrationStatus();
  }
  private LinearLayout group(LinearLayout root,String label){
   TextView heading=text(label,16,true,ink);heading.setPadding(dp(3),dp(18),dp(3),dp(9));root.addView(heading,new LinearLayout.LayoutParams(-1,-2));
@@ -101,7 +117,7 @@ public final class CallIslandSettingsActivity extends Activity {
   view.setBackground(shape(surface,18));view.setFocusable(true);view.setClickable(true);
   parent.addView(view,new LinearLayout.LayoutParams(-1,-2));view.setOnClickListener(v->{TouchFeedback.pulse(this,prefs,v);action.run();});return view;
  }
- private void toggle(LinearLayout parent,String label,String description,String key,boolean fallback){
+ private Switch toggle(LinearLayout parent,String label,String description,String key,boolean fallback){
   LinearLayout row=new LinearLayout(this);row.setGravity(Gravity.CENTER_VERTICAL);row.setPadding(dp(14),dp(10),dp(12),dp(10));row.setMinimumHeight(dp(68));
   parent.addView(row,new LinearLayout.LayoutParams(-1,-2));
   LinearLayout words=column();TextView name=text(label,15,true,ink),detail=text(description,12,false,secondary);detail.setPadding(0,dp(4),0,0);
@@ -113,6 +129,36 @@ public final class CallIslandSettingsActivity extends Activity {
   LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(-2,-2);params.setMarginStart(dp(12));row.addView(control,params);
   control.setOnCheckedChangeListener((button,value)->{prefs.edit().putBoolean(key,value).apply();renderPreview();});
   row.setOnClickListener(v->control.setChecked(!control.isChecked()));
+  return control;
+ }
+ private boolean canDrawOutside(){try{return Settings.canDrawOverlays(this);}catch(RuntimeException unavailable){return false;}}
+ private boolean holdsPhoneRole(){
+  try{
+   if(Build.VERSION.SDK_INT>=29){RoleManager roles=getSystemService(RoleManager.class);return roles!=null&&roles.isRoleHeld(RoleManager.ROLE_DIALER);}
+   TelecomManager telecom=getSystemService(TelecomManager.class);return telecom!=null&&getPackageName().equals(telecom.getDefaultDialerPackage());
+  }catch(RuntimeException unavailable){return false;}
+ }
+ private void updateIntegrationStatus(){
+  if(outsidePermission==null||phoneRole==null)return;
+  outsidePermission.setText(canDrawOutside()?tr("הרשאת הצגה מעל אפליקציות: מאושרת","Display-over-other-apps access: allowed"):
+    tr("הרשאת הצגה מעל אפליקציות: נדרשת · פתיחת הגדרות","Display-over-other-apps access: needed · open settings"));
+  phoneRole.setText(holdsPhoneRole()?tr("DA CALLER הוא חייגן ברירת המחדל","DA CALLER is the default phone app"):
+    tr("נדרש חייגן ברירת מחדל · הגדרת DA CALLER","Default phone app needed · choose DA CALLER"));
+ }
+ private void openOutsidePermission(){
+  try{startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,Uri.parse("package:"+getPackageName())));}
+  catch(RuntimeException unavailable){
+   Toast.makeText(this,tr("פתח בהגדרות המכשיר: גישה מיוחדת לאפליקציות ← הצגה מעל אפליקציות אחרות ← DA CALLER.",
+     "In device settings, open Special app access → Display over other apps → DA CALLER."),Toast.LENGTH_LONG).show();
+  }
+ }
+ private void requestPhoneRole(){
+  if(holdsPhoneRole()){updateIntegrationStatus();return;}
+  try{
+   if(Build.VERSION.SDK_INT>=29){RoleManager roles=getSystemService(RoleManager.class);
+    if(roles!=null&&roles.isRoleAvailable(RoleManager.ROLE_DIALER)){startActivity(roles.createRequestRoleIntent(RoleManager.ROLE_DIALER));return;}}
+   startActivity(new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER).putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME,getPackageName()));
+  }catch(RuntimeException unavailable){Toast.makeText(this,tr("בחר ב־DA CALLER כחייגן ברירת המחדל בהגדרות המכשיר.","Choose DA CALLER as the default phone app in device settings."),Toast.LENGTH_LONG).show();}
  }
  private void chooseStyle(){
   String[] values={"apple","glass","emerald"};String[] labels={tr("קלאסי שחור","Classic black"),tr("זכוכית רכה","Soft glass"),tr("אמרלד","Emerald")};
@@ -170,7 +216,7 @@ public final class CallIslandSettingsActivity extends Activity {
   }}else getWindow().getDecorView().setSystemUiVisibility(dark?0:View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
  }
  @Override public void onWindowFocusChanged(boolean focused){super.onWindowFocusChanged(focused);if(focused&&prefs!=null)applySystemBars();}
- @Override protected void onResume(){super.onResume();handler.removeCallbacks(clock);handler.post(clock);getWindow().getDecorView().post(this::applySystemBars);}
+ @Override protected void onResume(){super.onResume();handler.removeCallbacks(clock);handler.post(clock);updateIntegrationStatus();getWindow().getDecorView().post(this::applySystemBars);}
  @Override protected void onPause(){handler.removeCallbacks(clock);super.onPause();}
  @Override protected void onSaveInstanceState(Bundle state){super.onSaveInstanceState(state);state.putBoolean("expanded",expanded);state.putBoolean("muted",muted);state.putBoolean("speaker",speaker);state.putBoolean("ended",ended);state.putInt("phase",phase);state.putLong("connected_at",connectedAt);}
 }
