@@ -1,0 +1,33 @@
+{
+  "repository": "hadar1233hr-afk/D.A.-Caller",
+  "source_sha": "4c36335d9eea7d4539b55c2df9edd086ba6e3557",
+  "source_run_id": "40768595683",
+  "conclusion": "failure",
+  "artifacts": {
+    "ui": {
+      "artifact_id": 12852342243,
+      "artifact_name": "DA-CALLER-Android13-UI-7e321fd8b9617f7ffc9942000039dda70b7d2a3b",
+      "github_digest": "sha256:29fdceb95c85dc5bf5fde207cebd5d9115b6e08f58b2dea6fbb62bf6019bbab6",
+      "sha256": "29fdceb95c85dc5bf5fde207cebd5d9115b6e08f58b2dea6fbb62bf6019bbab6",
+      "bytes": 12857623,
+      "path": "ui.zip"
+    },
+    "checks": {
+      "artifact_id": 12851298271,
+      "artifact_name": "DA-CALLER-checks-7e321fd8b9617f7ffc9942000039dda70b7d2a3b",
+      "github_digest": "sha256:3f2fd5e97d9a875ea05d0a64c30fbb0d662b444e8fe33330d0b9a004a49b52af",
+      "sha256": "3f2fd5e97d9a875ea05d0a64c30fbb0d662b444e8fe33330d0b9a004a49b52af",
+      "bytes": 107916,
+      "path": "checks.zip"
+    },
+    "validate-apk": {
+      "artifact_id": 12850713237,
+      "artifact_name": "DA-CALLER-0.11.0-beta.9-debug-7e321fd8b9617f7ffc9942000039dda70b7d2a3b",
+      "github_digest": "sha256:1b07e7bef42f31dc15f165dd27ea0c03b835f5dc542e2249a89475cf98df3e06",
+      "sha256": "1b07e7bef42f31dc15f165dd27ea0c03b835f5dc542e2249a89475cf98df3e06",
+      "bytes": 265232,
+      "path": "validate-apk.zip"
+    }
+  },
+  "purpose": "Native screenshot/code review only; no APK Release or publication approval"
+}
