@@ -12,8 +12,8 @@ import sys
 
 root = Path(sys.argv[1] if len(sys.argv) > 1 else "app/build/ui-snapshots")
 required = {f"external-{name}.png" for name in (
-    "launcher-incoming-compact", "launcher-incoming-expanded", "launcher-active-expanded",
-    "settings-active-expanded", "end-confirmation", "inapp-return",
+    "launcher-native-incoming", "launcher-active-compact", "launcher-active-expanded",
+    "other-app-active-expanded", "end-confirmation", "inapp-return",
     "permission-denied-launcher", "ended-launcher",
 )}
 files = [path for path in root.rglob("*.png") if path.is_file()]
@@ -36,7 +36,7 @@ for flag in ("real_modem_telecom_incallservice", "native_answer_acknowledged_by_
              "native_mute_acknowledged_by_telecom", "native_speaker_capability_guard",
              "return_back_preserves_call_query_without_duplicate", "launcher_and_other_app_real_windows",
              "native_end_cancel_confirm_and_cleanup", "disabled_or_permission_denied_preserves_real_call",
-             "modem_end_removes_window", "incoming_notification_handoff_and_fallback"):
+             "modem_end_removes_window", "native_incoming_notification_preserved", "protected_app_policy_respected"):
     assert checks.get(flag) is True, f"Actual external integration check failed: {flag}"
 assert proof.get("physical_cellular_audio_verified") is False, "Emulator must not claim physical carrier/audio proof"
 observations = proof.get("observations", [])
@@ -64,34 +64,60 @@ else:
     assert speaker.get("status") == "UNAVAILABLE", "Unknown speaker verification status"
     assert mask == speaker.get("initial_route") == speaker.get("final_route") == 8
     assert not transitions and speaker.get("unavailable_controls_absent") is True
-handoff = {item.get("stage"): item for item in observations if item.get("event") == "incoming-notification"}
-for stage, high in {"permission-denied": True, "overlay-attached": False, "second-overlay-attached": False,
-                    "preference-disabled": True, "preference-reenabled": False,
-                    "permission-revoked": True, "permission-regranted": False}.items():
-    item = handoff.get(stage, {})
-    assert item.get("channel") == ("dacaller_incoming_v5" if high else "dacaller_ongoing_v5"), f"Wrong native call channel: {stage}"
-    assert item.get("importance") == (4 if high else 2) and item.get("full_screen_intent") is high
-    assert item.get("heads_up_visible") is high, f"Actual native fallback/handoff visibility failed: {stage}"
-    if high:
-        popup = re.fullmatch(r"\[([0-9]+),([0-9]+)\]\[([0-9]+),([0-9]+)\]", item.get("heads_up_bounds", ""))
-        assert popup
-        left, top, right, bottom = map(int, popup.groups())
-        assert 0 <= left < right <= 480 and 0 <= top < bottom <= 854
-    else:
-        assert item.get("heads_up_bounds") is None
-    assert item.get("overlay_windows") == (0 if high else 1) and item.get("call_state") == 2
+def rectangle(value):
+    match = re.fullmatch(r"\[([0-9]+),([0-9]+)\]\[([0-9]+),([0-9]+)\]", value)
+    assert match, f"Missing native screen bounds: {value}"
+    left, top, right, bottom = map(int, match.groups())
+    assert 0 <= left < right <= 480 and 0 <= top < bottom <= 854
+    return left, top, right, bottom
+
+
+home = proof.get("home_resolution", {}).get("expected_package")
+assert home and home != "com.dacaller.app"
+incoming = {item.get("stage"): item for item in observations if item.get("event") == "incoming-notification"}
+for stage, permission in {"permission-denied": False, "permission-granted": True, "second-incoming": True}.items():
+    item = incoming.get(stage, {})
+    assert item.get("channel") == "dacaller_incoming_v5" and item.get("importance") == 4
+    assert item.get("full_screen_intent") is True and item.get("heads_up_visible") is True
+    rectangle(item.get("heads_up_bounds", ""))
+    assert item.get("overlay_windows") == 0 and item.get("native_overlay_accessible") is False
+    assert item.get("call_state") == 2 and item.get("overlay_permission") is permission
     assert item.get("answer_intent") is True and item.get("decline_intent") is True
     assert str(item.get("template", "")).endswith("$CallStyle") and item.get("caller") == "נועה שיחת אמולטור"
-    if stage in ("permission-denied", "permission-revoked"):
-        assert item.get("overlay_permission") is False
-clear = {item.get("stage"): item for item in observations if item.get("event") == "unobscured-native-input"}
-for stage in ("first-incoming", "second-incoming"):
-    item = clear.get(stage, {})
+    assert item.get("foreground_package") == ("com.android.settings" if stage == "second-incoming" else home)
+answers = {item.get("stage"): item for item in observations if item.get("event") == "native-systemui-answer"}
+assert set(answers) == {"first", "second"}
+for item in answers.values():
+    assert item.get("acknowledged") is True and item.get("call_state") == 4 and item.get("token")
+    assert item.get("text") in ("Answer", "ענה") or item.get("description") in ("Answer", "ענה")
+    rectangle(item.get("bounds", ""))
+foreign = proof.get("foreign_app_resolution", {})
+clock = foreign.get("package", "")
+assert clock in ("com.android.deskclock", "com.google.android.deskclock")
+assert foreign.get("action") == "android.intent.action.MAIN" and foreign.get("category") == "android.intent.category.LAUNCHER"
+assert str(foreign.get("component", "")).startswith(clock + "/")
+surfaces = {item.get("stage"): item for item in observations if item.get("event") == "native-external-surface"}
+for stage in ("first-active", "home-return", "other-app", "other-app-expanded", "second-active", "preference-reenabled", "permission-regranted"):
+    item = surfaces.get(stage, {})
     assert 350 <= item.get("wait_millis", 0) <= 8000 and item.get("blocked_samples", -1) >= 0
-    rectangle = re.fullmatch(r"\[([0-9]+),([0-9]+)\]\[([0-9]+),([0-9]+)\]", item.get("island_bounds", ""))
-    assert rectangle, f"No native unobscured incoming input bounds: {stage}"
-    left, top, right, bottom = map(int, rectangle.groups())
-    assert 0 <= left < right <= 480 and 0 <= top < bottom <= 854
+    left, top, right, bottom = rectangle(item.get("island_bounds", ""))
+    wl, wt, wr, wb = rectangle(item.get("native_window_bounds", ""))
+    assert wl <= left < right <= wr and wt <= top < bottom <= wb
+    assert item.get("native_overlay_accessible") is True and item.get("call_state") == 4
+    assert item.get("native_window_type") == 3 and item.get("native_window_layer", -1) >= 1
+    assert item.get("heads_up_visible") is False
+    assert item.get("foreground_package") == (clock if stage.startswith("other-app") else home)
+protected = proof.get("protected_app", {})
+assert protected.get("package") == "com.android.settings" and protected.get("native_incoming_notification_verified") is True
+protected_checks = {item.get("stage"): item for item in protected.get("active_checks", [])}
+assert set(protected_checks) == {"first-active", "second-active"}
+for item in protected_checks.values():
+    assert item.get("system_hides_overlay") is True and item.get("native_overlay_accessible") is False
+    assert item.get("call_preserved") is True and item.get("call_state") == 4 and item.get("token")
+    assert item.get("ongoing_notification_present") is True and item.get("ongoing_return_intent") is True and item.get("ongoing_hangup_intent") is True
+    assert item.get("protected_flag_present") is True
+    policy = item.get("own_window_policy", "")
+    assert "DA CALLER call island" in policy and "mForceHideNonSystemOverlayWindow=true" in policy and "mPolicyVisibility=false" in policy
 commands = [item["response"] for item in observations if item.get("event", "").startswith("modem-")]
 assert sum(item.get("operation") == "call" for item in commands) == 2, "Two actual modem calls required"
 assert any(item.get("operation") == "cancel" for item in commands), "Modem cancellation proof missing"
@@ -120,6 +146,6 @@ assert len(images) == 227, f"Expected219 previous and8 actual Telecom PNGs, foun
     "api": 33, "size": "480x854", "density_dpi": 240, "font_scale": 1.3,
     "required_real_png_files": len(required), "total_required_png_files": 227,
     "sha256": hashes, "native_assertions": proof,
-    "limits": "Actual simulated modem calls, Android Telecom, production service and application-overlay windows. Physical SIM/carrier, audible routing, Bluetooth, lockscreen and Jelly Star not verified.",
+    "limits": "Actual simulated modem calls, Android Telecom, production service and application-overlay windows. Incoming calls always keep native high-priority Android CallStyle; the external island starts for outgoing/active/held calls. Protected Android Settings intentionally hides overlays, verified without bypassing OS policy. Physical SIM/carrier, audible routing, Bluetooth, lockscreen and Jelly Star not verified.",
 }, indent=2) + "\n")
 print("Verified8 actual Telecom external-island PNGs and call/audio/lifecycle assertions; all227 required renders retained")

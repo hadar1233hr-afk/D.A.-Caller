@@ -35,8 +35,6 @@ public final class PhoneSessionService extends InCallService {
  private boolean screenVisible;
  private PowerManager.WakeLock proximityLock;
  private CallIslandOverlay islandOverlay;
- private String islandVisibleToken;
- private boolean destroying;
  private final Runnable refreshHistory=()->CallHistory.refresh(getApplicationContext(),true,null);
  private final Call.Callback callback=new Call.Callback(){
   @Override public void onStateChanged(Call call,int state){
@@ -61,7 +59,6 @@ public final class PhoneSessionService extends InCallService {
   catch(RuntimeException failure){CallFailureReporter.record(this,"incall-create-island-overlay",failure);if(islandOverlay!=null)islandOverlay.stop();islandOverlay=null;}
  }
  @Override public void onDestroy(){
-  destroying=true;islandVisibleToken=null;
   if(islandOverlay!=null){islandOverlay.stop();islandOverlay=null;}
   for(Call call:new ArrayList<>(order))try{call.unregisterCallback(callback);}
    catch(RuntimeException failure){CallFailureReporter.record(this,"incall-destroy",failure);}
@@ -302,26 +299,6 @@ public final class PhoneSessionService extends InCallService {
   }
  }
  static boolean intrusiveNotification(int state,boolean visible){return state==Call.STATE_RINGING&&!visible;}
- /** The quiet status notification takes over only after this owned call has a real external window. */
- void islandVisibilityChanged(String token,boolean visible){
-  if(instance!=this||destroying||token==null)return;
-  Call call=current;
-  boolean allowRealert=false;
-  if(visible){
-   if(call==null||!token.equals(calls.get(call)))return;
-   int state=call.getState();
-   if(state==Call.STATE_DISCONNECTED||state==Call.STATE_DISCONNECTING)return;
-   if(token.equals(islandVisibleToken))return;
-   islandVisibleToken=token;
-  }else{
-   if(!token.equals(islandVisibleToken))return;
-   islandVisibleToken=null;
-   allowRealert=call!=null&&token.equals(calls.get(call))&&call.getState()==Call.STATE_RINGING&&!screenVisible;
-  }
-  // Notification-only handoff: never notifyViews(), answer, silence or route Telecom audio.
-  try{updateNotification(current,allowRealert);}
-  catch(RuntimeException unavailable){CallFailureReporter.record(this,"incall-island-notification-handoff",unavailable);}
- }
  static void notifyChanged(){PhoneSessionService service=instance;if(service!=null)service.changed();else notifyViews();}
  private void clear(Call call){
   if(!calls.containsKey(call))return;
@@ -333,12 +310,8 @@ public final class PhoneSessionService extends InCallService {
   changed();
  }
  private void updateNotification(Call call){
-  updateNotification(call,false);
- }
- private void updateNotification(Call call,boolean allowRealert){
   if(call==null||call.getState()==Call.STATE_DISCONNECTED){removeCallNotification();return;}
-  String callToken=calls.get(call);
-  boolean intrusive=intrusiveNotification(call.getState(),screenVisible||callToken!=null&&callToken.equals(islandVisibleToken));
+  boolean intrusive=intrusiveNotification(call.getState(),screenVisible);
   Intent intent=new Intent(this,CallScreenActivity.class)
     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
   intent.setData(android.net.Uri.parse("dacaller-call-screen:"+calls.get(call)));
@@ -349,10 +322,6 @@ public final class PhoneSessionService extends InCallService {
   Notification notification=CallNotifications.create(this,call.getState(),caller.name(),caller.number,intrusive,
     audio==null?0:audio.getRoute(),audio==null?0:audio.getSupportedRouteMask(),connected,open,
     (action,code)->command(action,code,call));
-  // Replacing a presented incoming island must restore the native heads-up for
-  // this transition, even though this notification key has already alerted.
-  // Both channels remain silent; Telecom continues to own the ringtone.
-  if(allowRealert&&intrusive)notification.flags&=~Notification.FLAG_ONLY_ALERT_ONCE;
   try{
    // Android 13 accepts a quiet CallStyle only for an actual foreground service.
    // Telecom keeps this service bound; the phone-call foreground lifecycle lasts

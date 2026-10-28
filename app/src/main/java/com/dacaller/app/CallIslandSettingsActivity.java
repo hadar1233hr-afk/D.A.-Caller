@@ -71,13 +71,16 @@ public final class CallIslandSettingsActivity extends Activity {
   toggle(outside,tr("הצגת האי בזמן שיחה","Show island during calls"),
     tr("מופיע במסכי האפליקציה לאחר חזרה ממסך השיחה. אפשר להוסיף גם הצגה מחוץ לאפליקציה.","Appears in the app after returning from the full call screen. Outside-app display can also be enabled below."),"island_enabled",true);
   Switch outsideSwitch=toggle(outside,tr("הצגה במסך הבית ובאפליקציות אחרות","Show on Home and above other apps"),
-    tr("רק בזמן שיחה. נדרשת הרשאת הצגה מעל אפליקציות אחרות; האי מוסתר במסך הנעילה.","Only during a call. Requires display-over-other-apps access; hidden on the lock screen."),"island_outside_app",false);
+    tr("בזמן חיוג, שיחה פעילה והמתנה. שיחה נכנסת מוצגת בהתראת Android.","Shown during dialing, active and held calls. Incoming calls stay in Android's call notification."),"island_outside_app",false);
   outsideSwitch.setOnCheckedChangeListener((button,value)->{
    prefs.edit().putBoolean("island_outside_app",value).apply();updateIntegrationStatus();
    if(value&&!canDrawOutside())openOutsidePermission();
   });
   outsidePermission=choice(outside,"","island_overlay_permission",this::openOutsidePermission);
   phoneRole=choice(outside,"","island_phone_role",this::requestPhoneRole);
+  TextView systemLimit=text(tr("במסכי מערכת מסוימים Android מסתיר חלונות צפים. אפשר להמשיך לשלוט בשיחה דרך ההתראה.",
+    "Android hides floating windows on some system screens. The call notification remains available."),12,false,secondary);
+  systemLimit.setPadding(dp(14),dp(6),dp(14),dp(14));outside.addView(systemLimit,new LinearLayout.LayoutParams(-1,-2));
   LinearLayout demo=group(root,tr("תצוגה מקדימה","Live preview"));
   TextView demoNote=text(tr("הדגמה בלבד · לא מתבצעת שיחה","Demo only · no call is placed"),12,true,accent);
   demoNote.setTag("island-preview-demo-label");demoNote.setPadding(dp(12),dp(10),dp(12),dp(8));demo.addView(demoNote,new LinearLayout.LayoutParams(-1,-2));

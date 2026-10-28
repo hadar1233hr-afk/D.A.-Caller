@@ -77,6 +77,11 @@ public class CallIslandOverlayTest {
   return new CallIslandState(token,"Dana Example","0500099971",Call.STATE_ACTIVE,CallAudioState.ROUTE_EARPIECE,
     CallAudioState.ROUTE_EARPIECE|CallAudioState.ROUTE_SPEAKER,false,true,true,System.currentTimeMillis()-11000,-1);
  }
+ private static CallIslandState phase(String token,int state){
+  CallIslandState active=active(token);
+  return new CallIslandState(token,active.name,active.number,state,active.route,active.supportedRoutes,
+    active.muted,state==Call.STATE_ACTIVE||state==Call.STATE_HOLDING,state!=Call.STATE_RINGING,active.connectedAtMillis,-1);
+ }
  private void idle(){shadowOf(Looper.getMainLooper()).idle();}
  private void enable(){prefs.edit().putBoolean("island_outside_app",true).commit();idle();}
  private void refresh(){overlay.configurationChanged();idle();}
@@ -97,6 +102,26 @@ public class CallIslandOverlayTest {
   stopped=session.snapshots;shadowOf(Looper.getMainLooper()).idleFor(Duration.ofSeconds(3));assertEquals(stopped,session.snapshots);
   assertNotNull(session.state);assertTrue(session.actions.isEmpty());
  }
+ @Test public void incomingAndUnknownCallStatesNeverCreateExternalUiOrDispatchCallControls(){
+  enable();session.state=phase("incoming",Call.STATE_RINGING);overlay.start();idle();
+  assertFalse(overlay.isShowing());verify(windows,never()).addView(any(),any());
+  overlay.onExpand();overlay.onOpen();overlay.onAction("ANSWER");overlay.onAction("DECLINE");idle();
+  assertEquals(Call.STATE_RINGING,session.state.state);assertTrue(session.actions.isEmpty());
+  for(int state:new int[]{Call.STATE_NEW,Call.STATE_DISCONNECTING,Call.STATE_DISCONNECTED}){
+   session.state=phase("not-presented",state);PhoneSessionService.notifyViews();idle();assertFalse(overlay.isShowing());
+  }
+  verify(windows,never()).addView(any(),any());assertTrue(session.actions.isEmpty());
+ }
+ @Test public void answeredIncomingCallAppearsWithoutChangingPermissionAndWaitingCallHidesIt(){
+  enable();session.state=phase("incoming",Call.STATE_RINGING);overlay.start();idle();assertFalse(overlay.isShowing());
+  session.state=phase("incoming",Call.STATE_ACTIVE);PhoneSessionService.notifyViews();idle();assertTrue(overlay.isShowing());
+  session.state=phase("waiting",Call.STATE_RINGING);PhoneSessionService.notifyViews();idle();assertFalse(overlay.isShowing());
+  assertTrue(session.actions.isEmpty());
+  for(int state:new int[]{Call.STATE_DIALING,Call.STATE_CONNECTING,Call.STATE_SELECT_PHONE_ACCOUNT,Call.STATE_HOLDING}){
+   session.state=phase("owned-next",state);PhoneSessionService.notifyViews();idle();assertTrue(overlay.isShowing());
+  }
+  assertTrue(session.actions.isEmpty());assertTrue(prefs.getBoolean("island_outside_app",false));assertTrue(privacy.permitted);
+ }
  @Test public void windowHasOnlyCapsuleBoundsAndCannotStealKeyboardOrOutsideTouches(){
   enable();overlay.start();assertTrue(overlay.isShowing());assertNotNull(added);assertNotNull(params);
   assertEquals(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,params.type);
@@ -107,34 +132,6 @@ public class CallIslandOverlayTest {
   assertTrue(params.height<RuntimeEnvironment.getApplication().getResources().getDisplayMetrics().heightPixels);
   overlay.onExpand();idle();assertTrue(overlay.isShowing());verify(windows,atLeastOnce()).updateViewLayout(eq(added),any());
   overlay.onCollapse();idle();assertTrue(overlay.isShowing());assertTrue(session.actions.isEmpty());
- }
- @Test public void successfulAddWithoutActualAttachmentCannotSuppressNativeIncomingUi(){
-  overlay.stop();List<String> visibility=new ArrayList<>();
-  Context context=new ContextThemeWrapper(RuntimeEnvironment.getApplication(),R.style.AppTheme);
-  overlay=new CallIslandOverlay(context,session,windows,privacy,(token,visible)->visibility.add(token+":"+visible));
-  enable();overlay.start();idle();assertTrue(overlay.isShowing());assertFalse(added.isAttachedToWindow());
-  overlay.onExpand();idle();overlay.onCollapse();idle();overlay.stop();assertTrue(visibility.isEmpty());
- }
- @Test public void realWindowAttachmentReportsOnceAndPrivacyOrTokenChangesRevokeHandoff()throws Exception{
-  overlay.stop();List<String> visibility=new ArrayList<>();
-  Context context=new ContextThemeWrapper(RuntimeEnvironment.getApplication(),R.style.AppTheme);
-  WindowManager real=context.getSystemService(WindowManager.class);
-  overlay=new CallIslandOverlay(context,session,real,privacy,(token,visible)->visibility.add(token+":"+visible));
-  enable();overlay.start();idle();assertTrue(overlay.isShowing());
-  assertEquals(java.util.Collections.singletonList("owned-call:true"),visibility);
-  refresh();overlay.onExpand();idle();assertEquals(1,visibility.size());
-  java.lang.reflect.Field field=CallIslandOverlay.class.getDeclaredField("window");field.setAccessible(true);
-  View root=(View)field.get(overlay);root.setVisibility(View.INVISIBLE);refresh();
-  assertEquals("An attached but hidden root cannot suppress native incoming UI","owned-call:false",visibility.get(visibility.size()-1));
-  root.setVisibility(View.VISIBLE);refresh();assertEquals("owned-call:true",visibility.get(visibility.size()-1));
-  visibility.clear();
-  session.state=active("next-call");PhoneSessionService.notifyViews();idle();
-  assertEquals(java.util.Arrays.asList("owned-call:false","next-call:true"),visibility);
-  privacy.locked=true;refresh();assertFalse(overlay.isShowing());
-  assertEquals("next-call:false",visibility.get(visibility.size()-1));
-  privacy.locked=false;refresh();assertTrue(overlay.isShowing());assertEquals("next-call:true",visibility.get(visibility.size()-1));
-  overlay.stop();assertEquals("next-call:false",visibility.get(visibility.size()-1));
-  assertNotNull(session.state);assertTrue(session.actions.isEmpty());
  }
  @Test public void screenPrivacyOwnAppAndPermissionRevocationRemoveTheWindowWithoutEndingCall(){
   enable();overlay.start();assertTrue(overlay.isShowing());

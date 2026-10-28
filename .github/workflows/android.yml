@@ -375,7 +375,9 @@ jobs:
           ## Implemented changes
           - Apple-inspired call island inside app screens, with compact and expanded controls.
           - Optional call island over Home and other apps, after explicit opt-in and Android display-over-apps special access.
-          - Native external answer, mute, speaker, return and confirmed end controls use the currently owned Telecom call.
+          - Incoming calls keep Android's native CallStyle answer/decline notification; the external island starts for outgoing, active and held calls.
+          - External mute, supported speaker routes, return and confirmed end use the currently owned Telecom call.
+          - Protected system screens may hide floating windows; the original incoming alert and ongoing call notification remain available.
           - Three island styles, two sizes, optional controls/timer/photo/animation and safe end confirmation.
           - Explicitly labelled interactive demo and portable island settings backup.
           - The in-app island reserves space above content and preserves navigation/list state without special access.
