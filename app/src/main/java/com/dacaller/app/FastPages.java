@@ -282,7 +282,7 @@ final class FastPages {
   }
   addFavorites(page,host.contactsSnapshot());
   if(prefs.getBoolean("show_stats",true))addSummary(page);
-  LinearLayout top=horizontal();page.addView(top,lp(-1,41));
+  LinearLayout top=horizontal();top.setTag("call-island-secondary");page.addView(top,lp(-1,41));
   TextView title=text(tr("כל השיחות"),15,ink(),true);
   top.addView(title,new LinearLayout.LayoutParams(0,-1,1));
   TextView count=text(String.valueOf(CallHistory.entries.size()),11,subtle(),false);
@@ -291,6 +291,7 @@ final class FastPages {
   touch(refresh);refresh.setContentDescription(tr("רענון יומן השיחות"));
   refresh.setOnClickListener(v->{pulse(refresh);host.reloadCallLog();});
   SwipeListView list=new SwipeListView();
+  list.setTag("call-island-page-list");
   liveRecents=list;
   list.setDivider(null);list.setDividerHeight(0);
   list.setCacheColorHint(Color.TRANSPARENT);list.setScrollingCacheEnabled(true);
@@ -367,7 +368,7 @@ final class FastPages {
   head.addView(add,lp(51,48));touch(add);
   add.setOnClickListener(v->{pulse(add);host.newContact(null);});
   // Keep the 48dp refresh target inside a matching-height parent on small screens.
-  LinearLayout small=horizontal();page.addView(small,lp(-1,48));
+  LinearLayout small=horizontal();small.setTag("call-island-secondary");page.addView(small,lp(-1,48));
   TextView count=text(I18n.count(host,contacts.size(),"אנשי קשר","contacts"),11,subtle(),false);
   small.addView(count,new LinearLayout.LayoutParams(0,-1,1));
   ImageView refresh=icon(R.drawable.ic_refresh,tint());small.addView(refresh,lp(48,48));
@@ -378,6 +379,7 @@ final class FastPages {
   adapter.filter(contactQuery);search.setText(contactQuery);
   count.setText(I18n.count(host,adapter.getCount(),"אנשי קשר","contacts"));
   SwipeListView list=new SwipeListView();
+  list.setTag("call-island-page-list");
   liveContacts=list;
   list.setDivider(null);list.setFastScrollEnabled(true);list.setVerticalScrollBarEnabled(false);
   list.setSelector(android.R.color.transparent);

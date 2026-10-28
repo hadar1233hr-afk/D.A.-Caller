@@ -11,3 +11,7 @@ work/
 # Android/IDE local settings
 .idea/
 *.iml
+
+# Python verification caches
+__pycache__/
+*.pyc

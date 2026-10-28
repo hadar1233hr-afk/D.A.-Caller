@@ -1,0 +1,24 @@
+{
+  "source_sha": "51f975011692c44cf348139e7d8d2569eec74d5d",
+  "app_tree": "48d9adfcc8341e8f36413313b63d2f4e8e5f569b",
+  "workflow_run_id": 40642457660,
+  "note": "Preview arranges reduced native captures; originals retained unchanged in reviewed ZIP.",
+  "frames": [
+    {
+      "file": "island-app-contacts-compact.png",
+      "sha256": "05ae288a2761ee6829f561c73158b6eb75feefbf6a9b5a912bbb10af8f77bfd7"
+    },
+    {
+      "file": "island-app-recents-expanded.png",
+      "sha256": "a0679aefa3dde66b25c26cf5b732e8e0dff97e89f82ea95a2fa204d3912a556b"
+    },
+    {
+      "file": "island-glass-light-en-expanded.png",
+      "sha256": "b71c4a9c6c84bd72df948a7d989188efe64fb3c4e34c80485f6d3a61371d7103"
+    },
+    {
+      "file": "island-emerald-dark-he-expanded.png",
+      "sha256": "5edadaf596cc4f100410fdc929a9dee892b07fdddf952a62b83c26a089e52721"
+    }
+  ]
+}

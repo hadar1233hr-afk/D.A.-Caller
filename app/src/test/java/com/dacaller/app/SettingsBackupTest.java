@@ -34,6 +34,25 @@ public final class SettingsBackupTest {
   assertEquals("pixel",parsed.values.get("call_theme"));assertEquals(65,parsed.values.get("call_button_height"));
   assertEquals("hexagon",parsed.values.get("avatar_shape"));assertTrue(parsed.values.containsKey("call_btn_notes"));
  }
+ @Test public void islandPreferencesRoundTripAndLegacyBackupLeavesIslandChoicesUntouched()throws Exception{
+  assertEquals(false,SettingsBackup.capture(prefs).values.get("island_outside_app"));
+  prefs.edit().putBoolean("island_enabled",false).putString("island_style","emerald").putString("island_size","comfortable")
+    .putBoolean("island_show_timer",false).putBoolean("island_show_photo",false).putBoolean("island_animations",false)
+    .putBoolean("island_show_mute",false).putBoolean("island_show_speaker",false).putBoolean("island_show_hold",false)
+    .putBoolean("island_confirm_end",false).putBoolean("island_outside_app",true).commit();
+  SettingsBackup.Snapshot saved=SettingsBackup.decode(SettingsBackup.encode(SettingsBackup.capture(prefs)));
+  prefs.edit().putBoolean("island_enabled",true).putString("island_style","apple").putString("island_size","compact")
+    .putBoolean("island_show_timer",true).putBoolean("island_show_photo",true).putBoolean("island_animations",true)
+    .putBoolean("island_show_mute",true).putBoolean("island_show_speaker",true).putBoolean("island_show_hold",true)
+    .putBoolean("island_confirm_end",true).putBoolean("island_outside_app",false).commit();
+  assertTrue(SettingsBackup.restore(prefs,saved,id->true));
+  for(String key:new String[]{"island_enabled","island_show_timer","island_show_photo","island_animations", "island_show_mute","island_show_speaker","island_show_hold","island_confirm_end"})assertFalse(key,prefs.getBoolean(key,true));
+  assertEquals("emerald",prefs.getString("island_style",null));assertEquals("comfortable",prefs.getString("island_size",null));
+  assertTrue(SettingsBackup.restore(prefs,SettingsBackup.decode(file("{\"dark\":true}")),id->true));
+  assertEquals("Legacy sparse backup must preserve choices absent from its file","emerald",prefs.getString("island_style",null));
+  assertFalse(prefs.getBoolean("island_enabled",true));
+  assertTrue(prefs.getBoolean("island_outside_app",false));
+ }
  @Test public void exportNeverIncludesPermissionsRuntimeFlagsOrLauncherInstanceBindings()throws Exception{
   prefs.edit().putBoolean("role_prompted",true).putBoolean("notifications_prompted",true)
     .putBoolean("settings_permission_asked_android.permission.CALL_PHONE",true)
@@ -58,6 +77,7 @@ public final class SettingsBackupTest {
     "{\"role_prompted\":false}","{\"widget_phone_3\":\"444\"}","{\"haptic_strength\":4}",
     "{\"call_button_height\":64}","{\"font_contacts\":5000}","{\"language\":\"xx\"}",
     "{\"launcher_icon\":\"arbitrary.component\"}","{\"avatar_shape\":\"invalid\"}","{\"archive_extra\":\"erase\"}",
+    "{\"island_style\":\"remote_overlay\"}","{\"island_size\":\"huge\"}","{\"island_enabled\":\"false\"}",
     "{\"favorites\":[\"111\",\"111\"]}","{\"favorites\":[123]}","{\"favorites\":null}","{\"dark\":1.0}",
     "{\"note_anything\":\"x\"}","{\"stats_expanded\":{}}","{}"}){
    try{SettingsBackup.Snapshot invalid=SettingsBackup.decode(file(settings));SettingsBackup.restore(prefs,invalid,id->{fail("No icon change before validation");return true;});fail(settings);}

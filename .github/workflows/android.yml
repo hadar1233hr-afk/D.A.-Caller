@@ -13,9 +13,14 @@ on:
       - 'scripts/verify-ui-matrix.py'
       - 'scripts/verify-personalization-matrix.py'
       - 'scripts/verify-call-integration-matrix.py'
+      - 'scripts/verify-island-matrix.py'
+      - 'scripts/emulator-call-driver.py'
+      - 'scripts/verify-external-island-matrix.py'
       - 'scripts/verify-visual-review.py'
       - 'docs/evidence/2026-10-25/**'
       - 'docs/evidence/personalization-2026-10-25/**'
+      - 'docs/evidence/island-2026-10-27/**'
+      - 'docs/evidence/external-island-2026-10-28/**'
   push:
     branches: [main]
     paths:
@@ -30,6 +35,9 @@ on:
       - 'scripts/verify-ui-matrix.py'
       - 'scripts/verify-personalization-matrix.py'
       - 'scripts/verify-call-integration-matrix.py'
+      - 'scripts/verify-island-matrix.py'
+      - 'scripts/emulator-call-driver.py'
+      - 'scripts/verify-external-island-matrix.py'
       - 'scripts/verify-visual-review.py'
   workflow_dispatch:
     inputs:
@@ -91,6 +99,7 @@ jobs:
           assert "package: name='com.dacaller.app'" in metadata, 'Wrong Android product'
           assert "sdkVersion:'26'" in metadata, 'Unexpected minimum Android API'
           assert "android.permission.INTERNET" not in metadata, 'DA CALLER must remain offline'
+          assert "android.permission.SYSTEM_ALERT_WINDOW" in metadata, 'Optional outside-app call island permission missing'
           version = re.search(r"versionName='([^']+)'", metadata).group(1)
           assert re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+(?:-[A-Za-z0-9.]+)?', version), 'Unsafe version'
           with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
@@ -168,6 +177,7 @@ jobs:
           metadata = Path('app/build/native-tested/apk-metadata.txt').read_text()
           assert "package: name='com.dacaller.app'" in metadata
           assert "sdkVersion:'26'" in metadata and "android.permission.INTERNET" not in metadata
+          assert "android.permission.SYSTEM_ALERT_WINDOW" in metadata
           with zipfile.ZipFile('app/build/outputs/apk/debug/app-debug.apk') as apk:
               for name in apk.namelist():
                   if re.fullmatch(r'classes[0-9]*\.dex', name):
@@ -192,6 +202,7 @@ jobs:
             app/build/outputs/androidTest-results/
             app/build/ui-snapshots/
             app/build/ui-device-config.txt
+            app/build/emulator-call-driver.*
           if-no-files-found: warn
           retention-days: 30
 
@@ -289,7 +300,7 @@ jobs:
   # use permanent signing and cannot update a differently signed install.
   # Never publishes on forks or changes the separately gated stable-beta process.
   preview-debug:
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'codex/da-caller-hardening-20261023' || ((github.event.pull_request.head.ref == 'codex/da-caller-visual-20261025' || github.event.pull_request.head.ref == 'codex/da-caller-personalization-20261025') && contains(github.event.pull_request.labels.*.name, 'visual-reviewed')))
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'codex/da-caller-hardening-20261023' || ((github.event.pull_request.head.ref == 'codex/da-caller-visual-20261025' || github.event.pull_request.head.ref == 'codex/da-caller-personalization-20261025' || github.event.pull_request.head.ref == 'codex/da-caller-dynamic-island-20261027') && contains(github.event.pull_request.labels.*.name, 'visual-reviewed')))
     needs: [validate, android-ui]
     runs-on: ubuntu-latest
     permissions:
@@ -311,6 +322,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           DA_CALLER_VISUAL_REVIEW: docs/evidence/personalization-2026-10-25/visual-review.json
+        run: python3 scripts/verify-visual-review.py
+      - name: Require external island review of this exact application source
+        if: github.event.pull_request.head.ref == 'codex/da-caller-dynamic-island-20261027'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          DA_CALLER_VISUAL_REVIEW: docs/evidence/external-island-2026-10-28/visual-review.json
         run: python3 scripts/verify-visual-review.py
       - uses: actions/download-artifact@v4
         with:
@@ -355,6 +373,15 @@ jobs:
           cat > preview-notes.md <<'NOTES'
           # DA CALLER — UNVERIFIED DEBUG TEST BUILD
           ## Implemented changes
+          - Apple-inspired call island inside app screens, with compact and expanded controls.
+          - Optional call island over Home and other apps, after explicit opt-in and Android display-over-apps special access.
+          - Incoming calls keep Android's native CallStyle answer/decline notification; the external island starts for outgoing, active and held calls.
+          - External mute, supported speaker routes, return and confirmed end use the currently owned Telecom call.
+          - Protected system screens may hide floating windows; the original incoming alert and ongoing call notification remain available.
+          - Three island styles, two sizes, optional controls/timer/photo/animation and safe end confirmation.
+          - Explicitly labelled interactive demo and portable island settings backup.
+          - The in-app island reserves space above content and preserves navigation/list state without special access.
+          - External windows are disabled by default, hide inside this app, on permission loss, screen-off, lock and call end.
           - Offline settings backup/restore with a validated file and explicit confirmation.
           - Five selectable original dark-green/gold launcher icons.
           - Collapsible horizontal favorites above contacts and recents, and a compact expandable summary.
@@ -371,11 +398,17 @@ jobs:
           ## Verification and installation limits
           The linked source passed unit tests, lint, APK verification and the
           Android 13 emulator suite at 480x854/240dpi with native three-button
-          navigation, RTL, font1.3 and 183 required PNG captures. The published
+          navigation, RTL, font1.3 and 227 required PNG captures. Eight additional
+          captures and native input exercise real emulator-modem calls through
+          Android Telecom and the production InCallService over Home/Settings,
+          with actual call-state/audio callbacks, permission denial and cleanup.
+          This proves simulated modem integration, not physical carrier/audio behavior.
+          The published
           APK is the exact debug binary installed by the emulator test task.
           The exact app
-          tree and the additional personalization captures were visually reviewed
+          tree and the additional personalization/island captures were visually reviewed
           before publication; see the linked pull request and its verification report.
+          Report: docs/DA_CALLER_EXTERNAL_ISLAND_2026-10-28.md at the linked source commit.
           This is **not** a stable or device-verified release.
           The Android build, unit tests and emulator UI checks passed, but
           actual cellular calls, answering, ringing, lock screen, SIM and

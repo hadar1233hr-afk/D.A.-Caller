@@ -1,0 +1,94 @@
+{
+  "result": "PASS",
+  "unit_tests": {
+    "tests": 239,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "lint_errors": 0,
+  "lint_issues": [
+    {
+      "id": "OldTargetApi",
+      "severity": "Warning",
+      "message": "Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the `android.os.Build.VERSION_CODES` javadoc for details."
+    },
+    {
+      "id": "SetTextI18n",
+      "severity": "Warning",
+      "message": "Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+    },
+    {
+      "id": "SetTextI18n",
+      "severity": "Warning",
+      "message": "Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+    },
+    {
+      "id": "SetTextI18n",
+      "severity": "Warning",
+      "message": "Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+    },
+    {
+      "id": "SetTextI18n",
+      "severity": "Warning",
+      "message": "Do not concatenate text displayed with `setText`. Use resource string with placeholders."
+    }
+  ],
+  "commands": [
+    ":app:testDebugUnitTest",
+    ":app:lintDebug",
+    ":app:assembleDebug",
+    ":app:assembleDebugAndroidTest",
+    ":app:assembleRelease"
+  ],
+  "apk_identity": {
+    "package": "com.dacaller.app",
+    "versionCode": 18,
+    "versionName": "0.11.0-beta.8",
+    "minSdk": 26,
+    "targetSdk": 34,
+    "internet_permission": false,
+    "system_overlay_permission": false,
+    "module_isolation": true,
+    "debug_fixture_excluded_from_release": true
+  },
+  "native_verification": "PASS",
+  "physical_device": "NOT TESTED",
+  "matching_existing_signature": "BLOCKED",
+  "ci_source_sha": "51f975011692c44cf348139e7d8d2569eec74d5d",
+  "app_tree": "48d9adfcc8341e8f36413313b63d2f4e8e5f569b",
+  "ci_run_id": 40642457660,
+  "ci_unit_tests": {
+    "tests": 239,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_tests": {
+    "tests": 29,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "reviewed_native_pngs": 219,
+  "native_settings_system_bar_pixel_contrast": {
+    "island-settings-dark-bottom.png": {
+      "status": 984,
+      "navigation": 1276
+    },
+    "island-settings-dark.png": {
+      "status": 984,
+      "navigation": 1276
+    },
+    "island-settings-light-bottom.png": {
+      "status": 918,
+      "navigation": 1276
+    },
+    "island-settings-light.png": {
+      "status": 918,
+      "navigation": 1276
+    }
+  },
+  "publication_requires_same_reviewed_app_tree": true,
+  "screenshot_fixture_provider_isolation": "Instance-only observers detached; existing workers drained and500ms observed quiescence before fictional data; production provider code unchanged."
+}

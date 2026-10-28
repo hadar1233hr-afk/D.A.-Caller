@@ -134,6 +134,10 @@ final class SettingsScreen {
   cardEnd();
   section("שיחות ומענה","");
   cardStart();
+  option(I18n.isEnglish(host)?"Dynamic call island":"אי שיחה דינמי",
+    I18n.isEnglish(host)?"A compact call capsule, quick controls and a live preview":"קפסולת שיחה, פקדים מהירים ותצוגה מקדימה",()->
+      host.startActivity(new Intent(host,CallIslandSettingsActivity.class)));
+  lastOption().setTag("settings_call_island");
   choice("אופן מענה לשיחה","מחוות החלקה לבחירה","answer_mode",
     new String[]{"החלקה ימינה למענה","החלקה שמאלה למענה",
       "למעלה למענה, למטה לדחייה","iOS · ימינה למענה, הקשה לדחייה"},

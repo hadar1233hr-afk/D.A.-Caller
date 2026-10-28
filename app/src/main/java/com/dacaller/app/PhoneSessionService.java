@@ -1,6 +1,7 @@
 package com.dacaller.app;
 
 import android.app.Notification;
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.Manifest;
@@ -16,6 +17,7 @@ import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.telecom.InCallService;
 import android.telecom.TelecomManager;
+import android.telecom.VideoProfile;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.UUID;
@@ -32,6 +34,7 @@ public final class PhoneSessionService extends InCallService {
  private final Handler handler=new Handler(Looper.getMainLooper());
  private boolean screenVisible;
  private PowerManager.WakeLock proximityLock;
+ private CallIslandOverlay islandOverlay;
  private final Runnable refreshHistory=()->CallHistory.refresh(getApplicationContext(),true,null);
  private final Call.Callback callback=new Call.Callback(){
   @Override public void onStateChanged(Call call,int state){
@@ -52,14 +55,20 @@ public final class PhoneSessionService extends InCallService {
     proximityLock.setReferenceCounted(false);
    }
   }catch(RuntimeException failure){CallFailureReporter.record(this,"incall-create-proximity",failure);proximityLock=null;}
+  try{islandOverlay=CallIslandOverlay.create(this);islandOverlay.start();}
+  catch(RuntimeException failure){CallFailureReporter.record(this,"incall-create-island-overlay",failure);if(islandOverlay!=null)islandOverlay.stop();islandOverlay=null;}
  }
  @Override public void onDestroy(){
+  if(islandOverlay!=null){islandOverlay.stop();islandOverlay=null;}
   for(Call call:new ArrayList<>(order))try{call.unregisterCallback(callback);}
    catch(RuntimeException failure){CallFailureReporter.record(this,"incall-destroy",failure);}
   calls.clear();order.clear();identities.clear();handler.removeCallbacksAndMessages(null);safeReleaseProximity();
   if(instance==this){instance=null;current=null;notifyViews();}
   removeCallNotification();
   super.onDestroy();
+ }
+ @Override public void onConfigurationChanged(android.content.res.Configuration configuration){
+  super.onConfigurationChanged(configuration);if(islandOverlay!=null)islandOverlay.configurationChanged();
  }
  @Override public void onCallAdded(Call call){
   super.onCallAdded(call);
@@ -209,6 +218,79 @@ public final class PhoneSessionService extends InCallService {
   PhoneSessionService service=instance;
   return service!=null&&call!=null&&token!=null&&token.equals(service.calls.get(call));
  }
+ /** Current-call snapshots and commands never keep a mutable Call in a UI view. */
+ static CallIslandState islandSnapshot(){
+  PhoneSessionService service=instance;Call call=current;
+  if(service==null||call==null)return null;
+  String token=service.calls.get(call);
+  if(token==null)return null;
+  try{
+   int state=call.getState();
+   if(state==Call.STATE_DISCONNECTED||state==Call.STATE_DISCONNECTING)return null;
+   CallerIdentity identity=service.callerIdentity(call);
+   CallAudioState audio=service.getCallAudioState();Call.Details details=call.getDetails();
+   boolean hold=details!=null&&((state==Call.STATE_ACTIVE&&details.can(Call.Details.CAPABILITY_HOLD))||
+     (state==Call.STATE_HOLDING&&details.can(Call.Details.CAPABILITY_HOLD)));
+   // Telecom has one hold capability for both hold/unhold. SUPPORT_HOLD only
+   // describes support in general and is not sufficient to execute the action.
+   boolean mute=audio!=null&&CallNotifications.controllable(state);
+   return new CallIslandState(token,identity.name(),identity.number,state,
+     audio==null?0:audio.getRoute(),audio==null?0:audio.getSupportedRouteMask(),
+     audio!=null&&audio.isMuted(),hold,mute,details==null?0:details.getConnectTimeMillis(),identity.contactId);
+  }catch(RuntimeException unavailable){
+   CallFailureReporter.record(service,"incall-island-snapshot",unavailable);return null;
+  }
+ }
+ /** Return true only when a valid request was sent; audio/state callbacks acknowledge it. */
+ static boolean performIslandAction(String token,String action){
+  PhoneSessionService service=instance;Call call=current;
+  if(service==null||!commandMatches(call,token)||action==null)return false;
+  try{
+   int state=call.getState();
+   if(state==Call.STATE_DISCONNECTED||state==Call.STATE_DISCONNECTING)return false;
+   switch(action){
+    case "ANSWER":
+     if(state!=Call.STATE_RINGING)return false;
+     call.answer(VideoProfile.STATE_AUDIO_ONLY);return true;
+    case "DECLINE":
+     if(state!=Call.STATE_RINGING)return false;
+     call.reject(false,null);return true;
+    case "END":
+     if(state==Call.STATE_RINGING)return false;
+     call.disconnect();return true;
+    case "SPEAKER_ON":return notificationSpeaker(call,true);
+    case "SPEAKER_OFF":return notificationSpeaker(call,false);
+    case "MUTE_ON":case "MUTE_OFF":
+     if(!CallNotifications.controllable(state))return false;
+     CallAudioState audio=service.getCallAudioState();boolean muted="MUTE_ON".equals(action);
+     if(audio==null||audio.isMuted()==muted)return false;
+     service.setMuted(muted);return true;
+    case "HOLD":case "RESUME":
+     Call.Details details=call.getDetails();
+     if(details==null||!details.can(Call.Details.CAPABILITY_HOLD))return false;
+     if("HOLD".equals(action)&&state==Call.STATE_ACTIVE){call.hold();return true;}
+     if("RESUME".equals(action)&&state==Call.STATE_HOLDING){call.unhold();return true;}
+     return false;
+    default:return false;
+   }
+  }catch(RuntimeException unavailable){
+   CallFailureReporter.record(service,"incall-island-action",unavailable);return false;
+  }
+ }
+ static void openIslandCall(Activity host,String token){
+  openIslandCall((Context)host,token);
+ }
+ static void openIslandCall(Context host,String token){
+  Call call=current;
+  if(host==null||host instanceof Activity&&(((Activity)host).isFinishing()||((Activity)host).isDestroyed())||!commandMatches(call,token))return;
+  try{
+   if(call.getState()==Call.STATE_DISCONNECTED||call.getState()==Call.STATE_DISCONNECTING)return;
+   int flags=Intent.FLAG_ACTIVITY_SINGLE_TOP;
+   if(!(host instanceof Activity))flags|=Intent.FLAG_ACTIVITY_NEW_TASK;
+   host.startActivity(new Intent(host,CallScreenActivity.class)
+     .setData(android.net.Uri.parse("dacaller-call-screen:"+token)).addFlags(flags));
+  }catch(RuntimeException unavailable){CallFailureReporter.record(host,"incall-island-open",unavailable);}
+ }
  static void setScreenVisible(boolean visible){
   PhoneSessionService service=instance;
   if(service!=null){service.screenVisible=visible;
@@ -267,7 +349,7 @@ public final class PhoneSessionService extends InCallService {
  }
  private static final class CallerIdentity {
   final String key,number,fallback;final boolean contactsAllowed;
-  String contactName;boolean requested;
+  String contactName;long contactId=-1;boolean requested;
   CallerIdentity(String key,String number,String fallback,boolean contactsAllowed){
    this.key=key;this.number=number;this.fallback=fallback;this.contactsAllowed=contactsAllowed;
   }
@@ -300,8 +382,10 @@ public final class PhoneSessionService extends InCallService {
     if(instance!=this||!calls.containsKey(call)||identities.get(call)!=expected||
       checkSelfPermission(Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED)return;
     if(id>0&&name!=null&&!name.trim().isEmpty()&&!name.equals(number))expected.contactName=name.trim();
+    expected.contactId=id>0?id:-1;
     if(current==call)try{updateNotification(call);}
      catch(RuntimeException failure){CallFailureReporter.record(this,"incall-contact-notification",failure);}
+    if(current==call)notifyViews();
    });
   }
   return identity;

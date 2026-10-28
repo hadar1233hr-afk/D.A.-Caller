@@ -1,0 +1,1518 @@
+{
+  "review_status": "PASS",
+  "screenshot_source_sha": "51f975011692c44cf348139e7d8d2569eec74d5d",
+  "screenshot_run_id": "40642457660",
+  "reviewed_app_tree": "48d9adfcc8341e8f36413313b63d2f4e8e5f569b",
+  "expected_png_count": 219,
+  "reviewed_png_count": 219,
+  "reviewed_at_utc": "2026-10-28T06:28:55.907490+00:00",
+  "verified_features": [
+    "compact_expanded_island",
+    "call_actions_guarded",
+    "island_customization_backup",
+    "activity_lifecycle_and_list_state",
+    "offline_no_overlay_permission"
+  ],
+  "group_counts": {
+    "call_design": 101,
+    "island": 36,
+    "widget": 17,
+    "settings": 4,
+    "personalization": 53,
+    "notification_and_back": 8
+  },
+  "native_environment": {
+    "api": 33,
+    "density_dpi": 240,
+    "status_bar_top_px": 36,
+    "navigation_bar_bottom_px": 72,
+    "navigation_bar_visible": true
+  },
+  "unit_tests": {
+    "tests": 239,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_tests": {
+    "tests": 29,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "review_method": "All219 fresh native PNGs personally inspected at original480x854 resolution in26 call,21 other and9 island2x2 sheets, with selected originals checked separately. Screenshots were never edited; sheets only arrange original pixels. Each independent group report and exact source captures are retained.",
+  "resolved_findings": [
+    "Expanded island spacing and temporary secondary-toolbar/FAB adaptation preserve a usable60dp real app list at320dp width/font1.3; actual contacts and recents images show no header overlap.",
+    "Exposed inset background follows actual app palette and restores original drawable on hide/stop.",
+    "All four settings compositor captures have native status/navigation pixel contrast, with three consecutive valid samples before saving the exact checked bitmap."
+  ],
+  "bounded_findings": [
+    {
+      "severity": "minor",
+      "files": [
+        "call-emerald-dark-normal-largefont.png",
+        "call-emerald-dark-normal-longname-he.png",
+        "call-emerald-light-normal-largefont.png"
+      ],
+      "description": "The Hebrew New call caption ellipsizes at font1.3 in the existing emerald/iOS three-column normal grid. Its icon remains fully visible; this was already recorded in beta7."
+    },
+    {
+      "severity": "expected",
+      "files": [
+        "call-emerald-dark-audio-longname-en.png",
+        "call-emerald-dark-audio-longname-he.png",
+        "call-emerald-dark-normal-longname-en.png",
+        "call-emerald-dark-normal-longname-he.png",
+        "call-frost-dark-audio-longname-en.png",
+        "call-frost-dark-audio-longname-he.png",
+        "call-frost-dark-normal-longname-en.png",
+        "call-frost-dark-normal-longname-he.png",
+        "call-graphite-dark-audio-longname-en.png",
+        "call-graphite-dark-audio-longname-he.png",
+        "call-graphite-dark-normal-longname-en.png",
+        "call-graphite-dark-normal-longname-he.png",
+        "call-ivory-dark-audio-longname-en.png",
+        "call-ivory-dark-audio-longname-he.png",
+        "call-ivory-dark-normal-longname-en.png",
+        "call-ivory-dark-normal-longname-he.png",
+        "call-pixel-dark-audio-longname-en.png",
+        "call-pixel-dark-audio-longname-he.png",
+        "call-pixel-dark-normal-longname-en.png",
+        "call-pixel-dark-normal-longname-he.png"
+      ],
+      "description": "Intentionally long synthetic contact names ellipsize in bounded caller headers. Numbers and main call controls remain visible."
+    },
+    {
+      "severity": "minor",
+      "files": [
+        "call-integration-notification-active-private-he.png",
+        "call-integration-notification-outgoing-he.png"
+      ],
+      "description": "At font 1.3 the native Hebrew speaker-on caption is ellipsized. Speaker icon and action remain visible; fictional caller identity and call state remain fully legible in the notification body. Freshly observed in both named source7 captures."
+    },
+    {
+      "severity": "expected",
+      "files": [
+        "personalization-contacts-dark-en-largefont-collapsed.png",
+        "personalization-contacts-dark-en-largefont-expanded.png",
+        "personalization-contacts-dark-en-standard-collapsed.png",
+        "personalization-contacts-dark-en-standard-expanded.png",
+        "personalization-contacts-dark-he-largefont-collapsed.png",
+        "personalization-contacts-dark-he-largefont-expanded.png",
+        "personalization-contacts-dark-he-standard-collapsed.png",
+        "personalization-contacts-dark-he-standard-expanded.png",
+        "personalization-contacts-light-en-largefont-collapsed.png",
+        "personalization-contacts-light-en-largefont-expanded.png",
+        "personalization-contacts-light-en-standard-collapsed.png",
+        "personalization-contacts-light-en-standard-expanded.png",
+        "personalization-contacts-light-he-largefont-collapsed.png",
+        "personalization-contacts-light-he-largefont-expanded.png",
+        "personalization-contacts-light-he-standard-collapsed.png",
+        "personalization-contacts-light-he-standard-expanded.png",
+        "personalization-contacts-shape-circle.png",
+        "personalization-contacts-shape-hexagon.png",
+        "personalization-contacts-shape-rounded_square.png",
+        "personalization-contacts-shape-square.png",
+        "personalization-recents-dark-en-largefont-compact.png",
+        "personalization-recents-dark-en-largefont-expanded.png",
+        "personalization-recents-dark-en-standard-compact.png",
+        "personalization-recents-dark-en-standard-expanded.png",
+        "personalization-recents-dark-he-largefont-compact.png",
+        "personalization-recents-dark-he-largefont-expanded.png",
+        "personalization-recents-dark-he-standard-compact.png",
+        "personalization-recents-dark-he-standard-expanded.png",
+        "personalization-recents-light-en-largefont-compact.png",
+        "personalization-recents-light-en-largefont-expanded.png",
+        "personalization-recents-light-en-standard-compact.png",
+        "personalization-recents-light-en-standard-expanded.png",
+        "personalization-recents-light-he-largefont-compact.png",
+        "personalization-recents-light-he-largefont-expanded.png",
+        "personalization-recents-light-he-standard-compact.png",
+        "personalization-recents-light-he-standard-expanded.png"
+      ],
+      "description": "Long English contact/favorite labels and secondary recent-call date metadata ellipsize within bounded rows. Primary phone numbers, navigation and call icons remain legible. The existing floating dial control overlaps a low list row/action in these scrollable lists; no new island overlap is present in this baseline subset."
+    },
+    {
+      "severity": "expected",
+      "files": [
+        "widget-dark-favorites-2x2-largefont.png",
+        "widget-light-favorites-2x2-largefont.png",
+        "widget-dark-quick-1x1.png",
+        "widget-light-quick-1x1.png",
+        "personalization-widgets-shape-circle.png",
+        "personalization-widgets-shape-hexagon.png",
+        "personalization-widgets-shape-rounded_square.png",
+        "personalization-widgets-shape-square.png"
+      ],
+      "description": "Narrow large-font widget branding and long quick-contact or shape-preview favorite names ellipsize. All four names in each narrow favorites grid remain readable; quick-contact initials and target label remain visible, and all five shape-preview favorites retain distinct avatar positions and readable bounded labels."
+    },
+    {
+      "severity": "expected",
+      "files": [
+        "personalization-chooser-dark-icons-bottom.png",
+        "personalization-chooser-dark-icons.png",
+        "personalization-chooser-light-icons-bottom.png",
+        "personalization-chooser-light-icons.png"
+      ],
+      "description": "The five-icon chooser is scrollable at font 1.3: top captures partly hide the fifth row behind the footer, and bottom captures fully expose it while clipping the first row at the scrolled top. Across each theme pair, all five icon artworks and names are readable."
+    },
+    {
+      "severity": "expected",
+      "files": [
+        "island-apple-dark-en-compact.png",
+        "island-apple-light-en-compact.png",
+        "island-emerald-dark-en-compact.png",
+        "island-emerald-light-en-compact.png",
+        "island-glass-dark-en-compact.png",
+        "island-glass-light-en-compact.png"
+      ],
+      "description": "The English caller ellipsizes in the intentionally compact260dp capsule atfont1.3; fullcaller remains readable after expansion and the phase/timer/controls fit."
+    },
+    {
+      "severity": "minor_fixture_only",
+      "files": [
+        "island-apple-light-he-compact.png"
+      ],
+      "description": "The native status-clock icons have low contrast during the first light DEBUG-fixture capture. The capsule and dark native navigation buttons remain readable; the following expanded fixture capture and allfour actual app/settings captures have proper system-bar contrast. This is recorded as a fixture transition limit; no persistent production-screen bar defect is established."
+    }
+  ],
+  "blocking_findings": [],
+  "scope_limits": [
+    "Synthetic call-state screenshots do not verify physical SIM/carrier/Bluetooth audio, proximity or full TalkBack behavior.",
+    "This review covers only the 101 call-design regression captures. Root and another reviewer cover 36 island and 82 other captures.",
+    "No physical SIM/carrier, Bluetooth routing, Jelly Star, proximity, lock-screen/ringing or full TalkBack walkthrough is claimed.",
+    "Notification call states are synthetic using the production builder and a real phoneCall foreground service; visual inspection does not certify physical Telecom behavior.",
+    "Backup document result is supplied by instrumentation; not every external document-provider interface is verified.",
+    "This visual review covers only the 82 named files; the new island settings/native-bar stability captures and physical telephony are outside this subset.",
+    "Call state and fictional caller/initial are synthetic. Real production renderer/controller and native navigation/acknowledgement are exercised; Telecom commands are separately unit-tested.",
+    "Actual app captures use Hebrew, dark, classic style, compact summary andfont1.3 on320dp width. Other extreme combinations are not claimed as exhaustively verified.",
+    "No physical SIM/Bluetooth/Jelly Star or full TalkBack walkthrough. Code review notes compactelapsed is not separately announced and an expandedroot may expose a no-op accessibilityclick; childcontrols and expanded duration are exposed.",
+    "Only the screenshot MainActivity observers are detached and its existing provider workers drained before fictional rows are installed. Real provider behavior remains enabled and separately tested in production/other native regressions.",
+    "Call states are synthetic; native UI/controller/session acknowledgement and navigation are real. Actual Telecom commands are separately unit-tested.",
+    "No physical SIM, Bluetooth, proximity, ringtone/lock-screen, Jelly Star, full TalkBack or matching-installed-key upgrade was verified.",
+    "Small-screen actual-app captures use the pictured default compact summary; more demanding combinations are not claimed as exhaustively verified."
+  ],
+  "files": [
+    {
+      "name": "call-emerald-dark-audio-largefont.png",
+      "sha256": "94ab4a64023fa59b99edcce5bf09927b40a93b9e8c42652d8bc9af449732f6de",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-emerald-dark-audio-longname-en.png",
+      "sha256": "e4c5fe82b9e958ba12a1ad7af5baa8d968d58e7f55ccbbd27df9b38be8f21daf",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-emerald-dark-audio-longname-he.png",
+      "sha256": "73e83ff8f3045a822667c25b67386cab2d9c4fad324a409543fab2bac9b36663",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-emerald-dark-audio-standard.png",
+      "sha256": "f2a998f9ba927104571e1da771f3c5d7c5f679dcb0ae30a227ebbef3cd63d686",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-emerald-dark-keypad-largefont.png",
+      "sha256": "aa7990c6f20473617d687bd87e4e9dd3d5b8a5a5e0f52b367f287b261a028e87",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-emerald-dark-keypad-standard.png",
+      "sha256": "936dcc99dd0168709d1781f5dd160176912afb3ac09b35f14bcbe4adf7dafb41",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-emerald-dark-more-largefont.png",
+      "sha256": "71f7af32d0dbfb56aa476538c13b03f9d8028e68b50ab140177f8945b8039da2",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-emerald-dark-more-standard.png",
+      "sha256": "9c3674e40c2058ac1108f15ddbc2eda94343a87d3b4d91f459a12484d6acb254",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-emerald-dark-normal-largefont.png",
+      "sha256": "b0ba275c230da581081373586f547257feb4e26afdbbbcdc75454702bfc7cbb6",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-emerald-dark-normal-longname-en.png",
+      "sha256": "681c26083dd7018472f64516d05be3343cde89dd0118f337d9b08f7acf21daac",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-emerald-dark-normal-longname-he.png",
+      "sha256": "ac2f6fcdac23ccf7a417116716920f2a57c2d17ee4799a9ffe80899d7274374a",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-emerald-dark-normal-standard.png",
+      "sha256": "4b4171578684f1c231144444c7f7ee2626fabac1f366b19867db37cc15c862c4",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-emerald-light-audio-largefont.png",
+      "sha256": "5990451fb2a295134107c26dbd55ff36cc1a468ac74e26dccd1f5c2097f19703",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-emerald-light-audio-standard.png",
+      "sha256": "de2cd0e344f6e24d60bcc01ede5648b4f36c81e66b4bfae0637aa3b33fac0cf0",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-emerald-light-keypad-largefont.png",
+      "sha256": "4f361673f695094f9544a5812ca4d4a6902195b2a5849e631229316c52415dab",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-emerald-light-keypad-standard.png",
+      "sha256": "643fb22f15459602b1a9983f011b4f2909e84241b31af92cc26e13d5d5160f1c",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-emerald-light-more-largefont.png",
+      "sha256": "cd168dbfecc2c76ce0a86300c0984706e8f223ddc16033c34e191ff082104d2d",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-emerald-light-more-standard.png",
+      "sha256": "24a3fce3d1bbf4908575ebdbcbad8b8b8710f81660ff7d789f3950333dc0a7af",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-emerald-light-normal-largefont.png",
+      "sha256": "05be2f4536d7feb033ebb677584dfb9ad70d1c0f696c8bcdc1e66e29d196de60",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-emerald-light-normal-standard.png",
+      "sha256": "10cad9f3947cfc3c6f7bd989fdaf320126c77b791c94bb36b2ce5f468b5aa219",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-frost-dark-audio-largefont.png",
+      "sha256": "89d2a218700a0cd8e1967e7742b324d2f8297a7ad40c5fd6715a6432c692759a",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-frost-dark-audio-longname-en.png",
+      "sha256": "daa26429959e2671e921ac6e03f8c19fb6952dcef1c713038fffb5ac21282a56",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-frost-dark-audio-longname-he.png",
+      "sha256": "045ffc28d44135d94707c71ee2234b89242c320c2b7c0d74f519bc076a51c57c",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-frost-dark-audio-standard.png",
+      "sha256": "1914576392d930ea28fc305f59de127fa62aeb500cf01eded4bfcc39b99eb3e6",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-frost-dark-keypad-largefont.png",
+      "sha256": "8b2da3cb7f2b9cc44cf656872d61d26096d41ba93a2f239111c97a0e12f3a6cf",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-frost-dark-keypad-standard.png",
+      "sha256": "28f48d57056551db76b498753e8ee9fa9f346c001284f722e68e942949c85096",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-frost-dark-more-largefont.png",
+      "sha256": "4dfbc417f4847fb3dbfc0c4db9a97b1d69716b48e80155f8eaf9670526fd397d",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-frost-dark-more-standard.png",
+      "sha256": "8235aa0f6dfc918dde560bc9ff148d9922440150983af70d8c4f4ac455d30c7a",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-frost-dark-normal-largefont.png",
+      "sha256": "36b2b074fcad78110491d29f2057974d96519565c1d553987abd970eaea583fc",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-frost-dark-normal-longname-en.png",
+      "sha256": "272dab4863ecb11bf491d1262c5b32cf1830ad0cc873c0c97c9bd2bd5714c86c",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-frost-dark-normal-longname-he.png",
+      "sha256": "8a84f06fedcdabb6d7a47a3ef2cf5775c37601c485eeed1efa133ddb1b136b9f",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-frost-dark-normal-standard.png",
+      "sha256": "4b48a5e2f702e2446a18b5ef6fce611fe60339facb25c420f4a95a961a0b3855",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-frost-light-audio-largefont.png",
+      "sha256": "6126eba679515906981ed0767def82aed485bf5c5530365bd137c3637ae0b925",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-frost-light-audio-standard.png",
+      "sha256": "e7f89f1146c50cce3526e8148fb7810ff843a90d0e1d146c39a054cdf00672fd",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-frost-light-keypad-largefont.png",
+      "sha256": "afd3a8ae3871cf2aeca6c2ad04a3822ed17759a8387a5227643e1b3421f78fcf",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-frost-light-keypad-standard.png",
+      "sha256": "50baf2d7f33df1afd5c2648e4db674a9ab17e8d1c5a2641cc50396caa3e0a3ad",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-frost-light-more-largefont.png",
+      "sha256": "ecad4b8e48f79b2ff6ae59fbc5e0efb89a28799eec1652c48aa348fac34f7469",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-frost-light-more-standard.png",
+      "sha256": "31ee5cfeadf0e570e3563265ce7ee6328680b28f814d83d1a239d07ad353de77",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-frost-light-normal-largefont.png",
+      "sha256": "f64c93239c0f7ed07d96f1d5a4c5242afee4f2e9bf08e524dbb9829ac71d45a2",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-frost-light-normal-standard.png",
+      "sha256": "70766f15318ce58a6309730a257472186e23f78f3f42caddbf3262f5d19ad961",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-graphite-dark-audio-largefont.png",
+      "sha256": "0a8280af9b355f8ed7733e909270e52eeb5eb15a9c7ce389a551413fc4338a02",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-graphite-dark-audio-longname-en.png",
+      "sha256": "6922b8d94453f80b21dce2ba71dad9c58adb3462ec62776a16fc0d727fdbc018",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-graphite-dark-audio-longname-he.png",
+      "sha256": "3ac35f1a1516a9f803fa1a06a6a63aedb4bb04bb2727909a0ba7b21fb0c918f7",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-graphite-dark-audio-standard.png",
+      "sha256": "29170a425b8dc2be78933f287b6fd37652c342c1c597a8c9d8bd72bb77abad5c",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-graphite-dark-keypad-largefont.png",
+      "sha256": "6a9e6e356d3a90538cad857b03c31f3d846e4a9edc1181da7b0c42c36849833c",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-graphite-dark-keypad-standard.png",
+      "sha256": "aeb751238c5df28e186ebf7161860fbb1382604bcf939a4239b69099156e8a4e",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-graphite-dark-more-largefont.png",
+      "sha256": "42d6be82c917989e98f0ceef9ca1440e291543e41bd65e01cadcafdc177e5cf5",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-graphite-dark-more-standard.png",
+      "sha256": "3d8f59cdda5fb0b8481bfc6ec64ed2aab74e34826b7599faee3900872a6c17d9",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-graphite-dark-normal-largefont.png",
+      "sha256": "b8ab574675d4d7f569130f80c7915bde1f18daec259ff61d5bb0c49536865814",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-graphite-dark-normal-longname-en.png",
+      "sha256": "b224df5559589b528fc0ad6e0512c480ff4a0a58d5c79aa1cf8d896c1fecea1a",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-graphite-dark-normal-longname-he.png",
+      "sha256": "265116f5c1635b04b02e5b06eaa1754d1f42da3b221c07ded319534b4296acfa",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-graphite-dark-normal-standard.png",
+      "sha256": "5ce8c8483eab70675052f54e451c51cc8797e606b0d2092cd90523f57fbbe918",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-graphite-light-audio-largefont.png",
+      "sha256": "ca28ff4526d32e1feb12239fc5ad771a636c24e5e645599e5140c0cfae9d135c",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-graphite-light-audio-standard.png",
+      "sha256": "1853bb4e017f9ef6de0a75062eaa4f2f368a57628dcae8bfe1c88d1b6cf690d2",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-graphite-light-keypad-largefont.png",
+      "sha256": "511d4d33240a5f7d91eb82e0f47a09dd2ae583e759ac1473a528bb797af915b7",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-graphite-light-keypad-standard.png",
+      "sha256": "a4a8142daa86c3a54414bd8ae03600c9b97a2e62a92c8cc50603d4d7081a036f",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-graphite-light-more-largefont.png",
+      "sha256": "681af8a7186e4bad784555b5943197f0b051085f38f03685be4eeda3251f6c5f",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-graphite-light-more-standard.png",
+      "sha256": "d8987622d988110e8999afea921803295f5b23034b760bbe3056b9bf8374085c",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-graphite-light-normal-largefont.png",
+      "sha256": "0b6c0195c7e3c81ba5479ea02ea1544e7ef50a38072889c1c1e2a76ee12bd1b2",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-graphite-light-normal-standard.png",
+      "sha256": "076eb2716dfc9d7962066a2240465614d9ea380b5738b1dfca43370d8d6cab05",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-integration-notification-active-private-en.png",
+      "sha256": "a75bc36d702f31896d68bf26b98b844c2bc903315fa2f1742845bf7d4286818b",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "call-integration-notification-active-private-he.png",
+      "sha256": "fc26cea74cb49396f7353f5908aee060f1fe1414a31eb371d65c1baa84ab864f",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "call-integration-notification-active-speaker-en.png",
+      "sha256": "ca197fce456cbb658c930674fe0ed2b52276d91e9d108ee5f706af3efafd542f",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "call-integration-notification-active-speaker-he.png",
+      "sha256": "885365af361bdba92aefd280756840e492191c10f2f1791cf2ce74bbe554070f",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "call-integration-notification-incoming-he.png",
+      "sha256": "636fb01574df76a02cc7b0aa0ea019130996abc1f1355e153d1ea9d371bf75ab",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "call-integration-notification-outgoing-he.png",
+      "sha256": "8c5d033759c7e7a8a5b56af4dba238cf4fe8f585a4a5ddf5c66bee7329ab8575",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "call-integration-return-contacts.png",
+      "sha256": "5c7b685e6204f0e36de12afa0c886290344743c8c1049a18a2a7c2bfc56e4d62",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "call-integration-return-settings.png",
+      "sha256": "e330142343752d631f8bdf2ca1080ded1498c14c1053f9371391b3c7378e2a83",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "call-ivory-dark-audio-largefont.png",
+      "sha256": "589a4bd8fbfbf2c74a9a0c0369ce0ee654055b8992e944a56d33906122aa2311",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-ivory-dark-audio-longname-en.png",
+      "sha256": "ae766a1b7e716fefaadb9e4892ed1c14cd9df79c4ff8558b62b831ccdd1c500e",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-ivory-dark-audio-longname-he.png",
+      "sha256": "57ffe3b281052e47b5f422b35225e2c0d9d5b4eff104972684697e9d857d7a78",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-ivory-dark-audio-standard.png",
+      "sha256": "f806d0c30e38110c1bd85173b5ea78a32b356eb025388c2a7aeb668490b88cba",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-ivory-dark-keypad-largefont.png",
+      "sha256": "848ebf90602705bbdd2623d4a324f841caa6499781a5aa048ba32fb6f9665063",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-ivory-dark-keypad-standard.png",
+      "sha256": "5f6e9a5d119438cddecc218ef5471a497d0bc668dcad721c242a804a874626b3",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-ivory-dark-more-largefont.png",
+      "sha256": "bd0e20dfd7ba939160fb50ba0a1747f471ae4b99f4d6babcec522e4487f29b3b",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-ivory-dark-more-standard.png",
+      "sha256": "8b29b3d8f15b0da22076840d7dad8f0c157698c13e918170c6e5e74cfcd7a190",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-ivory-dark-normal-largefont.png",
+      "sha256": "290c7cfbbc5e97b1a37d0f4fbfa2680013b5664716fe757cf4f0cc691c8ef0f2",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-ivory-dark-normal-longname-en.png",
+      "sha256": "cbba552591558bf00794e2d0b115cf8aaff68d9254946b4a68c66227e744a260",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-ivory-dark-normal-longname-he.png",
+      "sha256": "20c7e46d26049eb0354cd9014dc988469163a818102f72562001ea6de433395d",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-ivory-dark-normal-standard.png",
+      "sha256": "76dc2149c827d015006f8463e94e447b2758092cab3483a2d3ce12a3b9db054b",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-ivory-light-audio-largefont.png",
+      "sha256": "84ac6a70fbaf3a99d977f7f6997051a08b3e3b5b29b5b5e0e5b9ecec4f3b20cf",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-ivory-light-audio-standard.png",
+      "sha256": "abecdb1c97b9c97e85d31a38e0d91f65413acbe9848783f8267c6cdcfeacc462",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-ivory-light-keypad-largefont.png",
+      "sha256": "9280f3d4a7d1c7ddf5f09e0603c315bcc43632bc351735f6e188dd115792d7d8",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-ivory-light-keypad-standard.png",
+      "sha256": "3c2167a5d4131c536e2446f27381d2234e89b42c5bdf18ceef2c3eb930cdb32b",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-ivory-light-more-largefont.png",
+      "sha256": "c0ff3e55d5e23b4d5c4da8e8ccc6db00f5ad209e3f7630719b138c4f62c5b8d6",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-ivory-light-more-standard.png",
+      "sha256": "7d05e3ad2707a95f2793456768bbd5d5233cb2a29972599a6e2354bfd50cf1d5",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-ivory-light-normal-largefont.png",
+      "sha256": "8b74468a592e02e064c4a37e67a65da11e149e4877f30ce468e8ea238689a2e4",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-ivory-light-normal-standard.png",
+      "sha256": "18f6b1c7fd9f77a22ef1bb2d924022c99ab8c1822e97bbb435c7f0bc6a7f7941",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-pixel-dark-audio-largefont.png",
+      "sha256": "5609bab39209fa0d40f99ffe75222c0bf1c4b204b11d7debb911189c371b7e17",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-pixel-dark-audio-longname-en.png",
+      "sha256": "73e07e7fa15cceed44ad15837227d5e71c90ce8a50bbe718d32d821552724f8b",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-pixel-dark-audio-longname-he.png",
+      "sha256": "dbb3d2eea5ea30d2e775f534204c26def71ff6fe27ffce5c0af845f77c88bb52",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-pixel-dark-audio-standard.png",
+      "sha256": "3dde24012ff207dafcdbe8dc05f82d60fafc0c0807ea2e9acb9d4062457686d4",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-pixel-dark-keypad-largefont.png",
+      "sha256": "1625d5a2af38abd66ae19d308b56774e522c335895cd7cba9a8551c86b81246e",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-pixel-dark-keypad-standard.png",
+      "sha256": "01b8cd28bd42f6142dff03fb12204537f0f89849b757dc965671acf5a4731aa0",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-pixel-dark-more-largefont.png",
+      "sha256": "e7c19434c08440d3ae189d71c4328d04e106dc8411880af9137b9add4dfc4168",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-pixel-dark-more-standard.png",
+      "sha256": "c4e39778c14d31a0d0daf33277409cdc3b40086d15a153cf6bb9be588ab32788",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-pixel-dark-normal-largefont.png",
+      "sha256": "daf3eb5022d0cc2c5d2f4fbb2f947992471a65a10dc6d703f003daa78955020e",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-pixel-dark-normal-longname-en.png",
+      "sha256": "3e0ad75bda353b4b2a5cf19a3ff6ed1bb66b2f6f46fc3aab9fd0cfc14ac4a477",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-pixel-dark-normal-longname-he.png",
+      "sha256": "3a06ea251d6da534a0c713fb8fd419a498a9d343d3e83dbe1802dbd42163e24b",
+      "review_group": "call",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "call-pixel-dark-normal-standard.png",
+      "sha256": "2d9f68ed61f60cedb66d611ae175332ff118c930d2d82853ea6529ef0c70ab7a",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-pixel-light-audio-english-no-bluetooth.png",
+      "sha256": "ca87467a09ba93cbb8696e77a491a4f4711cde4037fcbf9759d68cd29d1fe336",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-pixel-light-audio-largefont.png",
+      "sha256": "e8bb3e220c0663db97f087ee0a35771a8cd9080b1369a28de0e4efcb2a5d17bd",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-pixel-light-audio-standard.png",
+      "sha256": "74b6512f3872529be58fb4d2597f3d2d6d98ff0780b32b174f8466b8e4181a78",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-pixel-light-keypad-largefont.png",
+      "sha256": "a77ad543fef4d91de1b9d20c4237ac91a977b31290e539f24c01d00d79af469f",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-pixel-light-keypad-standard.png",
+      "sha256": "16e825412486e26d9a001d4589f57d9adab1be9cce67299327f36b429b759d9d",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-pixel-light-more-largefont.png",
+      "sha256": "2b9fff630d1baf8e99d2b2386c7ecddce11d10f9fe92e4d3894cbe97d479e55d",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-pixel-light-more-standard.png",
+      "sha256": "4492cf2642acc0ace259e0d69cc815635f2b337f799d8b0a9c5e8b9813957c61",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-pixel-light-normal-largefont.png",
+      "sha256": "8351d6e863fd00c4de2b9176b95f1bd5c424b6ab26d0efa8a6022b12963d485c",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "call-pixel-light-normal-standard.png",
+      "sha256": "2bc75a121812740a08f987379a299a0967a1bd0d77a1475a976ec43e3c0557b7",
+      "review_group": "call",
+      "status": "PASS"
+    },
+    {
+      "name": "island-app-contacts-compact.png",
+      "sha256": "05ae288a2761ee6829f561c73158b6eb75feefbf6a9b5a912bbb10af8f77bfd7",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-app-contacts-expanded.png",
+      "sha256": "05db66ad3fe2095a4d23c4b16e1aee19ad55b2b6bf79a4672283347633543000",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-app-recents-compact.png",
+      "sha256": "56074a682c302e2ca62c991caba9b0354586a8745b10b13ffe6e78f7df9f6213",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-app-recents-expanded.png",
+      "sha256": "a0679aefa3dde66b25c26cf5b732e8e0dff97e89f82ea95a2fa204d3912a556b",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-apple-dark-en-compact.png",
+      "sha256": "717cf84c2b5625715fe32e815382c7deb4033aaed08d5b17390671462a494f67",
+      "review_group": "island",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "island-apple-dark-en-expanded.png",
+      "sha256": "5718bf888e5885cfa3b39b493c029d856df1ec3016dc3939cca371e5f1262856",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-apple-dark-he-compact.png",
+      "sha256": "f86110f86c8f02234183df91bc4bf913ca357e5c794c536a5962bd7e8adfff26",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-apple-dark-he-expanded.png",
+      "sha256": "10e70e1c0747961f1f32b7528d0faa3f102c8dea74050161c7fc45439d06a9ca",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-apple-light-en-compact.png",
+      "sha256": "7348a48c626ab6df439265ab378fcfde4ae8dbd66ca8ead1d338c62f9aaff200",
+      "review_group": "island",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "island-apple-light-en-expanded.png",
+      "sha256": "9b68bf4ebf2a065edfa71f88ac22a877757e9bb8352ca254af24b5b63ec78a7f",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-apple-light-he-compact.png",
+      "sha256": "f378d874738f59d592cfc841ec67f85cee89ed6219d4718aa326ba0a20e51087",
+      "review_group": "island",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "island-apple-light-he-expanded.png",
+      "sha256": "4206c1ab3f726157bc0ad0956bbec741cd0f99437c28aa7668f61b4d3a530407",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-emerald-dark-en-compact.png",
+      "sha256": "c7c83d209b5879e98d866cff25f101c0d3362b878b04a75543b39debb2dab5fa",
+      "review_group": "island",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "island-emerald-dark-en-expanded.png",
+      "sha256": "cf4b03391044131d0098519f6e7b688aa9a88adafc142157635fc31ff31058d1",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-emerald-dark-he-compact.png",
+      "sha256": "130cabd78f12109c3085e1f5d8247383b334b5fe74849d1035c5b2767e1d530e",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-emerald-dark-he-expanded.png",
+      "sha256": "5edadaf596cc4f100410fdc929a9dee892b07fdddf952a62b83c26a089e52721",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-emerald-light-en-compact.png",
+      "sha256": "835f9d1bf923750424c7b3c2b890a74c13722b18b988fbaaffcd772cb0e9da67",
+      "review_group": "island",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "island-emerald-light-en-expanded.png",
+      "sha256": "ab9811ed867acc1ae9d133bd67701713ddd5bd5dc4610321bd644d18620cb382",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-emerald-light-he-compact.png",
+      "sha256": "39f8cbe4b3947c6cdf22ada5ad58ee7c92364c7652bc770591a06f9d84170919",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-emerald-light-he-expanded.png",
+      "sha256": "a271a5f6bb08fb85ae60f283edf7b76a484d5cd14e4f9cc1cdb06955dc27d786",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-glass-dark-en-compact.png",
+      "sha256": "1d78f3eca8290b280df5640ff35b46885417d65f53fc9a0d9372257fe3596ef1",
+      "review_group": "island",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "island-glass-dark-en-expanded.png",
+      "sha256": "a8d1ccdfd2f80024b77d7a7e3df9a8dcebbbae131397a7e7f0e047d14bbd6a3e",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-glass-dark-he-compact.png",
+      "sha256": "e08b261cb4d5b1fcf9c85b498c249a6ce23d90be3cc6f580127530e1d67b2d8f",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-glass-dark-he-expanded.png",
+      "sha256": "62846448d9489dcf6e7a05c04c2059db3be73216b1b0d90f836020415f48457e",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-glass-light-en-compact.png",
+      "sha256": "f5f35523886b1b5d02edcb32c921c7d20047dc10637ad66d036ca34beece46ff",
+      "review_group": "island",
+      "status": "BOUNDED"
+    },
+    {
+      "name": "island-glass-light-en-expanded.png",
+      "sha256": "b71c4a9c6c84bd72df948a7d989188efe64fb3c4e34c80485f6d3a61371d7103",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-glass-light-he-compact.png",
+      "sha256": "41054cd59c10682d18d92926ae052dd3ba04e8c617b94b1d7f7c0f7f0c487541",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-glass-light-he-expanded.png",
+      "sha256": "6020ba82fbc6f9e43e95a28234cfe23c9f27b4dba491f33413fc6dd060f6fbfb",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-settings-dark-bottom.png",
+      "sha256": "7c57a4ff0651f32770fff373557369b98063c7f6d2654ea1f0795824b83d084a",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-settings-dark.png",
+      "sha256": "4a3d43558a57b410d0d3f258ae27855870fb0463fe48654731e0d9bba978447c",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-settings-light-bottom.png",
+      "sha256": "c68d1c48adcfe8c68e01949a7dd48e27342ec26b4c96e7bca85e2c98b8e96b24",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-settings-light.png",
+      "sha256": "c25d0ca2d14b655503cf3efe980f70dcfa117674ea1447bdc5a19098458175e9",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-state-held.png",
+      "sha256": "bf91d11e6c5d1c4f1fbd592e8d840e1a571e1900aba57f8ed089f0101815833c",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-state-incoming.png",
+      "sha256": "0710357223905c9dd5b4ef4001c91ef429ad7454c877e5bd09e82dcf985326fd",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-state-noaudio.png",
+      "sha256": "d6e640af89deaf37cc762979cc053a9dabf20f649b3f27e435420f29064d9760",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "island-state-outgoing.png",
+      "sha256": "40561f751df8c4fc8a2b87a2721e5b5717909edd29583dc9d7e08f7b9613c77f",
+      "review_group": "island",
+      "status": "PASS"
+    },
+    {
+      "name": "personalization-archive-dark.png",
+      "sha256": "a3470d4ae1dde730235688e1cb9f65dc14697d1b82be518c496c9684b2010809",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "personalization-archive-light.png",
+      "sha256": "e1f9086d0637066acee971bcf0bf246a983059742821fc2bd3a9d1b2568a95bf",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "personalization-backup-restore-confirmation.png",
+      "sha256": "d2d0d6d6af2fe94c9b7e30d0c63e9d183c8ae76c7faa49972be0de182705102b",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "personalization-backup-saved-dark.png",
+      "sha256": "1da7f7c22ad315aa68561916fc2906ff4fdc3a976e790ba29a747c1547357e36",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "personalization-backup-saved-light.png",
+      "sha256": "6db6eae4ec9e2b98ec2a63f9a8dbac72626da0d99a977087ac69b4b17ad2ec64",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "personalization-chooser-dark-avatar_shapes-bottom.png",
+      "sha256": "723350ee952fd286b9cce3b065052d43255c2056a717062b7b327961d4b0e546",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "personalization-chooser-dark-avatar_shapes.png",
+      "sha256": "723350ee952fd286b9cce3b065052d43255c2056a717062b7b327961d4b0e546",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "personalization-chooser-dark-icons-bottom.png",
+      "sha256": "ccc65b0b2f5d60cc96367f1a282cb156ed97f022f81227b512cc526a562a333e",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-chooser-dark-icons.png",
+      "sha256": "f60e3bd1f69675721f062b4de133cd5b9725866cf4528924276500b8fb5f04c6",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-chooser-light-avatar_shapes-bottom.png",
+      "sha256": "933dd184b70be7397c218b891177a7abd33d2c0debe099ffd960d7f83056e3b2",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "personalization-chooser-light-avatar_shapes.png",
+      "sha256": "933dd184b70be7397c218b891177a7abd33d2c0debe099ffd960d7f83056e3b2",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "personalization-chooser-light-icons-bottom.png",
+      "sha256": "b11510a25ca96fa3d9c9eb6d83b1c8595aedf89579a8fd6b2d489a4349b6ab49",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-chooser-light-icons.png",
+      "sha256": "7961393398befc6facf104b288f70a77c69364c0de51d845aeb14f8a4b9323a1",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-dark-en-largefont-collapsed.png",
+      "sha256": "bbb654203f57ddf5f71b3aa6f406650da1be54c07069585f76d6d50c1e428258",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-dark-en-largefont-expanded.png",
+      "sha256": "1331ec0ad2d28fcea4bf7e7668d116fcc56d408465a39d26a61391bfe38496dc",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-dark-en-standard-collapsed.png",
+      "sha256": "6942e87d9b89fa33f2ed130f18545c66a385d14fe81bb43cd4c5855e03d03264",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-dark-en-standard-expanded.png",
+      "sha256": "902c175da86e3521c38ca46fb912c5c0a1b57a688f29373ec0c376f91d4925d9",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-dark-he-largefont-collapsed.png",
+      "sha256": "855f0d2052616aeffe4e99eb24c4e2cc88037fb7acf9b24438102f111d4b9638",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-dark-he-largefont-expanded.png",
+      "sha256": "dcf25bf6aa7ce4f3408e1c8c2abfe3c2ca6c6a07750e14bc1da6c9c4114fcccf",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-dark-he-standard-collapsed.png",
+      "sha256": "608ee2daaa72ac77c3aaa9a9c9e929428c6e14cb10b97c027c008b00ca9d149f",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-dark-he-standard-expanded.png",
+      "sha256": "fcc28622e4e909076e5aed2884fd19e4015de0eee5175a24d438aaf925a8abb2",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-light-en-largefont-collapsed.png",
+      "sha256": "bb1a9ae3e6f5c5d425aded570950199bac8ce61f204c240e641c7ab6f3cb167b",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-light-en-largefont-expanded.png",
+      "sha256": "d0b5e9931d45b4a875b1a39933a54673b4e230d728946799790c43b36b22ac89",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-light-en-standard-collapsed.png",
+      "sha256": "311e4d31234ece0c7c1e20b2bdaead5745db4f6adb78b2692c7c85211157de48",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-light-en-standard-expanded.png",
+      "sha256": "0ec7dd36bbc4a75149172e4a511fb7492f716969107d57ea4cb12a641fda6a2a",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-light-he-largefont-collapsed.png",
+      "sha256": "3e4badb2223803349f18a2a9a9a36cf97cd60aefbce7bf367be1e13fcd803f9c",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-light-he-largefont-expanded.png",
+      "sha256": "d3d081705da19a7d8ee1fea96e4c282a28e7468abb6fa37d7e2931c739a32bed",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-light-he-standard-collapsed.png",
+      "sha256": "493b6965b9a8d7793cac69d380c83e5f7f55685e80519566b752ec47cee80c53",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-light-he-standard-expanded.png",
+      "sha256": "17f816b972a05a778d8a3c88be2a0305975b8ea040b172ae2c7b013e3d2fc555",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-shape-circle.png",
+      "sha256": "186c39bbbb4180c6468a70c2fc2d3a120dd34f64c1532a8ba489b159d4b9792c",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-shape-hexagon.png",
+      "sha256": "ca5f5de38ea041454af30aace572aec4d19a8f489cc46d1d223f07532f8c021b",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-shape-rounded_square.png",
+      "sha256": "089aa924f7091c59a1443e672fd3d57b4a0a297eddc73f9f9f54e9d51d91c5f5",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-contacts-shape-square.png",
+      "sha256": "a6c944f612b5ff17340cdbb54343555026407f25baf8886da1f561eb061efd9e",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-recents-dark-en-largefont-compact.png",
+      "sha256": "7d7e05bf2558a13870bfdbc04c5a96a074423a8d97446910eb09ef486240c290",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-recents-dark-en-largefont-expanded.png",
+      "sha256": "17c86ccd95d2e6104d0dd12ae9b244064f672121d6973e9e8612ca7c3c6505a4",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-recents-dark-en-standard-compact.png",
+      "sha256": "a1f138f17445ce5872d1802b3f5e53fe15aba835ef5dc2ff20c70b7427cde728",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-recents-dark-en-standard-expanded.png",
+      "sha256": "7d7a5673f42b835212c6772d31567145db99da1c5a70259f33e5b1822ab033b0",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-recents-dark-he-largefont-compact.png",
+      "sha256": "5122069faee545b5877dcc7d9d8c2d39a66e08ad3edcfaacee44fd15b71c5edf",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-recents-dark-he-largefont-expanded.png",
+      "sha256": "fb43f6db03ba5368172e7864eeb0dffb247385e25e19f14ede00b7b4606ef758",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-recents-dark-he-standard-compact.png",
+      "sha256": "749b92256af2c6349a7ef87b3ac05dc5b2313945451859da76442336c1d95c92",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-recents-dark-he-standard-expanded.png",
+      "sha256": "3a09d85af6f2e68f95d2727665f3e992ec0d0621843ff87624e42f9d06b10020",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-recents-light-en-largefont-compact.png",
+      "sha256": "e20e7a49a626b605bd46953c55cf4bf6eda8d128a4b69e9efa1b3783f0a6550b",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-recents-light-en-largefont-expanded.png",
+      "sha256": "51e79ed1f8ec9289259a6b266faa6de5ecee14571ec9c82dd9518831b04022a8",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-recents-light-en-standard-compact.png",
+      "sha256": "45059bbd781206f975fb7dd84e3a40ef7ab4d72a64d170c6b7af804378444686",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-recents-light-en-standard-expanded.png",
+      "sha256": "d5292db1315eb536591d0cdecfe1324b84e9e98e1a1070f72a2c3ae4a8d899c6",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-recents-light-he-largefont-compact.png",
+      "sha256": "70a5fed4815489082089c80aba14b086645363a9d7a38bf550fc6d05602c0ee9",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-recents-light-he-largefont-expanded.png",
+      "sha256": "8abba6883a9e85722e63605b2d2949734cb7a3bfc3dff125e2650c3f3df8f71e",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-recents-light-he-standard-compact.png",
+      "sha256": "d6325721d307f3616434918618c976451d45333d8e3833b99978b78b5b6fb263",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-recents-light-he-standard-expanded.png",
+      "sha256": "73571523001dedc971a0321fb0bfbe1491a69a5ea596bdf8b277bd86c2a389a2",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-widgets-shape-circle.png",
+      "sha256": "dc6971c0a0495180b412dc9a82d480a4da2f0314677ccdfc7429525d41207445",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-widgets-shape-hexagon.png",
+      "sha256": "f3f20ec3fe7dc9f9cfec67c85aeccc17c1bde10e55559771effad20a411b6a8e",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-widgets-shape-rounded_square.png",
+      "sha256": "bc94c50e6edda1c89f01930945b2d7c44a1f1efdf904689b017c38a858538368",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "personalization-widgets-shape-square.png",
+      "sha256": "b879162ee4259a9385d1228761f8cd92fe8821a74ec2fcf928238f0db4b91b1f",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "settings-dark-bottom.png",
+      "sha256": "4596ea107c91c705ed55e003d6b3252674d80bd5ccb6acea98e2148229c3e1b3",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "settings-dark.png",
+      "sha256": "8ef66113d0ac01c6b28c12ea49333f11809b84d60782ffaeea6f89e2135d7c06",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "settings-light-bottom.png",
+      "sha256": "81e0231bfd7ec7c1a5b1657f05104b08f9d62e39cefa49b414d41e80b295f800",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "settings-light.png",
+      "sha256": "706ecfcab05bb80636b05e7c8a06feb1f20450f6997583cd9ad0f62bc834c3d5",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "widget-dark-contact-2x1.png",
+      "sha256": "5002100d979138be1a020286089951c08e496027497080ae242611fbc89c7b29",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "widget-dark-empty.png",
+      "sha256": "237acc770687ba95916c6f2424dd918a3e79d8f3812166460a5b93185075d0b1",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "widget-dark-favorites-2x2-largefont.png",
+      "sha256": "4d434840da337a9824813c11da7581824eca59daea56e287904117ec307f27eb",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "widget-dark-favorites-2x2.png",
+      "sha256": "3cd5e67ca48ca830ed155406c00e8a01d4a31b3d17ab161c1db36e321093e118",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "widget-dark-favorites-4x2.png",
+      "sha256": "128aa89adf9e8663242d50fd8012b28cdb3a55552fbbc6891190dec9ff8c144b",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "widget-dark-permission.png",
+      "sha256": "0394f1dd78a36adfbf950b08ea4f2fc83e46c15c0393b6be45a344f0ba55ce2d",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "widget-dark-quick-1x1.png",
+      "sha256": "cf400868bb4f23c23bb86f73801ed01dbd5e69c639c81787fe7d0e3c01fbf4b1",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "widget-dark-two-favorites.png",
+      "sha256": "97d960fcecac5f83ba4d2c27307035d93a556f25ab9742367a954a2631e0bb97",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "widget-light-contact-2x1.png",
+      "sha256": "bd2baf30f95d313f2b0c1997909a55f60be5f30e528007a17fe5c3e76e571036",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "widget-light-empty.png",
+      "sha256": "c65e249d3114a0be60877f4987f1088b5b7d1a561e7350d0ab71004370b4f944",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "widget-light-favorites-2x2-largefont.png",
+      "sha256": "3ecda219bb81d16cc14ce31c8c996a9a2760ddba8a4249397a0deff70862b183",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "widget-light-favorites-2x2.png",
+      "sha256": "adf8e04cca431c5cc38b5fe590b52b98f280d036fdea1f5b5ce34ef68d5d3cf4",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "widget-light-favorites-4x2.png",
+      "sha256": "b6b3e1556395b50dcbc9a7736a8b19a316426044da0b07d06c1a6cce6d9cf874",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "widget-light-permission.png",
+      "sha256": "1c3e7d94ffa668862f4266064e37f0eb9b9546c5ce872d048eb87d7ad3f72d9e",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "widget-light-quick-1x1.png",
+      "sha256": "6c2dc93e178faa5afa9080681e65e9c1f0f81f2473ad27383ffa88341a30a4cd",
+      "review_group": "other",
+      "status": "PASS_WITH_BOUNDED_FINDING"
+    },
+    {
+      "name": "widget-light-two-favorites.png",
+      "sha256": "23edfe98dabae687b64adf10e64c76339012977d44d1d84a7635a6f910e3d031",
+      "review_group": "other",
+      "status": "PASS"
+    },
+    {
+      "name": "widget-reconfigured.png",
+      "sha256": "58c5e93d94627671511e0f753e2d689fdbf3f174475cd20751b173f4ec86edbc",
+      "review_group": "other",
+      "status": "PASS"
+    }
+  ],
+  "retained_evidence": {
+    "path": "reviewed-Android13-219.zip",
+    "sha256": "adb5eb6d3e91e393a4dabf8e3246991039f0e6b5b21e1483c8e843a983f2c2dd",
+    "size_bytes": 10693666,
+    "native_png_count": 219
+  },
+  "publication_note": "A later docs-only publication run may recapture the same reviewed app tree with different clock pixels. Public delivery must equal that final run's exact tested APK and native screenshot bytes."
+}

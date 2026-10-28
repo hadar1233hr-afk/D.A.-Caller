@@ -61,6 +61,9 @@ public class MainActivity extends Activity {
  private ScrollView pageScroll;
  private String appliedTheme="";
  private String lastPage="";
+ private View islandSecondary,islandFloatingDial;
+ private int islandSecondaryVisibility,islandFloatingVisibility,islandSecondaryHeight;
+ private boolean islandContentConstrained;
  private final android.database.ContentObserver contactsObserver=new android.database.ContentObserver(new Handler(Looper.getMainLooper())){
   @Override public void onChange(boolean selfChange){handler.removeCallbacks(reloadChangedContacts);handler.postDelayed(reloadChangedContacts,350);}
  };
@@ -352,6 +355,7 @@ public class MainActivity extends Activity {
  }
  private void addFloatingDial(){
   FrameLayout button=new FrameLayout(this);
+  button.setTag("floating_dial");
   button.setBackground(rounded(dark()?0xFFE2C68D:0xFF242424,22));
   button.setElevation(d(8));
   ImageView glyph=icon(R.drawable.ic_dialpad_float,dark()?0xFF151515:Color.WHITE,32,32);
@@ -363,6 +367,37 @@ public class MainActivity extends Activity {
   button.setContentDescription(I18n.text(this,"הצגת מקשי חיוג"));
   decorate(button);
   button.setOnClickListener(v->{haptic(button);showKeypad(null);});
+ }
+ /** Keep one real list row reachable below expanded call controls on small phones. */
+ void adaptCallIslandContent(boolean expanded){
+  if(!expanded||workspace==null||(!"contacts".equals(page)&&!"recents".equals(page))){
+   restoreCallIslandContent();return;
+  }
+  View secondary=workspace.findViewWithTag("call-island-secondary");
+  View floating=workspace.findViewWithTag("floating_dial");
+  View list=workspace.findViewWithTag("call-island-page-list");
+  if(secondary==null||floating==null||list==null){restoreCallIslandContent();return;}
+  if(secondary!=islandSecondary||floating!=islandFloatingDial){
+   restoreCallIslandContent();
+   islandSecondary=secondary;islandFloatingDial=floating;
+   islandSecondaryVisibility=secondary.getVisibility();islandFloatingVisibility=floating.getVisibility();
+   int fixedHeight=secondary.getLayoutParams().height;
+   islandSecondaryHeight=islandSecondaryVisibility==View.GONE?0:Math.max(0,fixedHeight>0?fixedHeight:secondary.getHeight());
+  }
+  if(!list.isLaidOut())return;
+  // Compare with the height BEFORE this temporary adaptation. Using the newly
+  // enlarged list directly would repeatedly hide and restore the toolbar.
+  int unadaptedHeight=list.getHeight()-(islandContentConstrained?islandSecondaryHeight:0);
+  boolean constrained=unadaptedHeight<d(60);
+  if(constrained==islandContentConstrained)return;
+  islandContentConstrained=constrained;
+  secondary.setVisibility(constrained?View.GONE:islandSecondaryVisibility);
+  floating.setVisibility(constrained?View.GONE:islandFloatingVisibility);
+ }
+ private void restoreCallIslandContent(){
+  if(islandSecondary!=null)islandSecondary.setVisibility(islandSecondaryVisibility);
+  if(islandFloatingDial!=null)islandFloatingDial.setVisibility(islandFloatingVisibility);
+  islandSecondary=null;islandFloatingDial=null;islandSecondaryHeight=0;islandContentConstrained=false;
  }
  private void addNav(String title,int drawable,String target){
   boolean active=page.equals(target);
