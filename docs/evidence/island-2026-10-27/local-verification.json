@@ -55,9 +55,9 @@
   "native_verification": "PASS",
   "physical_device": "NOT TESTED",
   "matching_existing_signature": "BLOCKED",
-  "ci_source_sha": "589f1480d16292200b65da9bfe4bbc1c7e81ddc6",
-  "app_tree": "fe9b477a0075318da27e2c918c7ae185d3534451",
-  "ci_run_id": 40595673860,
+  "ci_source_sha": "51f975011692c44cf348139e7d8d2569eec74d5d",
+  "app_tree": "48d9adfcc8341e8f36413313b63d2f4e8e5f569b",
+  "ci_run_id": 40642457660,
   "ci_unit_tests": {
     "tests": 239,
     "failures": 0,
@@ -73,21 +73,22 @@
   "reviewed_native_pngs": 219,
   "native_settings_system_bar_pixel_contrast": {
     "island-settings-dark-bottom.png": {
-      "status": 981,
+      "status": 984,
       "navigation": 1276
     },
     "island-settings-dark.png": {
-      "status": 981,
+      "status": 984,
       "navigation": 1276
     },
     "island-settings-light-bottom.png": {
-      "status": 908,
+      "status": 918,
       "navigation": 1276
     },
     "island-settings-light.png": {
-      "status": 953,
+      "status": 918,
       "navigation": 1276
     }
   },
-  "publication_requires_same_reviewed_app_tree": true
+  "publication_requires_same_reviewed_app_tree": true,
+  "screenshot_fixture_provider_isolation": "Instance-only observers detached; existing workers drained and500ms observed quiescence before fictional data; production provider code unchanged."
 }

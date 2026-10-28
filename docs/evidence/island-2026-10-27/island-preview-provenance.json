@@ -1,24 +1,24 @@
 {
-  "source_sha": "589f1480d16292200b65da9bfe4bbc1c7e81ddc6",
-  "app_tree": "fe9b477a0075318da27e2c918c7ae185d3534451",
-  "workflow_run_id": 40595673860,
+  "source_sha": "51f975011692c44cf348139e7d8d2569eec74d5d",
+  "app_tree": "48d9adfcc8341e8f36413313b63d2f4e8e5f569b",
+  "workflow_run_id": 40642457660,
   "note": "Preview arranges reduced native captures; originals retained unchanged in reviewed ZIP.",
   "frames": [
     {
       "file": "island-app-contacts-compact.png",
-      "sha256": "5a0bfc14cc81f89c986da1883ec1845cd85e35868ff5fe390d53abd99d222c2d"
+      "sha256": "05ae288a2761ee6829f561c73158b6eb75feefbf6a9b5a912bbb10af8f77bfd7"
     },
     {
       "file": "island-app-recents-expanded.png",
-      "sha256": "07805d0b71757ca67e219ba492f94601341204d01817277219e18b5950bf67cd"
+      "sha256": "a0679aefa3dde66b25c26cf5b732e8e0dff97e89f82ea95a2fa204d3912a556b"
     },
     {
       "file": "island-glass-light-en-expanded.png",
-      "sha256": "f4cc5bdd426612062541c3009a9dc2850d8a2f712e502c45e9a8b37a7a50f906"
+      "sha256": "b71c4a9c6c84bd72df948a7d989188efe64fb3c4e34c80485f6d3a61371d7103"
     },
     {
       "file": "island-emerald-dark-he-expanded.png",
-      "sha256": "7a51743133266eceb969c1fad60cc8857c332fba291b04963f628683efd4634a"
+      "sha256": "5edadaf596cc4f100410fdc929a9dee892b07fdddf952a62b83c26a089e52721"
     }
   ]
 }

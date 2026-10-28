@@ -1,12 +1,12 @@
 {
   "review_status": "PASS_WITH_BOUNDED_FINDINGS",
-  "source_sha": "589f1480d16292200b65da9bfe4bbc1c7e81ddc6",
-  "app_tree": "fe9b477a0075318da27e2c918c7ae185d3534451",
-  "workflow_run_id": "40595673860",
-  "reviewed_at_utc": "2026-10-27T22:46:46.126712+00:00",
+  "source_sha": "51f975011692c44cf348139e7d8d2569eec74d5d",
+  "app_tree": "48d9adfcc8341e8f36413313b63d2f4e8e5f569b",
+  "workflow_run_id": "40642457660",
+  "reviewed_at_utc": "2026-10-28T06:28:22.457099+00:00",
   "reviewed_png_count": 36,
   "sheet_count": 9,
-  "review_method": "Root personally inspected all36 fresh source6 native captures in9 original-resolution2x2 sheets with view_image originaldetail. Each source preserves its480x854 pixels. Compared actual contacts/recents compact and expanded, allthree palettes/themes/languages, four states/capabilities and allfour settings captures. No screenshot pixels edited.",
+  "review_method": "Root personally inspected all36 fresh source7 captures in9 original-resolution2x2 sheets via view_image originaldetail. This includes actual20-contact/6-favorite MainActivity compact/expanded screens after provider-fixture isolation, allthree palettes/themes/languages, fourcall states and allfour settings images. No native pixels edited.",
   "visual_summary": "Classic black, soft glass and emerald capsules and expanded controls are readable and distinct. Timer/caller/captions, decline/answer/hold and noaudio presentation fit atfont1.3. Actual MainActivity retains a complete usable row, favorites/search/summary/navigation, matching dark background and no keypad/header overlap. Allfour settings native bars now have clear actual icon contrast.",
   "bounded_findings": [
     {
@@ -20,211 +20,219 @@
         "island-glass-light-en-compact.png"
       ],
       "description": "The English caller ellipsizes in the intentionally compact260dp capsule atfont1.3; fullcaller remains readable after expansion and the phase/timer/controls fit."
+    },
+    {
+      "severity": "minor_fixture_only",
+      "files": [
+        "island-apple-light-he-compact.png"
+      ],
+      "description": "The native status-clock icons have low contrast during the first light DEBUG-fixture capture. The capsule and dark native navigation buttons remain readable; the following expanded fixture capture and allfour actual app/settings captures have proper system-bar contrast. This is recorded as a fixture transition limit; no persistent production-screen bar defect is established."
     }
   ],
   "blocking_findings": [],
   "limits": [
     "Call state and fictional caller/initial are synthetic. Real production renderer/controller and native navigation/acknowledgement are exercised; Telecom commands are separately unit-tested.",
     "Actual app captures use Hebrew, dark, classic style, compact summary andfont1.3 on320dp width. Other extreme combinations are not claimed as exhaustively verified.",
-    "No physical SIM/Bluetooth/Jelly Star or full TalkBack walkthrough. Code review notes compactelapsed is not separately announced and an expandedroot may expose a no-op accessibilityclick; childcontrols and expanded duration are exposed."
+    "No physical SIM/Bluetooth/Jelly Star or full TalkBack walkthrough. Code review notes compactelapsed is not separately announced and an expandedroot may expose a no-op accessibilityclick; childcontrols and expanded duration are exposed.",
+    "Only the screenshot MainActivity observers are detached and its existing provider workers drained before fictional rows are installed. Real provider behavior remains enabled and separately tested in production/other native regressions."
   ],
   "native_settings_bar_pixel_contrast": {
     "island-settings-dark-bottom.png": {
-      "status": 981,
+      "status": 984,
       "navigation": 1276
     },
     "island-settings-dark.png": {
-      "status": 981,
+      "status": 984,
       "navigation": 1276
     },
     "island-settings-light-bottom.png": {
-      "status": 908,
+      "status": 918,
       "navigation": 1276
     },
     "island-settings-light.png": {
-      "status": 953,
+      "status": 918,
       "navigation": 1276
     }
   },
   "files": [
     {
       "file": "island-app-contacts-compact.png",
-      "sha256": "5a0bfc14cc81f89c986da1883ec1845cd85e35868ff5fe390d53abd99d222c2d",
+      "sha256": "05ae288a2761ee6829f561c73158b6eb75feefbf6a9b5a912bbb10af8f77bfd7",
       "result": "PASS"
     },
     {
       "file": "island-app-contacts-expanded.png",
-      "sha256": "66efbc4d546d2cb7fd35048c3b6e3b7fa9e58787cf801f56fd8ca1115dc61d99",
+      "sha256": "05db66ad3fe2095a4d23c4b16e1aee19ad55b2b6bf79a4672283347633543000",
       "result": "PASS"
     },
     {
       "file": "island-app-recents-compact.png",
-      "sha256": "9cfeea5aa8f44bbef755760e0b50749f32f96ed224ba4146f89ef6770cd5f548",
+      "sha256": "56074a682c302e2ca62c991caba9b0354586a8745b10b13ffe6e78f7df9f6213",
       "result": "PASS"
     },
     {
       "file": "island-app-recents-expanded.png",
-      "sha256": "07805d0b71757ca67e219ba492f94601341204d01817277219e18b5950bf67cd",
+      "sha256": "a0679aefa3dde66b25c26cf5b732e8e0dff97e89f82ea95a2fa204d3912a556b",
       "result": "PASS"
     },
     {
       "file": "island-apple-dark-en-compact.png",
-      "sha256": "2317d149267841e10352f22ef0ad7ed09e7dbd6d29264f9e6ba772007a64c25b",
+      "sha256": "717cf84c2b5625715fe32e815382c7deb4033aaed08d5b17390671462a494f67",
       "result": "BOUNDED"
     },
     {
       "file": "island-apple-dark-en-expanded.png",
-      "sha256": "6542fb4dfe3a01e0223fd5d7fd623dc6f1758db11d87cd0ce323716cd5d454d3",
+      "sha256": "5718bf888e5885cfa3b39b493c029d856df1ec3016dc3939cca371e5f1262856",
       "result": "PASS"
     },
     {
       "file": "island-apple-dark-he-compact.png",
-      "sha256": "e5635ac093a0a148f18a2e699590769fd2db93837745c76a8ff08c2504000b98",
+      "sha256": "f86110f86c8f02234183df91bc4bf913ca357e5c794c536a5962bd7e8adfff26",
       "result": "PASS"
     },
     {
       "file": "island-apple-dark-he-expanded.png",
-      "sha256": "714d90fdd086356081940e5d42308fa651930e7c040366c182ce09671d0a5ab8",
+      "sha256": "10e70e1c0747961f1f32b7528d0faa3f102c8dea74050161c7fc45439d06a9ca",
       "result": "PASS"
     },
     {
       "file": "island-apple-light-en-compact.png",
-      "sha256": "82d0918e627b364384c1b752fc4e68b04a70d303c3f78c52ded0c1899e3a8bd8",
+      "sha256": "7348a48c626ab6df439265ab378fcfde4ae8dbd66ca8ead1d338c62f9aaff200",
       "result": "BOUNDED"
     },
     {
       "file": "island-apple-light-en-expanded.png",
-      "sha256": "da27d2e4a2798507a42de8e248175f43299467e8d67166e93455afe5a0434c8e",
+      "sha256": "9b68bf4ebf2a065edfa71f88ac22a877757e9bb8352ca254af24b5b63ec78a7f",
       "result": "PASS"
     },
     {
       "file": "island-apple-light-he-compact.png",
-      "sha256": "8a348a02765dd472c01ace5ff2709f22372a223650a3be1ecd673a1fd582f5a0",
-      "result": "PASS"
+      "sha256": "f378d874738f59d592cfc841ec67f85cee89ed6219d4718aa326ba0a20e51087",
+      "result": "BOUNDED"
     },
     {
       "file": "island-apple-light-he-expanded.png",
-      "sha256": "0b7fab6db2c2f6e124b602cad811094fde6cb03218f31263e1122db69132e716",
+      "sha256": "4206c1ab3f726157bc0ad0956bbec741cd0f99437c28aa7668f61b4d3a530407",
       "result": "PASS"
     },
     {
       "file": "island-emerald-dark-en-compact.png",
-      "sha256": "94f3031aae9f9a60e44cd2da9bebeb070618f9d3fe6f5d515b642418598f8e4d",
+      "sha256": "c7c83d209b5879e98d866cff25f101c0d3362b878b04a75543b39debb2dab5fa",
       "result": "BOUNDED"
     },
     {
       "file": "island-emerald-dark-en-expanded.png",
-      "sha256": "5735174802d6d2e68253d70cfcb039a7741681f05036e0d74c4e30ff63491e54",
+      "sha256": "cf4b03391044131d0098519f6e7b688aa9a88adafc142157635fc31ff31058d1",
       "result": "PASS"
     },
     {
       "file": "island-emerald-dark-he-compact.png",
-      "sha256": "8541d908a0b1452c1165b95031fd896aa7f639273974e1961995e1d129c01200",
+      "sha256": "130cabd78f12109c3085e1f5d8247383b334b5fe74849d1035c5b2767e1d530e",
       "result": "PASS"
     },
     {
       "file": "island-emerald-dark-he-expanded.png",
-      "sha256": "7a51743133266eceb969c1fad60cc8857c332fba291b04963f628683efd4634a",
+      "sha256": "5edadaf596cc4f100410fdc929a9dee892b07fdddf952a62b83c26a089e52721",
       "result": "PASS"
     },
     {
       "file": "island-emerald-light-en-compact.png",
-      "sha256": "969d7c42ec97f5d65be47d8165fec7c55087bcc4b5514d4d2a9ed41fd774e75d",
+      "sha256": "835f9d1bf923750424c7b3c2b890a74c13722b18b988fbaaffcd772cb0e9da67",
       "result": "BOUNDED"
     },
     {
       "file": "island-emerald-light-en-expanded.png",
-      "sha256": "f3d54423c03179f6f269d742c6b7942eac5a2c5cf781e9bba589b9a8238077bf",
+      "sha256": "ab9811ed867acc1ae9d133bd67701713ddd5bd5dc4610321bd644d18620cb382",
       "result": "PASS"
     },
     {
       "file": "island-emerald-light-he-compact.png",
-      "sha256": "ef4b5a426849f270fd3416530766a3ad0aacba12ea77d06ca100daee775a6374",
+      "sha256": "39f8cbe4b3947c6cdf22ada5ad58ee7c92364c7652bc770591a06f9d84170919",
       "result": "PASS"
     },
     {
       "file": "island-emerald-light-he-expanded.png",
-      "sha256": "d2572fb38cd64da4cf66e29183d1cccd50b2acf77d236bd5395580c7983c70dc",
+      "sha256": "a271a5f6bb08fb85ae60f283edf7b76a484d5cd14e4f9cc1cdb06955dc27d786",
       "result": "PASS"
     },
     {
       "file": "island-glass-dark-en-compact.png",
-      "sha256": "f474ef4bef62a0b721a91cf1d03b68906feb44952ed7fdea734e1229bfdf4c0d",
+      "sha256": "1d78f3eca8290b280df5640ff35b46885417d65f53fc9a0d9372257fe3596ef1",
       "result": "BOUNDED"
     },
     {
       "file": "island-glass-dark-en-expanded.png",
-      "sha256": "b3cf624ca93e24cee346fa90e9dd4b4a7a53eda0ad4c68e4e3186a63f957b6d2",
+      "sha256": "a8d1ccdfd2f80024b77d7a7e3df9a8dcebbbae131397a7e7f0e047d14bbd6a3e",
       "result": "PASS"
     },
     {
       "file": "island-glass-dark-he-compact.png",
-      "sha256": "46ac025581c9776ac104636d7d7cc1462ec979b3448a8a5264ffa34d01423ad9",
+      "sha256": "e08b261cb4d5b1fcf9c85b498c249a6ce23d90be3cc6f580127530e1d67b2d8f",
       "result": "PASS"
     },
     {
       "file": "island-glass-dark-he-expanded.png",
-      "sha256": "3613a2f39dc5645a31c5ab78503c72fe39a88cbcb3c5a1887558a5a90244504f",
+      "sha256": "62846448d9489dcf6e7a05c04c2059db3be73216b1b0d90f836020415f48457e",
       "result": "PASS"
     },
     {
       "file": "island-glass-light-en-compact.png",
-      "sha256": "50a46f07e1cc8c16abd62ba51c0bcd1ed437b42eb6f0e5407a60e5a74b1396f7",
+      "sha256": "f5f35523886b1b5d02edcb32c921c7d20047dc10637ad66d036ca34beece46ff",
       "result": "BOUNDED"
     },
     {
       "file": "island-glass-light-en-expanded.png",
-      "sha256": "f4cc5bdd426612062541c3009a9dc2850d8a2f712e502c45e9a8b37a7a50f906",
+      "sha256": "b71c4a9c6c84bd72df948a7d989188efe64fb3c4e34c80485f6d3a61371d7103",
       "result": "PASS"
     },
     {
       "file": "island-glass-light-he-compact.png",
-      "sha256": "22640a5f9a0cab6090755a5c7922881ff3a066c4cd8ed0a4f2e73b8581668764",
+      "sha256": "41054cd59c10682d18d92926ae052dd3ba04e8c617b94b1d7f7c0f7f0c487541",
       "result": "PASS"
     },
     {
       "file": "island-glass-light-he-expanded.png",
-      "sha256": "bd5551bd0584fb419238225ae1fcfacaeb894e0d94232298d11639f566f2bd8c",
+      "sha256": "6020ba82fbc6f9e43e95a28234cfe23c9f27b4dba491f33413fc6dd060f6fbfb",
       "result": "PASS"
     },
     {
       "file": "island-settings-dark-bottom.png",
-      "sha256": "16255d322f5378a9aa276398d8c18a8e6db62574571258073c281c206ca0a467",
+      "sha256": "7c57a4ff0651f32770fff373557369b98063c7f6d2654ea1f0795824b83d084a",
       "result": "PASS"
     },
     {
       "file": "island-settings-dark.png",
-      "sha256": "edfff96498fbec7cf05cc92b37a1c69e51541a695685a27a4ac5d43d27d44a65",
+      "sha256": "4a3d43558a57b410d0d3f258ae27855870fb0463fe48654731e0d9bba978447c",
       "result": "PASS"
     },
     {
       "file": "island-settings-light-bottom.png",
-      "sha256": "168b36e04dfc8a550a991aaed879eb726943f9a15fd1daa3ebdb4089faf34b8d",
+      "sha256": "c68d1c48adcfe8c68e01949a7dd48e27342ec26b4c96e7bca85e2c98b8e96b24",
       "result": "PASS"
     },
     {
       "file": "island-settings-light.png",
-      "sha256": "2cedfe13fe9eb182c92b61855db91c9d8260923d19790b2ce702ce513df3c875",
+      "sha256": "c25d0ca2d14b655503cf3efe980f70dcfa117674ea1447bdc5a19098458175e9",
       "result": "PASS"
     },
     {
       "file": "island-state-held.png",
-      "sha256": "56ad5a87423b58911801a733a15f14d948e15e7f2901d54d091d4f8cee0bd0b9",
+      "sha256": "bf91d11e6c5d1c4f1fbd592e8d840e1a571e1900aba57f8ed089f0101815833c",
       "result": "PASS"
     },
     {
       "file": "island-state-incoming.png",
-      "sha256": "93c89d9cfaafa747bb7bb4e70937961889fc41a6be657213d0b8450c377ca7b8",
+      "sha256": "0710357223905c9dd5b4ef4001c91ef429ad7454c877e5bd09e82dcf985326fd",
       "result": "PASS"
     },
     {
       "file": "island-state-noaudio.png",
-      "sha256": "119101ecb90a4aab87d28b2bf4618c5c1589b2d7a7376632143612cafa6d497a",
+      "sha256": "d6e640af89deaf37cc762979cc053a9dabf20f649b3f27e435420f29064d9760",
       "result": "PASS"
     },
     {
       "file": "island-state-outgoing.png",
-      "sha256": "b9cf3ecb7a064d87b6dbcf5cc0f9da34b84c4b8e9ed4e4ccb9261cbd7bcf5180",
+      "sha256": "40561f751df8c4fc8a2b87a2721e5b5717909edd29583dc9d7e08f7b9613c77f",
       "result": "PASS"
     }
   ]
