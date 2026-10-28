@@ -1,0 +1,83 @@
+name: Export DA CALLER native review evidence
+on:
+  push:
+    branches: [codex/da-caller-native-evidence-20261028]
+    paths: [.github/workflows/export-native-review.yml]
+permissions:
+  contents: write
+  actions: read
+jobs:
+  export:
+    if: github.repository == 'hadar1233hr-afk/D.A.-Caller'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retain exact CI artifacts on the review branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          REVIEW_RUN_ID: '40722224181'
+          REVIEW_SOURCE_SHA: f60bd9148fd4cf34d8693bbec98c0e16b13b3464
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib, json, os, re, subprocess, time
+          from pathlib import Path
+          repository = os.environ['GH_REPO']
+          run_id = os.environ['REVIEW_RUN_ID']
+          source = os.environ['REVIEW_SOURCE_SHA']
+          assert re.fullmatch(r'[0-9]+', run_id)
+          def api(path):
+              return json.loads(subprocess.check_output(['gh', 'api', f'repos/{repository}/{path}']))
+          for attempt in range(180):
+              run = api(f'actions/runs/{run_id}')
+              assert run['head_sha'] == source, 'Unexpected source run'
+              assert run['path'] == '.github/workflows/android.yml'
+              if run['status'] == 'completed':
+                  break
+              time.sleep(10)
+          else:
+              raise AssertionError('Source run did not complete within the export deadline')
+          artifacts = api(f'actions/runs/{run_id}/artifacts')['artifacts']
+          output = Path('native-review-export') / run_id
+          assert not output.exists(), 'Review bundles are immutable; use a new run ID'
+          output.mkdir(parents=True)
+          categories = {}
+          for artifact in artifacts:
+              name = artifact['name']
+              if name.startswith('DA-CALLER-Android13-UI-'):
+                  category = 'ui'
+              elif name.startswith('DA-CALLER-checks-'):
+                  category = 'checks'
+              elif name.startswith('DA-CALLER-') and '-tested-debug-' in name:
+                  category = 'tested-apk'
+              elif name.startswith('DA-CALLER-') and '-debug-' in name:
+                  category = 'validate-apk'
+              else:
+                  continue
+              assert category not in categories, 'Ambiguous artifact category'
+              destination = output / (category + '.zip')
+              with destination.open('wb') as stream:
+                  subprocess.run(['gh', 'api', f'repos/{repository}/actions/artifacts/{artifact["id"]}/zip'], stdout=stream, check=True)
+              digest = hashlib.sha256(destination.read_bytes()).hexdigest()
+              recorded = artifact.get('digest')
+              if recorded:
+                  assert recorded == 'sha256:' + digest, 'Downloaded artifact differs from GitHub digest'
+              categories[category] = dict(artifact_id=artifact['id'], artifact_name=name,
+                  github_digest=recorded, sha256=digest, bytes=destination.stat().st_size, path=destination.name)
+          assert 'checks' in categories and 'ui' in categories, 'Required review artifacts missing'
+          if run['conclusion'] == 'success':
+              assert 'tested-apk' in categories, 'Successful native run requires exact tested APK'
+          (output / 'source-run.json').write_text(json.dumps(run, indent=2) + '\n')
+          (output / 'provenance.json').write_text(json.dumps(dict(repository=repository,
+              source_sha=source, source_run_id=run_id, conclusion=run['conclusion'],
+              artifacts=categories, purpose='Native screenshot/code review only; no APK Release or publication approval'), indent=2) + '\n')
+          print(json.dumps(dict(run=run_id, conclusion=run['conclusion'], artifacts=categories)))
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add native-review-export
+          git commit -m "Retain native review evidence for run $REVIEW_RUN_ID"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
