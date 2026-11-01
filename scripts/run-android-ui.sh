@@ -37,8 +37,16 @@ for call_driver_attempt in {1..50}; do
 done
 test -f app/build/emulator-call-driver.ready.json
 test_status=0
-./gradlew --no-daemon :app:connectedDebugAndroidTest || test_status=$?
+# Leave time inside the job's30-minute budget to retain the actual emulator
+# state if instrumentation blocks instead of reaching a test assertion.
+timeout --signal=INT --kill-after=30s 15m ./gradlew --no-daemon :app:connectedDebugAndroidTest || test_status=$?
 mkdir -p app/build/ui-snapshots
+if [ "$test_status" -ne 0 ]; then
+  timeout 15s adb logcat -d -t 3000 > app/build/ui-snapshots/host-failure-logcat.txt 2>&1 || true
+  timeout 15s adb shell dumpsys activity activities > app/build/ui-snapshots/host-failure-activities.txt 2>&1 || true
+  timeout 15s adb shell dumpsys window windows > app/build/ui-snapshots/host-failure-windows.txt 2>&1 || true
+  timeout 15s adb shell screencap -p /sdcard/Download/DA-CALLER-snapshots/host-failed.png || true
+fi
 # Keep failing renders for visual debugging, even if instrumentation failed.
 adb pull /sdcard/Download/DA-CALLER-snapshots/ app/build/ui-snapshots/ || true
 if [ "$test_status" -ne 0 ]; then exit "$test_status"; fi

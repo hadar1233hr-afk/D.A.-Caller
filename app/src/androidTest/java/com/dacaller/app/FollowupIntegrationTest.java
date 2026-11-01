@@ -205,7 +205,11 @@ public final class FollowupIntegrationTest extends InstrumentationTestCase {
  private MainActivity startMain(String page)throws Exception{
   settings.edit().putString("start_page",page).commit();shell("cmd statusbar collapse");
   MainActivity activity=(MainActivity)getInstrumentation().startActivitySync(new Intent(target,MainActivity.class)
-   .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP));launched.add(activity);main=activity;ready(activity);return activity;
+   // Main is singleTop. CLEAR_TOP can reuse it through onNewIntent, whereas
+   // startActivitySync waits for a newly created Activity and never returns.
+   // Each palette starts a fresh task on this disposable emulator; Back is
+   // still exercised against the actual Main created for that palette.
+   .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK));launched.add(activity);main=activity;ready(activity);return activity;
  }
  private <T extends View>T find(View view,Class<T> type){
   if(type.isInstance(view))return type.cast(view);if(view instanceof ViewGroup)for(int i=0;i<((ViewGroup)view).getChildCount();i++){
