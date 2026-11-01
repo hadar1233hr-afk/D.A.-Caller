@@ -140,12 +140,14 @@ for item in palettes:
     assert item.get("activity") == "com.dacaller.app.ChangelogActivity"
     assert item.get("root_rtl") is True and abs(item.get("font_scale", 0) - 1.3) < 0.0001 and item.get("density_dpi") == 240
     assert item.get("title") == "יומן שינויים" and current in item.get("installed_label", "")
+    assert item.get("installed_version_drawn_ltr") is True
     assert item.get("versions_in_native_tree") == versions and item.get("current_expanded") is True
     assert item.get("oldest_version") == "0.1.0" and item.get("oldest_expanded") is True and item.get("bottom_reachable") is True
     assert item.get("nav_bottom_px") == 72 and item.get("status_top_px") == 36
     assert rect(item.get("footer_bounds", ""))[3] <= 782
     entry = item.get("settings_entry", {})
     assert entry.get("tag") == "settings_changelog" and entry.get("input_method") == "native-pointer"
+    assert entry.get("version_drawn_ltr") is True
     rect(entry.get("bounds", ""))
     for place in ("top", "bottom"):
         contrast = item.get("bar_contrast", {}).get(place, {})

@@ -260,8 +260,10 @@ final class SettingsScreen {
   });
   cardEnd();
   cardStart();
+  String historyVersion=android.text.BidiFormatter.getInstance(!I18n.isEnglish(host))
+    .unicodeWrap(BuildConfig.VERSION_NAME,android.text.TextDirectionHeuristics.LTR);
   option(I18n.isEnglish(host)?"What's new":"יומן שינויים",
-    I18n.isEnglish(host)?"Version history · "+BuildConfig.VERSION_NAME:"מה השתנה בכל גרסה · "+BuildConfig.VERSION_NAME,
+    I18n.isEnglish(host)?"Version history · "+historyVersion:"מה השתנה בכל גרסה · "+historyVersion,
     ()->host.startActivity(new Intent(host,ChangelogActivity.class)));
   lastOption().setTag("settings_changelog");
   cardEnd();

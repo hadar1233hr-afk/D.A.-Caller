@@ -55,7 +55,8 @@ public final class ChangelogActivity extends Activity {
   back.setOnClickListener(v->finish());
   TextView title=text(tr("יומן שינויים","What's new"),23,true,ink);title.setTag("changelog-title");
   header.addView(title,new LinearLayout.LayoutParams(0,-2,1));
-  TextView installed=text(tr("הגרסה המותקנת: ","Installed version: ")+BuildConfig.VERSION_NAME,13,true,accent);
+  String version=android.text.BidiFormatter.getInstance(!english).unicodeWrap(BuildConfig.VERSION_NAME,android.text.TextDirectionHeuristics.LTR);
+  TextView installed=text(tr("הגרסה המותקנת: ","Installed version: ")+version,13,true,accent);
   installed.setTag("changelog-installed-version");installed.setPadding(dp(4),dp(10),dp(4),dp(4));root.addView(installed,new LinearLayout.LayoutParams(-1,-2));
   TextView introduction=text(tr("מה התחדש בכל גרסה, מהחדש לישן. הקש על גרסה כדי לראות את הפירוט.",
     "Updates from newest to oldest. Tap a version to see its details."),13,false,secondary);

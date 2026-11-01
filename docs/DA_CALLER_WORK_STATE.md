@@ -25,6 +25,14 @@ The new native test and verifier preserve all227 earlier captures and add six ca
 
 The16th test opened the light changelog and returned to Main, then hung when instrumentation waited for creation of a `singleTop` Main that Android reused through `onNewIntent`. The test now creates a fresh disposable-emulator task for each palette while preserving its actual Back/UI assertions. The host test command has a15-minute bound and captures failure state before the job's30-minute limit. Local Android-test Java compilation and shell syntax checks passed after this correction. A complete fresh32-test/233-image run and visual review remain required; this failure is not publication approval.
 
+### Second follow-up CI: functional PASS, display correction required
+
+[CI41339945300](https://github.com/hadar1233hr-afk/D.A.-Caller/actions/runs/41339945300), source `40925aacc1280f88303c745f50820ce4e6fd4873`, app tree `9ea43d2e5e45001f2d874056e58606e0f56ff8e9`, passed278 actual unit tests and32 actual Android13 tests with zero failures/errors/skips and233 PNGs. Official artifact digests were independently verified; exact raw artifacts remain at evidence commit `bec4c24279d03ca8d5365da12d25cc2a1215af85`.
+
+Fresh visual review covered101 call,88 other and24 island images before finding that the inline Hebrew version labels displayed `beta.9-0.11.0` instead of `0.11.0-beta.9`. The dedicated version card was correct. [Second-run review](evidence/call-followup-2026-11-01/second-ci-review.json) and source2 group reports retain this evidence without publication approval.
+
+Both the Settings subtitle and changelog installed-version label now wrap the version explicitly LTR with Android's BidiFormatter. The native test checks actual glyph-selection rectangles for increasing horizontal order in both places; the CI verifier and final evidence helpers require the resulting native proof. Java compilation and lint passed after this edit (0 errors,6 existing warnings). A local full-unit retry encountered Robolectric initialization failures because the host's download-lock file is read-only; it is not counted as a PASS. The new complete CI run and all233 fresh visual checks remain required for this changed app tree.
+
 The SDK annotation on `TelecomManager.cancelMissedCallsNotification()` models only `MODIFY_PHONE_STATE`. [Android13's server enforcement](https://github.com/aosp-mirror-neo/platform_packages_services_Telecomm/blob/3f4456d1b27cc019b4bc4f79fda8273d4506ea95/src/com/android/server/telecom/TelecomServiceImpl.java#L1116) also authorizes the verified default/system dialer. A narrow private helper checks the actual default package again, handles runtime failure and suppresses only this annotation mismatch; no signature-only permission is requested.
 
 ## Completion checklist

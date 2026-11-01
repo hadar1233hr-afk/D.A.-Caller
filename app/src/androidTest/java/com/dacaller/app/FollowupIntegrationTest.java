@@ -223,6 +223,27 @@ public final class FollowupIntegrationTest extends InstrumentationTestCase {
    TextView found=findText(((ViewGroup)view).getChildAt(n),value);if(found!=null)return found;
   }return null;
  }
+ private TextView findVersionText(View view){
+  if(view instanceof TextView&&((TextView)view).getText().toString().contains(BuildConfig.VERSION_NAME))return (TextView)view;
+  if(view instanceof ViewGroup)for(int n=0;n<((ViewGroup)view).getChildCount();n++){
+   TextView found=findVersionText(((ViewGroup)view).getChildAt(n));if(found!=null)return found;
+  }return null;
+ }
+ /** Check drawn glyph positions, rather than just the unchanged logical text. */
+ private void versionDrawnLeftToRight(TextView label)throws Exception{
+  ui(()->{assertNotNull("Actual version label required",label);assertNotNull(label.getLayout());
+   int start=label.getText().toString().indexOf(BuildConfig.VERSION_NAME);assertTrue(start>=0);
+   float previous=-Float.MAX_VALUE;int line=label.getLayout().getLineForOffset(start);
+   for(int n=0;n<BuildConfig.VERSION_NAME.length();n++){
+    assertEquals("Version must fit on one actual text line",line,label.getLayout().getLineForOffset(start+n));
+    android.graphics.Path path=new android.graphics.Path();android.graphics.RectF bounds=new android.graphics.RectF();
+    label.getLayout().getSelectionPath(start+n,start+n+1,path);path.computeBounds(bounds,true);
+    assertFalse("Version glyph has no native layout bounds",bounds.isEmpty());
+    assertTrue("Installed version must be drawn left to right: "+label.getText(),bounds.centerX()>previous);
+    previous=bounds.centerX();
+   }
+  });
+ }
  private void textFits(View view){
   if(!view.isShown())return;
   if(view instanceof TextView&&((TextView)view).length()>0){TextView text=(TextView)view;
@@ -259,13 +280,14 @@ public final class FollowupIntegrationTest extends InstrumentationTestCase {
   settings.edit().putBoolean("dark",dark).putBoolean("amoled",amoled).putString("language",english?"en":"he").commit();
   startMain("settings");View entry=tag(main,"settings_changelog");assertNotNull("Real Settings footer must expose changelog",entry);
   ScrollView scroll=scrollAncestor(entry);assertNotNull(scroll);scrollBottom(scroll,entry);ready(main);
+  versionDrawnLeftToRight(findVersionText(entry));
   Instrumentation.ActivityMonitor monitor=getInstrumentation().addMonitor(ChangelogActivity.class.getName(),null,false);
   try{Rect entryBounds=tapView(entry);Activity opened=monitor.waitForActivityWithTimeout(9000);
    assertTrue("Settings entry must open the real production Activity",opened instanceof ChangelogActivity);
    launched.add(opened);ready(opened);
    changelogObservations.put(new JSONObject().put("event","changelog-settings-open").put("palette",amoled?"amoled":dark?"dark":"light")
     .put("language",english?"en":"he").put("activity",opened.getClass().getName()).put("tag","settings_changelog")
-    .put("bounds",entryBounds.toShortString()).put("input_method","native-pointer"));return (ChangelogActivity)opened;
+    .put("bounds",entryBounds.toShortString()).put("version_drawn_ltr",true).put("input_method","native-pointer"));return (ChangelogActivity)opened;
   }finally{getInstrumentation().removeMonitor(monitor);}
  }
  private void backToSettings(ChangelogActivity activity)throws Exception{
@@ -284,6 +306,7 @@ public final class FollowupIntegrationTest extends InstrumentationTestCase {
    JSONObject opening=changelogObservations.getJSONObject(changelogObservations.length()-1);
    assertNotNull(root);assertEquals(View.LAYOUT_DIRECTION_RTL,root.getLayoutDirection());assertEquals("יומן שינויים",text(activity,"changelog-title"));
    assertTrue(text(activity,"changelog-installed-version").contains(BuildConfig.VERSION_NAME));
+   versionDrawnLeftToRight((TextView)tag(activity,"changelog-installed-version"));
    JSONArray renderedVersions=new JSONArray();
    ui(()->{assertTrue(root instanceof ViewGroup);ViewGroup column=(ViewGroup)root;
     for(int n=0;n<column.getChildCount();n++){String tag=String.valueOf(column.getChildAt(n).getTag());
@@ -305,11 +328,13 @@ public final class FollowupIntegrationTest extends InstrumentationTestCase {
     .put("activity",activity.getClass().getName()).put("root_rtl",root.getLayoutDirection()==View.LAYOUT_DIRECTION_RTL)
     .put("font_scale",activity.getResources().getConfiguration().fontScale).put("density_dpi",activity.getResources().getDisplayMetrics().densityDpi)
     .put("title",text(activity,"changelog-title")).put("installed_label",text(activity,"changelog-installed-version"))
+    .put("installed_version_drawn_ltr",true)
     .put("versions_in_native_tree",renderedVersions)
     .put("current_expanded",tag(activity,"changelog-details-"+BuildConfig.VERSION_NAME).getVisibility()==View.VISIBLE)
     .put("oldest_version",oldest).put("oldest_expanded",details.getVisibility()==View.VISIBLE).put("bottom_reachable",true)
     .put("footer_bounds",footerBounds.toShortString()).put("nav_bottom_px",navigation).put("status_top_px",status)
     .put("settings_entry",new JSONObject().put("tag",opening.getString("tag")).put("bounds",opening.getString("bounds"))
+     .put("version_drawn_ltr",opening.getBoolean("version_drawn_ltr"))
      .put("input_method",opening.getString("input_method")))
     .put("bar_contrast",new JSONObject().put("top",top).put("bottom",bottom)));
    tapView(toggle);await(()->details.getVisibility()==View.GONE,"Native oldest version did not collapse");backToSettings(activity);

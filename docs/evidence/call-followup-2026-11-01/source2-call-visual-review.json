@@ -1,0 +1,1359 @@
+{
+  "review_status": "PASS_WITH_BOUNDED_FINDINGS",
+  "group": "call",
+  "source_sha": "40925aacc1280f88303c745f50820ce4e6fd4873",
+  "app_tree": "9ea43d2e5e45001f2d874056e58606e0f56ff8e9",
+  "workflow_run_id": "41339945300",
+  "reviewed_at_utc": "2026-11-01T19:22:09.906467+00:00",
+  "reviewed_png_count": 101,
+  "review_method": "Actually viewed all101 fresh native480x854 PNGs using tools.view_image across each of the26 original-resolution2x2 call sheets(call-01.png through call-26.png). Every quadrant was inspected;25 sheets contain4 frames and the last contains1. Individually viewed the original emerald-light-normal-largefont and frost-dark-normal-longname-en PNGs to confirm the two bounded text patterns. Recomputed every original PNG SHA-256, checked exact source/tree/run provenance and verified each sheet crop equals the corresponding original PNG pixel bytes. This is visual inspection of this call group only, not a claim of native call action or physical audio validation.",
+  "reviewed_sheets": [
+    {
+      "file": "call-01.png",
+      "sha256": "8ac4acb050221e71e8910d0e0884f000dc97b4b46b26b23ea201fe469ffd3f2e",
+      "inspected": true,
+      "frames": [
+        "call-emerald-dark-audio-largefont.png",
+        "call-emerald-dark-audio-longname-en.png",
+        "call-emerald-dark-audio-longname-he.png",
+        "call-emerald-dark-audio-standard.png"
+      ]
+    },
+    {
+      "file": "call-02.png",
+      "sha256": "a73a541ae0fa62213728a3edcf14e6423ddb7e6a86f5e2126da0fa9e45976c31",
+      "inspected": true,
+      "frames": [
+        "call-emerald-dark-keypad-largefont.png",
+        "call-emerald-dark-keypad-standard.png",
+        "call-emerald-dark-more-largefont.png",
+        "call-emerald-dark-more-standard.png"
+      ]
+    },
+    {
+      "file": "call-03.png",
+      "sha256": "f210a033c4a618d676f6623b842716084a7ab182b9cc477b33899333c2667719",
+      "inspected": true,
+      "frames": [
+        "call-emerald-dark-normal-largefont.png",
+        "call-emerald-dark-normal-longname-en.png",
+        "call-emerald-dark-normal-longname-he.png",
+        "call-emerald-dark-normal-standard.png"
+      ]
+    },
+    {
+      "file": "call-04.png",
+      "sha256": "0fabd4924c4777562ee811bcfd28e2013112898beb85f830187a215f2bd78351",
+      "inspected": true,
+      "frames": [
+        "call-emerald-light-audio-largefont.png",
+        "call-emerald-light-audio-standard.png",
+        "call-emerald-light-keypad-largefont.png",
+        "call-emerald-light-keypad-standard.png"
+      ]
+    },
+    {
+      "file": "call-05.png",
+      "sha256": "1cc2ecb0c7c968962211ab2d51d569f77e49434262203694f51639e248098588",
+      "inspected": true,
+      "frames": [
+        "call-emerald-light-more-largefont.png",
+        "call-emerald-light-more-standard.png",
+        "call-emerald-light-normal-largefont.png",
+        "call-emerald-light-normal-standard.png"
+      ]
+    },
+    {
+      "file": "call-06.png",
+      "sha256": "65a36c8f00f37481f813fe714ba5333cdcabd39691aeb37e4a20cfaade062865",
+      "inspected": true,
+      "frames": [
+        "call-frost-dark-audio-largefont.png",
+        "call-frost-dark-audio-longname-en.png",
+        "call-frost-dark-audio-longname-he.png",
+        "call-frost-dark-audio-standard.png"
+      ]
+    },
+    {
+      "file": "call-07.png",
+      "sha256": "e63c6a2ba3478a86fb9987dcd4423b5d8aa2413d05d4592a76f9804a57be551f",
+      "inspected": true,
+      "frames": [
+        "call-frost-dark-keypad-largefont.png",
+        "call-frost-dark-keypad-standard.png",
+        "call-frost-dark-more-largefont.png",
+        "call-frost-dark-more-standard.png"
+      ]
+    },
+    {
+      "file": "call-08.png",
+      "sha256": "d11b1cfd6c4c13df9e8530ef9d8a21c4e1d80e57298d3c7bd7d830eefcedcdad",
+      "inspected": true,
+      "frames": [
+        "call-frost-dark-normal-largefont.png",
+        "call-frost-dark-normal-longname-en.png",
+        "call-frost-dark-normal-longname-he.png",
+        "call-frost-dark-normal-standard.png"
+      ]
+    },
+    {
+      "file": "call-09.png",
+      "sha256": "57a3a9a3da862d40882a6408027259a9dadc15e615a3e09253e2368b1ba33928",
+      "inspected": true,
+      "frames": [
+        "call-frost-light-audio-largefont.png",
+        "call-frost-light-audio-standard.png",
+        "call-frost-light-keypad-largefont.png",
+        "call-frost-light-keypad-standard.png"
+      ]
+    },
+    {
+      "file": "call-10.png",
+      "sha256": "0f3a3045bf6a7194c56b14125a6e715bec168ed8ac98a48dec5f8110b314d6c2",
+      "inspected": true,
+      "frames": [
+        "call-frost-light-more-largefont.png",
+        "call-frost-light-more-standard.png",
+        "call-frost-light-normal-largefont.png",
+        "call-frost-light-normal-standard.png"
+      ]
+    },
+    {
+      "file": "call-11.png",
+      "sha256": "873318068d86968f1770024c0bdbed98af9c29a20de65d541a3492944f714800",
+      "inspected": true,
+      "frames": [
+        "call-graphite-dark-audio-largefont.png",
+        "call-graphite-dark-audio-longname-en.png",
+        "call-graphite-dark-audio-longname-he.png",
+        "call-graphite-dark-audio-standard.png"
+      ]
+    },
+    {
+      "file": "call-12.png",
+      "sha256": "ea7f4230db5e874288be97f2ef56c0c3c1ea483e744f7aec429bbb06b08e57b1",
+      "inspected": true,
+      "frames": [
+        "call-graphite-dark-keypad-largefont.png",
+        "call-graphite-dark-keypad-standard.png",
+        "call-graphite-dark-more-largefont.png",
+        "call-graphite-dark-more-standard.png"
+      ]
+    },
+    {
+      "file": "call-13.png",
+      "sha256": "ba273cd63db97e0678b01e212582f65e88077be10c8fbbbe565df9df20d0de62",
+      "inspected": true,
+      "frames": [
+        "call-graphite-dark-normal-largefont.png",
+        "call-graphite-dark-normal-longname-en.png",
+        "call-graphite-dark-normal-longname-he.png",
+        "call-graphite-dark-normal-standard.png"
+      ]
+    },
+    {
+      "file": "call-14.png",
+      "sha256": "d4e7aa915090d7ca714c2887f78182eb023f91c4781d80018c95356870187a1b",
+      "inspected": true,
+      "frames": [
+        "call-graphite-light-audio-largefont.png",
+        "call-graphite-light-audio-standard.png",
+        "call-graphite-light-keypad-largefont.png",
+        "call-graphite-light-keypad-standard.png"
+      ]
+    },
+    {
+      "file": "call-15.png",
+      "sha256": "26618a71f76e4c06e8c81c9da9c28de726dac9eb1fcccec4227b31c90b266709",
+      "inspected": true,
+      "frames": [
+        "call-graphite-light-more-largefont.png",
+        "call-graphite-light-more-standard.png",
+        "call-graphite-light-normal-largefont.png",
+        "call-graphite-light-normal-standard.png"
+      ]
+    },
+    {
+      "file": "call-16.png",
+      "sha256": "a764327e294997300795777525bd2b10caf3933d4cb4947f9460e9e84e9de9de",
+      "inspected": true,
+      "frames": [
+        "call-ivory-dark-audio-largefont.png",
+        "call-ivory-dark-audio-longname-en.png",
+        "call-ivory-dark-audio-longname-he.png",
+        "call-ivory-dark-audio-standard.png"
+      ]
+    },
+    {
+      "file": "call-17.png",
+      "sha256": "ac7389ef047453df90675dd23b6349d969a0d79cb2db6215061c43181b8cf733",
+      "inspected": true,
+      "frames": [
+        "call-ivory-dark-keypad-largefont.png",
+        "call-ivory-dark-keypad-standard.png",
+        "call-ivory-dark-more-largefont.png",
+        "call-ivory-dark-more-standard.png"
+      ]
+    },
+    {
+      "file": "call-18.png",
+      "sha256": "80fd44835bb90ff26e5f800fd99f93b4d5adb83b8836ac922746e0b6048b8efa",
+      "inspected": true,
+      "frames": [
+        "call-ivory-dark-normal-largefont.png",
+        "call-ivory-dark-normal-longname-en.png",
+        "call-ivory-dark-normal-longname-he.png",
+        "call-ivory-dark-normal-standard.png"
+      ]
+    },
+    {
+      "file": "call-19.png",
+      "sha256": "6cc8e00d8c7cbd2d4f5c2a9f9d923a8ed0b13ec8644555a8e1dbedd2a01bd1d5",
+      "inspected": true,
+      "frames": [
+        "call-ivory-light-audio-largefont.png",
+        "call-ivory-light-audio-standard.png",
+        "call-ivory-light-keypad-largefont.png",
+        "call-ivory-light-keypad-standard.png"
+      ]
+    },
+    {
+      "file": "call-20.png",
+      "sha256": "58adfe4e1055bb6729dda94af2b19ebd7189a46e9acea419b9b818c3f8bcf8f6",
+      "inspected": true,
+      "frames": [
+        "call-ivory-light-more-largefont.png",
+        "call-ivory-light-more-standard.png",
+        "call-ivory-light-normal-largefont.png",
+        "call-ivory-light-normal-standard.png"
+      ]
+    },
+    {
+      "file": "call-21.png",
+      "sha256": "064e81a406d4f6c65d12468591a585c3c29d21343ff8afdb0b0c546ff5c1cdf7",
+      "inspected": true,
+      "frames": [
+        "call-pixel-dark-audio-largefont.png",
+        "call-pixel-dark-audio-longname-en.png",
+        "call-pixel-dark-audio-longname-he.png",
+        "call-pixel-dark-audio-standard.png"
+      ]
+    },
+    {
+      "file": "call-22.png",
+      "sha256": "95b322809e1c1a0f5300cc2d265ec911ddb79591ce2da42bd93e3d9486c0f578",
+      "inspected": true,
+      "frames": [
+        "call-pixel-dark-keypad-largefont.png",
+        "call-pixel-dark-keypad-standard.png",
+        "call-pixel-dark-more-largefont.png",
+        "call-pixel-dark-more-standard.png"
+      ]
+    },
+    {
+      "file": "call-23.png",
+      "sha256": "8f7f6f0641ac8faec8639cb2f0b6dae368b03c55dbba41f3bc02f0217a1b2ff2",
+      "inspected": true,
+      "frames": [
+        "call-pixel-dark-normal-largefont.png",
+        "call-pixel-dark-normal-longname-en.png",
+        "call-pixel-dark-normal-longname-he.png",
+        "call-pixel-dark-normal-standard.png"
+      ]
+    },
+    {
+      "file": "call-24.png",
+      "sha256": "b9bbfde2466950dc1d24fe63bf1c13326083a8d06e81a71e403306248dc422f0",
+      "inspected": true,
+      "frames": [
+        "call-pixel-light-audio-english-no-bluetooth.png",
+        "call-pixel-light-audio-largefont.png",
+        "call-pixel-light-audio-standard.png",
+        "call-pixel-light-keypad-largefont.png"
+      ]
+    },
+    {
+      "file": "call-25.png",
+      "sha256": "10ece2d0af304f0f14f79ba247e4f8504e19709a627cefe9254b00b22c04a675",
+      "inspected": true,
+      "frames": [
+        "call-pixel-light-keypad-standard.png",
+        "call-pixel-light-more-largefont.png",
+        "call-pixel-light-more-standard.png",
+        "call-pixel-light-normal-largefont.png"
+      ]
+    },
+    {
+      "file": "call-26.png",
+      "sha256": "4c687f678f7ecff5894d88c6526178b17a896ab3260b1c489644f9c41e00db84",
+      "inspected": true,
+      "frames": [
+        "call-pixel-light-normal-standard.png"
+      ]
+    }
+  ],
+  "individual_original_pngs_viewed": [
+    "call-emerald-light-normal-largefont.png",
+    "call-frost-dark-normal-longname-en.png"
+  ],
+  "bounded_findings": [
+    {
+      "id": "CALL-LONG-NAME-ELLIPSIZATION",
+      "severity": "BOUNDED",
+      "files": [
+        "call-emerald-dark-audio-longname-en.png",
+        "call-emerald-dark-audio-longname-he.png",
+        "call-emerald-dark-normal-longname-en.png",
+        "call-emerald-dark-normal-longname-he.png",
+        "call-frost-dark-audio-longname-en.png",
+        "call-frost-dark-audio-longname-he.png",
+        "call-frost-dark-normal-longname-en.png",
+        "call-frost-dark-normal-longname-he.png",
+        "call-graphite-dark-audio-longname-en.png",
+        "call-graphite-dark-audio-longname-he.png",
+        "call-graphite-dark-normal-longname-en.png",
+        "call-graphite-dark-normal-longname-he.png",
+        "call-ivory-dark-audio-longname-en.png",
+        "call-ivory-dark-audio-longname-he.png",
+        "call-ivory-dark-normal-longname-en.png",
+        "call-ivory-dark-normal-longname-he.png",
+        "call-pixel-dark-audio-longname-en.png",
+        "call-pixel-dark-audio-longname-he.png",
+        "call-pixel-dark-normal-longname-en.png",
+        "call-pixel-dark-normal-longname-he.png"
+      ],
+      "finding": "All20 long-name cases ellipsize the caller name to fit the identity area. Truncation is stronger in the frost/ivory side-avatar normal layouts. The phone number and timer remain readable and the caller name does not collide with the avatar or controls."
+    },
+    {
+      "id": "CALL-EMERALD-HE-NEW-CALL-CAPTION",
+      "severity": "BOUNDED",
+      "files": [
+        "call-emerald-dark-normal-largefont.png",
+        "call-emerald-light-normal-largefont.png",
+        "call-emerald-dark-normal-longname-he.png"
+      ],
+      "finding": "At font1.3 the Hebrew New call caption is truncated in the emerald six-control normal layout. The phone-plus icon remains clear, and the More panel captures show the full label. Other controls and hang-up remain visible."
+    }
+  ],
+  "blocking_findings": [],
+  "scope_limits": [
+    "All101 reviewed call-design captures are static fictional call-state fixtures rendered by the production in-app call UI. Screenshot appearance does not establish real Telecom call action acknowledgement or actual audible routing.",
+    "The review covers the pictured five call designs, light/dark variants, normal/audio/more/keypad states, Hebrew/English long-name cases, font scale1.3 and the English no-Bluetooth output chooser. It does not exhaust every data, font, theme and device combination.",
+    "No physical Jelly Star, SIM/carrier, microphone/speaker/Bluetooth audio, lockscreen/proximity, full TalkBack or matching-key data-preserving upgrade was tested by this visual review.",
+    "This report covers source2 call visuals only. It is retained as an accurate comparison, not publication approval: the separate changelog review identified an installed-version bidirectional-order defect, which root is fixing before a third complete CI run and fresh full233-image review."
+  ],
+  "publication_approval": false,
+  "files": [
+    {
+      "file": "call-emerald-dark-audio-largefont.png",
+      "sha256": "d2957ca0cb663c8264a509f4ccfbc15f21b75ade8b0458d461a6eba2ceda386f",
+      "result": "PASS",
+      "review_sheet": "call-01.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-audio-longname-en.png",
+      "sha256": "63f0cf1fe363267a1193c198382e9b5cc063f686d4dc2d60e8aac9ce30860924",
+      "result": "BOUNDED",
+      "review_sheet": "call-01.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-audio-longname-he.png",
+      "sha256": "11fe63f4bed31823133383b4f5c72292db5d707fc461909f79e1ffdf4ccad852",
+      "result": "BOUNDED",
+      "review_sheet": "call-01.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-audio-standard.png",
+      "sha256": "85445d8d24435471176bbf1b4c529078faccfa678d71a931edfb5385477a9c16",
+      "result": "PASS",
+      "review_sheet": "call-01.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-keypad-largefont.png",
+      "sha256": "9efa5119f7e135d4262dbb089412d024a3bf25bc018680fff307e49469794376",
+      "result": "PASS",
+      "review_sheet": "call-02.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-keypad-standard.png",
+      "sha256": "e4fddd3ec5368273bcdf6cd80acca53ac916bec31e8908bb519f290fb7c1c1ad",
+      "result": "PASS",
+      "review_sheet": "call-02.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-more-largefont.png",
+      "sha256": "3cd38e5570d966f3a10b907f5a7a79ae11eee7040df515309911ed6c254b4166",
+      "result": "PASS",
+      "review_sheet": "call-02.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-more-standard.png",
+      "sha256": "af1219c4b8d28cc4ac53ef34ed48d5c53b26e40470d7d6ea5bc1a53aea51b388",
+      "result": "PASS",
+      "review_sheet": "call-02.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-normal-largefont.png",
+      "sha256": "d034fe0ce29ea3f7b83293f2c032c52fd9f1adbbeedfd96226e9223d619721c8",
+      "result": "BOUNDED",
+      "review_sheet": "call-03.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The Hebrew New call caption in the six-control normal layout is ellipsized at font scale1.3; the phone-plus icon is intact and the expanded More panel shows the full New call label."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-normal-longname-en.png",
+      "sha256": "c6cfd35df2773360608112e161dd96dc2122931a3a63335f48718f3e20807587",
+      "result": "BOUNDED",
+      "review_sheet": "call-03.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-normal-longname-he.png",
+      "sha256": "382682362e41ec3a8624293fc78d85a5e09b3969dd15cdafe32e59845ee7a444",
+      "result": "BOUNDED",
+      "review_sheet": "call-03.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap.",
+        "The Hebrew New call caption in the six-control normal layout is ellipsized at font scale1.3; the phone-plus icon is intact and the expanded More panel shows the full New call label."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-normal-standard.png",
+      "sha256": "ade33427f67874ebb6df02af3b66cc1e923437fab23f678b36043b5c95a30473",
+      "result": "PASS",
+      "review_sheet": "call-03.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-emerald-light-audio-largefont.png",
+      "sha256": "c843f1e97eb1033766242b334423bdbce36a420ce827c2269e1c3267a6dfab67",
+      "result": "PASS",
+      "review_sheet": "call-04.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-emerald-light-audio-standard.png",
+      "sha256": "2160485e2634b8c230e03a80f30deadd9cb762c45e3762cc254d57cba29ec7ec",
+      "result": "PASS",
+      "review_sheet": "call-04.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-emerald-light-keypad-largefont.png",
+      "sha256": "b25f52cf7287e2026483be120d50dfb4b266a21e441940e625253137f4d00f15",
+      "result": "PASS",
+      "review_sheet": "call-04.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-emerald-light-keypad-standard.png",
+      "sha256": "795884ba67a84543b83d0e099289d335898118f6cf77900fcb32e46565330ab1",
+      "result": "PASS",
+      "review_sheet": "call-04.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-emerald-light-more-largefont.png",
+      "sha256": "5dca26becffacbae5593c470c015732d38365e6d7c84dc4c23b9720d905edc71",
+      "result": "PASS",
+      "review_sheet": "call-05.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-emerald-light-more-standard.png",
+      "sha256": "1cc0342a711549468aac78599cec0a8b23630bd471ea29203f7d7b3fda4e0448",
+      "result": "PASS",
+      "review_sheet": "call-05.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-emerald-light-normal-largefont.png",
+      "sha256": "d6476de963936029b3552944c9731e5819cd3b4f4d23163ed50772c9f65cc5e7",
+      "result": "BOUNDED",
+      "review_sheet": "call-05.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The Hebrew New call caption in the six-control normal layout is ellipsized at font scale1.3; the phone-plus icon is intact and the expanded More panel shows the full New call label."
+      ]
+    },
+    {
+      "file": "call-emerald-light-normal-standard.png",
+      "sha256": "9c86b378396501e1aae9c80cf690ab9419351696f4d4b4ca89ac1b16983c6779",
+      "result": "PASS",
+      "review_sheet": "call-05.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-frost-dark-audio-largefont.png",
+      "sha256": "5cf5a606758a80bcd620d1654dc42ace2e70a94e3d6ae7687315a6ef2592227b",
+      "result": "PASS",
+      "review_sheet": "call-06.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-frost-dark-audio-longname-en.png",
+      "sha256": "9653bd90c15126898b2bb0a9375daa116de99d2bdee669d306edd7f9b91113db",
+      "result": "BOUNDED",
+      "review_sheet": "call-06.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-frost-dark-audio-longname-he.png",
+      "sha256": "87e5249e8f5766a87ca4a0312ed88a03d2d756c06e35339d461261614af5bca9",
+      "result": "BOUNDED",
+      "review_sheet": "call-06.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-frost-dark-audio-standard.png",
+      "sha256": "e054400fce7bd46c9625061d4b4570306ec8c62a7afe024715df8c44ea8c4673",
+      "result": "PASS",
+      "review_sheet": "call-06.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-frost-dark-keypad-largefont.png",
+      "sha256": "00c995c1440e353bc71861fb42acd4acfef057d50f5b258e6c13d2aa20380d04",
+      "result": "PASS",
+      "review_sheet": "call-07.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-frost-dark-keypad-standard.png",
+      "sha256": "370bc0e15a030ee41d4a41526bce5c0e0222691978eb29d1de4a9733673566a9",
+      "result": "PASS",
+      "review_sheet": "call-07.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-frost-dark-more-largefont.png",
+      "sha256": "94dc698ac814caec5fef48fc98aa0e2273d8db88b139b9d1e7172e9bafbc6d7e",
+      "result": "PASS",
+      "review_sheet": "call-07.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-frost-dark-more-standard.png",
+      "sha256": "0c36aeddfdbc86b635e900ae884fadc35c70a813994712f7587d8930060d0fa3",
+      "result": "PASS",
+      "review_sheet": "call-07.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-frost-dark-normal-largefont.png",
+      "sha256": "0f332e2341441e654fa0004ce0bbb0392d10417a4d7fcf94cb8e12a46034945e",
+      "result": "PASS",
+      "review_sheet": "call-08.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-frost-dark-normal-longname-en.png",
+      "sha256": "d53cee82e2a8af73f5649d0b8c01b605297285d47c4c152f5a0751a26294e07d",
+      "result": "BOUNDED",
+      "review_sheet": "call-08.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-frost-dark-normal-longname-he.png",
+      "sha256": "a71fe45c1a59b84fdeb941ebf933a390bf581ff06e259371c39e72bcadd149bd",
+      "result": "BOUNDED",
+      "review_sheet": "call-08.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-frost-dark-normal-standard.png",
+      "sha256": "d8223878fec91c84845a3c343b7346ef93770e60d2d8a32166ec6e41f4f3157a",
+      "result": "PASS",
+      "review_sheet": "call-08.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-frost-light-audio-largefont.png",
+      "sha256": "59acb1a8570a06c0e1bed6e042e76461cd723a7e9a28638e3f1f441b619192c7",
+      "result": "PASS",
+      "review_sheet": "call-09.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-frost-light-audio-standard.png",
+      "sha256": "384cdd6ef2051e8d6c684cc0b8e77e928ab73ede01b406c988a9adcd2e3a81f1",
+      "result": "PASS",
+      "review_sheet": "call-09.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-frost-light-keypad-largefont.png",
+      "sha256": "d41b2a02005fa07cf90b4067e29ed029704cee2d707e867b9cffbb263c5800df",
+      "result": "PASS",
+      "review_sheet": "call-09.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-frost-light-keypad-standard.png",
+      "sha256": "5518f6ac277f96b164e20e7a4c3e47191bba72d35a48dfe2a51d1c20b7421bc6",
+      "result": "PASS",
+      "review_sheet": "call-09.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-frost-light-more-largefont.png",
+      "sha256": "798c4bfda45c45f602feded36b9104e118fd14e5e5ca89a0beaf4e37ba5b063f",
+      "result": "PASS",
+      "review_sheet": "call-10.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-frost-light-more-standard.png",
+      "sha256": "b582b246329150c1653aea60fb233cdcf182a160fb1daafd51aa5129d533ad53",
+      "result": "PASS",
+      "review_sheet": "call-10.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-frost-light-normal-largefont.png",
+      "sha256": "f0322766b3c7f0149be25f9aa7e62d3c4b88a212816d5856f4fbffa909dd708d",
+      "result": "PASS",
+      "review_sheet": "call-10.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-frost-light-normal-standard.png",
+      "sha256": "4b09dadd65c8de30dbb9529ec3173f6b5db431620b4d5979c76def966bc10fbb",
+      "result": "PASS",
+      "review_sheet": "call-10.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-audio-largefont.png",
+      "sha256": "2f2924cf0e8d3a1330ce91aedd1430f96a5f38c3b26ba194294aef429a489a97",
+      "result": "PASS",
+      "review_sheet": "call-11.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-audio-longname-en.png",
+      "sha256": "bd437a2b102f98ae34ef9a4129d9c27bc6350979f3e1a573465dff0e949108d9",
+      "result": "BOUNDED",
+      "review_sheet": "call-11.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-audio-longname-he.png",
+      "sha256": "73abfac8477eb91a88dc7e1ad4c1073843a3d238c61b42e78cab83ef1c63165d",
+      "result": "BOUNDED",
+      "review_sheet": "call-11.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-audio-standard.png",
+      "sha256": "96807a0bbc7b6b16daf712a8b45c3a6dec7cff8408b90d31721b1486713bf9da",
+      "result": "PASS",
+      "review_sheet": "call-11.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-keypad-largefont.png",
+      "sha256": "2310577ef327abd67c5e6972c9abcf79a5ec482044c23ad9eba98e0599016bf1",
+      "result": "PASS",
+      "review_sheet": "call-12.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-keypad-standard.png",
+      "sha256": "932797bf45c42feea826112089da479a3fa2b51979afc800ff8f292ecc040703",
+      "result": "PASS",
+      "review_sheet": "call-12.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-more-largefont.png",
+      "sha256": "3bd0c43e29903702178acf846a70242b57c9658194260c20428dc59829caa49a",
+      "result": "PASS",
+      "review_sheet": "call-12.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-more-standard.png",
+      "sha256": "7d708af7918979ca15b14d1422f0c243a86308758f347b35ed678bbbfc2a49ce",
+      "result": "PASS",
+      "review_sheet": "call-12.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-normal-largefont.png",
+      "sha256": "226db939456c469e5ad013cce6c112b702dcf6b4fef3b27a78882f890d56dc23",
+      "result": "PASS",
+      "review_sheet": "call-13.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-normal-longname-en.png",
+      "sha256": "b5f1c3714219e94dfb5dcb2dabf5933b3897c4263dfa2c5c650cc329993a2070",
+      "result": "BOUNDED",
+      "review_sheet": "call-13.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-normal-longname-he.png",
+      "sha256": "3acba25ef9314e71f24498b7f0f189757f1f5dc6a7ca90f63c6a6d198767da36",
+      "result": "BOUNDED",
+      "review_sheet": "call-13.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-normal-standard.png",
+      "sha256": "d678a80d91357a4af097acd013703bc55656530a8fb28bbc26c3e0da7576cf3c",
+      "result": "PASS",
+      "review_sheet": "call-13.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-graphite-light-audio-largefont.png",
+      "sha256": "14760dfaa36a3876ed4aa8bfc2eecc6c3149818f1e08cf61e5a4bba0de533bf1",
+      "result": "PASS",
+      "review_sheet": "call-14.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-graphite-light-audio-standard.png",
+      "sha256": "86300277663052f4a3eb25f05dc3bf4ddb569b2b230398350ad86b7f08feb43f",
+      "result": "PASS",
+      "review_sheet": "call-14.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-graphite-light-keypad-largefont.png",
+      "sha256": "451168c44b5f7d601fe8b46b7e045ec53f18d167eddb4e78fbdb601f6dea42a5",
+      "result": "PASS",
+      "review_sheet": "call-14.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-graphite-light-keypad-standard.png",
+      "sha256": "5874ec065d34eab7b9dc7c2a02d039bcd9a2beee675bfb2bcc75fc2681d9b704",
+      "result": "PASS",
+      "review_sheet": "call-14.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-graphite-light-more-largefont.png",
+      "sha256": "bbf3200a7bdb25d205b1da4c985eb61c4d63b237dcaba97b437bc0d722617153",
+      "result": "PASS",
+      "review_sheet": "call-15.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-graphite-light-more-standard.png",
+      "sha256": "5985466ac1e116d4459ec4ecd6602854bb82c99321c0dcd8dc6c47d4607cc20e",
+      "result": "PASS",
+      "review_sheet": "call-15.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-graphite-light-normal-largefont.png",
+      "sha256": "4d01a00fcd26446b3ecda516e20552d8ebbc391d5666e51544de6562c0738f15",
+      "result": "PASS",
+      "review_sheet": "call-15.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-graphite-light-normal-standard.png",
+      "sha256": "cb47bb335d23b45631446142b003698974eb9beb9547539d286946ee19ed2838",
+      "result": "PASS",
+      "review_sheet": "call-15.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-audio-largefont.png",
+      "sha256": "a5ae22ce2180847c1b7e05b8b7735a5ce68ef4dd26bdc3c298749caf4b519711",
+      "result": "PASS",
+      "review_sheet": "call-16.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-audio-longname-en.png",
+      "sha256": "97a63ff4f9801d21217da1beeef98d05bd30593157d71ebfb9f420fe8c17d9d2",
+      "result": "BOUNDED",
+      "review_sheet": "call-16.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-audio-longname-he.png",
+      "sha256": "98c96ce54b7052faead650d22147ecf55e07b737e42a4e083cc437792174f1e3",
+      "result": "BOUNDED",
+      "review_sheet": "call-16.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-audio-standard.png",
+      "sha256": "ca33b56d2372349ee82612a7b5ab15dfa0c21d197f81a21200696380db9301d9",
+      "result": "PASS",
+      "review_sheet": "call-16.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-keypad-largefont.png",
+      "sha256": "38619660f559d067e5c6cdf1ddecb832b18e12b92058eb08ba0295975cfae0fb",
+      "result": "PASS",
+      "review_sheet": "call-17.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-keypad-standard.png",
+      "sha256": "5656533c0677f5436df41da460e2b7f56fc4e5832f2380b512e4e59492f456ec",
+      "result": "PASS",
+      "review_sheet": "call-17.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-more-largefont.png",
+      "sha256": "54c110ca9f594faa58ed3e16c65396a504cd9a534354096053a217fdd1363d5a",
+      "result": "PASS",
+      "review_sheet": "call-17.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-more-standard.png",
+      "sha256": "f33ebdebbefdea7703590bdafef8567d5f9b0675750dd0731996f42673fa8da6",
+      "result": "PASS",
+      "review_sheet": "call-17.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-normal-largefont.png",
+      "sha256": "311538bd5a978c1f4c5fac330021775b24d2950b3d79f07e69c029c906c3a242",
+      "result": "PASS",
+      "review_sheet": "call-18.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-normal-longname-en.png",
+      "sha256": "df789b57ce7d4184257d4a1ad5f0e928cf9691372e84b162ac5915edf2ff8fc1",
+      "result": "BOUNDED",
+      "review_sheet": "call-18.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-normal-longname-he.png",
+      "sha256": "5c9786623660e8357203c8526de9290648f610233f8cae7fe73994ea3def77e1",
+      "result": "BOUNDED",
+      "review_sheet": "call-18.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-normal-standard.png",
+      "sha256": "6fb7a99a404253b61ba21130e7a1b12eb513962451f7045d536e02a2070ac1f3",
+      "result": "PASS",
+      "review_sheet": "call-18.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-ivory-light-audio-largefont.png",
+      "sha256": "a107382e100c885a80766e884eb53a89f85526d1c13724980d901b94d015ad30",
+      "result": "PASS",
+      "review_sheet": "call-19.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-ivory-light-audio-standard.png",
+      "sha256": "eccb79ee06a08025cc6b84012c477d2c6e9715be07237145f64ab9d09476c3bb",
+      "result": "PASS",
+      "review_sheet": "call-19.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-ivory-light-keypad-largefont.png",
+      "sha256": "9e44c66c49dcdeea0332ceefe4acafab32e5967e30225cb10af400142769f080",
+      "result": "PASS",
+      "review_sheet": "call-19.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-ivory-light-keypad-standard.png",
+      "sha256": "da8bd4b6adba33cb0e062fdc06e49baf140d51822b5f15eee2573716daf101cc",
+      "result": "PASS",
+      "review_sheet": "call-19.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-ivory-light-more-largefont.png",
+      "sha256": "f1ae23dedfea2f5f172e712c799027bb9f49dda8c655ef5c3e772a4563f7dbb7",
+      "result": "PASS",
+      "review_sheet": "call-20.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-ivory-light-more-standard.png",
+      "sha256": "186e6505ad94b2a69b0eba15beaeb0f4992e9313e340605f609c1bdd1841e4b7",
+      "result": "PASS",
+      "review_sheet": "call-20.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-ivory-light-normal-largefont.png",
+      "sha256": "a3b5784f78e3ef21f8b4947e8a046bde0bc0cb04968a3a3b0d8c7cc45380c0d1",
+      "result": "PASS",
+      "review_sheet": "call-20.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-ivory-light-normal-standard.png",
+      "sha256": "88ac76548db1d9a99759079e5a27fd4e0ab4420775cb49c12267aa53d8e2d301",
+      "result": "PASS",
+      "review_sheet": "call-20.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-audio-largefont.png",
+      "sha256": "d737989f3937c5be7b3a4eb7a8c063494fa41eec88aecd4d31430d4ed6dd5c57",
+      "result": "PASS",
+      "review_sheet": "call-21.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-audio-longname-en.png",
+      "sha256": "a1973716fc967864a9ee854a03ce5b1100334da62fc729d947fda6b17b44056c",
+      "result": "BOUNDED",
+      "review_sheet": "call-21.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-audio-longname-he.png",
+      "sha256": "1528b13f987afedea3aa73fdc26586daeeccbac4131ebf92e6e1868fbaf1b9a5",
+      "result": "BOUNDED",
+      "review_sheet": "call-21.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-audio-standard.png",
+      "sha256": "c116ec1ce82b8e1dd90cf021b4cf61aafe990fc9f093b2ffd33f3e45a5d4fd8f",
+      "result": "PASS",
+      "review_sheet": "call-21.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-keypad-largefont.png",
+      "sha256": "96c18eef60cc6406d81ee7baf583173a3656bd86e94ed086c0aae8ad6ba102e7",
+      "result": "PASS",
+      "review_sheet": "call-22.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-keypad-standard.png",
+      "sha256": "d36cd48cdf361b379266e402d666208dc95427592c7b8e201e4ac0d8086c7f27",
+      "result": "PASS",
+      "review_sheet": "call-22.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-more-largefont.png",
+      "sha256": "6bbc66a7e8b3ba7ead79cbd347cc6fd6d62f39ebcd947e5a5dcf6b52c5379372",
+      "result": "PASS",
+      "review_sheet": "call-22.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-more-standard.png",
+      "sha256": "f5fe0e5ba20a7fb88d3f39dd1b3acec5159caf29c0a304437fa31ead4be86ef0",
+      "result": "PASS",
+      "review_sheet": "call-22.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-normal-largefont.png",
+      "sha256": "9752d7e0cdf6db3627184bcad247feb20c8736b0fde9f2ef4929a9191e8f4c5f",
+      "result": "PASS",
+      "review_sheet": "call-23.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-normal-longname-en.png",
+      "sha256": "c29f742c7128d653c1c7f61923354fd9661941cf5b9cd40ad2aeb17eab740def",
+      "result": "BOUNDED",
+      "review_sheet": "call-23.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-normal-longname-he.png",
+      "sha256": "5e736f6e7a016f583ea312af4ab8448b64cd1fa6e8a2f7d613da6bc3137e081f",
+      "result": "BOUNDED",
+      "review_sheet": "call-23.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized to one line. The complete displayed phone number, timer and call controls remain visible without overlap."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-normal-standard.png",
+      "sha256": "08f71b44f1a2c2e755b0db6522184383394945839163e1f55b319f1a1f4e75a7",
+      "result": "PASS",
+      "review_sheet": "call-23.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-pixel-light-audio-english-no-bluetooth.png",
+      "sha256": "001d23b244e9f823b0cda6644a662fd7b7e8282efdf4c24750d6d8097ca5c04b",
+      "result": "PASS",
+      "review_sheet": "call-24.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-pixel-light-audio-largefont.png",
+      "sha256": "33ad5a40b50aa360539c4cdb618a18cfa52485a34f9a6c85809f0e20e892208c",
+      "result": "PASS",
+      "review_sheet": "call-24.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-pixel-light-audio-standard.png",
+      "sha256": "2610abce4f5ac1c3e2dc95d2749615b61e279adf8532ec2d8689fff676c4ae20",
+      "result": "PASS",
+      "review_sheet": "call-24.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-pixel-light-keypad-largefont.png",
+      "sha256": "803aa99b188c2072f8860dd875a84f32bf5e4a4253324de6d45aede8fdedd2b6",
+      "result": "PASS",
+      "review_sheet": "call-24.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-pixel-light-keypad-standard.png",
+      "sha256": "878dffc1799a6f350b68013ce4c890e20b8ff1af56645e27bebc6b48adee0200",
+      "result": "PASS",
+      "review_sheet": "call-25.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-pixel-light-more-largefont.png",
+      "sha256": "a8d6bc829ec9cf2f84a19dd0d8a6a8440ae0c322061f32bd1f8a84149c53e119",
+      "result": "PASS",
+      "review_sheet": "call-25.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-pixel-light-more-standard.png",
+      "sha256": "a9c52f72c278d7e5bc964937724e03d951c408eff3bf24d43eef2c3ff2933da6",
+      "result": "PASS",
+      "review_sheet": "call-25.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-pixel-light-normal-largefont.png",
+      "sha256": "d1172cadc21e37efd7af96a370964d4af82359b64372641f054d9d26cf075001",
+      "result": "PASS",
+      "review_sheet": "call-25.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    },
+    {
+      "file": "call-pixel-light-normal-standard.png",
+      "sha256": "19b563e8883cbbc5ce465a6f62b8132d1c4f478bee4c3ec6bd47d21137f9d95d",
+      "result": "PASS",
+      "review_sheet": "call-26.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "Visible caller/timer or keypad, menu and call controls are legible and stay clear of the status/navigation bars in this capture."
+      ]
+    }
+  ]
+}
