@@ -1,0 +1,797 @@
+{
+  "review_status": "PASS WITH BOUNDED FINDINGS",
+  "source_sha": "5d984dc5f9d336a71755b33951ab09d50f11193e",
+  "app_tree": "077ea26b62ac30ea3856fd78e3d7386a35b5cb0e",
+  "workflow_run_id": "41287047774",
+  "reviewed_at_utc": "2026-11-01T08:16:43.629904+00:00",
+  "reviewed_png_count": 82,
+  "review_method": "Actually inspected every assigned native 480x854 PNG in all21 original-resolution2x2 sheets other-01.png through other-21.png using view_image. Also opened personalization-recents-dark-he-largefont-compact.png individually at original resolution to resolve a possible Hebrew summary edge issue: text is visible within the card. Every source file was independently SHA-256 checked, decoded with Pillow, and compared pixel-for-pixel against its unscaled sheet crop. Reviewed only this source10 run, without approval reuse from earlier runs.",
+  "native_environment": {
+    "api": 33,
+    "density_dpi": 240,
+    "native_png_width": 480,
+    "native_png_height": 854,
+    "status_bar_top_px": 36,
+    "navigation_bar_bottom_px": 72,
+    "navigation_bar_visible": true
+  },
+  "coverage": {
+    "personalization": 53,
+    "settings": 4,
+    "widget": 17,
+    "notification_and_back": 8,
+    "sheets": 21
+  },
+  "blocking_findings": [],
+  "bounded_findings": [
+    "Fixed dialpad FAB partly obscures one lower visible contact/recent-call control in several captured list positions, while upper row controls and the bottom navigation remain distinct. Screenshot review alone does not establish scrolling or tapping reachability; this is a bounded layout observation, not a claim that every visible control is unobscured.",
+    "Long contact/favorite names, recent-call date/time metadata, native notification headers and compact widget branding use ellipsis. Full visible phone numbers, principal state/count labels and action icons remain readable. Android CallStyle shortens the longer Hebrew speaker-on action.",
+    "Launcher-icon chooser is scrollable: the fifth icon is partial in the initial state and fully shown in the paired bottom state; the bottom state has a partial first row under its fixed header. Settings and list captures likewise include naturally partial adjacent rows at scroll edges.",
+    "Light avatar-shape chooser displays plain filled shapes without the initials present in the dark version. The four geometric previews, Hebrew labels, radio markers and Cancel action remain distinguishable."
+  ],
+  "scope_limits": [
+    "This report covers exactly82 fresh non-call-design/non-island screenshots; call designs and island/external-call captures require their separate reviewers.",
+    "Visual review confirms the pictured pixels only. It does not independently validate dialing, notification action effects, scrolling, permission grants, backup contents/restore effects, widgets on an arbitrary launcher, or persistence.",
+    "Fixture screenshots use fictional contacts and call state. Actual modem/Telecom external-call evidence is outside this82-frame visual scope.",
+    "The pictured matrix includes English/Hebrew RTL, dark/light themes and named enlarged-font1.3 states on Android13 at480x854/density240. It does not exhaust every theme/font/content combination and is not a physical Jelly Star, SIM/carrier, audio, Bluetooth, proximity, lock-screen, TalkBack or matching-key upgrade verification.",
+    "Readability and color separation were assessed visually; this was not a measured WCAG contrast or screen-reader audit. Native Android SystemUI notification shade styling is system-owned."
+  ],
+  "files": [
+    {
+      "file": "call-integration-notification-active-private-en.png",
+      "sha256": "8d92e8173db66d3971bb131cec94240d1bd4226527ca87734460fa06650b0b18",
+      "result": "PASS",
+      "sheet": "other-01.png",
+      "notes": [
+        "Native Android CallStyle card has legible contact/call state and separated hang-up, return and applicable answer/speaker actions; SystemUI owns the surrounding shade."
+      ]
+    },
+    {
+      "file": "call-integration-notification-active-private-he.png",
+      "sha256": "c98d94d373780aea5fa572df4d44cf46c9ddf68a3fca30e70538458fe84fc5bb",
+      "result": "BOUNDED",
+      "sheet": "other-01.png",
+      "notes": [
+        "Native Android CallStyle card has legible contact/call state and separated hang-up, return and applicable answer/speaker actions; SystemUI owns the surrounding shade.",
+        "Native compact header uses ellipsis; active-private Hebrew speaker-on action is shortened by SystemUI, with the speaker icon and other actions still visible."
+      ]
+    },
+    {
+      "file": "call-integration-notification-active-speaker-en.png",
+      "sha256": "81567cd813a73ff428a9383c8dd402bcc7a0030e78b887f99cb845a2b5442657",
+      "result": "PASS",
+      "sheet": "other-01.png",
+      "notes": [
+        "Native Android CallStyle card has legible contact/call state and separated hang-up, return and applicable answer/speaker actions; SystemUI owns the surrounding shade."
+      ]
+    },
+    {
+      "file": "call-integration-notification-active-speaker-he.png",
+      "sha256": "8300f9a17546f6a65d91c3cd566bbeb9a027a1b05f96ea2ecec9652129d75bd8",
+      "result": "BOUNDED",
+      "sheet": "other-01.png",
+      "notes": [
+        "Native Android CallStyle card has legible contact/call state and separated hang-up, return and applicable answer/speaker actions; SystemUI owns the surrounding shade.",
+        "Native compact header uses ellipsis; active-private Hebrew speaker-on action is shortened by SystemUI, with the speaker icon and other actions still visible."
+      ]
+    },
+    {
+      "file": "call-integration-notification-incoming-he.png",
+      "sha256": "790abb8ac86e0eaae28756614dd43d4b9b69786681402ae8724859d6513dc133",
+      "result": "BOUNDED",
+      "sheet": "other-02.png",
+      "notes": [
+        "Native Android CallStyle card has legible contact/call state and separated hang-up, return and applicable answer/speaker actions; SystemUI owns the surrounding shade.",
+        "Native compact header uses ellipsis; active-private Hebrew speaker-on action is shortened by SystemUI, with the speaker icon and other actions still visible."
+      ]
+    },
+    {
+      "file": "call-integration-notification-outgoing-he.png",
+      "sha256": "7b15436304afc410b319de31e83ba3144045fdb6f86655b2660168bec1736e04",
+      "result": "BOUNDED",
+      "sheet": "other-02.png",
+      "notes": [
+        "Native Android CallStyle card has legible contact/call state and separated hang-up, return and applicable answer/speaker actions; SystemUI owns the surrounding shade.",
+        "Native compact header uses ellipsis; active-private Hebrew speaker-on action is shortened by SystemUI, with the speaker icon and other actions still visible."
+      ]
+    },
+    {
+      "file": "call-integration-return-contacts.png",
+      "sha256": "2b14f24264fd104d57622dd7581affc56120cadc0fbbc9dedfa3f494f0624f42",
+      "result": "BOUNDED",
+      "sheet": "other-02.png",
+      "notes": [
+        "Restored Hebrew contact query, visible rows and selected Contacts navigation remain readable. Long row names ellipsize; fixed dialpad button partly covers one lower visible call control."
+      ]
+    },
+    {
+      "file": "call-integration-return-settings.png",
+      "sha256": "f716a607090b1feefb91481af85d77cc7219368f3ccf9378b04e1d63fe4ac517",
+      "result": "BOUNDED",
+      "sheet": "other-02.png",
+      "notes": [
+        "Restored Hebrew scrolled settings position and selected Settings navigation remain readable; top/bottom adjacent rows are partial at the viewport edges."
+      ]
+    },
+    {
+      "file": "personalization-archive-dark.png",
+      "sha256": "25e714f56b9e22f8f55191797a9fb5c8a8dbb76c59749d658176c26f266aacf4",
+      "result": "PASS",
+      "sheet": "other-03.png",
+      "notes": [
+        "Hebrew archive title, search, full contact identity/number and call date/duration are readable; light/dark content and native navigation have clear visual separation."
+      ]
+    },
+    {
+      "file": "personalization-archive-light.png",
+      "sha256": "7b188758eb8d5c6fbd6a243b04ec00b72a9706256401dbe2adebe3ec81b74692",
+      "result": "PASS",
+      "sheet": "other-03.png",
+      "notes": [
+        "Hebrew archive title, search, full contact identity/number and call date/duration are readable; light/dark content and native navigation have clear visual separation."
+      ]
+    },
+    {
+      "file": "personalization-backup-restore-confirmation.png",
+      "sha256": "eae4d0f6a76a4c2253b344e1875f874e6d47075f33b3fc878856beccc12a0009",
+      "result": "PASS",
+      "sheet": "other-03.png",
+      "notes": [
+        "Backup/restore text and actions fit the visible native screen/dialog; replacement/retention wording and counts remain readable without covering the bottom actions or native navigation."
+      ]
+    },
+    {
+      "file": "personalization-backup-saved-dark.png",
+      "sha256": "9ca4aa0956a57c1b7bb8a79921124af86d7c17d6a4a6628c5cb499ca4c2f9ac6",
+      "result": "PASS",
+      "sheet": "other-03.png",
+      "notes": [
+        "Backup/restore text and actions fit the visible native screen/dialog; replacement/retention wording and counts remain readable without covering the bottom actions or native navigation."
+      ]
+    },
+    {
+      "file": "personalization-backup-saved-light.png",
+      "sha256": "94d3b960ff580f7748f55ddcac13b9f84d6aa785c4e6c5ad1bf206810ae11f03",
+      "result": "PASS",
+      "sheet": "other-04.png",
+      "notes": [
+        "Backup/restore text and actions fit the visible native screen/dialog; replacement/retention wording and counts remain readable without covering the bottom actions or native navigation."
+      ]
+    },
+    {
+      "file": "personalization-chooser-dark-avatar_shapes-bottom.png",
+      "sha256": "856ae96eecb5c88925f62eaba962d9ac4133389664690a02463a2277440908d6",
+      "result": "PASS",
+      "sheet": "other-04.png",
+      "notes": [
+        "Native RTL chooser title, radio choices and Cancel control are legible and separated from system navigation."
+      ]
+    },
+    {
+      "file": "personalization-chooser-dark-avatar_shapes.png",
+      "sha256": "856ae96eecb5c88925f62eaba962d9ac4133389664690a02463a2277440908d6",
+      "result": "PASS",
+      "sheet": "other-04.png",
+      "notes": [
+        "Native RTL chooser title, radio choices and Cancel control are legible and separated from system navigation."
+      ]
+    },
+    {
+      "file": "personalization-chooser-dark-icons-bottom.png",
+      "sha256": "f48c11285efef94278ebde995d94f455a0ef4950af85b279d7fbacd77e4df456",
+      "result": "BOUNDED",
+      "sheet": "other-04.png",
+      "notes": [
+        "Native RTL chooser title, radio choices and Cancel control are legible and separated from system navigation.",
+        "Scrollable icon choices have partial edge rows: initial state clips the fifth choice at the fixed footer; paired bottom state shows the fifth choice fully and a partial first choice under the header."
+      ]
+    },
+    {
+      "file": "personalization-chooser-dark-icons.png",
+      "sha256": "551ed3409739a11b0e51cf5a650a9a45d7b116a0ea2c88472b0363212718143d",
+      "result": "BOUNDED",
+      "sheet": "other-05.png",
+      "notes": [
+        "Native RTL chooser title, radio choices and Cancel control are legible and separated from system navigation.",
+        "Scrollable icon choices have partial edge rows: initial state clips the fifth choice at the fixed footer; paired bottom state shows the fifth choice fully and a partial first choice under the header."
+      ]
+    },
+    {
+      "file": "personalization-chooser-light-avatar_shapes-bottom.png",
+      "sha256": "3207605834ed7d6a0381390c6bd2be235dcf109951e678a5dc6b98e8e10bbe50",
+      "result": "BOUNDED",
+      "sheet": "other-05.png",
+      "notes": [
+        "Native RTL chooser title, radio choices and Cancel control are legible and separated from system navigation.",
+        "Light-theme previews are plain filled shapes without the initials visible in dark-theme previews. All four shapes, labels and selection marks remain distinct."
+      ]
+    },
+    {
+      "file": "personalization-chooser-light-avatar_shapes.png",
+      "sha256": "3207605834ed7d6a0381390c6bd2be235dcf109951e678a5dc6b98e8e10bbe50",
+      "result": "BOUNDED",
+      "sheet": "other-05.png",
+      "notes": [
+        "Native RTL chooser title, radio choices and Cancel control are legible and separated from system navigation.",
+        "Light-theme previews are plain filled shapes without the initials visible in dark-theme previews. All four shapes, labels and selection marks remain distinct."
+      ]
+    },
+    {
+      "file": "personalization-chooser-light-icons-bottom.png",
+      "sha256": "16ada4d898b3a2e9773099d0164d61419fba2299634874b39fd1492b15661241",
+      "result": "BOUNDED",
+      "sheet": "other-05.png",
+      "notes": [
+        "Native RTL chooser title, radio choices and Cancel control are legible and separated from system navigation.",
+        "Scrollable icon choices have partial edge rows: initial state clips the fifth choice at the fixed footer; paired bottom state shows the fifth choice fully and a partial first choice under the header."
+      ]
+    },
+    {
+      "file": "personalization-chooser-light-icons.png",
+      "sha256": "5c1cb9c2059df6abeb2cff6ec723aae14e5dfb417ee98e7ff41140550a8f7040",
+      "result": "BOUNDED",
+      "sheet": "other-06.png",
+      "notes": [
+        "Native RTL chooser title, radio choices and Cancel control are legible and separated from system navigation.",
+        "Scrollable icon choices have partial edge rows: initial state clips the fifth choice at the fixed footer; paired bottom state shows the fifth choice fully and a partial first choice under the header."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-en-largefont-collapsed.png",
+      "sha256": "13ec9dfedbceea1e3b77c497ba2ea01a40f51e004a76cb911d3fcdfb360f423e",
+      "result": "BOUNDED",
+      "sheet": "other-06.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport.",
+        "Long Dana contact/favorite name uses ellipsis at enlarged font; full visible phone number remains available."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-en-largefont-expanded.png",
+      "sha256": "4352932bcf5591f159d73d1f0e36c55e6bfc4e0c290baa7c7f589ad7c74878cb",
+      "result": "BOUNDED",
+      "sheet": "other-06.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport.",
+        "Long Dana contact/favorite name uses ellipsis at enlarged font; full visible phone number remains available."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-en-standard-collapsed.png",
+      "sha256": "7fe34f706e4275981932ee89afb92837a58f8a983789262c7a2802c5e9ae97c1",
+      "result": "BOUNDED",
+      "sheet": "other-06.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-en-standard-expanded.png",
+      "sha256": "7a610e5ad04ca415da9b756036ca4d9a3229bad9e2c22a8bef2ddf367f60aed6",
+      "result": "BOUNDED",
+      "sheet": "other-07.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-he-largefont-collapsed.png",
+      "sha256": "cb75617e007387c09c22da8eba63fde360f008d091fa656c253a63f2ea928e8b",
+      "result": "BOUNDED",
+      "sheet": "other-07.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-he-largefont-expanded.png",
+      "sha256": "80cbd8713e29e3c329207937e8246ffafc4fb39d40cad1410da39da8d5138034",
+      "result": "BOUNDED",
+      "sheet": "other-07.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-he-standard-collapsed.png",
+      "sha256": "ba1217fb8a3ab251e070b44e9e652d5d2539d8fae895dd9069ac80c315e7e6be",
+      "result": "BOUNDED",
+      "sheet": "other-07.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-he-standard-expanded.png",
+      "sha256": "4cabdbe0a14cb8b58c064b9dd010388a92da48dbfb8db7c8f8bb61cd45be4bf1",
+      "result": "BOUNDED",
+      "sheet": "other-08.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-en-largefont-collapsed.png",
+      "sha256": "d59358c26a0be5fc3a9f9f63e8a74f8158a31548ae315d5e45c2b51749710bfe",
+      "result": "BOUNDED",
+      "sheet": "other-08.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport.",
+        "Long Dana contact/favorite name uses ellipsis at enlarged font; full visible phone number remains available."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-en-largefont-expanded.png",
+      "sha256": "1b9ab7b547015c3a16c8d6e6b63df3b4e8cfca9a76e47c656922b28927c9d9b8",
+      "result": "BOUNDED",
+      "sheet": "other-08.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport.",
+        "Long Dana contact/favorite name uses ellipsis at enlarged font; full visible phone number remains available."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-en-standard-collapsed.png",
+      "sha256": "f876d0d2a81355949d5d8f3cc6766c167da342522db1f70dc5e1077e83bb6a31",
+      "result": "BOUNDED",
+      "sheet": "other-08.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-en-standard-expanded.png",
+      "sha256": "bf291832dc553c0877685d582d9031e9504fa42497debc11a4fd5df142b7a35a",
+      "result": "BOUNDED",
+      "sheet": "other-09.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-he-largefont-collapsed.png",
+      "sha256": "4a76863e06f3069e2b3566f3925d159300b7bfbc0a76b801e01a1fa26861f5f4",
+      "result": "BOUNDED",
+      "sheet": "other-09.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-he-largefont-expanded.png",
+      "sha256": "63dec200650af1c7c7e923d8d68f55ae6f1e501e60dc32b2aafe0f0e6125d10a",
+      "result": "BOUNDED",
+      "sheet": "other-09.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-he-standard-collapsed.png",
+      "sha256": "a268f9b907c06f4272e290613998885f0bcd7991d75e9f08390a432d83580452",
+      "result": "BOUNDED",
+      "sheet": "other-09.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-he-standard-expanded.png",
+      "sha256": "62b77a01d5b97b2f2bbe82d3e67d37f15a570466c3c61258aab1a96f2f170e84",
+      "result": "BOUNDED",
+      "sheet": "other-10.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport."
+      ]
+    },
+    {
+      "file": "personalization-contacts-shape-circle.png",
+      "sha256": "a7ddcf3bb460ea2b72e6e975271ba6ba5d66e2781183be9482ed9e1e89bc9b69",
+      "result": "BOUNDED",
+      "sheet": "other-10.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport."
+      ]
+    },
+    {
+      "file": "personalization-contacts-shape-hexagon.png",
+      "sha256": "c5e8bdcc367fe161aeac539764dbc7e351336b049c39b3a940d807ba546b881a",
+      "result": "BOUNDED",
+      "sheet": "other-10.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport."
+      ]
+    },
+    {
+      "file": "personalization-contacts-shape-rounded_square.png",
+      "sha256": "f26ab82d8256291ee9bf41e397814d1766089d251098f27bf67c16cad985098c",
+      "result": "BOUNDED",
+      "sheet": "other-10.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport."
+      ]
+    },
+    {
+      "file": "personalization-contacts-shape-square.png",
+      "sha256": "c940183e9207dae99e2808f067f98ae6ff246a384387131b4d6506e9085456d8",
+      "result": "BOUNDED",
+      "sheet": "other-11.png",
+      "notes": [
+        "Contact/favorites/search layout, full visible phone numbers and selected navigation remain readable in the pictured language/theme/font/shape state. The fixed dialpad button partly covers a lower row call control; lower rows can extend below the fixed navigation viewport."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-en-largefont-compact.png",
+      "sha256": "3d96b2442f8c27532b0f3e6180c5c5de28eefbbc93f52bf1170e6b4938a1167d",
+      "result": "BOUNDED",
+      "sheet": "other-11.png",
+      "notes": [
+        "Compact/expanded call summary, counts, direction glyphs, full visible phone numbers and selected navigation are readable in the pictured language/theme/font state. Dates/times use ellipsis in narrow secondary lines; fixed dialpad button partly covers a lower call control."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-en-largefont-expanded.png",
+      "sha256": "dd5c6dfe3c0986a0f53e7a24fbc49792dcbcb0430c00605ce76db263c789ae6f",
+      "result": "BOUNDED",
+      "sheet": "other-11.png",
+      "notes": [
+        "Compact/expanded call summary, counts, direction glyphs, full visible phone numbers and selected navigation are readable in the pictured language/theme/font state. Dates/times use ellipsis in narrow secondary lines; fixed dialpad button partly covers a lower call control."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-en-standard-compact.png",
+      "sha256": "9b737694b00fd901d65d601f6f3f14eebeb7a3b63f8c7974aa2651e09c17df07",
+      "result": "BOUNDED",
+      "sheet": "other-11.png",
+      "notes": [
+        "Compact/expanded call summary, counts, direction glyphs, full visible phone numbers and selected navigation are readable in the pictured language/theme/font state. Dates/times use ellipsis in narrow secondary lines; fixed dialpad button partly covers a lower call control."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-en-standard-expanded.png",
+      "sha256": "c12ab4790a9d4a89269fd2ca214d69c2fb7cf9eb40385aed178198250ef4ffcc",
+      "result": "BOUNDED",
+      "sheet": "other-12.png",
+      "notes": [
+        "Compact/expanded call summary, counts, direction glyphs, full visible phone numbers and selected navigation are readable in the pictured language/theme/font state. Dates/times use ellipsis in narrow secondary lines; fixed dialpad button partly covers a lower call control."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-he-largefont-compact.png",
+      "sha256": "5d2b1757c162fbf8941d19435a7bfc2547fe27036a0be8cab281a360e860efb2",
+      "result": "BOUNDED",
+      "sheet": "other-12.png",
+      "notes": [
+        "Compact/expanded call summary, counts, direction glyphs, full visible phone numbers and selected navigation are readable in the pictured language/theme/font state. Dates/times use ellipsis in narrow secondary lines; fixed dialpad button partly covers a lower call control."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-he-largefont-expanded.png",
+      "sha256": "1d35a4fad561bc5ef3c80e9c152e7771e42da1073000f9c7259d19e40e50037e",
+      "result": "BOUNDED",
+      "sheet": "other-12.png",
+      "notes": [
+        "Compact/expanded call summary, counts, direction glyphs, full visible phone numbers and selected navigation are readable in the pictured language/theme/font state. Dates/times use ellipsis in narrow secondary lines; fixed dialpad button partly covers a lower call control."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-he-standard-compact.png",
+      "sha256": "d3ea54e67c163e902e2fffc5ec930f1850a6b47ea01b0b7b368aec447050f7cf",
+      "result": "BOUNDED",
+      "sheet": "other-12.png",
+      "notes": [
+        "Compact/expanded call summary, counts, direction glyphs, full visible phone numbers and selected navigation are readable in the pictured language/theme/font state. Dates/times use ellipsis in narrow secondary lines; fixed dialpad button partly covers a lower call control."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-he-standard-expanded.png",
+      "sha256": "ba8941e3c9e6fca035d99e950d7d95a97f118e57ac0588da8f7d32cd6e5ab9de",
+      "result": "BOUNDED",
+      "sheet": "other-13.png",
+      "notes": [
+        "Compact/expanded call summary, counts, direction glyphs, full visible phone numbers and selected navigation are readable in the pictured language/theme/font state. Dates/times use ellipsis in narrow secondary lines; fixed dialpad button partly covers a lower call control."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-en-largefont-compact.png",
+      "sha256": "c56ef68524f3c775dc803f79fed584c7491e6a95f44fa87b35cf2ef294d6a269",
+      "result": "BOUNDED",
+      "sheet": "other-13.png",
+      "notes": [
+        "Compact/expanded call summary, counts, direction glyphs, full visible phone numbers and selected navigation are readable in the pictured language/theme/font state. Dates/times use ellipsis in narrow secondary lines; fixed dialpad button partly covers a lower call control."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-en-largefont-expanded.png",
+      "sha256": "683d6b52999a0ea5919dadec884c85fd19bf690b87573c35c93c66d5cd846374",
+      "result": "BOUNDED",
+      "sheet": "other-13.png",
+      "notes": [
+        "Compact/expanded call summary, counts, direction glyphs, full visible phone numbers and selected navigation are readable in the pictured language/theme/font state. Dates/times use ellipsis in narrow secondary lines; fixed dialpad button partly covers a lower call control."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-en-standard-compact.png",
+      "sha256": "53d912caf119de285e243f83e206ba30d9071bc8b572b8c519d1d74656e45694",
+      "result": "BOUNDED",
+      "sheet": "other-13.png",
+      "notes": [
+        "Compact/expanded call summary, counts, direction glyphs, full visible phone numbers and selected navigation are readable in the pictured language/theme/font state. Dates/times use ellipsis in narrow secondary lines; fixed dialpad button partly covers a lower call control."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-en-standard-expanded.png",
+      "sha256": "1fac6f21b1067ece48e0c2e07ed182c90fa67bde928f1bc3437518ae39e6f0c9",
+      "result": "BOUNDED",
+      "sheet": "other-14.png",
+      "notes": [
+        "Compact/expanded call summary, counts, direction glyphs, full visible phone numbers and selected navigation are readable in the pictured language/theme/font state. Dates/times use ellipsis in narrow secondary lines; fixed dialpad button partly covers a lower call control."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-he-largefont-compact.png",
+      "sha256": "7a8d0ce353596edf98455671deccb529959a6fa73cac1867ed23fb761d311ba8",
+      "result": "BOUNDED",
+      "sheet": "other-14.png",
+      "notes": [
+        "Compact/expanded call summary, counts, direction glyphs, full visible phone numbers and selected navigation are readable in the pictured language/theme/font state. Dates/times use ellipsis in narrow secondary lines; fixed dialpad button partly covers a lower call control."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-he-largefont-expanded.png",
+      "sha256": "8544d8fe69f9f5e29513ab013d96daa04b100d22e7c6e48e8dba0c8e117dd69d",
+      "result": "BOUNDED",
+      "sheet": "other-14.png",
+      "notes": [
+        "Compact/expanded call summary, counts, direction glyphs, full visible phone numbers and selected navigation are readable in the pictured language/theme/font state. Dates/times use ellipsis in narrow secondary lines; fixed dialpad button partly covers a lower call control."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-he-standard-compact.png",
+      "sha256": "833b2f78436a0d1d7e145b1398a4e56e29d2f5268cd276bda31148975d21ca22",
+      "result": "BOUNDED",
+      "sheet": "other-14.png",
+      "notes": [
+        "Compact/expanded call summary, counts, direction glyphs, full visible phone numbers and selected navigation are readable in the pictured language/theme/font state. Dates/times use ellipsis in narrow secondary lines; fixed dialpad button partly covers a lower call control."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-he-standard-expanded.png",
+      "sha256": "7ff1c1f6647fbe3bac3ff3d01a44abc29ffe6b3507d40572aa0fa45183f2ebb9",
+      "result": "BOUNDED",
+      "sheet": "other-15.png",
+      "notes": [
+        "Compact/expanded call summary, counts, direction glyphs, full visible phone numbers and selected navigation are readable in the pictured language/theme/font state. Dates/times use ellipsis in narrow secondary lines; fixed dialpad button partly covers a lower call control."
+      ]
+    },
+    {
+      "file": "personalization-widgets-shape-circle.png",
+      "sha256": "2a53e2023dd8a928ef42e661ffb4598b701ebfa402ffd889cbb823a4d8eec866",
+      "result": "BOUNDED",
+      "sheet": "other-15.png",
+      "notes": [
+        "Requested avatar shape is visibly applied to all widget contacts, with separated names and initials; long Dana favorite label uses ellipsis."
+      ]
+    },
+    {
+      "file": "personalization-widgets-shape-hexagon.png",
+      "sha256": "e9ede748f62565f7af39c5d2cb76717f1148dcd3335a5d15331e171142c4a457",
+      "result": "BOUNDED",
+      "sheet": "other-15.png",
+      "notes": [
+        "Requested avatar shape is visibly applied to all widget contacts, with separated names and initials; long Dana favorite label uses ellipsis."
+      ]
+    },
+    {
+      "file": "personalization-widgets-shape-rounded_square.png",
+      "sha256": "54afcd3a61df286d3a00d4dfd40402f56ee8f3d0d609ab53f9c45298e07bc40a",
+      "result": "BOUNDED",
+      "sheet": "other-15.png",
+      "notes": [
+        "Requested avatar shape is visibly applied to all widget contacts, with separated names and initials; long Dana favorite label uses ellipsis."
+      ]
+    },
+    {
+      "file": "personalization-widgets-shape-square.png",
+      "sha256": "53b372591fb6a68e214fdd7d009eac75853cc4eb6c7c03729a33b8f2cfb2d446",
+      "result": "BOUNDED",
+      "sheet": "other-16.png",
+      "notes": [
+        "Requested avatar shape is visibly applied to all widget contacts, with separated names and initials; long Dana favorite label uses ellipsis."
+      ]
+    },
+    {
+      "file": "settings-dark-bottom.png",
+      "sha256": "13f8cf6c34dbbe28da8e3c205b7fcec4de0a9e2b84198004dc6b78a64ea8902d",
+      "result": "PASS",
+      "sheet": "other-16.png",
+      "notes": [
+        "Visible Hebrew permission/status/action rows are legible in the pictured scroll position. Adjacent rows clip naturally at the scroll edges; paired bottom capture exposes the lower permission/diagnostics rows and version. Light/dark native navigation controls have visible contrast."
+      ]
+    },
+    {
+      "file": "settings-dark.png",
+      "sha256": "f1c0b131f141acded5df20f40fab8a70c8a158dfc3d09f7b854f76a78914b945",
+      "result": "PASS",
+      "sheet": "other-16.png",
+      "notes": [
+        "Visible Hebrew permission/status/action rows are legible in the pictured scroll position. Adjacent rows clip naturally at the scroll edges; paired bottom capture exposes the lower permission/diagnostics rows and version. Light/dark native navigation controls have visible contrast."
+      ]
+    },
+    {
+      "file": "settings-light-bottom.png",
+      "sha256": "c1853bf7402e2d4274438e4263bc00a14829ff83e10de90d30300d8230c2a3d0",
+      "result": "PASS",
+      "sheet": "other-16.png",
+      "notes": [
+        "Visible Hebrew permission/status/action rows are legible in the pictured scroll position. Adjacent rows clip naturally at the scroll edges; paired bottom capture exposes the lower permission/diagnostics rows and version. Light/dark native navigation controls have visible contrast."
+      ]
+    },
+    {
+      "file": "settings-light.png",
+      "sha256": "d036f9115a7ec6906de323bedba0aa25000bc2e75b0bad9c82ddfb71ad43c987",
+      "result": "PASS",
+      "sheet": "other-17.png",
+      "notes": [
+        "Visible Hebrew permission/status/action rows are legible in the pictured scroll position. Adjacent rows clip naturally at the scroll edges; paired bottom capture exposes the lower permission/diagnostics rows and version. Light/dark native navigation controls have visible contrast."
+      ]
+    },
+    {
+      "file": "widget-dark-contact-2x1.png",
+      "sha256": "ec444c1e2b2ed0798c7cb8f718119545840730ae506546ce674d20d96ed4bac4",
+      "result": "PASS",
+      "sheet": "other-17.png",
+      "notes": [
+        "Pictured widget content, name/initials, empty/permission text or reconfigured identity is readable and contained in its preview; light/dark system navigation controls remain distinct."
+      ]
+    },
+    {
+      "file": "widget-dark-empty.png",
+      "sha256": "00531b1f07011af136998a091f6977abfaf25227e0dc973b656e8a64e96bb49a",
+      "result": "PASS",
+      "sheet": "other-17.png",
+      "notes": [
+        "Pictured widget content, name/initials, empty/permission text or reconfigured identity is readable and contained in its preview; light/dark system navigation controls remain distinct."
+      ]
+    },
+    {
+      "file": "widget-dark-favorites-2x2-largefont.png",
+      "sha256": "d592c1ec26653f9c0f3e36471cc4a5ce5858c568356e7ddda0e25f94d3355710",
+      "result": "BOUNDED",
+      "sheet": "other-17.png",
+      "notes": [
+        "Pictured widget content, name/initials, empty/permission text or reconfigured identity is readable and contained in its preview; light/dark system navigation controls remain distinct.",
+        "Narrow enlarged-font widget header shortens the DA CALLER brand with ellipsis; favorites label and all four contact labels remain visible."
+      ]
+    },
+    {
+      "file": "widget-dark-favorites-2x2.png",
+      "sha256": "fd256cb7a7723e7cf71cd38af9075584defe7f9340661c4836cabccf9201b428",
+      "result": "PASS",
+      "sheet": "other-18.png",
+      "notes": [
+        "Pictured widget content, name/initials, empty/permission text or reconfigured identity is readable and contained in its preview; light/dark system navigation controls remain distinct."
+      ]
+    },
+    {
+      "file": "widget-dark-favorites-4x2.png",
+      "sha256": "c48e439db27c30ad78b9743623f079cac35ce73472fb78d76003e205a53e6ec9",
+      "result": "PASS",
+      "sheet": "other-18.png",
+      "notes": [
+        "Pictured widget content, name/initials, empty/permission text or reconfigured identity is readable and contained in its preview; light/dark system navigation controls remain distinct."
+      ]
+    },
+    {
+      "file": "widget-dark-permission.png",
+      "sha256": "fa9407517a221e4c375985953ef2940fe71c4d482aff8f2cf0fb94dd871b6e3d",
+      "result": "PASS",
+      "sheet": "other-18.png",
+      "notes": [
+        "Pictured widget content, name/initials, empty/permission text or reconfigured identity is readable and contained in its preview; light/dark system navigation controls remain distinct."
+      ]
+    },
+    {
+      "file": "widget-dark-quick-1x1.png",
+      "sha256": "6eedf98910f0731e7407eb81ae617005b136726c40f04ce3f0a07b1bb08f672b",
+      "result": "BOUNDED",
+      "sheet": "other-18.png",
+      "notes": [
+        "Pictured widget content, name/initials, empty/permission text or reconfigured identity is readable and contained in its preview; light/dark system navigation controls remain distinct.",
+        "Small quick-dial widget shortens the long contact name with ellipsis; initials and remaining name are visible."
+      ]
+    },
+    {
+      "file": "widget-dark-two-favorites.png",
+      "sha256": "d11db91b0c8bd3ee7cafcb29b5673018cdc2d008d61a9e744cac1c3076ea3455",
+      "result": "PASS",
+      "sheet": "other-19.png",
+      "notes": [
+        "Pictured widget content, name/initials, empty/permission text or reconfigured identity is readable and contained in its preview; light/dark system navigation controls remain distinct."
+      ]
+    },
+    {
+      "file": "widget-light-contact-2x1.png",
+      "sha256": "9d838b66183d3c109b37061854bab4b8eec3b304a6556215611c07bb0ab7327c",
+      "result": "PASS",
+      "sheet": "other-19.png",
+      "notes": [
+        "Pictured widget content, name/initials, empty/permission text or reconfigured identity is readable and contained in its preview; light/dark system navigation controls remain distinct."
+      ]
+    },
+    {
+      "file": "widget-light-empty.png",
+      "sha256": "9f19f363c83c998608d9be96072067ec039a1b4173f85746e7844fc279a3b115",
+      "result": "PASS",
+      "sheet": "other-19.png",
+      "notes": [
+        "Pictured widget content, name/initials, empty/permission text or reconfigured identity is readable and contained in its preview; light/dark system navigation controls remain distinct."
+      ]
+    },
+    {
+      "file": "widget-light-favorites-2x2-largefont.png",
+      "sha256": "be4b1e11072451c15ee095fef8bc7b1541b0ff56a6e54a6449052d0e59d7fc1e",
+      "result": "BOUNDED",
+      "sheet": "other-19.png",
+      "notes": [
+        "Pictured widget content, name/initials, empty/permission text or reconfigured identity is readable and contained in its preview; light/dark system navigation controls remain distinct.",
+        "Narrow enlarged-font widget header shortens the DA CALLER brand with ellipsis; favorites label and all four contact labels remain visible."
+      ]
+    },
+    {
+      "file": "widget-light-favorites-2x2.png",
+      "sha256": "1cb578b7e719aeaf417e1c104e398cc2cdf7de947526802ca2a304d61bf8c4d2",
+      "result": "PASS",
+      "sheet": "other-20.png",
+      "notes": [
+        "Pictured widget content, name/initials, empty/permission text or reconfigured identity is readable and contained in its preview; light/dark system navigation controls remain distinct."
+      ]
+    },
+    {
+      "file": "widget-light-favorites-4x2.png",
+      "sha256": "79d06b1f00f7855d8985eceadcb26fa5e5838c1e0fe348ebe848fad84e92b446",
+      "result": "PASS",
+      "sheet": "other-20.png",
+      "notes": [
+        "Pictured widget content, name/initials, empty/permission text or reconfigured identity is readable and contained in its preview; light/dark system navigation controls remain distinct."
+      ]
+    },
+    {
+      "file": "widget-light-permission.png",
+      "sha256": "6a39bab4e28acae8187ae94c3924190227c6c68e26e5f5e78ec9612fec62151b",
+      "result": "PASS",
+      "sheet": "other-20.png",
+      "notes": [
+        "Pictured widget content, name/initials, empty/permission text or reconfigured identity is readable and contained in its preview; light/dark system navigation controls remain distinct."
+      ]
+    },
+    {
+      "file": "widget-light-quick-1x1.png",
+      "sha256": "e5c15a6341e336d55f5e967dd51dc4cb3232f26d5b8a7820b9ced5446137a6bf",
+      "result": "BOUNDED",
+      "sheet": "other-20.png",
+      "notes": [
+        "Pictured widget content, name/initials, empty/permission text or reconfigured identity is readable and contained in its preview; light/dark system navigation controls remain distinct.",
+        "Small quick-dial widget shortens the long contact name with ellipsis; initials and remaining name are visible."
+      ]
+    },
+    {
+      "file": "widget-light-two-favorites.png",
+      "sha256": "52e357947a4c1e2fe3bb9e838b6e07415891bf5f6040652636a16ee59de29d23",
+      "result": "PASS",
+      "sheet": "other-21.png",
+      "notes": [
+        "Pictured widget content, name/initials, empty/permission text or reconfigured identity is readable and contained in its preview; light/dark system navigation controls remain distinct."
+      ]
+    },
+    {
+      "file": "widget-reconfigured.png",
+      "sha256": "241d2d304d83623eb17dc38e9c7b7cfcdbf155a749287558a8f07704def5a369",
+      "result": "PASS",
+      "sheet": "other-21.png",
+      "notes": [
+        "Pictured widget content, name/initials, empty/permission text or reconfigured identity is readable and contained in its preview; light/dark system navigation controls remain distinct."
+      ]
+    }
+  ]
+}
