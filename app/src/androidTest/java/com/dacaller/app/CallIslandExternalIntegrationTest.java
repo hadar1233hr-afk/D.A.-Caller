@@ -246,9 +246,13 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
    if((line.contains("mResumedActivity")||line.contains("topResumedActivity"))&&line.contains(" "+packageName+"/")){resumed=true;break;}
   if(!resumed)return false;
   // A text occurrence in dumpsys alone does not establish a visible native app.
-  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+  return nativeAppVisible(getInstrumentation().getUiAutomation().getWindows(),packageName);
+ }
+ private boolean nativeAppVisible(List<AccessibilityWindowInfo> windows,String packageName){
+  for(AccessibilityWindowInfo window:windows){
+   if(window.getType()!=AccessibilityWindowInfo.TYPE_APPLICATION)continue;
    AccessibilityNodeInfo root=window.getRoot();
-   if(window.getType()==AccessibilityWindowInfo.TYPE_APPLICATION&&root!=null&&root.isVisibleToUser()
+   if(root!=null&&root.isVisibleToUser()
      &&packageName.contentEquals(String.valueOf(root.getPackageName())))return true;
   }
   return false;
@@ -295,15 +299,17 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
    AccessibilityNodeInfo found=callerRow(node.getChild(i),depth+1,budget);if(found!=null)return found;
   }return null;
  }
- private AccessibilityNodeInfo incomingRow(){
-  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+ private AccessibilityNodeInfo incomingRow(){return incomingRow(getInstrumentation().getUiAutomation().getWindows());}
+ private AccessibilityNodeInfo incomingRow(List<AccessibilityWindowInfo> windows){
+  for(AccessibilityWindowInfo window:windows){
    AccessibilityNodeInfo root=window.getRoot();
    if(root==null||!"com.android.systemui".contentEquals(String.valueOf(root.getPackageName())))continue;
    AccessibilityNodeInfo found=callerRow(root,0,new int[]{5000});if(found!=null)return found;
   }return null;
  }
- private Rect visibleIncomingHeadsUp(){
-  AccessibilityNodeInfo row=incomingRow();if(row==null)return null;Rect bounds=new Rect();row.getBoundsInScreen(bounds);return bounds;
+ private Rect visibleIncomingHeadsUp(){return visibleIncomingHeadsUp(getInstrumentation().getUiAutomation().getWindows());}
+ private Rect visibleIncomingHeadsUp(List<AccessibilityWindowInfo> windows){
+  AccessibilityNodeInfo row=incomingRow(windows);if(row==null)return null;Rect bounds=new Rect();row.getBoundsInScreen(bounds);return bounds;
  }
  private boolean containsCaller(AccessibilityNodeInfo node,int depth,int[] budget){
   if(node==null||depth>70||--budget[0]<0)return false;
@@ -311,26 +317,55 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   for(int i=0;i<node.getChildCount();i++)if(containsCaller(node.getChild(i),depth+1,budget))return true;
   return false;
  }
- private AccessibilityWindowInfo nativeExternalWindow(){
-  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+ private AccessibilityWindowInfo nativeExternalWindow(){return nativeExternalWindow(getInstrumentation().getUiAutomation().getWindows());}
+ private AccessibilityWindowInfo nativeExternalWindow(List<AccessibilityWindowInfo> windows){
+  for(AccessibilityWindowInfo window:windows){
+   if(window.getType()!=AccessibilityWindowInfo.TYPE_SYSTEM)continue;
+   // The production WindowManager title identifies our narrow window before
+   // querying a root; a removed SystemUI heads-up can block getRoot for seconds.
+   if(!"DA CALLER call island".contentEquals(String.valueOf(window.getTitle())))continue;
    AccessibilityNodeInfo root=window.getRoot();
-   if(window.getType()==AccessibilityWindowInfo.TYPE_SYSTEM&&root!=null&&root.isVisibleToUser()
+   if(root!=null&&root.isVisibleToUser()
      &&target.getPackageName().contentEquals(String.valueOf(root.getPackageName()))&&containsCaller(root,0,new int[]{5000}))return window;
   }return null;
  }
  private void awaitNativeSurface(String stage,String foreground)throws Exception{
+  // Resolve the actual foreground separately. Full activity dumpsys is slow on
+  // the emulator; repeated shell processes must not consume the surface budget.
+  long foregroundStart=SystemClock.uptimeMillis();
+  await(()->resumed(foreground),"Actual foreground app missing before external surface: "+stage);
+  long foregroundWait=SystemClock.uptimeMillis()-foregroundStart;
   long start=SystemClock.uptimeMillis(),deadline=start+8000,clearSince=0;int blockedSamples=0;
+  JSONArray samples=new JSONArray();
   while(SystemClock.uptimeMillis()<deadline){
-   getInstrumentation().waitForIdleSync();Rect bounds=islandScreenBounds();AccessibilityWindowInfo window=nativeExternalWindow();
+   long sampleStart=SystemClock.uptimeMillis();
+   Rect bounds=islandScreenBounds();
+   // One native AX snapshot keeps the overlay, incoming banner and underlying
+   // application observations consistent. The own bounds are read on main.
+   List<AccessibilityWindowInfo> windows=getInstrumentation().getUiAutomation().getWindows();
+   AccessibilityWindowInfo window=nativeExternalWindow(windows);
    Rect nativeBounds=new Rect();if(window!=null)window.getBoundsInScreen(nativeBounds);
-   boolean usable=state(Call.STATE_ACTIVE)&&window!=null&&!bounds.isEmpty()&&nativeBounds.contains(bounds)
-    &&visibleIncomingHeadsUp()==null&&resumed(foreground);
+   Rect incomingBounds=visibleIncomingHeadsUp(windows);
+   boolean foregroundVisible=nativeAppVisible(windows,foreground);
+   boolean active=state(Call.STATE_ACTIVE);
+   boolean usable=active&&window!=null&&!bounds.isEmpty()&&nativeBounds.contains(bounds)
+    &&incomingBounds==null&&foregroundVisible;
+   if(samples.length()==24)samples.remove(0);
+   samples.put(new JSONObject().put("at_millis",SystemClock.uptimeMillis()-start)
+    .put("sample_millis",SystemClock.uptimeMillis()-sampleStart).put("call_active",active)
+    .put("native_overlay_accessible",window!=null).put("island_bounds",bounds.toShortString())
+    .put("native_window_bounds",nativeBounds.toShortString()).put("foreground_native_visible",foregroundVisible)
+    .put("incoming_bounds",incomingBounds==null?JSONObject.NULL:incomingBounds.toShortString()).put("usable",usable));
    if(SystemClock.uptimeMillis()>=deadline)break;
    if(usable){
     if(clearSince==0)clearSince=SystemClock.uptimeMillis();
     if(SystemClock.uptimeMillis()-clearSince>=350){
+     long surfaceWait=SystemClock.uptimeMillis()-start;
+     assertTrue("Actual top resumed app changed during external surface observation: "+stage,resumed(foreground));
+     observations.put(new JSONObject().put("event","native-external-surface-samples").put("stage",stage)
+      .put("foreground_precheck_millis",foregroundWait).put("samples",samples));
      observations.put(new JSONObject().put("event","native-external-surface").put("stage",stage)
-      .put("wait_millis",SystemClock.uptimeMillis()-start).put("blocked_samples",blockedSamples)
+      .put("wait_millis",surfaceWait).put("blocked_samples",blockedSamples)
       .put("island_bounds",bounds.toShortString()).put("native_window_bounds",nativeBounds.toShortString())
       .put("foreground_package",foreground).put("native_window_type",window.getType()).put("native_window_layer",window.getLayer())
       .put("native_overlay_accessible",true).put("call_state",live().getState()).put("heads_up_visible",false));return;
@@ -338,6 +373,8 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
    }else{clearSince=0;blockedSamples++;}
    Thread.sleep(50);
   }
+  observations.put(new JSONObject().put("event","native-external-surface-failure-samples").put("stage",stage)
+   .put("foreground_precheck_millis",foregroundWait).put("samples",samples));
   String message="Actual native external surface must be visible and usable over "+foreground+": "+stage;
   diagnostics(message);fail(message);
  }

@@ -400,8 +400,9 @@ jobs:
           Android 13 emulator suite at 480x854/240dpi with native three-button
           navigation, RTL, font1.3 and 227 required PNG captures. Eight additional
           captures and native input exercise real emulator-modem calls through
-          Android Telecom and the production InCallService over Home/Settings,
-          with actual call-state/audio callbacks, permission denial and cleanup.
+          Android Telecom and the production InCallService over Home and Clock,
+          while respecting protected Settings screens, with actual call-state/audio
+          callbacks, permission denial and cleanup.
           This proves simulated modem integration, not physical carrier/audio behavior.
           The published
           APK is the exact debug binary installed by the emulator test task.
