@@ -3,6 +3,7 @@
  <uses-permission android:name="android.permission.READ_CONTACTS"/>
  <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
  <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+ <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>
  <uses-permission android:name="android.permission.CALL_PHONE"/>
  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
  <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30"/>
@@ -39,6 +40,7 @@
   </activity-alias>
   <activity android:name=".CallIslandSettingsActivity" android:exported="false"/>
   <activity android:name=".SettingsBackupActivity" android:exported="false"/>
+  <activity android:name=".ChangelogActivity" android:exported="false"/>
   <activity android:name=".CallScreenActivity" android:exported="false" android:launchMode="singleTop" android:excludeFromRecents="true" android:enableOnBackInvokedCallback="true" tools:targetApi="33"/>
   <!-- Telecom binds this InCallService for the system's ROLE_DIALER holder.
        That role is the documented alternative to MANAGE_OWN_CALLS for phoneCall
@@ -49,6 +51,12 @@
     <intent-filter><action android:name="android.telecom.InCallService"/></intent-filter>
   </service>
   <receiver android:name=".CallCommandReceiver" android:exported="false"/>
+  <!-- Platform-protected Telecom broadcast, targeted to the current default
+       dialer. Handling it replaces Telecom's system-dialer fallback. -->
+  <receiver android:name=".MissedCallNotificationReceiver" android:exported="true">
+   <intent-filter><action android:name="android.telecom.action.SHOW_MISSED_CALLS_NOTIFICATION"/></intent-filter>
+  </receiver>
+  <receiver android:name=".MissedCallClearReceiver" android:exported="false"/>
   <activity android:name=".ContactEditorActivity" android:exported="false" android:windowSoftInputMode="adjustResize"/>
   <activity android:name=".ContactChooseActivity" android:exported="false"/>
   <activity android:name=".ContactDetailActivity" android:exported="false"/>

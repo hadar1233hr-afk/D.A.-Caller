@@ -259,6 +259,12 @@ final class SettingsScreen {
      .setNegativeButton(tr("סגור"),null).show();
   });
   cardEnd();
+  cardStart();
+  option(I18n.isEnglish(host)?"What's new":"יומן שינויים",
+    I18n.isEnglish(host)?"Version history · "+BuildConfig.VERSION_NAME:"מה השתנה בכל גרסה · "+BuildConfig.VERSION_NAME,
+    ()->host.startActivity(new Intent(host,ChangelogActivity.class)));
+  lastOption().setTag("settings_changelog");
+  cardEnd();
   TextView bottom=text("DA CALLER · v"+BuildConfig.VERSION_NAME,11,false,subtle);
   bottom.setGravity(Gravity.CENTER);
   LinearLayout.LayoutParams foot=new LinearLayout.LayoutParams(-1,dp(51));root.addView(bottom,foot);

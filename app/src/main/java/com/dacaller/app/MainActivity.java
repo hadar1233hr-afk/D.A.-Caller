@@ -140,6 +140,7 @@ public class MainActivity extends Activity {
  }
  private void handleIntent(Intent intent){
   if(intent==null)return;
+  if(MissedCallNotifications.handleOpenIntent(this,intent)){page="recents";refreshLog(true);return;}
   if(intent.getBooleanExtra("favorites",false)){page="contacts";prefs.edit().putBoolean("favorites_expanded",true).apply();}
   if(intent.getBooleanExtra("show_contacts",false))page="contacts";
   if(intent.hasExtra("contact_search")){

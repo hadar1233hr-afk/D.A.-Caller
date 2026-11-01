@@ -16,11 +16,13 @@ on:
       - 'scripts/verify-island-matrix.py'
       - 'scripts/emulator-call-driver.py'
       - 'scripts/verify-external-island-matrix.py'
+      - 'scripts/verify-followup-matrix.py'
       - 'scripts/verify-visual-review.py'
       - 'docs/evidence/2026-10-25/**'
       - 'docs/evidence/personalization-2026-10-25/**'
       - 'docs/evidence/island-2026-10-27/**'
       - 'docs/evidence/external-island-2026-10-28/**'
+      - 'docs/evidence/call-followup-2026-11-01/**'
   push:
     branches: [main]
     paths:
@@ -38,6 +40,7 @@ on:
       - 'scripts/verify-island-matrix.py'
       - 'scripts/emulator-call-driver.py'
       - 'scripts/verify-external-island-matrix.py'
+      - 'scripts/verify-followup-matrix.py'
       - 'scripts/verify-visual-review.py'
   workflow_dispatch:
     inputs:
@@ -323,12 +326,12 @@ jobs:
           GH_REPO: ${{ github.repository }}
           DA_CALLER_VISUAL_REVIEW: docs/evidence/personalization-2026-10-25/visual-review.json
         run: python3 scripts/verify-visual-review.py
-      - name: Require external island review of this exact application source
+      - name: Require island, missed-call and changelog review of this exact application source
         if: github.event.pull_request.head.ref == 'codex/da-caller-dynamic-island-20261027'
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          DA_CALLER_VISUAL_REVIEW: docs/evidence/external-island-2026-10-28/visual-review.json
+          DA_CALLER_VISUAL_REVIEW: docs/evidence/call-followup-2026-11-01/visual-review.json
         run: python3 scripts/verify-visual-review.py
       - uses: actions/download-artifact@v4
         with:
@@ -373,6 +376,9 @@ jobs:
           cat > preview-notes.md <<'NOTES'
           # DA CALLER — UNVERIFIED DEBUG TEST BUILD
           ## Implemented changes
+          - DA CALLER handles the platform default-dialer missed-call broadcast, with contact identity, grouped counts and direct return to recents.
+          - Explicit opening/dismissal acknowledges only the captured missed-call rows; no history/archive rows are deleted.
+          - Offline version-by-version changelog in Settings, with Hebrew/English and light/dark/AMOLED support.
           - Apple-inspired call island inside app screens, with compact and expanded controls.
           - Optional call island over Home and other apps, after explicit opt-in and Android display-over-apps special access.
           - Incoming calls keep Android's native CallStyle answer/decline notification; the external island starts for outgoing, active and held calls.
@@ -398,7 +404,7 @@ jobs:
           ## Verification and installation limits
           The linked source passed unit tests, lint, APK verification and the
           Android 13 emulator suite at 480x854/240dpi with native three-button
-          navigation, RTL, font1.3 and 227 required PNG captures. Eight additional
+          navigation, RTL, font1.3 and 233 required PNG captures. Eight external
           captures and native input exercise real emulator-modem calls through
           Android Telecom and the production InCallService over Home and Clock,
           while respecting protected Settings screens, with actual call-state/audio
@@ -409,7 +415,7 @@ jobs:
           The exact app
           tree and the additional personalization/island captures were visually reviewed
           before publication; see the linked pull request and its verification report.
-          Report: docs/DA_CALLER_EXTERNAL_ISLAND_2026-10-28.md at the linked source commit.
+          Report: docs/DA_CALLER_CALL_FOLLOWUP_2026-11-01.md at the linked source commit.
           This is **not** a stable or device-verified release.
           The Android build, unit tests and emulator UI checks passed, but
           actual cellular calls, answering, ringing, lock screen, SIM and

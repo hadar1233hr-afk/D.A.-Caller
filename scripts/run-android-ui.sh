@@ -47,3 +47,4 @@ python3 scripts/verify-personalization-matrix.py app/build/ui-snapshots
 python3 scripts/verify-call-integration-matrix.py app/build/ui-snapshots
 python3 scripts/verify-island-matrix.py app/build/ui-snapshots
 python3 scripts/verify-external-island-matrix.py app/build/ui-snapshots
+python3 scripts/verify-followup-matrix.py app/build/ui-snapshots
