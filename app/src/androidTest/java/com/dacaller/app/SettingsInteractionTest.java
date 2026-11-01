@@ -52,7 +52,7 @@ public final class SettingsInteractionTest extends InstrumentationTestCase {
     header[0]=(View)find(viewport[0],"הרשאות וחיבור למערכת").getParent();
     ViewGroup parent=(ViewGroup)header[0].getParent();content[0]=parent.getChildAt(parent.indexOfChild(header[0])+1);
    });
-   getInstrumentation().waitForIdleSync();
+   awaitCurrentViewport(viewport[0],"settings-"+(dark?"dark":"light"));
    ui(()->assertCurrentViewport(viewport[0]));
    for(int n=0;n<6;n++){
     reveal(viewport[0],header[0]);tap(header[0]);
@@ -77,6 +77,48 @@ public final class SettingsInteractionTest extends InstrumentationTestCase {
    snapshot("settings-"+(dark?"dark":"light")+"-bottom");
    ui(()->assertCurrentViewport(viewport[0]));
   }
+ }
+ private void awaitCurrentViewport(ScrollView viewport,String screenshotPrefix)throws Exception{
+  // startActivitySync and setContentView finish before Android necessarily
+  // grants window focus. Wait for that real state instead of sampling it once.
+  long start=SystemClock.uptimeMillis(),stableSince=-1;
+  final boolean[] ready=new boolean[1];final String[] state=new String[1];
+  java.util.ArrayDeque<String> samples=new java.util.ArrayDeque<>();
+  while(SystemClock.uptimeMillis()-start<7000){
+   getInstrumentation().waitForIdleSync();
+   ui(()->{
+    View decor=host.getWindow().getDecorView();
+    boolean current=inCurrentContent(viewport),shown=viewport.isShown();
+    boolean focused=host.hasWindowFocus()&&decor.hasWindowFocus();
+    ready[0]=!host.isFinishing()&&!host.isDestroyed()&&current&&shown&&focused
+      &&decor.isAttachedToWindow()&&decor.isShown()&&decor.getWindowVisibility()==View.VISIBLE;
+    state[0]="current_content="+current+", viewport_attached="+viewport.isAttachedToWindow()
+      +", viewport_shown="+shown+", activity_focus="+host.hasWindowFocus()
+      +", decor_focus="+decor.hasWindowFocus()+", decor_attached="+decor.isAttachedToWindow()
+      +", decor_shown="+decor.isShown()+", decor_visibility="+decor.getWindowVisibility()
+      +", finishing="+host.isFinishing()+", destroyed="+host.isDestroyed();
+   });
+   long now=SystemClock.uptimeMillis();
+   if(samples.size()==24)samples.removeFirst();
+   samples.addLast((now-start)+"ms: "+state[0]);
+   if(ready[0]){
+    if(stableSince<0)stableSince=now;
+    if(now-stableSince>=350)return;
+   }else stableSince=-1;
+   Thread.sleep(40);
+  }
+  StringBuilder report=new StringBuilder("Settings viewport did not become stably visible/focused.\n");
+  for(String sample:samples)report.append(sample).append('\n');
+  report.append("\nACTIVITIES\n").append(shell("dumpsys activity activities"));
+  report.append("\nWINDOWS\n").append(shell("dumpsys window windows"));
+  java.io.File evidence=new java.io.File(host.getExternalFilesDir(null),screenshotPrefix+"-not-ready.txt");
+  try(java.io.FileOutputStream output=new java.io.FileOutputStream(evidence)){
+   output.write(report.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+  }
+  shell("mkdir -p /sdcard/Download/DA-CALLER-snapshots");
+  shell("cp "+evidence.getAbsolutePath()+" /sdcard/Download/DA-CALLER-snapshots/"+evidence.getName());
+  snapshot(screenshotPrefix+"-not-ready");
+  fail("Settings viewport must be stably attached, shown and focused before interaction: "+state[0]);
  }
  private void awaitBottomAndDiagnostic(ScrollView viewport,String screenshotPrefix)throws Exception{
   final boolean[] reached=new boolean[1];

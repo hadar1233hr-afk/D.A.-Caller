@@ -102,7 +102,11 @@ for stage in ("first-active", "home-return", "other-app", "other-app-expanded", 
     assert 350 <= item.get("wait_millis", 0) <= 8000 and item.get("blocked_samples", -1) >= 0
     left, top, right, bottom = rectangle(item.get("island_bounds", ""))
     wl, wt, wr, wb = rectangle(item.get("native_window_bounds", ""))
-    assert wl <= left < right <= wr and wt <= top < bottom <= wb
+    rl, rt, rr, rb = rectangle(item.get("native_root_bounds", ""))
+    assert rl <= left < right <= rr and rt <= top < bottom <= rb, "Actual native root must contain the complete island"
+    assert type(item.get("window_bounds_tolerance_px")) is int and item["window_bounds_tolerance_px"] == 1
+    assert all(abs(window_edge - root_edge) <= 1 for window_edge, root_edge in zip((wl, wt, wr, wb), (rl, rt, rr, rb))), "WindowInfo/native root may differ by at most one physical pixel per edge"
+    assert item.get("native_root_package") == "com.dacaller.app" and item.get("native_root_caller_present") is True
     assert item.get("native_overlay_accessible") is True and item.get("call_state") == 4
     assert item.get("native_window_type") == 3 and item.get("native_window_layer", -1) >= 1
     assert item.get("heads_up_visible") is False

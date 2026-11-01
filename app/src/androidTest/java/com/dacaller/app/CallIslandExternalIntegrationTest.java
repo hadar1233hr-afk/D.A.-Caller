@@ -58,6 +58,7 @@ import org.json.JSONObject;
 public final class CallIslandExternalIntegrationTest extends InstrumentationTestCase {
  private static final String DIRECTORY="/sdcard/Download/DA-CALLER-snapshots";
  private static final String NUMBER="0500099971",NAME="נועה שיחת אמולטור",QUERY="נועה";
+ private static final int NATIVE_WINDOW_ROUNDING_PX=1;
  private Context target;
  private SharedPreferences prefs;
  private Map<String,?> original,originalNavigation;
@@ -320,6 +321,11 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
  }
  private AccessibilityWindowInfo nativeExternalWindow(){return nativeExternalWindow(getInstrumentation().getUiAutomation().getWindows());}
  private AccessibilityWindowInfo nativeExternalWindow(List<AccessibilityWindowInfo> windows){return nativeExternalWindow(windows,null);}
+ private boolean nativeBoundsMatch(Rect window,Rect root){
+  return !window.isEmpty()&&!root.isEmpty()&&Math.abs(window.left-root.left)<=NATIVE_WINDOW_ROUNDING_PX
+   &&Math.abs(window.top-root.top)<=NATIVE_WINDOW_ROUNDING_PX&&Math.abs(window.right-root.right)<=NATIVE_WINDOW_ROUNDING_PX
+   &&Math.abs(window.bottom-root.bottom)<=NATIVE_WINDOW_ROUNDING_PX;
+ }
  private AccessibilityWindowInfo nativeExternalWindow(List<AccessibilityWindowInfo> windows,Rect expected){
   for(AccessibilityWindowInfo window:windows){
    if(window.getType()!=AccessibilityWindowInfo.TYPE_SYSTEM)continue;
@@ -327,10 +333,17 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
    // AX title is optional on Android13 application overlays; WM setTitle() is
    // not its accessibilityTitle. Package, caller and visibility remain required.
    Rect candidate=new Rect();window.getBoundsInScreen(candidate);
-   if(expected!=null&&!expected.isEmpty()&&!candidate.contains(expected))continue;
+   Rect rounded=new Rect(candidate);rounded.inset(-NATIVE_WINDOW_ROUNDING_PX,-NATIVE_WINDOW_ROUNDING_PX);
+   if(expected!=null&&!expected.isEmpty()&&!rounded.contains(expected))continue;
    AccessibilityNodeInfo root=window.getRoot();
    if(root!=null&&root.isVisibleToUser()
-     &&target.getPackageName().contentEquals(String.valueOf(root.getPackageName()))&&containsCaller(root,0,new int[]{5000}))return window;
+     &&target.getPackageName().contentEquals(String.valueOf(root.getPackageName()))&&containsCaller(root,0,new int[]{5000})){
+    Rect rootBounds=new Rect();root.getBoundsInScreen(rootBounds);
+    // WindowInfo uses rounded transformed frame coordinates on API33. The real
+    // AX root must contain the complete View, with at most one physical pixel
+    // of difference per WindowInfo edge. Keep both original rectangles in proof.
+    if(nativeBoundsMatch(candidate,rootBounds)&&(expected==null||expected.isEmpty()||rootBounds.contains(expected)))return window;
+   }
   }return null;
  }
  private void awaitNativeSurface(String stage,String foreground)throws Exception{
@@ -352,16 +365,24 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
    List<AccessibilityWindowInfo> windows=getInstrumentation().getUiAutomation().getWindows();
    AccessibilityWindowInfo window=nativeExternalWindow(windows,bounds);
    Rect nativeBounds=new Rect();if(window!=null)window.getBoundsInScreen(nativeBounds);
+   AccessibilityNodeInfo nativeRoot=window==null?null:window.getRoot();
+   Rect nativeRootBounds=new Rect();if(nativeRoot!=null)nativeRoot.getBoundsInScreen(nativeRootBounds);
+   String nativeRootPackage=nativeRoot==null?"":String.valueOf(nativeRoot.getPackageName());
+   boolean nativeCaller=nativeRoot!=null&&containsCaller(nativeRoot,0,new int[]{5000});
    Rect incomingBounds=visibleIncomingHeadsUp(windows);
    boolean foregroundVisible=nativeAppVisible(windows,foreground);
    boolean active=state(Call.STATE_ACTIVE);
-   boolean usable=active&&window!=null&&!bounds.isEmpty()&&nativeBounds.contains(bounds)
+   boolean usable=active&&window!=null&&!bounds.isEmpty()&&nativeRoot!=null&&nativeRoot.isVisibleToUser()
+    &&target.getPackageName().equals(nativeRootPackage)&&nativeCaller&&nativeRootBounds.contains(bounds)
+    &&nativeBoundsMatch(nativeBounds,nativeRootBounds)
     &&incomingBounds==null&&foregroundVisible;
    if(samples.length()==24)samples.remove(0);
    samples.put(new JSONObject().put("at_millis",SystemClock.uptimeMillis()-start)
     .put("sample_millis",SystemClock.uptimeMillis()-sampleStart).put("call_active",active)
     .put("native_overlay_accessible",window!=null).put("island_bounds",bounds.toShortString())
-    .put("native_window_bounds",nativeBounds.toShortString()).put("foreground_native_visible",foregroundVisible)
+    .put("native_window_bounds",nativeBounds.toShortString()).put("native_root_bounds",nativeRootBounds.toShortString())
+    .put("native_root_package",nativeRootPackage).put("native_root_caller_present",nativeCaller)
+    .put("window_bounds_tolerance_px",NATIVE_WINDOW_ROUNDING_PX).put("foreground_native_visible",foregroundVisible)
     .put("incoming_bounds",incomingBounds==null?JSONObject.NULL:incomingBounds.toShortString()).put("usable",usable));
    if(SystemClock.uptimeMillis()>=deadline)break;
    if(usable){
@@ -374,6 +395,8 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
      observations.put(new JSONObject().put("event","native-external-surface").put("stage",stage)
       .put("wait_millis",surfaceWait).put("blocked_samples",blockedSamples)
       .put("island_bounds",bounds.toShortString()).put("native_window_bounds",nativeBounds.toShortString())
+      .put("native_root_bounds",nativeRootBounds.toShortString()).put("native_root_package",nativeRootPackage)
+      .put("native_root_caller_present",nativeCaller).put("window_bounds_tolerance_px",NATIVE_WINDOW_ROUNDING_PX)
       .put("foreground_package",foreground).put("native_window_type",window.getType()).put("native_window_layer",window.getLayer())
       .put("native_window_title",String.valueOf(window.getTitle()))
       .put("native_overlay_accessible",true).put("call_state",live().getState()).put("heads_up_visible",false));return;
