@@ -20,6 +20,11 @@ public final class SettingsInteractionTest extends InstrumentationTestCase {
   super.setUp();
   Intent intent=new Intent(getInstrumentation().getTargetContext(),ListDispatchHostActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
   host=(ListDispatchHostActivity)getInstrumentation().startActivitySync(intent);getInstrumentation().waitForIdleSync();
+  // The fixture mounts SettingsScreen directly below. Keep MainActivity's
+  // logical page consistent so a pending recents/provider callback cannot
+  // replace that screen while this test still holds the detached viewport.
+  java.lang.reflect.Field page=MainActivity.class.getDeclaredField("page");page.setAccessible(true);
+  ui(()->{try{page.set(host,"settings");}catch(IllegalAccessException failure){throw new AssertionError(failure);}});
  }
  @Override protected void tearDown()throws Exception{
   ui(()->host.finish());getInstrumentation().waitForIdleSync();super.tearDown();
@@ -48,6 +53,7 @@ public final class SettingsInteractionTest extends InstrumentationTestCase {
     ViewGroup parent=(ViewGroup)header[0].getParent();content[0]=parent.getChildAt(parent.indexOfChild(header[0])+1);
    });
    getInstrumentation().waitForIdleSync();
+   ui(()->assertCurrentViewport(viewport[0]));
    for(int n=0;n<6;n++){
     reveal(viewport[0],header[0]);tap(header[0]);
     ui(()->assertEquals(View.VISIBLE,content[0].getVisibility()));
@@ -60,12 +66,16 @@ public final class SettingsInteractionTest extends InstrumentationTestCase {
     SettingsScreen.refreshAttached(host);assertEquals(View.VISIBLE,content[0].getVisibility());
    });
    reveal(viewport[0],header[0]);Thread.sleep(220);getInstrumentation().waitForIdleSync();
+   ui(()->assertCurrentViewport(viewport[0]));
    snapshot("settings-"+(dark?"dark":"light"));
+   ui(()->assertCurrentViewport(viewport[0]));
    // fullScroll delegates to smoothScrollBy on Android 13. An idle message
    // queue does not mean its future Choreographer animation frames have run.
    ui(()->viewport[0].fullScroll(View.FOCUS_DOWN));
    awaitBottomAndDiagnostic(viewport[0],"settings-"+(dark?"dark":"light"));
+   ui(()->assertCurrentViewport(viewport[0]));
    snapshot("settings-"+(dark?"dark":"light")+"-bottom");
+   ui(()->assertCurrentViewport(viewport[0]));
   }
  }
  private void awaitBottomAndDiagnostic(ScrollView viewport,String screenshotPrefix)throws Exception{
@@ -80,10 +90,11 @@ public final class SettingsInteractionTest extends InstrumentationTestCase {
       +viewport.getPaddingTop()+viewport.getPaddingBottom());
     android.graphics.Rect visible=new android.graphics.Rect();
     boolean shown=diagnostic.getGlobalVisibleRect(visible);
-    reached[0]=viewport.getScrollY()==maximum&&shown&&visible.height()==diagnostic.getHeight()
+    boolean current=inCurrentContent(viewport)&&host.hasWindowFocus()&&viewport.isShown();
+    reached[0]=current&&viewport.getScrollY()==maximum&&shown&&visible.height()==diagnostic.getHeight()
       &&diagnostic.getHeight()>0&&diagnostic.isClickable();
     geometry[0]="scroll="+viewport.getScrollY()+"/"+maximum+", diagnostic visible="+visible.height()
-      +"/"+diagnostic.getHeight()+", viewport="+viewport.getHeight();
+      +"/"+diagnostic.getHeight()+", viewport="+viewport.getHeight()+", current attached viewport="+current;
    });
    if(reached[0])return;
    Thread.sleep(20);
@@ -91,15 +102,36 @@ public final class SettingsInteractionTest extends InstrumentationTestCase {
   snapshot(screenshotPrefix+"-unreachable");
   fail("Diagnostic action must be fully reachable after the scroll animation settles: "+geometry[0]);
  }
+ private boolean inCurrentContent(View view){
+  if(!view.isAttachedToWindow())return false;
+  View content=host.findViewById(android.R.id.content);
+  for(View ancestor=view;ancestor!=null;){
+   if(ancestor==content)return true;
+   android.view.ViewParent parent=ancestor.getParent();ancestor=parent instanceof View?(View)parent:null;
+  }
+  return false;
+ }
+ private void assertCurrentViewport(ScrollView viewport){
+  assertTrue("Settings viewport must be attached to the actual current content",inCurrentContent(viewport));
+  assertTrue("Settings viewport must be shown in the focused Activity",host.hasWindowFocus()&&viewport.isShown());
+ }
  private void reveal(ScrollView viewport,View target)throws Exception{
   ui(()->{
+   assertCurrentViewport(viewport);
+   assertTrue("Settings header must belong to the current content before scrolling",inCurrentContent(target));
    // Section headers are direct children of the scroll content column.
    viewport.scrollTo(0,target.getTop());
   });getInstrumentation().waitForIdleSync();
  }
  private void tap(View target)throws Exception{
   final int[] point=new int[2];
-  ui(()->{target.getLocationOnScreen(point);point[0]+=target.getWidth()/2;point[1]+=target.getHeight()/2;});
+  ui(()->{
+   assertTrue("Settings touch target must belong to the shown current content",inCurrentContent(target)&&target.isShown()&&host.hasWindowFocus());
+   target.getLocationOnScreen(point);point[0]+=target.getWidth()/2;point[1]+=target.getHeight()/2;
+   android.graphics.Rect visible=new android.graphics.Rect();
+   assertTrue("Settings touch center must be visibly reachable",target.getLocalVisibleRect(visible)
+    &&visible.contains(target.getWidth()/2,target.getHeight()/2));
+  });
   long at=SystemClock.uptimeMillis();
   MotionEvent down=MotionEvent.obtain(at,at,MotionEvent.ACTION_DOWN,point[0],point[1],0);
   MotionEvent up=MotionEvent.obtain(at,at+40,MotionEvent.ACTION_UP,point[0],point[1],0);

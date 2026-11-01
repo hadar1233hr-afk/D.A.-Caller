@@ -302,6 +302,7 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
  private AccessibilityNodeInfo incomingRow(){return incomingRow(getInstrumentation().getUiAutomation().getWindows());}
  private AccessibilityNodeInfo incomingRow(List<AccessibilityWindowInfo> windows){
   for(AccessibilityWindowInfo window:windows){
+   if(window.getType()!=AccessibilityWindowInfo.TYPE_SYSTEM)continue;
    AccessibilityNodeInfo root=window.getRoot();
    if(root==null||!"com.android.systemui".contentEquals(String.valueOf(root.getPackageName())))continue;
    AccessibilityNodeInfo found=callerRow(root,0,new int[]{5000});if(found!=null)return found;
@@ -318,12 +319,15 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   return false;
  }
  private AccessibilityWindowInfo nativeExternalWindow(){return nativeExternalWindow(getInstrumentation().getUiAutomation().getWindows());}
- private AccessibilityWindowInfo nativeExternalWindow(List<AccessibilityWindowInfo> windows){
+ private AccessibilityWindowInfo nativeExternalWindow(List<AccessibilityWindowInfo> windows){return nativeExternalWindow(windows,null);}
+ private AccessibilityWindowInfo nativeExternalWindow(List<AccessibilityWindowInfo> windows,Rect expected){
   for(AccessibilityWindowInfo window:windows){
    if(window.getType()!=AccessibilityWindowInfo.TYPE_SYSTEM)continue;
-   // The production WindowManager title identifies our narrow window before
-   // querying a root; a removed SystemUI heads-up can block getRoot for seconds.
-   if(!"DA CALLER call island".contentEquals(String.valueOf(window.getTitle())))continue;
+   // Public native geometry selects the narrow candidate before root queries.
+   // AX title is optional on Android13 application overlays; WM setTitle() is
+   // not its accessibilityTitle. Package, caller and visibility remain required.
+   Rect candidate=new Rect();window.getBoundsInScreen(candidate);
+   if(expected!=null&&!expected.isEmpty()&&!candidate.contains(expected))continue;
    AccessibilityNodeInfo root=window.getRoot();
    if(root!=null&&root.isVisibleToUser()
      &&target.getPackageName().contentEquals(String.valueOf(root.getPackageName()))&&containsCaller(root,0,new int[]{5000}))return window;
@@ -335,6 +339,9 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   long foregroundStart=SystemClock.uptimeMillis();
   await(()->resumed(foreground),"Actual foreground app missing before external surface: "+stage);
   long foregroundWait=SystemClock.uptimeMillis()-foregroundStart;
+  // Android13 setServiceInfo clears UiAutomation's query cache before applying
+  // the unchanged flags. It refreshes window metadata without changing the UI.
+  getInstrumentation().getUiAutomation().setServiceInfo(getInstrumentation().getUiAutomation().getServiceInfo());
   long start=SystemClock.uptimeMillis(),deadline=start+8000,clearSince=0;int blockedSamples=0;
   JSONArray samples=new JSONArray();
   while(SystemClock.uptimeMillis()<deadline){
@@ -343,7 +350,7 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
    // One native AX snapshot keeps the overlay, incoming banner and underlying
    // application observations consistent. The own bounds are read on main.
    List<AccessibilityWindowInfo> windows=getInstrumentation().getUiAutomation().getWindows();
-   AccessibilityWindowInfo window=nativeExternalWindow(windows);
+   AccessibilityWindowInfo window=nativeExternalWindow(windows,bounds);
    Rect nativeBounds=new Rect();if(window!=null)window.getBoundsInScreen(nativeBounds);
    Rect incomingBounds=visibleIncomingHeadsUp(windows);
    boolean foregroundVisible=nativeAppVisible(windows,foreground);
@@ -363,18 +370,19 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
      long surfaceWait=SystemClock.uptimeMillis()-start;
      assertTrue("Actual top resumed app changed during external surface observation: "+stage,resumed(foreground));
      observations.put(new JSONObject().put("event","native-external-surface-samples").put("stage",stage)
-      .put("foreground_precheck_millis",foregroundWait).put("samples",samples));
+      .put("foreground_precheck_millis",foregroundWait).put("query_cache_reset_via_service_info",true).put("samples",samples));
      observations.put(new JSONObject().put("event","native-external-surface").put("stage",stage)
       .put("wait_millis",surfaceWait).put("blocked_samples",blockedSamples)
       .put("island_bounds",bounds.toShortString()).put("native_window_bounds",nativeBounds.toShortString())
       .put("foreground_package",foreground).put("native_window_type",window.getType()).put("native_window_layer",window.getLayer())
+      .put("native_window_title",String.valueOf(window.getTitle()))
       .put("native_overlay_accessible",true).put("call_state",live().getState()).put("heads_up_visible",false));return;
     }
    }else{clearSince=0;blockedSamples++;}
    Thread.sleep(50);
   }
   observations.put(new JSONObject().put("event","native-external-surface-failure-samples").put("stage",stage)
-   .put("foreground_precheck_millis",foregroundWait).put("samples",samples));
+   .put("foreground_precheck_millis",foregroundWait).put("query_cache_reset_via_service_info",true).put("samples",samples));
   String message="Actual native external surface must be visible and usable over "+foreground+": "+stage;
   diagnostics(message);fail(message);
  }
@@ -651,7 +659,9 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   JSONArray windows=new JSONArray();int[] budget={7000};
   for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
    JSONArray nodes=new JSONArray();dumpAccessibility(window.getRoot(),nodes,0,budget);
-   windows.put(new JSONObject().put("id",window.getId()).put("layer",window.getLayer()).put("type",window.getType()).put("nodes",nodes));
+   Rect bounds=new Rect();window.getBoundsInScreen(bounds);
+   windows.put(new JSONObject().put("id",window.getId()).put("title",String.valueOf(window.getTitle()))
+    .put("layer",window.getLayer()).put("type",window.getType()).put("bounds",bounds.toShortString()).put("nodes",nodes));
   }return windows;
  }
  private void dumpAccessibility(AccessibilityNodeInfo node,JSONArray nodes,int depth,int[] budget)throws Exception{
