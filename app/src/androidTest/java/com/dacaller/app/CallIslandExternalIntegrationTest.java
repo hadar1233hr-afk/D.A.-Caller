@@ -417,16 +417,53 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   return null;
  }
  private void answerNativeIncoming(String stage)throws Exception{
-  await(()->answerNode(incomingRow(),0,new int[]{3000})!=null,"Native SystemUI CallStyle Answer action missing for this caller");
-  AccessibilityNodeInfo answer=answerNode(incomingRow(),0,new int[]{3000});Rect bounds=new Rect();answer.getBoundsInScreen(bounds);
-  assertTrue("Actual SystemUI answer must have visible touch bounds",!bounds.isEmpty());
+  String resource="com.android.systemui:integer/touch_acceptance_delay";
+  String configured=shell("cmd overlay lookup com.android.systemui "+resource).trim();
+  assertTrue("Read the actual SystemUI touch guard resource, never guess: "+configured,configured.matches("[0-9]+"));
+  int delay=Integer.parseInt(configured);assertTrue("Unexpected native touch guard",delay>=0&&delay<=3000);
+  long minimumStable=Math.max(350,delay+100),start=SystemClock.uptimeMillis(),stableSince=-1;
   String token=PhoneSessionService.islandSnapshot().token;Call call=live();
+  Rect bounds=new Rect(),previous=new Rect();int previousWindow=-1;
+  AccessibilityNodeInfo answer=null;long stableMillis=0,readyWait=0;
+  while(SystemClock.uptimeMillis()-start<10000){
+   AccessibilityNodeInfo candidate=answerNode(incomingRow(),0,new int[]{3000});
+   Rect currentBounds=new Rect();if(candidate!=null)candidate.getBoundsInScreen(currentBounds);
+   CallIslandState current=PhoneSessionService.islandSnapshot();
+   boolean ready=candidate!=null&&candidate.isEnabled()&&!currentBounds.isEmpty()
+    &&live()==call&&state(Call.STATE_RINGING)&&current!=null&&token.equals(current.token)&&incomingNotificationMatches();
+   long now=SystemClock.uptimeMillis();
+   if(ready){
+    if(stableSince<0||!currentBounds.equals(previous)||candidate.getWindowId()!=previousWindow)stableSince=now;
+    previous.set(currentBounds);previousWindow=candidate.getWindowId();
+    if(now-stableSince>=minimumStable){
+     // A newly posted heads-up intentionally swallows early pointer clicks.
+     // Reacquire the real button after the configured guard and stable geometry,
+     // then inject exactly one touch and require the real Telecom acknowledgement.
+     AccessibilityNodeInfo fresh=answerNode(incomingRow(),0,new int[]{3000});
+     Rect freshBounds=new Rect();if(fresh!=null)fresh.getBoundsInScreen(freshBounds);
+     if(fresh!=null&&fresh.isEnabled()&&fresh.getWindowId()==previousWindow&&freshBounds.equals(currentBounds)){
+      answer=fresh;bounds.set(freshBounds);stableMillis=now-stableSince;readyWait=now-start;break;
+     }
+     stableSince=-1;
+    }
+   }else stableSince=-1;
+   Thread.sleep(50);
+  }
+  if(answer==null){diagnostics("Native SystemUI Answer did not become stable after its configured touch guard: "+stage);
+   fail("Native SystemUI Answer must be stable and ready for a physical tap: "+stage);}
+  assertSame(call,live());assertEquals(token,PhoneSessionService.islandSnapshot().token);assertTrue(state(Call.STATE_RINGING));
+  observations.put(new JSONObject().put("event","native-systemui-answer-attempt").put("stage",stage).put("token",token)
+   .put("bounds",bounds.toShortString()).put("window_id",answer.getWindowId()).put("stable_millis",stableMillis)
+   .put("configured_touch_acceptance_delay_millis",delay).put("ready_wait_millis",readyWait)
+   .put("touch_guard_resource",resource).put("input_method","native-pointer"));
   lastTap="SystemUI unique-caller Answer "+bounds.toShortString()+" @ "+bounds.centerX()+","+bounds.centerY();
   tapPoint(bounds.centerX(),bounds.centerY());await(()->state(Call.STATE_ACTIVE),"Native SystemUI answer did not activate actual Telecom call");
   assertSame(call,live());assertEquals(token,PhoneSessionService.islandSnapshot().token);
   observations.put(new JSONObject().put("event","native-systemui-answer").put("stage",stage)
    .put("text",String.valueOf(answer.getText())).put("description",String.valueOf(answer.getContentDescription()))
    .put("resource_id",answer.getViewIdResourceName()).put("bounds",bounds.toShortString()).put("token",token)
+   .put("configured_touch_acceptance_delay_millis",delay).put("stable_millis",stableMillis).put("ready_wait_millis",readyWait)
+   .put("touch_guard_resource",resource).put("input_method","native-pointer")
    .put("call_state",live().getState()).put("acknowledged",true));
  }
  private void tap(View view)throws Exception{

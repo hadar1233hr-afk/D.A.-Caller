@@ -91,6 +91,13 @@ for item in answers.values():
     assert item.get("acknowledged") is True and item.get("call_state") == 4 and item.get("token")
     assert item.get("text") in ("Answer", "ענה") or item.get("description") in ("Answer", "ענה")
     rectangle(item.get("bounds", ""))
+    delay = item.get("configured_touch_acceptance_delay_millis")
+    stable, ready_wait = item.get("stable_millis"), item.get("ready_wait_millis")
+    assert type(delay) is int and 0 <= delay <= 3000, "Actual SystemUI touch acceptance resource is required"
+    assert type(stable) is int and stable >= max(350, delay + 100), "Answer must remain stable beyond SystemUI's touch guard"
+    assert type(ready_wait) is int and ready_wait >= stable
+    assert item.get("input_method") == "native-pointer"
+    assert item.get("touch_guard_resource") == "com.android.systemui:integer/touch_acceptance_delay"
 foreign = proof.get("foreign_app_resolution", {})
 clock = foreign.get("package", "")
 assert clock in ("com.android.deskclock", "com.google.android.deskclock")
