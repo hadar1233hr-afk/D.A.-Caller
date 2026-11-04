@@ -1,5 +1,12 @@
 # DA CALLER continuation state
 
+## Latest verified checkpoint
+
+Source46c500a / CI41851873318 completed:352 unique unit PASS;34 native cases,33 PASS and1 explicit business-dataset MISSING failure;0 errors/skips. All237 functional images were freshly reviewed:101 call and44 island frames PASS,91 other PASS and1 visual FAIL (personalization-backup-saved-light.png: white system icons on near-white bars). All36 island compositor proofs independently passed. Reminder real Telecom/OS-alarm/read-only checks passed again. No release approval. [Retained second-run evidence](evidence/callback-business-2026-11-04/second-ci/pipeline-summary.json).
+
+Backup capture fix is unfinished: only a draft verifier change exists locally; its native producer is not implemented or tested. Preserve it, do not count it as PASS. Backup SAF is intercepted with a test provider, not real DocumentsUI. The previous worker stopped on an actual usage-limit error; no replacement account/model was used. Compatible beta9 private key and licensed business dataset remain unavailable.
+
+
 ## Active new owner request after the completed beta.9 release
 
 On2026-11-02 the owner added: (1) opt-in end-of-day reminders for today's missed callers without a later connected call longer than one second; group identities and distinguish missed counts from callback attempts; (2) a sourced, licensed, offline Israeli business directory in a separate small Contacts tab, with measured coverage rather than invented hundreds of thousands/millions; (3) durable update signing. The user confirms beta.9 is installed and does not know what a keystore is. Android requires that installed certificate's exact private key: audit its availability before claiming an update path. Never suggest uninstalling. The prior immutable release is baseline evidence, not approval of new edits. Scheduled repeats of the old prompt must preserve this newer objective and avoid competing development. New implementation/test counts/version remain pending; no new APK is verified yet.
