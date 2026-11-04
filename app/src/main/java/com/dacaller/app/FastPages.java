@@ -420,8 +420,10 @@ final class FastPages {
  private void addBusinessTab(LinearLayout row){
   TextView businesses=text(I18n.isEnglish(host)?"Businesses":"בתי עסק",12,tint(),true);
   businesses.setTag("contacts_directory_tab");businesses.setGravity(Gravity.CENTER);
-  businesses.setBackground(edge(panel(),12));businesses.setPadding(dp(8),0,dp(8),0);
-  row.addView(businesses,lp(84,48));touch(businesses);
+  // Keep the full English label readable at 1.3x font scale without growing the toolbar.
+  businesses.setSingleLine(true);businesses.setEllipsize(android.text.TextUtils.TruncateAt.END);
+  businesses.setBackground(edge(panel(),12));businesses.setPadding(dp(6),0,dp(6),0);
+  row.addView(businesses,lp(96,48));touch(businesses);
   businesses.setContentDescription(I18n.isEnglish(host)?"Search businesses separately from personal contacts":"חיפוש בתי עסק בנפרד מאנשי הקשר האישיים");
   businesses.setOnClickListener(view->{pulse(businesses);host.openBusinessDirectory();});
  }

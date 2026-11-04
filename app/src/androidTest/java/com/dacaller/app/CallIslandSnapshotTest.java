@@ -34,9 +34,12 @@ import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.security.DigestOutputStream;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -52,6 +55,9 @@ import org.xmlpull.v1.XmlSerializer;
 @android.annotation.TargetApi(33)
 public final class CallIslandSnapshotTest extends InstrumentationTestCase {
  private static final String DIRECTORY="/sdcard/Download/DA-CALLER-snapshots";
+ private static final int BAR_CAPTURE_DEADLINE_MS=5000,BAR_CAPTURE_MAX_SAMPLES=50;
+ private static final int BAR_CAPTURE_INTERVAL_MS=100,BAR_CAPTURE_STABLE_SAMPLES=3,BAR_CAPTURE_MIN_PIXELS=40;
+ private static final Map<String,JSONObject> nativeBarCaptures=new LinkedHashMap<>();
  private static boolean matrixPassed,actionsPassed,settingsPassed,animationsPassed,appMainPassed,settingsBarsPassed;
  private int settingsBarCaptures;
  private Context target;
@@ -158,8 +164,9 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   MotionEvent up=MotionEvent.obtain(now,now+45,MotionEvent.ACTION_UP,x,y,0);
   getInstrumentation().sendPointerSync(down);getInstrumentation().sendPointerSync(up);down.recycle();up.recycle();settle();
  }
- private void snapshot(String name)throws Exception{
-  settle();String path=DIRECTORY+"/island-"+name+".png";shell("screencap -p "+path);
+ private void snapshot(Activity activity,boolean dark,String name)throws Exception{
+  settle();nativeBarSnapshot(activity,dark,name);
+  String path=DIRECTORY+"/island-"+name+".png";
   assertEquals("regular file",shell("stat -c %F "+path).trim());assertTrue(Long.parseLong(shell("stat -c %s "+path).trim())>1000);
  }
  private void launch(String language,boolean dark,String style,int state,boolean noAudio)throws Exception{
@@ -190,10 +197,11 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   checked("matrix",this::matrixScenario);
  }
  private void matrixScenario()throws Exception{
+  matrixPassed=false;appMainPassed=false;nativeBarCaptures.keySet().removeIf(name->!name.startsWith("island-settings-"));
   for(boolean dark:new boolean[]{false,true})for(String language:new String[]{"he","en"})for(String style:new String[]{"apple","glass","emerald"}){
    launch(language,dark,style,Call.STATE_ACTIVE,false);String suffix=style+"-"+(dark?"dark":"light")+"-"+language;
-   assertFalse(host.controller.isExpanded());geometry();snapshot(suffix+"-compact");
-   expanded();geometry();snapshot(suffix+"-expanded");
+   assertFalse(host.controller.isExpanded());geometry();snapshot(host,dark,suffix+"-compact");
+   expanded();geometry();snapshot(host,dark,suffix+"-expanded");
    tap(tagged(host,"island-collapse"));await(()->!host.controller.isExpanded(),"Header collapse failed");geometry();
   }
   int[] states={Call.STATE_RINGING,Call.STATE_DIALING,Call.STATE_HOLDING,Call.STATE_ACTIVE};
@@ -203,7 +211,7 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
    if(i==0){visible(tagged(host,"island-action-ANSWER"));visible(tagged(host,"island-action-DECLINE"));}
    if(i==2)visible(tagged(host,"island-action-RESUME"));
    if(i==3){assertNull(view(host,"island-action-MUTE_ON"));assertNull(view(host,"island-action-SPEAKER_ON"));}
-   snapshot("state-"+labels[i]);
+   snapshot(host,true,"state-"+labels[i]);
   }
   actualMainScreens();
   matrixPassed=true;writeEvidence();
@@ -338,14 +346,14 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
     ui(()->list.setSelectionFromTop(4,-7));settle();
     assertFictionalMainData(app,list);
     long identity=list.getAdapter().getItemId(list.getFirstVisiblePosition());int top=list.getChildAt(0).getTop();
-    actualMainGeometry(app,false,"recents".equals(page));snapshot("app-"+page+"-compact");
+    actualMainGeometry(app,false,"recents".equals(page));snapshot(app,true,"app-"+page+"-compact");
     assertFictionalMainData(app,list);
     tap(tagged(app,"island-expand"));await(controller::isExpanded,"Actual MainActivity island did not expand");settle();
     assertFictionalMainData(app,list);
     actualMainGeometry(app,true,"recents".equals(page));
     if("contacts".equals(page))assertEquals("לדוגמה",find(app.getWindow().getDecorView(),EditText.class).getText().toString());
     if(list.getHeight()>=dp(48)&&list.getChildCount()>0){assertEquals(identity,list.getAdapter().getItemId(list.getFirstVisiblePosition()));assertEquals(top,list.getChildAt(0).getTop());}
-    snapshot("app-"+page+"-expanded");
+    snapshot(app,true,"app-"+page+"-expanded");
     tap(tagged(app,"island-collapse"));await(()->!controller.isExpanded(),"Actual MainActivity island did not collapse");settle();
     assertFictionalMainData(app,list);
     visible(tagged(app,"floating_dial"));visible(tagged(app,"call-island-secondary"));
@@ -608,60 +616,84 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   File file=new File(target.getExternalFilesDir(null),name);try(FileOutputStream out=new FileOutputStream(file)){out.write(value.getBytes(StandardCharsets.UTF_8));}
   shell("cp "+file.getAbsolutePath()+" "+DIRECTORY+"/"+name);
  }
- private int contrastingBarPixels(Bitmap capture,int top,int bottom,boolean dark){
+ private int contrastingBarPixels(Bitmap capture,int left,int right,int top,int bottom,boolean dark){
   int count=0;
-  for(int y=Math.max(0,top);y<Math.min(capture.getHeight(),bottom);y++)for(int x=0;x<capture.getWidth();x++){
+  for(int y=Math.max(0,top);y<Math.min(capture.getHeight(),bottom);y++)for(int x=Math.max(0,left);x<Math.min(capture.getWidth(),right);x++){
    int pixel=capture.getPixel(x,y),brightness=Color.red(pixel)+Color.green(pixel)+Color.blue(pixel);
    if(dark?brightness>600:brightness<384)count++;
   }return count;
  }
- private void settingsSnapshot(Activity settings,boolean dark,String name)throws Exception{
+ private int[] nativeBarState(Activity activity)throws Exception{
+  int[] bars=new int[6];
+  ui(()->{
+   bars[3]=activity.hasWindowFocus()?1:0;
+   android.view.WindowInsets insets=activity.getWindow().getDecorView().getRootWindowInsets();
+   if(insets!=null){
+    bars[0]=insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.statusBars()).top;
+    bars[1]=insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.navigationBars()).bottom;
+    bars[2]=insets.isVisible(android.view.WindowInsets.Type.navigationBars())?1:0;
+    bars[4]=insets.isVisible(android.view.WindowInsets.Type.statusBars())?1:0;
+   }
+   android.view.WindowInsetsController controller=activity.getWindow().getInsetsController();
+   bars[5]=controller==null?-1:controller.getSystemBarsAppearance();
+  });return bars;
+ }
+ private JSONObject nativeBarStateJson(int[] bars)throws Exception{
+  JSONObject state=new JSONObject();state.put("focused",bars[3]==1);state.put("status_top_px",bars[0]);
+  state.put("navigation_bottom_px",bars[1]);state.put("navigation_visible",bars[2]==1);
+  state.put("status_visible",bars[4]==1);state.put("requested_system_bars_appearance",bars[5]);return state;
+ }
+ private void nativeBarSnapshot(Activity activity,boolean dark,String name)throws Exception{
   // Capture the actual compositor, including native status/navigation icons.
   // Requested appearance flags alone do not prove the rendered icon contrast
   // while Android transfers bar ownership between Activity windows.
-  long deadline=SystemClock.uptimeMillis()+5000;int stable=0,statusPixels=0,navigationPixels=0;
-  final int[] bars=new int[4];Bitmap capture=null;boolean passed=false;JSONArray samples=new JSONArray();
+  long started=SystemClock.uptimeMillis(),deadline=started+BAR_CAPTURE_DEADLINE_MS;
+  int stable=0,statusPixels=0,navigationPixels=0;int[] bars=new int[6];
+  Bitmap capture=null;boolean passed=false;JSONArray samples=new JSONArray();String filename="island-"+name+".png";
   try{
    do{
-    ui(()->{
-     bars[0]=0;bars[1]=0;bars[2]=0;bars[3]=settings.hasWindowFocus()?1:0;
-     android.view.WindowInsets insets=settings.getWindow().getDecorView().getRootWindowInsets();
-     if(insets!=null){
-      bars[0]=insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.statusBars()).top;
-      bars[1]=insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.navigationBars()).bottom;
-      bars[2]=insets.isVisible(android.view.WindowInsets.Type.navigationBars())?1:0;
-     }
-    });
+    bars=nativeBarState(activity);
     if(capture!=null)capture.recycle();capture=getInstrumentation().getUiAutomation().takeScreenshot();
-    statusPixels=capture==null?0:contrastingBarPixels(capture,0,bars[0],dark);
-    navigationPixels=capture==null?0:contrastingBarPixels(capture,capture.getHeight()-bars[1],capture.getHeight(),dark);
-    boolean good=bars[3]==1&&bars[0]>0&&bars[1]>=dp(48)&&bars[2]==1&&statusPixels>=40&&navigationPixels>=40;
+    int[] after=nativeBarState(activity);long sampled=SystemClock.uptimeMillis();
+    // The left half includes the clock and excludes Android's right-side
+    // microphone privacy chip, which can otherwise hide white-on-light icons.
+    statusPixels=capture==null?0:contrastingBarPixels(capture,0,capture.getWidth()/2,0,bars[0],dark);
+    navigationPixels=capture==null?0:contrastingBarPixels(capture,0,capture.getWidth(),capture.getHeight()-bars[1],capture.getHeight(),dark);
+    boolean unchanged=true;for(int i=0;i<5;i++)unchanged&=bars[i]==after[i];
+    boolean good=sampled<=deadline&&unchanged&&bars[3]==1&&bars[0]>0&&bars[1]>=dp(48)&&bars[2]==1&&bars[4]==1
+     &&statusPixels>=BAR_CAPTURE_MIN_PIXELS&&navigationPixels>=BAR_CAPTURE_MIN_PIXELS;
     stable=good?stable+1:0;
-    JSONObject sample=new JSONObject();sample.put("uptime_ms",SystemClock.uptimeMillis());sample.put("focused",bars[3]==1);
-    sample.put("status_top_px",bars[0]);sample.put("navigation_bottom_px",bars[1]);sample.put("navigation_visible",bars[2]==1);
+    JSONObject sample=new JSONObject();sample.put("uptime_ms",sampled);sample.put("elapsed_ms",sampled-started);
+    sample.put("window_before",nativeBarStateJson(bars));sample.put("window_after",nativeBarStateJson(after));
+    sample.put("width_px",capture==null?0:capture.getWidth());sample.put("height_px",capture==null?0:capture.getHeight());
     sample.put("contrasting_status_pixels",statusPixels);sample.put("contrasting_navigation_pixels",navigationPixels);
     sample.put("consecutive_valid_samples",stable);samples.put(sample);
-    if(stable>=3){passed=true;break;}
-    Thread.sleep(100);
-   }while(SystemClock.uptimeMillis()<deadline);
+    if(stable>=BAR_CAPTURE_STABLE_SAMPLES){passed=true;break;}
+    long remaining=deadline-SystemClock.uptimeMillis();if(remaining<=0)break;
+    Thread.sleep(Math.min(BAR_CAPTURE_INTERVAL_MS,remaining));
+   }while(SystemClock.uptimeMillis()<deadline&&samples.length()<BAR_CAPTURE_MAX_SAMPLES);
    // Save precisely the Bitmap whose native bar pixels were checked, on both
    // success and failure; no editing or separately timed shell capture.
-   String filename="island-"+name+".png";
+   JSONObject record=new JSONObject();record.put("filename",filename);record.put("dark",dark);record.put("validated",passed);
+   record.put("capture_method","UiAutomation.takeScreenshot");record.put("status_sample_left_px",0);
+   record.put("status_sample_right_px",capture==null?0:capture.getWidth()/2);
+   record.put("required_navigation_px",dp(48));record.put("required_contrasting_pixels_per_bar",BAR_CAPTURE_MIN_PIXELS);
+   record.put("required_consecutive_valid_samples",BAR_CAPTURE_STABLE_SAMPLES);record.put("deadline_ms",BAR_CAPTURE_DEADLINE_MS);
+   record.put("sample_interval_ms",BAR_CAPTURE_INTERVAL_MS);record.put("max_samples",BAR_CAPTURE_MAX_SAMPLES);
+   record.put("sample_count",samples.length());record.put("samples",samples);
    if(capture!=null){
     File file=new File(target.getExternalFilesDir(null),filename);
-    try(FileOutputStream out=new FileOutputStream(file)){assertTrue(capture.compress(Bitmap.CompressFormat.PNG,100,out));}
+    MessageDigest digest=MessageDigest.getInstance("SHA-256");
+    try(DigestOutputStream out=new DigestOutputStream(new FileOutputStream(file),digest)){assertTrue(capture.compress(Bitmap.CompressFormat.PNG,100,out));}
+    StringBuilder hash=new StringBuilder();for(byte value:digest.digest())hash.append(String.format(java.util.Locale.ROOT,"%02x",value&255));
+    record.put("sha256",hash.toString());
     shell("cp "+file.getAbsolutePath()+" "+DIRECTORY+"/"+filename);
    }
-   if(!passed){
-    JSONObject diagnostic=new JSONObject();diagnostic.put("screenshot",filename);diagnostic.put("dark",dark);
-    diagnostic.put("required_navigation_px",dp(48));diagnostic.put("required_contrasting_pixels_per_bar",40);
-    diagnostic.put("required_consecutive_valid_samples",3);diagnostic.put("samples",samples);
-    diagnosticFile("island-"+name+"-bars-failed.json",diagnostic.toString(2));
-   }
-   assertNotNull("Native settings compositor screenshot missing",capture);
-   assertTrue("Settings native status/navigation bars must have stable rendered contrast: "+name
+   nativeBarCaptures.put(filename,record);writeEvidence();
+   if(!passed)diagnosticFile("island-"+name+"-bars-failed.json",record.toString(2));
+   assertNotNull("Native island compositor screenshot missing",capture);
+   assertTrue("Island native status/navigation bars must have stable rendered contrast: "+name
     +" status="+statusPixels+" navigation="+navigationPixels+" navInset="+bars[1],passed);
-   settingsBarCaptures++;
   }finally{if(capture!=null)capture.recycle();}
  }
  public void testCustomizationPreviewBothThemesAndBottomControlsAtLargeFont()throws Exception{
@@ -669,13 +701,14 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
  }
  private void customizationScenario()throws Exception{
   settingsBarsPassed=false;settingsBarCaptures=0;
+  settingsPassed=false;nativeBarCaptures.keySet().removeIf(name->name.startsWith("island-settings-"));
   for(boolean dark:new boolean[]{false,true}){
    prefs.edit().putBoolean("dark",dark).putBoolean("amoled",false).putString("language","he").putString("island_style","apple").commit();
    Activity settings=getInstrumentation().startActivitySync(new Intent(target,CallIslandSettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));launched.add(settings);diagnosticHost=settings;settle();
    await(settings::hasWindowFocus,"Customization must own the window before capture");
    ScrollView scroll=find(settings.getWindow().getDecorView(),ScrollView.class);assertNotNull(scroll);
    ui(()->scroll.scrollTo(0,0));settle();
-   settingsSnapshot(settings,dark,"settings-"+(dark?"dark":"light"));
+   snapshot(settings,dark,"settings-"+(dark?"dark":"light"));settingsBarCaptures++;
    // Integration/permission controls now precede the demonstration. Keep the
    // top capture at the true top, then scroll the real preview into view before
    // retaining the same strict full-visibility and text-layout assertions.
@@ -687,7 +720,7 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
    });settle();ui(()->{visible(tagged(settings,"island-settings-preview"));textFits(tagged(settings,"island-settings-preview"));});
    ui(()->scroll.fullScroll(View.FOCUS_DOWN));settle();
    ui(()->{visible(tagged(settings,"island_confirm_end"));textFits(tagged(settings,"island_confirm_end"));});
-   settingsSnapshot(settings,dark,"settings-"+(dark?"dark":"light")+"-bottom");
+   snapshot(settings,dark,"settings-"+(dark?"dark":"light")+"-bottom");settingsBarCaptures++;
    boolean confirmed=prefs.getBoolean("island_confirm_end",true);tap(tagged(settings,"island_confirm_end"));
    await(()->prefs.getBoolean("island_confirm_end",true)!=confirmed,"Native setting switch did not persist its selection");
    tap(tagged(settings,"island_confirm_end"));await(()->prefs.getBoolean("island_confirm_end",true)==confirmed,"Native setting could not be restored");
@@ -706,6 +739,7 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   proof.put("activity_recreation_preserves_fixture_session_and_query",actionsPassed);proof.put("customization_preview_and_bottom_controls",settingsPassed);
   proof.put("animations_lifecycle",animationsPassed);proof.put("native_preference_persistence",settingsPassed);
   proof.put("native_settings_bar_contrast",settingsBarsPassed);
+  proof.put("nativeBarCaptures",new JSONArray(nativeBarCaptures.values()));
   proof.put("session_source","Non-exported DEBUG fixture. Fictional contacts and state; real production renderer/controller. No Telecom call or physical audio route is created.");
   proof.put("full_call_navigation","Real CallScreenActivity in explicit DEBUG preview; system Back returns to same native host and preserved list.");
   File file=new File(target.getExternalFilesDir(null),"island-native.json");try(FileOutputStream out=new FileOutputStream(file)){out.write(proof.toString(2).getBytes(StandardCharsets.UTF_8));}

@@ -14,7 +14,11 @@ The signing audit found beta.9's installed public certificate `3d41dabd6e32a28ba
 
 Business source acquisition is **BLOCKED**: the configured proxy returnedHTTP403 for the Geofabrik public extract; the executor policy does not permit that host. Actual source bytes downloaded:0; actual production business records imported:0. Do not bypass this policy, ship synthetic records or claim complete/current national coverage. Reproducible importer, provenance/ODbL requirements and source-access documentation are implemented under scripts/business-directory/. The business UI must state dataset unavailability honestly until licensed source data are imported and measured.
 
-Updated 2026-11-02. Active branch: `codex/da-caller-dynamic-island-20261027`; draft [PR5](https://github.com/hadar1233hr-afk/D.A.-Caller/pull/5). Published verified debug test version: **0.11.0-beta.9**, code **19**.
+### Second source: bounded native-bar capture and the small business entry
+
+The English chip now stays single-line at12sp/96dp×48dp and passes3 native-font/touch unit tests at320dp/font1.3. All36 island PNGs must now pass3 consecutive compositor samples (clock left-half and navigation contrast≥40, actual visible insets/focus, bounded5s); the exact checked Bitmap is saved and hash-bound to raw records. A narrow1e-6 check accepts Android's actual1.2999999523 font scale. Debug/unsigned-release/native-test Java/lint passed locally (0errors,6warnings). A local352-test run had350PASS and2 new touch-test coordinate failures; corrected coordinate conversion then passed all3 focused tests. Fresh full CI/native/visual evidence is required; no352-test PASS is claimed yet. [Preflight](evidence/callback-business-2026-11-04/second-source-preflight.json).
+
+Updated 2026-11-04. Active branch: `codex/da-caller-dynamic-island-20261027`; draft [PR5](https://github.com/hadar1233hr-afk/D.A.-Caller/pull/5). Published verified debug test version: **0.11.0-beta.9**, code **19**.
 
 The owner added two requirements after the external-island review: DA CALLER notifications for missed calls, replacing Telecom's fallback system-dialer notification, and an offline changelog in Settings showing the progress of each version. These software features are now implemented and delivered together in the verified GitHub debug prerelease. Do not publish the earlier baseline as if it contained the two new features.
 

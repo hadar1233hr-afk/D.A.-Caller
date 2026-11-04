@@ -46,6 +46,54 @@ for flag in ("real_renderer_and_controller", "matrix_native_layout_assertions",
              "native_preference_persistence", "app_main_integration",
              "native_settings_bar_contrast"):
     assert proof.get(flag) is True, f"Native island check did not pass: {flag}"
+bar_captures = proof.get("nativeBarCaptures")
+assert isinstance(bar_captures, list) and len(bar_captures) == len(required), "All 36 island PNGs require native bar captures"
+assert collections.Counter(capture.get("filename") for capture in bar_captures) == collections.Counter(required), "Native bar capture filenames do not match the 36 required PNGs"
+for capture in bar_captures:
+    name = capture["filename"]
+    assert capture.get("validated") is True, f"Native bar capture did not pass: {name}"
+    assert capture.get("dark") is ("-dark" in name or name in states or name in app_layouts), f"Wrong bar contrast palette: {name}"
+    assert capture.get("capture_method") == "UiAutomation.takeScreenshot", f"Not a native compositor capture: {name}"
+    assert capture.get("sha256") == hashes[name], f"Checked native Bitmap does not match the saved PNG: {name}"
+    expected = {"status_sample_left_px": 0, "status_sample_right_px": 240,
+                "required_navigation_px": 72, "required_contrasting_pixels_per_bar": 40,
+                "required_consecutive_valid_samples": 3, "deadline_ms": 5000,
+                "sample_interval_ms": 100, "max_samples": 50}
+    for field, value in expected.items():
+        assert type(capture.get(field)) is int and capture[field] == value, f"Wrong native bar capture requirement {field}: {name}"
+    samples = capture.get("samples")
+    assert isinstance(samples, list) and 3 <= len(samples) <= 50, f"Missing or unbounded native bar samples: {name}"
+    assert type(capture.get("sample_count")) is int and capture["sample_count"] == len(samples), f"Wrong native bar sample count: {name}"
+    stable = 0
+    previous_elapsed = -1
+    previous_uptime = -1
+    state_fields = ("focused", "status_top_px", "navigation_bottom_px", "navigation_visible", "status_visible")
+    for sample in samples:
+        elapsed, uptime = sample.get("elapsed_ms"), sample.get("uptime_ms")
+        assert type(elapsed) is int and 0 <= elapsed <= 5000 and previous_elapsed <= elapsed, f"Native bar capture exceeded 5s or reordered samples: {name}"
+        assert type(uptime) is int and previous_uptime <= uptime, f"Native bar samples are not chronological: {name}"
+        if previous_uptime >= 0:
+            assert uptime - previous_uptime == elapsed - previous_elapsed, f"Native bar sample clocks disagree: {name}"
+        previous_elapsed, previous_uptime = elapsed, uptime
+        before, after = sample.get("window_before"), sample.get("window_after")
+        assert isinstance(before, dict) and isinstance(after, dict), f"Missing actual native window state: {name}"
+        for state in (before, after):
+            for field in ("focused", "navigation_visible", "status_visible"):
+                assert type(state.get(field)) is bool, f"Invalid native window flag {field}: {name}"
+            for field in ("status_top_px", "navigation_bottom_px", "requested_system_bars_appearance"):
+                assert type(state.get(field)) is int, f"Invalid native window value {field}: {name}"
+        status_pixels, navigation_pixels = sample.get("contrasting_status_pixels"), sample.get("contrasting_navigation_pixels")
+        width, height = sample.get("width_px"), sample.get("height_px")
+        assert type(width) is int and type(height) is int and (width, height) in ((0, 0), (480, 854)), f"Wrong native bar sample dimensions: {name}"
+        assert type(status_pixels) is int and 0 <= status_pixels <= width // 2 * max(0, before["status_top_px"]), f"Invalid left-half clock contrast count: {name}"
+        assert type(navigation_pixels) is int and 0 <= navigation_pixels <= width * max(0, before["navigation_bottom_px"]), f"Invalid navigation contrast count: {name}"
+        good = (all(before[field] == after[field] for field in state_fields)
+                and before["focused"] and before["status_visible"] and before["navigation_visible"]
+                and before["status_top_px"] > 0 and before["navigation_bottom_px"] >= 72
+                and status_pixels >= 40 and navigation_pixels >= 40)
+        stable = stable + 1 if good else 0
+        assert type(sample.get("consecutive_valid_samples")) is int and sample["consecutive_valid_samples"] == stable, f"Native bar stability count disagrees with raw samples: {name}"
+    assert stable == 3, f"Native bars were not valid for 3 consecutive compositor samples: {name}"
 insets_files = [p for p in root.rglob("window-insets.json") if p.is_file()]
 assert len(insets_files) == 1
 insets = json.loads(insets_files[0].read_text())

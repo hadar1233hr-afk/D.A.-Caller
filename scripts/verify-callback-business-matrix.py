@@ -62,6 +62,11 @@ def bars(value):
     assert value.get("status", 0) >= 40 and value.get("navigation", 0) >= 40
 
 
+def large_font(value):
+    # Android reports Configuration.fontScale as float32, e.g.1.2999999523.
+    return type(value) in (int, float) and abs(value - 1.3) <= 0.000001
+
+
 def https(value):
     from urllib.parse import urlsplit
     result = urlsplit(value)
@@ -70,7 +75,7 @@ def https(value):
 
 proof = one("callback-business-native.json")
 assert proof.get("api") == 33 and proof.get("size") == "480x854"
-assert proof.get("density_dpi") == 240 and proof.get("font_scale") == 1.3
+assert proof.get("density_dpi") == 240 and large_font(proof.get("font_scale"))
 assert proof.get("physical_cellular_audio_verified") is False
 assert "production private OS alarm" in proof.get("data_origin", "")
 reminder = proof.get("reminder", {})
@@ -141,7 +146,7 @@ for item in settings:
     bars(item.get("bar_contrast", {}))
 assert settings[0].get("input_method") == "native-pointer"
 for item in lists:
-    assert item.get("root_rtl") is True and item.get("number_ltr") is True and item.get("font_scale") == 1.3
+    assert item.get("root_rtl") is True and item.get("number_ltr") is True and large_font(item.get("font_scale"))
     assert item.get("name") == "נועה תזכורת לשיחה" and "2" in item.get("counts", "")
     bars(item.get("bar_contrast", {}))
 cleanup = reminder.get("cleanup", {})
@@ -184,7 +189,7 @@ assert [item.get("palette") for item in palettes] == ["light", "dark"]
 for item in palettes:
     assert item.get("native_entry_tag") == "contacts_directory_tab"
     assert re.fullmatch(r"\[[0-9]+,[0-9]+\]\[[0-9]+,[0-9]+\]", str(item.get("entry_bounds", "")))
-    assert item.get("root_rtl") is True and item.get("phone_ltr") is True and item.get("font_scale") == 1.3
+    assert item.get("root_rtl") is True and item.get("phone_ltr") is True and large_font(item.get("font_scale"))
     assert item.get("first_record_id") == record["id"]
     bars(item.get("bar_contrast", {}))
 for name, expected in {"matrix-verification.json": 122, "personalization-verification.json": 53,
