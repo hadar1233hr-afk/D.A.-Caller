@@ -1,5 +1,13 @@
 # DA CALLER continuation state
 
+## Additional owner tasks — 2026-11-04 (pending)
+
+1. Create a new contact directly from an unknown number in Recents, with the selected number prefilled and no automatic dialing.
+2. Repair Nothing and Xiaomi call-screen arrangement. Increase digits across all five call designs; Google additionally needs a rounder, more attractive, bolder typeface. Verify large-font Hebrew/English and the Jelly Star-sized viewport without overlaps.
+3. Implement genuine incoming swipe-to-answer. Partial/cancelled gestures and a simple tap must not answer; a completed swipe answers only the currently owned ringing Telecom call. Preserve an accessible answering path and verify with real emulator calls and pointer gestures.
+
+These additions were recorded at the owner's request; implementation and verification remain pending. Existing backup-capture, licensed-data and compatible-signing work remains active. No new APK is approved.
+
 ## Latest verified checkpoint
 
 Source46c500a / CI41851873318 completed:352 unique unit PASS;34 native cases,33 PASS and1 explicit business-dataset MISSING failure;0 errors/skips. All237 functional images were freshly reviewed:101 call and44 island frames PASS,91 other PASS and1 visual FAIL (personalization-backup-saved-light.png: white system icons on near-white bars). All36 island compositor proofs independently passed. Reminder real Telecom/OS-alarm/read-only checks passed again. No release approval. [Retained second-run evidence](evidence/callback-business-2026-11-04/second-ci/pipeline-summary.json).
