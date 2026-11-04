@@ -1,0 +1,1750 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-11-04T14:34:50.443599+00:00",
+  "reviewer": "/root/review_beta10_calls",
+  "review_type": "Read-only actual-pixel visual review of call screen PNGs",
+  "source_commit": "402da24a939113fa08655e704633d86a0375d959",
+  "application_tree": "1ce289c4ba733312821173549d2efd99f19f9bfc",
+  "ci_run_id": 41803113785,
+  "version": "0.11.0-beta.10",
+  "version_code": 20,
+  "identity_verification": {
+    "repository_HEAD_matches_source": true,
+    "source_app_tree_matches": true,
+    "ci_run_id_provenance": "Assigned artifact run identity supplied by parent reviewer; no remote CI query performed in this visual-only subtask"
+  },
+  "artifact_directory": "/workspace/work/callback-business-first-ui/ui-snapshots/DA-CALLER-snapshots",
+  "manifest_path": "/workspace/work/callback-business-first-review/manifest.json",
+  "manifest_sha256": "b3e72027eb300b3bfdce572eaddaf8de7264a498ea557e04b3a6442e34113928",
+  "instructions_read": [
+    "/workspace/D.A.-Caller/AGENTS.md",
+    "/workspace/D.A.-Caller/docs/DA_CALLER_CALLBACK_BUSINESS_2026-11-04.md"
+  ],
+  "observed_rendering_status": "PASS",
+  "status_scope": "Only rendering visible in the 101 listed PNGs; no end-to-end call behavior, hardware, release or installation approval is implied.",
+  "coverage": {
+    "actually_reviewed_png_count": 101,
+    "actually_reviewed_unique_png_count": 101,
+    "actually_opened_sheet_count": 26,
+    "original_png_dimensions_px": [
+      480,
+      854
+    ],
+    "sheet_dimensions_px": [
+      1000,
+      1810
+    ],
+    "base_matrix_png_count": 80,
+    "large_font_long_name_png_count": 20,
+    "english_no_bluetooth_png_count": 1,
+    "themes": {
+      "graphite": "Samsung One UI",
+      "pixel": "Google Phone",
+      "emerald": "iOS 26 Glass",
+      "frost": "Xiaomi HyperOS",
+      "ivory": "Nothing OS"
+    },
+    "base_matrix": "Five themes, light/dark, normal/audio/more/keypad, font scale 1.0/1.3",
+    "long_name_matrix": "Five themes, dark, Hebrew/English long names, normal/audio, font scale 1.3",
+    "additional_case": "Google Phone light English audio output with no Bluetooth device",
+    "original_png_hashes_all_match_manifest": true,
+    "sheet_frames_pixel_identical_to_originals": true,
+    "review_method": "Each call-01.png through call-26.png was opened using tools.view_image and forwarded using image(...); all occupied frames were actually inspected. The 480x854 frame crops were then checked byte-for-byte against the original PNG pixels, without rescaling. Original graphite dark More largefont was additionally opened directly."
+  },
+  "checks": [
+    {
+      "check": "Text/control clipping and overlap",
+      "status": "PASS",
+      "observation": "No confirmed glyph clipping, overlapping text/control, missing control, unexpected blank frame, or off-screen end-call control was observed. Keypad digits, letters, star/hash/plus, panel close buttons, titles and route/More rows remain visible at both font scales."
+    },
+    {
+      "check": "Long Hebrew and English names",
+      "status": "PASS",
+      "observation": "Long names are visibly ellipsized within their available width and do not overlap avatar, phone number, timer or audio panel. Hebrew truncation appears at the visual left; English truncation appears at the visual right. Phone numbers remain readable."
+    },
+    {
+      "check": "Native status/navigation bars and safe area",
+      "status": "PASS",
+      "observation": "Native top time/status symbols and three-button navigation remain visible with appropriate light/dark contrast. End-call controls have visible separation from the navigation bar. No native-bar collision was observed."
+    },
+    {
+      "check": "Theme shape and backgrounds",
+      "status": "PASS",
+      "observation": "The themes remain visually distinct: circular Samsung controls, Google Phone rounded trays with peach selected controls, outlined glass surfaces, HyperOS rectangular action cards, and Nothing monochrome/dotted surfaces with squared rows. Light/dark backgrounds and button/text contrast are coherent in these captures."
+    },
+    {
+      "check": "End call and capability controls as rendered",
+      "status": "PASS",
+      "observation": "Every frame shows an unobscured red/coral end-call control. Normal panels expose the theme-specific action arrangement; More sheets show New call/Hold rows, audio sheets show route choices/selection, and keypad sheets show all twelve keys. This establishes visible rendering only, not Telecom capability or action execution."
+    },
+    {
+      "check": "English no-Bluetooth route presentation",
+      "status": "PASS",
+      "observation": "call-pixel-light-audio-english-no-bluetooth.png visibly shows Audio output, Speaker, selected Phone, More/Mute/Keypad, and end-call, with no Bluetooth/F901 choice."
+    }
+  ],
+  "findings": [],
+  "non_blocking_observations": [
+    {
+      "files": [
+        "call-emerald-dark-normal-largefont.png",
+        "call-emerald-dark-normal-longname-he.png",
+        "call-emerald-light-normal-largefont.png"
+      ],
+      "observation": "The large Hebrew New call label uses visible ellipsis in the narrow normal-layout action slot; the icon and remaining label stay separate from adjacent controls."
+    },
+    {
+      "files": [
+        "call-graphite-dark-more-largefont.png",
+        "call-graphite-dark-more-standard.png",
+        "call-graphite-light-more-largefont.png",
+        "call-graphite-light-more-standard.png"
+      ],
+      "observation": "More title has very tight right spacing against the graphite panel edge. Full title was visible, including on the directly reopened original dark largefont PNG; no confirmed clipping was found."
+    }
+  ],
+  "limitations": [
+    "These call-layout PNGs are real Android renders driven by synthetic call/audio fixtures; they are not proof of a live Telecom connection or physical audio behavior.",
+    "No screenshot can establish touch hit area, actual mute/route/hold/add-call/DTMF/hang-up execution, lifecycle behavior, or accessibility announcement correctness.",
+    "Physical Jelly Star, SIM/carrier, audible microphone/speaker/Bluetooth, proximity/lock/OEM, full TalkBack and matching-key upgrade are NOT TESTED by this review.",
+    "The long-name fixtures cover dark normal/audio panels, not every light/keypad/More permutation."
+  ],
+  "release_status": "BLOCKED",
+  "release_blockers_and_accounting_from_parent_context": [
+    "Production business source bytes and production rows remain 0; native dataset check is the single known failing native test.",
+    "Native accounting is 34 tests: 33 pass, 1 fail; the functional PNG artifact has 237 PNGs, not the 241 originally planned.",
+    "Installed beta9 matching private signing key remains unavailable; in-place compatibility has not been proven."
+  ],
+  "publication_or_visual_reviewed_label_applied": false,
+  "application_code_modified": false,
+  "reviewed_sheets": [
+    {
+      "sheet": "call-01.png",
+      "sha256": "1766ee4aff96c28a22a8b601ad275ff57f04d3f31ffdae708d95f20a9570c04b",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-emerald-dark-audio-largefont.png",
+        "call-emerald-dark-audio-longname-en.png",
+        "call-emerald-dark-audio-longname-he.png",
+        "call-emerald-dark-audio-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-02.png",
+      "sha256": "309df0a959340017360188af95d986f1c97ee2991ec209e643a48aac9b5aaaee",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-emerald-dark-keypad-largefont.png",
+        "call-emerald-dark-keypad-standard.png",
+        "call-emerald-dark-more-largefont.png",
+        "call-emerald-dark-more-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-03.png",
+      "sha256": "45a6b1c9ce568fd5df45582851546e807d5dd5f65fcca131415f700e3d4a775f",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-emerald-dark-normal-largefont.png",
+        "call-emerald-dark-normal-longname-en.png",
+        "call-emerald-dark-normal-longname-he.png",
+        "call-emerald-dark-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-04.png",
+      "sha256": "9af2f7034493b238ef52b0ac3a5343f95abb4b92caecf59d9c1d2b95cd6684f9",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-emerald-light-audio-largefont.png",
+        "call-emerald-light-audio-standard.png",
+        "call-emerald-light-keypad-largefont.png",
+        "call-emerald-light-keypad-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-05.png",
+      "sha256": "2f31458a9bb1eeb7a710151827354182b8de588e700c553cf51f550fa6772b20",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-emerald-light-more-largefont.png",
+        "call-emerald-light-more-standard.png",
+        "call-emerald-light-normal-largefont.png",
+        "call-emerald-light-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-06.png",
+      "sha256": "1988d1f0416650c56fd6a73329cad7c266fb6074bbe783d5a6138eef8d4212ba",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-frost-dark-audio-largefont.png",
+        "call-frost-dark-audio-longname-en.png",
+        "call-frost-dark-audio-longname-he.png",
+        "call-frost-dark-audio-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-07.png",
+      "sha256": "bddbd1163e250d62de8a63bbf1f3476ee67bd87c5c04f2367d5bda2f6cf00d8d",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-frost-dark-keypad-largefont.png",
+        "call-frost-dark-keypad-standard.png",
+        "call-frost-dark-more-largefont.png",
+        "call-frost-dark-more-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-08.png",
+      "sha256": "9dc90430dd62c2f9258738430651338a5ae9c2924c5bd9f3f516b000fe382aad",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-frost-dark-normal-largefont.png",
+        "call-frost-dark-normal-longname-en.png",
+        "call-frost-dark-normal-longname-he.png",
+        "call-frost-dark-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-09.png",
+      "sha256": "3c8f4051edfe9af7c1c648e85b160f2b26d9a6fcde01cc2deb903f6d6c815445",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-frost-light-audio-largefont.png",
+        "call-frost-light-audio-standard.png",
+        "call-frost-light-keypad-largefont.png",
+        "call-frost-light-keypad-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-10.png",
+      "sha256": "1b2801556d5e90c46dec8a69872c49d775a74a741ab611b05d3c4897652c560f",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-frost-light-more-largefont.png",
+        "call-frost-light-more-standard.png",
+        "call-frost-light-normal-largefont.png",
+        "call-frost-light-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-11.png",
+      "sha256": "b28fa037444fd050cc0e3fb68ea1e01af399029aef700ef7d6b175dd3defead4",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-graphite-dark-audio-largefont.png",
+        "call-graphite-dark-audio-longname-en.png",
+        "call-graphite-dark-audio-longname-he.png",
+        "call-graphite-dark-audio-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-12.png",
+      "sha256": "e70f0d6c4d7fad9e96b8e26a8b5c40c51f0b97d531d5e13923b9e47128f963bd",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-graphite-dark-keypad-largefont.png",
+        "call-graphite-dark-keypad-standard.png",
+        "call-graphite-dark-more-largefont.png",
+        "call-graphite-dark-more-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-13.png",
+      "sha256": "4bf453727fc6ce76bcbc41e6e0019eb9e3a7732ffd0a1afbac10914081f3c5b7",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-graphite-dark-normal-largefont.png",
+        "call-graphite-dark-normal-longname-en.png",
+        "call-graphite-dark-normal-longname-he.png",
+        "call-graphite-dark-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-14.png",
+      "sha256": "01d5013c0badecc6093d7850a2fe82d787735aec9e45f2de29501ee0c3da96d0",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-graphite-light-audio-largefont.png",
+        "call-graphite-light-audio-standard.png",
+        "call-graphite-light-keypad-largefont.png",
+        "call-graphite-light-keypad-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-15.png",
+      "sha256": "c2bee6d23943d4ccad9fefecf582105fb57ffcd4896a144880aea418061cf584",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-graphite-light-more-largefont.png",
+        "call-graphite-light-more-standard.png",
+        "call-graphite-light-normal-largefont.png",
+        "call-graphite-light-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-16.png",
+      "sha256": "a2e9d69cf93f891602046085f31669799d66878a021a2d58a37d87980466f3a6",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-ivory-dark-audio-largefont.png",
+        "call-ivory-dark-audio-longname-en.png",
+        "call-ivory-dark-audio-longname-he.png",
+        "call-ivory-dark-audio-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-17.png",
+      "sha256": "64b4b0bb725884da2f5800ff204819b424ef3c748e148e633e40931f8e6a03e6",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-ivory-dark-keypad-largefont.png",
+        "call-ivory-dark-keypad-standard.png",
+        "call-ivory-dark-more-largefont.png",
+        "call-ivory-dark-more-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-18.png",
+      "sha256": "f11df85c23066e454253be78bbc47a0881428afc05a27e2f8b89f7fd32cf52c8",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-ivory-dark-normal-largefont.png",
+        "call-ivory-dark-normal-longname-en.png",
+        "call-ivory-dark-normal-longname-he.png",
+        "call-ivory-dark-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-19.png",
+      "sha256": "fb07a5e3c7e2ba0077ebb3533b5ef467a051a1fa1e65c1eea9092587da44ffc0",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-ivory-light-audio-largefont.png",
+        "call-ivory-light-audio-standard.png",
+        "call-ivory-light-keypad-largefont.png",
+        "call-ivory-light-keypad-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-20.png",
+      "sha256": "891f00ab573112a5e1a1cf665be611a696c6b2a3e02933515c631013ea21268a",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-ivory-light-more-largefont.png",
+        "call-ivory-light-more-standard.png",
+        "call-ivory-light-normal-largefont.png",
+        "call-ivory-light-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-21.png",
+      "sha256": "c90addfc25ae6932570233ab6541b542bd5beaab7fa03ec724d167faa301696f",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-pixel-dark-audio-largefont.png",
+        "call-pixel-dark-audio-longname-en.png",
+        "call-pixel-dark-audio-longname-he.png",
+        "call-pixel-dark-audio-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-22.png",
+      "sha256": "9b2f2acef24866f5dc12b49f64d9105a8d5cd35fcf2813a2215a68ec1a8b3ec3",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-pixel-dark-keypad-largefont.png",
+        "call-pixel-dark-keypad-standard.png",
+        "call-pixel-dark-more-largefont.png",
+        "call-pixel-dark-more-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-23.png",
+      "sha256": "97c69a7414207adfba6b39aeda0a88a56edd5a6f47d5ee0b44a0d5099daabd18",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-pixel-dark-normal-largefont.png",
+        "call-pixel-dark-normal-longname-en.png",
+        "call-pixel-dark-normal-longname-he.png",
+        "call-pixel-dark-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-24.png",
+      "sha256": "5d7089bf7bccedc5ff1faecf8ec50cb4d82e1f3c6726083aff55a4b8d86c2a75",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-pixel-light-audio-english-no-bluetooth.png",
+        "call-pixel-light-audio-largefont.png",
+        "call-pixel-light-audio-standard.png",
+        "call-pixel-light-keypad-largefont.png"
+      ]
+    },
+    {
+      "sheet": "call-25.png",
+      "sha256": "88d32e1912f58d2f8564602be27bc07da43596f93ff109809d5351ef143afe9c",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-pixel-light-keypad-standard.png",
+        "call-pixel-light-more-largefont.png",
+        "call-pixel-light-more-standard.png",
+        "call-pixel-light-normal-largefont.png"
+      ]
+    },
+    {
+      "sheet": "call-26.png",
+      "sha256": "5341c6e5ea1c92fdfcb76b16c130d9d13e21b39a39e0de1ecf4343b8354dcbaf",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_view_image_and_image_forwarded": true,
+      "original_pixels_preserved": true,
+      "files": [
+        "call-pixel-light-normal-standard.png"
+      ]
+    }
+  ],
+  "reviewed_files": [
+    {
+      "file": "call-emerald-dark-audio-largefont.png",
+      "sha256": "1b54e9e1ed872b3c0ca850a281f41810ca189e683e80aa5db1ef3c34d8bda483",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-01.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-dark-audio-longname-en.png",
+      "sha256": "933e1318bba728421745f6d04dcf1b23758e80e89383465d9ea04dd5147995d9",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-01.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-dark-audio-longname-he.png",
+      "sha256": "a2a53f1ab54e5c16fad678e5d9bd1772b6e64c6fc632bc43eadd32413e6f4013",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-01.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-dark-audio-standard.png",
+      "sha256": "2abe25f2a7c6be4c8c940db9e56768d251923139fb71697353b7de6f6ffe2a05",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-01.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-dark-keypad-largefont.png",
+      "sha256": "94f407cc2d8aefb93c5cba3200f97d71d6c68bb38607e3bf8185a069b25d84c7",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-02.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-dark-keypad-standard.png",
+      "sha256": "4654e65584359d7dd6f3b0de048a77ea453de75eb2c286dc1a0272fa73a0eebb",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-02.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-dark-more-largefont.png",
+      "sha256": "a8eb6432329b69c5569f5da0fdb81dd50599eff382621dc9684f333e49a5b6d1",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-02.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-dark-more-standard.png",
+      "sha256": "7bf3a5ba8bd7f0c07c108c17a1b6a4b3186c02bf63c468e686424f4645bc23e6",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-02.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-dark-normal-largefont.png",
+      "sha256": "292d2603a5afd2fa84b51c23a0fc6a00f0b1cef55f81f41af5c741fffd27b5e5",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-03.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-dark-normal-longname-en.png",
+      "sha256": "67063e53515936a50b611eb7d32f3d436e03a7390cfb7f38b7fcf272edd545f1",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-03.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-dark-normal-longname-he.png",
+      "sha256": "1fbac687f7027d8477de9e7eb8f21c18689b4372f2d15395654e418ee6e238ec",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-03.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-dark-normal-standard.png",
+      "sha256": "be9900531c7cefde5ab1a66ba251c9af5092187dcb632d2873581b188bc02571",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-03.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-light-audio-largefont.png",
+      "sha256": "f7536ad2b75a0c0863a9c52c117faf96c0e0d1246b9adffdf8144866adeda007",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-04.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-light-audio-standard.png",
+      "sha256": "454921e3cffb33bda534836c8925a11d648251b79f6918a35ed8d354138af898",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-04.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-light-keypad-largefont.png",
+      "sha256": "d1e813309d82847d5cebcfa663fd81c7814065599d672b118504d9360ec5b39f",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-04.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-light-keypad-standard.png",
+      "sha256": "113dc75962431c030b1be10776c0fb1e5a17714e047b80b3ec38585edb03c3b7",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-04.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-light-more-largefont.png",
+      "sha256": "d2d0b74854f5e7dc8a9426e43c1c2d99f86a07d22b6c2a613b87ec38671c9d28",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-05.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-light-more-standard.png",
+      "sha256": "1ac28ddddf90c6557e519627e556ac949dfb47521d13118bd152dfce234b5b26",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-05.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-light-normal-largefont.png",
+      "sha256": "5f2d08729aa52d2a16aaa700770965b3b3674afabb455741cb2e9154c0a2befd",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-05.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-emerald-light-normal-standard.png",
+      "sha256": "fc5897fd286b907d98f07686aa0b36b7d152986193c1653fac9ed44f2db8192d",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-05.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-dark-audio-largefont.png",
+      "sha256": "aa4c1a568a1117c6a15e119d9e9e930415a561c1019bee086a75cf701046a828",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-06.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-dark-audio-longname-en.png",
+      "sha256": "6c5f5f002d8e9f14e024d3c3bd322d2ae129788f3d5f95ae347bd9eacc9169e6",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-06.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-dark-audio-longname-he.png",
+      "sha256": "3282f2354b477f3a40b100b513c8dc5394e87b9d1afa77a0bcdbc29acb6d4532",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-06.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-dark-audio-standard.png",
+      "sha256": "a95b341891716bc3b52f7920a27392e1e1a56cb43ba3a70f9f8b3d1b01358982",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-06.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-dark-keypad-largefont.png",
+      "sha256": "ed0df0e61b82e3aed1499ab13a31a4a2a4cbde49b279d8a57276b0a226104eef",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-07.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-dark-keypad-standard.png",
+      "sha256": "93dafee72a1978e46d23c7a08cce6cc67c0ae878785262f58a13f0012ac68a78",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-07.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-dark-more-largefont.png",
+      "sha256": "ebb69cd53397a3703ac3cbe907698ad56237caa57df10e39562db47fc72d19b1",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-07.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-dark-more-standard.png",
+      "sha256": "f9f358d8be5aecf8ed837bf99cc485d257c3693c144f755449a69bb22d13ad2f",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-07.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-dark-normal-largefont.png",
+      "sha256": "15f1b7be9be807c69b8f39a346af0fcf842130ba3438df077e388690ddbb5c4d",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-08.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-dark-normal-longname-en.png",
+      "sha256": "ce00eff7fd4af3c3880b0d1a5c403a2d592b8513d3ec250715ac94defe14fc63",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-08.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-dark-normal-longname-he.png",
+      "sha256": "aa13a57d7f8088dca120a4bc07894de6a73ceb0b4fdf24cb26609a9fac09c9e2",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-08.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-dark-normal-standard.png",
+      "sha256": "421dd2083d0aff963ae91a9bb409344be0b11d64450b037c86ad589e42155068",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-08.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-light-audio-largefont.png",
+      "sha256": "dd0973da899820b59466e9a26681b039b259a0e1436956c812b51a56797abb52",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-09.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-light-audio-standard.png",
+      "sha256": "097b28a382c332170373bfc98a03533863f08e4cf8a8d727895d2fa407211afd",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-09.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-light-keypad-largefont.png",
+      "sha256": "a3767b7cddd09915b11927a3b1bfffdbbe77af008b4c43e94657bb4e4aca1800",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-09.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-light-keypad-standard.png",
+      "sha256": "440636607c4c13941a75b731f539ed5450e2da537a8cd5af346f0c31716da69a",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-09.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-light-more-largefont.png",
+      "sha256": "1625a7763cb266ba8f50c0b003d6e6ddd27c5f144191c0a38e5681d865b8173a",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-10.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-light-more-standard.png",
+      "sha256": "1cec11720eacaa49e4b4214c15f710f17efb72a963bf81f96fb767aca8264155",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-10.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-light-normal-largefont.png",
+      "sha256": "882bffe19d3c6df265e8b4886b808d60f9c0ab11989b63318d2a1870f8d88b64",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-10.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-frost-light-normal-standard.png",
+      "sha256": "59e6d1a2a25fa20ab0721587e59ad0a964552dd0d881ce2f80b4c28bf9ca1451",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-10.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-dark-audio-largefont.png",
+      "sha256": "94e6b6ee79309a28ee696216cc41ca2bdb0b9adcf84cc52e71a9789010110c92",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-11.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-dark-audio-longname-en.png",
+      "sha256": "e2e93eab64254aa391de645d2a6ac1fcf16827129db8bebc224e096090fdad53",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-11.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-dark-audio-longname-he.png",
+      "sha256": "2890844dfc8ef1e2966704f74766f5b8efc033f812741eb84b828828c57a71b8",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-11.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-dark-audio-standard.png",
+      "sha256": "83cc2f1478449ccfbf9caa8bb9ea606c9081b38c10d3515f082f63973e212dae",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-11.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-dark-keypad-largefont.png",
+      "sha256": "e217d70c8fb01e8d82c5cddacb565269386bc01942582be8373185b87536831f",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-12.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-dark-keypad-standard.png",
+      "sha256": "4f16902ca7334ae25c5ecdcd41e20ab544b0bc5f7b73dd1c9a4c938212acee05",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-12.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-dark-more-largefont.png",
+      "sha256": "fba0ed8df8d135e08d0aec323fc9f127ca5efbc8154547e65aecb26794b5ef01",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-12.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "additional_original_png_view": true
+    },
+    {
+      "file": "call-graphite-dark-more-standard.png",
+      "sha256": "d7faec89f2fc609e384611a63736e0e79e21da2a4a7270f12ee78bfab6c1fc65",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-12.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-dark-normal-largefont.png",
+      "sha256": "b1582d361686f3fb17d59c29efd2bef3216a7b1af3dcdeb7ca58627ea43db1a8",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-13.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-dark-normal-longname-en.png",
+      "sha256": "9eb32d1af3c445a779be755ca3e6f5d6fef365438b7b85debb6ff0e1c6a189d5",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-13.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-dark-normal-longname-he.png",
+      "sha256": "f01f5a28c454c767f51bc657e4f78ac691df6723953d7f478bfee3d9ca84ed80",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-13.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-dark-normal-standard.png",
+      "sha256": "ececf00f85a813958e66223cb724cd3263cf22a9357b5031a5c061a6e2524881",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-13.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-light-audio-largefont.png",
+      "sha256": "c70e2bd652afc31aacef1038d34be2881b1900623e818341e0e403845915a327",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-14.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-light-audio-standard.png",
+      "sha256": "ca55a804e7f55a6e9be85e89b673c2c4d37dba437ea96d92d6839e5c256d09d2",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-14.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-light-keypad-largefont.png",
+      "sha256": "49b5d827ba39dc315d774b8fa29b0582dd61a1f0dd085b7f8be8ebc97ef95fba",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-14.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-light-keypad-standard.png",
+      "sha256": "575e0d2bc2eabf1dbd51311f08b4d21738b7a955d9400853db4e82aed648913f",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-14.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-light-more-largefont.png",
+      "sha256": "b6528d8a4d9be3f58335d08c7075dcf87af5364538764f59122a5d9b080314dd",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-15.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-light-more-standard.png",
+      "sha256": "774765c4ca9c2f8d7f489028251b7056b06f9288cf9d518e1a78fa7df176d326",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-15.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-light-normal-largefont.png",
+      "sha256": "c199a0d897352e8fb0f8dbf34801c3b79d88908e8a4001985c4fc223ae98135e",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-15.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-graphite-light-normal-standard.png",
+      "sha256": "cfa527ff20d1ee8396ebb8cf8122923c728d57d8519001fc75232a11a71fc88b",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-15.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-dark-audio-largefont.png",
+      "sha256": "6a0199de72f17d9602b3e76914a7a41d0b54955094826bb572225fee5ac9227b",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-16.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-dark-audio-longname-en.png",
+      "sha256": "6a5b22a71381b47ee9aaa5c9d554a94846075cb33d9c36094cb2b20674a65af2",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-16.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-dark-audio-longname-he.png",
+      "sha256": "f30b779df8e376357e3e5c2518adf3575d6aae71a4514bde06660b9a7285a853",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-16.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-dark-audio-standard.png",
+      "sha256": "499ba6c9de9558c2f4173be09b3b06ed8a558df83084cad517c027befb1bae13",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-16.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-dark-keypad-largefont.png",
+      "sha256": "8a1b94721f18b8c7a36af7c2bec0c73daae4d7412bb614aee4ff8ac40fcd8734",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-17.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-dark-keypad-standard.png",
+      "sha256": "156073dccb6512a90979025c6594d13e645e02c4b755f1597e15a9c391cc69a5",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-17.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-dark-more-largefont.png",
+      "sha256": "7555b023e191275e753683148239729fc81d8aced79c6ee3030065c5c58b4551",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-17.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-dark-more-standard.png",
+      "sha256": "283b67e38bd5a7e37915be985be8480574b5052a5863f43a2438e512856eb2f2",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-17.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-dark-normal-largefont.png",
+      "sha256": "40f12ed445c934ab2036367ef4ca824481ea247fc24f71ed2c80a692dba87116",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-18.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-dark-normal-longname-en.png",
+      "sha256": "b89c35d02fbd5efe69f4b99195dba6f6a2186127bfd0d90e022dbca38e124e93",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-18.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-dark-normal-longname-he.png",
+      "sha256": "1cab3bfe3be1ca848ff827fb4cd900618f82461a1d07e913d0914aff8a35afe9",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-18.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-dark-normal-standard.png",
+      "sha256": "a9d19654bc0198b162f47bdec98b5a207d0e2ab784fecd6d02dc2f31bfaf0665",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-18.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-light-audio-largefont.png",
+      "sha256": "f4d721e98c80e143911113695f34a3f9e06f87092b5b7bba9f893eafd719c761",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-19.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-light-audio-standard.png",
+      "sha256": "3919afe674cc2c0e2ec9616cf8cbeab17c039e109827031e3a78f385e0512717",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-19.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-light-keypad-largefont.png",
+      "sha256": "5ac6ff7f6c509329c05230ce4e3f8d65b6420c83441f67275ba25ed29fce1962",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-19.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-light-keypad-standard.png",
+      "sha256": "ec067aa844c51b82cffaa6f74295bbbfd006d7135a5f83fee0a724ec9318d26b",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-19.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-light-more-largefont.png",
+      "sha256": "909d551429fa5d86eec7b7acf1c8be1c16a55076ece81a90084f216aaee19534",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-20.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-light-more-standard.png",
+      "sha256": "a73400490f5e53f5697e738282a55177cc5fd4442bf46f0a68622dfd6c8be160",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-20.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-light-normal-largefont.png",
+      "sha256": "4ac69d620e3753d4c029863785d9fd7bf6168f80168db0eb187735f70fa53fb7",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-20.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-ivory-light-normal-standard.png",
+      "sha256": "530bf43735a1fdac268ab7541a8fca36cef863c8630959ed671131e578e52fd1",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-20.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-dark-audio-largefont.png",
+      "sha256": "07c571c1a0478bc89cf7e4424b3648d69a92c154c61b9c54c801f02e9f784df2",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-21.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-dark-audio-longname-en.png",
+      "sha256": "ea36f0f4bf9128ba0f26f112d4c0946697b40a441949c7f556ab2d97dfb362af",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-21.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-dark-audio-longname-he.png",
+      "sha256": "43fee0a2ec3ef739683651b0e3563f745a5a038a28c21a2f023e219eb4fbcd6a",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-21.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-dark-audio-standard.png",
+      "sha256": "b5dadfef8c2ee7eb6f06240386c9dce3329c2f581c55657e98f4a5a4dcdc8bda",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-21.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-dark-keypad-largefont.png",
+      "sha256": "0d20c463fd0ebc463762260958b01d44c585985c6391e8dd603686a3f3788891",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-22.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-dark-keypad-standard.png",
+      "sha256": "ebac7ea74b84575c9eaec9bd0f129e90b4e59f0cf55e4f7da68157292ab54903",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-22.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-dark-more-largefont.png",
+      "sha256": "52c6b997e353a1ff9f2b57c8acf32ebfb1ecc191a950b7d3e58d7994150e766a",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-22.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-dark-more-standard.png",
+      "sha256": "67bb9a9e71b692a77e9b3f65d984fe71ed6ee2859721323ce0430c92ed7a1b23",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-22.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-dark-normal-largefont.png",
+      "sha256": "3240aec49b620348fc406ac4b698843da9db87e967be755351de1e182110347d",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-23.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-dark-normal-longname-en.png",
+      "sha256": "66fa1ab2cea5cabd53e1aa9347018416da94389ffce8586d5abc7955090f8c93",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-23.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-dark-normal-longname-he.png",
+      "sha256": "6a25397a4948d28c8ce97c85ae554619e98ea95b08a054feacbe789144eaffe4",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-23.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-dark-normal-standard.png",
+      "sha256": "376fa63d02402ce9dd556d505022cfdbaca625dd96582c0b96b8ec156e8fcbf4",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-23.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-light-audio-english-no-bluetooth.png",
+      "sha256": "32b84e8cba6be1989eee05dae93b650df310e1f30802c661770324087e96fc12",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-24.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-light-audio-largefont.png",
+      "sha256": "b17906e92c01ba86d66e5f45e94935083a0121e73d231133ead5d2527d9c5a68",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-24.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-light-audio-standard.png",
+      "sha256": "d0d60f5811a1253dfed073d16cae3e67918dc1ffd0b60ee0738e67eefdacf134",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-24.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-light-keypad-largefont.png",
+      "sha256": "6c42eea97ecccb69dae5a6b378b07c806815330ca6b75c1dc2a6171ce962df91",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-24.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-light-keypad-standard.png",
+      "sha256": "7d6a21f86f4c79d72b04006268f81e44937c086107a6808ca232b1fb203dba20",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-25.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-light-more-largefont.png",
+      "sha256": "e2cada67fabdb991c4bd24106a1912bca08834f2d6a0e289037d70bc132b5b48",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-25.png",
+      "sheet_position": "top_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-light-more-standard.png",
+      "sha256": "74ab91712366104534829af42b4b4e0fd19e8b4a7db8b861986c3e27ed22dbf8",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-25.png",
+      "sheet_position": "bottom_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-light-normal-largefont.png",
+      "sha256": "69c658ffde47a8fb9f6efee7fc1512a368f155bf297919b472b6a0920b51854d",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-25.png",
+      "sheet_position": "bottom_right",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    },
+    {
+      "file": "call-pixel-light-normal-standard.png",
+      "sha256": "f733de39e0fcd5fb9877925687919a1894b7b66ba85aea7bfbe7c53f4a3658d5",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "reviewed_via_sheet": "call-26.png",
+      "sheet_position": "top_left",
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS"
+    }
+  ]
+}
