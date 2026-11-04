@@ -1,5 +1,19 @@
 # DA CALLER continuation state
 
+## Active new owner request after the completed beta.9 release
+
+On2026-11-02 the owner added: (1) opt-in end-of-day reminders for today's missed callers without a later connected call longer than one second; group identities and distinguish missed counts from callback attempts; (2) a sourced, licensed, offline Israeli business directory in a separate small Contacts tab, with measured coverage rather than invented hundreds of thousands/millions; (3) durable update signing. The user confirms beta.9 is installed and does not know what a keystore is. Android requires that installed certificate's exact private key: audit its availability before claiming an update path. Never suggest uninstalling. The prior immutable release is baseline evidence, not approval of new edits. Scheduled repeats of the old prompt must preserve this newer objective and avoid competing development. New implementation/test counts/version remain pending; no new APK is verified yet.
+
+Reminder cutoff defaults to21:00 local and is user-selectable. A connection is actual duration>=2s after the latest missed call for the normalized number; a later miss makes an earlier connection insufficient. All runtime data work remains offline and off the UI thread. Personal contacts must never enter the public business dataset. Licensed source access, measured row counts and freshness are pending research. A business-source agent hit transient selected-model capacity and was retried with the same model, with no account/model changes. Actual usage-quota errors must stop work rather than trigger a model/account switch.
+
+### Resumed implementation checkpoint (2026-11-04)
+
+The partial reminder reducer/scheduler, separate business UI/backend and their Settings/navigation integration are being completed on this branch. No new application source is validated yet; the beta.9 results below do not apply to these edits. Planned new version is0.11.0-beta.10/code20, unreleased. Fresh unit/native/visual evidence is required. At resume no competing worker or newer PR head was present.
+
+The signing audit found beta.9's installed public certificate `3d41dabd6e32a28ba6af2c57bb872fb3dfafa1f85a5c8523b72b54e4d8a32f56`, but no matching private key in the retained CI artifacts, cache or local keystore. An in-place beta.9 update remains **BLOCKED**; see [the signing audit and recovery procedure](DA_CALLER_SIGNING.md). The new preparation tool passed18 mocked security-contract tests; this is not proof of real APK signing or an update. Persistent-key provisioning and an owner-controlled private backup remain pending. Publication must fail closed rather than silently use another ephemeral debug key.
+
+Business source acquisition is **BLOCKED**: the configured proxy returnedHTTP403 for the Geofabrik public extract; the executor policy does not permit that host. Actual source bytes downloaded:0; actual production business records imported:0. Do not bypass this policy, ship synthetic records or claim complete/current national coverage. Reproducible importer, provenance/ODbL requirements and source-access documentation are being prepared. The business UI must state dataset unavailability honestly until licensed source data are imported and measured.
+
 Updated 2026-11-02. Active branch: `codex/da-caller-dynamic-island-20261027`; draft [PR5](https://github.com/hadar1233hr-afk/D.A.-Caller/pull/5). Published verified debug test version: **0.11.0-beta.9**, code **19**.
 
 The owner added two requirements after the external-island review: DA CALLER notifications for missed calls, replacing Telecom's fallback system-dialer notification, and an offline changelog in Settings showing the progress of each version. These software features are now implemented and delivered together in the verified GitHub debug prerelease. Do not publish the earlier baseline as if it contained the two new features.
