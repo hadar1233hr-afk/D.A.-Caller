@@ -17,8 +17,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          REVIEW_RUN_ID: '41363043464'
-          REVIEW_SOURCE_SHA: c9d1eca7385c1b1711f5004185f292ca923c36bb
+          REVIEW_RUN_ID: '41803113785'
+          REVIEW_SOURCE_SHA: 402da24a939113fa08655e704633d86a0375d959
         shell: bash
         run: |
           set -euo pipefail
@@ -51,6 +51,8 @@ jobs:
                   category = 'ui'
               elif name.startswith('DA-CALLER-checks-'):
                   category = 'checks'
+              elif name.startswith('DA-CALLER-native-failure-candidate-'):
+                  category = 'native-failure-candidate'
               elif name.startswith('DA-CALLER-') and '-tested-debug-' in name:
                   category = 'tested-apk'
               elif name.startswith('DA-CALLER-') and '-debug-' in name:
