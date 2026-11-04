@@ -101,6 +101,19 @@ public class CallReturnNavigationTest {
    assertFalse(app.getSharedPreferences("da_caller",Context.MODE_PRIVATE).getBoolean("role_prompted",false));
   }
  }
+ @Test public void businessReturnPreservesOnlyTypedSearchAndAnchorsWithoutReplayingDial(){
+  Bundle state=new Bundle();state.putString("page","contacts");state.putBoolean("contacts_business_mode",true);
+  state.putString("business_query","בית קפה");state.putInt("business_offset",100);state.putInt("business_position",12);
+  state.putInt("business_top",-9);state.putLong("business_id",9000000001L);state.putString("place_call","0501112233");
+  CallReturnNavigation.saveMain(app,state);Bundle restored=CallReturnNavigation.mainState(app);
+  assertTrue(restored.getBoolean("contacts_business_mode"));assertEquals("בית קפה",restored.getString("business_query"));
+  assertEquals(100,restored.getInt("business_offset"));assertEquals(12,restored.getInt("business_position"));
+  assertEquals(-9,restored.getInt("business_top"));assertEquals(9000000001L,restored.getLong("business_id"));
+  assertFalse(restored.containsKey("place_call"));
+  runtime.edit().putString("business_offset","bad").putString("contacts_business_mode","true").putInt("business_query",42).commit();
+  Bundle corrupt=CallReturnNavigation.mainState(app);assertEquals(0,corrupt.getInt("business_offset"));
+  assertFalse(corrupt.getBoolean("contacts_business_mode"));assertEquals("",corrupt.getString("business_query"));
+ }
  @Test public void liveMainReturnKeepsItsActualPageAndIgnoresInjectedDialExtras(){
   try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup()){
    MainActivity activity=controller.get();activity.openContactsTab();
@@ -117,6 +130,20 @@ public class CallReturnNavigationTest {
   app.getSharedPreferences("da_caller",Context.MODE_PRIVATE).edit().putString("start_page","settings").commit();
   try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup()){
    Bundle state=new Bundle();controller.get().onSaveInstanceState(state);assertEquals("settings",state.getString("page"));
+  }
+ }
+ @Test public void businessColdReturnRestoresSeparateTabAndRecentShortcutNeverDials(){
+  Bundle state=new Bundle();state.putString("page","contacts");state.putBoolean("contacts_business_mode",true);
+  state.putString("business_query","קפה");state.putInt("business_offset",50);CallReturnNavigation.saveMain(app,state);
+  try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class,CallReturnNavigation.intent(app)).setup()){
+   MainActivity activity=controller.get();View content=activity.findViewById(android.R.id.content);
+   assertNotNull(content.findViewWithTag("business_directory_root"));
+   Bundle restored=new Bundle();activity.onSaveInstanceState(restored);
+   assertTrue(restored.getBoolean("contacts_business_mode"));assertEquals("קפה",restored.getString("business_query"));
+   assertEquals(50,restored.getInt("business_offset"));
+   activity.onNewIntent(new Intent(activity,MainActivity.class).putExtra("show_recents",true));
+   Bundle recents=new Bundle();activity.onSaveInstanceState(recents);assertEquals("recents",recents.getString("page"));
+   assertNull("Navigation must never enqueue a call",Shadows.shadowOf(activity).getNextStartedActivity());
   }
  }
  @Test public void coldReadOnlyDestinationsAreExplicitAndPermissionScoped(){

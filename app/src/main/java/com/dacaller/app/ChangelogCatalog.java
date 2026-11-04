@@ -26,6 +26,15 @@ final class ChangelogCatalog {
  // Version boundaries and notes are grounded in app/build.gradle history and
  // docs/DA_CALLER_{VISUAL_VERIFICATION,PERSONALIZATION_VERIFICATION,DYNAMIC_ISLAND}.
  private static final List<Entry> ENTRIES=Collections.unmodifiableList(Arrays.asList(
+  new Entry("0.11.0-beta.10","תזכורת לחזרה לשיחות","A reminder to return calls",
+   change("תזכורת יומית אופציונלית למתקשרים שלא נענו היום, לפי חיבור מאוחר יותר של יותר משנייה; קיבוץ ומניין הפספוסים וניסיונות החזרה.",
+    "Optional daily reminders for today's missed callers without a later connection longer than one second, with grouped missed calls and callback attempts."),
+   change("בחירת שעת התזכורת וגיבוי ההגדרה. התזכורת אינה מוחקת או משנה את יומן השיחות והארכיון.",
+    "A selectable reminder time and settings backup. The reminder never deletes or changes call history or the archive."),
+   change("לשונית בתי עסק נפרדת עם חיפוש מקומי ומקור הנתונים. הזמינות והכיסוי תלויים במאגר מורשה שנכלל בגרסה; נתוני דוגמה אינם נכללים.",
+    "A separate business tab with offline search and source details. Availability and coverage depend on a licensed dataset included in the build; no sample records are bundled."),
+   change("הגנות חדשות מפני פרסום בחתימה מתחלפת. עדכון התקנת beta.9 עדיין דורש את מפתח החתימה המקורי שאינו זמין כרגע.",
+    "New guards against publication with changing signing keys. Updating an existing beta.9 install still requires its original private signing key, which is currently unavailable.")),
   new Entry("0.11.0-beta.9","האי יוצא למסך הבית","The island comes to Home",
    change("אפשרות לאי שיחה במסך הבית ובאפליקציות אחרות בזמן חיוג, שיחה פעילה או המתנה, לאחר אישור הרשאת Android.",
     "Optional call island on Home and above other apps while dialing, active or on hold, after granting Android's display permission."),

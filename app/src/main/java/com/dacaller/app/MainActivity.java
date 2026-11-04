@@ -41,6 +41,8 @@ public class MainActivity extends Activity {
  private LinearLayout root,nav;
  private FrameLayout workspace;
  private FastPages fastPages;
+ private BusinessDirectoryView businessDirectory;
+ private boolean contactsBusinesses,businessNeedsResume;
  private String page="recents";
  private List<Contacts.Person> contacts=Collections.emptyList();
  private boolean loadingContacts=false;
@@ -51,7 +53,7 @@ public class MainActivity extends Activity {
  private String pendingRoleCallNumber=null;
  private long lastCallRequestAt=-1;
  private final Runnable reloadChangedContacts=()->{ContactPhotos.clearCache();loadContacts(true);};
- private final Runnable reloadChangedCalls=()->refreshLog(true);
+ private final Runnable reloadChangedCalls=()->{refreshLog(true);CallbackReminder.maybeRefresh(this);};
  private final Runnable deferredRender=()->render();
  private boolean reloadContactsPending=false;
  private int contactsGeneration=0;
@@ -120,7 +122,11 @@ public class MainActivity extends Activity {
   if(returning){/* A return restores UI only, never old permission/call destinations. */}
   else if(saved==null)handleIntent(getIntent());
   else {requestedCallNumber=saved.getString("requested_call");pendingRoleCallNumber=saved.getString("pending_role_call");dialpadNumber=saved.getString("dialpad");}
-  if(uiState!=null){fastPages=new FastPages(this);fastPages.restoreState(uiState);}
+  if(uiState!=null){
+   fastPages=new FastPages(this);fastPages.restoreState(uiState);
+   contactsBusinesses=uiState.getBoolean("contacts_business_mode",false);
+   directory().restoreState(uiState);
+  }
   render();loadContacts();
   if(returning&&pageScroll!=null){ScrollView scroll=pageScroll;int y=Math.max(0,uiState.getInt("settings_scroll",0));scroll.post(()->scroll.scrollTo(0,y));}
   if(returnDestination!=null)handler.post(()->{if(!isFinishing()&&!isDestroyed())startActivity(returnDestination);});
@@ -141,6 +147,9 @@ public class MainActivity extends Activity {
  private void handleIntent(Intent intent){
   if(intent==null)return;
   if(MissedCallNotifications.handleOpenIntent(this,intent)){page="recents";refreshLog(true);return;}
+  if(intent.getBooleanExtra("show_recents",false))page="recents";
+  if(intent.getBooleanExtra("show_businesses",false)){page="contacts";contactsBusinesses=true;}
+  if(intent.getBooleanExtra("favorites",false)||intent.getBooleanExtra("show_contacts",false)||intent.hasExtra("contact_search"))contactsBusinesses=false;
   if(intent.getBooleanExtra("favorites",false)){page="contacts";prefs.edit().putBoolean("favorites_expanded",true).apply();}
   if(intent.getBooleanExtra("show_contacts",false))page="contacts";
   if(intent.hasExtra("contact_search")){
@@ -166,8 +175,10 @@ public class MainActivity extends Activity {
    if(!contactsLoaded&&!loadingContacts)loadContacts(true);
   }else if(contactsLoaded||!contacts.isEmpty()){
    contactsGeneration++;contactsLoaded=false;contacts=Collections.emptyList();contactNames.clear();
-   ContactPhotos.clearCache();render();
+   ContactPhotos.clearCache();if(!page.equals("contacts")||!contactsBusinesses)render();
   }
+  if(businessNeedsResume&&page.equals("contacts")&&contactsBusinesses){businessNeedsResume=false;render();}
+  CallbackReminder.schedule(this);CallbackReminder.maybeRefresh(this);
   SettingsScreen.refreshAttached(this);
  }
  @Override protected void onStart(){
@@ -181,11 +192,13 @@ public class MainActivity extends Activity {
   if(fastPages!=null)fastPages.remember(lastPage);
   Bundle navigation=new Bundle();navigation.putString("page",page);
   if(fastPages!=null)fastPages.saveState(navigation);
+  saveBusinessState(navigation);
   if(pageScroll!=null)navigation.putInt("settings_scroll",pageScroll.getScrollY());
   CallReturnNavigation.saveMain(this,navigation);
   try{getContentResolver().unregisterContentObserver(contactsObserver);}catch(Exception ignored){}
   try{getContentResolver().unregisterContentObserver(callsObserver);}catch(Exception ignored){}
   handler.removeCallbacks(reloadChangedContacts);handler.removeCallbacks(reloadChangedCalls);
+  if(businessDirectory!=null){businessDirectory.detach();businessNeedsResume=page.equals("contacts")&&contactsBusinesses;}
   contactsLoaded=false;
   super.onStop();
  }
@@ -194,6 +207,7 @@ public class MainActivity extends Activity {
   if(request==21){contactsLoaded=false;loadContacts(true);render();}
   if(request==22){CallArchive.schedule(this);refreshLog();render();if(isDefault())ensureCallNotifications();}
   if(request==24)ensureVoiceNetworkPermission();
+  if(request==28){CallbackReminder.schedule(this);CallbackReminder.maybeRefresh(this);}
   if(request==23&&requestedCallNumber!=null){
    String number=requestedCallNumber;requestedCallNumber=null;
    if(results.length>0&&results[0]==PackageManager.PERMISSION_GRANTED)makeCall(number);
@@ -222,7 +236,7 @@ public class MainActivity extends Activity {
    }
   }
   if(code==201){contactsLoaded=false;loadContacts(true);}
-  if(code==310&&result==RESULT_OK&&data!=null&&data.getBooleanExtra("settings_restored",false)){CallArchive.schedule(this);contactsLoaded=false;loadContacts(true);refreshPagePreserveScroll();WidgetSupport.refreshAll(this);}
+  if(code==310&&result==RESULT_OK&&data!=null&&data.getBooleanExtra("settings_restored",false)){CallArchive.schedule(this);CallbackReminder.schedule(this);CallbackReminder.maybeRefresh(this);contactsLoaded=false;loadContacts(true);refreshPagePreserveScroll();WidgetSupport.refreshAll(this);}
  }
  private boolean isDefault(){
   try{if(android.os.Build.VERSION.SDK_INT>=29){
@@ -285,7 +299,7 @@ public class MainActivity extends Activity {
     contacts=result;contactsLoaded=true;
     contactNames.clear();
     for(Contacts.Person item:result)if(!item.phone.isEmpty())contactNames.put(Contacts.canonical(item.phone),item.name);
-    if(page.equals("contacts")||page.equals("favorites")||page.equals("recents"))render();
+    if((page.equals("contacts")&&!contactsBusinesses)||page.equals("favorites")||page.equals("recents"))render();
     FavoritesWidget.refresh(this);
     if(reloadContactsPending){reloadContactsPending=false;loadContacts(true);}
    });
@@ -309,7 +323,7 @@ public class MainActivity extends Activity {
  private void decorate(View view){TouchFeedback.bind(view,prefs);}
  private void render(){
   // Provider callbacks must not detach the row currently under a finger.
-  if(fastPages!=null&&fastPages.isInteracting()){
+  if((fastPages!=null&&fastPages.isInteracting())||(businessDirectory!=null&&businessDirectory.isInteracting())){
    handler.removeCallbacks(deferredRender);handler.postDelayed(deferredRender,80);return;
   }
   handler.removeCallbacks(deferredRender);
@@ -320,6 +334,7 @@ public class MainActivity extends Activity {
   String theme=bg()+"_"+panel()+"_"+tint()+"_"+prefs.getString("language","he");
   boolean rebuild=root==null||!theme.equals(appliedTheme);
   if(fastPages!=null)fastPages.remember(lastPage);
+  if(businessDirectory!=null){businessDirectory.remember();businessDirectory.detach();}
   if(rebuild){
    appliedTheme=theme;
    root=column();root.setBackgroundColor(bg());
@@ -338,11 +353,11 @@ public class MainActivity extends Activity {
    workspace.addView(pageScroll,new FrameLayout.LayoutParams(-1,-1));
   }else{
    View current;
-   if(page.equals("contacts"))current=fastPages.contacts(contacts,false);
+   if(page.equals("contacts"))current=contactsBusinesses?directory().create():fastPages.contacts(contacts,false);
    else current=fastPages.recents();
    workspace.addView(current,new FrameLayout.LayoutParams(-1,-1));
-   fastPages.restore(page);
-   addFloatingDial();
+   if(!page.equals("contacts")||!contactsBusinesses)fastPages.restore(page);
+   if(!page.equals("contacts")||!contactsBusinesses)addFloatingDial();
   }
   lastPage=page;
   nav.removeAllViews();
@@ -477,7 +492,23 @@ public class MainActivity extends Activity {
  void reloadCallLog(){CallHistory.refresh(this,true,()->{if(!isFinishing()&&!isDestroyed())render();});}
  void requestLog(){ensureCallLogPermission();}
  void requestContacts(){requestPermissions(new String[]{Manifest.permission.READ_CONTACTS},21);}
- void openContactsTab(){page="contacts";render();}
+ void openContactsTab(){openPersonalContacts();}
+ void openBusinessDirectory(){page="contacts";contactsBusinesses=true;render();}
+ void openPersonalContacts(){page="contacts";contactsBusinesses=false;render();}
+ private BusinessDirectoryView directory(){
+  if(businessDirectory==null)businessDirectory=new BusinessDirectoryView(this,this::openPersonalContacts,this::dialFromList);
+  return businessDirectory;
+ }
+ private void saveBusinessState(Bundle state){
+  state.putBoolean("contacts_business_mode",contactsBusinesses);
+  if(businessDirectory!=null){businessDirectory.remember();businessDirectory.saveState(state);}
+ }
+ void requestCallbackReminderPermissions(){
+  java.util.ArrayList<String> permissions=new java.util.ArrayList<>();
+  if(checkSelfPermission(Manifest.permission.READ_CALL_LOG)!=PackageManager.PERMISSION_GRANTED)permissions.add(Manifest.permission.READ_CALL_LOG);
+  if(android.os.Build.VERSION.SDK_INT>=33&&checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)!=PackageManager.PERMISSION_GRANTED)permissions.add(Manifest.permission.POST_NOTIFICATIONS);
+  if(!permissions.isEmpty())requestPermissions(permissions.toArray(new String[0]),28);
+ }
  void newContact(String phone){
   Intent intent=new Intent(this,ContactEditorActivity.class);
   if(phone!=null&&!phone.trim().isEmpty())intent.putExtra("incoming_number",phone);
@@ -682,12 +713,14 @@ public class MainActivity extends Activity {
  @Override protected void onSaveInstanceState(Bundle state){
   state.putString("page",page);state.putString("requested_call",requestedCallNumber);state.putString("pending_role_call",pendingRoleCallNumber);
   if(fastPages!=null){fastPages.remember(lastPage);fastPages.saveState(state);}
+  saveBusinessState(state);
   if(keypadDialog!=null&&keypadDialog.isShowing())state.putString("dialpad",keypadInput==null?"":keypadInput.getText().toString());
   super.onSaveInstanceState(state);
  }
  @Override protected void onDestroy(){
   handler.removeCallbacksAndMessages(null);
   if(keypadDialog!=null)keypadDialog.dismiss();
+  if(businessDirectory!=null)businessDirectory.close();
   super.onDestroy();
  }
 }

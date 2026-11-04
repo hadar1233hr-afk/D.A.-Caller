@@ -350,7 +350,12 @@ final class FastPages {
  View contacts(List<Contacts.Person> contacts,boolean favorites){
   if(filterTask!=null){handler.removeCallbacks(filterTask);filterTask=null;}
   if(host.checkSelfPermission(Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED){
-   return permission("כדי לראות אנשי קשר נדרשת הרשאה","אפשר גישה לאנשי קשר",()->host.requestContacts());
+   LinearLayout denied=vertical();denied.setBackgroundColor(background());
+   LinearLayout tabs=horizontal();denied.addView(tabs,lp(-1,48));
+   TextView personal=text(I18n.isEnglish(host)?"My contacts":"אנשי הקשר שלי",12,ink(),true);
+   tabs.addView(personal,new LinearLayout.LayoutParams(0,dp(48),1));addBusinessTab(tabs);
+   denied.addView(permission("כדי לראות אנשי קשר נדרשת הרשאה","אפשר גישה לאנשי קשר",()->host.requestContacts()),new LinearLayout.LayoutParams(-1,0,1));
+   return denied;
   }
   LinearLayout page=vertical();page.setBackgroundColor(background());
   page.setFocusableInTouchMode(true);page.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
@@ -371,6 +376,7 @@ final class FastPages {
   LinearLayout small=horizontal();small.setTag("call-island-secondary");page.addView(small,lp(-1,48));
   TextView count=text(I18n.count(host,contacts.size(),"אנשי קשר","contacts"),11,subtle(),false);
   small.addView(count,new LinearLayout.LayoutParams(0,-1,1));
+  count.setTag("contacts_personal_tab");addBusinessTab(small);
   ImageView refresh=icon(R.drawable.ic_refresh,tint());small.addView(refresh,lp(48,48));
   refresh.setContentDescription(I18n.isEnglish(host)?"Refresh contacts":"רענון אנשי קשר");
   touch(refresh);refresh.setOnClickListener(v->{pulse(refresh);host.reloadContacts();});
@@ -410,6 +416,14 @@ final class FastPages {
   TextView empty=text(I18n.isEnglish(host)?"No matching contacts":"לא נמצאו אנשי קשר",14,subtle(),false);
   empty.setGravity(Gravity.CENTER);page.addView(empty,lp(-1,100));list.setEmptyView(empty);
   return page;
+ }
+ private void addBusinessTab(LinearLayout row){
+  TextView businesses=text(I18n.isEnglish(host)?"Businesses":"בתי עסק",12,tint(),true);
+  businesses.setTag("contacts_directory_tab");businesses.setGravity(Gravity.CENTER);
+  businesses.setBackground(edge(panel(),12));businesses.setPadding(dp(8),0,dp(8),0);
+  row.addView(businesses,lp(84,48));touch(businesses);
+  businesses.setContentDescription(I18n.isEnglish(host)?"Search businesses separately from personal contacts":"חיפוש בתי עסק בנפרד מאנשי הקשר האישיים");
+  businesses.setOnClickListener(view->{pulse(businesses);host.openBusinessDirectory();});
  }
  private View permission(String info,String action,Runnable callback){
   LinearLayout box=vertical();box.setGravity(Gravity.CENTER);box.setPadding(dp(20),dp(20),dp(20),dp(20));

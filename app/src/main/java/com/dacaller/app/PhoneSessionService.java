@@ -19,13 +19,23 @@ import android.telecom.InCallService;
 import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.IdentityHashMap;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class PhoneSessionService extends InCallService {
  static volatile PhoneSessionService instance;
  static volatile Call current;
+ /** Provider workers may read these values without touching mutable Telecom
+  * Calls, service maps or the caller-identity lookup owned by the main thread. */
+ static final class CallbackConnection {
+  final int state;final String number;final long connectedAtMillis;
+  CallbackConnection(int state,String number,long connectedAtMillis){this.state=state;this.number=number;this.connectedAtMillis=connectedAtMillis;}
+ }
+ private static volatile List<CallbackConnection> callbackConnections=Collections.emptyList();
+ static List<CallbackConnection> callbackConnections(){return instance==null?Collections.emptyList():callbackConnections;}
  private static final int NOTIFICATION_ID=1502;
  private static final CopyOnWriteArrayList<Runnable> listeners=new CopyOnWriteArrayList<>();
  private final IdentityHashMap<Call,String> calls=new IdentityHashMap<>();
@@ -47,7 +57,7 @@ public final class PhoneSessionService extends InCallService {
  static void unregister(Runnable cb){listeners.remove(cb);}
  static void notifyViews(){for(Runnable cb:listeners){try{cb.run();}catch(Exception ignored){}}}
  @Override public void onCreate(){
-  super.onCreate();instance=this;
+  super.onCreate();instance=this;callbackConnections=Collections.emptyList();
   try{
    PowerManager power=getSystemService(PowerManager.class);
    if(power!=null&&power.isWakeLockLevelSupported(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK)){
@@ -63,7 +73,7 @@ public final class PhoneSessionService extends InCallService {
   for(Call call:new ArrayList<>(order))try{call.unregisterCallback(callback);}
    catch(RuntimeException failure){CallFailureReporter.record(this,"incall-destroy",failure);}
   calls.clear();order.clear();identities.clear();handler.removeCallbacksAndMessages(null);safeReleaseProximity();
-  if(instance==this){instance=null;current=null;notifyViews();}
+  if(instance==this){callbackConnections=Collections.emptyList();instance=null;current=null;notifyViews();}
   removeCallNotification();
   super.onDestroy();
  }
@@ -111,11 +121,25 @@ public final class PhoneSessionService extends InCallService {
  private void changed(){
   try{current=preferredCall();}
   catch(RuntimeException failure){CallFailureReporter.record(this,"incall-select-call",failure);}
+  publishCallbackConnections();
   try{updateProximity();}
   catch(RuntimeException failure){CallFailureReporter.record(this,"incall-proximity",failure);safeReleaseProximity();}
   try{updateNotification(current);}
   catch(RuntimeException failure){CallFailureReporter.record(this,"incall-notification",failure);}
+  CallbackReminder.maybeRefresh(getApplicationContext());
   notifyViews();
+ }
+ private void publishCallbackConnections(){
+  ArrayList<CallbackConnection> snapshots=new ArrayList<>();
+  for(Call call:order)try{
+   int state=call.getState();if(state!=Call.STATE_ACTIVE&&state!=Call.STATE_HOLDING)continue;
+   Call.Details details=call.getDetails();
+   if(details==null||details.getHandlePresentation()!=TelecomManager.PRESENTATION_ALLOWED||details.getHandle()==null)continue;
+   String number=details.getHandle().getSchemeSpecificPart();
+   if(!CallbackReminderModel.safeNumber(number).isEmpty()&&details.getConnectTimeMillis()>0)
+    snapshots.add(new CallbackConnection(state,number,details.getConnectTimeMillis()));
+  }catch(RuntimeException failure){CallFailureReporter.record(this,"incall-callback-snapshot",failure);}
+  callbackConnections=Collections.unmodifiableList(snapshots);
  }
  static boolean useProximity(int state,int route){
   return (state==Call.STATE_ACTIVE||state==Call.STATE_DIALING||state==Call.STATE_CONNECTING)
@@ -307,6 +331,12 @@ public final class PhoneSessionService extends InCallService {
   calls.remove(call);order.remove(call);identities.remove(call);
   CallHistory.fetchedAt=0;
   handler.removeCallbacks(refreshHistory);handler.postDelayed(refreshHistory,2500);
+  // Telecom writes its final duration after disconnect. Keep these bounded
+  // refreshes independent of this service's soon-to-be-destroyed handler.
+  Context app=getApplicationContext();
+  Handler reminderHandler=new Handler(Looper.getMainLooper());
+  reminderHandler.postDelayed(()->CallbackReminder.maybeRefresh(app),750);
+  reminderHandler.postDelayed(()->CallbackReminder.maybeRefresh(app),2500);
   changed();
  }
  private void updateNotification(Call call){

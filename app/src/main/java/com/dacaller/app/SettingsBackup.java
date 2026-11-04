@@ -39,6 +39,7 @@ final class SettingsBackup {
   bool("island_animations",true);bool("island_show_mute",true);bool("island_show_speaker",true);
   bool("island_show_hold",true);bool("island_confirm_end",true);
   bool("island_outside_app",false);
+  bool("callback_reminder_enabled",false);DEFAULTS.put("callback_reminder_minute",21*60);
   option("island_style","apple","apple","glass","emerald");
   option("island_size","compact","compact","comfortable");
   option("language","he","he","en");option("accent","gold","gold","silver");
@@ -168,6 +169,7 @@ final class SettingsBackup {
     if(key.equals("call_button_height")&&n!=56&&n!=65&&n!=75)throw new InvalidBackup();
     if(key.equals("haptic_strength")&&(n<1||n>3))throw new InvalidBackup();
     if(key.startsWith("font_")&&(n<60||n>200))throw new InvalidBackup();
+    if(key.equals("callback_reminder_minute")&&(n<0||n>=24*60))throw new InvalidBackup();
    }
    if(key.equals("favorites")){
     if(!(value instanceof Set)||((Set<?>)value).size()>MAX_FAVORITES)throw new InvalidBackup();

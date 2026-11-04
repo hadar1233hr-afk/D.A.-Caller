@@ -18,6 +18,13 @@ on:
       - 'scripts/verify-external-island-matrix.py'
       - 'scripts/verify-followup-matrix.py'
       - 'scripts/verify-visual-review.py'
+      - 'scripts/da_caller_signing.py'
+      - 'scripts/da_caller_ci_signing.py'
+      - 'scripts/tests/test_da_caller*.py'
+      - 'scripts/business-directory/**'
+      - 'scripts/verify-callback-business-matrix.py'
+      - 'docs/evidence/callback-business-2026-11-04/**'
+      - 'docs/DA_CALLER_SIGNING_POLICY.json'
       - 'docs/evidence/2026-10-25/**'
       - 'docs/evidence/personalization-2026-10-25/**'
       - 'docs/evidence/island-2026-10-27/**'
@@ -42,6 +49,13 @@ on:
       - 'scripts/verify-external-island-matrix.py'
       - 'scripts/verify-followup-matrix.py'
       - 'scripts/verify-visual-review.py'
+      - 'scripts/da_caller_signing.py'
+      - 'scripts/da_caller_ci_signing.py'
+      - 'scripts/tests/test_da_caller*.py'
+      - 'scripts/business-directory/**'
+      - 'scripts/verify-callback-business-matrix.py'
+      - 'docs/evidence/callback-business-2026-11-04/**'
+      - 'docs/DA_CALLER_SIGNING_POLICY.json'
   workflow_dispatch:
     inputs:
       publish_beta:
@@ -79,6 +93,30 @@ jobs:
           packages: platform-tools
       - name: Install pinned Android SDK components
         run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - name: Prepare existing signing identity before building (never generate a key)
+        id: signing
+        env:
+          DA_CALLER_KEYSTORE_BASE64: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && secrets.DA_CALLER_KEYSTORE_BASE64 || '' }}
+          DA_CALLER_KEYSTORE_PASSWORD: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && secrets.DA_CALLER_KEYSTORE_PASSWORD || '' }}
+          DA_CALLER_CERT_SHA256: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && secrets.DA_CALLER_CERT_SHA256 || '' }}
+        run: python3 scripts/da_caller_ci_signing.py prepare --directory "$RUNNER_TEMP/da-caller-signing" --report app/build/signing-context.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: scripts/business-directory/requirements-lock.txt
+      - name: Install locked business-data tooling dependencies
+        run: python3 -m pip install -r scripts/business-directory/requirements-lock.txt
+      - name: Verify all DA CALLER Python tooling contracts
+        run: |
+          set -euo pipefail
+          mkdir -p app/build/tooling-checks
+          python3 -m unittest discover -s scripts/tests -p 'test_da_caller*.py' -v 2>&1 | tee app/build/tooling-checks/signing-tests.txt
+      - name: Verify business extraction and packaging contracts (synthetic test inputs only)
+        run: |
+          set -euo pipefail
+          mkdir -p app/build/tooling-checks
+          python3 -m unittest discover -s scripts/business-directory -p 'test_*.py' -v 2>&1 | tee app/build/tooling-checks/business-data-tests.txt
       - name: Build, test and lint DA CALLER only
         run: ./gradlew --no-daemon :app:testDebugUnitTest :app:lintDebug :app:assembleDebug
       - name: Verify APK identity, version and signature
@@ -109,12 +147,14 @@ jobs:
               print(f'version={version}', file=output)
           PY
           sha256sum "$APK" > app/build/debug-apk.sha256
+          python3 scripts/da_caller_ci_signing.py verify-apk --apk "$APK" --context app/build/signing-context.json --report app/build/debug-signing-policy.json --apksigner "$TOOLS/apksigner"
       - uses: actions/upload-artifact@v4
         with:
           name: DA-CALLER-${{ steps.metadata.outputs.version }}-debug-${{ github.sha }}
           path: |
             app/build/outputs/apk/debug/app-debug.apk
             app/build/debug-signature.txt
+            app/build/debug-signing-policy.json
             app/build/debug-apk.sha256
             app/build/apk-metadata.txt
           if-no-files-found: error
@@ -127,8 +167,13 @@ jobs:
             app/build/reports/tests/
             app/build/test-results/
             app/build/reports/lint-results-debug.*
+            app/build/tooling-checks/
           if-no-files-found: warn
           retention-days: 30
+
+      - name: Remove temporary private signing material
+        if: always()
+        run: rm -rf -- "$RUNNER_TEMP/da-caller-signing"
 
   android-ui:
     needs: validate
@@ -149,6 +194,13 @@ jobs:
           packages: platform-tools
       - name: Install compile SDK
         run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - name: Prepare existing signing identity before building (never generate a key)
+        id: signing
+        env:
+          DA_CALLER_KEYSTORE_BASE64: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && secrets.DA_CALLER_KEYSTORE_BASE64 || '' }}
+          DA_CALLER_KEYSTORE_PASSWORD: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && secrets.DA_CALLER_KEYSTORE_PASSWORD || '' }}
+          DA_CALLER_CERT_SHA256: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && secrets.DA_CALLER_CERT_SHA256 || '' }}
+        run: python3 scripts/da_caller_ci_signing.py prepare --directory "$RUNNER_TEMP/da-caller-signing" --report app/build/signing-context.json
       - name: Enable emulator acceleration
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -188,6 +240,7 @@ jobs:
                       assert b'Lcom/dabusinessbook/' not in dex and b'Lcom/dacaller/offline/' not in dex
                       assert b'Lcom/dacaller/app/BackupDocumentProvider;' not in dex
           PY
+          python3 scripts/da_caller_ci_signing.py verify-apk --apk "$APK" --context app/build/signing-context.json --report app/build/native-tested/debug-signing-policy.json --apksigner "$TOOLS/apksigner"
       - uses: actions/upload-artifact@v4
         with:
           name: DA-CALLER-${{ needs.validate.outputs.version }}-tested-debug-${{ github.sha }}
@@ -209,10 +262,39 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
-  # A push/PR can never publish or replace a release. This separately gated job
+      - name: Retain built APK as an unapproved candidate after a native failure
+        if: failure()
+        shell: bash
+        run: |
+          set -euo pipefail
+          APK=app/build/outputs/apk/debug/app-debug.apk
+          if [ ! -f "$APK" ]; then exit 0; fi
+          mkdir -p app/build/native-failure-candidate
+          cp "$APK" app/build/native-failure-candidate/app-debug.apk
+          sha256sum "$APK" > app/build/native-failure-candidate/debug-apk.sha256
+          printf '%s\n' 'NOT APPROVED: native suite failed or was incomplete. This is diagnostic evidence only; not a release or verified update.' > app/build/native-failure-candidate/NOT-APPROVED.txt
+          TOOLS="$ANDROID_HOME/build-tools/35.0.0"
+          "$TOOLS/apksigner" verify --verbose --print-certs "$APK" > app/build/native-failure-candidate/debug-signature.txt
+          "$TOOLS/aapt" dump badging "$APK" > app/build/native-failure-candidate/apk-metadata.txt
+          if [ -f app/build/signing-context.json ]; then
+            python3 scripts/da_caller_ci_signing.py verify-apk --apk "$APK" --context app/build/signing-context.json --report app/build/native-failure-candidate/debug-signing-policy.json --apksigner "$TOOLS/apksigner"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: DA-CALLER-native-failure-candidate-${{ github.sha }}
+          path: app/build/native-failure-candidate/
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Remove temporary private signing material
+        if: always()
+        run: rm -rf -- "$RUNNER_TEMP/da-caller-signing"
+
+  # A push cannot publish or replace a release. This main-only operator job
   # requires an explicitly verified main commit, a permanent key and its pinned
   # certificate fingerprint. Configure the da-caller-release environment to
-  # require a reviewer before supplying signing secrets.
+  # require a reviewer. Signing inputs are repository secrets so the SAME key
+  # is available before both validation jobs; no key enters a publication job.
   beta:
     if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.publish_beta && inputs.device_verified
     needs: [validate, android-ui]
@@ -221,6 +303,7 @@ jobs:
     environment: da-caller-release
     permissions:
       contents: write
+      actions: read
     steps:
       - uses: actions/checkout@v4
         with:
@@ -230,46 +313,32 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - uses: gradle/actions/wrapper-validation@v4
-      - uses: gradle/actions/setup-gradle@v4
       - uses: android-actions/setup-android@v3
         with:
           packages: platform-tools
-      - name: Install pinned Android SDK components
-        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
-      - name: Build and verify permanent signed beta
+      - name: Install signature-verification tools
+        run: sdkmanager 'build-tools;35.0.0'
+      - name: Require visual review of this exact application source
         env:
-          KEYSTORE_B64: ${{ secrets.DA_CALLER_KEYSTORE_BASE64 }}
-          DA_CALLER_KEYSTORE_PASSWORD: ${{ secrets.DA_CALLER_KEYSTORE_PASSWORD }}
-          EXPECTED_CERT_SHA256: ${{ secrets.DA_CALLER_CERT_SHA256 }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          DA_CALLER_VISUAL_REVIEW: docs/evidence/callback-business-2026-11-04/visual-review.json
+        run: python3 scripts/verify-visual-review.py
+      - uses: actions/download-artifact@v4
+        with:
+          name: DA-CALLER-${{ needs.validate.outputs.version }}-tested-debug-${{ github.sha }}
+          path: candidate
+      - name: Verify compatible permanent signer and reuse exact native-tested APK
+        env:
           VERSION: ${{ needs.validate.outputs.version }}
         shell: bash
         run: |
           set -euo pipefail
-          test -n "$KEYSTORE_B64"
-          test -n "$DA_CALLER_KEYSTORE_PASSWORD"
-          test -n "$EXPECTED_CERT_SHA256"
-          export DA_CALLER_KEYSTORE_PATH="$RUNNER_TEMP/da-caller-release.jks"
-          trap 'rm -f "$DA_CALLER_KEYSTORE_PATH"' EXIT
-          printf '%s' "$KEYSTORE_B64" | base64 --decode > "$DA_CALLER_KEYSTORE_PATH"
-          chmod 600 "$DA_CALLER_KEYSTORE_PATH"
-          ./gradlew --no-daemon :app:assembleRelease
-          APK=app/build/outputs/apk/release/app-release.apk
-          TOOLS="$ANDROID_HOME/build-tools/35.0.0"
-          "$TOOLS/apksigner" verify --verbose --print-certs "$APK" > app/build/release-signature.txt
-          "$TOOLS/aapt" dump badging "$APK" > app/build/release-metadata.txt
-          python3 - <<'PY'
-          import os, re
-          from pathlib import Path
-          normalize = lambda value: value.replace(':', '').strip().lower()
-          cert = re.search(r'Signer #1 certificate SHA-256 digest: (\S+)', Path('app/build/release-signature.txt').read_text()).group(1)
-          assert normalize(cert) == normalize(os.environ['EXPECTED_CERT_SHA256']), 'Unexpected signing certificate'
-          metadata = Path('app/build/release-metadata.txt').read_text()
-          assert "package: name='com.dacaller.app'" in metadata
-          version = re.search(r"versionName='([^']+)'", metadata).group(1)
-          assert version == os.environ['VERSION']
-          assert tuple(map(int, version.split('-')[0].split('.'))) > (0, 9, 0), 'Never replace 0.8.0/0.9.0'
-          PY
+          APK=$(find candidate -name app-debug.apk -type f -print -quit)
+          CONTEXT=$(find candidate -name debug-signing-policy.json -type f -print -quit)
+          test -n "$APK"
+          test -n "$CONTEXT"
+          python3 scripts/da_caller_ci_signing.py verify-apk --publication --apk "$APK" --context "$CONTEXT" --report publication-signing.json --apksigner "$ANDROID_HOME/build-tools/35.0.0/apksigner"
           cp "$APK" "DA-CALLER-v$VERSION.apk"
           sha256sum "DA-CALLER-v$VERSION.apk" > "DA-CALLER-v$VERSION.apk.sha256"
       - name: Publish immutable beta
@@ -290,17 +359,23 @@ jobs:
             exit 1
           fi
           cat > release-notes.md <<'NOTES'
-          DA CALLER beta. Built from the linked verified commit, with unit tests,
-          lint, package identity and permanent certificate checks. The operator
-          confirmed the Android 13 physical-device checklist for this commit.
+          DA CALLER beta. This is the exact permanent-signed DEBUG binary tested
+          by the Android 13 emulator job; no publication-time rebuild occurs.
+          The source passed unit tests, lint, package/signature checks and its
+          recorded visual review. Publication additionally requires the pinned
+          signer to match the required existing installation's certificate.
+          This workflow does not perform physical-device telephony tests.
+          SIM/audio/Bluetooth/Jelly Star and a physical in-place update require
+          separately recorded hardware evidence. Never uninstall an existing
+          installation: doing so deletes its private archive and settings.
           Business Book and DA ID Offline are separate applications.
           NOTES
-          gh release create "v$VERSION" "DA-CALLER-v$VERSION.apk" "DA-CALLER-v$VERSION.apk.sha256" \
+          gh release create "v$VERSION" "DA-CALLER-v$VERSION.apk" "DA-CALLER-v$VERSION.apk.sha256" publication-signing.json \
             --target "$GITHUB_SHA" --prerelease --title "DA CALLER v$VERSION beta" \
             --notes-file release-notes.md
 
-  # Explicitly marked TEST prerelease. It does NOT claim field validation or
-  # use permanent signing and cannot update a differently signed install.
+  # Explicitly marked DEBUG TEST prerelease. Publication now requires a
+  # permanent compatible key supplied BEFORE emulator validation; no fallback.
   # Never publishes on forks or changes the separately gated stable-beta process.
   preview-debug:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && (github.event.pull_request.head.ref == 'codex/da-caller-hardening-20261023' || ((github.event.pull_request.head.ref == 'codex/da-caller-visual-20261025' || github.event.pull_request.head.ref == 'codex/da-caller-personalization-20261025' || github.event.pull_request.head.ref == 'codex/da-caller-dynamic-island-20261027') && contains(github.event.pull_request.labels.*.name, 'visual-reviewed')))
@@ -313,6 +388,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+      - name: Install signature-verification tools
+        run: sdkmanager 'build-tools;35.0.0'
       - name: Require visual review of this exact application source
         if: github.event.pull_request.head.ref == 'codex/da-caller-visual-20261025'
         env:
@@ -326,24 +410,24 @@ jobs:
           GH_REPO: ${{ github.repository }}
           DA_CALLER_VISUAL_REVIEW: docs/evidence/personalization-2026-10-25/visual-review.json
         run: python3 scripts/verify-visual-review.py
-      - name: Require island, missed-call and changelog review of this exact application source
+      - name: Require callback, licensed directory and earlier UI review of this exact source
         if: github.event.pull_request.head.ref == 'codex/da-caller-dynamic-island-20261027'
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          DA_CALLER_VISUAL_REVIEW: docs/evidence/call-followup-2026-11-01/visual-review.json
+          DA_CALLER_VISUAL_REVIEW: docs/evidence/callback-business-2026-11-04/visual-review.json
         run: python3 scripts/verify-visual-review.py
       - uses: actions/download-artifact@v4
         with:
-          # Publish the emulator-tested binary, rather than a separate job's
-          # rebuild signed with a different ephemeral debug certificate.
+          # Publish exactly the emulator-tested binary. Its pinned permanent
+          # compatible signer is independently checked below; no rebuild.
           name: DA-CALLER-${{ needs.validate.outputs.version }}-tested-debug-${{ github.sha }}
           path: candidate
       - uses: actions/download-artifact@v4
         with:
           name: DA-CALLER-Android13-UI-${{ github.sha }}
           path: visual-review
-      - name: Publish explicitly unverified debug prerelease
+      - name: Publish reviewed debug test prerelease only with a compatible permanent signer
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -355,6 +439,9 @@ jobs:
           [[ "$VERSION" =~ ^0[.]11[.]0-beta[.][0-9]+$ ]]
           APK=$(find candidate -name app-debug.apk -type f -print -quit)
           test -n "$APK"
+          CONTEXT=$(find candidate -name debug-signing-policy.json -type f -print -quit)
+          test -n "$CONTEXT"
+          python3 scripts/da_caller_ci_signing.py verify-apk --publication --apk "$APK" --context "$CONTEXT" --report publication-signing.json --apksigner "$ANDROID_HOME/build-tools/35.0.0/apksigner"
           cp "$APK" "DA-CALLER-v$VERSION-debug.apk"
           sha256sum "DA-CALLER-v$VERSION-debug.apk" > "DA-CALLER-v$VERSION-debug.apk.sha256"
           python3 -m zipfile -c "DA-CALLER-v$VERSION-Android13-screenshots.zip" visual-review
@@ -376,6 +463,9 @@ jobs:
           cat > preview-notes.md <<'NOTES'
           # DA CALLER — UNVERIFIED DEBUG TEST BUILD
           ## Implemented changes
+          - Optional daily callback reminders group today's missed callers and require a later connected call longer than one second; default off with a selectable local time.
+          - The reminder reads local providers without changing call history or the archive.
+          - A separate offline business tab uses a reviewed licensed dataset, paged search and per-record source details; never private contacts or fabricated records.
           - DA CALLER handles the platform default-dialer missed-call broadcast, with contact identity, grouped counts and direct return to recents.
           - Explicit opening/dismissal acknowledges only the captured missed-call rows; no history/archive rows are deleted.
           - Offline version-by-version changelog in Settings, with Hebrew/English and light/dark/AMOLED support.
@@ -404,7 +494,7 @@ jobs:
           ## Verification and installation limits
           The linked source passed unit tests, lint, APK verification and the
           Android 13 emulator suite at 480x854/240dpi with native three-button
-          navigation, RTL, font1.3 and 233 required PNG captures. Eight external
+          navigation, RTL, font1.3 and 241 required PNG captures. Eight external
           captures and native input exercise real emulator-modem calls through
           Android Telecom and the production InCallService over Home and Clock,
           while respecting protected Settings screens, with actual call-state/audio
@@ -415,20 +505,22 @@ jobs:
           The exact app
           tree and the additional personalization/island captures were visually reviewed
           before publication; see the linked pull request and its verification report.
-          Report: docs/DA_CALLER_CALL_FOLLOWUP_2026-11-01.md at the linked source commit.
+          Report: docs/DA_CALLER_CALLBACK_BUSINESS_2026-11-04.md at the linked source commit.
           This is **not** a stable or device-verified release.
           The Android build, unit tests and emulator UI checks passed, but
           actual cellular calls, answering, ringing, lock screen, SIM and
           Unihertz Jelly Star behavior have NOT been verified on hardware.
-          It is signed with an ephemeral CI debug certificate and cannot
-          update any differently signed installation in place, including
-          earlier 0.11 betas. **Do not uninstall your existing installation:
-          uninstalling deletes its private archive and settings.** A matching
-          secure signing key is required for a guaranteed data-preserving update.
+          The APK signer was checked against the committed permanent public pin
+          and the required existing installation's certificate before publication.
+          That certificate equality is necessary for an update; a physical
+          data-preserving installation upgrade has NOT been tested by this job.
+          Differently signed older installations cannot be updated by this APK.
+          **Do not uninstall your existing installation: uninstalling deletes its
+          private archive and settings.** Missing/incompatible keys block publication.
           Keep a working alternative dialer installed. Test on a spare device.
           No APK in this preview should be considered production ready.
           NOTES
           gh release create "v$VERSION-debug" "DA-CALLER-v$VERSION-debug.apk" "DA-CALLER-v$VERSION-debug.apk.sha256" \
-            "DA-CALLER-v$VERSION-Android13-screenshots.zip" "DA-CALLER-v$VERSION-signature.txt" "DA-CALLER-v$VERSION-metadata.txt" \
+            "DA-CALLER-v$VERSION-Android13-screenshots.zip" "DA-CALLER-v$VERSION-signature.txt" "DA-CALLER-v$VERSION-metadata.txt" publication-signing.json \
             --target "$HEAD_SHA" --prerelease --title "DA CALLER v$VERSION (DEBUG TEST — UNVERIFIED)" \
             --notes-file preview-notes.md

@@ -13,7 +13,12 @@ public final class MissedCallNotificationReceiver extends BroadcastReceiver {
   MissedCallNotifications.worker.execute(()->{
    try{MissedCallNotifications.receive(app,copy);}
    catch(RuntimeException failure){CallFailureReporter.record(app,"missed-notification-receive",failure);}
-   finally{if(pending!=null)pending.finish();}
+   finally{
+    // Reminder reads only the provider; missed-call acknowledgement remains
+    // exclusively owned by the notification's explicit Open/Clear actions.
+    CallbackReminder.maybeRefresh(app);
+    if(pending!=null)pending.finish();
+   }
   });
  }
 }

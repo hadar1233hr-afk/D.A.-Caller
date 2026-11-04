@@ -61,6 +61,21 @@ public final class SettingsBackupTest {
   String json=new String(SettingsBackup.encode(SettingsBackup.capture(prefs)),StandardCharsets.UTF_8);
   assertFalse(json.contains("prompted"));assertFalse(json.contains("permission"));assertFalse(json.contains("failure"));assertFalse(json.contains("widget_"));
  }
+ @Test public void reminderBackupRestoresExplicitOptInAndTimeWithoutResettingUnrelatedData()throws Exception{
+  SettingsBackup.Snapshot defaults=SettingsBackup.capture(prefs);
+  assertEquals(false,defaults.values.get("callback_reminder_enabled"));
+  assertEquals(1260,defaults.values.get("callback_reminder_minute"));
+  prefs.edit().putBoolean("callback_reminder_enabled",true).putInt("callback_reminder_minute",1439).commit();
+  SettingsBackup.Snapshot saved=SettingsBackup.decode(SettingsBackup.encode(SettingsBackup.capture(prefs)));
+  prefs.edit().putBoolean("callback_reminder_enabled",false).putInt("callback_reminder_minute",0)
+   .putString("widget_phone_7","0501112233").putString("note_123","keep").commit();
+  assertTrue(SettingsBackup.restore(prefs,saved,id->true));
+  assertTrue(prefs.getBoolean("callback_reminder_enabled",false));assertEquals(1439,prefs.getInt("callback_reminder_minute",-1));
+  assertEquals("0501112233",prefs.getString("widget_phone_7",null));assertEquals("keep",prefs.getString("note_123",null));
+  assertTrue(SettingsBackup.restore(prefs,SettingsBackup.decode(file("{\"dark\":true}")),id->true));
+  assertTrue("A sparse old backup must not disable the user's reminder",prefs.getBoolean("callback_reminder_enabled",false));
+  assertEquals(1439,prefs.getInt("callback_reminder_minute",-1));
+ }
  @Test public void successfulRestoreReplacesOnlyValuesInFileAndPreservesUnrelatedData()throws Exception{
   prefs.edit().putBoolean("dark",false).putBoolean("role_prompted",true).putString("widget_phone_8","123")
     .putString("note_111","keep note").putString("archive_extra","forever").commit();
@@ -78,6 +93,7 @@ public final class SettingsBackupTest {
     "{\"call_button_height\":64}","{\"font_contacts\":5000}","{\"language\":\"xx\"}",
     "{\"launcher_icon\":\"arbitrary.component\"}","{\"avatar_shape\":\"invalid\"}","{\"archive_extra\":\"erase\"}",
     "{\"island_style\":\"remote_overlay\"}","{\"island_size\":\"huge\"}","{\"island_enabled\":\"false\"}",
+    "{\"callback_reminder_enabled\":\"true\"}","{\"callback_reminder_minute\":-1}","{\"callback_reminder_minute\":1440}","{\"callback_reminder_minute\":12.5}",
     "{\"favorites\":[\"111\",\"111\"]}","{\"favorites\":[123]}","{\"favorites\":null}","{\"dark\":1.0}",
     "{\"note_anything\":\"x\"}","{\"stats_expanded\":{}}","{}"}){
    try{SettingsBackup.Snapshot invalid=SettingsBackup.decode(file(settings));SettingsBackup.restore(prefs,invalid,id->{fail("No icon change before validation");return true;});fail(settings);}

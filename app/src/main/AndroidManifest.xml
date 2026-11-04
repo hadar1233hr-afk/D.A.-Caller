@@ -41,6 +41,15 @@
   <activity android:name=".CallIslandSettingsActivity" android:exported="false"/>
   <activity android:name=".SettingsBackupActivity" android:exported="false"/>
   <activity android:name=".ChangelogActivity" android:exported="false"/>
+  <activity android:name=".CallbackReminderActivity" android:exported="false"/>
+  <receiver android:name=".CallbackReminderReceiver" android:exported="false">
+   <intent-filter>
+    <action android:name="android.intent.action.BOOT_COMPLETED"/>
+    <action android:name="android.intent.action.TIME_SET"/>
+    <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+    <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+   </intent-filter>
+  </receiver>
   <activity android:name=".CallScreenActivity" android:exported="false" android:launchMode="singleTop" android:excludeFromRecents="true" android:enableOnBackInvokedCallback="true" tools:targetApi="33"/>
   <!-- Telecom binds this InCallService for the system's ROLE_DIALER holder.
        That role is the documented alternative to MANAGE_OWN_CALLS for phoneCall

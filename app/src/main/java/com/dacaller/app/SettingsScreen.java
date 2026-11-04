@@ -259,6 +259,37 @@ final class SettingsScreen {
      .setNegativeButton(tr("סגור"),null).show();
   });
   cardEnd();
+  section(I18n.isEnglish(host)?"End-of-day callback reminder":"תזכורת לסוף היום","◷");
+  cardStart();
+  toggle(I18n.isEnglish(host)?"Remind me about unanswered callbacks":"תזכורת לשיחות שלא חזרתי אליהן",
+    I18n.isEnglish(host)?"Today's missed callers without a later connected call longer than one second":"מתקשרים מהיום שלא היתה איתם שיחה מחוברת של יותר משנייה אחרי הפספוס האחרון",
+    "callback_reminder_enabled",prefs.getBoolean("callback_reminder_enabled",false));
+  lastOption().setTag("settings_callback_reminder_enabled");
+  int reminderMinute=Math.max(0,Math.min(1439,prefs.getInt("callback_reminder_minute",21*60)));
+  String reminderClock=String.format(java.util.Locale.ROOT,"%02d:%02d",reminderMinute/60,reminderMinute%60);
+  String localTime=android.text.BidiFormatter.getInstance(!I18n.isEnglish(host)).unicodeWrap(reminderClock,android.text.TextDirectionHeuristics.LTR);
+  option(I18n.isEnglish(host)?"Reminder time":"שעת התזכורת",
+    I18n.isEnglish(host)?localTime+" · device local time":localTime+" · לפי השעון המקומי",()->{
+     new android.app.TimePickerDialog(host,(picker,hour,minute)->{
+      CallbackReminder.setMinuteOfDay(host,hour*60+minute);host.refreshPagePreserveScroll();
+     },reminderMinute/60,reminderMinute%60,true).show();
+    });
+  lastOption().setTag("settings_callback_reminder_time");
+  option(I18n.isEnglish(host)?"View today's callback list":"פתיחת רשימת החזרה של היום",
+    I18n.isEnglish(host)?"Contact names, missed calls and later callback attempts":"שמות אנשי קשר, שיחות שלא נענו וניסיונות חזרה",()->
+     host.startActivity(new Intent(host,CallbackReminderActivity.class)));
+  lastOption().setTag("settings_callback_reminder_list");
+  permissionOption(I18n.isEnglish(host)?"Reminder notifications and call history":"התראות תזכורת ויומן שיחות",
+    I18n.isEnglish(host)?"The app needs the dialer role, call history and notifications":"נדרשים חייגן ברירת מחדל, קריאת יומן והרשאת התראות",
+    ()->isDefaultDialer()&&granted(Manifest.permission.READ_CALL_LOG)&&notificationsEnabled(),()->{
+     if(!isDefaultDialer())host.requestDefaultDialer();
+     else if(!granted(Manifest.permission.READ_CALL_LOG)||Build.VERSION.SDK_INT>=33&&!granted(Manifest.permission.POST_NOTIFICATIONS))host.requestCallbackReminderPermissions();
+     else host.openNotificationSettings();
+    });
+  TextView reminderNote=text(I18n.isEnglish(host)?"Includes today's local calls when checked. Android may delay delivery; call history and your archive are never changed.":
+    "נכללות שיחות מהיום לפי הנתונים המקומיים בזמן הבדיקה. Android עשוי לעכב את ההצגה; יומן השיחות והארכיון אינם משתנים.",11,false,subtle);
+  reminderNote.setPadding(dp(12),dp(10),dp(12),dp(10));card.addView(reminderNote);
+  cardEnd();
   cardStart();
   String historyVersion=android.text.BidiFormatter.getInstance(!I18n.isEnglish(host))
     .unicodeWrap(BuildConfig.VERSION_NAME,android.text.TextDirectionHeuristics.LTR);
@@ -410,7 +441,11 @@ final class SettingsScreen {
   descriptionBlock.addView(text(description,11,false,subtle));
   Switch sw=new Switch(host);sw.setChecked(checked);sw.setContentDescription(tr(label));item.addView(sw);
   sw.setOnCheckedChangeListener((widget,value)->{
-   prefs.edit().putBoolean(key,value).apply();
+   if(key.equals("callback_reminder_enabled")){
+    CallbackReminder.setEnabled(host,value);
+    if(value){if(!isDefaultDialer())host.requestDefaultDialer();else host.requestCallbackReminderPermissions();}
+    refreshPermissions();
+   }else prefs.edit().putBoolean(key,value).apply();
    TouchFeedback.pulse(host,prefs,sw);
    if(key.equals("show_stats"))host.reloadCallLog();
   });
