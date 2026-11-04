@@ -453,10 +453,14 @@ public class MainActivity extends Activity {
   });
  }
  private void showNumberOnly(String phone){
-  new android.app.AlertDialog.Builder(this)
+  android.app.AlertDialog.Builder details=new android.app.AlertDialog.Builder(this)
    .setTitle(phone).setMessage(I18n.text(this,"אין איש קשר תואם"))
    .setPositiveButton(I18n.text(this,"התקשר"),(dialog,which)->makeCall(phone))
-   .setNegativeButton(I18n.text(this,"סגור"),null).show();
+   .setNegativeButton(I18n.text(this,"סגור"),null);
+  if(phone!=null&&CallLauncher.isCallable(phone)&&!phone.trim().matches("-[123]"))
+   details.setNeutralButton(I18n.isEnglish(this)?"Create new contact":"יצירת איש קשר חדש",
+     (dialog,which)->newContact(phone));
+  details.show();
  }
  void showCallNumber(CallHistory.Entry call){
   String kind=call.type==CallLog.Calls.OUTGOING_TYPE?"יוצאת":

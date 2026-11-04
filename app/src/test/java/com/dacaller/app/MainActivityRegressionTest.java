@@ -146,4 +146,28 @@ public class MainActivityRegressionTest {
   if(view instanceof ViewGroup)for(int i=0;i<((ViewGroup)view).getChildCount();i++)if(hasText(((ViewGroup)view).getChildAt(i),expected))return true;
   return false;
  }
+ @Test public void unknownNumberOffersExplicitNewContactWithExactNumberAndNeverDials()throws Exception{
+  try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup()){
+   MainActivity activity=controller.get();String number="+972 50-009-9971";
+   java.lang.reflect.Method method=MainActivity.class.getDeclaredMethod("showNumberOnly",String.class);method.setAccessible(true);method.invoke(activity,number);
+   android.app.AlertDialog dialog=org.robolectric.shadows.ShadowAlertDialog.getLatestAlertDialog();
+   assertNotNull(dialog.getButton(android.content.DialogInterface.BUTTON_NEUTRAL));
+   assertNull(Shadows.shadowOf(activity).getNextStartedActivity());
+   dialog.getButton(android.content.DialogInterface.BUTTON_NEUTRAL).performClick();Shadows.shadowOf(android.os.Looper.getMainLooper()).idle();
+   Intent next=Shadows.shadowOf(activity).getNextStartedActivity();assertNotNull(next);
+   assertEquals(ContactEditorActivity.class.getName(),next.getComponent().getClassName());
+   assertEquals(number,next.getStringExtra("incoming_number"));assertNotEquals(Intent.ACTION_CALL,next.getAction());
+  }
+ }
+ @Test public void hiddenAndUnavailableNumbersNeverOfferCreateContact()throws Exception{
+  try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup()){
+   java.lang.reflect.Method method=MainActivity.class.getDeclaredMethod("showNumberOnly",String.class);method.setAccessible(true);
+   for(String number:new String[]{"","-1","-2","-3"}){
+    method.invoke(controller.get(),number);android.app.AlertDialog dialog=org.robolectric.shadows.ShadowAlertDialog.getLatestAlertDialog();
+    assertEquals(View.GONE,dialog.getButton(android.content.DialogInterface.BUTTON_NEUTRAL).getVisibility());dialog.dismiss();
+   }
+   assertNull(Shadows.shadowOf(controller.get()).getNextStartedActivity());
+  }
+ }
+
 }

@@ -2,7 +2,7 @@
 
 ## Additional owner tasks — 2026-11-04 (pending)
 
-1. Create a new contact directly from an unknown number in Recents, with the selected number prefilled and no automatic dialing.
+1. IMPLEMENTED, pending native verification: the unknown-number dialog reached from Recents now offers explicit Create new contact, preserving the selected number and issuing no call. Hidden/unknown system sentinels have no create action.10 MainActivity regression tests passed (0 failures/errors/skips), including2 new cases. [Results](evidence/recents-create-contact/verification.json). Fresh native screenshots/full CI remain required.
 2. Repair Nothing and Xiaomi call-screen arrangement. Increase digits across all five call designs; Google additionally needs a rounder, more attractive, bolder typeface. Verify large-font Hebrew/English and the Jelly Star-sized viewport without overlaps.
 3. Implement genuine incoming swipe-to-answer. Partial/cancelled gestures and a simple tap must not answer; a completed swipe answers only the currently owned ringing Telecom call. Preserve an accessible answering path and verify with real emulator calls and pointer gestures.
 
