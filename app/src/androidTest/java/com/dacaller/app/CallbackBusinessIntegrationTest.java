@@ -190,18 +190,64 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   MotionEvent event=MotionEvent.obtain(downTime,SystemClock.uptimeMillis(),action,x,y,0);event.setSource(InputDevice.SOURCE_TOUCHSCREEN);
   try{assertTrue("Native touchscreen injection rejected",getInstrumentation().getUiAutomation().injectInputEvent(event,true));}finally{event.recycle();}
  }
+ private AccessibilityNodeInfo nativeContains(AccessibilityNodeInfo node,String label,int depth,int[] budget){
+  if(node==null||depth>70||--budget[0]<0)return null;
+  if(node.isVisibleToUser()&&String.valueOf(node.getText()).contains(label))return node;
+  for(int i=0;i<node.getChildCount();i++){AccessibilityNodeInfo found=nativeContains(node.getChild(i),label,depth+1,budget);if(found!=null)return found;}return null;
+ }
+ private AccessibilityNodeInfo incomingSystemRow(AccessibilityNodeInfo node,int depth,int[] budget){
+  if(node==null||depth>70||--budget[0]<0)return null;
+  if(String.valueOf(node.getViewIdResourceName()).endsWith("/expandableNotificationRow")
+   &&nativeContains(node,NAME,0,new int[]{1500})!=null
+   &&nativeContains(node,CallNotifications.stateLabel(target,Call.STATE_RINGING),0,new int[]{1500})!=null)return node;
+  for(int i=0;i<node.getChildCount();i++){AccessibilityNodeInfo found=incomingSystemRow(node.getChild(i),depth+1,budget);if(found!=null)return found;}return null;
+ }
+ private AccessibilityNodeInfo incomingSystemRow(){
+  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+   AccessibilityNodeInfo root=window.getRoot();if(root!=null&&"com.android.systemui".contentEquals(String.valueOf(root.getPackageName()))){
+    AccessibilityNodeInfo row=incomingSystemRow(root,0,new int[]{5000});if(row!=null)return row;}}
+  return null;
+ }
+ private void expandOwnCallRows(AccessibilityNodeInfo node,int depth,int[] budget){
+  if(node==null||depth>70||--budget[0]<0)return;
+  if(String.valueOf(node.getViewIdResourceName()).endsWith("/expandableNotificationRow")&&nativeContains(node,NAME,0,new int[]{1500})!=null)
+   node.performAction(AccessibilityNodeInfo.ACTION_EXPAND);
+  for(int i=0;i<node.getChildCount();i++)expandOwnCallRows(node.getChild(i),depth+1,budget);
+ }
+ private AccessibilityNodeInfo nativeIncomingBody(AccessibilityNodeInfo node,int depth,int[] budget){
+  if(node==null||depth>70||--budget[0]<0)return null;
+  if(node.isVisibleToUser()&&String.valueOf(node.getViewIdResourceName()).endsWith("/conversation_text")&&String.valueOf(node.getText()).contains(NAME))return node;
+  for(int i=0;i<node.getChildCount();i++){AccessibilityNodeInfo found=nativeIncomingBody(node.getChild(i),depth+1,budget);if(found!=null)return found;}return null;
+ }
+ private JSONObject openIncomingThroughNativeNotification(Call connected)throws Exception{
+  // PendingIntent.send bypasses SystemUI's click handling and can leave a
+  // sticky heads-up over the screen. Exercise the real caller-body click.
+  shell("cmd statusbar expand-notifications");settle();
+  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+   AccessibilityNodeInfo root=window.getRoot();if(root!=null&&"com.android.systemui".contentEquals(String.valueOf(root.getPackageName())))expandOwnCallRows(root,0,new int[]{5000});}
+  await(()->incomingSystemRow()!=null,"Actual incoming SystemUI row with caller/state must appear");
+  String resource="com.android.systemui:integer/touch_acceptance_delay",configured=shell("cmd overlay lookup com.android.systemui "+resource).trim();
+  assertTrue(configured.matches("[0-9]+"));int delay=Integer.parseInt(configured);assertTrue(delay>=0&&delay<=3000);Thread.sleep(delay+100);
+  AccessibilityNodeInfo row=incomingSystemRow();assertNotNull(row);
+  AccessibilityNodeInfo body=nativeIncomingBody(row,0,new int[]{2000});
+  assertNotNull("Require actual CallStyle caller-body TextView",body);Rect bounds=new Rect();body.getBoundsInScreen(bounds);assertFalse(bounds.isEmpty());assertTrue(bounds.left>=0&&bounds.top>=0&&bounds.right<=480&&bounds.bottom<=854);
+  assertSame(connected,PhoneSessionService.current);assertEquals(Call.STATE_RINGING,connected.getState());tapPoint(bounds.centerX(),bounds.centerY());
+  await(()->callScreen!=null&&!callScreen.isFinishing()&&tag(callScreen,"incoming-swipe-answer")!=null,"Native notification body must open incoming screen");
+  ready(callScreen);await(()->incomingSystemRow()==null,"Native notification click must remove obscuring incoming heads-up");
+  assertEquals("Opening call screen must not answer",Call.STATE_RINGING,connected.getState());
+  return new JSONObject().put("method","native-SystemUI-caller-body-pointer").put("touch_guard_resource",resource).put("touch_guard_ms",delay)
+   .put("body_bounds",new JSONArray(new int[]{bounds.left,bounds.top,bounds.right,bounds.bottom})).put("incoming_remained_ringing",true).put("heads_up_removed_before_capture",true);
+ }
  private JSONObject answerByNativeSwipe(Call connected)throws Exception{
-  // Open the real production call screen, never invoke a View listener or Call.answer from the test.
-  assertNotNull(notification(1502).getNotification().contentIntent);notification(1502).getNotification().contentIntent.send();
-  await(()->callScreen!=null&&!callScreen.isFinishing()&&tag(callScreen,"incoming-swipe-answer")!=null,"Real incoming swipe screen must appear");
-  shell("cmd statusbar collapse");ready(callScreen);View prompt=tag(callScreen,"incoming-swipe-answer");
+  JSONObject navigation=openIncomingThroughNativeNotification(connected);
+  View prompt=tag(callScreen,"incoming-swipe-answer");
   Rect bounds=viewBounds(prompt);int threshold=Math.round(64*target.getResources().getDisplayMetrics().density);
   int x=bounds.left+bounds.width()/4,y=bounds.centerY();
   assertTrue("Swipe travel must fit real display",x+threshold+24<480);
   View phase=tag(callScreen,"call-phase");assertNotNull(phase);Rect phaseBounds=viewBounds(phase);
   assertTrue("Incoming status must stay above the swipe prompt",phaseBounds.bottom<=bounds.top);
   boolean dark=settings.getBoolean("dark",false)||settings.getBoolean("amoled",false);
-  JSONObject proof=new JSONObject().put("dark",dark).put("incoming_header_outside_swipe",true).put("input_method","UiAutomation.injectInputEvent SOURCE_TOUCHSCREEN")
+  JSONObject proof=new JSONObject().put("navigation",navigation).put("dark",dark).put("incoming_header_outside_swipe",true).put("input_method","UiAutomation.injectInputEvent SOURCE_TOUCHSCREEN")
    .put("answer_mode","ios").put("threshold_px",threshold).put("bounds",new JSONArray(new int[]{bounds.left,bounds.top,bounds.right,bounds.bottom}));
   proof.put("resting_bars",snapshot("incoming-swipe-resting",dark));
   tapPoint(x,y);assertEquals("A real tap must not answer",Call.STATE_RINGING,connected.getState());proof.put("tap_stayed_ringing",true);

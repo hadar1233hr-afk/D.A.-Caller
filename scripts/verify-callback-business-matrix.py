@@ -126,6 +126,11 @@ assert rows[2]["duration"] >= 2 and reminder.get("answered_call") == rows[2]
 assert reminder.get("answer_method") == "production-real-touchscreen-swipe"
 swipe = reminder.get("incoming_swipe", {})
 assert swipe.get("input_method") == "UiAutomation.injectInputEvent SOURCE_TOUCHSCREEN" and swipe.get("answer_mode") == "ios"
+navigation = swipe.get("navigation", {})
+assert navigation.get("method") == "native-SystemUI-caller-body-pointer"
+assert navigation.get("incoming_remained_ringing") is True and navigation.get("heads_up_removed_before_capture") is True
+assert navigation.get("touch_guard_resource") == "com.android.systemui:integer/touch_acceptance_delay"
+assert type(navigation.get("touch_guard_ms")) is int and 0 <= navigation["touch_guard_ms"] <= 3000
 assert swipe.get("threshold_px") == 96 and swipe.get("drag_translation_px", 0) > 0
 for flag in ("tap_stayed_ringing", "short_drag_stayed_ringing", "cancelled_drag_stayed_ringing",
              "cancel_reset_translation", "completed_swipe_activated_owned_call", "incoming_header_outside_swipe", "drag_keeps_prompt_fully_visible"):

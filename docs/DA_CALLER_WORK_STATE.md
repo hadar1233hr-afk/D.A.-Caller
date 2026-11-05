@@ -22,6 +22,12 @@ Source da2baba / CI41958726025 booted with the2GB userdata setting:356 unique un
 
 All three backup frames passed independent raw pixel/hash/stability validation and actual visual review; the formerly bad light frame now has legible native icons. The two new contact frames were viewed and pass. However both incoming frames FAIL visual approval: the incoming phase overlaps the prompt, and dragging clips its right edge. [Actual images/proofs/review](evidence/call-layout-digits/iteration-1/review.json). New correction hides the empty timer outside ACTIVE, limits prompt motion to its allocated margins and adds actual native geometry assertions. It also records the correct effective palette for the dark incoming screen/dimmed dialog.31 focused cases, Android-test Java and lint passed after this correction. Fresh native screenshots are required; no publication approval.
 
+## Incoming geometry corrected; native notification navigation needs correction
+
+Source bb1466d / CI41960992905 again passed356 units and34/35 native cases, with only the licensed-data MISSING failure;243 PNGs retained at immutable exportf9c81ebe8f87337434ce08aa6947421bea9f9e1c. Native phase/prompt geometry now passes, and the actual frames show no overlap or pill clipping. However a sticky SystemUI CallStyle covers the caller identity: the harness directly sent the content PendingIntent, bypassing SystemUI's click handling. These two incoming frames are NOT approved as unobscured design evidence.
+
+Next test-only correction opens the real notification shade, locates the actual incoming caller/state row and clicks its real caller-body TextView through touchscreen input after SystemUI's configured touch guard. It requires the call to remain RINGING and the obscuring native row to disappear before any swipe capture. No production notification/Telecom behavior or incoming HIGH channel is changed. All245 captures/35 cases remain required; fresh evidence is pending.
+
 ## Latest CI infrastructure failure — no Android results
 
 Source d4ee506 / CI41956994515 validation passed, but the emulator never booted: Android emulator37.2.13 required7372.80MB for its default userdata while the runner had6294.55MB. Native cases executed:0; new screenshots:0. This is an infrastructure failure, not an app or swipe PASS/FAIL. [Actual failure](evidence/backup-native-bars/ci-boot-blocked.json). Pin disposable AVD disk-size2048M and run the prepared245-image/35-case source afresh. No existing user/device data is touched by this CI setting.
