@@ -17,8 +17,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          REVIEW_RUN_ID: '41963339463'
-          REVIEW_SOURCE_SHA: 3cf0990386312f1848e16ee3cd2afd7e80b03f4f
+          REVIEW_RUN_ID: '42000831931'
+          REVIEW_SOURCE_SHA: 494ba8f57a168a6f30b1431c74ca505a3287b2fb
         shell: bash
         run: |
           set -euo pipefail
