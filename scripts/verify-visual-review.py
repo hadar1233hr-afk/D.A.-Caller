@@ -25,12 +25,12 @@ if "personalization" in str(review_path):
         "call_notifications", "return_from_call"
     }, "Review must cover all eight requested features"
 if "callback-business-" in str(review_path):
-    assert expected == 243, "All233 earlier and10 callback/business/swipe captures must be reviewed"
+    assert expected == 245, "All233 earlier and12 callback/business/swipe/contact captures must be reviewed"
     assert set(review.get("verified_features", [])) == {
         "compact_expanded_island", "call_actions_guarded", "island_customization_backup",
         "activity_lifecycle_and_list_state", "offline_optional_overlay_permission",
         "real_telecom_external_island", "missed_call_notifications", "local_version_changelog",
-        "daily_callback_reminder", "licensed_offline_business_directory", "real_incoming_swipe_answer"
+        "daily_callback_reminder", "licensed_offline_business_directory", "real_incoming_swipe_answer", "create_contact_from_unknown_recents"
     }, "Review must include actual callbacks, the OS alarm and the sourced business dataset"
 elif "call-followup-" in str(review_path):
     assert expected == 233, "All227 prior and6 missed-call/changelog captures must be reviewed"

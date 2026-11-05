@@ -494,7 +494,7 @@ jobs:
           ## Verification and installation limits
           The linked source passed unit tests, lint, APK verification and the
           Android 13 emulator suite at 480x854/240dpi with native three-button
-          navigation, RTL, font1.3 and 243 required PNG captures. Eight external
+          navigation, RTL, font1.3 and 245 required PNG captures. Eight external
           captures and native input exercise real emulator-modem calls through
           Android Telecom and the production InCallService over Home and Clock,
           while respecting protected Settings screens, with actual call-state/audio

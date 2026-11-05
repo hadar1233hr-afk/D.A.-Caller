@@ -19,11 +19,12 @@ required = {"callback-settings-light.png", "callback-settings-dark.png",
             "callback-list-light.png", "callback-list-dark.png",
             "business-tab-light.png", "business-tab-dark.png",
             "business-search.png", "business-detail.png",
-            "incoming-swipe-resting.png", "incoming-swipe-dragging.png"}
+            "incoming-swipe-resting.png", "incoming-swipe-dragging.png",
+            "recents-unknown-number-actions.png", "recents-new-contact-editor.png"}
 files = [path for path in root.rglob("*.png") if path.is_file()]
 counts = collections.Counter(path.name for path in files)
 assert all(counts[name] == 1 for name in required), "Missing/duplicate real callback/business PNG; an unavailable dataset is BLOCKED"
-assert len(files) == len(counts) == 243, "Retain all233 previous PNGs and add exactly10 callback/business/swipe captures"
+assert len(files) == len(counts) == 245, "Retain all233 previous PNGs and add exactly12 callback/business/swipe/contact captures"
 assert not any(any(marker in name for marker in ("failed", "unreachable", "not-ready")) for name in counts), "Failure diagnostics do not qualify as passing evidence"
 images = {path.name: path for path in files}
 hashes = {}
@@ -73,6 +74,22 @@ def https(value):
     result = urlsplit(value)
     assert result.scheme == "https" and result.hostname and not result.username and not result.password
 
+
+contact = one("recents-create-contact-native.json")
+assert contact.get("api") == 33 and contact.get("origin") == "actual emulator Telecom missed call"
+assert contact.get("number") == "0500099971"
+for flag in ("exact_number_prefilled", "new_contact_without_existing_id", "no_automatic_dial",
+             "cancel_keeps_contacts_and_call_rows", "back_to_recents"):
+    assert contact.get(flag) is True, f"Missing native create-contact assertion: {flag}"
+for frame in ("actions_bars", "editor_bars"):
+    bars(contact.get(frame, {}))
+assert contact.get("call_log_before_editor") == contact.get("call_log_after_cancel")
+assert len(contact.get("call_log_after_cancel", [])) == 1
+assert contact["call_log_after_cancel"][0]["type"] == 3
+assert [item.get("operation") for item in contact.get("modem_commands", [])] == ["call", "cancel"]
+for command in contact["modem_commands"]:
+    assert command.get("returncode") == 0 and command.get("number") == "0500099971"
+    assert re.fullmatch(r"emulator-[0-9]+", str(command.get("serial", "")))
 
 proof = one("callback-business-native.json")
 assert proof.get("api") == 33 and proof.get("size") == "480x854"
@@ -210,8 +227,8 @@ for name, expected in {"matrix-verification.json": 122, "personalization-verific
     "app_tree": subprocess.check_output(["git", "rev-parse", "HEAD:app"], text=True).strip(),
     "workflow_run_id": os.environ.get("GITHUB_RUN_ID"),
     "api": 33, "size": "480x854", "density_dpi": 240, "font_scale": 1.3,
-    "required_real_png_files": 10, "total_required_png_files": 243,
+    "required_real_png_files": 12, "total_required_png_files": 245,
     "sha256": hashes, "native_assertions": proof,
     "limits": "Actual emulator Telecom and production call-log rows, real OS accelerated private-alarm delivery and the actual licensed packaged business dataset. Accelerated delivery does not mean the test waited until21:00. No real business number was dialed. Physical SIM/carrier/audio/JellyStar, actual overnight/Doze/OEM delivery and matching-key installed-beta9 upgrade remain NOT TESTED.",
 }, ensure_ascii=False, indent=2) + "\n")
-print("Verified10 real callback/business/swipe captures and native proof; all243 required PNGs retained")
+print("Verified12 real callback/business/swipe/contact captures and native proof; all245 required PNGs retained")

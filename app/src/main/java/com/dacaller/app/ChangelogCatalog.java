@@ -27,6 +27,10 @@ final class ChangelogCatalog {
  // docs/DA_CALLER_{VISUAL_VERIFICATION,PERSONALIZATION_VERIFICATION,DYNAMIC_ISLAND}.
  private static final List<Entry> ENTRIES=Collections.unmodifiableList(Arrays.asList(
   new Entry("0.11.0-beta.10","תזכורת לחזרה לשיחות","A reminder to return calls",
+   change("יצירת איש קשר חדש ממספר לא מוכר בשיחות האחרונות, בלי חיוג אוטומטי.",
+    "Create a new contact from an unknown recent caller without automatically dialing."),
+   change("מענה בהחלקה מלאה, עם חלופת נגישות. סידור Nothing ו־Xiaomi וספרות חיוג גדולות יותר; בגוגל גופן עגול ומודגש מקומי.",
+    "Answer with a complete swipe or the explicit accessibility action. Tidier Nothing and Xiaomi layouts and larger keypad digits, with a bundled rounded, heavier Google typeface."),
    change("תזכורת יומית אופציונלית למתקשרים שלא נענו היום, לפי חיבור מאוחר יותר של יותר משנייה; קיבוץ ומניין הפספוסים וניסיונות החזרה.",
     "Optional daily reminders for today's missed callers without a later connection longer than one second, with grouped missed calls and callback attempts."),
    change("בחירת שעת התזכורת וגיבוי ההגדרה. התזכורת אינה מוחקת או משנה את יומן השיחות והארכיון.",

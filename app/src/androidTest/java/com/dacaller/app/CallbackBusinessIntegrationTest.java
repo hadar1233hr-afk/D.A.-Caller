@@ -73,7 +73,7 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
  private SharedPreferences settings,missedState,reminderState;
  private Map<String,?> original,originalNavigation,originalMissed,originalReminder;
  private String originalFont;private int originalAccessibilityFlags;
- private volatile MainActivity main;private volatile CallbackReminderActivity reminder;private volatile CallScreenActivity callScreen;
+ private volatile MainActivity main;private volatile CallbackReminderActivity reminder;private volatile CallScreenActivity callScreen;private volatile ContactEditorActivity editor;private boolean reminderScenario;
  private final List<Activity> launched=new ArrayList<>();
  private Uri insertedContact;private boolean modemRequested;private long requestSequence,started;
  private final Set<Long> baselineIds=new HashSet<>();
@@ -84,7 +84,8 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   public void onActivityStarted(Activity activity){}
   public void onActivityResumed(Activity activity){if(activity instanceof MainActivity)main=(MainActivity)activity;
    if(activity instanceof CallbackReminderActivity)reminder=(CallbackReminderActivity)activity;
-   if(activity instanceof CallScreenActivity)callScreen=(CallScreenActivity)activity;}
+   if(activity instanceof CallScreenActivity)callScreen=(CallScreenActivity)activity;
+   if(activity instanceof ContactEditorActivity)editor=(ContactEditorActivity)activity;}
   public void onActivityPaused(Activity activity){}
   public void onActivityStopped(Activity activity){}
   public void onActivitySaveInstanceState(Activity activity,android.os.Bundle state){}
@@ -277,6 +278,7 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
  private String page(MainActivity activity)throws Exception{java.lang.reflect.Field field=MainActivity.class.getDeclaredField("page");field.setAccessible(true);return String.valueOf(field.get(activity));}
 
  public void testCallbackReminderFromActualTelecomAndPrivateOsAlarm()throws Exception{
+  reminderScenario=true;
   try{reminderScenario();}catch(Throwable failure){failureEvidence(failure);if(failure instanceof Exception)throw (Exception)failure;throw (Error)failure;}
  }
  private StatusBarNotification notification(int id){for(StatusBarNotification item:target.getSystemService(NotificationManager.class).getActiveNotifications())
@@ -428,8 +430,46 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   assertNotNull(missed.getNotification().deleteIntent);missed.getNotification().deleteIntent.send();await(()->notification(MissedCallNotifications.ID)==null,"Own explicit missed notification cleanup must finish");
   JSONArray after=ownRows();assertEquals(rows.length(),after.length());for(int n=0;n<after.length();n++){JSONObject row=after.getJSONObject(n);
    if(own.contains(row.getLong("id"))){assertEquals(0,row.getInt("new"));assertEquals(1,row.getInt("is_read"));}}
-  if(completedReminder!=null){completedReminder.put("cleanup",new JSONObject().put("method","production-own-missed-notification-delete-PendingIntent-after-read-only-proof")
+  if(reminderScenario&&completedReminder!=null){completedReminder.put("cleanup",new JSONObject().put("method","production-own-missed-notification-delete-PendingIntent-after-read-only-proof")
    .put("retained_rows",after).put("acknowledged_ids",ids).put("all_missed_rows_read",true).put("no_call_log_delete",true));writeCombined();}
+ }
+
+ private AccessibilityNodeInfo nativeExactText(String value){
+  AccessibilityNodeInfo root=getInstrumentation().getUiAutomation().getRootInActiveWindow();if(root==null)return null;
+  for(AccessibilityNodeInfo node:root.findAccessibilityNodeInfosByText(value))if(node.isVisibleToUser()&&value.contentEquals(node.getText()==null?"":node.getText()))return node;
+  return null;
+ }
+ private void tapNativeText(String value)throws Exception{
+  await(()->nativeExactText(value)!=null,"Native text missing: "+value);AccessibilityNodeInfo node=nativeExactText(value);
+  Rect bounds=new Rect();node.getBoundsInScreen(bounds);assertTrue(bounds.width()>0&&bounds.height()>0);tapPoint(bounds.centerX(),bounds.centerY());
+ }
+ private Set<Long> rawContactIds(){
+  Set<Long> ids=new HashSet<>();try(Cursor cursor=target.getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI,new String[]{ContactsContract.RawContacts._ID},null,null,null)){
+   assertNotNull(cursor);while(cursor.moveToNext())ids.add(cursor.getLong(0));}return ids;
+ }
+ public void testUnknownActualRecentCallerOpensNewEditorWithoutDialOrWrite()throws Exception{
+  ContactPhotos.clearCache();Set<Long> contactsBefore=rawContactIds();
+  modem("call");await(()->PhoneSessionService.current!=null&&PhoneSessionService.current.getState()==Call.STATE_RINGING,"Actual unknown caller must ring");
+  Call unknown=PhoneSessionService.current;Thread.sleep(350);finishRemote(unknown,1);
+  MainActivity activity=startMain("recents");assertEquals("recents",page(activity));
+  await(()->nativeExactText(NUMBER)!=null,"Actual unknown Telecom row must appear in Recents");
+  tapNativeText(NUMBER);tapNativeText("כרטיס איש קשר");
+  await(()->nativeExactText("יצירת איש קשר חדש")!=null,"Unknown number must offer explicit new-contact action");
+  assertNull("Opening unknown-number actions must never dial",PhoneSessionService.current);
+  JSONObject proof=new JSONObject().put("api",33).put("number",NUMBER).put("origin","actual emulator Telecom missed call")
+   .put("actions_bars",snapshot("recents-unknown-number-actions",false)).put("call_log_before_editor",ownRows());
+  tapNativeText("יצירת איש קשר חדש");await(()->editor!=null&&!editor.isFinishing(),"Explicit action must launch the production editor");
+  launched.add(editor);ready(editor);assertEquals(NUMBER,editor.getIntent().getStringExtra("incoming_number"));assertFalse(editor.getIntent().hasExtra("contact_id"));
+  EditText phone=editor.findViewById(0x01000000 | ("phone0".hashCode() & 0x00ffffff));assertNotNull(phone);
+  await(()->NUMBER.contentEquals(phone.getText()),"Exact unknown number must prefill new contact");
+  assertEquals(contactsBefore,rawContactIds());assertNull(PhoneSessionService.current);
+  ui(()->editor.getWindow().getInsetsController().hide(WindowInsets.Type.ime()));reveal(phone);viewBounds(phone);
+  proof.put("editor_bars",snapshot("recents-new-contact-editor",false));key(KeyEvent.KEYCODE_BACK);ready(activity);
+  assertEquals("recents",page(activity));assertNull(PhoneSessionService.current);assertEquals(contactsBefore,rawContactIds());
+  JSONArray retained=ownRows();assertEquals(proof.getJSONArray("call_log_before_editor").toString(),retained.toString());
+  proof.put("exact_number_prefilled",true).put("new_contact_without_existing_id",true).put("no_automatic_dial",true)
+   .put("cancel_keeps_contacts_and_call_rows",true).put("back_to_recents",true).put("call_log_after_cancel",retained)
+   .put("modem_commands",modemCommands).put("calls",calls);writeFile("recents-create-contact-native.json",proof.toString(2));
  }
 
  public void testBundledBusinessDirectoryNativeIsolationSearchAndProvenance()throws Exception{
