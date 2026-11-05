@@ -1,5 +1,9 @@
 # DA CALLER continuation state
 
+## New release authorization — 2026-11-05
+
+The owner explicitly permits publication without beta.9 signature compatibility and waives physical Jelly Star checks as a release prerequisite. These remain unverified; do not claim upgrade compatibility or recommend uninstalling. Next version is0.12.0/code21 (semantic versioning, no beta suffix). Native/visual/source/public-byte gates still apply. The uploaded Geofabrik PBF cannot be transferred by the available Sediment downloader: actual error `file exceeds the executor transfer limit of 32 MiB`. No new source bytes were acquired. The previous241-image review is historical after the version/changelog change; fresh source verification is required.
+
 ## Latest verified checkpoint — 2026-11-05 (supersedes earlier pending verification below)
 
 Source `3cf0990386312f1848e16ee3cd2afd7e80b03f4f`, app tree `02f9eaf9281a57c1076b8c3cad6503072ca935cd`, [CI41963339463](https://github.com/hadar1233hr-afk/D.A.-Caller/actions/runs/41963339463):356 unique unit tests PASS;35 actual Android13 tests ran,34 PASS and1 business-data FAIL, no errors/skips. Debug/native compilation and lint passed. The overall workflow is FAILURE, not publication approval.

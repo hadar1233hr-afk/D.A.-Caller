@@ -26,7 +26,7 @@ final class ChangelogCatalog {
  // Version boundaries and notes are grounded in app/build.gradle history and
  // docs/DA_CALLER_{VISUAL_VERIFICATION,PERSONALIZATION_VERIFICATION,DYNAMIC_ISLAND}.
  private static final List<Entry> ENTRIES=Collections.unmodifiableList(Arrays.asList(
-  new Entry("0.11.0-beta.10","תזכורת לחזרה לשיחות","A reminder to return calls",
+  new Entry("0.12.0","תזכורת לחזרה לשיחות","A reminder to return calls",
    change("יצירת איש קשר חדש ממספר לא מוכר בשיחות האחרונות, בלי חיוג אוטומטי.",
     "Create a new contact from an unknown recent caller without automatically dialing."),
    change("מענה בהחלקה מלאה, עם חלופת נגישות. סידור Nothing ו־Xiaomi וספרות חיוג גדולות יותר; בגוגל גופן עגול ומודגש מקומי.",
