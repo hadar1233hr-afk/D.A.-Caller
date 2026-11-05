@@ -212,6 +212,9 @@ jobs:
           api-level: 33
           target: google_apis
           arch: x86_64
+          # Pin test userdata size: the current API33 image otherwise requests
+          # >7GB while this disposable runner may have only6GB free.
+          disk-size: 2048M
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -prop qemu.hw.mainkeys=0
           # This action executes each input line in a separate shell.

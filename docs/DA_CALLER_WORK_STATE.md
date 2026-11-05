@@ -16,6 +16,10 @@ The real reminder Telecom scenario now injects touchscreen DOWN/MOVE/UP/CANCEL e
 
 The next source additionally tests a real unknown incoming Telecom call persisted by Android, then native Recents → contact card → Create new contact → exact phone prefill → Back. It checks unchanged raw-contact IDs/call rows and no active call, with two further original captures. This increases the required matrix to245 (all233 prior +8 reminder/business +2 swipe +2 create-contact),35 native cases. These new native assertions remain NOT TESTED until the fresh run finishes; production data remains0 and full business coverage is BLOCKED.
 
+## Latest CI infrastructure failure — no Android results
+
+Source d4ee506 / CI41956994515 validation passed, but the emulator never booted: Android emulator37.2.13 required7372.80MB for its default userdata while the runner had6294.55MB. Native cases executed:0; new screenshots:0. This is an infrastructure failure, not an app or swipe PASS/FAIL. [Actual failure](evidence/backup-native-bars/ci-boot-blocked.json). Pin disposable AVD disk-size2048M and run the prepared245-image/35-case source afresh. No existing user/device data is touched by this CI setting.
+
 ## Latest verified checkpoint
 
 Source46c500a / CI41851873318 completed:352 unique unit PASS;34 native cases,33 PASS and1 explicit business-dataset MISSING failure;0 errors/skips. All237 functional images were freshly reviewed:101 call and44 island frames PASS,91 other PASS and1 visual FAIL (personalization-backup-saved-light.png: white system icons on near-white bars). All36 island compositor proofs independently passed. Reminder real Telecom/OS-alarm/read-only checks passed again. No release approval. [Retained second-run evidence](evidence/callback-business-2026-11-04/second-ci/pipeline-summary.json).
