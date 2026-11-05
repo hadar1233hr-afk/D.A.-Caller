@@ -210,8 +210,8 @@ public final class CallbackReminderTest {
   miss(1,FIRST,10);Intent intent=CallbackReminder.openIntent(app,day().key);
   try(ActivityController<CallbackReminderActivity> controller=Robolectric.buildActivity(CallbackReminderActivity.class,intent).setup()){
    CallbackReminderActivity activity=controller.get();long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(10);TextView summary=activity.findViewById(android.R.id.content).findViewWithTag("callback-reminder-summary");
-   while(!summary.getText().toString().contains("1 callers")&&System.nanoTime()<deadline){Thread.sleep(15);shadowOf(Looper.getMainLooper()).idle();}
-   assertTrue(summary.getText().toString(),summary.getText().toString().contains("1 callers"));assertNull(shadowOf(activity).getNextStartedActivity());
+   while(!summary.getText().toString().contains("1 caller · 1 missed call on this day")&&System.nanoTime()<deadline){Thread.sleep(15);shadowOf(Looper.getMainLooper()).idle();}
+   assertTrue(summary.getText().toString(),summary.getText().toString().contains("1 caller · 1 missed call on this day"));assertNull(shadowOf(activity).getNextStartedActivity());
    View root=activity.findViewById(android.R.id.content).findViewWithTag("callback-reminder-root");assertNotNull(root);assertFalse(logs.queryOnMain);assertEquals(0,logs.writes);assertEquals(0,people.writes);
   }
  }
