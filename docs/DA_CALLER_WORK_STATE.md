@@ -1,5 +1,15 @@
 # DA CALLER continuation state
 
+## Latest verified checkpoint — 2026-11-05 (supersedes earlier pending verification below)
+
+Source `3cf0990386312f1848e16ee3cd2afd7e80b03f4f`, app tree `02f9eaf9281a57c1076b8c3cad6503072ca935cd`, [CI41963339463](https://github.com/hadar1233hr-afk/D.A.-Caller/actions/runs/41963339463):356 unique unit tests PASS;35 actual Android13 tests ran,34 PASS and1 business-data FAIL, no errors/skips. Debug/native compilation and lint passed. The overall workflow is FAILURE, not publication approval.
+
+All241 available functional PNGs were actually visually reviewed (101 call layouts,44 island,96 other);2 diagnostic PNGs were viewed separately. The required245-frame gate remains unchanged:4 business frames are missing because production records/source bytes are0. [Hash-bound final evidence](evidence/call-layout-digits/final-ci/visual-review.json), [independent reminder proof](evidence/call-layout-digits/final-ci/reminder-verification.json), and authenticated immutable raw export `661b1357c9f255464967b6cfc8bdd84736b376d7` retain the actual results.
+
+The new unknown-Recents contact action, all-five larger digits/Google bundled Nunito, Nothing/Xiaomi layout, and genuine incoming swipe are implemented and now verified in fresh emulator evidence. Actual SystemUI caller-body pointer navigation opens the incoming screen without a covering heads-up notification; tap, short drag and cancelled drag retain RINGING, completed swipe activates the same Telecom Call. Phase/prompt overlap and dragged-pill clipping were corrected and fresh captures reviewed. Backup native-bar contrast passed independent pixel/hash checks. Reminder uses4 actual modem calls, retains4 call-log rows, excludes a later connected2-second callback, restores pending status after a subsequent miss, and receives an accelerated real AlarmManager delivery in background. This is not an overnight/Doze test. Single-number Hebrew reminder copy still uses the plural noun; counts/actions are correct.
+
+Publication remains BLOCKED: no licensed production business dataset (publisher host rejected by enforced network policy; no bypass), and no surviving private signing key matching the installed beta.9 certificate. Do not publish an incompatible APK, lower the matrix target, apply release approval, or recommend uninstalling. Version0.11.0-beta.10/code20 remains UNRELEASED. Physical Jelly Star/SIM/carrier/audio/Bluetooth/lockscreen/proximity/full TalkBack/overnight Doze/matching-key upgrade remain NOT TESTED; emulator speaker routing was UNAVAILABLE. The SAF backup scenario uses an isolated intercepted test provider, not verified DocumentsUI.
+
 ## Additional owner tasks — 2026-11-04 (pending)
 
 1. IMPLEMENTED, pending native verification: the unknown-number dialog reached from Recents now offers explicit Create new contact, preserving the selected number and issuing no call. Hidden/unknown system sentinels have no create action.10 MainActivity regression tests passed (0 failures/errors/skips), including2 new cases. [Results](evidence/recents-create-contact/verification.json). Fresh native screenshots/full CI remain required.

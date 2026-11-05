@@ -40,5 +40,7 @@
     "personalization-backup-saved-dark.png": "011083a5a68b997fea5e5bee266c0e97c8120db5cb7a1ada2073b28ba5598b51",
     "personalization-backup-restore-confirmation.png": "a9f96a2b30fce3b781d073a5067d0682ea1bf2cb5163ccd625f0465e2922862a"
   },
-  "publication_approved": false
+  "publication_approved": false,
+  "full245_present": false,
+  "required_functional_images": 245
 }
