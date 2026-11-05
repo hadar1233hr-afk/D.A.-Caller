@@ -1,0 +1,44 @@
+{
+  "app_records_added": 0,
+  "archive_bytes": 174313,
+  "archive_sha256": "f867f175917ae8f7bba2c585c93b334620726f6bd4ac9a930d9d78de600aed65",
+  "checks": [
+    "known-owner-PBF-sha",
+    "executed-helper-sha",
+    "output-sha-geometry-nodes.json",
+    "immutable-v1-source-bytes-geometry-nodes.json",
+    "output-sha-relation-member-ways.json",
+    "immutable-v1-source-bytes-relation-member-ways.json",
+    "output-sha-source-objects.ndjson",
+    "immutable-v1-source-bytes-source-objects.ndjson",
+    "exact-counts-and-unique-source-identities",
+    "no-record-or-coordinate-country-admission",
+    "all-way-coordinate-dependencies-bound",
+    "all-geometry-nodes-exact-count-present",
+    "way-area-source-observations",
+    "relation-roles-preserved-not-assembled",
+    "all-way-topology-country-checks-explicitly-false",
+    "retained-zip-crc-and-exact-members",
+    "retained-zip-sha-geometry-nodes.json",
+    "retained-zip-sha-relation-member-ways.json",
+    "retained-zip-sha-source-objects.ndjson"
+  ],
+  "checks_executed": 19,
+  "checks_status": "PASS",
+  "executed_helper_sha256": "5b3a85e1a4784b93b1539d0de7992ae17a04c214417b8c20752267ef4f7f4bd5",
+  "limits": [
+    "Producer/reference consistency checks, not independent source authenticity or polygon topology audit.",
+    "No Android/native/hardware/phone-call/network/current ownership verification.",
+    "Combined Israel-and-Palestine source object inventory; no Israeli country admission."
+  ],
+  "observed_at_utc": "2026-11-05T18:03:23.498429+00:00",
+  "report_sha256": "3509896455b9e31856caddbc1772aba7da09feb1837d95660b13af6f4e4069dd",
+  "source_data_sha256": {
+    "geometry-nodes.json": "aecbf4203c131ad2afed796d93257b55dde6459f5316d13db53cddd8e7bcdb9b",
+    "relation-member-ways.json": "94d90b1a396b2d0c5a4637814ea5f07d904af5114abf969bafe851230ddfbd50",
+    "source-objects.ndjson": "8b701a255da74f22dc1a8b6ba53efaf8fd6e66bb5c69c3f906c2ca259072d6b6"
+  },
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "status": "SOURCE_INVENTORY_RETAINED_NOT_APP_OR_GEOGRAPHIC_ADMISSION",
+  "v1_v2_source_data_byte_identical": true
+}

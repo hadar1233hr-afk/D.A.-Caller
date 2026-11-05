@@ -1,0 +1,60 @@
+{
+  "status": "RESEARCH_CORPUS_AND_SOURCE_AUDIT_RETAINED_NOT_APP_ACCEPTED",
+  "observed_at_utc": "2026-11-05T18:09:22.979059+00:00",
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "ndjson_sha256": "cdbac300bf164e252e606d990f648c040e7193444b525786b16aba9049a692d6",
+  "archive_sha256": "442e3f03fe18990ba8eedbe0f940b2c12f434b32bcd7082e5e14fcbc73f63d6e",
+  "archive_bytes": 100106,
+  "archive_members_sha256": {
+    "research-way-businesses.ndjson": "cdbac300bf164e252e606d990f648c040e7193444b525786b16aba9049a692d6",
+    "report.json": "33ee5cf3296aca31c0771deadb6b44b59051d857d12bd88b869c9a49c5025cf8",
+    "independent-audit.json": "172e3510b485879725e13bdfe9e54ed1c5f91a8c5bee1e0ee4b9bb3fa426360b",
+    "quality-summary.json": "fad8c29053147f71b1fcadac2c2f13a095049ada3349265a694efc2f833409e4",
+    "phone-quality.json": "ea5e3ad05c4f99f9145e66a8d4f90db7f5b2731ae68f3b43b756dd5eaa2e5258",
+    "cross-identities.json": "a1909a4486d359d5e5a8e20a8722114e54a1d2b4d4c4ea8655d97cd0fd0973b8",
+    "combined-coverage.json": "fd38e2ba7c408edec6193437015ad6593534bc4b0244a65d3eabe2e5b020ef96",
+    "LICENSE-NOTICE.txt": "c44447616177d0f727b601a7d63e47c0b1b80375a749c00f8bdd5763455690a2"
+  },
+  "script_sha256": {
+    "research_way_geography.py": "78b943a603b16bd4763cc45cc1546438967427a8b3a009fb252c481196802787",
+    "check_way_geography.py": "a84aea751aa35793f8786adfedbb68eb87bdf1e169e2a52f69dd62f3b6fd67a0",
+    "audit_way_geography.py": "d179364bf7034c108371fae3b11e32f9de64f8d880ab262dc4d7cae83e9e450b",
+    "way_source_inventory.py": "5b3a85e1a4784b93b1539d0de7992ae17a04c214417b8c20752267ef4f7f4bd5"
+  },
+  "adversarial_geometry_tests": {
+    "executed": 16,
+    "passed": 16,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "independently_rerun": true
+  },
+  "inventory_producer_reference_assertions": {
+    "executed": 19,
+    "passed": 19,
+    "scope": "Producer retention/ref/hash consistency, not independent topology tests"
+  },
+  "independent_source_audit": {
+    "phone_rows": 247,
+    "source_ways": 242,
+    "referenced_nodes": 2639,
+    "ordered_coordinate_slots": 2920,
+    "whole_polygon_replays": 247,
+    "status": "PASS"
+  },
+  "root_retention_checks": [
+    "Archive exactmembers/CRC/allmember SHA values match retained sources",
+    "Actual executed helper/source-audit/report/corpus hashes agree",
+    "Retained inventory ZIP CRC/size/SHA and3data/code/report SHA values verified",
+    "Same source candidate corpus preserved, no app/guard/source mutations"
+  ],
+  "app_records_added": 0,
+  "source_rows_merged": 0,
+  "app_tree_unchanged": "9f15350b457405bf88a35c0ac5badc8f3a85cd94",
+  "publication_approval": false,
+  "limits": [
+    "Research source/geometry fidelity is not current phone ownership, complete national coverage or production admission.",
+    "No new Android/native/visual run; the existing unchanged app evidence remains356unit/35native/243visual with245guard FAIL.",
+    "Shared category/phone parsing and geometry provenance contracts are disclosed in the independent audit."
+  ]
+}

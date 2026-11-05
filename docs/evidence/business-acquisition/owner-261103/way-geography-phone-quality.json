@@ -1,0 +1,408 @@
+{
+  "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED",
+  "app_accepted": false,
+  "rows_added_to_app": 0,
+  "phonenumbers_version": "9.0.42",
+  "source_sha256": "cdbac300bf164e252e606d990f648c040e7193444b525786b16aba9049a692d6",
+  "source_bytes": 579098,
+  "review_helper_sha256": "89452692195fa9e9b7b3dc65a75f7943d0fddbffa26fb4d28ad3b747b58759f0",
+  "unchanged_packager_sha256": "d0ffd2392ed43a356f6e84ee6b4a7526cf84a50dc555e5536d85975b3d0c123f",
+  "source_rows": 247,
+  "production_results": {
+    "Country membership not explicitly sourced": 244,
+    "Invalid app dial identity": 3
+  },
+  "phone_rejected_rows": 3,
+  "phone_rejected_unique_e164": 3,
+  "phone_review_decisions": {
+    "RESEARCH_REFORMAT_PROPOSAL": 3
+  },
+  "phone_rejections": [
+    {
+      "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED",
+      "app_accepted": false,
+      "source_record": {
+        "address": "",
+        "category": "tourism:attraction",
+        "city": "",
+        "complete_source_ring_coordinates": [
+          [
+            35.7711588,
+            33.3069177
+          ],
+          [
+            35.7719412,
+            33.3065671
+          ],
+          [
+            35.7730834,
+            33.3062042
+          ],
+          [
+            35.7756305,
+            33.3068095
+          ],
+          [
+            35.7782698,
+            33.3065585
+          ],
+          [
+            35.7800986,
+            33.3039873
+          ],
+          [
+            35.7833982,
+            33.3044244
+          ],
+          [
+            35.7852103,
+            33.3045713
+          ],
+          [
+            35.785492,
+            33.3093621
+          ],
+          [
+            35.7850934,
+            33.3100554
+          ],
+          [
+            35.7851577,
+            33.3128707
+          ],
+          [
+            35.7852497,
+            33.314116
+          ],
+          [
+            35.7885553,
+            33.3210975
+          ],
+          [
+            35.7816601,
+            33.3223285
+          ],
+          [
+            35.7768124,
+            33.3222951
+          ],
+          [
+            35.7735916,
+            33.3231473
+          ],
+          [
+            35.7712047,
+            33.3127205
+          ],
+          [
+            35.770876,
+            33.3070989
+          ],
+          [
+            35.7711588,
+            33.3069177
+          ]
+        ],
+        "country_admission": "missing-source-country-tag",
+        "country_inferred": false,
+        "country_tag": null,
+        "dialing_scope": "E164",
+        "e164": "+9721599550560",
+        "extension": "",
+        "geographic_scope": "research-complete-closed-way-source-IL-interior-minus-filled-WB-and-Gaza",
+        "geometry_admission": "research-qualified-complete-source-polygon",
+        "geometry_input_sha256": "04b9d0ed2ad8d28e2947bb9fde88cbe39dd7f37c666940ab48869fdb3939750f",
+        "id": "osm:way:94669391:+9721599550560",
+        "imported_at": "2026-11-05T18:03:38.461417+00:00",
+        "license_id": "ODbL-1.0",
+        "margin_degrees": 0.001,
+        "name": "\u05d0\u05ea\u05e8 \u05e1\u05e7\u05d9 \u05d4\u05e8 \u05d4\u05d7\u05e8\u05de\u05d5\u05df",
+        "original_phone": "+972-1599-550-560",
+        "phone": "+9721599550560",
+        "phone_type": "9",
+        "source_country_fields": {},
+        "source_id": "osm:way:94669391",
+        "source_node_refs": [
+          1099054313,
+          1099054315,
+          7592451105,
+          3752006330,
+          3752006331,
+          3752006332,
+          3752006329,
+          1731593394,
+          1099054325,
+          3752006326,
+          3752006325,
+          3752001624,
+          3752001621,
+          3752001620,
+          7592451106,
+          1099054327,
+          1099054330,
+          1099054332,
+          1099054313
+        ],
+        "source_phones": {
+          "phone": "+972-1599-550-560"
+        },
+        "source_tags": {
+          "description": "\u05d0\u05ea\u05e8 \u05d4\u05e1\u05e7\u05d9 \u05d4\u05d9\u05d7\u05d9\u05d3 \u05d1\u05d9\u05e9\u05e8\u05d0\u05dc, \u05d4\u05de\u05de\u05d5\u05e7\u05dd \u05e2\u05dc \u05de\u05d5\u05e8\u05d3\u05d5\u05ea \u05d4\u05e8 \u05d4\u05d7\u05e8\u05de\u05d5\u05df \u05d5\u05de\u05e6\u05d9\u05e2 \u05de\u05e1\u05dc\u05d5\u05dc\u05d9 \u05d2\u05dc\u05d9\u05e9\u05d4, \u05e8\u05db\u05d1\u05dc\u05d9\u05dd \u05d5\u05e4\u05e2\u05d9\u05dc\u05d5\u05d9\u05d5\u05ea \u05e9\u05dc\u05d2 \u05d1\u05d7\u05d5\u05e8\u05e3, \u05dc\u05e6\u05d3 \u05e1\u05d9\u05d5\u05e8\u05d9\u05dd \u05d5\u05e4\u05e2\u05d9\u05dc\u05d5\u05d9\u05d5\u05ea \u05d4\u05e8\u05e8\u05d9\u05d5\u05ea \u05d1\u05e2\u05d5\u05e0\u05ea \u05d4\u05e7\u05d9\u05e5.",
+          "description:he": "\u05d0\u05ea\u05e8 \u05d4\u05e1\u05e7\u05d9 \u05d4\u05d9\u05d7\u05d9\u05d3 \u05d1\u05d9\u05e9\u05e8\u05d0\u05dc, \u05d4\u05de\u05de\u05d5\u05e7\u05dd \u05e2\u05dc \u05de\u05d5\u05e8\u05d3\u05d5\u05ea \u05d4\u05e8 \u05d4\u05d7\u05e8\u05de\u05d5\u05df \u05d5\u05de\u05e6\u05d9\u05e2 \u05de\u05e1\u05dc\u05d5\u05dc\u05d9 \u05d2\u05dc\u05d9\u05e9\u05d4, \u05e8\u05db\u05d1\u05dc\u05d9\u05dd \u05d5\u05e4\u05e2\u05d9\u05dc\u05d5\u05d9\u05d5\u05ea \u05e9\u05dc\u05d2 \u05d1\u05d7\u05d5\u05e8\u05e3, \u05dc\u05e6\u05d3 \u05e1\u05d9\u05d5\u05e8\u05d9\u05dd \u05d5\u05e4\u05e2\u05d9\u05dc\u05d5\u05d9\u05d5\u05ea \u05d4\u05e8\u05e8\u05d9\u05d5\u05ea \u05d1\u05e2\u05d5\u05e0\u05ea \u05d4\u05e7\u05d9\u05e5.",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Mapeak_Mount_Hermon_ski_resort.jpeg",
+          "image1": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Mapeak_Mount_Hermon_ski_resort_1.jpeg",
+          "image2": "https://upload.wikimedia.org/wikipedia/commons/d/d8/Mapeak_Mount_Hermon_ski_resort_2.jpeg",
+          "landuse": "winter_sports",
+          "name": "\u05d0\u05ea\u05e8 \u05e1\u05e7\u05d9 \u05d4\u05e8 \u05d4\u05d7\u05e8\u05de\u05d5\u05df",
+          "name:en": "Mount Hermon ski resort",
+          "name:es": "Centro de esqu\u00ed Monte Herm\u00f3n",
+          "name:he": "\u05d0\u05ea\u05e8 \u05e1\u05e7\u05d9 \u05d4\u05e8 \u05d4\u05d7\u05e8\u05de\u05d5\u05df",
+          "opening_hours": "Mo-Su 08:00-16:00",
+          "phone": "+972-1599-550-560",
+          "tourism": "attraction",
+          "website": "https://skihermon.co.il/",
+          "wikidata": "Q6921185",
+          "wikipedia": "he:\u05d0\u05ea\u05e8 \u05d4\u05d7\u05e8\u05de\u05d5\u05df"
+        },
+        "source_updated_at": "2026-11-01T16:45:16+00:00",
+        "source_url": "https://www.openstreetmap.org/way/94669391",
+        "source_version": 16,
+        "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED",
+        "verification": "source-listed-not-phone-confirmed"
+      },
+      "decision": "RESEARCH_REFORMAT_PROPOSAL",
+      "reason": "national-service-identity-without-trunk-zero",
+      "proposal": {
+        "base_dial_identity": "1599550560",
+        "e164": "+9721599550560",
+        "national_display_by_library": "1599-550560",
+        "region_by_numbering_metadata": "IL",
+        "phone_type": "UAN",
+        "valid_by_library": true,
+        "same_e164_round_trip": true,
+        "extension_retained_separately": "",
+        "requires_review_before_production_use": true
+      },
+      "current_app_base_identity": ""
+    },
+    {
+      "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED",
+      "app_accepted": false,
+      "source_record": {
+        "address": "\u05ea\u05dc\u05ea\u05df 8",
+        "category": "healthcare:clinic",
+        "city": "",
+        "complete_source_ring_coordinates": [
+          [
+            35.0077012,
+            31.9057335
+          ],
+          [
+            35.0076581,
+            31.9057541
+          ],
+          [
+            35.0075883,
+            31.9057598
+          ],
+          [
+            35.0074216,
+            31.9057464
+          ],
+          [
+            35.0074315,
+            31.9056571
+          ],
+          [
+            35.0073682,
+            31.9056521
+          ],
+          [
+            35.0074093,
+            31.9052693
+          ],
+          [
+            35.0077797,
+            31.9052897
+          ],
+          [
+            35.0077398,
+            31.9056498
+          ],
+          [
+            35.0077313,
+            31.9056883
+          ],
+          [
+            35.0077012,
+            31.9057335
+          ]
+        ],
+        "country_admission": "missing-source-country-tag",
+        "country_inferred": false,
+        "country_tag": null,
+        "dialing_scope": "E164",
+        "e164": "+9721599520520",
+        "extension": "",
+        "geographic_scope": "research-complete-closed-way-source-IL-interior-minus-filled-WB-and-Gaza",
+        "geometry_admission": "research-qualified-complete-source-polygon",
+        "geometry_input_sha256": "04b9d0ed2ad8d28e2947bb9fde88cbe39dd7f37c666940ab48869fdb3939750f",
+        "id": "osm:way:137316205:+9721599520520",
+        "imported_at": "2026-11-05T18:03:38.461417+00:00",
+        "license_id": "ODbL-1.0",
+        "margin_degrees": 0.001,
+        "name": "\u05d8\u05e8\u05dd",
+        "original_phone": "1-599-520-520",
+        "phone": "+9721599520520",
+        "phone_type": "9",
+        "source_country_fields": {},
+        "source_id": "osm:way:137316205",
+        "source_node_refs": [
+          1506291111,
+          4842521724,
+          4842521726,
+          4842516719,
+          4842516717,
+          1506291108,
+          1506291106,
+          1506291110,
+          4842521721,
+          4842521727,
+          1506291111
+        ],
+        "source_phones": {
+          "phone": "1-599-520-520"
+        },
+        "source_tags": {
+          "addr:housenumber": "8",
+          "addr:street": "\u05ea\u05dc\u05ea\u05df",
+          "amenity": "clinic",
+          "building": "yes",
+          "healthcare": "clinic",
+          "name": "\u05d8\u05e8\u05dd",
+          "name:en": "Terem",
+          "name:he": "\u05d8\u05e8\u05dd",
+          "not:operator:wikidata": "Q2907040",
+          "operator": "\u05de\u05db\u05d1\u05d9",
+          "operator:en": "Maccabi Healthcare Services",
+          "operator:he": "\u05de\u05db\u05d1\u05d9",
+          "phone": "1-599-520-520"
+        },
+        "source_updated_at": "2024-12-02T20:47:53+00:00",
+        "source_url": "https://www.openstreetmap.org/way/137316205",
+        "source_version": 9,
+        "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED",
+        "verification": "source-listed-not-phone-confirmed"
+      },
+      "decision": "RESEARCH_REFORMAT_PROPOSAL",
+      "reason": "national-service-identity-without-trunk-zero",
+      "proposal": {
+        "base_dial_identity": "1599520520",
+        "e164": "+9721599520520",
+        "national_display_by_library": "1599-520520",
+        "region_by_numbering_metadata": "IL",
+        "phone_type": "UAN",
+        "valid_by_library": true,
+        "same_e164_round_trip": true,
+        "extension_retained_separately": "",
+        "requires_review_before_production_use": true
+      },
+      "current_app_base_identity": ""
+    },
+    {
+      "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED",
+      "app_accepted": false,
+      "source_record": {
+        "address": "\u05d4\u05d3\u05d5\u05d0\u05e8 106",
+        "category": "amenity:post_office",
+        "city": "",
+        "complete_source_ring_coordinates": [
+          [
+            34.8758139,
+            32.3813184
+          ],
+          [
+            34.875848,
+            32.381419
+          ],
+          [
+            34.8757225,
+            32.3814494
+          ],
+          [
+            34.8756884,
+            32.3813488
+          ],
+          [
+            34.8758139,
+            32.3813184
+          ]
+        ],
+        "country_admission": "missing-source-country-tag",
+        "country_inferred": false,
+        "country_tag": null,
+        "dialing_scope": "E164",
+        "e164": "+9721599500171",
+        "extension": "",
+        "geographic_scope": "research-complete-closed-way-source-IL-interior-minus-filled-WB-and-Gaza",
+        "geometry_admission": "research-qualified-complete-source-polygon",
+        "geometry_input_sha256": "04b9d0ed2ad8d28e2947bb9fde88cbe39dd7f37c666940ab48869fdb3939750f",
+        "id": "osm:way:531392365:+9721599500171",
+        "imported_at": "2026-11-05T18:03:38.461417+00:00",
+        "license_id": "ODbL-1.0",
+        "margin_degrees": 0.001,
+        "name": "\u05d3\u05d5\u05d0\u05e8 \u05db\u05e4\u05e8 \u05d5\u05d9\u05ea\u05e7\u05d9\u05df",
+        "original_phone": "1599500171",
+        "phone": "+9721599500171",
+        "phone_type": "9",
+        "source_country_fields": {},
+        "source_id": "osm:way:531392365",
+        "source_node_refs": [
+          5158407728,
+          5158407729,
+          5158407730,
+          5158407731,
+          5158407728
+        ],
+        "source_phones": {
+          "phone": "1599500171"
+        },
+        "source_tags": {
+          "addr:housenumber": "106",
+          "addr:street": "\u05d4\u05d3\u05d5\u05d0\u05e8",
+          "amenity": "post_office",
+          "building": "commercial",
+          "name": "\u05d3\u05d5\u05d0\u05e8 \u05db\u05e4\u05e8 \u05d5\u05d9\u05ea\u05e7\u05d9\u05df",
+          "opening_hours": "Mo, We, Th, Su 08:00-15:00; Fr 08:00-12:00; Tu 08:00-12:30, 16:00-18:00",
+          "phone": "1599500171",
+          "website": "https://doar.israelpost.co.il/branch/673"
+        },
+        "source_updated_at": "2025-09-03T14:51:47+00:00",
+        "source_url": "https://www.openstreetmap.org/way/531392365",
+        "source_version": 3,
+        "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED",
+        "verification": "source-listed-not-phone-confirmed"
+      },
+      "decision": "RESEARCH_REFORMAT_PROPOSAL",
+      "reason": "national-service-identity-without-trunk-zero",
+      "proposal": {
+        "base_dial_identity": "1599500171",
+        "e164": "+9721599500171",
+        "national_display_by_library": "1599-500171",
+        "region_by_numbering_metadata": "IL",
+        "phone_type": "UAN",
+        "valid_by_library": true,
+        "same_e164_round_trip": true,
+        "extension_retained_separately": "",
+        "requires_review_before_production_use": true
+      },
+      "current_app_base_identity": ""
+    }
+  ],
+  "limitations": [
+    "No source phone, name, country, scope or extension was rewritten.",
+    "A proposed dial form is not production acceptance; existing country/scope guards still apply.",
+    "Numbering-plan validity and round-trip identity do not prove assignment, reachability or current ownership.",
+    "No phone calls, network lookup, APK edits, signing changes or app dataset writes were performed."
+  ]
+}

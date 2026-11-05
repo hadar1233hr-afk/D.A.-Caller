@@ -1,5 +1,53 @@
 # DA CALLER continuation state
 
+## Complete-way source research —247 added research rows, APK unchanged
+
+The latest continuation expanded the existing conservative source-geometry
+research to complete standalone closed WAY polygons, leaving all app/signing/CI
+guards unchanged. [Source inventory](evidence/business-acquisition/owner-261103/way-inventory-README.md)
+measured369 named phone-bearing public-category ways and5 relations. All369
+ways had complete referenced coordinates; all5 relations retain their7 outer
+and3 inner roles and remain omitted without role-aware polygon assembly.
+
+The full-polygon policy yielded247 raw phone rows from242 ways/242 distinct base
+numbers. The entire polygon must clear the retained source IL boundary and both
+filled WB envelopes/Gaza by more than0.001degrees; no centroid, guessed closing
+edge, repaired ring, filled inclusion hole or country tag is invented.11 broad
+non-IL country fields,105 non-contained polygons,7 WB intersections/near-margins,
+1 IL near-margin and3 geometry-qualified ways without qualifying phones were
+excluded. Diplomatic represented-state fields are not proof of a foreign address.
+245 emitted phone rows retain missing country tags;2 retain explicit IL.
+
+All16 new adversarial geometry tests PASS and were independently rerun/reviewed.
+An independent actual-PBF audit reread242 original ways and2,639 referenced
+nodes, compared all247 source-row fields and2,920 coordinate slots, then replayed
+all247 full polygons using separate GEOS bindings; all PASS. Source category/
+phone parsing and the geometry-provenance validator are shared disclosed
+reference contracts, not independently reimplemented numbering-plan truth.
+[Report, exact100,106-byte derived ZIP, hashes, audit and reproduction](evidence/business-acquisition/owner-261103/way-geography-README.md)
+are retained. This is source fidelity, not live phone/current business verification.
+
+Combined unchanged NODE plus new WAY research now measures2,695 raw phone rows
+from2,635 source objects and2,590 distinct numbers. Five numbers shared across
+point/area listings remain separate;0merges.816 rows lack an address and1,497
+lack a city tag; exact source-derived city/category/date counts are retained,
+without invented geographic tags or a national coverage percentage. Source
+objects are not necessarily distinct physical businesses. All247 new unchanged
+rows still fail production packaging:244country/scope,3same-E.164 UAN1599 dial
+format proposals. All their text fields pass bounds/control checks.0app records.
+
+App tree remains9f15350b457405bf88a35c0ac5badc8f3a85cd94. Retained native APK
+SHA f025fad667edafe2c76ab3f574c7ff1bfd2aeb301fdd1d035ac1acb6b311e16a was
+rechecked unchanged. Existing356-unit/35-native/243-visual proof remains current;
+no new Android run is claimed. Overall CI still FAILS unchanged245-frame gate.
+PR5 comments/reviews contain no explicit signing/CI exception approval. No gate
+or release changed and no public APK was issued. The earlier direct approval
+question remains pending; repeated continuation is not approval. Work was
+delegated only within this research, with no competing app work or actual quota
+block. Keep the existing2-hour timer active until all requested work and verified
+APK delivery finish. Future production admission/phone-format selection and new
+native business checks remain separate; do not rename research scope to force admission.
+
 ## Research identity quality —53 new checks, no APK or gate changes
 
 The unchanged2,448-row research corpus now has read-only phone, text and duplicate

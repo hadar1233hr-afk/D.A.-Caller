@@ -1,6 +1,6 @@
-# Conservative NODE geography research
+# Conservative source-geometry research
 
-This offline tool prepares **research candidates only** for DA CALLER. It does
+These offline tools prepare **research candidates only** for DA CALLER. They do
 not change the application, the production packager, signing or publication gates.
 The original24-record explicit-address-tag package remains unchanged, and0.12.0
 still contains no business data.
@@ -14,7 +14,8 @@ country determination or complete national coverage. Source dates span2010–202
 Admission requires a point strictly inside the complete source IL polygon and
 outside BOTH filled WestBank outer envelopes and the source Gaza polygon, with
 an angular0.001-degree margin around boundaries. Degrees are not exact meters.
-Ways/relations are omitted because their complete geometry was not evaluated.
+The NODE tool omits ways/relations; the separately audited closed-way extension
+below evaluates full polygons. Relations remain omitted without role-aware assembly.
 Missing country tags stay null; they are never fabricated from a phone prefix
 or location. Any non-IL country field triggers a deliberately broad research
 exclusion: on diplomatic offices `country` may mean the represented state.
@@ -106,3 +107,44 @@ binding for every supplied reread and excluded pronunciation/etymology or
 unsupported-language metadata from name alternatives. Only exact `name`,
 `short_name` and their explicitly supported `he/ar/en` tags are considered;
 unknown tags remain retained raw, without guessed language or selected names.
+
+## Complete closed-way research extension
+
+`way_source_inventory.py` independently inventories named, phone-bearing public
+source ways/relations and resolves their referenced coordinates using bounded
+PBF ID passes. Its retained source ZIP contains369 ways,5 relations and3,944
+dependency nodes. Closure/available coordinates alone do not establish topology
+or geographic membership. Relations retain outer/inner roles but are not
+assembled or admitted.
+
+`research_way_geography.py` considers complete standalone closed polygons only.
+It tests the ENTIRE polygon against the same source IL inclusion, both filled
+WB envelopes, Gaza and angular0.001degree margins. It rejects missing/open/
+invalid/zero-area rings and `area=no`; it never invents a closing edge, centroid,
+hole or country tag. Sixteen adversarial geometry checks passed, including
+crossing edges despite all vertices being inside an inclusion, and enclosed
+exclusions despite all vertices being outside them.
+
+The measured result is247 phone rows from242 source ways/242 distinct numbers.
+`audit_way_geography.py` independently reread242 original PBF ways and2,639
+referenced nodes, compared every retained field and all2,920 coordinate slots,
+and replayed all247 complete polygons with separate GEOS bindings. All passed.
+It reuses the original category/phone parser and geometry-provenance validator
+as disclosed reference contracts, not independent implementations of them.
+
+```sh
+python scripts/business-directory/research/check_way_geography.py
+/workspace/work/business-directory-research/.venv/bin/python scripts/business-directory/research/research_way_geography.py /workspace/work/business-data/israel-and-palestine-261103.osm.pbf /workspace/work/business-data/way-inventory-owner-261103-v2 /workspace/work/business-data /workspace/work/new-way-geography --extractor scripts/business-directory/extract_osm_businesses.py
+/workspace/work/business-directory-research/.venv/bin/python scripts/business-directory/research/audit_way_geography.py /workspace/work/business-data/israel-and-palestine-261103.osm.pbf /workspace/work/new-way-geography/research-way-businesses.ndjson /workspace/work/business-data /workspace/work/new-way-source-audit.json --extractor scripts/business-directory/extract_osm_businesses.py
+```
+
+All output paths must be new. Unpack/recreate the retained inventory/geometry
+inputs first when replaying elsewhere. The report binds their source/code/data
+hashes. The new way corpus remains rejected by unchanged production guards
+(244scope/country,3same-E.164 UAN1599 format proposals). It has no text-bound/
+control failures. Node+way research totals2,695 raw phone rows/2,635 source
+objects/2,590 distinct numbers, with five shared point/area phones retained
+separately. No count proves distinct physical businesses, current ownership,
+official borders or full national coverage.0app records;0.12.0 remains without
+businesses and publication approval remains pending. See matching
+`way-geography-*` evidence, exact corpus ZIP and combined coverage report.
