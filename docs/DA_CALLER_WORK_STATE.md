@@ -12,7 +12,7 @@ These additions were recorded at the owner's request; implementation and verific
 
 Source46c500a / CI41851873318 completed:352 unique unit PASS;34 native cases,33 PASS and1 explicit business-dataset MISSING failure;0 errors/skips. All237 functional images were freshly reviewed:101 call and44 island frames PASS,91 other PASS and1 visual FAIL (personalization-backup-saved-light.png: white system icons on near-white bars). All36 island compositor proofs independently passed. Reminder real Telecom/OS-alarm/read-only checks passed again. No release approval. [Retained second-run evidence](evidence/callback-business-2026-11-04/second-ci/pipeline-summary.json).
 
-Backup capture fix is unfinished: only a draft verifier change exists locally; its native producer is not implemented or tested. Preserve it, do not count it as PASS. Backup SAF is intercepted with a test provider, not real DocumentsUI. The previous worker stopped on an actual usage-limit error; no replacement account/model was used. Compatible beta9 private key and licensed business dataset remain unavailable.
+Backup compositor producer and independent PNG verifier are now implemented for the three existing backup captures. They require three consecutive focused, visible native-bar samples within five seconds and save/hash exactly the checked Bitmap. Android-test Java compilation and lint passed; fresh emulator execution and visual review remain PENDING. Backup SAF is intercepted with a test provider, not real DocumentsUI. Compatible beta9 private key and licensed business dataset remain unavailable.
 
 
 ## Active new owner request after the completed beta.9 release
