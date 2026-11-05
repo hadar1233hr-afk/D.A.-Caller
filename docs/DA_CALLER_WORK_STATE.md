@@ -1,5 +1,48 @@
 # DA CALLER continuation state
 
+## Research identity quality —53 new checks, no APK or gate changes
+
+The unchanged2,448-row research corpus now has read-only phone, text and duplicate
+identity reviews with retained source/code hashes. All seven phone-identity
+failures are five UAN1599 base identities. National-form proposals round-trip
+to the exact source E.164 identity without an added trunk zero; originals and
+separate extensions remain intact. This is numbering-plan evidence, not live
+assignment/reachability/ownership verification. [Phone review](evidence/business-acquisition/owner-261103/phone-readiness-README.md).
+
+Checking all production text fields independently found3 rows/4 fields with
+Unicode Cf controls:2 names and1 city/address. None is oversized. The earlier
+first-failure histogram of2 text failures remains correct: the city/address
+failure is hidden behind the existing scope guard. An independent PBF reread
+retains exact clean source-name alternatives for review only, with no selected
+replacement, control deletion or word reordering. Cross-review found and fixed
+two research-helper defects: all supplied source rereads now bind exact
+ID/URL/timestamp even for city-only or clean rows; pronunciation/etymology and
+unsupported-language metadata cannot be treated as alternate names. Both were
+independently rechecked. [Text review](evidence/business-acquisition/owner-261103/text-readiness-README.md).
+
+Five two-node pairs share normalized name/phone/extension/nonempty-address keys:
+three nearly coincide, one is12.029m apart and one809.489m apart in approximate
+source-coordinate distance.71 base numbers occur on multiple source nodes.
+None of this proves duplicate physical businesses; all rows are retained and
+zero automatic merges occurred.745 missing-address rows are not grouped by an
+empty address. [Identity review](evidence/business-acquisition/owner-261103/duplicate-readiness-README.md).
+
+Root independently executed16 phone +29 text +8 duplicate checks:53 new data
+quality checks PASS,0failures/errors/skips. Existing16 geometry and37
+extractor/packager contracts also PASS,106 total data-tool checks. These are not
+new Android tests. [Combined evidence](evidence/business-acquisition/owner-261103/quality-review-summary.json).
+The unchanged production packager still rejects every research row; the primary
+24-record SQLite hash/count/integrity were rechecked unchanged.0app rows added.
+
+Application tree remains9f15350b457405bf88a35c0ac5badc8f3a85cd94, so the existing
+356-unit/35-native/243-visual proof remains the current app evidence. No app,
+other product, signing, CI or publication guard was edited. Overall CI remains
+FAIL at the unchanged245-frame guard; no new public APK. PR comments/reviews
+were checked again and contain no explicit approval for the previously rejected
+0.12.0-only exception. Continue from this data quality checkpoint without
+inventing country tags or bypassing that rejection. The2-hour timer stays active
+until all requested work and verified APK delivery finish.
+
 ## Research continuation —2,448 phone candidates, APK unchanged
 
 The new offline NODE-only research produced2,448 phone rows from2,393 actual source nodes, with2,353 distinct base phones. Every emitted node ID/name/category/original and canonical phone/raw country field/coordinate/timestamp matched the owner-supplied PBF in an independent source audit; all2,448 point admissions were replayed independently.2,434 country tags remain missing and14 are explicit; none was invented. [Measured report, exact compressed corpus, geometry inputs and audit](evidence/business-acquisition/owner-261103/node-geography-README.md) and [reproducible research tool/checks](../scripts/business-directory/research/README.md) are retained.16 independent geometry/country contract tests PASS (0 failures/errors/skips); these are separate research checks, not a fresh Android run.

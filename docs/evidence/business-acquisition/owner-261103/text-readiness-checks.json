@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "tests": 29,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "test_script_sha256": "c33665bc723cd0289c1274e4017ea2d7e0c18df8167c462520aa7df3a026ce7c",
+  "helper_sha256": "a0ba075c107a17e990fb285752f4447156d4c429a770303fb560e689a52d64a5",
+  "report_sha256": "e04848419c58d79e9d3e5eeab9c3e778cfa3f223554966f374625d4bd3a299fc",
+  "corpus_report_assertions": "PASS",
+  "original_rows_unchanged_from_prior_report": true,
+  "independent_source_identity_checked_for_all_rows": true,
+  "review_corrections": [
+    "All supplied source rereads bound by exact ID/URL/timestamp, including non-name failures and clean rows",
+    "Only exact name/short_name and explicitly supported he/ar/en tags may be review alternatives; metadata names are excluded"
+  ],
+  "scope": "Research source text only; no Android/native/publication tests run"
+}

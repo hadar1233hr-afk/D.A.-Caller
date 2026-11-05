@@ -59,3 +59,50 @@ fill a missing country tag merely to pass production validation.
 The compressed research corpus and geometry inputs retain an ODbL notice,
 source IDs, source timestamps and checksums. See the matching evidence README,
 semantic review and retention manifest. They do not approve APK publication.
+
+## Identity quality review without changing source rows
+
+`duplicate_identity_review.py` reports shared base phones and repeated
+name/phone/extension/nonempty-address keys. It preserves every source row and
+flags ambiguous locations for manual review. On this corpus, five two-node
+groups have matching keys: three points nearly coincide, one pair is12.029m
+apart and one is809.489m apart. These are approximate source-coordinate
+distances, not measured premises or proof of duplicate physical businesses.
+Seventy-one numbers are shared by multiple source nodes; they are not merged.
+All8 synthetic identity-review checks passed.
+
+```sh
+python scripts/business-directory/research/check_duplicate_identity_review.py
+python scripts/business-directory/research/duplicate_identity_review.py /workspace/work/business-data/node-geography-owner-261103-v2/research-node-businesses.ndjson /workspace/work/new-duplicate-review.json
+```
+
+The output path must not exist. See the retained `duplicate-readiness-*`
+evidence for exact groups and input/code hashes. This review neither reduces
+the2,448-row source corpus nor adds records to the app.
+
+`phone_identity_review.py` explains all seven existing phone-identity failures:
+they are five distinct UAN1599 identities. A library-derived national form
+round-trips to the same source E.164 base number without a trunk zero. Full raw
+records and separate extensions are preserved. The proposals do not fill
+country tags, change source phones or pass the existing country/scope guard.
+Numbering-plan validity does not prove current ownership or reachability.
+Sixteen focused checks, including the retained actual corpus, passed.
+
+```sh
+/workspace/work/business-directory-research/.venv/bin/python scripts/business-directory/research/check_phone_identity_review.py
+/workspace/work/business-directory-research/.venv/bin/python scripts/business-directory/research/phone_identity_review.py /workspace/work/business-data/node-geography-owner-261103-v2/research-node-businesses.ndjson
+```
+
+`source_text_review.py` independently checks all seven production text bounds,
+including fields hidden behind earlier scope rejection. Three rows have `Cf`
+controls: two names and one city/address. None is oversized. An independent
+PBF reread retains exact source tags and clean name alternatives for review;
+no control was deleted, text reordered or alternative selected. The earlier
+first-failure histogram of two text errors remains correct. See the retained
+`text-readiness-*` and `phone-readiness-*` evidence for exact reproduction,
+source IDs, original values, limitations and code/input hashes.
+All29 text checks passed after independent review strengthened source-object
+binding for every supplied reread and excluded pronunciation/etymology or
+unsupported-language metadata from name alternatives. Only exact `name`,
+`short_name` and their explicitly supported `he/ar/en` tags are considered;
+unknown tags remain retained raw, without guessed language or selected names.

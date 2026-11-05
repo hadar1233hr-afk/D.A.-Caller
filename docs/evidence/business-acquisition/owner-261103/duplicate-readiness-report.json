@@ -1,0 +1,1026 @@
+{
+  "status": "RESEARCH_IDENTITY_REVIEW_ONLY_NO_SOURCE_OR_APP_MUTATION",
+  "input_phone_rows": 2448,
+  "distinct_source_ids": 2393,
+  "rows_without_address": 745,
+  "same_name_phone_extension_address_groups": [
+    {
+      "source_ids": [
+        "osm:node:12400091759",
+        "osm:node:12400091760"
+      ],
+      "name": "חן פינת המשקאות",
+      "phone": "+972524310930",
+      "extension": "",
+      "address": "העלייה 26 תל אביב-יפו",
+      "source_rows": 2,
+      "classification": "nearly_coincident_manual_review",
+      "approximate_max_distance_m": 1.959,
+      "action": "RETAIN_ALL_SOURCE_ROWS_MANUAL_REVIEW_NO_AUTOMATIC_MERGE"
+    },
+    {
+      "source_ids": [
+        "osm:node:12568199182",
+        "osm:node:12568199183"
+      ],
+      "name": "דדה",
+      "phone": "+972549910145",
+      "extension": "",
+      "address": "אוריאל אקוסטה 16 תל אביב-יפו",
+      "source_rows": 2,
+      "classification": "nearly_coincident_manual_review",
+      "approximate_max_distance_m": 0.225,
+      "action": "RETAIN_ALL_SOURCE_ROWS_MANUAL_REVIEW_NO_AUTOMATIC_MERGE"
+    },
+    {
+      "source_ids": [
+        "osm:node:12857390748",
+        "osm:node:12857390749"
+      ],
+      "name": "גליאנו",
+      "phone": "+972584704555",
+      "extension": "",
+      "address": "אברבנאל 17 תל אביב-יפו",
+      "source_rows": 2,
+      "classification": "nearly_coincident_manual_review",
+      "approximate_max_distance_m": 0.801,
+      "action": "RETAIN_ALL_SOURCE_ROWS_MANUAL_REVIEW_NO_AUTOMATIC_MERGE"
+    },
+    {
+      "source_ids": [
+        "osm:node:1799497566",
+        "osm:node:2557930606"
+      ],
+      "name": "ז. את ג. הספקה טכנית",
+      "phone": "+97235598752",
+      "extension": "",
+      "address": "המלאכה 39",
+      "source_rows": 2,
+      "classification": "separated_manual_review",
+      "approximate_max_distance_m": 809.489,
+      "action": "RETAIN_ALL_SOURCE_ROWS_MANUAL_REVIEW_NO_AUTOMATIC_MERGE"
+    },
+    {
+      "source_ids": [
+        "osm:node:5711484722",
+        "osm:node:5711499422"
+      ],
+      "name": "הגלריה של אלמוג",
+      "phone": "+972778838890",
+      "extension": "",
+      "address": "הגפן 3",
+      "source_rows": 2,
+      "classification": "nearby_manual_review",
+      "approximate_max_distance_m": 12.029,
+      "action": "RETAIN_ALL_SOURCE_ROWS_MANUAL_REVIEW_NO_AUTOMATIC_MERGE"
+    }
+  ],
+  "group_location_classes": {
+    "nearly_coincident_manual_review": 3,
+    "separated_manual_review": 1,
+    "nearby_manual_review": 1
+  },
+  "same_identity_rows_beyond_first": 5,
+  "shared_phone_groups": [
+    {
+      "phone": "+9721599510510",
+      "source_nodes": 3,
+      "names": [
+        "Bershka",
+        "סטרדיווריוס"
+      ],
+      "source_ids": [
+        "osm:node:10001924959",
+        "osm:node:12625537932",
+        "osm:node:14046803650"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97225665725",
+      "source_nodes": 2,
+      "names": [
+        "סופר זול אקספרס",
+        "סופרזול אקספרס"
+      ],
+      "source_ids": [
+        "osm:node:13098704201",
+        "osm:node:13161962302"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97235229505",
+      "source_nodes": 2,
+      "names": [
+        "פיקה"
+      ],
+      "source_ids": [
+        "osm:node:11063336012",
+        "osm:node:12133753684"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97235252033",
+      "source_nodes": 2,
+      "names": [
+        "הקוסם",
+        "פלאפל הקוסם"
+      ],
+      "source_ids": [
+        "osm:node:10812430078",
+        "osm:node:1791481321"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97235598752",
+      "source_nodes": 2,
+      "names": [
+        "ז. את ג. הספקה טכנית"
+      ],
+      "source_ids": [
+        "osm:node:1799497566",
+        "osm:node:2557930606"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97235626789",
+      "source_nodes": 2,
+      "names": [
+        "מצמן את מרוץ - תל אביב",
+        "מצמן את מרוץ - תל אביב - חנות עודפים"
+      ],
+      "source_ids": [
+        "osm:node:1989843575",
+        "osm:node:1989843580"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97236090096",
+      "source_nodes": 2,
+      "names": [
+        "Michal",
+        "Michal Outlet"
+      ],
+      "source_ids": [
+        "osm:node:11176709527",
+        "osm:node:11176718777"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97236135468",
+      "source_nodes": 2,
+      "names": [
+        "דלק",
+        "מנטה"
+      ],
+      "source_ids": [
+        "osm:node:1622283334",
+        "osm:node:1622283370"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97236532407",
+      "source_nodes": 4,
+      "names": [
+        "בנק הפועלים"
+      ],
+      "source_ids": [
+        "osm:node:10868043157",
+        "osm:node:1520020686",
+        "osm:node:2624166982",
+        "osm:node:5181466596"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97236590101",
+      "source_nodes": 2,
+      "names": [
+        "דלק",
+        "מנטה"
+      ],
+      "source_ids": [
+        "osm:node:1716547887",
+        "osm:node:1716729158"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97236707929",
+      "source_nodes": 3,
+      "names": [
+        "פורט 19"
+      ],
+      "source_ids": [
+        "osm:node:13137796250",
+        "osm:node:5754884732",
+        "osm:node:9833787217"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97236742222",
+      "source_nodes": 2,
+      "names": [
+        "כיבוי אש רמת גן - בורסה",
+        "תחנת כיבוי אש רמת גן"
+      ],
+      "source_ids": [
+        "osm:node:1693941208",
+        "osm:node:5084345846"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97236868657",
+      "source_nodes": 3,
+      "names": [
+        "בנדיקט",
+        "בנדיקט רוטשילד"
+      ],
+      "source_ids": [
+        "osm:node:13530092974",
+        "osm:node:14078352301",
+        "osm:node:721908107"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97236950567",
+      "source_nodes": 2,
+      "names": [
+        "Greg Cafe",
+        "אלתרנתיב"
+      ],
+      "source_ids": [
+        "osm:node:6959481347",
+        "osm:node:7194886836"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97236956276",
+      "source_nodes": 2,
+      "names": [
+        "Meat Bar",
+        "מיט בר בורגר"
+      ],
+      "source_ids": [
+        "osm:node:10946223402",
+        "osm:node:777400974"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97237357200",
+      "source_nodes": 2,
+      "names": [
+        "חצי חינם",
+        "חצי חינם חולון - המרכבה"
+      ],
+      "source_ids": [
+        "osm:node:1059858020",
+        "osm:node:1228264344"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97237363070",
+      "source_nodes": 2,
+      "names": [
+        "שניט",
+        "שניט הקטן"
+      ],
+      "source_ids": [
+        "osm:node:12695171677",
+        "osm:node:12695171678"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97239151144",
+      "source_nodes": 2,
+      "names": [
+        "Wine Shop",
+        "טריגר בשר ויין"
+      ],
+      "source_ids": [
+        "osm:node:12114467379",
+        "osm:node:12114473827"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97239545522",
+      "source_nodes": 2,
+      "names": [
+        "בנק לאומי"
+      ],
+      "source_ids": [
+        "osm:node:5613227085",
+        "osm:node:6014955187"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97239771111",
+      "source_nodes": 2,
+      "names": [
+        "אל על משרד ראשי-שער דרומי",
+        "אל על משרד ראשי-שער צפוני"
+      ],
+      "source_ids": [
+        "osm:node:6584172182",
+        "osm:node:6584182186"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97246883040",
+      "source_nodes": 4,
+      "names": [
+        "הווילג' מלון מטיילים על הירדן",
+        "מלון מטיילים ארץ דפנה",
+        "מלון מטיילים גשר הזיו",
+        "מלון מטיילים מטולה"
+      ],
+      "source_ids": [
+        "osm:node:1184832072",
+        "osm:node:5713169675",
+        "osm:node:6835215030",
+        "osm:node:9152590049"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97246940767",
+      "source_nodes": 2,
+      "names": [
+        "בית שלום"
+      ],
+      "source_ids": [
+        "osm:node:5109817422",
+        "osm:node:5713136326"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97246941154",
+      "source_nodes": 2,
+      "names": [
+        "דגי דפנה"
+      ],
+      "source_ids": [
+        "osm:node:2393033799",
+        "osm:node:593121602"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97246941234",
+      "source_nodes": 2,
+      "names": [
+        "ד\"ר רענן רפאלי – מרפאה וטרינרית",
+        "דר' רענן רפאלי"
+      ],
+      "source_ids": [
+        "osm:node:2432439455",
+        "osm:node:5711543715"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97246943752",
+      "source_nodes": 2,
+      "names": [
+        "דור אלון",
+        "טן"
+      ],
+      "source_ids": [
+        "osm:node:2303364413",
+        "osm:node:372848858"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97246959696",
+      "source_nodes": 2,
+      "names": [
+        "כללית סמייל",
+        "כללית רפואה משלימה"
+      ],
+      "source_ids": [
+        "osm:node:5221302762",
+        "osm:node:5221308971"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97248573637",
+      "source_nodes": 2,
+      "names": [
+        "H&O"
+      ],
+      "source_ids": [
+        "osm:node:13286258730",
+        "osm:node:5221355892"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97248812345",
+      "source_nodes": 4,
+      "names": [
+        "ביטוח לאומי",
+        "המוסד לביטוח לאומי"
+      ],
+      "source_ids": [
+        "osm:node:5918373059",
+        "osm:node:683209656",
+        "osm:node:8615804707",
+        "osm:node:8615804708"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97249597759",
+      "source_nodes": 2,
+      "names": [
+        "אומה",
+        "ארבורגר"
+      ],
+      "source_ids": [
+        "osm:node:5147983274",
+        "osm:node:5147987288"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97249950102",
+      "source_nodes": 4,
+      "names": [
+        "האורן",
+        "האלה",
+        "האלון",
+        "חניון לילה תנועות הנוער"
+      ],
+      "source_ids": [
+        "osm:node:11991816696",
+        "osm:node:4394881307",
+        "osm:node:4394881308",
+        "osm:node:4394894146"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97249950103",
+      "source_nodes": 3,
+      "names": [
+        "האורן",
+        "האלה",
+        "האלון"
+      ],
+      "source_ids": [
+        "osm:node:4394881307",
+        "osm:node:4394881308",
+        "osm:node:4394894146"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972505556566",
+      "source_nodes": 3,
+      "names": [
+        "Brand Apartments Tel Aviv"
+      ],
+      "source_ids": [
+        "osm:node:2079012098",
+        "osm:node:2079069969",
+        "osm:node:2079181983"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972506532265",
+      "source_nodes": 2,
+      "names": [
+        "Yellow",
+        "פז"
+      ],
+      "source_ids": [
+        "osm:node:3222136461",
+        "osm:node:621159124"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972508472798",
+      "source_nodes": 3,
+      "names": [
+        "Goosto - hookah store"
+      ],
+      "source_ids": [
+        "osm:node:10933638391",
+        "osm:node:10933647227",
+        "osm:node:10933659470"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972515008717",
+      "source_nodes": 2,
+      "names": [
+        "מרלן"
+      ],
+      "source_ids": [
+        "osm:node:10951185355",
+        "osm:node:7660826785"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972523221401",
+      "source_nodes": 2,
+      "names": [
+        "Daya, beach front apartment",
+        "דאיה - יחידת אירוח"
+      ],
+      "source_ids": [
+        "osm:node:7217006285",
+        "osm:node:7217006385"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972524310930",
+      "source_nodes": 2,
+      "names": [
+        "חן פינת המשקאות"
+      ],
+      "source_ids": [
+        "osm:node:12400091759",
+        "osm:node:12400091760"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972542081490",
+      "source_nodes": 2,
+      "names": [
+        "אלונית",
+        "דור אלון"
+      ],
+      "source_ids": [
+        "osm:node:1477010460",
+        "osm:node:1743698935"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972542913573",
+      "source_nodes": 2,
+      "names": [
+        "סו גוד",
+        "סונול"
+      ],
+      "source_ids": [
+        "osm:node:6547354717",
+        "osm:node:6547423945"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972544234684",
+      "source_nodes": 2,
+      "names": [
+        "Rutman IP",
+        "רוטמן פטנטים"
+      ],
+      "source_ids": [
+        "osm:node:2604728178",
+        "osm:node:7940877653"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972544326270",
+      "source_nodes": 2,
+      "names": [
+        "אילינה סוחוביצקי יועצת נדל\"ן"
+      ],
+      "source_ids": [
+        "osm:node:5119184423",
+        "osm:node:5119184523"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972544415969",
+      "source_nodes": 2,
+      "names": [
+        "מוקד טלפוני LVL Group",
+        "פוטו-ארט 4 יו"
+      ],
+      "source_ids": [
+        "osm:node:6861931385",
+        "osm:node:6861932885"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972545438742",
+      "source_nodes": 2,
+      "names": [
+        "אלונית",
+        "דור אלון"
+      ],
+      "source_ids": [
+        "osm:node:1798702767",
+        "osm:node:349072493"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972545438758",
+      "source_nodes": 2,
+      "names": [
+        "אלונית",
+        "דור אלון"
+      ],
+      "source_ids": [
+        "osm:node:1270554036",
+        "osm:node:1798702761"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972546733660",
+      "source_nodes": 2,
+      "names": [
+        "סונול",
+        "שדה יואב"
+      ],
+      "source_ids": [
+        "osm:node:1270554061",
+        "osm:node:1798702764"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972549910145",
+      "source_nodes": 2,
+      "names": [
+        "דדה"
+      ],
+      "source_ids": [
+        "osm:node:12568199182",
+        "osm:node:12568199183"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972584704555",
+      "source_nodes": 2,
+      "names": [
+        "גליאנו"
+      ],
+      "source_ids": [
+        "osm:node:12857390748",
+        "osm:node:12857390749"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972585586825",
+      "source_nodes": 2,
+      "names": [
+        "דוברין 7",
+        "וספר"
+      ],
+      "source_ids": [
+        "osm:node:12025813254",
+        "osm:node:4875501522"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972587980909",
+      "source_nodes": 2,
+      "names": [
+        "Babel Books Tel-Aviv",
+        "Бабель"
+      ],
+      "source_ids": [
+        "osm:node:11710718324",
+        "osm:node:7573279486"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972723386908",
+      "source_nodes": 2,
+      "names": [
+        "GaliRoma Pizza",
+        "גלירומא בוטיק פיצה"
+      ],
+      "source_ids": [
+        "osm:node:6790992294",
+        "osm:node:6814321296"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972723929598",
+      "source_nodes": 2,
+      "names": [
+        "פינה בגן"
+      ],
+      "source_ids": [
+        "osm:node:1517901141",
+        "osm:node:5129028321"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972772233344",
+      "source_nodes": 2,
+      "names": [
+        "מייקאפ לנד זכרון יעקב",
+        "מייקאפ לנד חיפה"
+      ],
+      "source_ids": [
+        "osm:node:13873869602",
+        "osm:node:13873872717"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+972778838890",
+      "source_nodes": 2,
+      "names": [
+        "הגלריה של אלמוג"
+      ],
+      "source_ids": [
+        "osm:node:5711484722",
+        "osm:node:5711499422"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97286332266",
+      "source_nodes": 2,
+      "names": [
+        "Pizza Hut",
+        "פאפאגאיו בר"
+      ],
+      "source_ids": [
+        "osm:node:1088124086",
+        "osm:node:1088128533"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97286337327",
+      "source_nodes": 2,
+      "names": [
+        "אילת",
+        "סונול"
+      ],
+      "source_ids": [
+        "osm:node:2378304437",
+        "osm:node:538532388"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97286810584",
+      "source_nodes": 2,
+      "names": [
+        "דלק",
+        "מנטה"
+      ],
+      "source_ids": [
+        "osm:node:1798702765",
+        "osm:node:1798702766"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97288552231",
+      "source_nodes": 2,
+      "names": [
+        "דר.ליאפיס ארקדי מרפאת שיניים",
+        "מרפאת שיניים דייר ליאפיס ארקדי"
+      ],
+      "source_ids": [
+        "osm:node:8089282517",
+        "osm:node:8238984817"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97288600808",
+      "source_nodes": 2,
+      "names": [
+        "גולדה"
+      ],
+      "source_ids": [
+        "osm:node:13323181210",
+        "osm:node:13323181212"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97289737666",
+      "source_nodes": 2,
+      "names": [
+        "מכבי",
+        "מכבי שירותי בריאות - מעבדה"
+      ],
+      "source_ids": [
+        "osm:node:11250987637",
+        "osm:node:9895359617"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97289950097",
+      "source_nodes": 2,
+      "names": [
+        "כפר הנוקדים"
+      ],
+      "source_ids": [
+        "osm:node:3442732615",
+        "osm:node:3568331220"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97297440400",
+      "source_nodes": 2,
+      "names": [
+        "מיט בר בורגר"
+      ],
+      "source_ids": [
+        "osm:node:10946228150",
+        "osm:node:6792690637"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97298822660",
+      "source_nodes": 2,
+      "names": [
+        "חינאוי",
+        "קבב G"
+      ],
+      "source_ids": [
+        "osm:node:2411348354",
+        "osm:node:6516161176"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "+97299585735",
+      "source_nodes": 2,
+      "names": [
+        "אדי אור"
+      ],
+      "source_ids": [
+        "osm:node:12382095879",
+        "osm:node:1665847282"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "1700505507",
+      "source_nodes": 2,
+      "names": [
+        "פיצוחי ענהאל"
+      ],
+      "source_ids": [
+        "osm:node:5143607254",
+        "osm:node:5302055847"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "1700506070",
+      "source_nodes": 8,
+      "names": [
+        "KFC",
+        "Pizza Hut",
+        "פיצה האט"
+      ],
+      "source_ids": [
+        "osm:node:1088128534",
+        "osm:node:10970907888",
+        "osm:node:11802320072",
+        "osm:node:12047583620",
+        "osm:node:12146589680",
+        "osm:node:1740901019",
+        "osm:node:2363322549",
+        "osm:node:6547410090"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "1700700165",
+      "source_nodes": 3,
+      "names": [
+        "דדה"
+      ],
+      "source_ids": [
+        "osm:node:1251428252",
+        "osm:node:8302822752",
+        "osm:node:8302822753"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "1700705040",
+      "source_nodes": 2,
+      "names": [
+        "מגה ספורט",
+        "מגה ספורט חולון"
+      ],
+      "source_ids": [
+        "osm:node:2124161116",
+        "osm:node:5331566553"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "1700709700",
+      "source_nodes": 2,
+      "names": [
+        "פיצה שמש"
+      ],
+      "source_ids": [
+        "osm:node:11738940269",
+        "osm:node:2079186344"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "1800266066",
+      "source_nodes": 3,
+      "names": [
+        "Castro",
+        "קסטרו"
+      ],
+      "source_ids": [
+        "osm:node:5111541881",
+        "osm:node:5221338622",
+        "osm:node:5331566554"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "1800300307",
+      "source_nodes": 2,
+      "names": [
+        "בוני עולם"
+      ],
+      "source_ids": [
+        "osm:node:11264547401",
+        "osm:node:11264556668"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    },
+    {
+      "phone": "1800350550",
+      "source_nodes": 4,
+      "names": [
+        "האורן",
+        "האלה",
+        "האלון",
+        "חניון בארותיים"
+      ],
+      "source_ids": [
+        "osm:node:1061646298",
+        "osm:node:4394881307",
+        "osm:node:4394881308",
+        "osm:node:4394894146"
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_IDENTITIES_NOT_PROOF_OF_DUPLICATE_BUSINESS"
+    }
+  ],
+  "shared_phones_with_multiple_source_ids": 71,
+  "repeated_source_phone_extension_rows": 0,
+  "rows_removed_or_merged": 0,
+  "app_rows_added": 0,
+  "limits": [
+    "Approximate spherical distance between source coordinates, not measured premises proximity.",
+    "A shared phone, source name/address or close point is not proof of the same physical business.",
+    "Source addresses may be incomplete or outdated; no address, phone ownership or currentness confirmed."
+  ],
+  "input_ndjson_sha256": "37ce40b735e144cc38eee1e72ce75c785424f0213d05c9c35feb766c1b2704df"
+}
