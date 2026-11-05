@@ -6,7 +6,7 @@
 
 Overall workflow is FAILURE: the unchanged external-island post-verifier still expects245 images from the earlier populated-business scope and found243. Do not report a full pipeline PASS or alter/bypass the rejected signing/CI safeguards. Original gates remain unchanged. Explicit owner approval was requested asynchronously for the0.12.0-only exception; no reply has arrived yet.
 
-Actual visual review covers36 fresh frames, including all4 Settings top/bottom palettes, reminder singular copy,0.12.0 changelog, hidden directory, actual incoming swipe/new-contact editor and backup/island-settings samples. These36 frames PASS visually; full243-image visual review is PENDING. [Partial review and native proof](evidence/release-0.12.0/polish-ci/polish-review-partial.json). This is not publication approval. No new Release/APK link has been issued.
+Actual visual review now covers ALL243 actual PNGs (101 call,44 island,98 other), all PASS visually. The original36-frame review remains historical. [Complete hash-bound visual observation](evidence/release-0.12.0/polish-ci/full-visual-observation.json) retains all62 actually viewed sheets and243 source hashes. This is not publication approval: unchanged legacy gates and the rejected signing/CI exception still block release. No new Release/APK link has been issued.
 
 ## Latest continuation — APK-first, polish and business extraction
 
