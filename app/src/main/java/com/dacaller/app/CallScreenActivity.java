@@ -188,6 +188,7 @@ public final class CallScreenActivity extends Activity {
   if(state!=Call.STATE_ACTIVE){clockHandler.removeCallbacks(stopTone);stopTone.run();}
   if(state==Call.STATE_RINGING||state==Call.STATE_DIALING||state==Call.STATE_CONNECTING)getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);else getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
   String stage=state==Call.STATE_RINGING?"שיחה נכנסת":state==Call.STATE_DIALING?"מחייג…":state==Call.STATE_CONNECTING?"מתחבר…":state==Call.STATE_HOLDING?"בהמתנה":"שיחה פעילה";
+  timer.setVisibility(state==Call.STATE_ACTIVE?View.VISIBLE:View.GONE);
   phase.setText(tr(stage));phase.setVisibility(state==Call.STATE_ACTIVE&&(theme.style==1||largeType()&&theme.style!=4)?View.GONE:View.VISIBLE);
   if(preview())setPreviewIdentity();
   else{updateCaller(call);updateTimer();updateBadge();}
@@ -273,8 +274,12 @@ public final class CallScreenActivity extends Activity {
     case MotionEvent.ACTION_MOVE:
      if(tracking[0]){
       float dx=event.getRawX()-down[0],dy=event.getRawY()-down[1];
-      if(mode.equals("vertical"))v.setTranslationY(Math.max(-dp(32),Math.min(dp(32),dy)));
-      else v.setTranslationX(Math.max(-dp(32),Math.min(dp(32),dx)));
+      // Stay inside the space allocated to this prompt. Moving the entire
+      // pill32dp clipped its edge and could overlap the Decline row.
+      android.view.ViewGroup.LayoutParams params=v.getLayoutParams();
+      android.view.ViewGroup.MarginLayoutParams margins=params instanceof android.view.ViewGroup.MarginLayoutParams?(android.view.ViewGroup.MarginLayoutParams)params:null;
+      if(mode.equals("vertical"))v.setTranslationY(Math.max(-(margins==null?0:margins.topMargin),Math.min(margins==null?0:margins.bottomMargin,dy)));
+      else v.setTranslationX(Math.max(-(margins==null?0:margins.leftMargin),Math.min(margins==null?0:margins.rightMargin,dx)));
      }
      return true;
     case MotionEvent.ACTION_POINTER_DOWN:

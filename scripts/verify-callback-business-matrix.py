@@ -128,7 +128,7 @@ swipe = reminder.get("incoming_swipe", {})
 assert swipe.get("input_method") == "UiAutomation.injectInputEvent SOURCE_TOUCHSCREEN" and swipe.get("answer_mode") == "ios"
 assert swipe.get("threshold_px") == 96 and swipe.get("drag_translation_px", 0) > 0
 for flag in ("tap_stayed_ringing", "short_drag_stayed_ringing", "cancelled_drag_stayed_ringing",
-             "cancel_reset_translation", "completed_swipe_activated_owned_call"):
+             "cancel_reset_translation", "completed_swipe_activated_owned_call", "incoming_header_outside_swipe", "drag_keeps_prompt_fully_visible"):
     assert swipe.get(flag) is True, f"Missing real native incoming swipe assertion: {flag}"
 for capture in ("resting_bars", "dragging_bars"):
     bars(swipe.get(capture, {}))

@@ -16,6 +16,12 @@ The real reminder Telecom scenario now injects touchscreen DOWN/MOVE/UP/CANCEL e
 
 The next source additionally tests a real unknown incoming Telecom call persisted by Android, then native Recents → contact card → Create new contact → exact phone prefill → Back. It checks unchanged raw-contact IDs/call rows and no active call, with two further original captures. This increases the required matrix to245 (all233 prior +8 reminder/business +2 swipe +2 create-contact),35 native cases. These new native assertions remain NOT TESTED until the fresh run finishes; production data remains0 and full business coverage is BLOCKED.
 
+## First real new-layout run — functional checks, visual correction required
+
+Source da2baba / CI41958726025 booted with the2GB userdata setting:356 unique units PASS,35 native cases executed,34 PASS and1 explicit licensed-data MISSING failure (0errors/skips). Official ZIP digests verified against GitHub metadata; immutable raw exportcd51f1255e34a4c7955477bfe49fb20fd0142419.243 PNGs:241 functional +2 diagnostics; all233 baseline names retained. The real swipe and unknown-number editor native assertions passed.
+
+All three backup frames passed independent raw pixel/hash/stability validation and actual visual review; the formerly bad light frame now has legible native icons. The two new contact frames were viewed and pass. However both incoming frames FAIL visual approval: the incoming phase overlaps the prompt, and dragging clips its right edge. [Actual images/proofs/review](evidence/call-layout-digits/iteration-1/review.json). New correction hides the empty timer outside ACTIVE, limits prompt motion to its allocated margins and adds actual native geometry assertions. It also records the correct effective palette for the dark incoming screen/dimmed dialog.31 focused cases, Android-test Java and lint passed after this correction. Fresh native screenshots are required; no publication approval.
+
 ## Latest CI infrastructure failure — no Android results
 
 Source d4ee506 / CI41956994515 validation passed, but the emulator never booted: Android emulator37.2.13 required7372.80MB for its default userdata while the runner had6294.55MB. Native cases executed:0; new screenshots:0. This is an infrastructure failure, not an app or swipe PASS/FAIL. [Actual failure](evidence/backup-native-bars/ci-boot-blocked.json). Pin disposable AVD disk-size2048M and run the prepared245-image/35-case source afresh. No existing user/device data is touched by this CI setting.

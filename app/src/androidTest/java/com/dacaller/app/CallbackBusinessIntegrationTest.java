@@ -198,16 +198,21 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   Rect bounds=viewBounds(prompt);int threshold=Math.round(64*target.getResources().getDisplayMetrics().density);
   int x=bounds.left+bounds.width()/4,y=bounds.centerY();
   assertTrue("Swipe travel must fit real display",x+threshold+24<480);
-  JSONObject proof=new JSONObject().put("input_method","UiAutomation.injectInputEvent SOURCE_TOUCHSCREEN")
+  View phase=tag(callScreen,"call-phase");assertNotNull(phase);Rect phaseBounds=viewBounds(phase);
+  assertTrue("Incoming status must stay above the swipe prompt",phaseBounds.bottom<=bounds.top);
+  boolean dark=settings.getBoolean("dark",false)||settings.getBoolean("amoled",false);
+  JSONObject proof=new JSONObject().put("dark",dark).put("incoming_header_outside_swipe",true).put("input_method","UiAutomation.injectInputEvent SOURCE_TOUCHSCREEN")
    .put("answer_mode","ios").put("threshold_px",threshold).put("bounds",new JSONArray(new int[]{bounds.left,bounds.top,bounds.right,bounds.bottom}));
-  proof.put("resting_bars",snapshot("incoming-swipe-resting",false));
+  proof.put("resting_bars",snapshot("incoming-swipe-resting",dark));
   tapPoint(x,y);assertEquals("A real tap must not answer",Call.STATE_RINGING,connected.getState());proof.put("tap_stayed_ringing",true);
   long at=SystemClock.uptimeMillis();pointer(at,MotionEvent.ACTION_DOWN,x,y);Thread.sleep(35);
   pointer(at,MotionEvent.ACTION_MOVE,x+threshold/3f,y);Thread.sleep(35);pointer(at,MotionEvent.ACTION_UP,x+threshold/3f,y);settle();
   assertEquals("Short real drag must not answer",Call.STATE_RINGING,connected.getState());proof.put("short_drag_stayed_ringing",true);
   at=SystemClock.uptimeMillis();pointer(at,MotionEvent.ACTION_DOWN,x,y);Thread.sleep(35);pointer(at,MotionEvent.ACTION_MOVE,x+threshold+12,y);
   final float[] translated={0};ui(()->translated[0]=prompt.getTranslationX());assertTrue("Prompt must visibly follow native finger",translated[0]>0);
-  proof.put("drag_translation_px",translated[0]);proof.put("dragging_bars",snapshot("incoming-swipe-dragging",false));
+  Rect dragged=viewBounds(prompt);assertEquals("Dragged pill must not be clipped horizontally",prompt.getWidth(),dragged.width());
+  assertEquals("Dragged pill must not be clipped vertically",prompt.getHeight(),dragged.height());
+  proof.put("drag_keeps_prompt_fully_visible",true);proof.put("drag_translation_px",translated[0]);proof.put("dragging_bars",snapshot("incoming-swipe-dragging",dark));
   pointer(at,MotionEvent.ACTION_CANCEL,x+threshold+12,y);settle();assertEquals("Cancelled real drag must not answer",Call.STATE_RINGING,connected.getState());
   ui(()->assertEquals(0f,prompt.getTranslationX(),0.01f));proof.put("cancelled_drag_stayed_ringing",true).put("cancel_reset_translation",true);
   at=SystemClock.uptimeMillis();pointer(at,MotionEvent.ACTION_DOWN,x,y);
@@ -456,8 +461,8 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   tapNativeText(NUMBER);tapNativeText("כרטיס איש קשר");
   await(()->nativeExactText("יצירת איש קשר חדש")!=null,"Unknown number must offer explicit new-contact action");
   assertNull("Opening unknown-number actions must never dial",PhoneSessionService.current);
-  JSONObject proof=new JSONObject().put("api",33).put("number",NUMBER).put("origin","actual emulator Telecom missed call")
-   .put("actions_bars",snapshot("recents-unknown-number-actions",false)).put("call_log_before_editor",ownRows());
+  JSONObject proof=new JSONObject().put("api",33).put("number",NUMBER).put("origin","actual emulator Telecom missed call").put("actions_dark",true).put("editor_dark",false)
+   .put("actions_bars",snapshot("recents-unknown-number-actions",true)).put("call_log_before_editor",ownRows());
   tapNativeText("יצירת איש קשר חדש");await(()->editor!=null&&!editor.isFinishing(),"Explicit action must launch the production editor");
   launched.add(editor);ready(editor);assertEquals(NUMBER,editor.getIntent().getStringExtra("incoming_number"));assertFalse(editor.getIntent().hasExtra("contact_id"));
   EditText phone=editor.findViewById(0x01000000 | ("phone0".hashCode() & 0x00ffffff));assertNotNull(phone);
