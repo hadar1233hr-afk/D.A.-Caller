@@ -95,7 +95,7 @@ public final class CallbackReminderActivity extends Activity {
     if(restorePending){list.setSelectionFromTop(restorePosition,restoreTop);restorePending=false;}else list.setSelectionFromTop(position,top);
     int missed=0;for(CallbackReminderModel.Entry entry:entries)missed+=entry.missedCountToday;
     summary.setText(entries.isEmpty()?tr("אין שיחות שממתינות לחזרה","No calls waiting for your return"):
-      tr(entries.size()+" מספרים · "+missed+" שיחות שלא נענו ביום זה",entries.size()+" callers · "+missed+" missed calls on this day"));
+      tr((entries.size()==1?"מספר אחד":entries.size()+" מספרים")+" · "+(missed==1?"שיחה אחת שלא נענתה ביום זה":missed+" שיחות שלא נענו ביום זה"),entries.size()+(entries.size()==1?" caller · ":" callers · ")+missed+(missed==1?" missed call on this day":" missed calls on this day")));
     if(!result.error.isEmpty()){
      summary.setText(tr("לא ניתן לטעון את השיחות כרגע","Calls are currently unavailable"));
      status.setText(CallbackReminder.ERROR_ROLE.equals(result.error)?tr("יש לבחור ב־DA CALLER כחייגן ברירת המחדל בהגדרות.","Choose DA CALLER as the default dialer in Settings."):

@@ -383,7 +383,9 @@ final class SettingsScreen {
  }
  private void cardStart(){
   card=column();
-  card.setBackground(card(surface,18));
+  GradientDrawable surfaceShape=card(surface,18);
+  surfaceShape.setStroke(dp(1),dark?0xFF343434:0xFFE9E7E0);
+  card.setBackground(surfaceShape);
   card.setPadding(dp(6),dp(8),dp(6),dp(8));
   LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(-1,-2);
   cp.topMargin=dp(4);
@@ -413,10 +415,17 @@ final class SettingsScreen {
   }
   sectionHeader=null;
  }
- private void cardEnd(){card=null;}
+ private void cardEnd(){
+  // Dividers separate settings rows; the rounded card edge finishes the last row.
+  if(card!=null&&card.getChildCount()>0){
+   View last=card.getChildAt(card.getChildCount()-1);
+   if("settings_separator".equals(last.getTag()))card.removeView(last);
+  }
+  card=null;
+ }
  private void sep(){
   if(card==null)return;
-  View dividerView=new View(host);dividerView.setBackgroundColor(divider);
+  View dividerView=new View(host);dividerView.setTag("settings_separator");dividerView.setBackgroundColor(divider);
   LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,dp(1));
   p.leftMargin=dp(10);p.rightMargin=dp(10);
   card.addView(dividerView,p);

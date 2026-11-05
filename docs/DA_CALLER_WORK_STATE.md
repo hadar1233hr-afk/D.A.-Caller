@@ -1,5 +1,11 @@
 # DA CALLER continuation state
 
+## Latest continuation — APK-first, polish and business extraction
+
+User requests delivery here immediately when an APK is ready, continued Israel-only business integration separately, modest UI polish, and one2-hour continuation timer that disables itself after all requested work is complete. Existing self-owned timer was updated, not duplicated; no reliable quota API or actual usage-limit block has been observed.
+
+Settings cards now have subtle palette-aware outlines and no redundant terminal separators; reminder summary handles singular Hebrew/English. Existing5 focused Settings tests and production/native-test Java compilation passed before the subsequent reminder copy edit; fresh full-source CI/native/visual evidence is required. Prior356 full-unit PASS remains historical for the earlier scope source. Business extraction is running offline on the verified owner-supplied PBF in /workspace/work/business-data. No records bundled in0.12.0. Signing/publication gate exception remains rejected/pending explicit owner approval; do not bypass it.
+
 ## Owner release scope update — 2026-11-05
 
 Local scope checks completed:356 unique unit tests PASS (0failures/errors/skips), debug APK build/native-test Java compilation/lint PASS (3m37). This is not fresh native/visual approval. See `docs/releases/0.12.0-local-checks.json`.
