@@ -1,5 +1,17 @@
 # DA CALLER continuation state
 
+## Research continuation —2,448 phone candidates, APK unchanged
+
+The new offline NODE-only research produced2,448 phone rows from2,393 actual source nodes, with2,353 distinct base phones. Every emitted node ID/name/category/original and canonical phone/raw country field/coordinate/timestamp matched the owner-supplied PBF in an independent source audit; all2,448 point admissions were replayed independently.2,434 country tags remain missing and14 are explicit; none was invented. [Measured report, exact compressed corpus, geometry inputs and audit](evidence/business-acquisition/owner-261103/node-geography-README.md) and [reproducible research tool/checks](../scripts/business-directory/research/README.md) are retained.16 independent geometry/country contract tests PASS (0 failures/errors/skips); these are separate research checks, not a fresh Android run.
+
+Admission uses complete source IL geometry, excludes the union of both filled WestBank outer envelopes and Gaza, and rejects an angular0.001-degree margin. This is source-spatial research, not an official/legal country determination, verified phone ownership or national coverage. All ways/relations remain omitted until full geometry is checked. Dates span2010–2026,745 records lack an address and5 duplicate-address rows require review.
+
+The broad secondary-country policy omitted8 diplomatic rows from the provisional2,456-row run. Diplomatic `country` can denote a represented state; all9 primary-package observations have addr:country=IL, so these are semantic review notes, NOT proof of foreign physical location or defects in the original24 records. Preserve the original source audit and read its semantic companion. The primary24 source/package hashes and actual SQLite24-row count/integrity were independently rechecked and remain unchanged.
+
+All2,448 unchanged research rows are rejected by the existing production packager:2,439 scope/country guards,7 unsupported app dial identities and2 source-text validation failures.0 rows were added to app assets. Do not rename the research scope/fill country tags to pass it. A reviewed production admission/phone/text/deduplication contract and new native business verification are still needed for future integration.
+
+The0.12.0 app tree remains `9f15350b457405bf88a35c0ac5badc8f3a85cd94`, identical to the existing356-unit/35-native/243-image proof below. No app, signing, CI, publication gate or release was changed. PR comments/reviews were checked and contain no explicit new approval. The0.12.0-only publication exception is still pending; no APK was published. The existing2-hour timer remains active; it must be disabled once all requested work and verified APK delivery finish. No usage-quota API was assumed and no current quota block occurred in this continuation.
+
 ## Fresh native verification — source0d266d6 / CI42001641651
 
 [CI42001641651](https://github.com/hadar1233hr-afk/D.A.-Caller/actions/runs/42001641651) produced356 unique unit PASS and35 unique Android13 native PASS,0 failures/errors/skips in the actual independently extracted JUnit reports. All243 actual PNGs are present, with101 call/44 island/98 other and0 diagnostics; all233 baseline names retained. GitHub artifact hashes/sizes/ZIPCRC were independently checked; immutable raw export `612188913a0e9ff2040d58892d1f9e83d528c4da` retains the native APK, UI and checks. App tree `9f15350b457405bf88a35c0ac5badc8f3a85cd94` remains unchanged by subsequent data/docs commits.
