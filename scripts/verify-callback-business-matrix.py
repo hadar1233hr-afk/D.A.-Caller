@@ -18,11 +18,12 @@ root = Path(sys.argv[1] if len(sys.argv) > 1 else "app/build/ui-snapshots")
 required = {"callback-settings-light.png", "callback-settings-dark.png",
             "callback-list-light.png", "callback-list-dark.png",
             "business-tab-light.png", "business-tab-dark.png",
-            "business-search.png", "business-detail.png"}
+            "business-search.png", "business-detail.png",
+            "incoming-swipe-resting.png", "incoming-swipe-dragging.png"}
 files = [path for path in root.rglob("*.png") if path.is_file()]
 counts = collections.Counter(path.name for path in files)
 assert all(counts[name] == 1 for name in required), "Missing/duplicate real callback/business PNG; an unavailable dataset is BLOCKED"
-assert len(files) == len(counts) == 241, "Retain all233 previous PNGs and add exactly8 callback/business captures"
+assert len(files) == len(counts) == 243, "Retain all233 previous PNGs and add exactly10 callback/business/swipe captures"
 assert not any(any(marker in name for marker in ("failed", "unreachable", "not-ready")) for name in counts), "Failure diagnostics do not qualify as passing evidence"
 images = {path.name: path for path in files}
 hashes = {}
@@ -105,7 +106,15 @@ assert calls[-1].get("disconnect_cause") == 5
 for row in (rows[0], rows[1], rows[3]):
     assert row["duration"] == 0 and row["new"] == 1 and row["is_read"] == 0
 assert rows[2]["duration"] >= 2 and reminder.get("answered_call") == rows[2]
-assert reminder.get("answer_method") == "production-real-CallStyle-Answer-PendingIntent"
+assert reminder.get("answer_method") == "production-real-touchscreen-swipe"
+swipe = reminder.get("incoming_swipe", {})
+assert swipe.get("input_method") == "UiAutomation.injectInputEvent SOURCE_TOUCHSCREEN" and swipe.get("answer_mode") == "ios"
+assert swipe.get("threshold_px") == 96 and swipe.get("drag_translation_px", 0) > 0
+for flag in ("tap_stayed_ringing", "short_drag_stayed_ringing", "cancelled_drag_stayed_ringing",
+             "cancel_reset_translation", "completed_swipe_activated_owned_call"):
+    assert swipe.get(flag) is True, f"Missing real native incoming swipe assertion: {flag}"
+for capture in ("resting_bars", "dragging_bars"):
+    bars(swipe.get(capture, {}))
 before = reminder.get("pending_before_connection", {})
 after = reminder.get("pending_after_later_miss", {})
 for entry in (before, after):
@@ -201,8 +210,8 @@ for name, expected in {"matrix-verification.json": 122, "personalization-verific
     "app_tree": subprocess.check_output(["git", "rev-parse", "HEAD:app"], text=True).strip(),
     "workflow_run_id": os.environ.get("GITHUB_RUN_ID"),
     "api": 33, "size": "480x854", "density_dpi": 240, "font_scale": 1.3,
-    "required_real_png_files": 8, "total_required_png_files": 241,
+    "required_real_png_files": 10, "total_required_png_files": 243,
     "sha256": hashes, "native_assertions": proof,
     "limits": "Actual emulator Telecom and production call-log rows, real OS accelerated private-alarm delivery and the actual licensed packaged business dataset. Accelerated delivery does not mean the test waited until21:00. No real business number was dialed. Physical SIM/carrier/audio/JellyStar, actual overnight/Doze/OEM delivery and matching-key installed-beta9 upgrade remain NOT TESTED.",
 }, ensure_ascii=False, indent=2) + "\n")
-print("Verified8 real callback/business captures and native proof; all241 required PNGs retained")
+print("Verified10 real callback/business/swipe captures and native proof; all243 required PNGs retained")

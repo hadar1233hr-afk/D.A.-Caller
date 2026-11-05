@@ -73,7 +73,7 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
  private SharedPreferences settings,missedState,reminderState;
  private Map<String,?> original,originalNavigation,originalMissed,originalReminder;
  private String originalFont;private int originalAccessibilityFlags;
- private volatile MainActivity main;private volatile CallbackReminderActivity reminder;
+ private volatile MainActivity main;private volatile CallbackReminderActivity reminder;private volatile CallScreenActivity callScreen;
  private final List<Activity> launched=new ArrayList<>();
  private Uri insertedContact;private boolean modemRequested;private long requestSequence,started;
  private final Set<Long> baselineIds=new HashSet<>();
@@ -83,7 +83,8 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   public void onActivityCreated(Activity activity,android.os.Bundle state){}
   public void onActivityStarted(Activity activity){}
   public void onActivityResumed(Activity activity){if(activity instanceof MainActivity)main=(MainActivity)activity;
-   if(activity instanceof CallbackReminderActivity)reminder=(CallbackReminderActivity)activity;}
+   if(activity instanceof CallbackReminderActivity)reminder=(CallbackReminderActivity)activity;
+   if(activity instanceof CallScreenActivity)callScreen=(CallScreenActivity)activity;}
   public void onActivityPaused(Activity activity){}
   public void onActivityStopped(Activity activity){}
   public void onActivitySaveInstanceState(Activity activity,android.os.Bundle state){}
@@ -106,7 +107,7 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   for(String permission:new String[]{Manifest.permission.READ_CONTACTS,Manifest.permission.WRITE_CONTACTS,Manifest.permission.READ_CALL_LOG,
    Manifest.permission.WRITE_CALL_LOG,Manifest.permission.READ_PHONE_STATE,Manifest.permission.CALL_PHONE,Manifest.permission.POST_NOTIFICATIONS})shell("pm grant "+target.getPackageName()+" "+permission);
   settings.edit().putBoolean("role_prompted",true).putBoolean("notifications_prompted",true).putBoolean("voice_permission_prompted",true)
-   .putBoolean("haptics",false).putString(CallArchive.PREF,CallArchive.OFF).putBoolean("island_enabled",false)
+   .putString("call_theme","pixel").putString("answer_mode","ios").putBoolean("haptics",false).putString(CallArchive.PREF,CallArchive.OFF).putBoolean("island_enabled",false)
    .putBoolean("island_outside_app",false).putBoolean("dark",false).putBoolean("amoled",false).putString("language","he")
    .putInt(CallbackReminder.PREF_MINUTE,1439).remove(CallbackReminder.PREF_ENABLED).putBoolean("settings_group_open_6",true).commit();
   CallbackReminder.schedule(target);reminderState.edit().clear().commit();
@@ -183,6 +184,36 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   MotionEvent up=MotionEvent.obtain(at,at+45,MotionEvent.ACTION_UP,x,y,0);down.setSource(InputDevice.SOURCE_TOUCHSCREEN);up.setSource(InputDevice.SOURCE_TOUCHSCREEN);
   try{assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(down,true));assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(up,true));}
   finally{down.recycle();up.recycle();}settle();
+ }
+ private void pointer(long downTime,int action,float x,float y)throws Exception{
+  MotionEvent event=MotionEvent.obtain(downTime,SystemClock.uptimeMillis(),action,x,y,0);event.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+  try{assertTrue("Native touchscreen injection rejected",getInstrumentation().getUiAutomation().injectInputEvent(event,true));}finally{event.recycle();}
+ }
+ private JSONObject answerByNativeSwipe(Call connected)throws Exception{
+  // Open the real production call screen, never invoke a View listener or Call.answer from the test.
+  assertNotNull(notification(1502).getNotification().contentIntent);notification(1502).getNotification().contentIntent.send();
+  await(()->callScreen!=null&&!callScreen.isFinishing()&&tag(callScreen,"incoming-swipe-answer")!=null,"Real incoming swipe screen must appear");
+  shell("cmd statusbar collapse");ready(callScreen);View prompt=tag(callScreen,"incoming-swipe-answer");
+  Rect bounds=viewBounds(prompt);int threshold=Math.round(64*target.getResources().getDisplayMetrics().density);
+  int x=bounds.left+bounds.width()/4,y=bounds.centerY();
+  assertTrue("Swipe travel must fit real display",x+threshold+24<480);
+  JSONObject proof=new JSONObject().put("input_method","UiAutomation.injectInputEvent SOURCE_TOUCHSCREEN")
+   .put("answer_mode","ios").put("threshold_px",threshold).put("bounds",new JSONArray(new int[]{bounds.left,bounds.top,bounds.right,bounds.bottom}));
+  proof.put("resting_bars",snapshot("incoming-swipe-resting",false));
+  tapPoint(x,y);assertEquals("A real tap must not answer",Call.STATE_RINGING,connected.getState());proof.put("tap_stayed_ringing",true);
+  long at=SystemClock.uptimeMillis();pointer(at,MotionEvent.ACTION_DOWN,x,y);Thread.sleep(35);
+  pointer(at,MotionEvent.ACTION_MOVE,x+threshold/3f,y);Thread.sleep(35);pointer(at,MotionEvent.ACTION_UP,x+threshold/3f,y);settle();
+  assertEquals("Short real drag must not answer",Call.STATE_RINGING,connected.getState());proof.put("short_drag_stayed_ringing",true);
+  at=SystemClock.uptimeMillis();pointer(at,MotionEvent.ACTION_DOWN,x,y);Thread.sleep(35);pointer(at,MotionEvent.ACTION_MOVE,x+threshold+12,y);
+  final float[] translated={0};ui(()->translated[0]=prompt.getTranslationX());assertTrue("Prompt must visibly follow native finger",translated[0]>0);
+  proof.put("drag_translation_px",translated[0]);proof.put("dragging_bars",snapshot("incoming-swipe-dragging",false));
+  pointer(at,MotionEvent.ACTION_CANCEL,x+threshold+12,y);settle();assertEquals("Cancelled real drag must not answer",Call.STATE_RINGING,connected.getState());
+  ui(()->assertEquals(0f,prompt.getTranslationX(),0.01f));proof.put("cancelled_drag_stayed_ringing",true).put("cancel_reset_translation",true);
+  at=SystemClock.uptimeMillis();pointer(at,MotionEvent.ACTION_DOWN,x,y);
+  for(int step=1;step<=6;step++){Thread.sleep(35);pointer(at,MotionEvent.ACTION_MOVE,x+(threshold+18)*step/6f,y);}
+  pointer(at,MotionEvent.ACTION_UP,x+threshold+18,y);await(()->connected.getState()==Call.STATE_ACTIVE,"Completed native swipe must activate the same real Telecom call");
+  assertSame(connected,PhoneSessionService.current);proof.put("completed_swipe_activated_owned_call",true);
+  return proof;
  }
  private Rect viewBounds(View view)throws Exception{
   Rect result=new Rect();ui(()->{assertNotNull(view);assertTrue(view.isAttachedToWindow()&&view.isShown());
@@ -371,8 +402,7 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
    assertNull("Opening callback details must never dial",PhoneSessionService.current);assertReminderUi((CallbackReminderActivity)opened,true);
   }finally{getInstrumentation().removeMonitor(monitor);}
   Call connected=incoming();await(()->notification(1502)!=null,"Actual incoming CallStyle required");
-  PendingIntent answer=notification(1502).getNotification().extras.getParcelable(Notification.EXTRA_ANSWER_INTENT,PendingIntent.class);
-  assertNotNull(answer);answer.send();await(()->connected.getState()==Call.STATE_ACTIVE,"Production CallStyle Answer PI must activate actual Telecom call");
+  JSONObject swipe=answerByNativeSwipe(connected);
   await(()->connected.getDetails()!=null&&connected.getDetails().getConnectTimeMillis()>0,"Actual Telecom connection details must acknowledge connect time");
   long connectedAt=connected.getDetails().getConnectTimeMillis();assertTrue(connectedAt>0);
   long until=SystemClock.uptimeMillis()+12000;while(System.currentTimeMillis()-connectedAt<2200&&SystemClock.uptimeMillis()<until)Thread.sleep(60);
@@ -386,7 +416,7 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
    "later_missed_call_restores_pending","native_settings_and_list_light_dark","direct_notification_details_never_autodial","native_back_to_previous_settings"})checks.put(flag,true);
   completedReminder=new JSONObject().put("checks",checks).put("modem_commands",new JSONArray(modemCommands.toString())).put("calls",calls).put("pending_before_connection",entry(before))
    .put("pending_after_later_miss",entry(again)).put("alarm",alarm).put("answered_call",answered).put("rows_before_delivery",rowsBefore)
-   .put("rows_after_all_reminder_reads",retained).put("read_observations",readObservations).put("observations",events).put("answer_method","production-real-CallStyle-Answer-PendingIntent");writeCombined();
+   .put("rows_after_all_reminder_reads",retained).put("read_observations",readObservations).put("observations",events).put("answer_method","production-real-touchscreen-swipe").put("incoming_swipe",swipe);writeCombined();
  }
  private android.widget.Switch findSwitch(View root){if(root instanceof android.widget.Switch)return (android.widget.Switch)root;
   if(root instanceof ViewGroup)for(int n=0;n<((ViewGroup)root).getChildCount();n++){android.widget.Switch found=findSwitch(((ViewGroup)root).getChildAt(n));if(found!=null)return found;}return null;}

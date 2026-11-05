@@ -8,6 +8,12 @@
 
 These additions were recorded at the owner's request; implementation and verification remain pending. Existing backup-capture, licensed-data and compatible-signing work remains active. No new APK is approved.
 
+## Native incoming-swipe verification in progress
+
+Backup-capture source4c7922b / CI41956399559 stopped before Android execution:356 unit cases ran,354 passed and2 old CallScreenActivity tests still required the removed ordinary Answer tile. They are being updated to assert the explicit accessibility Answer action and stale-call guard; this failure is not native evidence.
+
+The real reminder Telecom scenario now injects touchscreen DOWN/MOVE/UP/CANCEL events into the production incoming prompt, preserving its four actual modem calls. It checks tap/partial/cancelled drags remain RINGING, translation resets, and a complete drag activates the same Call. Two new raw captures (`incoming-swipe-resting`, `incoming-swipe-dragging`) raise the full required matrix from241 to243 while retaining all earlier captures. New test Java compilation/lint passed; the corrected full unit run produced356 unique cases with0 failures/errors/skips. A final null-safe accessibility-label assertion still needs its focused rerun. Actual native run and visual review remain PENDING. No swipe PASS is inferred from the previous CallStyle PendingIntent answer.
+
 ## Latest verified checkpoint
 
 Source46c500a / CI41851873318 completed:352 unique unit PASS;34 native cases,33 PASS and1 explicit business-dataset MISSING failure;0 errors/skips. All237 functional images were freshly reviewed:101 call and44 island frames PASS,91 other PASS and1 visual FAIL (personalization-backup-saved-light.png: white system icons on near-white bars). All36 island compositor proofs independently passed. Reminder real Telecom/OS-alarm/read-only checks passed again. No release approval. [Retained second-run evidence](evidence/callback-business-2026-11-04/second-ci/pipeline-summary.json).

@@ -17,7 +17,7 @@ required = {"missed-single-he.png", "missed-multiple-he.png",
 files = [path for path in root.rglob("*.png") if path.is_file()]
 counts = collections.Counter(path.name for path in files)
 assert all(counts[name] == 1 for name in required), "Missing or duplicate follow-up PNG"
-assert len(files) == len(counts) == 241, "Keep all233 earlier PNGs and add exactly8 callback/business renders"
+assert len(files) == len(counts) == 243, "Keep all233 earlier PNGs and add exactly10 callback/business/swipe renders"
 assert not any("failed" in name or "unreachable" in name or "not-ready" in name for name in counts), "Failure diagnostics are not passing evidence"
 images = {path.name: path for path in files}
 hashes = {}
@@ -172,8 +172,8 @@ for filename, count in {"matrix-verification.json": 122, "personalization-verifi
     "app_tree": subprocess.check_output(["git", "rev-parse", "HEAD:app"], text=True).strip(),
     "workflow_run_id": os.environ.get("GITHUB_RUN_ID"),
     "api": 33, "size": "480x854", "density_dpi": 240, "font_scale": 1.3,
-    "required_real_png_files": 6, "total_required_png_files": 241,
+    "required_real_png_files": 6, "total_required_png_files": 243,
     "sha256": hashes, "native_assertions": proof,
     "limits": "The six new screenshots come from actual Android UI. Missed calls use an emulator modem, Android Telecom's protected default-dialer broadcast and the production receiver. Native notification clear/open actions preserve platform call-log rows. Hardware SIM/audio/JellyStar and matching-key upgrades remain unverified. Permission-denial fallbacks are separately unit-tested; the native test does not revoke dangerous permissions or fake a platform broadcast.",
 }, ensure_ascii=False, indent=2) + "\n")
-print("Verified6 actual missed-call/changelog renders and native assertions; all241 required PNGs retained")
+print("Verified6 actual missed-call/changelog renders and native assertions; all243 required PNGs retained")

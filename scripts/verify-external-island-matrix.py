@@ -149,14 +149,14 @@ for name, count in previous.items():
     path = root / name
     assert path.is_file(), f"Existing verification missing: {name}"
     assert json.loads(path.read_text())["required_real_png_files"] == count, f"Reduced previous coverage: {name}"
-assert len(images) == 241, f"Expected233 previous and8 callback/business PNGs, found{len(images)}"
+assert len(images) == 243, f"Expected233 previous and10 callback/business/swipe PNGs, found{len(images)}"
 (root / "external-island-verification.json").write_text(json.dumps({
     "source_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
     "app_tree": subprocess.check_output(["git", "rev-parse", "HEAD:app"], text=True).strip(),
     "workflow_run_id": os.environ.get("GITHUB_RUN_ID"),
     "api": 33, "size": "480x854", "density_dpi": 240, "font_scale": 1.3,
-    "required_real_png_files": len(required), "total_required_png_files": 241,
+    "required_real_png_files": len(required), "total_required_png_files": 243,
     "sha256": hashes, "native_assertions": proof,
     "limits": "Actual simulated modem calls, Android Telecom, production service and application-overlay windows. Incoming calls always keep native high-priority Android CallStyle; the external island starts for outgoing/active/held calls. Protected Android Settings intentionally hides overlays, verified without bypassing OS policy. Physical SIM/carrier, audible routing, Bluetooth, lockscreen and Jelly Star not verified.",
 }, indent=2) + "\n")
-print("Verified8 actual Telecom external-island PNGs and call/audio/lifecycle assertions; all241 required renders retained")
+print("Verified8 actual Telecom external-island PNGs and call/audio/lifecycle assertions; all243 required renders retained")
