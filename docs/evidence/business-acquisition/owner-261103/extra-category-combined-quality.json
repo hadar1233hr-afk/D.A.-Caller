@@ -1,0 +1,53 @@
+{
+  "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED",
+  "prior_rows": 2696,
+  "extra_node_rows": 29,
+  "extra_way_rows": 3,
+  "new_rows": 32,
+  "new_unique_base_phones": 32,
+  "new_ids_overlapping_prior": [],
+  "new_phones_overlapping_prior": [],
+  "aggregate_raw_rows": 2728,
+  "aggregate_source_objects": 2668,
+  "aggregate_unique_base_phones": 2623,
+  "extra_category_rows": {
+    "leisure:fitness_centre": 19,
+    "amenity:nightclub": 4,
+    "leisure:escape_game": 4,
+    "leisure:bowling_alley": 1,
+    "amenity:internet_cafe": 2,
+    "leisure:amusement_arcade": 1,
+    "leisure:trampoline_park": 1
+  },
+  "extra_source_years": {
+    "2017": 2,
+    "2020": 1,
+    "2021": 1,
+    "2022": 4,
+    "2023": 5,
+    "2024": 2,
+    "2025": 8,
+    "2026": 9
+  },
+  "extra_country_fields_missing": 32,
+  "extra_text_blocker_rows": 0,
+  "extra_corpus_sha256": {
+    "extra-category-nodes-owner-261103-v2/research-extra-category-nodes.ndjson": "8f9fbe7d47041e47b38aec62f1f5b4f7b199c2671ac4b199cf4f27ec2a5a8fe8",
+    "extra-category-ways-owner-261103-v1/research-way-businesses.ndjson": "dd35def488f06705a128986681a4d775970ad3357b55a74fecb00e63585f5df1"
+  },
+  "unchanged_production_first_failures": {
+    "extra-category-nodes-owner-261103-v2": {
+      "Country membership not explicitly sourced": 29
+    },
+    "extra-category-ways-owner-261103-v1": {
+      "Country membership not explicitly sourced": 3
+    }
+  },
+  "source_merges": 0,
+  "app_records_added": 0,
+  "prior_research_sqlite_rows_unchanged": 2696,
+  "limits": [
+    "Research counts are not distinct physical businesses, current phone ownership or national coverage.",
+    "New cohorts are outside app and unchanged earlier researchSQLite; no scope/country renaming to force production admission."
+  ]
+}

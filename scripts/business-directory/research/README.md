@@ -190,3 +190,29 @@ future native integration remain separate, and0.12.0 stays without businesses.
 /workspace/work/business-directory-research/.venv/bin/python scripts/business-directory/research/check_research_sqlite.py
 /workspace/work/business-directory-research/.venv/bin/python scripts/business-directory/research/stage_research_sqlite.py query /workspace/work/business-data/research-search-stage-owner-261103-v2/research-search.sqlite "אג׳נדה"
 ```
+
+## Additional source categories without broadening the core filter
+
+`category_gap_inventory.py` retains353 source objects outside the original
+category filter, with18 synthetic privacy cases checked. These include
+noncommercial/ambiguous schools/clubs and are not geographic/business admissions.
+`extended_business_category.py` supplies a narrow8-value research policy, holds
+access/residential/lifecycle ambiguity and avoids existing core-covered objects.
+Private ownership does not mean private access.15 final policy methods passed,
+including regressions for nonboolean lifecycle/nonoperating-building conflicts.
+The core extractor and earlier runners remain byte-identical.
+
+`research_extra_category_nodes.py` explicitly visits leisure/amenity NODEs;
+the earlier core C++ filter does not visit leisure-only objects.29 extra nodes
+passed source-spatial research and independent direct-PBF field/point replay.
+`extra_category_geometry_inventory.py` retains3 extra WAY rings/15 exact nodes;
+the unchanged full-way runner/auditor with the explicit new policy emitted and
+independently checked all3. No additional relation was admitted by this policy.
+The32 phones/sourceIDs have0overlap with prior cohorts. All country fields remain
+missing, all text checks pass, and unchanged production packaging rejects all32.
+
+Aggregate source research now has2728rows/2668sourceobjects/2623distinctphones.
+This does not establish distinct physical businesses, current ownership or full
+coverage. The existing2696-row researchSQLite and app data remain unchanged.
+See `extra-category-README.md` and matching source/audit/retention ZIPs in the
+retained evidence directory for exact reproduction and disclosed references.

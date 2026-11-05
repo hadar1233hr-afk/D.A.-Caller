@@ -1,5 +1,43 @@
 # DA CALLER continuation state
 
+## Additional source categories —32 new phone rows, no app change
+
+The unchanged core filter omits leisure-only and several other business
+categories. A353-object source gap inventory measures these omissions without
+geographic/publicness admission; schools/clubs/pools and other ambiguous
+listings remain review-only. A separate narrow8-value policy covers fitness,
+bowling, escape games, trampoline parks, arcades, driving schools, internet
+cafes and nightclubs while holding restricted/conditional access, residential
+buildings and lifecycle conflicts. Private commercial ownership is not private
+access.15 policy methods and18 synthetic inventory privacy cases PASS. Review
+found/fixed nonboolean lifecycle/nonoperating-building gaps with3 regressions;
+no actual candidate had those cases, final v2 was rebuilt after source freeze.
+
+Actual source-spatial extension adds29 nodes+3 complete ways=32 distinct new
+phone rows, with0 prior sourceID/phone overlap.19fitness/4nightclub/4escape/
+2internetcafe/1bowling/1arcade/1trampoline rows. All32 country fields remain
+missing,0text issues, and all32 still fail unchanged production admission.
+Independent direct-PBF audit checked every29node field and separately replayed
+all29 points. Existing independent way audit reread3ways/15nodes and replayed
+their whole polygons; all PASS. Source dates2017–2026 are not currentness proof.
+[Exact sources, reports, audits and reproduction](evidence/business-acquisition/owner-261103/extra-category-README.md).
+
+Combined research:2728 raw rows/2668 source objects/2623 unique base numbers;
+not necessarily distinct physical businesses or national coverage. New32-row
+ZIP18,443bytes SHA529d5b1786dc1b06c3caf98c1b715f6839c8a5fa4de71c76a1dae6b0d90310bb.
+Earlier researchSQLite remains its immutable2696-row/2683-default cohort. No
+new rows merged/renamed into app or staging assets and no country tags invented.
+
+App tree9f15350b457405bf88a35c0ac5badc8f3a85cd94/nativeAPK unchanged; existing
+356unit/35native/243-image proof remains current. No new Android run claimed;
+unchanged245-frame CI still FAILS. No app, production packager, signing/CI/release
+guard changes or publication. PR5 comments/reviews still provide no explicit
+approval for the previously rejected0.12.0-only signing/CI exception. Prior
+approval question remains pending. Existing2-hour timer continues until all
+requested work and verified APK delivery finish; no actual quota block or
+model/account switch. Future production/native integration remains separate;
+research data must not masquerade as app businesses tables.
+
 ## Research SQLite and true relation holes — app/release unchanged
 
 Complete role-aware assembly evaluated all5 source multipolygon relations,

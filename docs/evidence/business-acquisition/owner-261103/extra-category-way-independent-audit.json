@@ -1,0 +1,58 @@
+{
+  "status": "PASS_RESEARCH_SOURCE_AND_COMPLETE_POLYGON_AUDIT_ONLY",
+  "observed_at_utc": "2026-11-05T22:17:25.395910+00:00",
+  "elapsed_seconds": 14.048,
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "source_pbf_bytes": 121050024,
+  "research_ndjson_sha256": "dd35def488f06705a128986681a4d775970ad3357b55a74fecb00e63585f5df1",
+  "research_report_sha256": "496adeee2ed819f44b23d71c445ec546b75edfb3b8729b92030348a370d0b36b",
+  "audit_script_sha256": "d179364bf7034c108371fae3b11e32f9de64f8d880ab262dc4d7cae83e9e450b",
+  "reviewed_way_helper_sha256": "78b943a603b16bd4763cc45cc1546438967427a8b3a009fb252c481196802787",
+  "reference_extractor_sha256": "b9ff71844e21a2605d26452920edae8fa62026383a4008581191a40e78d7c060",
+  "geometry_input_sha256": {
+    "research-region-outer-rings.json": "04b9d0ed2ad8d28e2947bb9fde88cbe39dd7f37c666940ab48869fdb3939750f",
+    "research-region-geometry-inventory.json": "ba44cf5695ada7b33a33acf86976a185768c8fb6396e9156ecc4c00c9fd823b1",
+    "country-relation-inventory.json": "cef27b1ec8c92b6a68d5bd57b0c65eb4ecd282ed949b75b767996069d3104125",
+    "disputed-region-relation-inventory.json": "b96552bfa717e01d9ad4d6275f45ee04ebe967a267e2a30c9a6cd42e5fc5d3f1",
+    "geography-research-review.json": "84ee86f8d48083ffb32c3cc51bfc4f0f3d0a507435d78068a8d7265c6360a0cc",
+    "owner-upload-receipt.json": "8ac1da66a8771f289b73a01cf15ca0351b13795ac5cb552fcb0a5fbc4c6532c2"
+  },
+  "source_way_rows": 3,
+  "unique_original_source_ways_found": 3,
+  "unique_original_referenced_nodes_found": 15,
+  "checks_passed": {
+    "coordinate_slots_rechecked_against_pbf": 18,
+    "exact_full_raw_source_tag_rows": 3,
+    "exact_ordered_source_ref_and_coordinate_rows": 3,
+    "exact_source_country_fields_without_inference_rows": 3,
+    "exact_source_way_identity_version_timestamp_url_rows": 3,
+    "independent_complete_polygon_valid_area_containment_margin_exclusion_rows": 3,
+    "research_status_license_provenance_rows": 3,
+    "source_derived_name_city_address_category_rows": 3,
+    "source_raw_and_reparsed_canonical_phone_extension_rows": 3
+  },
+  "minimum_actual_polygon_distances_degrees": {
+    "source_IL_boundary": 0.001838159027542827,
+    "Gaza_admin4": 0.22234706673138294,
+    "JudeaSamaria_admin4_outer_filled": 0.001838159027542827,
+    "WestBank_historic_outer_filled": 0.001838159027542827
+  },
+  "geos_version": "3.13.1-CAPI-1.19.2",
+  "method": [
+    "PBF pass1 C++ EntityFilter(WAY)+IdFilter on emitted way IDs, retaining exact raw tags/refs/version/time",
+    "PBF pass2 C++ EntityFilter(NODE)+IdFilter using refs obtained from original PBF ways, not cached inventory",
+    "Exact original ordered refs and every retained coordinate compared for every research phone row",
+    "Own GEOS bindings replay complete original polygons against retained original source rings; no ClosedWayScope calls",
+    "Original source phones re-parsed through the unchanged hash-bound existing extractor contract"
+  ],
+  "app_rows_added": 0,
+  "source_mutations": 0,
+  "automatic_merges": 0,
+  "limits": [
+    "Source fidelity and numbering-plan policy replay do not establish current business operation, phone ownership or reachability.",
+    "The unchanged source category/phone parser and geometry-provenance validator are shared reference contracts, not independent implementations.",
+    "Angular0.001degree rules use source lon/lat coordinates, not surveyed meters or official/legal borders.",
+    "Only emitted standalone closed ways audited; omitted ways/relations and national completeness are not verified here.",
+    "Missing country fields remain missing; this audit does not approve production admission or APK publication."
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED",
+  "scope": "research-extra-category-node-source-IL-minus-filled-WB-and-Gaza",
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "source_pbf_bytes": 121050024,
+  "observed_at_utc": "2026-11-05T22:11:53.326234+00:00",
+  "raw_phone_rows": 29,
+  "source_nodes": 29,
+  "unique_base_phones": 29,
+  "counts": {
+    "emitted_source_nodes": 29,
+    "named_extra_category_nodes_with_phone_tag": 55,
+    "omit-already-covered-by-core-category": 14382,
+    "omit-missing-source-name-or-phone": 212,
+    "omit-no-qualifying-source-phone": 2,
+    "omit-outside-reviewed-extra-category": 30514,
+    "phone_rejected_not_current_valid_israeli_number": 1,
+    "reject-outside-or-on-source-IL": 24,
+    "research-extra-category-no-restricted-source-access": 267,
+    "research-qualified-source-interior": 31
+  },
+  "ndjson_sha256": "8f9fbe7d47041e47b38aec62f1f5b4f7b199c2671ac4b199cf4f27ec2a5a8fe8",
+  "source_category_counts": {
+    "leisure:fitness_centre": 16,
+    "amenity:nightclub": 4,
+    "leisure:escape_game": 4,
+    "leisure:bowling_alley": 1,
+    "amenity:internet_cafe": 2,
+    "leisure:amusement_arcade": 1,
+    "leisure:trampoline_park": 1
+  },
+  "source_country_tags": {
+    "<missing>": 29
+  },
+  "source_years": {
+    "2017": 2,
+    "2020": 1,
+    "2021": 1,
+    "2022": 3,
+    "2023": 4,
+    "2024": 2,
+    "2025": 7,
+    "2026": 9
+  },
+  "research_script_sha256": "1b9d358cbeee8b807c4033be32ac22a1a7d6c998c8d6ffdbda3557e654c45c1d",
+  "policy_module_sha256": "b9ff71844e21a2605d26452920edae8fa62026383a4008581191a40e78d7c060",
+  "unchanged_core_extractor_sha256": "3b770ebf3af5322e77421d4e2458b360a7488985b8d4e36e69a42e0ad55577d8",
+  "node_geometry_reference_sha256": "a5a01b32666bf4c22585de39b79801aedbadc0d1e2bf0d5074e20bc4a2518d0f",
+  "geometry_provenance": {
+    "input_sha256": {
+      "research-region-outer-rings.json": "04b9d0ed2ad8d28e2947bb9fde88cbe39dd7f37c666940ab48869fdb3939750f",
+      "research-region-geometry-inventory.json": "ba44cf5695ada7b33a33acf86976a185768c8fb6396e9156ecc4c00c9fd823b1",
+      "country-relation-inventory.json": "cef27b1ec8c92b6a68d5bd57b0c65eb4ecd282ed949b75b767996069d3104125",
+      "disputed-region-relation-inventory.json": "b96552bfa717e01d9ad4d6275f45ee04ebe967a267e2a30c9a6cd42e5fc5d3f1",
+      "geography-research-review.json": "84ee86f8d48083ffb32c3cc51bfc4f0f3d0a507435d78068a8d7265c6360a0cc",
+      "owner-upload-receipt.json": "8ac1da66a8771f289b73a01cf15ca0351b13795ac5cb552fcb0a5fbc4c6532c2"
+    },
+    "relations": {
+      "source_IL": {
+        "relation_id": 1473946,
+        "source_url": "https://www.openstreetmap.org/relation/1473946",
+        "source_updated_at": "2026-09-18T15:07:24+00:00",
+        "source_tags": {
+          "name:en": "Israel",
+          "ISO3166-1": "IL",
+          "type": "boundary",
+          "boundary": "administrative",
+          "admin_level": "2",
+          "disputed": null
+        },
+        "all_members_complete": true,
+        "inner_holes_filled_for_exclusion_only": false
+      },
+      "Gaza_admin4": {
+        "relation_id": 1473938,
+        "source_url": "https://www.openstreetmap.org/relation/1473938",
+        "source_updated_at": "2026-10-10T16:02:40+00:00",
+        "source_tags": {
+          "name:en": "Gaza Strip",
+          "ISO3166-1": null,
+          "type": "boundary",
+          "boundary": "administrative",
+          "admin_level": "4",
+          "disputed": null
+        },
+        "all_members_complete": true,
+        "inner_holes_filled_for_exclusion_only": false
+      },
+      "JudeaSamaria_admin4_outer_filled": {
+        "relation_id": 1803010,
+        "source_url": "https://www.openstreetmap.org/relation/1803010",
+        "source_updated_at": "2026-09-28T11:34:35+00:00",
+        "source_tags": {
+          "name:en": "Judea and Samaria",
+          "ISO3166-1": null,
+          "type": "boundary",
+          "boundary": "administrative",
+          "admin_level": "4",
+          "disputed": null
+        },
+        "all_members_complete": true,
+        "inner_holes_filled_for_exclusion_only": true
+      },
+      "WestBank_historic_outer_filled": {
+        "relation_id": 12331025,
+        "source_url": "https://www.openstreetmap.org/relation/12331025",
+        "source_updated_at": "2025-12-24T19:52:27+00:00",
+        "source_tags": {
+          "name:en": "West Bank",
+          "ISO3166-1": null,
+          "type": "boundary",
+          "boundary": "historic",
+          "admin_level": null,
+          "disputed": null
+        },
+        "all_members_complete": true,
+        "inner_holes_filled_for_exclusion_only": true
+      }
+    }
+  },
+  "app_records_added": 0,
+  "automatic_source_merges": 0,
+  "license_id": "ODbL-1.0",
+  "attribution": "\u00a9 OpenStreetMap contributors",
+  "limits": [
+    "Additional categories are a narrow source review, not confirmation of public access or active commercial operation.",
+    "Unclear access, lifecycle conflicts, residential objects, clubs, generic schools and pools are held out.",
+    "Private commercial ownership is not interpreted as private access.",
+    "Only actual source NODE coordinates reviewed; additional ways/relations are not admitted here.",
+    "Country tags remain original/missing; source geometry and angular margin are not official borders or meters.",
+    "Source-listed names/phones and numbering-plan validity do not prove current ownership or completeness.",
+    "No app, original extractor, production packager, signing, CI or release guard edits."
+  ]
+}
