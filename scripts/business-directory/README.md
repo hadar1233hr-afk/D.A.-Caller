@@ -2,21 +2,32 @@
 
 These scripts build only DA CALLER's independent public business dataset. They
 never read Android contacts, call logs or the private call archive. No populated
-production phonebook has been acquired or committed. The app has no network
+production phonebook asset has been installed in the app. The app has no network
 permission; data preparation happens before release.
 
 ## Current acquisition status
 
-**BLOCKED: zero actual source bytes, zero production records imported.** The
-configured proxy returned HTTP403 for the normal Geofabrik source HEAD request
+**Direct publisher acquisition remains BLOCKED; an owner-uploaded source is now
+retained separately. No production records are bundled.** The configured proxy
+returned HTTP403 for the normal Geofabrik source HEAD request
 on2026-11-02. The current environment's supported allowlist still excludes
 `download.geofabrik.de`. No alternative proxy, remote runner, mirror, direct route,
 account or credential was used to bypass it. The recorded attempt is in
-[acquisition-status.json](acquisition-status.json). The advertised source size is
-not a completed download; no Israeli phone count has been established.
+[acquisition-status.json](acquisition-status.json).
 
-Source acquisition needs the supported environment configuration to permit the
-publisher's exact host. This repository cannot change that network policy.
+On2026-11-05 the owner uploaded a ZIP to this repository's existing release
+(asset712722687). The recorded GitHub transfer has120,936,686 bytes and
+SHA256`578d67213db0cb617f18ccd12c60eab5c532f073fa5520b399d9f5d36973b11e`;
+its single PBF has121,050,024 bytes and
+SHA256`62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf`.
+These identify retained owner-supplied inputs; they do not authenticate a download
+from Geofabrik. Source origin is declared OSM/Geofabrik, and the original
+publisher transfer has **not** been independently verified. Extraction and quality
+measurements are retained under `docs/evidence/business-acquisition/owner-261103/`;
+do not infer national coverage or current phone ownership from the file size.
+
+Direct publisher acquisition needs the supported environment configuration to
+permit the publisher's exact host. This repository cannot change that network policy.
 Other researched licensed sources, and their limits, are in
 [ALTERNATIVE_SOURCES.md](ALTERNATIVE_SOURCES.md). `query_overture_israel.sql` is an
 unexecuted candidate, not proof of imported records. Around's search API must not
@@ -61,6 +72,35 @@ empty datasets, inflated declared counts, conflicting source/license/country
 provenance and existing output directories. A checksum binds retained inputs; it
 does not independently prove phone ownership. Source review remains necessary.
 
+### Explicit owner-upload preparation
+
+An owner upload must never be rewritten as a successful publisher HTTP200
+receipt. The default `publisher-download` mode still requires its existing
+successful publisher receipt. To prepare an owner-supplied source deliberately,
+use the separate mode and retain the original ZIP and its PBF:
+
+```sh
+python3 scripts/business-directory/package_app_dataset.py /workspace/work/business-data/extracted-owner-261103-explicit-il /workspace/work/business-data/owner-upload-receipt.json /workspace/work/business-data/packaged-owner-261103 --dataset-version osm-il-owner-261103 --acquisition-mode owner-upload --source-archive /workspace/work/business-data/israel-and-palestine-261103.osm.zip --source-pbf /workspace/work/business-data/israel-and-palestine-261103.osm.pbf
+```
+
+This command is a preparation example, **not** evidence it has been executed or
+that its output has been approved or installed. The selected receipt must identify
+an owner-uploaded asset in this DA CALLER repository, explicitly state that
+publisher provenance is not independently verified, and contain matching archive
+and PBF byte counts/SHA256s plus the recorded ZIP member. Both actual files are
+required; receipt booleans alone are insufficient. The tool verifies the retained
+ZIP's one root PBF, reads it with CRC checking and matches its bytes/hash to the
+retained PBF and extraction manifest. Existing source/license, explicit-IL,
+per-record country, extraction hash, row-count and nonempty output checks apply.
+
+Generated manifest, SQLite metadata, notice and packaging report retain
+`method=owner-upload` and `publisher_download_authenticated=false`. This is local
+input-consistency evidence, not independent publisher or phone authentication.
+The exact original transfer receipt is included in the redistribution files.
+Source/license review and exact-dataset native validation remain required before
+an app bundles it. DA CALLER0.12.0 excludes the business directory; these tools do
+not change that release scope or any APK publication/signing gates.
+
 Its `app-assets/business-directory/` contains the exact backend contract:
 
 - `israel-businesses.sqlite`: schema version1, `businesses` with stable positive
@@ -91,15 +131,20 @@ when preparing the release; do not claim ODbL compliance from a hash alone.
 
 ```sh
 cd scripts/business-directory
-/workspace/work/business-data-venv/bin/python -m unittest -v test_extractor.py test_package.py
+/workspace/work/business-data-venv/bin/python -m unittest -v test_extractor.py test_package.py test_owner_upload.py
 ```
 
-On2026-11-04, **23 local tests passed**, zero failures/errors/skips, using the
+On2026-11-05, **37 local tests passed**, zero failures/errors/skips, using the
 already installed pinned research environment. They check phone/country safety,
 actual libosmium fixture parsing, source/hash/count refusal, exact Android SQLite
 and manifest schema, FTS Hebrew-point handling, stable identity, extensions and
-no-overwrite behavior. All fixtures are temporary and explicitly synthetic.
+no-overwrite behavior. Fourteen owner-upload cases additionally cover explicit
+mode selection, missing inputs, byte/hash/ZIP-member tampering, dishonest HTTP or
+publisher claims, wrong repository/host, retained license/country/count checks,
+truthful output provenance and no overwrite. All fixtures are temporary and
+explicitly synthetic. The log is `/workspace/work/business-upload-support-tests.log`.
 
-Whole-source acquisition/import, real national record counts, production bundle
-queries/performance, current phone ownership and complete country coverage remain
-**BLOCKED / NOT TESTED**. No100,000/million-number or complete-Israel claim is made.
+Real owner-source extraction is measured separately from these synthetic tests.
+Production bundle queries/performance, independently confirmed current phone
+ownership and complete country coverage remain **NOT TESTED**. No100,000/million-
+number or complete-Israel claim is made.

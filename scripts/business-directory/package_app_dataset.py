@@ -2,8 +2,8 @@
 """Package an acquired OSM extract into DA CALLER's independent public database.
 
 This is a build tool, not an Android/network importer. Its inputs are the exact
-extractor outputs and successful source acquisition receipt. No business data is
-invented, no personal contacts are accessed, and no production assets are written
+extractor outputs and an explicitly selected source acquisition receipt. No
+business data is invented, no personal contacts are accessed, and no assets are written
 automatically. Publish the redistribution files alongside any app that ships the
 generated assets. Public-source phone ownership is not independently confirmed.
 """
@@ -20,6 +20,8 @@ import shutil
 import sqlite3
 import tempfile
 import unicodedata
+from urllib.parse import urlsplit
+import zipfile
 
 SOURCE_URL = "https://download.geofabrik.de/asia/israel-and-palestine-latest.osm.pbf"
 SOURCE_PAGE = "https://download.geofabrik.de/asia/israel-and-palestine.html"
@@ -27,6 +29,7 @@ LICENSE_URL = "https://opendatacommons.org/licenses/odbl/1-0/"
 ATTRIBUTION = "© OpenStreetMap contributors"
 MAX_RECORDS = 2_000_000
 MAX_DATABASE_BYTES = 512 * 1024 * 1024
+MAX_SOURCE_BYTES = 2 * 1024 * 1024 * 1024
 
 
 def sha256(path: Path) -> str:
@@ -121,8 +124,92 @@ def create_schema(database: sqlite3.Connection) -> None:
     """)
 
 
+def acquisition(receipt: dict, extraction: dict, mode: str,
+                source_pbf: Path | None, source_archive: Path | None) -> dict:
+    """Bind retained inputs without treating an upload as a publisher download.
+
+    Owner-upload mode verifies local consistency and a recorded GitHub transfer;
+    it does not authenticate the original publisher or establish phone ownership.
+    The caller must deliberately select this mode and retain both source files.
+    """
+    if not isinstance(receipt, dict) or not isinstance(extraction, dict):
+        raise ValueError("Source acquisition receipt and manifest must be objects")
+    if (extraction.get("source_url") != SOURCE_URL
+        or extraction.get("license_id") != "ODbL-1.0"
+        or extraction.get("scope") != "explicit-il"
+        or type(extraction.get("source_bytes")) is not int or extraction["source_bytes"] <= 0
+        or not re.fullmatch(r"[a-f0-9]{64}", str(extraction.get("source_sha256", "")))):
+        raise ValueError("Matching source/license and explicit IL scope required")
+    if mode == "publisher-download":
+        # Keep the existing default acquisition contract; an upload cannot enter
+        # it through a filename, a missing flag or a forged HTTP success field.
+        if (source_pbf is not None or source_archive is not None
+            or receipt.get("status") != "DOWNLOADED" or receipt.get("http_status") != 200
+            or receipt.get("source_url") != SOURCE_URL or receipt.get("source_license") != "ODbL-1.0"
+            or type(receipt.get("actual_source_bytes")) is not int
+            or receipt["actual_source_bytes"] <= 0
+            or not re.fullmatch(r"[a-f0-9]{64}", str(receipt.get("source_sha256", "")))
+            or receipt["source_sha256"] != extraction.get("source_sha256")
+            or receipt["actual_source_bytes"] != extraction.get("source_bytes")):
+            raise ValueError("Successful matching acquisition receipt and explicit IL scope required")
+        return dict(method=mode, source_sha256=receipt["source_sha256"],
+                    source_bytes=receipt["actual_source_bytes"],
+                    origin_note="Retained successful publisher-download receipt; checksum consistency is not phone confirmation")
+    if mode != "owner-upload":
+        raise ValueError("Unknown acquisition mode")
+    if source_pbf is None or source_archive is None:
+        raise ValueError("Owner-upload mode requires the retained ZIP and PBF paths")
+    url = urlsplit(str(receipt.get("url", "")))
+    if (receipt.get("source") != "owner-uploaded GitHub Release asset"
+        or type(receipt.get("asset_id")) is not int or receipt["asset_id"] <= 0
+        or url.scheme != "https" or url.netloc != "github.com" or url.query or url.fragment
+        or not re.fullmatch(r"/hadar1233hr-afk/D[.]A[.]-Caller/releases/download/[A-Za-z0-9._-]+/[A-Za-z0-9._-]+[.]zip", url.path)
+        or receipt.get("github_digest_matches") is not True or receipt.get("zip_crc") != "PASS"
+        or receipt.get("publisher_provenance_independently_verified") is not False
+        or any(key in receipt for key in ("http_status", "status", "source_url", "source_license"))):
+        raise ValueError("Explicit truthful owner-upload transfer provenance required; no publisher HTTP claim")
+    for field in ("sha256", "pbf_sha256"):
+        if not re.fullmatch(r"[a-f0-9]{64}", str(receipt.get(field, ""))):
+            raise ValueError("Owner-upload source checksum is missing or invalid")
+    for field, path in (("bytes", source_archive), ("pbf_bytes", source_pbf)):
+        if (type(receipt.get(field)) is not int or not 0 < receipt[field] <= MAX_SOURCE_BYTES
+            or not path.is_file() or path.stat().st_size != receipt[field]):
+            raise ValueError("Owner-upload retained source byte count mismatch")
+    if (sha256(source_archive) != receipt["sha256"]
+        or sha256(source_pbf) != receipt["pbf_sha256"]
+        or receipt["pbf_sha256"] != extraction.get("source_sha256")
+        or receipt["pbf_bytes"] != extraction.get("source_bytes")):
+        raise ValueError("Owner-upload retained source checksum mismatch")
+    try:
+        with zipfile.ZipFile(source_archive) as archive:
+            members = archive.infolist()
+            if (len(members) != 1 or members[0].filename != source_pbf.name
+                or not re.fullmatch(r"[A-Za-z0-9._-]+[.]osm[.]pbf", members[0].filename)
+                or members[0].is_dir() or members[0].file_size != receipt["pbf_bytes"]
+                or receipt.get("members") != [{"name": members[0].filename, "bytes": members[0].file_size}]):
+                raise ValueError("Owner-upload ZIP must contain exactly the declared root PBF")
+            digest = hashlib.sha256()
+            actual_bytes = 0
+            with archive.open(members[0]) as stream:
+                for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+                    actual_bytes += len(chunk)
+                    if actual_bytes > receipt["pbf_bytes"]:
+                        raise ValueError("Owner-upload ZIP member byte bound exceeded")
+                    digest.update(chunk)
+            if actual_bytes != receipt["pbf_bytes"] or digest.hexdigest() != receipt["pbf_sha256"]:
+                raise ValueError("Owner-upload ZIP member checksum mismatch")
+    except (zipfile.BadZipFile, RuntimeError, NotImplementedError) as error:
+        raise ValueError("Owner-upload ZIP integrity check failed") from error
+    return dict(method=mode, source_sha256=receipt["pbf_sha256"], source_bytes=receipt["pbf_bytes"],
+                publisher_download_authenticated=False,
+                transfer_url=receipt["url"], transfer_asset_id=receipt["asset_id"],
+                transfer_archive_sha256=receipt["sha256"], transfer_archive_bytes=receipt["bytes"],
+                origin_note="Owner-supplied OSM/Geofabrik source claim; publisher download not independently authenticated; retained input hashes and ZIP integrity checked")
+
+
 def package(source: Path, receipt_path: Path, output: Path, dataset_version: str,
-            minimum_records: int = 1) -> dict:
+            minimum_records: int = 1, *, acquisition_mode: str = "publisher-download",
+            source_pbf: Path | None = None, source_archive: Path | None = None) -> dict:
     if output.exists():
         raise ValueError("Output already exists; never overwrite a dataset")
     if not re.fullmatch(r"[A-Za-z0-9._-]{1,80}", dataset_version):
@@ -133,17 +220,7 @@ def package(source: Path, receipt_path: Path, output: Path, dataset_version: str
     receipt = json.loads(receipt_path.read_text())
     # A checksum authenticates consistency of retained build inputs, not the
     # truth/current ownership of a phone. The publisher must review provenance.
-    if (receipt.get("status") != "DOWNLOADED" or receipt.get("http_status") != 200
-        or receipt.get("source_url") != SOURCE_URL or receipt.get("source_license") != "ODbL-1.0"
-        or not isinstance(receipt.get("actual_source_bytes"), int)
-        or receipt["actual_source_bytes"] <= 0
-        or not re.fullmatch(r"[a-f0-9]{64}", str(receipt.get("source_sha256", "")))
-        or receipt["source_sha256"] != extraction.get("source_sha256")
-        or receipt["actual_source_bytes"] != extraction.get("source_bytes")
-        or extraction.get("source_url") != SOURCE_URL
-        or extraction.get("license_id") != "ODbL-1.0"
-        or extraction.get("scope") != "explicit-il"):
-        raise ValueError("Successful matching acquisition receipt and explicit IL scope required")
+    provenance = acquisition(receipt, extraction, acquisition_mode, source_pbf, source_archive)
     for file, hash_key in (("businesses.sqlite", "sqlite_sha256"), ("businesses.ndjson", "ndjson_sha256")):
         if sha256(source / file) != extraction.get(hash_key):
             raise ValueError("Extracted source checksum mismatch")
@@ -189,7 +266,8 @@ def package(source: Path, receipt_path: Path, output: Path, dataset_version: str
                     (row_id, search_text(name), search_text(city), search_text(category), phone))
             database.execute("INSERT INTO metadata VALUES ('dataset_version',?)", (dataset_version,))
             database.execute("INSERT INTO metadata VALUES ('attribution',?)", (ATTRIBUTION,))
-            database.execute("INSERT INTO metadata VALUES ('source_sha256',?)", (receipt["source_sha256"],))
+            database.execute("INSERT INTO metadata VALUES ('source_sha256',?)", (provenance["source_sha256"],))
+            database.execute("INSERT INTO metadata VALUES ('acquisition',?)", (json.dumps(provenance, sort_keys=True),))
             database.execute("INSERT INTO metadata VALUES ('phone_verification',?)", ("source-listed-not-phone-confirmed",))
             unique = database.execute("SELECT count(DISTINCT normalized_phone) FROM businesses").fetchone()[0]
             if database.execute("PRAGMA quick_check(1)").fetchone()[0] != "ok":
@@ -204,11 +282,12 @@ def package(source: Path, receipt_path: Path, output: Path, dataset_version: str
             verification="Source-listed public business phones; current ownership not confirmed",
             coverage="Partial source coverage only; no complete-country or million-number claim",
             timestamp_note="updated_at is extraction time; individual source object dates are separate",
-            scope="explicit-il")
+            scope="explicit-il", acquisition=provenance)
         (assets / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         notice = (ATTRIBUTION + "\nOpen Database License (ODbL) 1.0: " + LICENSE_URL
             + "\nSource: " + SOURCE_PAGE
             + "\nDataset: " + dataset_version
+            + "\nAcquisition: " + provenance["origin_note"]
             + "\nThis public derived database is offered under ODbL1.0, independently of application code and private contacts."
             + "\nThe exact machine-readable derived SQLite database and source NDJSON must remain publicly downloadable alongside the distributing application."
             + "\nNames/numbers are source-listed; format validation does not confirm current ownership or complete coverage.\n")
@@ -222,7 +301,7 @@ def package(source: Path, receipt_path: Path, output: Path, dataset_version: str
         shutil.copyfile(receipt_path, redistribution / "acquisition-receipt.json")
         report = dict(status="PACKAGED_NOT_PUBLISHED", dataset_version=dataset_version,
             counts=dict(sorted(counts.items())), distinct_phone_count=unique,
-            database_sha256=manifest["database_sha256"], source_sha256=receipt["source_sha256"],
+            database_sha256=manifest["database_sha256"], source_sha256=provenance["source_sha256"], acquisition=provenance,
             production_installation="Not automatic; copy app-assets only after source/license and native review",
             license_requirement="Publish exact redistribution/ contents with the app; do not hide derived data behind access controls")
         (tmp / "packaging-report.json").write_text(json.dumps(report, indent=2) + "\n")
@@ -237,9 +316,13 @@ def main() -> None:
     parser.add_argument("output", type=Path)
     parser.add_argument("--dataset-version", required=True)
     parser.add_argument("--minimum-records", type=int, default=1)
+    parser.add_argument("--acquisition-mode", choices=("publisher-download", "owner-upload"), default="publisher-download")
+    parser.add_argument("--source-pbf", type=Path, help="Retained PBF required for explicit owner-upload mode")
+    parser.add_argument("--source-archive", type=Path, help="Retained ZIP required for explicit owner-upload mode")
     args = parser.parse_args()
     print(json.dumps(package(args.source, args.receipt, args.output,
-        args.dataset_version, args.minimum_records), indent=2))
+        args.dataset_version, args.minimum_records, acquisition_mode=args.acquisition_mode,
+        source_pbf=args.source_pbf, source_archive=args.source_archive), indent=2))
 
 
 if __name__ == "__main__":

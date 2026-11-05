@@ -1,0 +1,57 @@
+{
+  "status": "EXTRACTED_AND_AUDITED_NOT_PACKAGED_NOT_PUBLISHED",
+  "scope": "explicit Israel country tags only; no coordinate boundary or complete national coverage claim",
+  "actual_rows": 24,
+  "actual_unique_phones": 23,
+  "rows_passing_existing_app_value_validation": 24,
+  "app_value_rejections": {},
+  "country_tags": {
+    "IL": 24
+  },
+  "categories": {
+    "office:diplomatic": 9,
+    "tourism:hotel": 3,
+    "shop:cosmetics": 2,
+    "craft:winery": 1,
+    "shop:furniture": 1,
+    "shop:tattoo": 1,
+    "office:taxi": 1,
+    "shop:beauty": 1,
+    "shop:mobile_phone": 1,
+    "office:company": 1,
+    "amenity:restaurant": 1,
+    "tourism:guest_house": 1,
+    "tourism:attraction": 1
+  },
+  "source_object_year_histogram": {
+    "2017": 2,
+    "2023": 7,
+    "2024": 4,
+    "2025": 3,
+    "2026": 8
+  },
+  "missing_fields": {},
+  "phones_shared_by_multiple_source_names": 1,
+  "phones_shared_by_multiple_objects": 1,
+  "sqlite_integrity": "PASS",
+  "independent_counts_hashes_and_country_source_contract": "PASS",
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "zip_sha256": "578d67213db0cb617f18ccd12c60eab5c532f073fa5520b399d9f5d36973b11e",
+  "embedded_pbf_metadata": {
+    "generator": "osmium/1.16.0",
+    "replication_timestamp": "2026-11-03T21:24:23Z",
+    "sequence": "4938",
+    "base_url": "https://download.geofabrik.de/asia/israel-and-palestine-updates",
+    "bounds_lon_lat": [
+      33.999936,
+      29.439598,
+      35.91531,
+      33.454362
+    ]
+  },
+  "publisher_provenance_independently_verified": false,
+  "phone_ownership_verified": false,
+  "complete_israel_coverage": false,
+  "packaging_blocker": "Existing packager only accepts an HTTP200 Geofabrik publisher acquisition receipt. Owner GitHub transfer is genuine and hash-bound but not that receipt. No receipt was forged and packager was not bypassed.",
+  "next_step": "Add reviewed/tested owner-upload acquisition mode, retaining exact source hash/bytes and truthful attribution/acquisition origin; review ODbL license/source offer and exact records before future app integration.0.12.0 remains directory-free."
+}
