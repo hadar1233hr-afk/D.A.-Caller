@@ -13,6 +13,7 @@ android {
   targetSdk 34
   versionCode 21
   versionName '0.12.0'
+  buildConfigField 'boolean', 'BUSINESS_DIRECTORY_ENABLED', 'false'
   testInstrumentationRunner 'android.test.InstrumentationTestRunner'
  }
  signingConfigs {

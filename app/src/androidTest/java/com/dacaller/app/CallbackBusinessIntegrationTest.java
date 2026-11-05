@@ -544,6 +544,24 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   java.lang.reflect.Field dialog=BusinessDirectoryView.class.getDeclaredField("dialog");dialog.setAccessible(true);return (AlertDialog)dialog.get(directory);
  }
  private void businessScenario()throws Exception{
+  if(!BuildConfig.BUSINESS_DIRECTORY_ENABLED){
+   long before=contactRows();String digest=contactDigest();
+   assertEquals(BusinessDirectory.Status.MISSING,businessPage("").status);
+   JSONArray palettes=new JSONArray();
+   for(boolean dark:new boolean[]{false,true}){
+    settings.edit().putBoolean("dark",dark).putBoolean("amoled",false).putString("language","he").commit();
+    startMain("contacts");ready(main);assertNull(tag(main,"contacts_directory_tab"));
+    ui(()->main.openBusinessDirectory());ready(main);
+    assertNull(tag(main,"business_directory_root"));assertNull(tag(main,"contacts_directory_tab"));
+    palettes.put(new JSONObject().put("palette",dark?"dark":"light").put("bar_contrast",snapshot("business-deferred-"+(dark?"dark":"light"),dark)));
+   }
+   assertEquals(before,contactRows());assertEquals(digest,contactDigest());assertNull(PhoneSessionService.current);
+   completedBusiness=new JSONObject().put("readiness","DEFERRED_BY_OWNER").put("enabled",false).put("record_count",0)
+    .put("tab_absent",true).put("stale_navigation_keeps_personal_contacts",true).put("no_automatic_business_call",true)
+    .put("private_contacts_before",before).put("private_contacts_after",contactRows())
+    .put("private_contacts_digest_before",digest).put("private_contacts_digest_after",contactDigest()).put("palettes",palettes);
+   writeCombined();return;
+  }
   long privateBefore=contactRows();String privateDigest=contactDigest();BusinessDirectory.Page initial=businessPage("");
   // A missing/empty/invalid source is a real release blocker. Unit-only fake
   // databases cannot turn this gate into native production-dataset evidence.
@@ -603,7 +621,7 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   if(completedBusiness!=null)writeFile("business-directory-native.json",completedBusiness.toString(2));
   if(completedReminder==null||completedBusiness==null)return;
   writeFile("callback-business-native.json",new JSONObject().put("api",33).put("size","480x854").put("density_dpi",240).put("font_scale",1.3)
-   .put("physical_cellular_audio_verified",false).put("data_origin","Actual Android Telecom emulator modem calls and call-log rows; production private OS alarm; immutable licensed packaged business dataset")
+   .put("physical_cellular_audio_verified",false).put("data_origin",BuildConfig.BUSINESS_DIRECTORY_ENABLED?"Actual Android Telecom emulator modem calls and call-log rows; production private OS alarm; immutable licensed packaged business dataset":"Actual Android Telecom emulator modem calls and call-log rows; production private OS alarm; business directory deferred by owner, no business data verified")
    .put("reminder",completedReminder).put("business",completedBusiness).toString(2));
  }
  private void failureEvidence(Throwable failure)throws Exception{

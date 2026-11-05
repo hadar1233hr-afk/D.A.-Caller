@@ -100,6 +100,7 @@ public class ContactsBusinessChipTest {
   root.dispatchTouchEvent(up);up.recycle();Shadows.shadowOf(Looper.getMainLooper()).idle();
  }
  @Test public void fullEnglishAndHebrewLabelsFitBesideFlexibleCountAnd48dpRefresh(){
+  if(!BuildConfig.BUSINESS_DIRECTORY_ENABLED){for(String language:new String[]{"en","he"}){assertNull(page(language,true).findViewWithTag("contacts_directory_tab"));assertEquals(0,host.calls);assertEquals(0,host.directoryOpens);}return;}
   for(String language:new String[]{"en","he"}){
    View page=page(language,true);TextView chip=chip(page);fullLabelFits(chip,language);
    LinearLayout row=(LinearLayout)chip.getParent();View count=page.findViewWithTag("contacts_personal_tab"),refresh=row.getChildAt(2);
@@ -114,6 +115,7 @@ public class ContactsBusinessChipTest {
   }
  }
  @Test public void onlyExplicitBusinessTouchOpensDirectoryAndRefreshKeepsItsOwnAction(){
+  if(!BuildConfig.BUSINESS_DIRECTORY_ENABLED){for(String language:new String[]{"en","he"}){assertNull(page(language,true).findViewWithTag("contacts_directory_tab"));assertEquals(0,host.calls);assertEquals(0,host.directoryOpens);}return;}
   for(String language:new String[]{"en","he"}){
    int opens=host.directoryOpens,refreshes=host.refreshes;
    View page=page(language,true);TextView chip=chip(page);LinearLayout row=(LinearLayout)chip.getParent();
@@ -124,6 +126,7 @@ public class ContactsBusinessChipTest {
   }
  }
  @Test public void businessEntryAlsoFitsAndOpensWithoutPersonalContactsPermission(){
+  if(!BuildConfig.BUSINESS_DIRECTORY_ENABLED){for(String language:new String[]{"en","he"}){assertNull(page(language,false).findViewWithTag("contacts_directory_tab"));assertEquals(0,host.calls);assertEquals(0,host.directoryOpens);}return;}
   for(String language:new String[]{"en","he"}){
    View page=page(language,false);TextView chip=chip(page);fullLabelFits(chip,language);
    assertEquals(dp(48),((View)chip.getParent()).getHeight());contained(chip,(View)chip.getParent());

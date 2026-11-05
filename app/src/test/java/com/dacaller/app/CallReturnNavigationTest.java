@@ -137,9 +137,10 @@ public class CallReturnNavigationTest {
   state.putString("business_query","קפה");state.putInt("business_offset",50);CallReturnNavigation.saveMain(app,state);
   try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class,CallReturnNavigation.intent(app)).setup()){
    MainActivity activity=controller.get();View content=activity.findViewById(android.R.id.content);
-   assertNotNull(content.findViewWithTag("business_directory_root"));
+   if(BuildConfig.BUSINESS_DIRECTORY_ENABLED)assertNotNull(content.findViewWithTag("business_directory_root"));
+   else {assertNull(content.findViewWithTag("business_directory_root"));assertNull(content.findViewWithTag("contacts_directory_tab"));}
    Bundle restored=new Bundle();activity.onSaveInstanceState(restored);
-   assertTrue(restored.getBoolean("contacts_business_mode"));assertEquals("קפה",restored.getString("business_query"));
+   assertEquals(BuildConfig.BUSINESS_DIRECTORY_ENABLED,restored.getBoolean("contacts_business_mode"));assertEquals("קפה",restored.getString("business_query"));
    assertEquals(50,restored.getInt("business_offset"));
    activity.onNewIntent(new Intent(activity,MainActivity.class).putExtra("show_recents",true));
    Bundle recents=new Bundle();activity.onSaveInstanceState(recents);assertEquals("recents",recents.getString("page"));

@@ -346,6 +346,7 @@ public class MainActivity extends Activity {
    setContentView(root);
   }
   if(fastPages==null)fastPages=new FastPages(this);
+  if(!BuildConfig.BUSINESS_DIRECTORY_ENABLED)contactsBusinesses=false;
   workspace.removeAllViews();
   pageScroll=null;
   if(page.equals("settings")){
@@ -497,7 +498,7 @@ public class MainActivity extends Activity {
  void requestLog(){ensureCallLogPermission();}
  void requestContacts(){requestPermissions(new String[]{Manifest.permission.READ_CONTACTS},21);}
  void openContactsTab(){openPersonalContacts();}
- void openBusinessDirectory(){page="contacts";contactsBusinesses=true;render();}
+ void openBusinessDirectory(){page="contacts";contactsBusinesses=BuildConfig.BUSINESS_DIRECTORY_ENABLED;render();}
  void openPersonalContacts(){page="contacts";contactsBusinesses=false;render();}
  private BusinessDirectoryView directory(){
   if(businessDirectory==null)businessDirectory=new BusinessDirectoryView(this,this::openPersonalContacts,this::dialFromList);

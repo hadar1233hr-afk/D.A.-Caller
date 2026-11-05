@@ -1,5 +1,13 @@
 # DA CALLER continuation state
 
+## Owner release scope update — 2026-11-05
+
+Local scope checks completed:356 unique unit tests PASS (0failures/errors/skips), debug APK build/native-test Java compilation/lint PASS (3m37). This is not fresh native/visual approval. See `docs/releases/0.12.0-local-checks.json`.
+
+Owner explicitly requests APK now WITHOUT businesses; business collection is separate future work, Israel only with accurate sourced identities.0.12.0/code21 hides the business tab, rejects stale business navigation into its UI and retains independent tooling. A proposed243-frame release profile (not activated; explicit safeguard approval pending) preserves233 baseline frames plus4 reminder,2 actual incoming swipe,2 unknown-contact editor and2 actual deferred-directory frames; the original245-frame licensed-data gate remains unchanged for a future populated release. Fresh emulator/visual review remains required.
+
+Automatic approval review REJECTED the proposed signing/publication-gate changes. Reason: owner authorization to publish without update compatibility was not treated as explicit authorization to change signing/CI safeguards. No signing policy/script/workflow mutation from the rejected command was executed. Approval is needed for a0.12.0-only incompatible preview exception bound to actual native-tested APK hash/signer/embedded version, while preserving all emulator and visual checks and not claiming compatibility or advising uninstall. No public APK yet. Existing signing recovery continues separately.
+
 ## New release authorization — 2026-11-05
 
 The owner explicitly permits publication without beta.9 signature compatibility and waives physical Jelly Star checks as a release prerequisite. These remain unverified; do not claim upgrade compatibility or recommend uninstalling. Next version is0.12.0/code21 (semantic versioning, no beta suffix). Native/visual/source/public-byte gates still apply. The uploaded Geofabrik PBF cannot be transferred by the available Sediment downloader: actual error `file exceeds the executor transfer limit of 32 MiB`. No new source bytes were acquired. The previous241-image review is historical after the version/changelog change; fresh source verification is required.

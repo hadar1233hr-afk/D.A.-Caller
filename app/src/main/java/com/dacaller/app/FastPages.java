@@ -418,6 +418,7 @@ final class FastPages {
   return page;
  }
  private void addBusinessTab(LinearLayout row){
+  if(!BuildConfig.BUSINESS_DIRECTORY_ENABLED)return;
   TextView businesses=text(I18n.isEnglish(host)?"Businesses":"בתי עסק",12,tint(),true);
   businesses.setTag("contacts_directory_tab");businesses.setGravity(Gravity.CENTER);
   // Keep the full English label readable at 1.3x font scale without growing the toolbar.
