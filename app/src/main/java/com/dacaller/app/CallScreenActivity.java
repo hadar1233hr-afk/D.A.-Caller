@@ -221,7 +221,7 @@ public final class CallScreenActivity extends Activity {
    Call call=PhoneSessionService.current;if(call==null){if(!preview())finish();return;}
    LinearLayout fallback=col();fallback.setGravity(Gravity.CENTER);fallback.setPadding(dp(20),dp(20),dp(20),dp(20));fallback.setBackgroundColor(Color.BLACK);
    fallback.addView(text("DA CALLER · "+tr("שיחה פעילה"),22,Color.WHITE,true),new LinearLayout.LayoutParams(-1,0,1));
-   if(call.getState()==Call.STATE_RINGING){TextView accept=text(tr("ענה"),20,Color.WHITE,true);accept.setBackgroundColor(0xFF16754D);add(fallback,accept,-1,64,12);accept.setOnClickListener(v->{if(call==PhoneSessionService.current)try{call.answer(VideoProfile.STATE_AUDIO_ONLY);}catch(RuntimeException ignored){}});}
+   if(call.getState()==Call.STATE_RINGING){TextView accept=text(tr("ענה"),20,Color.WHITE,true);accept.setBackgroundColor(0xFF16754D);add(fallback,accept,-1,64,12);accept.setText(tr("החלק ימינה כדי לענות  →"));accept.setContentDescription(accept.getText());bindIncomingGesture(call,accept,"ios");}
    FrameLayout end=endButton(call);add(fallback,end,136,64,16);setContentView(fallback);
   }catch(RuntimeException secondary){CallFailureReporter.record(this,"incall-emergency-screen",secondary);}
  }
@@ -240,24 +240,54 @@ public final class CallScreenActivity extends Activity {
   String title=mode.equals("vertical")?"↑ למעלה למענה · למטה לדחייה ↓":
     mode.equals("left")?"← שמאלה למענה · ימינה לדחייה →":
     mode.equals("right")?"→ ימינה למענה · שמאלה לדחייה ←":"החלק ימינה כדי לענות  →";
-  // Keep both safety actions reachable by TalkBack, switch access and a simple tap.
+  // Touch answering requires a completed gesture; accessibility uses its explicit action.
   prompt.setText(tr(title));prompt.setContentDescription(tr(title));prompt.setFocusable(true);
-  prompt.setOnClickListener(v->v.announceForAccessibility(tr(title)));
   LinearLayout.LayoutParams gesture=new LinearLayout.LayoutParams(-1,dp(compact()?78:100));
   gesture.setMargins(dp(7),dp(6),dp(7),dp(13));buttons.addView(prompt,gesture);
+  bindIncomingGesture(call,prompt,mode);
+  LinearLayout controls=row();buttons.addView(controls,new LinearLayout.LayoutParams(-1,-2));
+  tile(controls,R.drawable.ic_control_close,"דחה",2,compact()?65:77,()->decline(call,prompt));
+ }
+ private void bindIncomingGesture(Call call,TextView prompt,String mode){
+  prompt.setFocusable(true);
+  prompt.setOnClickListener(v->v.announceForAccessibility(prompt.getContentDescription()));
+  prompt.setTag("incoming-swipe-answer");
+  prompt.setAccessibilityDelegate(new View.AccessibilityDelegate(){
+   @Override public void onInitializeAccessibilityNodeInfo(View view,android.view.accessibility.AccessibilityNodeInfo info){
+    super.onInitializeAccessibilityNodeInfo(view,info);
+    info.addAction(new android.view.accessibility.AccessibilityNodeInfo.AccessibilityAction(
+      android.view.accessibility.AccessibilityNodeInfo.ACTION_CLICK,tr("ענה")));
+   }
+   @Override public boolean performAccessibilityAction(View view,int action,Bundle args){
+    if(action==android.view.accessibility.AccessibilityNodeInfo.ACTION_CLICK){answer(call,prompt);return true;}
+    return super.performAccessibilityAction(view,action,args);
+   }
+  });
   final float[] down={0,0};final boolean[] tracking={false};
   prompt.setOnTouchListener((v,event)->{
    switch(event.getActionMasked()){
     case MotionEvent.ACTION_DOWN:
-     tracking[0]=true;down[0]=event.getX();down[1]=event.getY();
-     v.getParent().requestDisallowInterceptTouchEvent(true);return true;
+     tracking[0]=event.getPointerCount()==1;down[0]=event.getRawX();down[1]=event.getRawY();
+     v.setTranslationX(0);v.setTranslationY(0);
+     if(v.getParent()!=null)v.getParent().requestDisallowInterceptTouchEvent(true);return true;
+    case MotionEvent.ACTION_MOVE:
+     if(tracking[0]){
+      float dx=event.getRawX()-down[0],dy=event.getRawY()-down[1];
+      if(mode.equals("vertical"))v.setTranslationY(Math.max(-dp(32),Math.min(dp(32),dy)));
+      else v.setTranslationX(Math.max(-dp(32),Math.min(dp(32),dx)));
+     }
+     return true;
     case MotionEvent.ACTION_POINTER_DOWN:
-    case MotionEvent.ACTION_CANCEL:tracking[0]=false;return true;
+    case MotionEvent.ACTION_POINTER_UP:
+    case MotionEvent.ACTION_CANCEL:
+     tracking[0]=false;v.setTranslationX(0);v.setTranslationY(0);
+     if(v.getParent()!=null)v.getParent().requestDisallowInterceptTouchEvent(false);return true;
     case MotionEvent.ACTION_UP:
-     v.getParent().requestDisallowInterceptTouchEvent(false);
+     if(v.getParent()!=null)v.getParent().requestDisallowInterceptTouchEvent(false);
+     v.setTranslationX(0);v.setTranslationY(0);
      if(!tracking[0])return true;
      tracking[0]=false;
-     IncomingGesture.Action action=IncomingGesture.resolve(mode,event.getX()-down[0],event.getY()-down[1],dp(64));
+     IncomingGesture.Action action=IncomingGesture.resolve(mode,event.getRawX()-down[0],event.getRawY()-down[1],dp(64));
      if(action==IncomingGesture.Action.ANSWER)answer(call,prompt);
      else if(action==IncomingGesture.Action.DECLINE)decline(call,prompt);
      else v.performClick();
@@ -265,9 +295,6 @@ public final class CallScreenActivity extends Activity {
     default:return true;
    }
   });
-  LinearLayout controls=row();buttons.addView(controls,new LinearLayout.LayoutParams(-1,-2));
-  tile(controls,R.drawable.ic_phone_line,"ענה",1,compact()?65:77,()->answer(call,prompt));
-  tile(controls,R.drawable.ic_control_close,"דחה",2,compact()?65:77,()->decline(call,prompt));
  }
  private void answer(Call call,View view){
   if(call!=PhoneSessionService.current||call.getState()!=Call.STATE_RINGING)return;

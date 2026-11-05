@@ -171,4 +171,35 @@ public class CallReturnNavigationTest {
    assertNull("Android already restores its saved Activity stack",Shadows.shadowOf(controller.get()).getNextStartedActivity());
   }
  }
+ @Test public void incomingTouchRequiresCompletedSwipeAndCancelledDragCannotAnswer(){
+  Call call=mock(Call.class);when(call.getState()).thenReturn(Call.STATE_RINGING);PhoneSessionService.current=call;
+  try(ActivityController<CallScreenActivity> controller=Robolectric.buildActivity(CallScreenActivity.class).setup()){
+   View prompt=controller.get().findViewById(android.R.id.content).findViewWithTag("incoming-swipe-answer");assertNotNull(prompt);
+   float distance=100*controller.get().getResources().getDisplayMetrics().density;
+   gestureEvent(prompt,android.view.MotionEvent.ACTION_DOWN,0);gestureEvent(prompt,android.view.MotionEvent.ACTION_UP,0);
+   gestureEvent(prompt,android.view.MotionEvent.ACTION_DOWN,0);gestureEvent(prompt,android.view.MotionEvent.ACTION_UP,distance/4);
+   gestureEvent(prompt,android.view.MotionEvent.ACTION_DOWN,0);gestureEvent(prompt,android.view.MotionEvent.ACTION_MOVE,distance);
+   assertTrue("The swipe must visibly follow the finger",prompt.getTranslationX()>0);
+   gestureEvent(prompt,android.view.MotionEvent.ACTION_CANCEL,distance);gestureEvent(prompt,android.view.MotionEvent.ACTION_UP,distance);
+   verify(call,never()).answer(anyInt());assertEquals(0f,prompt.getTranslationX(),0f);
+   gestureEvent(prompt,android.view.MotionEvent.ACTION_DOWN,0);gestureEvent(prompt,android.view.MotionEvent.ACTION_MOVE,distance);
+   gestureEvent(prompt,android.view.MotionEvent.ACTION_UP,distance);verify(call,times(1)).answer(android.telecom.VideoProfile.STATE_AUDIO_ONLY);
+  }
+ }
+ @Test public void incomingAccessibilityCanAnswerButOldCallSwipeCannotAffectItsReplacement(){
+  Call call=mock(Call.class);when(call.getState()).thenReturn(Call.STATE_RINGING);PhoneSessionService.current=call;
+  try(ActivityController<CallScreenActivity> controller=Robolectric.buildActivity(CallScreenActivity.class).setup()){
+   View prompt=controller.get().findViewById(android.R.id.content).findViewWithTag("incoming-swipe-answer");assertNotNull(prompt);
+   assertTrue(prompt.performAccessibilityAction(android.view.accessibility.AccessibilityNodeInfo.ACTION_CLICK,null));
+   verify(call).answer(android.telecom.VideoProfile.STATE_AUDIO_ONLY);
+   Call replacement=mock(Call.class);when(replacement.getState()).thenReturn(Call.STATE_RINGING);PhoneSessionService.current=replacement;
+   gestureEvent(prompt,android.view.MotionEvent.ACTION_DOWN,0);gestureEvent(prompt,android.view.MotionEvent.ACTION_UP,500);
+   verify(call,times(1)).answer(anyInt());verify(replacement,never()).answer(anyInt());
+  }
+ }
+ private static void gestureEvent(View target,int action,float x){
+  long at=android.os.SystemClock.uptimeMillis();android.view.MotionEvent event=android.view.MotionEvent.obtain(at,at,action,x,0,0);
+  try{target.dispatchTouchEvent(event);}finally{event.recycle();}
+ }
+
 }
