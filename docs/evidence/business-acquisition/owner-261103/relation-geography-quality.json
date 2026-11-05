@@ -1,0 +1,20 @@
+{
+  "status": "RESEARCH_QUALITY_ONLY_NOT_APP_ACCEPTED",
+  "corpus_sha256": "2e56ba410ea38bc06897d43c50108b5d007895d41856daeffa55e136dda58ae8",
+  "production_first_failure_results": {
+    "Country membership not explicitly sourced": 1
+  },
+  "source_text_failed_fields": [],
+  "country_fields_inferred": 0,
+  "app_records_added": 0,
+  "source_mutations": 0,
+  "combined_node_way_relation_phone_rows": 2696,
+  "combined_unique_source_objects": 2636,
+  "combined_unique_base_phones": 2591,
+  "distinct_new_phone_count": 1,
+  "automatic_merges": 0,
+  "limits": [
+    "Source-listing and numbering metadata do not establish current phone ownership/reachability.",
+    "Combined source identities need not be distinct physical businesses or national coverage."
+  ]
+}

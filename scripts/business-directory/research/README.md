@@ -15,7 +15,8 @@ Admission requires a point strictly inside the complete source IL polygon and
 outside BOTH filled WestBank outer envelopes and the source Gaza polygon, with
 an angular0.001-degree margin around boundaries. Degrees are not exact meters.
 The NODE tool omits ways/relations; the separately audited closed-way extension
-below evaluates full polygons. Relations remain omitted without role-aware assembly.
+below evaluates full polygons. The relation extension retains true source holes
+and omits ambiguous/nested/incomplete geometry rather than guessing.
 Missing country tags stay null; they are never fabricated from a phone prefix
 or location. Any non-IL country field triggers a deliberately broad research
 exclusion: on diplomatic offices `country` may mean the represented state.
@@ -148,3 +149,44 @@ separately. No count proves distinct physical businesses, current ownership,
 official borders or full national coverage.0app records;0.12.0 remains without
 businesses and publication approval remains pending. See matching
 `way-geography-*` evidence, exact corpus ZIP and combined coverage report.
+
+## Role-aware source relation research
+
+`research_relation_geography.py` assembles original outer/inner members only at
+matching source reference endpoints. It requires complete unambiguous rings,
+unique hole-to-shell assignment and valid whole multipolygons. Source holes
+remain holes; overlapping/orphan/touching holes, ambiguous/nested members and
+invented closure/repair are rejected.20 adversarial contracts passed and were
+independently rerun. All5 source relation decisions were independently replayed
+from actual PBF5relations/10ways/131nodes. One relation yields1 source phone row;
+4 are excluded. The emitted1relation/2ways/39nodes and actual hole matched.
+See `relation-geography-README.md` in the retained source-evidence directory for
+exact corpus/report/audit ZIP hashes and CLI reproduction.
+
+## Separate offline research SQLite
+
+`stage_research_sqlite.py` creates a distinctly named RESEARCH_ONLY schema,
+never a production app dataset. Exact audited NODE/WAY/optional RELATION bytes,
+reports/audits, original scopes, code/dependency hashes and runtime versions are
+bound and rechecked before retaining a fresh output. No existing app asset,
+country field, personal contact/history/archive or production guard is changed.
+
+Actual final staging retains2696 original lines/SHAs and2680 null countries.
+2693 text-safe FTS rows include10 separately marked same-E.164 phone-format
+proposals requiring explicit boolean opt-in; default search has2683 entries.
+3 source-text rows remain stored outside search. Raw bytes and ordered cohorts
+can be reconstructed exactly. Stable INTEGERPRIMARYKEY FTS bindings survive
+VACUUM. Every app_accepted value remains0, and the schema has no app businesses
+table. Querying opens read-only with bound MATCH, literal tokens and keyset pages.
+
+25 contracts and an independent full actual-database audit PASS.33 pages covered
+1217 shop matches without omissions/repeats. The query plan uses FTS+INTEGERPK
+lookup and a temporary sorting B-tree; desktop checks are not Android UI or
+million-record performance tests. See `research-search-README.md` and its exact
+database/manifest/audit/check ZIP in source evidence. Production admission and
+future native integration remain separate, and0.12.0 stays without businesses.
+
+```sh
+/workspace/work/business-directory-research/.venv/bin/python scripts/business-directory/research/check_research_sqlite.py
+/workspace/work/business-directory-research/.venv/bin/python scripts/business-directory/research/stage_research_sqlite.py query /workspace/work/business-data/research-search-stage-owner-261103-v2/research-search.sqlite "אג׳נדה"
+```

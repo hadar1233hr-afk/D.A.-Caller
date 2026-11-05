@@ -1,5 +1,58 @@
 # DA CALLER continuation state
 
+## Research SQLite and true relation holes — app/release unchanged
+
+Complete role-aware assembly evaluated all5 source multipolygon relations,
+preserving original outer/inner roles and true holes without guessed closing
+edges. One WeWork relation adds1 phone row;2 relations fail source IL containment
+and2 intersect/approach the filled WB exclusion.20 new adversarial checks PASS,
+independently rerun. An independent actual-PBF audit reread5 relations/10 member
+ways/131 nodes and replayed all5 decisions; emitted1row/1relation/2ways/39nodes
+and its true hole matched. Country remains null; production still rejects it.
+[Relation corpus, report, audit and reproduction](evidence/business-acquisition/owner-261103/relation-geography-README.md).
+
+Combined NODE/WAY/RELATION research now has2,696 raw phone rows/2,636 source
+objects/2,591 distinct numbers. A separate offline SQLite/FTS4 research stage
+retains all2696 exact original BLOB lines/hashes/order;2680 country values remain
+null.2693 text-safe FTS rows include10 separate same-E.164 UAN1599 proposals
+requiring explicit boolean research opt-in. Default search has2683 entries;
+3 source-text rows remain stored outside search. No phone/name repair, country
+inference, source merge, dial action, production admission or app record added.
+
+All25 new SQLite contracts PASS, independently rerun. An initially invalid
+positive synthetic phone fixture was replaced by the library example, with an
+additional invalid-source withholding regression; no actual source changed.
+Review fixed truthy-string opt-in, stable INTEGERPRIMARYKEY FTS binding through
+sparse-row VACUUM, and source/code/dependency/lock/runtime snapshots before
+validation with final hash checks. Final v2 was rebuilt after source freeze;
+private v1 is historical only. These45 new data-tool contracts (20+25) are not
+new Android tests.
+
+Independent actual-DB audit matched2696 raw/source projections,2693 FTS bindings,
+all code/source-audit hashes and SQLite integrity/foreign keys/research-only
+CHECK. Known Hebrew/E.164/national queries and opt-in/default controls passed;
+33 keyset pages covered1217 shop matches with0repeats/omissions. Query bytes
+remained unchanged. FTS index+INTEGERPK lookup use a temporary sorting B-tree;
+no mobile/million-record performance claim. Source phone/text parsers are shared
+disclosed references. [Exact DB ZIP, manifest, audit and reproduction](evidence/business-acquisition/owner-261103/research-search-README.md).
+
+DB6,844,416bytes SHA b8d5f5209ea87969a1b42d3907e73f99466f869f7df2afcd8d7bb4eeb4dda274;
+ZIP1,581,985bytes SHA8d651d59ebb5d99ef0a92b01e638fa0ee965db473c8759a7422f017231bcdd2b.
+The schema deliberately differs from app businesses tables and every row remains
+app_accepted=0. Never rename it into app assets. All original research rows still
+fail unchanged production packaging; source searchability is not verified
+current ownership, official borders or complete national coverage.
+
+App tree9f15350b457405bf88a35c0ac5badc8f3a85cd94 unchanged; existing356unit/
+35native/243-reviewed-image proof remains current, unchanged245-frame CI still
+FAILS. No app/productionpackager/signing/CI/publication gate edits, no new native
+run or APK. PR5 comments/reviews still contain no explicit approval for the
+rejected0.12.0-only signing/CI exception. Prior direct approval question remains
+pending; continuation is not approval. Keep existing2-hour timer until all
+requested work and verified APK delivery finish. No quota block, model/account
+switch or competing app work occurred. Future production/native integration
+remains separate; this stage is research-only.
+
 ## Complete-way source research —247 added research rows, APK unchanged
 
 The latest continuation expanded the existing conservative source-geometry
