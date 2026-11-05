@@ -1,0 +1,28 @@
+{
+  "readiness": "DEFERRED_BY_OWNER",
+  "enabled": false,
+  "record_count": 0,
+  "tab_absent": true,
+  "stale_navigation_keeps_personal_contacts": true,
+  "no_automatic_business_call": true,
+  "private_contacts_before": 0,
+  "private_contacts_after": 0,
+  "private_contacts_digest_before": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "private_contacts_digest_after": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "palettes": [
+    {
+      "palette": "light",
+      "bar_contrast": {
+        "status": 953,
+        "navigation": 1276
+      }
+    },
+    {
+      "palette": "dark",
+      "bar_contrast": {
+        "status": 1016,
+        "navigation": 1276
+      }
+    }
+  ]
+}

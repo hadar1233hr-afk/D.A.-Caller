@@ -1,5 +1,13 @@
 # DA CALLER continuation state
 
+## Fresh native verification — source0d266d6 / CI42001641651
+
+[CI42001641651](https://github.com/hadar1233hr-afk/D.A.-Caller/actions/runs/42001641651) produced356 unique unit PASS and35 unique Android13 native PASS,0 failures/errors/skips in the actual independently extracted JUnit reports. All243 actual PNGs are present, with101 call/44 island/98 other and0 diagnostics; all233 baseline names retained. GitHub artifact hashes/sizes/ZIPCRC were independently checked; immutable raw export `612188913a0e9ff2040d58892d1f9e83d528c4da` retains the native APK, UI and checks. App tree `9f15350b457405bf88a35c0ac5badc8f3a85cd94` remains unchanged by subsequent data/docs commits.
+
+Overall workflow is FAILURE: the unchanged external-island post-verifier still expects245 images from the earlier populated-business scope and found243. Do not report a full pipeline PASS or alter/bypass the rejected signing/CI safeguards. Original gates remain unchanged. Explicit owner approval was requested asynchronously for the0.12.0-only exception; no reply has arrived yet.
+
+Actual visual review covers36 fresh frames, including all4 Settings top/bottom palettes, reminder singular copy,0.12.0 changelog, hidden directory, actual incoming swipe/new-contact editor and backup/island-settings samples. These36 frames PASS visually; full243-image visual review is PENDING. [Partial review and native proof](evidence/release-0.12.0/polish-ci/polish-review-partial.json). This is not publication approval. No new Release/APK link has been issued.
+
 ## Latest continuation — APK-first, polish and business extraction
 
 User requests delivery here immediately when an APK is ready, continued Israel-only business integration separately, modest UI polish, and one2-hour continuation timer that disables itself after all requested work is complete. Existing self-owned timer was updated, not duplicated; no reliable quota API or actual usage-limit block has been observed.
