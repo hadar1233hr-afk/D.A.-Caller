@@ -1,0 +1,57 @@
+{
+  "status": "ROLE_AWARE_RELATION_RESEARCH_RETAINED_NOT_APP_ACCEPTED",
+  "observed_at_utc": "2026-11-05T20:09:21.242001+00:00",
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "corpus_sha256": "2e56ba410ea38bc06897d43c50108b5d007895d41856daeffa55e136dda58ae8",
+  "corpus_bytes": 11856,
+  "archive_bytes": 8770,
+  "archive_sha256": "851a0304f0edb8d9dc1dac87140f6d53c8ea33131f5a672f8d50c3ea942016ae",
+  "archive_member_sha256": {
+    "research-relation-businesses.ndjson": "2e56ba410ea38bc06897d43c50108b5d007895d41856daeffa55e136dda58ae8",
+    "report.json": "14b12e58052b8d26ca1271a175024bc50b1cf5230a5dc15187d2650b65fe568c",
+    "independent-audit.json": "3d93f9f508c9c4ef056c67c320b7124b7c2cd5136aa5fe2639c55ff46b66b584",
+    "quality.json": "502eeb7a282ed5ff36e3755a155c3c9d9cbcefa56439c9c333f436e6852cfc46",
+    "checks.txt": "e63384c566ac4292e7551340ab6b8c0c9f77ba6b22752e786ca3df37dff62458",
+    "LICENSE-NOTICE.txt": "9c02e21f1f1e1ca0de32253b1a196bf4cddcc5f04254b8835e828e624d0b651c"
+  },
+  "script_sha256": {
+    "research_relation_geography.py": "a644adeb89ab294096eb588497dd078e33b9151e71741900c53f22319b7dafea",
+    "check_relation_geography.py": "f9bf11faa9160315597e06919994ec820f1d0dee6e58d9c0308cb1b30e6280bc",
+    "audit_relation_geography.py": "c042c0642c15de83b9b4edf04af6eff9fc978aa0e20ec9522cf6cc8cac21dd77"
+  },
+  "adversarial_tests": {
+    "executed": 20,
+    "passed": 20,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "independently_rerun": true
+  },
+  "independent_source_and_role_spatial_audit": {
+    "all_source_decisions": 5,
+    "all_relations_reread": 5,
+    "all_member_ways_reread": 10,
+    "all_referenced_nodes_reread": 131,
+    "emitted_rows": 1,
+    "emitted_relations": 1,
+    "emitted_member_ways": 2,
+    "emitted_nodes": 39,
+    "status": "PASS"
+  },
+  "retention_checks": [
+    "Actual source/corpus/executedhelper/auditscript/report SHA agree",
+    "ZIP exactmembernames/CRC/allmember SHA agree",
+    "Original missingcountry retained; productioncountryguard stillrejects sole row",
+    "Alltext fields withinexistingbounds; no substitutions or formatproposals",
+    "Finalproducer20adversarialmethods PASS and independent reviewer20PASS"
+  ],
+  "source_mutations": 0,
+  "automatic_merges": 0,
+  "app_records_added": 0,
+  "publication_approval": false,
+  "limits": [
+    "Research only; no production geographic admission, Android/native test or publication approval.",
+    "Source country/phone/category/geometry provenance reference contracts shared as disclosed.",
+    "No currentness, physical business identity or national coverage claim."
+  ]
+}

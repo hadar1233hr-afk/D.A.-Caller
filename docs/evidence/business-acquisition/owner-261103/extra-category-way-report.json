@@ -1,0 +1,119 @@
+{
+  "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED",
+  "scope": "research-complete-closed-way-source-IL-interior-minus-filled-WB-and-Gaza",
+  "observed_at_utc": "2026-11-05T22:16:09.822296+00:00",
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "source_pbf_bytes": 121050024,
+  "input_inventory_sha256": {
+    "source-objects.ndjson": "0f76a5e50070cb6f448fb85a83066780f803b9ea9f5624ba0a1934d669275679",
+    "geometry-nodes.json": "e244a09fd8b709dce95e6af9ee3d637f94e92b97a5f79928cc649f2412d07856",
+    "relation-member-ways.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "report.json": "483f1a83ac8c1bd6f059fc61e6799353647f03098977077c920fbec2d2eb7fca"
+  },
+  "geometry_provenance": {
+    "input_sha256": {
+      "research-region-outer-rings.json": "04b9d0ed2ad8d28e2947bb9fde88cbe39dd7f37c666940ab48869fdb3939750f",
+      "research-region-geometry-inventory.json": "ba44cf5695ada7b33a33acf86976a185768c8fb6396e9156ecc4c00c9fd823b1",
+      "country-relation-inventory.json": "cef27b1ec8c92b6a68d5bd57b0c65eb4ecd282ed949b75b767996069d3104125",
+      "disputed-region-relation-inventory.json": "b96552bfa717e01d9ad4d6275f45ee04ebe967a267e2a30c9a6cd42e5fc5d3f1",
+      "geography-research-review.json": "84ee86f8d48083ffb32c3cc51bfc4f0f3d0a507435d78068a8d7265c6360a0cc",
+      "owner-upload-receipt.json": "8ac1da66a8771f289b73a01cf15ca0351b13795ac5cb552fcb0a5fbc4c6532c2"
+    },
+    "relations": {
+      "source_IL": {
+        "relation_id": 1473946,
+        "source_url": "https://www.openstreetmap.org/relation/1473946",
+        "source_updated_at": "2026-09-18T15:07:24+00:00",
+        "source_tags": {
+          "name:en": "Israel",
+          "ISO3166-1": "IL",
+          "type": "boundary",
+          "boundary": "administrative",
+          "admin_level": "2",
+          "disputed": null
+        },
+        "all_members_complete": true,
+        "inner_holes_filled_for_exclusion_only": false
+      },
+      "Gaza_admin4": {
+        "relation_id": 1473938,
+        "source_url": "https://www.openstreetmap.org/relation/1473938",
+        "source_updated_at": "2026-10-10T16:02:40+00:00",
+        "source_tags": {
+          "name:en": "Gaza Strip",
+          "ISO3166-1": null,
+          "type": "boundary",
+          "boundary": "administrative",
+          "admin_level": "4",
+          "disputed": null
+        },
+        "all_members_complete": true,
+        "inner_holes_filled_for_exclusion_only": false
+      },
+      "JudeaSamaria_admin4_outer_filled": {
+        "relation_id": 1803010,
+        "source_url": "https://www.openstreetmap.org/relation/1803010",
+        "source_updated_at": "2026-09-28T11:34:35+00:00",
+        "source_tags": {
+          "name:en": "Judea and Samaria",
+          "ISO3166-1": null,
+          "type": "boundary",
+          "boundary": "administrative",
+          "admin_level": "4",
+          "disputed": null
+        },
+        "all_members_complete": true,
+        "inner_holes_filled_for_exclusion_only": true
+      },
+      "WestBank_historic_outer_filled": {
+        "relation_id": 12331025,
+        "source_url": "https://www.openstreetmap.org/relation/12331025",
+        "source_updated_at": "2025-12-24T19:52:27+00:00",
+        "source_tags": {
+          "name:en": "West Bank",
+          "ISO3166-1": null,
+          "type": "boundary",
+          "boundary": "historic",
+          "admin_level": null,
+          "disputed": null
+        },
+        "all_members_complete": true,
+        "inner_holes_filled_for_exclusion_only": true
+      }
+    }
+  },
+  "research_script_sha256": "78b943a603b16bd4763cc45cc1546438967427a8b3a009fb252c481196802787",
+  "extractor_sha256": "b9ff71844e21a2605d26452920edae8fa62026383a4008581191a40e78d7c060",
+  "node_research_sha256": "a5a01b32666bf4c22585de39b79801aedbadc0d1e2bf0d5074e20bc4a2518d0f",
+  "raw_phone_rows": 3,
+  "source_ways": 3,
+  "unique_base_phones": 3,
+  "counts": {
+    "emitted_source_ways": 3,
+    "research-qualified-complete-source-polygon": 3,
+    "source_named_phone_ways_examined": 3
+  },
+  "ndjson_sha256": "dd35def488f06705a128986681a4d775970ad3357b55a74fecb00e63585f5df1",
+  "source_country_tags": {
+    "<missing>": 3
+  },
+  "source_object_years": {
+    "2022": 1,
+    "2023": 1,
+    "2025": 1
+  },
+  "app_rows_added": 0,
+  "source_rows_merged": 0,
+  "automatically_repaired_rings": 0,
+  "attribution": "\u00a9 OpenStreetMap contributors",
+  "license_id": "ODbL-1.0",
+  "limits": [
+    "Full source polygons clear conservative source-geometry rules; no official/legal country or border claim.",
+    "The 0.001-degree angular margin is not a distance in meters.",
+    "No centroid, closing edge, missing node, hole, country tag or phone was invented.",
+    "Standalone closed ways only; all relations omitted without role-aware complete assembly.",
+    "Filled polygons are conservative envelopes for source admission, not surveyed premises.",
+    "No current ownership/reachability, active-business or complete national coverage claim.",
+    "Existing production admission, app, user data, signing, CI and release safeguards are unchanged."
+  ]
+}

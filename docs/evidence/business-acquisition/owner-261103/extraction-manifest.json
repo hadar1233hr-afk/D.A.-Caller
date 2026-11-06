@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "source_url": "https://download.geofabrik.de/asia/israel-and-palestine-latest.osm.pbf",
+  "source_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "source_bytes": 121050024,
+  "imported_at": "2026-11-05T09:10:14.989874+00:00",
+  "license_id": "ODbL-1.0",
+  "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+  "attribution": "© OpenStreetMap contributors",
+  "phonenumbers_version": "9.0.42",
+  "scope": "explicit-il",
+  "record_count": 24,
+  "distinct_phone_count": 23,
+  "counts": {
+    "accepted_source_objects": 24,
+    "business_category_objects": 42761,
+    "emitted_records": 24,
+    "named_businesses_with_phone_tag": 4671,
+    "objects_seen_node": 13830535,
+    "objects_seen_relation": 23187,
+    "objects_seen_way": 1743791,
+    "rejected_explicit_non_il_country": 82,
+    "rejected_missing_explicit_il_country": 4565,
+    "rejected_missing_source_name": 5609
+  },
+  "coverage_claim": "No claim of complete Israeli business coverage or confirmed phone ownership",
+  "scope_note": "explicit-il requires source country tag IL. The optional combined-extract mode selects valid Israeli dialing numbers, not a political boundary; it may contain cross-border listed businesses.",
+  "verification": "Source-listed public business phones; syntax/allocation validated, not individually called",
+  "omitted": "No contributor user IDs/names, customer contacts, fax tags or private/residential-only objects imported",
+  "sqlite_sha256": "5d46c017c7e4749184defb4ed54caf303b68d402542a659835192420181c9990",
+  "ndjson_sha256": "ed2e185b6d4fa6979008656ab3281566b187c1e5e4e8ef1ba80e50217f820836"
+}

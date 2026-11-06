@@ -1,0 +1,58 @@
+{
+  "status": "RESEARCH_EXTRACATEGORY_INVENTORY_RETAINED_NOT_GEOGRAPHICALLY_OR_APP_ADMITTED",
+  "observed_at_utc": "2026-11-05T22:17:34.460748+00:00",
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "archive_bytes": 3802,
+  "archive_sha256": "086adf04e441c9f166c50988b90548c37461b6db34e6dec1a600f2d8ee5b8f75",
+  "archive_member_sha256": {
+    "source-objects.ndjson": "0f76a5e50070cb6f448fb85a83066780f803b9ea9f5624ba0a1934d669275679",
+    "geometry-nodes.json": "e244a09fd8b709dce95e6af9ee3d637f94e92b97a5f79928cc649f2412d07856",
+    "relation-member-ways.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "report.json": "483f1a83ac8c1bd6f059fc61e6799353647f03098977077c920fbec2d2eb7fca",
+    "LICENSE-NOTICE.txt": "1ade45e3b367b35f96cf176b93af792b9662f4550bde61e70af1fb5999401f40"
+  },
+  "script_sha256": {
+    "extra_category_geometry_inventory.py": "3b0516894a36d41d78dbd9d18857a53659ef5eb70073574dd845ca645a61b9fc"
+  },
+  "extended_category_policy_sha256": "b9ff71844e21a2605d26452920edae8fa62026383a4008581191a40e78d7c060",
+  "source_ways": 3,
+  "source_relations": 0,
+  "source_nodes": 15,
+  "producer_retention_assertions": {
+    "executed": 22,
+    "passed": 22,
+    "checks": [
+      "known-owner-source-bytes-sha",
+      "research_helper_sha256",
+      "extended_category_policy_sha256",
+      "unchanged_core_extractor_sha256",
+      "shared_inventory_functions_sha256",
+      "shared_country_policy_sha256",
+      "exact-three-way-no-relation-identities",
+      "exact-fifteen-source-nodes-no-member-ways",
+      "all-source-tags-match-frozen-reviewed-policy",
+      "all-reference-dependency-results-recomputed",
+      "complete-dependencies-not-confused-with-topology-or-country",
+      "all-three-missing-country-preserved-no-admission",
+      "zero-app-geographic-admission",
+      "output-sha-geometry-nodes.json",
+      "output-sha-relation-member-ways.json",
+      "output-sha-source-objects.ndjson",
+      "archive-exact-members-crc",
+      "archive-member-sha-source-objects.ndjson",
+      "archive-member-sha-geometry-nodes.json",
+      "archive-member-sha-relation-member-ways.json",
+      "archive-member-sha-report.json",
+      "archive-member-sha-LICENSE-NOTICE.txt"
+    ]
+  },
+  "app_rows_added": 0,
+  "geographically_admitted_records": 0,
+  "limits": [
+    "Producer/dependency/hash consistency is not independent actual-PBF fidelity or full polygon topology/country validation.",
+    "All three source country tags remain null; phone prefixes/categories do not infer geographic scope.",
+    "Reviewed category/source listings do not confirm current business activity or phone ownership.",
+    "Existing app/production/research/signing/CI/publication contracts unchanged."
+  ],
+  "existing_unmodified_inventory_reader_protocol_check": "PASS:3sourceways/15source nodes/hashbindings accepted; no topology/geography classification"
+}

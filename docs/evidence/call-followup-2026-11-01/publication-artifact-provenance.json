@@ -1,0 +1,54 @@
+{
+  "provenance_verified_against_connector_digests": true,
+  "source": "c9d1eca7385c1b1711f5004185f292ca923c36bb",
+  "run": 41363043464,
+  "conclusion": "success",
+  "artifacts": {
+    "tested-apk": {
+      "artifact_id": 13106601111,
+      "artifact_name": "DA-CALLER-0.11.0-beta.9-tested-debug-b69d06605546a4f56d3b43266e65f86f011bf85a",
+      "sha256": "2a0cdde80169518241597c538a0e6e2932454ae128dce917a8c92b1957261885",
+      "bytes": 280754,
+      "path": "/workspace/work/call-followup-final-tested-apk",
+      "zip": "/workspace/da-caller-native-evidence/native-review-export/41363043464/tested-apk.zip"
+    },
+    "ui": {
+      "artifact_id": 13106386782,
+      "artifact_name": "DA-CALLER-Android13-UI-b69d06605546a4f56d3b43266e65f86f011bf85a",
+      "sha256": "294153208071d4fa837dc5dcd986ba19c5d1ff949182b0bdb7915ae8afaf1151",
+      "bytes": 13602363,
+      "path": "/workspace/work/call-followup-final-ui",
+      "zip": "/workspace/da-caller-native-evidence/native-review-export/41363043464/ui.zip"
+    },
+    "validate-apk": {
+      "artifact_id": 13106380382,
+      "artifact_name": "DA-CALLER-0.11.0-beta.9-debug-b69d06605546a4f56d3b43266e65f86f011bf85a",
+      "sha256": "50ebd5d6c788a332ec7ddbb02d79c167f8813c8623b0b601c97ace5b7deb2a7f",
+      "bytes": 280669,
+      "path": "/workspace/work/call-followup-final-validate-apk",
+      "zip": "/workspace/da-caller-native-evidence/native-review-export/41363043464/validate-apk.zip"
+    },
+    "checks": {
+      "artifact_id": 13106260807,
+      "artifact_name": "DA-CALLER-checks-b69d06605546a4f56d3b43266e65f86f011bf85a",
+      "sha256": "a0c0966235ed43ab07a62f887cf1973c72c08e53efecbfacd1c8bfe7cdb43e20",
+      "bytes": 111893,
+      "path": "/workspace/work/call-followup-final-checks",
+      "zip": "/workspace/da-caller-native-evidence/native-review-export/41363043464/checks.zip"
+    }
+  },
+  "export_commit": "732f824a399c980b360b1b218a96db183d1481e4",
+  "native_png_count": 233,
+  "unit": {
+    "tests": 278,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native": {
+    "tests": 32,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+}

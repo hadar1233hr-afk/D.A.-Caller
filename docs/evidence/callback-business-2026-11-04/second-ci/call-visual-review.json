@@ -1,0 +1,1964 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-11-04T15:13:44.607399+00:00",
+  "reviewer": "/root/review_beta10_calls",
+  "review_type": "Fresh actual-pixel visual review of all second-run call PNGs",
+  "source_commit": "46c500a62d3e12699e377280afaf82284be188bc",
+  "application_tree": "8a2fed904c74c44e57b837a5675e79487e2dba7e",
+  "ci_run_id": 41851873318,
+  "version": "0.11.0-beta.10",
+  "version_code": 20,
+  "identity_verification": {
+    "repository_HEAD_matches_assigned_source": true,
+    "assigned_source_app_tree_matches": true,
+    "ci_run_id_provenance": "Supplied by parent with the second-run artifact; no independent remote CI query in this visual subtask"
+  },
+  "artifact_directory": "/workspace/work/callback-business-second-ui/ui-snapshots/DA-CALLER-snapshots",
+  "manifest_path": "/workspace/work/callback-business-second-review/manifest.json",
+  "manifest_sha256": "ba74c82a995baf030e88fac75c189bb13ffe1f9034165cdfc1b02545e1c5466e",
+  "instructions_read": [
+    "/workspace/D.A.-Caller/AGENTS.md",
+    "/workspace/D.A.-Caller/docs/DA_CALLER_CALLBACK_BUSINESS_2026-11-04.md"
+  ],
+  "observed_rendering_status": "PASS",
+  "status_scope": "Visible rendering of the 101 listed second-run PNGs only. This report does not approve live call behavior, hardware, installation, signing compatibility, publication, or a release.",
+  "fresh_review": {
+    "all_101_current_images_actually_seen_again": true,
+    "previous_visual_PASS_not_carried_forward": true,
+    "previous_original_hashes_not_carried_forward": true,
+    "current_sheets_actually_seen": [
+      "call-01.png",
+      "call-02.png",
+      "call-03.png",
+      "call-04.png",
+      "call-05.png",
+      "call-06.png",
+      "call-07.png",
+      "call-08.png",
+      "call-09.png",
+      "call-10.png",
+      "call-11.png",
+      "call-12.png",
+      "call-13.png",
+      "call-14.png",
+      "call-15.png",
+      "call-16.png",
+      "call-17.png",
+      "call-18.png",
+      "call-19.png",
+      "call-20.png",
+      "call-21.png",
+      "call-22.png",
+      "call-23.png",
+      "call-24.png",
+      "call-25.png",
+      "call-26.png"
+    ]
+  },
+  "coverage": {
+    "actually_reviewed_png_count": 101,
+    "actually_reviewed_unique_png_count": 101,
+    "actually_opened_sheet_count": 26,
+    "additional_current_original_png_views": 1,
+    "original_dimensions_px": [
+      480,
+      854
+    ],
+    "sheet_dimensions_px": [
+      1000,
+      1810
+    ],
+    "base_matrix_png_count": 80,
+    "large_font_long_name_png_count": 20,
+    "english_no_bluetooth_png_count": 1,
+    "themes": {
+      "graphite": "Samsung One UI",
+      "pixel": "Google Phone",
+      "emerald": "iOS 26 Glass",
+      "frost": "Xiaomi HyperOS",
+      "ivory": "Nothing OS"
+    },
+    "base_matrix": "Five styles, light/dark, normal/audio/more/keypad, font scale 1.0/1.3",
+    "long_name_matrix": "Five styles, dark, normal/audio, Hebrew/English long names, font scale 1.3",
+    "additional_case": "Google Phone light English Audio output with Phone selected and no Bluetooth option",
+    "review_method": "All 26 fresh call sheets were opened using tools.view_image and forwarded using image(...). Every occupied frame was visually inspected anew. The current graphite dark More largefont original was additionally opened directly. After visual inspection, each unscaled sheet tile was checked pixel-for-pixel against its corresponding current original and every current original SHA256 was checked against the current manifest.",
+    "current_original_hash_mismatch_count": 0,
+    "current_tile_identity_mismatch_count": 0
+  },
+  "checks": [
+    {
+      "check": "Clipping, overlap, blank frames and off-screen controls",
+      "status": "PASS",
+      "observation": "No confirmed glyph/control clipping, overlapping text/control, unexpected blank call frame, or off-screen end-call control was observed in these 101 images. Keypad digits/letters/star/hash/plus, panel close buttons, audio routes and More rows remain visible at both font scales."
+    },
+    {
+      "check": "Long names, Hebrew/English and phone numbers",
+      "status": "PASS",
+      "observation": "Long names use bounded ellipsis: at the visual left for Hebrew and right for English. They remain separate from avatars, phone numbers, timers and panels. Phone numbers are readable and keep their digit order."
+    },
+    {
+      "check": "Native bars and safe area",
+      "status": "PASS",
+      "observation": "The top time/status icons and bottom three-button navigation are visible against the call-screen light/dark backgrounds. End-call controls stay separate from native navigation. No system-bar collision or missing-contrast icon was observed in the call group."
+    },
+    {
+      "check": "Style shapes, surfaces and selected state rendering",
+      "status": "PASS",
+      "observation": "The five styles show distinct circular controls, Google Phone rounded trays with peach selections, outlined glass surfaces, HyperOS action cards, and Nothing monochrome dotted/squared surfaces. Text, icons, route selection and end-call contrast remain legible in the observed light/dark frames."
+    },
+    {
+      "check": "Visible call actions",
+      "status": "PASS",
+      "observation": "Every image has an unobscured red/coral end-call button. The theme-specific normal controls, More New call/Hold rows, audio route rows and keypad grid are rendered without obscuring one another. This is a rendering observation only; capability or action execution is not established."
+    },
+    {
+      "check": "English no-Bluetooth frame",
+      "status": "PASS",
+      "observation": "The fresh call-pixel-light-audio-english-no-bluetooth.png visibly shows Audio output, Speaker, selected Phone, the core action dock and end call; no Bluetooth/F901 route is displayed."
+    }
+  ],
+  "findings": [],
+  "non_blocking_observations": [
+    {
+      "files": [
+        "call-emerald-dark-normal-largefont.png",
+        "call-emerald-dark-normal-longname-he.png",
+        "call-emerald-light-normal-largefont.png"
+      ],
+      "observation": "The large Hebrew New call label is visibly ellipsized in its narrow normal-layout action slot; icon and adjacent controls remain separate."
+    },
+    {
+      "files": [
+        "call-graphite-dark-more-largefont.png",
+        "call-graphite-dark-more-standard.png",
+        "call-graphite-light-more-largefont.png",
+        "call-graphite-light-more-standard.png"
+      ],
+      "observation": "The More title has tight right spacing against the graphite panel edge. The current original dark largefont PNG was additionally inspected and showed the full title with no confirmed glyph clipping."
+    }
+  ],
+  "limitations": [
+    "The call-layout images are Android renders driven by synthetic call/audio fixtures, not proof of live Telecom state or actual capability execution.",
+    "Screenshots do not establish hit areas, mute/audio route/hold/add-call/DTMF/hang-up execution, lifecycle behavior or spoken accessibility output.",
+    "Physical Jelly Star, SIM/carrier, audible microphone/speaker/Bluetooth, proximity/lock/OEM, full TalkBack and matching-key upgrade remain NOT TESTED by this review.",
+    "Long-name fixtures cover dark normal/audio; light and other-panel long-name permutations are outside the supplied matrix."
+  ],
+  "run_context_from_parent": {
+    "unit_tests": 352,
+    "unit_status": "PASS",
+    "native_tests": 34,
+    "native_pass": 33,
+    "native_fail": 1,
+    "known_native_failure": "Missing production business dataset",
+    "context_is_not_a_visual_test_result": true
+  },
+  "release_approval_granted": false,
+  "publication_or_visual_reviewed_label_applied": false,
+  "application_code_modified": false,
+  "reviewed_sheets": [
+    {
+      "sheet": "call-01.png",
+      "sha256": "9602b9f8ac5d84b6a3f8856004dbbeeada58b4fda45de5dbd6d265b4cfc15cfb",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-emerald-dark-audio-largefont.png",
+        "call-emerald-dark-audio-longname-en.png",
+        "call-emerald-dark-audio-longname-he.png",
+        "call-emerald-dark-audio-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-02.png",
+      "sha256": "8f9a931dfff75938be308ad8048c5ee24ba5f32a41c4b2862144d54dac8e1b21",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-emerald-dark-keypad-largefont.png",
+        "call-emerald-dark-keypad-standard.png",
+        "call-emerald-dark-more-largefont.png",
+        "call-emerald-dark-more-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-03.png",
+      "sha256": "0ef774e3b8635cec035809d4b0b802a2fb84eec648238019aded0bdf68173d56",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-emerald-dark-normal-largefont.png",
+        "call-emerald-dark-normal-longname-en.png",
+        "call-emerald-dark-normal-longname-he.png",
+        "call-emerald-dark-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-04.png",
+      "sha256": "4c64b9bbb4e228905d7a97fe44ea22076fef040eba186fea48dfe9a067336b37",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-emerald-light-audio-largefont.png",
+        "call-emerald-light-audio-standard.png",
+        "call-emerald-light-keypad-largefont.png",
+        "call-emerald-light-keypad-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-05.png",
+      "sha256": "3fb45bbfeacc1a9e0c174ec73c1f2c1e4d0f5135b5bdb8bd88c6533f2986d004",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-emerald-light-more-largefont.png",
+        "call-emerald-light-more-standard.png",
+        "call-emerald-light-normal-largefont.png",
+        "call-emerald-light-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-06.png",
+      "sha256": "b00cec9842e37da156224fc8c83b4edc2fb221e58128d1b53b58f91a1381f2a4",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-frost-dark-audio-largefont.png",
+        "call-frost-dark-audio-longname-en.png",
+        "call-frost-dark-audio-longname-he.png",
+        "call-frost-dark-audio-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-07.png",
+      "sha256": "c9bdecccfec450d25d5201d07d1f67ee77384cab5df0da9b060ff6035a089a69",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-frost-dark-keypad-largefont.png",
+        "call-frost-dark-keypad-standard.png",
+        "call-frost-dark-more-largefont.png",
+        "call-frost-dark-more-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-08.png",
+      "sha256": "3209ec91c04454fd4c0bfc3d5941e489eec14e56aea7244cc86153a17d966a61",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-frost-dark-normal-largefont.png",
+        "call-frost-dark-normal-longname-en.png",
+        "call-frost-dark-normal-longname-he.png",
+        "call-frost-dark-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-09.png",
+      "sha256": "972defbf7d8c153c47743a8d1f0039f9e7b45242743a76b70ef1c92f04f02d78",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-frost-light-audio-largefont.png",
+        "call-frost-light-audio-standard.png",
+        "call-frost-light-keypad-largefont.png",
+        "call-frost-light-keypad-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-10.png",
+      "sha256": "77cb14a4fad3dff1fd66f556e575d54329d3fe17fb495b33114ba97c55fbedda",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-frost-light-more-largefont.png",
+        "call-frost-light-more-standard.png",
+        "call-frost-light-normal-largefont.png",
+        "call-frost-light-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-11.png",
+      "sha256": "3c11dd9f037baf6c12893029edfab97d885732703691f0472eff2e19746d6433",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-graphite-dark-audio-largefont.png",
+        "call-graphite-dark-audio-longname-en.png",
+        "call-graphite-dark-audio-longname-he.png",
+        "call-graphite-dark-audio-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-12.png",
+      "sha256": "7b716250d7e0f227abe65adb90cb6a5b312efef26720cdadb8a7d4aa6277b769",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-graphite-dark-keypad-largefont.png",
+        "call-graphite-dark-keypad-standard.png",
+        "call-graphite-dark-more-largefont.png",
+        "call-graphite-dark-more-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-13.png",
+      "sha256": "2397b36350f13d11addb126a68bb16488a904a09490a21bc2e5f74908e8475fd",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-graphite-dark-normal-largefont.png",
+        "call-graphite-dark-normal-longname-en.png",
+        "call-graphite-dark-normal-longname-he.png",
+        "call-graphite-dark-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-14.png",
+      "sha256": "b57f56f1416177c606f869c7cbf3a06eaa0a96e32d6dbdc1393933a6c9015a36",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-graphite-light-audio-largefont.png",
+        "call-graphite-light-audio-standard.png",
+        "call-graphite-light-keypad-largefont.png",
+        "call-graphite-light-keypad-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-15.png",
+      "sha256": "2f78f5abf33d40b890206c072d355d0d8616f9faba115c63b621fb341d397fe8",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-graphite-light-more-largefont.png",
+        "call-graphite-light-more-standard.png",
+        "call-graphite-light-normal-largefont.png",
+        "call-graphite-light-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-16.png",
+      "sha256": "8e0589b71dc9f6f7de8c3e96f5626b7b974fa3c98285a49c0edfcfe84255883d",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-ivory-dark-audio-largefont.png",
+        "call-ivory-dark-audio-longname-en.png",
+        "call-ivory-dark-audio-longname-he.png",
+        "call-ivory-dark-audio-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-17.png",
+      "sha256": "ead8fa52dca4b42381c6046fa1b7f34e174861d2e14065e711adefc5de96a5ec",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-ivory-dark-keypad-largefont.png",
+        "call-ivory-dark-keypad-standard.png",
+        "call-ivory-dark-more-largefont.png",
+        "call-ivory-dark-more-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-18.png",
+      "sha256": "07715b86bade29aae6322ba4e2ebbf4e9ae656854085b1655cc40089c23e4006",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-ivory-dark-normal-largefont.png",
+        "call-ivory-dark-normal-longname-en.png",
+        "call-ivory-dark-normal-longname-he.png",
+        "call-ivory-dark-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-19.png",
+      "sha256": "fdde2f452d84a1710f272aa286d8a8f7f2560f4d4fb9c887990c23955e8e5439",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-ivory-light-audio-largefont.png",
+        "call-ivory-light-audio-standard.png",
+        "call-ivory-light-keypad-largefont.png",
+        "call-ivory-light-keypad-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-20.png",
+      "sha256": "9ed66f18bcdf31d70aa46ccad42ea4354f63fe04d118cf48796b3a2b2228f988",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-ivory-light-more-largefont.png",
+        "call-ivory-light-more-standard.png",
+        "call-ivory-light-normal-largefont.png",
+        "call-ivory-light-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-21.png",
+      "sha256": "12af6ea86588687d4e13c94e79aacde494fa34ade1d1df79e386dcbd626b281e",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-pixel-dark-audio-largefont.png",
+        "call-pixel-dark-audio-longname-en.png",
+        "call-pixel-dark-audio-longname-he.png",
+        "call-pixel-dark-audio-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-22.png",
+      "sha256": "63a96d11f309b68e07cd776f5663cbc56576861911656fe49d86fa806523c95c",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-pixel-dark-keypad-largefont.png",
+        "call-pixel-dark-keypad-standard.png",
+        "call-pixel-dark-more-largefont.png",
+        "call-pixel-dark-more-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-23.png",
+      "sha256": "e8299ff87648284e2729b6b4374f362f677c33ec4ea01999e39cd3f5e7828869",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-pixel-dark-normal-largefont.png",
+        "call-pixel-dark-normal-longname-en.png",
+        "call-pixel-dark-normal-longname-he.png",
+        "call-pixel-dark-normal-standard.png"
+      ]
+    },
+    {
+      "sheet": "call-24.png",
+      "sha256": "a4b4014ef4609ab36f5da9c7662963aaf14f31c47e674ae97f64c27138416951",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-pixel-light-audio-english-no-bluetooth.png",
+        "call-pixel-light-audio-largefont.png",
+        "call-pixel-light-audio-standard.png",
+        "call-pixel-light-keypad-largefont.png"
+      ]
+    },
+    {
+      "sheet": "call-25.png",
+      "sha256": "9c27d9c3233b8b4eca1f8f47feda4434537676048ca2988d3dd7534aa563a63a",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-pixel-light-keypad-standard.png",
+        "call-pixel-light-more-largefont.png",
+        "call-pixel-light-more-standard.png",
+        "call-pixel-light-normal-largefont.png"
+      ]
+    },
+    {
+      "sheet": "call-26.png",
+      "sha256": "4127148865a7d143f4e5ac77ff040e58352af3c89ff1e098b5da110670030e2f",
+      "dimensions_px": [
+        1000,
+        1810
+      ],
+      "actually_opened_with_tools_view_image_and_image_forwarded": true,
+      "files": [
+        "call-pixel-light-normal-standard.png"
+      ]
+    }
+  ],
+  "reviewed_files": [
+    {
+      "file": "call-emerald-dark-audio-largefont.png",
+      "sha256": "c110da1d39bf550d65cb1f343fa6b5ea1ed5229491fdf69e5a41f5474b231a98",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-01.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-dark-audio-longname-en.png",
+      "sha256": "f01a70644c349309befed03812f45829ef2431d9faa0c341da030ab2a1884170",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-01.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-dark-audio-longname-he.png",
+      "sha256": "721f9230615e435638c26c2dfdecc7781dd82c18f3c6fc50db19cae8145e1bfa",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-01.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-dark-audio-standard.png",
+      "sha256": "7b29d33ac85238b98b984f553b517307d8e5fef72e086dcd868a445b88465958",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-01.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-dark-keypad-largefont.png",
+      "sha256": "c045bcfea9e59ac561344ee4a144dd5b1bc12104772717f044c20779fa9cff24",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-02.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-dark-keypad-standard.png",
+      "sha256": "9577425b91262c7fbe28fde4d1432ce8e577f67f0ea6ba59f32f85f9c70d405e",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-02.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-dark-more-largefont.png",
+      "sha256": "16de1a92617f1ab34686e1e733dce9fbf17a10a25418c5b1f4661349f885a8bb",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-02.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-dark-more-standard.png",
+      "sha256": "a1fe45d24c82948e07a14b7feecc67b126d85a33f57969036ab4144f67aef046",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-02.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-dark-normal-largefont.png",
+      "sha256": "6dd39e065cc5178a8373618c819bd2f31ab3a71eef83f921a4fa19f7d17b1082",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-03.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-dark-normal-longname-en.png",
+      "sha256": "3357251131b19f6f34603f45b58c1c872c565741dcccdefa3abae9d9f1c168ff",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-03.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-dark-normal-longname-he.png",
+      "sha256": "b5255912089b036d5d6af246228b9738efcc82cb438b3f38b2a4cc468e7d621d",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-03.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-dark-normal-standard.png",
+      "sha256": "5c9a015495981b63d83bfd15bedd1e926274063f36e2de5953f4287fdaa4fb6c",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-03.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-light-audio-largefont.png",
+      "sha256": "e102484775f8af663873c07c8d5aedea3359f72694afd38f8ddbfecd3058ffb0",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-04.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-light-audio-standard.png",
+      "sha256": "e69047c9ceb9b53231263b849fcaca96f1349548fb47352045ec0d6dc92e9e04",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-04.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-light-keypad-largefont.png",
+      "sha256": "187907401c21c99954aafbad5195072b7fb3d89daa775b3083b748a4d28b66dc",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-04.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-light-keypad-standard.png",
+      "sha256": "8029c99a9e67bc7fe58223af7a85890643a0ced1a60a301245f59590eb731810",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-04.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-light-more-largefont.png",
+      "sha256": "f9c386724529c987ad70087a8653e84140648c99bb89922ad9afd8f3c2ff2d28",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-05.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-light-more-standard.png",
+      "sha256": "c8ab8d24714bbf818dde4ee40b5424da5d7ac4c646829a8107868a8fc1a81e2b",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-05.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-light-normal-largefont.png",
+      "sha256": "ee340e20afed46421bfd54a308554c63ea876aa41b58113415a3f386bbcdcb62",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-05.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-emerald-light-normal-standard.png",
+      "sha256": "39f7c33096f759ae91d6e0e9161234ef3136cd93c14ebe5000777cd4cdb87e0a",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-05.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-dark-audio-largefont.png",
+      "sha256": "59fb3df90d21d3551bd57fa0c4912f16136ac0cec52efa8d83aa96ea17cb202c",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-06.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-dark-audio-longname-en.png",
+      "sha256": "b6900a7f02099656a6068e6a8bbac19d1f95f55a06aed1e6cff69bcd1c22c24f",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-06.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-dark-audio-longname-he.png",
+      "sha256": "fadd7c63528d875ebefbeb4384439548a0b31fb48a390225ac30049c71681e64",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-06.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-dark-audio-standard.png",
+      "sha256": "7afc2cab40328e1ff6844d9137dcbafbd7ffb0c7095d547654a24acce348e380",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-06.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-dark-keypad-largefont.png",
+      "sha256": "2b740024162117de36e8009aba254d32e83ecc8201fb6d61f3eab6c1b73862ee",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-07.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-dark-keypad-standard.png",
+      "sha256": "b30412dfe1fa8a10b6f6e3f89f16d4850e0828a0c7155d3f930c8be0d127bc77",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-07.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-dark-more-largefont.png",
+      "sha256": "604137c6e0c7af016fc3777f3b002c3eab4c14394ed9d20ec69cd7e307c6f80d",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-07.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-dark-more-standard.png",
+      "sha256": "6aa788a1d4c2e9b61e18f9a5a1abff4c9883716386d46113aa8454e92ff15194",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-07.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-dark-normal-largefont.png",
+      "sha256": "8fed9374593a5d0ec99a12a4ce62246ab4b1115fab866506bdc3ae649653dec3",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-08.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-dark-normal-longname-en.png",
+      "sha256": "aee332b3d9f89a85a9f0669a49ade8960c61f56aa075226b5b693b7a982d2c71",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-08.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-dark-normal-longname-he.png",
+      "sha256": "35f1c1293d819357aa3f79ada9266828f69af5502ea84e8b5ee491748705f1b7",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-08.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-dark-normal-standard.png",
+      "sha256": "23585f04ff1a88c9857f4a56d5aad65ac81c5bed20d55d024b5a0e3ad0d6d720",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-08.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-light-audio-largefont.png",
+      "sha256": "516545ca9f4d962702e904759e4e5040c79c9bef5c7e2350b3104031bf7c13ae",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-09.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-light-audio-standard.png",
+      "sha256": "17a276a6f32c0e0444150e38ab4606657bcac5178c2b23af99db0c1fbc88a4b0",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-09.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-light-keypad-largefont.png",
+      "sha256": "b231c9ea21307145a6fbba372bf2c6713bb2d0e16ae3dd1497364aeb789fb056",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-09.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-light-keypad-standard.png",
+      "sha256": "94c46c8a9429feeddf3c58687869e2b3a4ab0c049c61e79335e0203bfc4c09a3",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-09.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-light-more-largefont.png",
+      "sha256": "195a07c7ccb1f11da6499ebc2bc011e425457ff67ea132f2186f1c25053e55c5",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-10.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-light-more-standard.png",
+      "sha256": "29adb7a69ddf9c43d2f8f648f0966f37641568a886146f4c731652c8f9966419",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-10.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-light-normal-largefont.png",
+      "sha256": "a9f1f4d1510a6f905305e2e461ab6f8ab689336f6aa92ccfba49dbab05b46c7b",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-10.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-frost-light-normal-standard.png",
+      "sha256": "627e7e757067a3e73683a036325915866736014451f96fe7eb1c09022f501904",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-10.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-dark-audio-largefont.png",
+      "sha256": "9293049c7ba4da908566e4394e56644bfd599c656921123557ef7615c1ac5f0d",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-11.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-dark-audio-longname-en.png",
+      "sha256": "308474d18612e56d1d47895f4fb1b95531b6f627652580af84fa7e8df1f794c0",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-11.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-dark-audio-longname-he.png",
+      "sha256": "575babdc6905af3d4f64b427cb08402c34cdb8db67884d15f88e92f25bbc8cdf",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-11.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-dark-audio-standard.png",
+      "sha256": "42753629c5739d082db9b66efff5ee969fa5e1adaa874b145b43b29f077eaf51",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-11.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-dark-keypad-largefont.png",
+      "sha256": "f9cb6c84afacc62e34760560a8908b5894dc2de4820a7c420c49b70849102191",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-12.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-dark-keypad-standard.png",
+      "sha256": "2426698e89637c9ad73eea05e1cdfa6332a9d7cde0024d65ed2c48a08d82733a",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-12.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-dark-more-largefont.png",
+      "sha256": "ee7feb9a51660780320db04f43508df43e5f02b9b17c62c04b386d69f5353b8b",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-12.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true,
+      "current_original_png_additionally_opened": true
+    },
+    {
+      "file": "call-graphite-dark-more-standard.png",
+      "sha256": "abcebc52f9f2c619f388b7a0830628fefc1ebb11abbd8da3dc31d2ad8ec82d7e",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-12.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-dark-normal-largefont.png",
+      "sha256": "26d207e1e53085fdade31e1fb0c1902fdecddb050b15ed8238193bfa87373d27",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-13.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-dark-normal-longname-en.png",
+      "sha256": "1c89d427a955f6e50747c545974c816962731411562828fb5c907a1c32ec7daa",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-13.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-dark-normal-longname-he.png",
+      "sha256": "a4edfc7e5404073bbaab5e8e6a6daa6babf249af790a41fddbb7834b15e4911d",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-13.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-dark-normal-standard.png",
+      "sha256": "06ba2ea7fcae40fe8631a0473455eec3224b6f5b495cbf52022ec709436b8e51",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-13.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-light-audio-largefont.png",
+      "sha256": "f8073bab7d3e621816766105bfddac2b622f017596517fa67dfdde1d431f37c5",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-14.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-light-audio-standard.png",
+      "sha256": "764fc2f9ca00ae35574d2727d100d6c188371ff1ea56d2308c8b8b56ea006fdd",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-14.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-light-keypad-largefont.png",
+      "sha256": "744870ddc88ceb3389fc86c21ac51a6fc2df49c6364f2eab70d8d293a2248894",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-14.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-light-keypad-standard.png",
+      "sha256": "b48722426168c565d9b63a63c5514542d92dcef6e30d10ec911fe136579b7c75",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-14.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-light-more-largefont.png",
+      "sha256": "e42b114615dc8066ca1d7b26e434b517c833cabc181db11f3a8681b8e5845e42",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-15.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-light-more-standard.png",
+      "sha256": "9859fe96348841048b2c43d71fb6619cc1c3f2842d433e82fe1c1a2342a5560d",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-15.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-light-normal-largefont.png",
+      "sha256": "9b38c2a2b9ffb713c0bed59d95e2771456e5fe34acd12d20134c6345d8aa2d25",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-15.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-graphite-light-normal-standard.png",
+      "sha256": "52c340da2d0710b46c68bb3a4f9d9aca1e7d1695fe090a6676b600a59ce9ff3c",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-15.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-dark-audio-largefont.png",
+      "sha256": "6513b1c1a4a0af02eac38c800b66ada05f82e8950a5e869303fcf7e913609ed7",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-16.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-dark-audio-longname-en.png",
+      "sha256": "a6853ace4a17ac072bc429dba0ec4da144d2ecc56146a68d0edb84512cf8ae02",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-16.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-dark-audio-longname-he.png",
+      "sha256": "6ca2c281e0c5681ebe3352a7b203116930400581105714691e922e0f1884fd99",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-16.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-dark-audio-standard.png",
+      "sha256": "afc912b18b3b837b71fe948154f5d9a055584f8d2b395ac530cb3064483b2c72",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-16.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-dark-keypad-largefont.png",
+      "sha256": "3856e252eb9d3b836ba5ba641127ce94cc2915d886e01f50aef8ac8e5c2e22c7",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-17.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-dark-keypad-standard.png",
+      "sha256": "47beaae14491619533ff6372d44584bae5719b80d6e738755e16782b40c51aea",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-17.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-dark-more-largefont.png",
+      "sha256": "b8678e0ef5828c4c71fea1e8df39d296f519b75abd90a465707059b562366433",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-17.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-dark-more-standard.png",
+      "sha256": "ce7d1353285e9cf1c1d408807a5c7cbc70d4556c41b2963bf1f765aa65173187",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-17.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-dark-normal-largefont.png",
+      "sha256": "b9a912d1af356de7b34ad722a56d889bcad39adc27353e4857260dbb65a99c32",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-18.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-dark-normal-longname-en.png",
+      "sha256": "8d97d0c9e696b76b4e1e1d6645d245adeb1c3d2bdea7488ac5f8323ecdbf25c5",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-18.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-dark-normal-longname-he.png",
+      "sha256": "9b8f57b2ec694be5385e7da9cdc272aa77fe3d431db8fa4fa96e6f5a26b9f2d8",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-18.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-dark-normal-standard.png",
+      "sha256": "6f06af38d0470b6c405ad03ce12fe8549198fe5a5c0b5a1768b0f8e69adc78db",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-18.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-light-audio-largefont.png",
+      "sha256": "e2f0d64ce558121552bb04f71bee920480f5be5d45dd41082014477ae2b1ba40",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-19.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-light-audio-standard.png",
+      "sha256": "192c65f85071461181b464f33f86d2d8c09981423e0781266921959d103e3dfb",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-19.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-light-keypad-largefont.png",
+      "sha256": "561b908376f6ad0441618cd3a552a662a3023ae8a4f18787c946a9923a23a58c",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-19.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-light-keypad-standard.png",
+      "sha256": "dc5ae5d03a8e5dc0af9cb57dd6544e66c390560b2f60679f9803176b72f9e346",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-19.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-light-more-largefont.png",
+      "sha256": "7d5f933045563284b52aaf49bee2dce7364ccdb5af32eac5e533af1ffdf83de8",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-20.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-light-more-standard.png",
+      "sha256": "7d327546afe3167b999779dcb54e9614bf7b398b591dcb723aee63831a755043",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-20.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-light-normal-largefont.png",
+      "sha256": "6c3e746183f3d962778e5f34023f41c932f346e5990a5350bc1b73fd82c6c238",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-20.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-ivory-light-normal-standard.png",
+      "sha256": "a8880b5bcb35158fc0958d0b8c5fdc8230b81b7e651b764870a09c550ddc5277",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-20.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-dark-audio-largefont.png",
+      "sha256": "84180dbe9229217888763dfbc6b89dab727b8f2e73ca2e8be1c43f65a94525ae",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-21.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-dark-audio-longname-en.png",
+      "sha256": "c0d8bef6b05c2347f2d2806f2b026fe6519751afc4d9da2cf750ef03ed616bde",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-21.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-dark-audio-longname-he.png",
+      "sha256": "a0cabd76617682ccdb52a2741b77bda55d7b1fa69840598a515b47684e6439a7",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-21.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-dark-audio-standard.png",
+      "sha256": "433141071f5a8d969fdf55b271977b7b84a198963bf38496f09afe38b8c8e917",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-21.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-dark-keypad-largefont.png",
+      "sha256": "c4edf743b7bb5e00969b12f9f32430a8540b7adedaf36ac219689cdf83d2ddb3",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-22.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-dark-keypad-standard.png",
+      "sha256": "bea8886cc48b30a59a268c6ee6617a7e8df1e59f34a8337f3fd949fa58d6a754",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-22.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-dark-more-largefont.png",
+      "sha256": "3fb188bee95d0d55a169f732c954e77949dd369eedf37b79c240575b6af684a1",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-22.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-dark-more-standard.png",
+      "sha256": "10879e616afaa1fa9690a3faa847b7eec430712abf2a537840114ebcd09c5729",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-22.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-dark-normal-largefont.png",
+      "sha256": "a2c44c5a1753027a7b505b03a9170152dc157857eedecd3538b618a4deae3fe7",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-23.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-dark-normal-longname-en.png",
+      "sha256": "81a8e61410dd514633d7beeecb60666257a3a0d3b2cb8b11875ea510557803aa",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-23.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-dark-normal-longname-he.png",
+      "sha256": "c1f82668f7433b06092e8bdad10f0e636647e68bd8d5c3e4b6601c6cf97eb6bd",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-23.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-dark-normal-standard.png",
+      "sha256": "9001256414e6d59f45da0f07a18b5173b27e7a94ce11d63f2679fcca9c641f5a",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-23.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-light-audio-english-no-bluetooth.png",
+      "sha256": "c15e302972edba7ffcb24243d2807778a8ffb13f11aa91582b9735b84d0ce46d",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-24.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-light-audio-largefont.png",
+      "sha256": "ed812e89c50a1811d9ab7185bf664ba7ffcf35e43cfce51f5aada37feadfc7c6",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-24.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-light-audio-standard.png",
+      "sha256": "c66cd23e64df9710095f10fdd422813fc71b57d9dcaf19bcdaca22b14c10baa9",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-24.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-light-keypad-largefont.png",
+      "sha256": "b90ffdb015249492e2f6089781ac5479d3b7e6f00d07c70d7cc8f2d344ccb143",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-24.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-light-keypad-standard.png",
+      "sha256": "c634d5fff44ca5c7642b5976a0a209015d3113a590f33cde80485a8f81b3342b",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-25.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-light-more-largefont.png",
+      "sha256": "67e5baf09ff0e28a524f3fb2508f937353c0d2fb69d23e15dabd168bf8dca9a7",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-25.png",
+      "sheet_position": "top_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-light-more-standard.png",
+      "sha256": "e8cf2b943cdaff92bfd4d2f9f302d0ce537d43b19c3dc6a6192aa435972cc52f",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-25.png",
+      "sheet_position": "bottom_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-light-normal-largefont.png",
+      "sha256": "fbaf92cae4b094e5f00e0668b0a50c1e643d236328610bb7900739953704a026",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-25.png",
+      "sheet_position": "bottom_right",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    },
+    {
+      "file": "call-pixel-light-normal-standard.png",
+      "sha256": "723b9068e1440c532ccb016be9850e6a40f47db0ff7a73e50e6a071c4c52081c",
+      "dimensions_px": [
+        480,
+        854
+      ],
+      "actually_visually_reviewed": true,
+      "observed_rendering_status": "PASS",
+      "reviewed_via_sheet": "call-26.png",
+      "sheet_position": "top_left",
+      "original_hash_matches_current_manifest": true,
+      "sheet_tile_pixel_identical_to_current_original": true
+    }
+  ]
+}

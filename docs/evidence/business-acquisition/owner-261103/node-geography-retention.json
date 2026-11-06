@@ -1,0 +1,45 @@
+{
+  "status": "RETAINED_RESEARCH_NOT_APP_BUNDLED_NOT_PUBLISHED_AS_APP",
+  "archive": "node-geography-research-candidates.zip",
+  "bytes": 254604,
+  "sha256": "440c454b689331619f0d2a9885c441178a6f0e92d1b2c892f4a6451eef903638",
+  "ndjson_sha256": "37ce40b735e144cc38eee1e72ce75c785424f0213d05c9c35feb766c1b2704df",
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "raw_phone_rows": 2448,
+  "distinct_source_nodes": 2393,
+  "distinct_base_phones": 2353,
+  "synthetic_geometry_tests": {
+    "tests": 16,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "existing_production_packager_rejects_actual_research_rows": {
+    "Country membership not explicitly sourced": 2439,
+    "Invalid app dial identity": 7,
+    "Invalid source text length/control character": 2
+  },
+  "production_app_records_added": 0,
+  "core_signing_CI_publication_gates_changed": false,
+  "independent_primary24_protection_check": {
+    "actual_packaged_rows": 24,
+    "sqlite_integrity": "ok",
+    "package_sha256_matches_previous_retained_report": true,
+    "package_sha256": "ecea0fc10d4df8a2699d094d3c6cac677a5a95bc6550709af163b38bb1a5e61c",
+    "source_ndjson_sha256_matches_previous_retained_manifest": true,
+    "source_rows": 24
+  },
+  "independent_review": {
+    "point_classifications_replayed": 2448,
+    "qualified_points": 2448,
+    "geometry_zip_sha256_crc": "PASS",
+    "missing_country_rows": 2434,
+    "explicit_country_rows": 14,
+    "source_object_years": "2010\u20132026",
+    "missing_address_rows": 745,
+    "duplicate_address_rows_beyond_first": 5,
+    "diplomatic_semantics": "Eight rows conservatively omitted; represented-state country field is not evidence of foreign physical location. Prior24 unchanged/not declared wrong."
+  },
+  "retained_research_script": "scripts/business-directory/research/research_node_geography.py",
+  "retained_research_script_sha256": "a5a01b32666bf4c22585de39b79801aedbadc0d1e2bf0d5074e20bc4a2518d0f"
+}

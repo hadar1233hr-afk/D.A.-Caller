@@ -1,0 +1,75 @@
+{
+  "provenance_verified_against_connector_digests": true,
+  "source": "159496adff8e289805def406bc6ba7b0e21cadbd",
+  "run": 41283506671,
+  "conclusion": "failure",
+  "artifacts": {
+    "validate-apk": {
+      "artifact_id": 13074441445,
+      "artifact_name": "DA-CALLER-0.11.0-beta.9-debug-575bd9d8a5b4c0c0212391de14e43e9d9fbea592",
+      "sha256": "a3c7a022fe292da7d55dd5e9a71191fa9bc9f68d7f6a7105e53bcc504c702148",
+      "bytes": 264312,
+      "path": "/workspace/work/external-island-seventh-validate-apk",
+      "zip": "/workspace/da-caller-native-evidence/native-review-export/41283506671/validate-apk.zip"
+    },
+    "ui": {
+      "artifact_id": 13074163004,
+      "artifact_name": "DA-CALLER-Android13-UI-575bd9d8a5b4c0c0212391de14e43e9d9fbea592",
+      "sha256": "38e815c8a4c34703094ce4a4c70c9581a4e41261ec9abb01c67d4d0b72bfb28a",
+      "bytes": 12499388,
+      "path": "/workspace/work/external-island-seventh-ui",
+      "zip": "/workspace/da-caller-native-evidence/native-review-export/41283506671/ui.zip"
+    },
+    "checks": {
+      "artifact_id": 13073792790,
+      "artifact_name": "DA-CALLER-checks-575bd9d8a5b4c0c0212391de14e43e9d9fbea592",
+      "sha256": "f8d34cd3ada258d2e0715aee57ac341b52e1c6854db202eefc6a533ecc8133e2",
+      "bytes": 106199,
+      "path": "/workspace/work/external-island-seventh-checks",
+      "zip": "/workspace/da-caller-native-evidence/native-review-export/41283506671/checks.zip"
+    }
+  },
+  "export_commit": "53e044be04e17153d6215c5402a9c766054bbdd7",
+  "native_png_count": 222,
+  "unit": {
+    "tests": 257,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native": {
+    "tests": 30,
+    "failures": 2,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_failures": [
+    {
+      "test": {
+        "name": "testActualTelecomExternalIslandOnLauncherAndOtherApps",
+        "classname": "com.dacaller.app.CallIslandExternalIntegrationTest",
+        "time": "15.256"
+      },
+      "message": {},
+      "text": "junit.framework.AssertionFailedError: Actual native external surface must be visible and usable over com.google.android.apps.nexuslauncher: first-active\nat com.dacaller.app.CallIslandExternalIntegrationTest.awaitNativeSurface(CallIslandExternalIntegrationTest.java:379)\nat com.dacaller.app.CallIslandExternalIntegrationTest.scenario(CallIslandExternalIntegrationTest.java:567)\nat com.dacaller.app.CallIslandExternalIntegrationTest.testActualTelecomExternalIslandOnLauncherAndOtherApps(CallIslandExternalIntegrationTest.java:551)\nat android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)\nat android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)\nat android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)\nat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)\n"
+    },
+    {
+      "test": {
+        "name": "testLastSettingsCategoryStaysInteractiveAndCallsCategoryHasNoPhoneSymbol",
+        "classname": "com.dacaller.app.SettingsInteractionTest",
+        "time": "4.658"
+      },
+      "message": {},
+      "text": "junit.framework.AssertionFailedError: Diagnostic action must be fully reachable after the scroll animation settles: scroll=660/945, diagnostic visible=104/104, viewport=746\nat com.dacaller.app.SettingsInteractionTest.awaitBottomAndDiagnostic(SettingsInteractionTest.java:92)\nat com.dacaller.app.SettingsInteractionTest.testLastSettingsCategoryStaysInteractiveAndCallsCategoryHasNoPhoneSymbol(SettingsInteractionTest.java:67)\nat android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)\nat android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)\nat android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)\nat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)\n"
+    }
+  ],
+  "status": "FAIL",
+  "source_app_tree": "8ab757533b763be5009f4e3028abf8c95a184743",
+  "native_artifacts_published_as_apk_release": false,
+  "failure_context": "FGS foreground synchronization passed. The external wait rejected the visible native island because source7 added an incorrect AX title assumption: Android13 WindowState uses accessibilityTitle, and does not fall back to the regular WM title for application overlays. All24 recorded samples show active call, visible Launcher, no HUN and [45,48][435,132] own bounds. A separate dark Settings failure captured Recents because the test mounted SettingsScreen without updating the MainActivity logical page; an async provider callback rendered Recents over the detached test viewport.",
+  "changes_for_next_run": [
+    "Remove optional AX-title equality filter. Match real system window bounds, package, native visible caller and current call; record title only diagnostically. Clear only the UiAutomation query cache for fresh window snapshots at transitions.",
+    "Keep test fixture MainActivity logical page=settings before mounting SettingsScreen. Require actual attached/current viewport and visible touch centers before interaction and screenshots.",
+    "Keep all257unit/30native/227PNG coverage, original8ssurface budget and350ms stability, actual native input/callback and protected-app checks. No production code change."
+  ]
+}

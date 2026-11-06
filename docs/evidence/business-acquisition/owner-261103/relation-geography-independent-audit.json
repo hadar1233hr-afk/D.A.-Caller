@@ -1,0 +1,110 @@
+{
+  "status": "PASS_RESEARCH_SOURCE_AND_HOLE_AWARE_RELATION_AUDIT_ONLY",
+  "observed_at_utc": "2026-11-05T20:07:28.743727+00:00",
+  "elapsed_seconds": 12.808,
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "source_pbf_bytes": 121050024,
+  "research_ndjson_sha256": "2e56ba410ea38bc06897d43c50108b5d007895d41856daeffa55e136dda58ae8",
+  "research_report_sha256": "14b12e58052b8d26ca1271a175024bc50b1cf5230a5dc15187d2650b65fe568c",
+  "audit_script_sha256": "c042c0642c15de83b9b4edf04af6eff9fc978aa0e20ec9522cf6cc8cac21dd77",
+  "reviewed_relation_helper_sha256": "a644adeb89ab294096eb588497dd078e33b9151e71741900c53f22319b7dafea",
+  "reference_extractor_sha256": "3b770ebf3af5322e77421d4e2458b360a7488985b8d4e36e69a42e0ad55577d8",
+  "reference_node_research_sha256": "a5a01b32666bf4c22585de39b79801aedbadc0d1e2bf0d5074e20bc4a2518d0f",
+  "geometry_input_sha256": {
+    "research-region-outer-rings.json": "04b9d0ed2ad8d28e2947bb9fde88cbe39dd7f37c666940ab48869fdb3939750f",
+    "research-region-geometry-inventory.json": "ba44cf5695ada7b33a33acf86976a185768c8fb6396e9156ecc4c00c9fd823b1",
+    "country-relation-inventory.json": "cef27b1ec8c92b6a68d5bd57b0c65eb4ecd282ed949b75b767996069d3104125",
+    "disputed-region-relation-inventory.json": "b96552bfa717e01d9ad4d6275f45ee04ebe967a267e2a30c9a6cd42e5fc5d3f1",
+    "geography-research-review.json": "84ee86f8d48083ffb32c3cc51bfc4f0f3d0a507435d78068a8d7265c6360a0cc",
+    "owner-upload-receipt.json": "8ac1da66a8771f289b73a01cf15ca0351b13795ac5cb552fcb0a5fbc4c6532c2"
+  },
+  "source_relations_reconsidered": 5,
+  "original_member_ways_reread": 10,
+  "original_referenced_nodes_reread": 131,
+  "source_relation_rows": 1,
+  "unique_original_source_relations_found": 1,
+  "unique_original_member_ways_found": 2,
+  "unique_original_referenced_nodes_found": 39,
+  "emitted_phone_rows": 1,
+  "emitted_source_relations": 1,
+  "checks_passed": {
+    "all_source_relation_decisions_independently_replayed": 5,
+    "exact_original_member_ways_and_node_fields_rows": 1,
+    "exact_original_relation_tags_members_id_url_version_timestamp_rows": 1,
+    "exact_role_cycles_traversal_source_edges_true_holes_rows": 1,
+    "exact_source_name_address_phone_extension_country_rows": 1,
+    "independent_complete_polygon_valid_area_containment_margin_exclusion_rows": 1,
+    "research_status_license_geometry_provenance_rows": 1
+  },
+  "all_source_relation_replays": {
+    "3862591": {
+      "decision": "reject-intersects-or-near-WestBank_historic_outer_filled",
+      "outer_rings": 1,
+      "inner_holes": 1,
+      "hole_area_degrees_squared": 2.280689500060555e-08,
+      "source_distances_degrees": {
+        "source_IL_boundary": 0.022724042339337367,
+        "Gaza_admin4": 0.7013531462043993,
+        "JudeaSamaria_admin4_outer_filled": 0.022724042339337367,
+        "WestBank_historic_outer_filled": 0.0
+      }
+    },
+    "8104153": {
+      "decision": "reject-not-wholly-inside-source-IL",
+      "outer_rings": 2,
+      "inner_holes": 0,
+      "hole_area_degrees_squared": 0,
+      "source_distances_degrees": {}
+    },
+    "14307079": {
+      "decision": "research-qualified-complete-role-aware-multipolygon",
+      "outer_rings": 1,
+      "inner_holes": 1,
+      "hole_area_degrees_squared": 5.091111500009287e-08,
+      "source_distances_degrees": {
+        "source_IL_boundary": 0.14964211355234222,
+        "Gaza_admin4": 0.6486950335044068,
+        "JudeaSamaria_admin4_outer_filled": 0.14964211355234222,
+        "WestBank_historic_outer_filled": 0.14964211355234222
+      }
+    },
+    "18313334": {
+      "decision": "reject-not-wholly-inside-source-IL",
+      "outer_rings": 1,
+      "inner_holes": 0,
+      "hole_area_degrees_squared": 0,
+      "source_distances_degrees": {}
+    },
+    "19228634": {
+      "decision": "reject-intersects-or-near-WestBank_historic_outer_filled",
+      "outer_rings": 1,
+      "inner_holes": 1,
+      "hole_area_degrees_squared": 8.139344999952434e-09,
+      "source_distances_degrees": {
+        "source_IL_boundary": 0.025243888463152377,
+        "Gaza_admin4": 0.7013498947548247,
+        "JudeaSamaria_admin4_outer_filled": 0.025243888463152377,
+        "WestBank_historic_outer_filled": 0.0
+      }
+    }
+  },
+  "geos_version": "3.13.1-CAPI-1.19.2",
+  "app_records_added": 0,
+  "app_rows_added": 0,
+  "source_mutations": 0,
+  "automatic_merges": 0,
+  "method": [
+    "Actual PBF relation category-key scan confirms all five named-phone source relations",
+    "Direct PBF member-way/node ID passes, deriving dependencies from original relation members",
+    "Independent endpoint-cycle assembly and exact retained ref/edge/coordinate/hole-parent comparisons",
+    "Separate GEOS bindings construct full true-hole multipolygons and replay every acceptance/rejection",
+    "Source phone/category parsing and bound geometry-provenance validation reuse disclosed reference contracts"
+  ],
+  "limits": [
+    "Source fidelity does not establish current business activity, phone ownership or reachability.",
+    "Shared category/phone and source geometry-provenance contracts are not independently reimplemented.",
+    "Angular distances and hole areas use degree units, not surveyed meters or legal borders.",
+    "Original relation versions are compared; inventory member-way versions were not retained, so no such comparison is claimed.",
+    "This audit is not production admission, native Android verification or publication approval."
+  ]
+}

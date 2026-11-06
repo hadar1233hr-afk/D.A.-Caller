@@ -1,0 +1,12 @@
+{
+  "source": "d4ee506f8b5375f74bc6a40d978b72c639abdce3",
+  "run": 41956994515,
+  "validate": "PASS",
+  "native_job": 127014952736,
+  "native_execution": "NOT TESTED",
+  "native_cases_executed": 0,
+  "native_pngs": 0,
+  "failure": "Android emulator37.2.13 could not create userdata partition: available6294.55MB, required7372.80MB. Device never appeared in adb.",
+  "fix": "Explicit disposable emulator disk-size2048M; fresh run required",
+  "publication_approved": false
+}

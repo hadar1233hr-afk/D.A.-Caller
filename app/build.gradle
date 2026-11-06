@@ -1,4 +1,9 @@
 plugins { id 'com.android.application' }
+def permanentStorePath=System.getenv('DA_CALLER_KEYSTORE_PATH')
+def permanentPassword=System.getenv('DA_CALLER_KEYSTORE_PASSWORD')
+if((permanentStorePath as boolean) != (permanentPassword as boolean)){
+ throw new GradleException('DA CALLER signing identity is incomplete; no fallback to another key is allowed.')
+}
 android {
  namespace 'com.dacaller.app'
  compileSdk 35
@@ -6,30 +11,32 @@ android {
   applicationId 'com.dacaller.app'
   minSdk 26
   targetSdk 34
-  versionCode 17
-  versionName '0.11.0-beta.7'
+  versionCode 21
+  versionName '0.12.0'
+  buildConfigField 'boolean', 'BUSINESS_DIRECTORY_ENABLED', 'false'
   testInstrumentationRunner 'android.test.InstrumentationTestRunner'
  }
  signingConfigs {
   permanent {
-   def storePath=System.getenv('DA_CALLER_KEYSTORE_PATH')
-   def password=System.getenv('DA_CALLER_KEYSTORE_PASSWORD')
-   if(storePath && password){
-    storeFile file(storePath)
-    storePassword password
+   if(permanentStorePath && permanentPassword){
+    storeFile file(permanentStorePath)
+    storePassword permanentPassword
     keyAlias 'da-caller'
-    keyPassword password
+    keyPassword permanentPassword
     storeType 'jks'
    }
   }
  }
  buildFeatures { buildConfig true }
  buildTypes {
+  debug {
+   // CI supplies the existing verified key BEFORE building the emulator APK.
+   // Without it this variant is disposable test-only and publication is blocked.
+   if(permanentStorePath && permanentPassword) signingConfig signingConfigs.permanent
+  }
   release {
    minifyEnabled false
-   def path=System.getenv('DA_CALLER_KEYSTORE_PATH')
-   def pass=System.getenv('DA_CALLER_KEYSTORE_PASSWORD')
-   if(path && pass) signingConfig signingConfigs.permanent
+   if(permanentStorePath && permanentPassword) signingConfig signingConfigs.permanent
   }
  }
  testOptions {

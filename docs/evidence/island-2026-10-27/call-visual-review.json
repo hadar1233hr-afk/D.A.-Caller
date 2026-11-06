@@ -1,0 +1,976 @@
+{
+  "review_status": "PASS_WITH_BOUNDED_FINDINGS",
+  "scope": "All 101 call-design regression PNGs, not the 36 new island or 82 other captures.",
+  "source_sha": "51f975011692c44cf348139e7d8d2569eec74d5d",
+  "app_tree": "48d9adfcc8341e8f36413313b63d2f4e8e5f569b",
+  "workflow_run_id": "40642457660",
+  "reviewed_at_utc": "2026-10-28T06:27:11.456042+00:00",
+  "reviewed_png_count": 101,
+  "sheet_count": 26,
+  "method": "Personally inspected ALL 26 fresh source7 full-resolution 2x2 call-design contact sheets via view_image detail original; each source retains original 480x854 pixels. Four fresh original screenshots were also opened individually to confirm complete controls, footers and navigation and rule out contact-sheet viewing artifacts. This review uses fresh source7 pixels and is not inferred from source6, image hashes or test assertions.",
+  "additional_original_checks": [
+    "call-pixel-light-normal-standard.png",
+    "call-frost-dark-normal-largefont.png",
+    "call-ivory-dark-normal-standard.png",
+    "call-graphite-light-more-largefont.png"
+  ],
+  "group_counts": {
+    "PASS": 79,
+    "BOUNDED": 22
+  },
+  "blocking_findings": [],
+  "bounded_findings": [
+    {
+      "severity": "minor",
+      "files": [
+        "call-emerald-dark-normal-largefont.png",
+        "call-emerald-dark-normal-longname-he.png",
+        "call-emerald-light-normal-largefont.png"
+      ],
+      "description": "The Hebrew New call caption ellipsizes at font1.3 in the existing emerald/iOS three-column normal grid. Its icon remains fully visible; this was already recorded in beta7."
+    },
+    {
+      "severity": "expected",
+      "files": [
+        "call-emerald-dark-audio-longname-en.png",
+        "call-emerald-dark-audio-longname-he.png",
+        "call-emerald-dark-normal-longname-en.png",
+        "call-emerald-dark-normal-longname-he.png",
+        "call-frost-dark-audio-longname-en.png",
+        "call-frost-dark-audio-longname-he.png",
+        "call-frost-dark-normal-longname-en.png",
+        "call-frost-dark-normal-longname-he.png",
+        "call-graphite-dark-audio-longname-en.png",
+        "call-graphite-dark-audio-longname-he.png",
+        "call-graphite-dark-normal-longname-en.png",
+        "call-graphite-dark-normal-longname-he.png",
+        "call-ivory-dark-audio-longname-en.png",
+        "call-ivory-dark-audio-longname-he.png",
+        "call-ivory-dark-normal-longname-en.png",
+        "call-ivory-dark-normal-longname-he.png",
+        "call-pixel-dark-audio-longname-en.png",
+        "call-pixel-dark-audio-longname-he.png",
+        "call-pixel-dark-normal-longname-en.png",
+        "call-pixel-dark-normal-longname-he.png"
+      ],
+      "description": "Intentionally long synthetic contact names ellipsize in bounded caller headers. Numbers and main call controls remain visible."
+    }
+  ],
+  "visual_summary": "All five styles remain distinct across light/dark, normal/audio/more/keypad and font1.0/1.3. Hebrew/English caller information and panel labels are legible; audio selection checks and rows are visible, including the English no-Bluetooth case. DTMF digits and letters fit; red icon-only hang-up and native status/navigation retain contrast and separation. No new call-design visual regression found.",
+  "limits": [
+    "Synthetic call-state screenshots do not verify physical SIM/carrier/Bluetooth audio, proximity or full TalkBack behavior.",
+    "This review covers only the 101 call-design regression captures. Root and another reviewer cover 36 island and 82 other captures."
+  ],
+  "files": [
+    {
+      "file": "call-emerald-dark-audio-largefont.png",
+      "sheet": "call-01.png",
+      "sha256": "94ab4a64023fa59b99edcce5bf09927b40a93b9e8c42652d8bc9af449732f6de",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-audio-longname-en.png",
+      "sheet": "call-01.png",
+      "sha256": "e4c5fe82b9e958ba12a1ad7af5baa8d968d58e7f55ccbbd27df9b38be8f21daf",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-audio-longname-he.png",
+      "sheet": "call-01.png",
+      "sha256": "73e83ff8f3045a822667c25b67386cab2d9c4fad324a409543fab2bac9b36663",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-audio-standard.png",
+      "sheet": "call-01.png",
+      "sha256": "f2a998f9ba927104571e1da771f3c5d7c5f679dcb0ae30a227ebbef3cd63d686",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-keypad-largefont.png",
+      "sheet": "call-02.png",
+      "sha256": "aa7990c6f20473617d687bd87e4e9dd3d5b8a5a5e0f52b367f287b261a028e87",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-keypad-standard.png",
+      "sheet": "call-02.png",
+      "sha256": "936dcc99dd0168709d1781f5dd160176912afb3ac09b35f14bcbe4adf7dafb41",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-more-largefont.png",
+      "sheet": "call-02.png",
+      "sha256": "71f7af32d0dbfb56aa476538c13b03f9d8028e68b50ab140177f8945b8039da2",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-more-standard.png",
+      "sheet": "call-02.png",
+      "sha256": "9c3674e40c2058ac1108f15ddbc2eda94343a87d3b4d91f459a12484d6acb254",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-normal-largefont.png",
+      "sheet": "call-03.png",
+      "sha256": "b0ba275c230da581081373586f547257feb4e26afdbbbcdc75454702bfc7cbb6",
+      "result": "BOUNDED",
+      "observations": [
+        "Existing Hebrew New call caption ellipsizes at font1.3 in the three-column normal control grid; icon and touch target remain fully visible. This matches the bounded beta7 finding."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-normal-longname-en.png",
+      "sheet": "call-03.png",
+      "sha256": "681c26083dd7018472f64516d05be3343cde89dd0118f337d9b08f7acf21daac",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-normal-longname-he.png",
+      "sheet": "call-03.png",
+      "sha256": "ac2f6fcdac23ccf7a417116716920f2a57c2d17ee4799a9ffe80899d7274374a",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable.",
+        "Existing Hebrew New call caption ellipsizes at font1.3 in the three-column normal control grid; icon and touch target remain fully visible. This matches the bounded beta7 finding."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-normal-standard.png",
+      "sheet": "call-03.png",
+      "sha256": "4b4171578684f1c231144444c7f7ee2626fabac1f366b19867db37cc15c862c4",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-emerald-light-audio-largefont.png",
+      "sheet": "call-04.png",
+      "sha256": "5990451fb2a295134107c26dbd55ff36cc1a468ac74e26dccd1f5c2097f19703",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-emerald-light-audio-standard.png",
+      "sheet": "call-04.png",
+      "sha256": "de2cd0e344f6e24d60bcc01ede5648b4f36c81e66b4bfae0637aa3b33fac0cf0",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-emerald-light-keypad-largefont.png",
+      "sheet": "call-04.png",
+      "sha256": "4f361673f695094f9544a5812ca4d4a6902195b2a5849e631229316c52415dab",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-emerald-light-keypad-standard.png",
+      "sheet": "call-04.png",
+      "sha256": "643fb22f15459602b1a9983f011b4f2909e84241b31af92cc26e13d5d5160f1c",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-emerald-light-more-largefont.png",
+      "sheet": "call-05.png",
+      "sha256": "cd168dbfecc2c76ce0a86300c0984706e8f223ddc16033c34e191ff082104d2d",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-emerald-light-more-standard.png",
+      "sheet": "call-05.png",
+      "sha256": "24a3fce3d1bbf4908575ebdbcbad8b8b8710f81660ff7d789f3950333dc0a7af",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-emerald-light-normal-largefont.png",
+      "sheet": "call-05.png",
+      "sha256": "05be2f4536d7feb033ebb677584dfb9ad70d1c0f696c8bcdc1e66e29d196de60",
+      "result": "BOUNDED",
+      "observations": [
+        "Existing Hebrew New call caption ellipsizes at font1.3 in the three-column normal control grid; icon and touch target remain fully visible. This matches the bounded beta7 finding."
+      ]
+    },
+    {
+      "file": "call-emerald-light-normal-standard.png",
+      "sheet": "call-05.png",
+      "sha256": "10cad9f3947cfc3c6f7bd989fdaf320126c77b791c94bb36b2ce5f468b5aa219",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-frost-dark-audio-largefont.png",
+      "sheet": "call-06.png",
+      "sha256": "89d2a218700a0cd8e1967e7742b324d2f8297a7ad40c5fd6715a6432c692759a",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-frost-dark-audio-longname-en.png",
+      "sheet": "call-06.png",
+      "sha256": "daa26429959e2671e921ac6e03f8c19fb6952dcef1c713038fffb5ac21282a56",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-frost-dark-audio-longname-he.png",
+      "sheet": "call-06.png",
+      "sha256": "045ffc28d44135d94707c71ee2234b89242c320c2b7c0d74f519bc076a51c57c",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-frost-dark-audio-standard.png",
+      "sheet": "call-06.png",
+      "sha256": "1914576392d930ea28fc305f59de127fa62aeb500cf01eded4bfcc39b99eb3e6",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-frost-dark-keypad-largefont.png",
+      "sheet": "call-07.png",
+      "sha256": "8b2da3cb7f2b9cc44cf656872d61d26096d41ba93a2f239111c97a0e12f3a6cf",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-frost-dark-keypad-standard.png",
+      "sheet": "call-07.png",
+      "sha256": "28f48d57056551db76b498753e8ee9fa9f346c001284f722e68e942949c85096",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-frost-dark-more-largefont.png",
+      "sheet": "call-07.png",
+      "sha256": "4dfbc417f4847fb3dbfc0c4db9a97b1d69716b48e80155f8eaf9670526fd397d",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-frost-dark-more-standard.png",
+      "sheet": "call-07.png",
+      "sha256": "8235aa0f6dfc918dde560bc9ff148d9922440150983af70d8c4f4ac455d30c7a",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-frost-dark-normal-largefont.png",
+      "sheet": "call-08.png",
+      "sha256": "36b2b074fcad78110491d29f2057974d96519565c1d553987abd970eaea583fc",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-frost-dark-normal-longname-en.png",
+      "sheet": "call-08.png",
+      "sha256": "272dab4863ecb11bf491d1262c5b32cf1830ad0cc873c0c97c9bd2bd5714c86c",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-frost-dark-normal-longname-he.png",
+      "sheet": "call-08.png",
+      "sha256": "8a84f06fedcdabb6d7a47a3ef2cf5775c37601c485eeed1efa133ddb1b136b9f",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-frost-dark-normal-standard.png",
+      "sheet": "call-08.png",
+      "sha256": "4b48a5e2f702e2446a18b5ef6fce611fe60339facb25c420f4a95a961a0b3855",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-frost-light-audio-largefont.png",
+      "sheet": "call-09.png",
+      "sha256": "6126eba679515906981ed0767def82aed485bf5c5530365bd137c3637ae0b925",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-frost-light-audio-standard.png",
+      "sheet": "call-09.png",
+      "sha256": "e7f89f1146c50cce3526e8148fb7810ff843a90d0e1d146c39a054cdf00672fd",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-frost-light-keypad-largefont.png",
+      "sheet": "call-09.png",
+      "sha256": "afd3a8ae3871cf2aeca6c2ad04a3822ed17759a8387a5227643e1b3421f78fcf",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-frost-light-keypad-standard.png",
+      "sheet": "call-09.png",
+      "sha256": "50baf2d7f33df1afd5c2648e4db674a9ab17e8d1c5a2641cc50396caa3e0a3ad",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-frost-light-more-largefont.png",
+      "sheet": "call-10.png",
+      "sha256": "ecad4b8e48f79b2ff6ae59fbc5e0efb89a28799eec1652c48aa348fac34f7469",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-frost-light-more-standard.png",
+      "sheet": "call-10.png",
+      "sha256": "31ee5cfeadf0e570e3563265ce7ee6328680b28f814d83d1a239d07ad353de77",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-frost-light-normal-largefont.png",
+      "sheet": "call-10.png",
+      "sha256": "f64c93239c0f7ed07d96f1d5a4c5242afee4f2e9bf08e524dbb9829ac71d45a2",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-frost-light-normal-standard.png",
+      "sheet": "call-10.png",
+      "sha256": "70766f15318ce58a6309730a257472186e23f78f3f42caddbf3262f5d19ad961",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-audio-largefont.png",
+      "sheet": "call-11.png",
+      "sha256": "0a8280af9b355f8ed7733e909270e52eeb5eb15a9c7ce389a551413fc4338a02",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-audio-longname-en.png",
+      "sheet": "call-11.png",
+      "sha256": "6922b8d94453f80b21dce2ba71dad9c58adb3462ec62776a16fc0d727fdbc018",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-audio-longname-he.png",
+      "sheet": "call-11.png",
+      "sha256": "3ac35f1a1516a9f803fa1a06a6a63aedb4bb04bb2727909a0ba7b21fb0c918f7",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-audio-standard.png",
+      "sheet": "call-11.png",
+      "sha256": "29170a425b8dc2be78933f287b6fd37652c342c1c597a8c9d8bd72bb77abad5c",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-keypad-largefont.png",
+      "sheet": "call-12.png",
+      "sha256": "6a9e6e356d3a90538cad857b03c31f3d846e4a9edc1181da7b0c42c36849833c",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-keypad-standard.png",
+      "sheet": "call-12.png",
+      "sha256": "aeb751238c5df28e186ebf7161860fbb1382604bcf939a4239b69099156e8a4e",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-more-largefont.png",
+      "sheet": "call-12.png",
+      "sha256": "42d6be82c917989e98f0ceef9ca1440e291543e41bd65e01cadcafdc177e5cf5",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-more-standard.png",
+      "sheet": "call-12.png",
+      "sha256": "3d8f59cdda5fb0b8481bfc6ec64ed2aab74e34826b7599faee3900872a6c17d9",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-normal-largefont.png",
+      "sheet": "call-13.png",
+      "sha256": "b8ab574675d4d7f569130f80c7915bde1f18daec259ff61d5bb0c49536865814",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-normal-longname-en.png",
+      "sheet": "call-13.png",
+      "sha256": "b224df5559589b528fc0ad6e0512c480ff4a0a58d5c79aa1cf8d896c1fecea1a",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-normal-longname-he.png",
+      "sheet": "call-13.png",
+      "sha256": "265116f5c1635b04b02e5b06eaa1754d1f42da3b221c07ded319534b4296acfa",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-normal-standard.png",
+      "sheet": "call-13.png",
+      "sha256": "5ce8c8483eab70675052f54e451c51cc8797e606b0d2092cd90523f57fbbe918",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-graphite-light-audio-largefont.png",
+      "sheet": "call-14.png",
+      "sha256": "ca28ff4526d32e1feb12239fc5ad771a636c24e5e645599e5140c0cfae9d135c",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-graphite-light-audio-standard.png",
+      "sheet": "call-14.png",
+      "sha256": "1853bb4e017f9ef6de0a75062eaa4f2f368a57628dcae8bfe1c88d1b6cf690d2",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-graphite-light-keypad-largefont.png",
+      "sheet": "call-14.png",
+      "sha256": "511d4d33240a5f7d91eb82e0f47a09dd2ae583e759ac1473a528bb797af915b7",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-graphite-light-keypad-standard.png",
+      "sheet": "call-14.png",
+      "sha256": "a4a8142daa86c3a54414bd8ae03600c9b97a2e62a92c8cc50603d4d7081a036f",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-graphite-light-more-largefont.png",
+      "sheet": "call-15.png",
+      "sha256": "681af8a7186e4bad784555b5943197f0b051085f38f03685be4eeda3251f6c5f",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-graphite-light-more-standard.png",
+      "sheet": "call-15.png",
+      "sha256": "d8987622d988110e8999afea921803295f5b23034b760bbe3056b9bf8374085c",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-graphite-light-normal-largefont.png",
+      "sheet": "call-15.png",
+      "sha256": "0b6c0195c7e3c81ba5479ea02ea1544e7ef50a38072889c1c1e2a76ee12bd1b2",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-graphite-light-normal-standard.png",
+      "sheet": "call-15.png",
+      "sha256": "076eb2716dfc9d7962066a2240465614d9ea380b5738b1dfca43370d8d6cab05",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-audio-largefont.png",
+      "sheet": "call-16.png",
+      "sha256": "589a4bd8fbfbf2c74a9a0c0369ce0ee654055b8992e944a56d33906122aa2311",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-audio-longname-en.png",
+      "sheet": "call-16.png",
+      "sha256": "ae766a1b7e716fefaadb9e4892ed1c14cd9df79c4ff8558b62b831ccdd1c500e",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-audio-longname-he.png",
+      "sheet": "call-16.png",
+      "sha256": "57ffe3b281052e47b5f422b35225e2c0d9d5b4eff104972684697e9d857d7a78",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-audio-standard.png",
+      "sheet": "call-16.png",
+      "sha256": "f806d0c30e38110c1bd85173b5ea78a32b356eb025388c2a7aeb668490b88cba",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-keypad-largefont.png",
+      "sheet": "call-17.png",
+      "sha256": "848ebf90602705bbdd2623d4a324f841caa6499781a5aa048ba32fb6f9665063",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-keypad-standard.png",
+      "sheet": "call-17.png",
+      "sha256": "5f6e9a5d119438cddecc218ef5471a497d0bc668dcad721c242a804a874626b3",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-more-largefont.png",
+      "sheet": "call-17.png",
+      "sha256": "bd0e20dfd7ba939160fb50ba0a1747f471ae4b99f4d6babcec522e4487f29b3b",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-more-standard.png",
+      "sheet": "call-17.png",
+      "sha256": "8b29b3d8f15b0da22076840d7dad8f0c157698c13e918170c6e5e74cfcd7a190",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-normal-largefont.png",
+      "sheet": "call-18.png",
+      "sha256": "290c7cfbbc5e97b1a37d0f4fbfa2680013b5664716fe757cf4f0cc691c8ef0f2",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-normal-longname-en.png",
+      "sheet": "call-18.png",
+      "sha256": "cbba552591558bf00794e2d0b115cf8aaff68d9254946b4a68c66227e744a260",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-normal-longname-he.png",
+      "sheet": "call-18.png",
+      "sha256": "20c7e46d26049eb0354cd9014dc988469163a818102f72562001ea6de433395d",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-normal-standard.png",
+      "sheet": "call-18.png",
+      "sha256": "76dc2149c827d015006f8463e94e447b2758092cab3483a2d3ce12a3b9db054b",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-ivory-light-audio-largefont.png",
+      "sheet": "call-19.png",
+      "sha256": "84ac6a70fbaf3a99d977f7f6997051a08b3e3b5b29b5b5e0e5b9ecec4f3b20cf",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-ivory-light-audio-standard.png",
+      "sheet": "call-19.png",
+      "sha256": "abecdb1c97b9c97e85d31a38e0d91f65413acbe9848783f8267c6cdcfeacc462",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-ivory-light-keypad-largefont.png",
+      "sheet": "call-19.png",
+      "sha256": "9280f3d4a7d1c7ddf5f09e0603c315bcc43632bc351735f6e188dd115792d7d8",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-ivory-light-keypad-standard.png",
+      "sheet": "call-19.png",
+      "sha256": "3c2167a5d4131c536e2446f27381d2234e89b42c5bdf18ceef2c3eb930cdb32b",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-ivory-light-more-largefont.png",
+      "sheet": "call-20.png",
+      "sha256": "c0ff3e55d5e23b4d5c4da8e8ccc6db00f5ad209e3f7630719b138c4f62c5b8d6",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-ivory-light-more-standard.png",
+      "sheet": "call-20.png",
+      "sha256": "7d05e3ad2707a95f2793456768bbd5d5233cb2a29972599a6e2354bfd50cf1d5",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-ivory-light-normal-largefont.png",
+      "sheet": "call-20.png",
+      "sha256": "8b74468a592e02e064c4a37e67a65da11e149e4877f30ce468e8ea238689a2e4",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-ivory-light-normal-standard.png",
+      "sheet": "call-20.png",
+      "sha256": "18f6b1c7fd9f77a22ef1bb2d924022c99ab8c1822e97bbb435c7f0bc6a7f7941",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-audio-largefont.png",
+      "sheet": "call-21.png",
+      "sha256": "5609bab39209fa0d40f99ffe75222c0bf1c4b204b11d7debb911189c371b7e17",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-audio-longname-en.png",
+      "sheet": "call-21.png",
+      "sha256": "73e07e7fa15cceed44ad15837227d5e71c90ce8a50bbe718d32d821552724f8b",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-audio-longname-he.png",
+      "sheet": "call-21.png",
+      "sha256": "dbb3d2eea5ea30d2e775f534204c26def71ff6fe27ffce5c0af845f77c88bb52",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-audio-standard.png",
+      "sheet": "call-21.png",
+      "sha256": "3dde24012ff207dafcdbe8dc05f82d60fafc0c0807ea2e9acb9d4062457686d4",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-keypad-largefont.png",
+      "sheet": "call-22.png",
+      "sha256": "1625d5a2af38abd66ae19d308b56774e522c335895cd7cba9a8551c86b81246e",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-keypad-standard.png",
+      "sheet": "call-22.png",
+      "sha256": "01b8cd28bd42f6142dff03fb12204537f0f89849b757dc965671acf5a4731aa0",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-more-largefont.png",
+      "sheet": "call-22.png",
+      "sha256": "e7c19434c08440d3ae189d71c4328d04e106dc8411880af9137b9add4dfc4168",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-more-standard.png",
+      "sheet": "call-22.png",
+      "sha256": "c4e39778c14d31a0d0daf33277409cdc3b40086d15a153cf6bb9be588ab32788",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-normal-largefont.png",
+      "sheet": "call-23.png",
+      "sha256": "daf3eb5022d0cc2c5d2f4fbb2f947992471a65a10dc6d703f003daa78955020e",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-normal-longname-en.png",
+      "sheet": "call-23.png",
+      "sha256": "3e0ad75bda353b4b2a5cf19a3ff6ed1bb66b2f6f46fc3aab9fd0cfc14ac4a477",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-normal-longname-he.png",
+      "sheet": "call-23.png",
+      "sha256": "3a06ea251d6da534a0c713fb8fd419a498a9d343d3e83dbe1802dbd42163e24b",
+      "result": "BOUNDED",
+      "observations": [
+        "Intentionally overlong caller name ends in ellipsis within its bounded header. Phone number, elapsed time and controls remain readable."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-normal-standard.png",
+      "sheet": "call-23.png",
+      "sha256": "2d9f68ed61f60cedb66d611ae175332ff118c930d2d82853ea6529ef0c70ab7a",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-pixel-light-audio-english-no-bluetooth.png",
+      "sheet": "call-24.png",
+      "sha256": "ca87467a09ba93cbb8696e77a491a4f4711cde4037fcbf9759d68cd29d1fe336",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-pixel-light-audio-largefont.png",
+      "sheet": "call-24.png",
+      "sha256": "e8bb3e220c0663db97f087ee0a35771a8cd9080b1369a28de0e4efcb2a5d17bd",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-pixel-light-audio-standard.png",
+      "sheet": "call-24.png",
+      "sha256": "74b6512f3872529be58fb4d2597f3d2d6d98ff0780b32b174f8466b8e4181a78",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-pixel-light-keypad-largefont.png",
+      "sheet": "call-24.png",
+      "sha256": "a77ad543fef4d91de1b9d20c4237ac91a977b31290e539f24c01d00d79af469f",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-pixel-light-keypad-standard.png",
+      "sheet": "call-25.png",
+      "sha256": "16e825412486e26d9a001d4589f57d9adab1be9cce67299327f36b429b759d9d",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-pixel-light-more-largefont.png",
+      "sheet": "call-25.png",
+      "sha256": "2b9fff630d1baf8e99d2b2386c7ecddce11d10f9fe92e4d3894cbe97d479e55d",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-pixel-light-more-standard.png",
+      "sheet": "call-25.png",
+      "sha256": "4492cf2642acc0ace259e0d69cc815635f2b337f799d8b0a9c5e8b9813957c61",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-pixel-light-normal-largefont.png",
+      "sheet": "call-25.png",
+      "sha256": "8351d6e863fd00c4de2b9176b95f1bd5c424b6ab26d0efa8a6022b12963d485c",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    },
+    {
+      "file": "call-pixel-light-normal-standard.png",
+      "sheet": "call-26.png",
+      "sha256": "2bc75a121812740a08f987379a299a0967a1bd0d77a1475a976ec43e3c0557b7",
+      "result": "PASS",
+      "observations": [
+        "Caller/number and relevant panel labels, keypad or audio rows are legible. Primary controls and hang-up remain visually separated from native system navigation, with no clipping or overlap found."
+      ]
+    }
+  ]
+}

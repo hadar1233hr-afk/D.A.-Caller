@@ -1,0 +1,67 @@
+{
+  "status": "RESEARCH_CATEGORY_GAP_SOURCE_INVENTORY_RETAINED_NOT_GEO_OR_APP_ADMITTED",
+  "observed_at_utc": "2026-11-05T22:11:14.083986+00:00",
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "source_objects": 353,
+  "source_object_types": {
+    "node": 209,
+    "relation": 3,
+    "way": 141
+  },
+  "objects_with_numbering_valid_candidate": 325,
+  "numbering_candidate_rows": 331,
+  "unique_base_candidates": 316,
+  "source_country_fields_missing": 350,
+  "archive_bytes": 74015,
+  "archive_sha256": "c826a74a5c8cc7689dcab9adf78a09817e8362d62fe5c21e6f367546908d2af2",
+  "archive_members_sha256": {
+    "source-category-gap-objects.ndjson": "a31fce5cbfc79d102a439287aaa9fad3bce767b85a793f9dc274061cd7e8e626",
+    "report.json": "2dad45fc39d3751f0d70b84cd0c4846d0cd035be997d2c7f56865b0920be2cd5",
+    "LICENSE-NOTICE.txt": "d320c2894e689de07d4d1437b9fad61bcfe8eb6c341bc4d48271b8e4db8e4646"
+  },
+  "helper_sha256": "948dd96506f0004f39ef04378ac00a3503f028202549e902fa6bf41c49ece635",
+  "report_sha256": "2dad45fc39d3751f0d70b84cd0c4846d0cd035be997d2c7f56865b0920be2cd5",
+  "runtime_observed_at_retention": {
+    "python": "3.12.14",
+    "phonenumbers": "9.0.42"
+  },
+  "requirements_lock_sha256": "40f702ed012b78157fe9ef0791811376a336e60a7840283105835696b36dfe37",
+  "synthetic_privacy_policy_checks": {
+    "executed": 18,
+    "passed": 18,
+    "failures": 0,
+    "errors": 0,
+    "scope": "Synthetic exclusion/ambiguity contracts, not source/business verification"
+  },
+  "producer_retention_assertions": {
+    "executed": 18,
+    "passed": 18,
+    "checks": [
+      "known-owner-pbf-sha",
+      "retained-corpus-sha",
+      "actual-executed-helper-sha",
+      "unchanged-category-phone-contract-sha",
+      "exact-count-unique-source-identities",
+      "source-kind-counts",
+      "every-source-category-currently-uncovered",
+      "all-retained-clear-explicit-private-residential-inactive-exclusions",
+      "no-country-geographic-or-app-admission",
+      "exact-raw-country-fields-no-filling",
+      "exact-numbering-candidate-counts",
+      "exact-raw-phone-fields",
+      "publicness-commercial-status-not-promoted",
+      "18-synthetic-privacy-contracts-pass",
+      "exact-archive-members-crc",
+      "archive-member-sha-source-category-gap-objects.ndjson",
+      "archive-member-sha-report.json",
+      "archive-member-sha-LICENSE-NOTICE.txt"
+    ]
+  },
+  "app_records_added": 0,
+  "geographically_admitted_records": 0,
+  "limits": [
+    "Producer consistency/retention checks are not independent PBF authenticity, geographic admission or business publicness/currentness verification.",
+    "Combined Israel-and-Palestine source objects; none counted as new Israeli business contacts.",
+    "Existing admitted/staged2696-row corpus and app/signing/CI safeguards remain unchanged."
+  ]
+}

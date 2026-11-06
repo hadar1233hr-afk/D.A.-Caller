@@ -1,0 +1,29 @@
+{
+  "status": "BLOCKED_BY_EXECUTOR_SOURCE_ACCESS",
+  "source_url": "https://download.geofabrik.de/asia/israel-and-palestine-latest.osm.pbf",
+  "source_page": "https://download.geofabrik.de/asia/israel-and-palestine.html",
+  "source_license": "ODbL-1.0",
+  "attempted_method": "HEAD through inherited proxy",
+  "attempted_at_utc": "2026-11-02T07:31:54Z",
+  "http_status": 403,
+  "actual_source_bytes_downloaded": 0,
+  "actual_production_records_imported": 0,
+  "actual_country_phone_count": null,
+  "bypass_attempted": false,
+  "ready_build_tools": [
+    "fetch_geofabrik.py",
+    "extract_osm_businesses.py",
+    "package_app_dataset.py"
+  ],
+  "test_result": {
+    "tests": 23,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "11 extraction and12 packaging tests; temporary synthetic fixtures only",
+    "actual_full_source_import": false
+  },
+  "accuracy_limit": "Source-listed business phones are not individually confirmed ownership; no complete-Israel or million-number claim.",
+  "current_executor_source_host_permitted": false,
+  "checked_on_utc": "2026-11-04"
+}

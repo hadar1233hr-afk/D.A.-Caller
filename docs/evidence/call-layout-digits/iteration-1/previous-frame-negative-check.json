@@ -1,0 +1,21 @@
+{
+  "scope": "Previous source2 frames only; not fresh native approval",
+  "actual_old_pixels": {
+    "personalization-backup-saved-light.png": {
+      "clock_contrast_pixels": 0,
+      "navigation_contrast_pixels": 0,
+      "contrast_pass": false
+    },
+    "personalization-backup-saved-dark.png": {
+      "clock_contrast_pixels": 427,
+      "navigation_contrast_pixels": 1276,
+      "contrast_pass": true
+    },
+    "personalization-backup-restore-confirmation.png": {
+      "clock_contrast_pixels": 480,
+      "navigation_contrast_pixels": 1281,
+      "contrast_pass": true
+    }
+  },
+  "corrupted_png_rejected": true
+}
