@@ -216,3 +216,31 @@ This does not establish distinct physical businesses, current ownership or full
 coverage. The existing2696-row researchSQLite and app data remain unchanged.
 See `extra-category-README.md` and matching source/audit/retention ZIPs in the
 retained evidence directory for exact reproduction and disclosed references.
+
+## Explicit expanded research staging
+
+`stage_expanded_research_sqlite.py` is a separate builder using the unchanged
+base schema/insertion/read-only query contracts. It requires allfive explicit
+families (NODE/WAY/RELATION plus extra_node/extra_way), their distinct audits,
+source/report/PBF hashes and current reviewed policy/producer/reference code.
+Original physical IDs/scopes/null countries remain intact; old audit files are
+not renamed to approve extra categories. Contradictory app-counter aliases fail
+even when the first is0. Cross-family source-object overlap fails without merge.
+
+14 new contracts and independent actualexpandedDB audit PASS:2728original
+lines,2725FTS projections,2715default/10phoneproposals/3textwithheld,2712null
+countries. All32 extra-phone queries found their source rows; fitness4pages19
+and shops33pages1217 had0repeat/omission. The prior2696-row DB and basehelper
+remain byte-identical. The new schema/profile is still RESEARCH_ONLY, every
+app_accepted=0 and0rows enter app assets or production admission. See
+`expanded-research-README.md` in retained evidence for exact ZIP/hashes/audit and
+CLI reproduction. Query tests are desktop SQLite evidence, not Android UI or
+million-record performance validation.
+
+New primary-source/license observations are separately retained in
+`docs/evidence/business-acquisition/primary-sources-2026-11-06.md/.json`.
+DataGov license/branch preview counts are metadata counts, not imported phones;
+officialAllThePlaces code/spider names are not an acquired dataset. Download
+hosts lack executor destination permission and actual files/overrides still
+need supported acquisition.0new external files/phones imported; no bypass or
+third-party snippets converted into a phonebook.

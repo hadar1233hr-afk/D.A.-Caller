@@ -1,5 +1,51 @@
 # DA CALLER continuation state
 
+## Five-cohort research search and primary-source review — app unchanged
+
+A new explicit research builder includes all5 audited cohorts without changing
+the base tool or previous2696-row artifact. The expanded DB retains2728 exact
+source lines/five reconstructed cohorts;2725FTS/2715default/10separate phone
+proposals/3textwithheld/2712nullcountries. Physical source IDs, original scopes,
+names/phones and all app_accepted=0 remain intact. Distinct extra-node/extra-way
+audit families validate policy/producer/reference hashes and every point/full-
+polygon proof; no old-audit renaming, country inference or production admission.
+
+All14 new contracts PASS, independently rerun. Review fixed contradictory app
+counter aliases (all present must be strict integer0); current input data were
+unaffected. Independent actual-DB audit checked every line/projection/hash and
+all32 extra phone queries. Fitness4pages/19results and shops33pages/1217results
+had0repeat/omission; integrity/FK/CHECK/readonly hashes PASS. These are research
+desktop checks, not new Android tests or million-record performance evidence.
+[Exact new DB ZIP/manifest/audit/reproduction](evidence/business-acquisition/owner-261103/expanded-research-README.md).
+DB6,975,488bytes SHA1a015426c33835a247198120bd05be026f4f0c25aa874d6c506cc7f07e1ad255;
+ZIP1,607,530bytes SHA2782bc396b40d5a99b1ae5e5a98b2679868b099f429b6607bc7d56b7b91849cb.
+Old base5d4d264... and DBb8d5f520... independently unchanged. Aggregate source
+counts remain2728rows/2668objects/2623phones, not verified physical businesses.
+
+Available web tooling verified new primary-source license/metadata candidates:
+DataGov BeerSheva licensed-business preview3108LICENSErows and BOI1157BRANCHrows;
+neither is a usable-phone/current-business count. Missing/zero/shared phones,
+status/expiry/merge fields, coordinate-axis ambiguity and differing cached update
+labels require actual file review. DataGov dataset license+Other(Open) metadata
+must be bound at acquisition; directBOI website terms are different/restrictive.
+AllThePlaces generated outputs are CC0 but country/phone fields can be inferred/
+invalid; code/_il-spider names are not data or source-country proof. Official
+GitHub releases had no data assets. Source download hosts are absent executor
+allowlist; no shell download, mirror/proxy bypass or actual record import occurred.
+[Primary source links/license/access observations](evidence/business-acquisition/primary-sources-2026-11-06.md)
+and matching JSON explicitly record0new files/0new phones acquired. Metadata
+previews must never be presented as a phonebook. Supported environment review
+or owner-provided exact official files/license metadata are needed for acquisition.
+
+Main app tree9f15350b457405bf88a35c0ac5badc8f3a85cd94/nativeAPK remain unchanged;
+existing356unit/35native/243image proof remains current, original245 CI gate
+stillFAILS. No app, production packager, signing/CI gate, label or Release change.
+PR5 has no new explicit approval for the rejected0.12.0-only signing/CI exception;
+continuation prompts do not supply it. Existing2-hour timer remains active until
+all work and verified APK delivery finish. No actual quota block/account/model
+switch or competing product work occurred. Research/native integration and
+supported new-source acquisition remain separate; no research-to-app masquerade.
+
 ## Additional source categories —32 new phone rows, no app change
 
 The unchanged core filter omits leisure-only and several other business
