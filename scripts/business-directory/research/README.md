@@ -5,6 +5,14 @@ not change the application, the production packager, signing or publication gate
 The original24-record explicit-address-tag package remains unchanged, and0.12.0
 still contains no business data.
 
+The latest exact-source-name derivative is documented in
+[source-name-README.md](../../../docs/evidence/business-acquisition/owner-261103/source-name-README.md).
+It adds two explicit raw `name` selections without sanitizing preferred names or
+changing parent raw/history/2,715 business rows. The output has 2,717 rows; ten
+phone and one city/address case remain withheld. Its new helper/check and
+seven actual-reader host tests do not admit data to app assets or authorize
+production/native activation or APK publication.
+
 The latest outside-app candidate is documented in
 [business-candidate-README.md](../../../docs/evidence/business-acquisition/owner-261103/business-candidate-README.md).
 It retains all 2,728 raw lines/decisions and projects 2,715 unchanged identities.

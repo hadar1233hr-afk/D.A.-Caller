@@ -1,5 +1,59 @@
 # DA CALLER continuation state
 
+## Two exact source-name fallbacks — 2026-11-11 evening
+
+Independent review found two name-only failures with clean original primary
+`name` tags: Arabic `دار كنا الضيافة` (node 5801536067) and English
+`R. Gallery Ltd` (node 12543641901). A new outside-app derivative explicitly
+selects these exact source fields; no Cf removal, translation, reversal or
+mutation of preferred `name:he` occurs. All 2,728 original raw/history records,
+the original decision NDJSON and prior 2,715 business/FTS rows stay unchanged.
+A separate two-event ledger/SQL table links old withholding to source tag/value,
+raw/report hashes and new projection. Historical three text holds are preserved;
+effective remaining holds are ten UAN phone rows and one unsafe city/address row.
+
+Final v1 measures 2,717 rows, 2,657 source objects and 2,614 normalized phones;
+77 shared-phone groups retained, 2,701 projected source-country NULLs. 1,508 rows
+lack city and 820 lack address; source dates remain 2010–2026. No country, phone,
+address, current ownership or national coverage was invented or inferred.
+The source-name selection is a technical preparation policy, not owner approval,
+production admission or permission to activate data in business-free 0.12.0.
+
+All 24 data-tool methods PASS, independently rerun. Review fixed executing-code
+snapshot timing and replacement of pinned hashes by later observed hashes;
+source/code drift regressions pass and retain no partial output. Independent
+actual-data audit reconstructed all old raw/history/FTS and new projections/
+events, checked all 105 source/code/policy bindings (including the original 49), exact
+Arabic/Gallery searches, 55 complete pages and six corruption/CHECK cases.
+All original research rows still fail unchanged production admission.
+
+Seven genuine HOST_ROBOLECTRIC_API33_NATIVE_SQLITE tests PASS, zero failures/
+errors/skips in actual retained JUnit: 2,717 rows/55 pages, 10,368 generic phone
+alias queries/2,614 groups/77 shared groups, five explicit selected-name queries
+(including Arabic دار/كنا and R. Gallery) and two selected-phone lookups. The
+first run succeeded in 38 seconds. These are host helper checks, NOT emulator,
+Telecom, UI, device, real-user archive, upgrade or native-integration approval.
+
+Final private directory /workspace/work/business-data/source-name-candidate-owner-261103-v1;
+DB 6,643,712 bytes SHA36a7c0a07fad679249c44c975cba7c8d4fb00171d593d19f4ff0c6413a0f115a.
+[Exact data, source/history/ODbL proof, JUnit, hashes, limitations and reproduction](evidence/business-acquisition/owner-261103/source-name-README.md).
+Parent v2 DB4eee8e84... and all old helpers/evidence remain unchanged. Transfer
+ZIP/PBF hashes were checked through inherited bindings; ZIP CRC/member proof is
+inherited from the parent, not newly executed here. No new publisher download,
+PBF object reread or external-source acquisition is claimed.
+
+Main app tree9f15350b457405bf88a35c0ac5badc8f3a85cd94/native APK SHA
+f025fad667edafe2c76ab3f574c7ff1bfd2aeb301fdd1d035ac1acb6b311e16a remain unchanged.
+Existing 356 unit/35 emulator/243 visual proof remains current; no new main-app
+emulator run is claimed. Overall application CI still FAILS unchanged 245-frame
+gate. No app/production packager/signing/CI gate/label/Release change or new APK.
+PR comments/reviews remain empty and the explicit mechanism-approval question
+remains unanswered. Repeated automation is not approval. This work does not
+delay or alter business-free 0.12.0; publication stays blocked by that separate
+rejected signing/CI exception. Hardware/matching-key upgrade remain NOT TESTED.
+Existing 2-hour timer stays active until all requested work and verified APK
+delivery finish. No actual quota error or account/model switch occurred here.
+
 ## Reviewed outside-app business candidate — 2026-11-11
 
 Final v2 is a fresh, explicitly non-admitted projection, separate from app assets

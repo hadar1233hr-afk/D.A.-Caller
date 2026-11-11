@@ -1,0 +1,29 @@
+test_corrupt_parent_and_source_report_fail_closed (__main__.SourceNameContracts.test_corrupt_parent_and_source_report_fail_closed) ... ok
+test_different_raw_tag_value_or_format_control_not_repaired (__main__.SourceNameContracts.test_different_raw_tag_value_or_format_control_not_repaired) ... ok
+test_exact_default_source_names_selected_without_repair (__main__.SourceNameContracts.test_exact_default_source_names_selected_without_repair) ... ok
+test_exact_text_rejects_normalization_trim_control_and_surrogate (__main__.SourceNameContracts.test_exact_text_rejects_normalization_trim_control_and_surrogate) ... ok
+test_executing_code_snapshot_precedes_input_validation (__main__.SourceNameContracts.test_executing_code_snapshot_precedes_input_validation) ... ok
+test_existing_output_preserved_before_missing_inputs_are_read (__main__.SourceNameContracts.test_existing_output_preserved_before_missing_inputs_are_read) ... ok
+test_midbuild_source_change_retains_no_partial_candidate (__main__.SourceNameContracts.test_midbuild_source_change_retains_no_partial_candidate) ... ok
+test_midvalidation_parent_drift_cannot_replace_fixed_hash_anchor (__main__.SourceNameContracts.test_midvalidation_parent_drift_cannot_replace_fixed_hash_anchor) ... ok
+test_name_only_withholding_and_false_admission_required (__main__.SourceNameContracts.test_name_only_withholding_and_false_admission_required) ... ok
+test_native_utf16_limit_without_truncation (__main__.SourceNameContracts.test_native_utf16_limit_without_truncation) ... ok
+test_no_previous_projector_or_country_admission_called (__main__.SourceNameContracts.test_no_previous_projector_or_country_admission_called) ... ok
+test_original_country_scope_phone_and_source_values_not_relabelled (__main__.SourceNameContracts.test_original_country_scope_phone_and_source_values_not_relabelled) ... ok
+test_original_line_mutation_or_serialization_change_is_rejected (__main__.SourceNameContracts.test_original_line_mutation_or_serialization_change_is_rejected) ... ok
+test_original_phone_identity_and_stable_ids_are_exact_and_distinct (__main__.SourceNameContracts.test_original_phone_identity_and_stable_ids_are_exact_and_distinct) ... ok
+test_original_raw_and_proof_remain_unchanged (__main__.SourceNameContracts.test_original_raw_and_proof_remain_unchanged) ... ok
+test_original_rows_still_fail_unchanged_production_contract (__main__.SourceNameContracts.test_original_rows_still_fail_unchanged_production_contract) ... ok
+test_other_language_metadata_or_caller_field_is_not_selected (__main__.SourceNameContracts.test_other_language_metadata_or_caller_field_is_not_selected) ... ok
+test_other_source_proof_cannot_supply_a_display_name (__main__.SourceNameContracts.test_other_source_proof_cannot_supply_a_display_name) ... ok
+test_selection_schema_cannot_claim_admitted_app_row (__main__.SourceNameContracts.test_selection_schema_cannot_claim_admitted_app_row) ... ok
+test_snapshot_source_or_code_mutation_rejected (__main__.SourceNameContracts.test_snapshot_source_or_code_mutation_rejected) ... ok
+test_source_proof_identity_url_timestamp_mismatches_fail (__main__.SourceNameContracts.test_source_proof_identity_url_timestamp_mismatches_fail) ... ok
+test_unreviewed_city_address_row_stays_withheld (__main__.SourceNameContracts.test_unreviewed_city_address_row_stays_withheld) ... ok
+test_version_type_path_and_bounds_rejected_before_reading_inputs (__main__.SourceNameContracts.test_version_type_path_and_bounds_rejected_before_reading_inputs) ... ok
+test_wrong_historical_disposition_is_not_reinterpreted (__main__.SourceNameContracts.test_wrong_historical_disposition_is_not_reinterpreted) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 1.259s
+
+OK
