@@ -1,5 +1,78 @@
 # DA CALLER continuation state
 
+## Reviewed outside-app business candidate — 2026-11-11
+
+Final v2 is a fresh, explicitly non-admitted projection, separate from app assets
+and the immutable expanded research DB. It retains all 2,728 exact raw lines and
+decisions; 2,715 rows/2,655 source objects/2,612 normalized phones are projected,
+with 10 phone-format proposals and 3 source-text rows withheld. There are 77
+shared-phone groups; no source merge, phone/name repair or fabricated country.
+2,699 projected country fields remain null. Source dates span 2010–2026; 1,507
+rows lack a city and 820 an address. These are measured source rows, not verified
+current businesses, ownership or national coverage.
+
+All 28 synthetic data-tool methods PASS and were independently rerun. Strict
+manifest-string regressions corrected a provisional helper gap; final v2 was
+rebuilt after source freeze. Independent actual-data audit reconstructed every
+raw/decision/12-column/stable-ID/FTS projection and retained source/audit/code/
+PBF/geometry binding; multilingual/phone/50+1 queries and six corruption checks
+PASS, files unchanged. Original production admission still rejects all 2,728
+original rows. Dedicated owner transfer validation rechecked ZIP/PBF/member
+hashes and CRC without a synthetic country-scoped extraction or publisher claim.
+
+Six genuine HOST_ROBOLECTRIC_API33_NATIVE_SQLITE tests PASS, zero failures/errors/
+skips in actual retained JUnit: all 2,715 rows/55 pages, 10,360 phone-alias
+queries/2,612 phone groups/77 shared groups, Hebrew/niqqud/English/punctuation/
+implicit FTS, read-only cache, manifest/checksum and five DB corruption cases.
+The successful run read v1 DB/manifest; both were independently byte-compared to
+final v2 and are identical. Earlier IPC and external-harness compile failures
+executed zero tests and remain retained. Synthetic cache canary preservation is
+not existing-user archive, upgrade or physical-device proof. These are host
+checks, NOT emulator, Telecom, UI, hardware, native integration or publication.
+
+DB 6,631,424 bytes, SHA
+4eee8e84a3ccab3f291cb58be1e384a0dc16351612511cfe884e14519af3fd0e;
+final private path /workspace/work/business-data/business-candidate-owner-261103-v2.
+[Exact candidate, evidence, hashes, limitations and reproduction](evidence/business-acquisition/owner-261103/business-candidate-README.md).
+Candidate-only markers are ignored by the unchanged reader. Nonstandard names
+and outer NOT_ADMITTED envelope are preparation controls; never copy the DB to
+app assets or relabel its source scopes/countries to pass production guards.
+
+Main app tree 9f15350b457405bf88a35c0ac5badc8f3a85cd94 and native APK SHA
+f025fad667edafe2c76ab3f574c7ff1bfd2aeb301fdd1d035ac1acb6b311e16a were independently
+rechecked unchanged. Existing 356 unit/35 emulator/243 reviewed PNG proof remains
+current; no new main-app Android run is claimed. Overall CI remains FAILURE at
+the unchanged 245-image gate. No app/production packager/signing/CI safeguards
+changed during this continuation, no new Release/APK/approval label. PR comments/
+reviews remain empty; explicit approval for the rejected signing/CI mechanism
+exception is still missing. Business preparation does not change the requested
+business-free 0.12.0 release scope. Physical Jelly Star and matching-key upgrade
+remain NOT TESTED; no uninstall recommendation.
+
+The previous actual quota interruption is recorded below. This scheduled resume
+used the existing account/model without another usage-limit error; no quota API
+or bypass was used. Existing 2-hour automation remains active until all requested
+work and verified APK delivery finish. Future production source-admission and
+genuine emulator business UI/dial validation remain separate pending work.
+
+## Scheduled resume after an actual usage-limit interruption — 2026-11-11
+
+The 2026-11-06 candidate-builder and reader-contract turns stopped with an
+explicit usage-limit error and a stated retry time of November 11, 08:22.
+No completed candidate or host-reader test result was produced before that stop.
+The retained partial work was the candidate boundary review and unfinished
+synthetic contracts; these must not be reported as a built dataset or PASS.
+
+At the scheduled November 11 resume (10:08 UTC), the main checkout and PR head
+were both ef4b8f322dc91bcf0f5d81a2480f6532454a8eb7. No competing agent, active
+lease, running or queued repository workflow was found. Work resumes only on
+an explicitly named, outside-app candidate and independent host-reader checks.
+The main app tree and retained native APK hash were rechecked unchanged.
+The existing signing/CI exception still has no explicit owner approval: PR
+comments and reviews are empty. No publication or rejected safeguard change is
+authorized by this resume. Candidate results below will be recorded only after
+their actual execution; host checks are not emulator or hardware validation.
+
 ## Five-cohort research search and primary-source review — app unchanged
 
 A new explicit research builder includes all5 audited cohorts without changing

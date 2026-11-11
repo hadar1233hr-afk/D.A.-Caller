@@ -5,6 +5,15 @@ not change the application, the production packager, signing or publication gate
 The original24-record explicit-address-tag package remains unchanged, and0.12.0
 still contains no business data.
 
+The latest outside-app candidate is documented in
+[business-candidate-README.md](../../../docs/evidence/business-acquisition/owner-261103/business-candidate-README.md).
+It retains all 2,728 raw lines/decisions and projects 2,715 unchanged identities.
+The new builder/auditor and 28 contracts are separate from the old packager;
+six actual-reader host tests are retained with their JUnit. This is not production
+admission or emulator/native integration. Its reader-shaped schema can load if
+manually copied, so keep the nonstandard filenames/outer envelope and never put
+it in app assets. Missing country fields/scopes and old artifacts remain intact.
+
 The retained261103 result has2,448 raw phone rows from2,393 source nodes and2,353
 distinct base numbers. Source names, original/canonical phones, country fields,
 coordinates and object timestamps were independently checked against the PBF.
