@@ -1,0 +1,34 @@
+{
+  "status": "INDEPENDENT_PREPUBLICATION_READINESS_REVIEW_PASS",
+  "reviewed_at_utc": "2026-11-12T04:10:39.022189+00:00",
+  "owner_approved": true,
+  "reviewer": "independent release_final_review agent plus root verification",
+  "code_sha256": {
+    "scripts/da_caller_ci_signing.py": "d2a65df0f430c7e042d418635d2ac9a974e30956a0a214da2ca7e7346f3b74fa",
+    "scripts/verify-release-012-matrix.py": "634c2154cf82f02986cb1c43cdb76026418476ad4b9e79f8f0b729a4ae2346d4",
+    "scripts/prepare-approved-012-release.py": "f922cf4bf6c3b303ed378e22bfda2d2ffd917c8de36eaca97130282a1c6d9abe",
+    ".github/workflows/release-012-approved.yml": "a6c480cbbc73f56dc5db5ccaf9a5da338917f54401c718f6b5d266bafccb8452",
+    "docs/DA_CALLER_SIGNING_POLICY.json": "4e18e09fcc41697590508e42e337f50bb3246c3928aaca190a6cf54204ee7b47",
+    "docs/releases/0.12.0-publication-authorization.json": "8c22f0f306bbcc2e3dff19bc25830c0f2786577cf9ba46dd0ea166fee57233f0"
+  },
+  "signing_scope_stage_contracts": {
+    "tests": 79,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "actual_precommit_staging_assets": 6,
+  "native_apk_sha256": "f025fad667edafe2c76ab3f574c7ff1bfd2aeb301fdd1d035ac1acb6b311e16a",
+  "native_apk_bytes": 469326,
+  "app_tree": "9f15350b457405bf88a35c0ac5badc8f3a85cd94",
+  "app_and_root_build_inputs_unchanged": true,
+  "legacy_default_workflow_and_245_guards_unchanged": true,
+  "new_emulator_execution": false,
+  "historical_native_cases": 35,
+  "historical_unit_cases": 356,
+  "actual_reviewed_pngs": 243,
+  "local_stage_source_commit": "ad702188fa1cf45b22dd6b87cea087705f533aaa",
+  "ci_must_restage_for_publication_commit": true,
+  "public_download_verification": "PENDING_POST_PUBLICATION",
+  "release_published": false
+}

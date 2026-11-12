@@ -1,5 +1,28 @@
 # DA CALLER continuation state
 
+## Owner approved the bounded publication exception — 2026-11-12
+
+The owner directly replied "כמובן" to the precise signing/publication-mechanism
+approval question linking docs/releases/0.12.0-publication-approval.md. The five
+constraints there are now explicitly authorized. Older pending-approval entries
+below are historical; do not ask again or treat this as an automated repetition.
+Execution is preparing an independently reviewed, separately bounded 0.12.0
+publication path for the retained native-tested binary. Application/build source,
+future signing defaults and the old245 populated-business verifier remain frozen.
+No new APK/Release/public-byte PASS is claimed at this preparation checkpoint.
+
+The bounded signing/profile/staging implementation has now passed independent
+review and 79 negative/security contracts (50 signing, 10 scope, 19 staging).
+Actual retained-artifact revalidation passed356 units/35 native cases/243 reviewed
+PNGs and seven functional replays. Local staging produced six verified assets,
+with the exact469,326-byte f025... APK and original14,225,526-byte UI archive.
+This local check binds precommit HEADad70218; CI must restage after the publication
+commit. The separate PR5/two-label workflow preserves original android.yml,
+future signing defaults and legacy245 guards, publishes without rebuild/re-sign,
+then compares every anonymous public download. Independent prepublication review
+and actual local logs are under docs/evidence/release-0.12.0/publication/.
+Public release/download verification remains PENDING until real execution.
+
 ## Two exact source-name fallbacks — 2026-11-11 evening
 
 Independent review found two name-only failures with clean original primary
