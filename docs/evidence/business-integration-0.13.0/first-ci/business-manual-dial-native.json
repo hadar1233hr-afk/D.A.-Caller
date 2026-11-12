@@ -1,0 +1,10 @@
+{
+  "status": "FAIL",
+  "api": 33,
+  "test": "testBundledBusinessManualNativeCallUsesExactSourceIdentity",
+  "failure": "junit.framework.AssertionFailedError",
+  "last_action": "view contacts_directory_tab [524315,200][524459,272]",
+  "number": "1599510510",
+  "dial_attempted": false,
+  "physical_cellular_audio_verified": false
+}

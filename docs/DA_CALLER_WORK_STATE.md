@@ -1,5 +1,31 @@
 # DA CALLER continuation state
 
+## First0.13 native run found a test-coordinate defect; corrected source needs rerun
+
+Source21150b4 / CI43199541915 passed361actualunits but **34/36 native cases**;
+both business cases failed before entering the directory or placing a call.
+There were241functional PNGs plus2explicit diagnostics, not245passing captures.
+Original34non-business cases passed. No business/native/visual approval exists.
+Exact official artifacts were retained at evidence-branch9bdd1ce, with GitHub
+digests/size/CRC checked. [First-run review/JUnit/provenance](evidence/business-integration-0.13.0/first-ci/review.json).
+
+Actual failureJSON reported the Contacts business chip at x524315..524459,
+while the real screenshot shows it around x91..235. InputDispatcher rejected
+the off-display injection. The native helper added getLocalVisibleRect to screen
+location without removing TextView's large internal single-line RTL scrollX.
+This is a harness coordinate defect, not a missing/wrongly drawn production chip.
+
+The helper now subtracts the view's own scroll before mapping to screen and
+requires physical display containment. All four business-tab taps also require
+exact agreement with actual native accessibility bounds, full visibility and a
+48dp target before unchanged genuine UiAutomation down/up acceptance assertions.
+No performClick fallback, input-acceptance relaxation or production/data changes.
+Final test source SHA e407bfaa7366a30e4ec0a800a26ffa85d9fbaed60a1ee1d66a3e3abbb15fa967;
+offlineAndroidtestJava compilation passed18s and independent code review GO.
+36cases/245PNG requirements and all signing/publication gates remain unchanged.
+Fresh full native execution and visual review are still required; this compile
+does not erase or relabel the first run's two actual failures.
+
 ## Remaining business integration: local verification complete, fresh native pending — 2026-11-12
 
 The verified0.12.0 APK completion link has already been delivered in Hebrew.

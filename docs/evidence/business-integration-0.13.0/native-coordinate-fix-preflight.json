@@ -1,0 +1,19 @@
+{
+  "status": "PASS_COMPILE_ONLY_NOT_NATIVE_EXECUTION",
+  "observed_at_utc": "2026-11-12T10:39:40.174079+00:00",
+  "failed_run_id": 43199541915,
+  "failed_cases": 2,
+  "root_cause": "TextView internal RTL scroll offsets mistaken for physical coordinates",
+  "test_source_sha256": "e407bfaa7366a30e4ec0a800a26ffa85d9fbaed60a1ee1d66a3e3abbb15fa967",
+  "production_sources_unchanged": true,
+  "reader_and_data_unchanged": true,
+  "physical_display_bounds_required": true,
+  "native_accessibility_bounds_agreement_required": true,
+  "unclipped_48dp_target_required": true,
+  "genuine_input_down_up_assertions_unchanged": true,
+  "expected_native_cases": 36,
+  "expected_real_pngs": 245,
+  "code_review": "GO_MANUAL_DIAL_REVIEW",
+  "fresh_native": "PENDING",
+  "fresh_visual": "PENDING"
+}

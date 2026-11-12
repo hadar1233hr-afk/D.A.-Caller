@@ -285,7 +285,14 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
  }
  private Rect viewBounds(View view)throws Exception{
   Rect result=new Rect();ui(()->{assertNotNull(view);assertTrue(view.isAttachedToWindow()&&view.isShown());
-   assertTrue(view.getLocalVisibleRect(result));int[] location=new int[2];view.getLocationOnScreen(location);result.offset(location[0],location[1]);});return result;
+   // Local drawing coordinates include the view's own content scroll. A
+   // single-line RTL TextView can legitimately scroll that content by hundreds
+   // of thousands of pixels; its touch target remains inside the display.
+   assertTrue(view.getLocalVisibleRect(result));int[] location=new int[2];view.getLocationOnScreen(location);
+   result.offset(location[0]-view.getScrollX(),location[1]-view.getScrollY());
+   android.util.DisplayMetrics display=new android.util.DisplayMetrics();assertNotNull(view.getDisplay());view.getDisplay().getRealMetrics(display);
+   assertTrue("Native touch rectangle must stay inside the physical display: "+view.getTag()+" "+result,
+    new Rect(0,0,display.widthPixels,display.heightPixels).contains(result));});return result;
  }
  private Rect tapView(View view)throws Exception{
   Rect bounds=viewBounds(view);assertTrue(bounds.width()>0&&bounds.height()>0);
@@ -570,6 +577,17 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   java.lang.reflect.Field field=MainActivity.class.getDeclaredField("businessDirectory");field.setAccessible(true);Object directory=field.get(main);assertNotNull(directory);
   java.lang.reflect.Field dialog=BusinessDirectoryView.class.getDeclaredField("dialog");dialog.setAccessible(true);return (AlertDialog)dialog.get(directory);
  }
+ private Rect tapBusinessTab()throws Exception{
+  View tab=tag(main,"contacts_directory_tab");assertTrue("Actual Contacts business entry must be a TextView",tab instanceof TextView);
+  Rect physical=viewBounds(tab);int minimum=Math.round(48*target.getResources().getDisplayMetrics().density);
+  assertEquals("The complete business target must be visible",tab.getWidth(),physical.width());assertEquals(tab.getHeight(),physical.height());
+  assertTrue("Business entry requires a full 48dp native touch target",physical.width()>=minimum&&physical.height()>=minimum);
+  String label=((TextView)tab).getText().toString();await(()->nativeExactText(label)!=null,"Actual accessibility tree must expose the business entry");
+  Rect accessible=new Rect();nativeExactText(label).getBoundsInScreen(accessible);
+  assertEquals("View touch coordinates must match actual native accessibility bounds",accessible,physical);
+  // Keep genuine system pointer injection and its acceptance assertions.
+  return tapView(tab);
+ }
  private JSONObject businessRecord(BusinessDirectory.Entry entry)throws Exception{
   return new JSONObject().put("id",entry.id).put("name",entry.name).put("phone",entry.phone).put("phone_display",entry.phoneDisplay)
    .put("source_id",entry.sourceId).put("source_url",entry.sourceUrl).put("source_license",entry.sourceLicense).put("source_updated_at",entry.sourceUpdatedAt);
@@ -625,7 +643,7 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   BusinessDirectory.Entry selected=services.entries.get(0);assertTrue(selected.phone.startsWith("1599"));
   assertEquals(selected.phone,BusinessDirectory.normalizedPhone(selected.phoneDisplay));assertTrue(BusinessDirectory.https(selected.sourceUrl));
   assertFalse(selected.sourceLicense.isEmpty());assertFalse(selected.sourceUpdatedAt.isEmpty());businessDialNumber=selected.phone;
-  assertEquals(0,newCallRows().length());startMain("contacts");tapView(tag(main,"contacts_directory_tab"));
+  assertEquals(0,newCallRows().length());startMain("contacts");tapBusinessTab();
   await(()->tag(main,"business_directory_search")!=null,"Actual business tab must open");typeBusinessQuery(selected.phone,selected);ready(main);
   assertNull("Opening and searching a public source must never auto-dial",PhoneSessionService.current);assertNull(PhoneSessionService.instance);
   assertEquals(0,newCallRows().length());assertFalse("Platform must still have no call immediately before the explicit tap",target.getSystemService(TelecomManager.class).isInCall());
@@ -651,6 +669,7 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   writeFile("business-manual-dial-native.json",new JSONObject().put("status","PASS").put("api",33).put("emulator_only",true)
    .put("test",getName()).put("dataset_version",services.manifest.datasetVersion).put("dataset_sha256",services.manifest.sha256)
    .put("record_count",services.manifest.recordCount).put("selected_record",businessRecord(selected)).put("no_automatic_call_before_tap",true).put("no_new_call_log_rows_before_tap",true)
+   .put("business_tab_native_bounds_and_48dp_target_verified",true)
    .put("dispatch_method","native-UiAutomation-touchscreen-business-row-call-button-to-production-TelecomManager.placeCall")
    .put("call_button_bounds",tap.toShortString()).put("call_token",owned.token).put("call_address",actual.toString()).put("call_number",actual.getSchemeSpecificPart())
    .put("observed_call_state",observedState).put("bound_call_token_verified",true).put("end_method","native-production-call-end-touchscreen")
@@ -688,7 +707,7 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   JSONArray palettes=new JSONArray();
   for(boolean dark:new boolean[]{false,true}){
    settings.edit().putBoolean("dark",dark).putBoolean("amoled",false).putString("language","he").commit();startMain("contacts");
-   View tab=tag(main,"contacts_directory_tab");assertNotNull("Small entry must be inside personal Contacts",tab);Rect tabBounds=tapView(tab);
+   View tab=tag(main,"contacts_directory_tab");assertNotNull("Small entry must be inside personal Contacts",tab);Rect tabBounds=tapBusinessTab();
    await(()->tag(main,"business_directory_name_"+selected.id)!=null,"Actual licensed dataset must render first page");ready(main);
    View root=tag(main,"business_directory_root");assertNotNull(root);assertEquals(View.LAYOUT_DIRECTION_RTL,root.getLayoutDirection());
    assertEquals(selected.name,text(main,"business_directory_name_"+selected.id));assertEquals(selected.phoneDisplay,text(main,"business_directory_phone_"+selected.id));
@@ -696,7 +715,7 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
    assertNull("Opening public tab must never dial",PhoneSessionService.current);ui(()->textFits(root));
    JSONObject bars=snapshot("business-tab-"+(dark?"dark":"light"),dark);assertTrue(bars.getInt("status")>=40&&bars.getInt("navigation")>=40);
    palettes.put(new JSONObject().put("palette",dark?"dark":"light").put("native_entry_tag","contacts_directory_tab")
-    .put("entry_bounds",tabBounds.toShortString()).put("root_rtl",true).put("phone_ltr",true).put("bar_contrast",bars)
+    .put("entry_bounds",tabBounds.toShortString()).put("entry_native_accessibility_bounds_equal",true).put("entry_minimum_touch_dp",48).put("root_rtl",true).put("phone_ltr",true).put("bar_contrast",bars)
     .put("font_scale",main.getResources().getConfiguration().fontScale).put("first_record_id",selected.id));
   }
   JSONArray uanQueries=businessUanQueries();typeBusinessQuery(selected.phone,selected);
@@ -729,7 +748,7 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
    .put("dialog_text",aboutText).put("formatted_record_count",formattedCount).put("source_name_with_osm_copyright",true)
    .put("source_url_license_license_url_snapshot_and_measured_count",true).put("back_preserved_query_and_source_row",true).put("no_automatic_call",true).put("additional_png_count",0);
   tapView(tag(main,"business_directory_personal_tab"));await(()->tag(main,"contacts_directory_tab")!=null,"Native personal tab must remain available");
-  assertNull(tag(main,"business_directory_root"));tapView(tag(main,"contacts_directory_tab"));
+  assertNull(tag(main,"business_directory_root"));tapBusinessTab();
   await(()->tag(main,"business_directory_name_"+selected.id)!=null,"Returning to businesses must retain query and exact identity");
   assertEquals(selected.phone,((EditText)tag(main,"business_directory_search")).getText().toString());assertEquals(privateBefore,contactRows());assertEquals(privateDigest,contactDigest());assertNull(PhoneSessionService.current);
   assertEquals("Read-only source queries and provenance must not create any call",0,newCallRows().length());
