@@ -10,7 +10,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -74,7 +73,7 @@ public final class CallScreenActivity extends Activity {
  private TextView text(String s,int size,int color,boolean bold){return styledText(new TextView(this),s,size,color,bold);}
  private <T extends TextView>T styledText(T v,String s,int size,int color,boolean bold){
   v.setText(s);v.setTextSize(size);v.setTextColor(color);v.setIncludeFontPadding(false);v.setGravity(Gravity.CENTER);
-  v.setTypeface(Typeface.create(theme!=null&&theme.style==4?"monospace":bold?"sans-serif-medium":"sans-serif",Typeface.NORMAL));return v;
+  AppAppearance.font(v,bold);return v;
  }
  private GradientDrawable rounded(int color,float radius){GradientDrawable d=new GradientDrawable();d.setColor(color);d.setCornerRadius(dp(radius));return d;}
  private ImageView icon(int resource,int color,int size){
@@ -118,19 +117,25 @@ public final class CallScreenActivity extends Activity {
   FrameLayout.LayoutParams hp=new FrameLayout.LayoutParams(-1,-2,Gravity.TOP);shell.addView(hero,hp);
   caller=text("",compact()?28:34,theme.ink,theme.style==0||theme.style==3);caller.setTag("call-caller");caller.setSingleLine(true);caller.setEllipsize(android.text.TextUtils.TruncateAt.END);
   identity=text("",15,theme.muted,false);identity.setTag("call-identity");identity.setSingleLine(true);identity.setEllipsize(android.text.TextUtils.TruncateAt.END);
-  phase=text("",14,theme.muted,false);phase.setTag("call-phase");phase.setSingleLine(true);timer=text("",theme.style==4?38:theme.style==3?34:17,theme.muted,false);timer.setTag("call-timer");
+  phase=text("",14,theme.muted,false);phase.setTag("call-phase");phase.setSingleLine(true);timer=text("",theme.style==4?38:theme.style==3?34:17,theme.muted,false);timer.setTag("call-timer");timer.setTextDirection(View.TEXT_DIRECTION_LTR);
   badge=text("VoLTE",10,theme.accent,true);badge.setVisibility(View.GONE);
   portraitFrame=AvatarShapes.frame(this);portraitFrame.setTag("call-portrait");portraitFrame.setBackgroundColor(theme.surface2);
   portrait=new ImageView(this);portrait.setScaleType(ImageView.ScaleType.CENTER_CROP);portrait.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
-  portraitFrame.addView(portrait,new FrameLayout.LayoutParams(-1,-1));initials=text("DA",theme.style==4?18:28,theme.accent,true);portraitFrame.addView(initials,new FrameLayout.LayoutParams(-1,-1));
+  portraitFrame.addView(portrait,new FrameLayout.LayoutParams(-1,-1));initials=text("?",theme.style==4?18:28,theme.accent,true);initials.setTag("call-initials");portraitFrame.addView(initials,new FrameLayout.LayoutParams(-1,-1));
   if(theme.style==1){
    add(hero,timer,-1,-2,compact()?48:66);add(hero,caller,-1,-2,17);add(hero,identity,-1,-2,10);add(hero,portraitFrame,compact()?98:112,compact()?98:112,20);add(hero,phase,-1,-2,10);
   }else if(theme.style==0||theme.style==2){
    int avatar=theme.style==0?(compact()?76:100):(compact()?66:88);
    add(hero,portraitFrame,avatar,avatar,compact()?20:40);add(hero,caller,-1,-2,14);add(hero,identity,-1,-2,8);add(hero,phase,-1,-2,10);add(hero,timer,-1,-2,5);
    if(theme.style==2){portraitFrame.setElevation(dp(6));portraitFrame.setBackground(theme.card(this,1));}
+  }else if(theme.style==4){
+   // Keep Nothing's monochrome surfaces and dot field, with one centered caller
+   // stack instead of a branded header and a profile split across the screen.
+   int avatar=largeType()?48:compact()?60:88;
+   add(hero,portraitFrame,avatar,avatar,largeType()?14:compact()?24:40);
+   add(hero,caller,-1,-2,compact()?10:14);add(hero,identity,-1,-2,compact()?6:8);
+   add(hero,phase,-1,-2,compact()?8:10);add(hero,timer,-1,-2,compact()?4:5);
   }else{
-   TextView brand=text(theme.style==4?"DA / 01":"DA CALLER",12,theme.muted,true);brand.setGravity(Gravity.START);add(hero,brand,-1,-2,26);
    LinearLayout profile=row();profile.setLayoutDirection(I18n.direction(this));add(hero,profile,-1,-2,compact()?18:28);
    LinearLayout names=col();names.setGravity(Gravity.START);names.setLayoutDirection(I18n.direction(this));profile.addView(names,new LinearLayout.LayoutParams(0,-2,1));
    caller.setGravity(Gravity.START);identity.setGravity(Gravity.START);add(names,caller,-1,-2,0);add(names,identity,-1,-2,8);
@@ -159,11 +164,11 @@ public final class CallScreenActivity extends Activity {
  private void updateCaller(Call call){
   String number=tr("מספר לא מזוהה");try{if(call.getDetails()!=null&&call.getDetails().getHandle()!=null)number=call.getDetails().getHandle().getSchemeSpecificPart();}catch(RuntimeException ignored){}
   if(lastNumber.equals(number))return;caller.setText(number);identity.setText("");lastNumber=number;final String expected=number;
-  portrait.setImageDrawable(null);initials.setVisibility(View.VISIBLE);
+  portrait.setImageDrawable(null);initials.setText("?");initials.setVisibility(View.VISIBLE);
   ContactPhotos.lookup(this,number,(id,name,picture)->{
    if(isFinishing()||isDestroyed()||!expected.equals(lastNumber))return;
    boolean named=name!=null&&!name.equals(expected)&&!name.trim().isEmpty();caller.setText(named?name:expected);identity.setText(named?expected:"");
-   initials.setText(named?name.substring(0,name.offsetByCodePoints(0,Math.min(2,name.codePointCount(0,name.length())))):"DA");
+   initials.setText(named?name.substring(0,name.offsetByCodePoints(0,Math.min(2,name.codePointCount(0,name.length())))):"?");
    portrait.setImageBitmap(picture);initials.setVisibility(picture==null?View.VISIBLE:View.GONE);syncCompactHeader();
   });
  }
@@ -178,6 +183,7 @@ public final class CallScreenActivity extends Activity {
   badge.setVisibility(call!=null&&call.getState()==Call.STATE_ACTIVE&&VolteStatus.isVoiceOnLte(this)?View.VISIBLE:View.GONE);
  }
  private void refreshSafely(){try{refresh();}catch(RuntimeException failure){CallFailureReporter.record(this,"incall-render",failure);showEmergencyCallControls();}}
+ private String phaseForState(int state){return tr(state==Call.STATE_RINGING?"שיחה נכנסת":state==Call.STATE_DIALING?"מחייג…":state==Call.STATE_CONNECTING?"מתחבר…":state==Call.STATE_HOLDING?"בהמתנה":"שיחה פעילה");}
  private void refresh(){
   if(isFinishing()||isDestroyed())return;
   Call call=preview()?null:PhoneSessionService.current;
@@ -187,9 +193,8 @@ public final class CallScreenActivity extends Activity {
   int state=preview()?Call.STATE_ACTIVE:call.getState();
   if(state!=Call.STATE_ACTIVE){clockHandler.removeCallbacks(stopTone);stopTone.run();}
   if(state==Call.STATE_RINGING||state==Call.STATE_DIALING||state==Call.STATE_CONNECTING)getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);else getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-  String stage=state==Call.STATE_RINGING?"שיחה נכנסת":state==Call.STATE_DIALING?"מחייג…":state==Call.STATE_CONNECTING?"מתחבר…":state==Call.STATE_HOLDING?"בהמתנה":"שיחה פעילה";
   timer.setVisibility(state==Call.STATE_ACTIVE?View.VISIBLE:View.GONE);
-  phase.setText(tr(stage));phase.setVisibility(state==Call.STATE_ACTIVE&&(theme.style==1||largeType()&&theme.style!=4)?View.GONE:View.VISIBLE);
+  phase.setText(phaseForState(state));phase.setVisibility(state==Call.STATE_ACTIVE&&(theme.style==1||largeType()&&theme.style!=4)?View.GONE:View.VISIBLE);
   if(preview())setPreviewIdentity();
   else{updateCaller(call);updateTimer();updateBadge();}
   applyPanelHeader();
@@ -201,7 +206,7 @@ public final class CallScreenActivity extends Activity {
  /** Synthetic strings are fixture data, never production caller information. */
  @android.annotation.SuppressLint("SetTextI18n")
  private void setPreviewIdentity(){
-  String name=getIntent().getStringExtra("preview_name");caller.setText(name==null?(I18n.isEnglish(this)?"Dana Abraham":"דנה אברהם"):name);identity.setText("050-123-4567");timer.setText("00:11");initials.setText("DA");badge.setVisibility(View.GONE);
+  String name=getIntent().getStringExtra("preview_name");String displayName=name==null?(I18n.isEnglish(this)?"Dana Abraham":"דנה אברהם"):name;caller.setText(displayName);identity.setText("050-123-4567");timer.setText("00:11");initials.setText(displayName.isEmpty()?"?":displayName.substring(0,displayName.offsetByCodePoints(0,Math.min(2,displayName.codePointCount(0,displayName.length())))));badge.setVisibility(View.GONE);
  }
  private void syncCompactHeader(){
   if(compactCaller==null)return;compactCaller.setText(caller.getText());compactIdentity.setText(identity.getText());compactTimer.setText(timer.getText());
@@ -221,7 +226,7 @@ public final class CallScreenActivity extends Activity {
   try{
    Call call=PhoneSessionService.current;if(call==null){if(!preview())finish();return;}
    LinearLayout fallback=col();fallback.setGravity(Gravity.CENTER);fallback.setPadding(dp(20),dp(20),dp(20),dp(20));fallback.setBackgroundColor(Color.BLACK);
-   fallback.addView(text("DA CALLER · "+tr("שיחה פעילה"),22,Color.WHITE,true),new LinearLayout.LayoutParams(-1,0,1));
+   fallback.addView(text(phaseForState(call.getState()),22,Color.WHITE,true),new LinearLayout.LayoutParams(-1,0,1));
    if(call.getState()==Call.STATE_RINGING){GesturePrompt accept=styledText(new GesturePrompt(this),tr("החלק ימינה כדי לענות  →"),20,Color.WHITE,true);accept.setBackgroundColor(0xFF16754D);add(fallback,accept,-1,64,12);accept.setText(tr("החלק ימינה כדי לענות  →"));accept.setContentDescription(accept.getText());bindIncomingGesture(call,accept,"ios");}
    FrameLayout end=endButton(call);add(fallback,end,136,64,16);setContentView(fallback);
   }catch(RuntimeException secondary){CallFailureReporter.record(this,"incall-emergency-screen",secondary);}
@@ -367,7 +372,7 @@ public final class CallScreenActivity extends Activity {
    if(theme.style==2&&!selected){bg.setStroke(dp(1),theme.dark?0xFF7A8A9E:0xFFFFFFFF);circle.setElevation(dp(2));}
    circle.setBackground(bg);cell.addView(circle,new LinearLayout.LayoutParams(dp(diameter),dp(diameter)));
    ImageView glyph=icon(resource,selected?theme.selectedInk:theme.ink,27);circle.addView(glyph,new FrameLayout.LayoutParams(dp(27),dp(27),Gravity.CENTER));
-   if(theme.style==1&&"audio".equals(id)&&route()==CallAudioState.ROUTE_BLUETOOTH){glyph.setTranslationX(dp(7));ImageView arrow=icon(R.drawable.ic_call_chevron,selected?theme.selectedInk:theme.ink,13);arrow.setTranslationX(dp(-14));circle.addView(arrow,new FrameLayout.LayoutParams(dp(13),dp(13),Gravity.CENTER));}
+   if(theme.style==1&&"audio".equals(id)&&route()==CallAudioState.ROUTE_BLUETOOTH){glyph.setTranslationX(dp(7));int arrowInk=selected?theme.selectedInk:theme.ink;ImageView arrow=icon(R.drawable.ic_call_chevron,arrowInk,13);arrow.setImageDrawable(AppAppearance.chevron(this,false,arrowInk));arrow.setTranslationX(dp(-14));circle.addView(arrow,new FrameLayout.LayoutParams(dp(13),dp(13),Gravity.CENTER));}
    TextView label=text(visibleTitle,12,theme.style==1?theme.muted:theme.ink,false);label.setTag("call-action-label-"+id);label.setSingleLine(true);label.setEllipsize(android.text.TextUtils.TruncateAt.END);add(cell,label,-1,-2,5);
   }
   if(!enabled){cell.setAlpha(0.45f);cell.setContentDescription(title+" · "+tr("לא זמין בשיחה זו"));cell.setEnabled(false);}
@@ -504,17 +509,17 @@ public final class CallScreenActivity extends Activity {
   String n="";
   try{if(call.getDetails()!=null&&call.getDetails().getHandle()!=null)n=call.getDetails().getHandle().getSchemeSpecificPart();}catch(Exception ignored){}
   final String key="note_"+Contacts.canonical(n);
-  Dialog dialog=new Dialog(this);
+  Dialog dialog=new Dialog(this,theme.dark?R.style.AppDialogDark:R.style.AppDialogLight);
   LinearLayout wrap=col();wrap.setPadding(dp(17),dp(16),dp(17),dp(16));wrap.setBackground(theme.card(this,0));
   wrap.addView(text(tr("הערה לשיחה"),18,theme.ink,true),new LinearLayout.LayoutParams(-1,dp(45)));
-  EditText editor=new EditText(this);editor.setTextColor(theme.ink);editor.setHintTextColor(theme.muted);
+  EditText editor=new EditText(this);AppAppearance.font(editor,false);editor.setTextColor(theme.ink);editor.setHintTextColor(theme.muted);
   editor.setText(prefs.getString(key,""));editor.setHint(tr("כתוב הערה"));
   editor.setMinLines(3);editor.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
   wrap.addView(editor,new LinearLayout.LayoutParams(-1,dp(125)));
   TextView save=text(tr("שמירה"),17,theme.accent,true);
   wrap.addView(save,new LinearLayout.LayoutParams(-1,dp(45)));
-  save.setOnClickListener(v->{feedback(save);prefs.edit().putString(key,editor.getText().toString()).apply();dialog.dismiss();});
-  dialog.setContentView(wrap);dialog.show();
+  save.setOnClickListener(v->{if(!SettingsBackup.allowPreferenceChange(this))return;feedback(save);prefs.edit().putString(key,editor.getText().toString()).apply();dialog.dismiss();});
+  dialog.setContentView(wrap);AppAppearance.show(dialog);
   Window window=dialog.getWindow();if(window!=null){window.setBackgroundDrawableResource(android.R.color.transparent);window.setLayout(-1,-2);}
  }
  @Override protected void onDestroy(){

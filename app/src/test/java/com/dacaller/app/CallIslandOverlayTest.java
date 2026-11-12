@@ -10,6 +10,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Looper;
+import android.os.SystemClock;
+import android.view.MotionEvent;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.view.ContextThemeWrapper;
@@ -182,4 +184,43 @@ public class CallIslandOverlayTest {
   enable();overlay.start();assertFalse(overlay.isShowing());assertNotNull(session.state);assertTrue(session.actions.isEmpty());
   assertTrue(prefs.getString("last_call_failure","").contains("island-overlay-ui"));
  }
+ private void pointer(View view,int action,float x,float y){
+  MotionEvent event=MotionEvent.obtain(SystemClock.uptimeMillis(),SystemClock.uptimeMillis(),action,x,y,0);view.dispatchTouchEvent(event);event.recycle();
+ }
+ private View capsule(){return added.findViewWithTag("island-root");}
+ @Test public void realExternalPointerDragPersistsPositionWithoutExpandingOrIssuingCallCommands(){
+  enable();overlay.start();View capsule=capsule();added.measure(View.MeasureSpec.makeMeasureSpec(params.width,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(params.height,View.MeasureSpec.EXACTLY));added.layout(0,0,params.width,params.height);
+  int oldY=params.y;pointer(added,MotionEvent.ACTION_DOWN,60,25);pointer(added,MotionEvent.ACTION_MOVE,110,225);pointer(added,MotionEvent.ACTION_UP,110,225);idle();
+  assertTrue(prefs.getBoolean(CallIslandPosition.SET,false));assertTrue(params.y>oldY);assertTrue(session.actions.isEmpty());
+  verify(windows,atLeastOnce()).updateViewLayout(eq(added),any());int y=params.y;overlay.stop();overlay.start();idle();assertEquals(y,params.y);
+  privacy.permitted=false;refresh();assertFalse(overlay.isShowing());assertNotNull(session.state);assertTrue(session.actions.isEmpty());
+ }
+ @Test public void externalHideAndStaleDragAreCallScopedAndRestoreAcrossOwnAppTransitions(){
+  enable();overlay.start();assertTrue(overlay.onDragStart("owned-call"));overlay.onDragMove("owned-call",0,200);
+  session.state=active("replacement");overlay.onDragEnd("owned-call",false);idle();assertFalse(prefs.getBoolean(CallIslandPosition.SET,false));assertTrue(session.actions.isEmpty());
+  overlay.onHide("owned-call");assertTrue(overlay.isShowing());overlay.onHide("replacement");assertFalse(overlay.isShowing());assertNotNull(session.state);
+  privacy.inside=true;refresh();prefs.edit().remove("island_hidden_token").commit();idle();assertFalse(overlay.isShowing());
+  privacy.inside=false;refresh();assertTrue(overlay.isShowing());overlay.onHide("replacement");
+  session.state=active("new-call");refresh();assertTrue(overlay.isShowing());assertTrue(session.actions.isEmpty());
+ }
+ @Test public void replacementCallCancelsAGenuineExternalDragBeforeTheOldPointerFinishes(){
+  enable();overlay.start();added.measure(View.MeasureSpec.makeMeasureSpec(params.width,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(params.height,View.MeasureSpec.EXACTLY));added.layout(0,0,params.width,params.height);
+  int originalY=params.y;pointer(added,MotionEvent.ACTION_DOWN,60,25);pointer(added,MotionEvent.ACTION_MOVE,110,225);assertTrue(params.y>originalY);
+  session.state=active("replacement");refresh();assertEquals(originalY,params.y);assertFalse(prefs.getBoolean(CallIslandPosition.SET,false));
+  pointer(added,MotionEvent.ACTION_UP,110,225);idle();assertEquals(originalY,params.y);
+  assertFalse(prefs.getBoolean(CallIslandPosition.SET,false));assertTrue(session.actions.isEmpty());
+ }
+ @Test public void optionalTopRequestRetainsNormalOverlayTypeAndNeverUsesNoLimitsOrPrivilegedFlags(){
+  android.view.WindowInsets insets=new android.view.WindowInsets.Builder().setInsets(android.view.WindowInsets.Type.systemBars(),android.graphics.Insets.of(0,24,0,48))
+    .setInsetsIgnoringVisibility(android.view.WindowInsets.Type.systemBars(),android.graphics.Insets.of(0,24,0,48)).setVisible(android.view.WindowInsets.Type.statusBars(),true).build();
+  when(windows.getCurrentWindowMetrics()).thenReturn(new android.view.WindowMetrics(new android.graphics.Rect(0,0,480,854),insets));
+  prefs.edit().putString(CallIslandPosition.MODE,"status_area").commit();enable();overlay.start();
+  assertTrue("Visible SystemUI needs the entire external capsule below its bar",params.y>=24);assertTrue(params.y+params.height<=854-48);
+  assertEquals(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,params.type);
+  assertEquals(0,params.flags&WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+  assertEquals(WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER,params.layoutInDisplayCutoutMode);
+  assertTrue(params.x>=0);assertTrue(params.y>=0);assertTrue(session.actions.isEmpty());
+  prefs.edit().putString(CallIslandPosition.MODE,"below").commit();idle();assertEquals(0,params.flags&WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+ }
+
 }

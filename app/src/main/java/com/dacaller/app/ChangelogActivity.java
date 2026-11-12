@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +11,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowInsetsController;
 import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public final class ChangelogActivity extends Activity {
  private TextView text(String value,int sp,boolean strong,int color){
   TextView view=new TextView(this);view.setText(value);view.setTextSize(sp);view.setTextColor(color);
   view.setGravity(Gravity.START|Gravity.CENTER_VERTICAL);view.setTextDirection(View.TEXT_DIRECTION_FIRST_STRONG);
-  view.setTypeface(Typeface.create(strong?"sans-serif-medium":"sans-serif",Typeface.NORMAL));
+  AppAppearance.font(view,strong);
   view.setLineSpacing(dp(2),1f);return view;
  }
  private GradientDrawable shape(int color,int radius,boolean highlighted){
@@ -43,14 +43,15 @@ public final class ChangelogActivity extends Activity {
   english=I18n.isEnglish(this);dark=prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);
   background=prefs.getBoolean("amoled",false)?Color.BLACK:dark?0xFF141414:0xFFF7F7F5;
   surface=dark?0xFF232323:Color.WHITE;ink=dark?0xFFF5F5F3:0xFF161C17;
-  secondary=dark?0xFFB8BEB9:0xFF59635B;accent=dark?0xFFE1C38A:0xFF805B27;
+  secondary=dark?0xFFB8BEB9:0xFF59635B;
+  accent="silver".equals(prefs.getString("accent","gold"))?(dark?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark);
   if(state==null)expanded.add(BuildConfig.VERSION_NAME);
   else{ArrayList<String> saved=state.getStringArrayList("expanded_versions");if(saved!=null)expanded.addAll(saved);}
   scroll=new ScrollView(this);scroll.setTag("changelog-scroll");scroll.setFillViewport(true);scroll.setBackgroundColor(background);
   LinearLayout root=column();root.setTag("changelog-root");root.setLayoutDirection(english?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);
   root.setPadding(dp(15),dp(10),dp(15),dp(24));scroll.addView(root,new ScrollView.LayoutParams(-1,-2));setContentView(scroll);
   LinearLayout header=new LinearLayout(this);header.setGravity(Gravity.CENTER_VERTICAL);root.addView(header,new LinearLayout.LayoutParams(-1,-2));
-  TextView back=text(english?"‹":"›",28,false,accent);back.setGravity(Gravity.CENTER);back.setContentDescription(tr("חזרה","Back"));
+  ImageView back=new ImageView(this);back.setImageDrawable(AppAppearance.backArrow(this,accent));back.setScaleType(ImageView.ScaleType.CENTER);back.setContentDescription(tr("חזרה","Back"));
   back.setTag("changelog-back");back.setFocusable(true);header.addView(back,new LinearLayout.LayoutParams(dp(48),dp(48)));
   back.setOnClickListener(v->finish());
   TextView title=text(tr("יומן שינויים","What's new"),23,true,ink);title.setTag("changelog-title");
@@ -91,7 +92,7 @@ public final class ChangelogActivity extends Activity {
   TextView badge=text(current?(entry.preview()?tr("גרסת הבדיקה המותקנת","Installed test build"):tr("הגרסה המותקנת","Installed version")):
     entry.preview()?tr("גרסת בדיקה קודמת","Earlier test build"):tr("גרסה קודמת","Earlier version"),11,current,accent);
   badge.setTag("changelog-status-"+entry.version);badge.setPadding(0,dp(5),0,0);labels.addView(badge,new LinearLayout.LayoutParams(-1,-2));
-  TextView chevron=text("",23,false,accent);chevron.setGravity(Gravity.CENTER);
+  ImageView chevron=new ImageView(this);chevron.setScaleType(ImageView.ScaleType.CENTER);
   chevron.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);header.addView(chevron,new LinearLayout.LayoutParams(dp(38),dp(48)));
   LinearLayout details=column();details.setTag("changelog-details-"+entry.version);details.setPadding(dp(14),0,dp(14),dp(14));
   card.addView(details,new LinearLayout.LayoutParams(-1,-2));
@@ -102,7 +103,7 @@ public final class ChangelogActivity extends Activity {
    TextView copy=text(change.text(english),14,false,ink);copy.setPadding(dp(2),dp(7),dp(2),0);row.addView(copy,new LinearLayout.LayoutParams(0,-2,1));
   }
   Runnable bind=()->{
-   boolean open=expanded.contains(entry.version);details.setVisibility(open?View.VISIBLE:View.GONE);chevron.setText(open?"⌃":"⌄");
+   boolean open=expanded.contains(entry.version);details.setVisibility(open?View.VISIBLE:View.GONE);chevron.setImageDrawable(AppAppearance.chevron(this,open,accent));
    header.setContentDescription(entry.version+". "+entry.title(english)+". "+tr(open?"הסתר פירוט":"הצג פירוט",open?"Hide details":"Show details"));
    if(Build.VERSION.SDK_INT>=30)header.setStateDescription(tr(open?"מורחב":"מכווץ",open?"Expanded":"Collapsed"));
   };

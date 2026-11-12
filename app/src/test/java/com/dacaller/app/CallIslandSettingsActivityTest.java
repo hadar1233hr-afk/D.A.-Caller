@@ -5,6 +5,11 @@ import static org.mockito.Mockito.*;
 import static org.robolectric.Shadows.shadowOf;
 
 import android.app.Application;
+import android.app.AlertDialog;
+import android.os.Bundle;
+import android.view.accessibility.AccessibilityNodeInfo;
+import android.widget.SeekBar;
+import org.robolectric.shadows.ShadowAlertDialog;
 import android.app.role.RoleManager;
 import android.content.Context;
 import android.content.Intent;
@@ -129,4 +134,50 @@ public final class CallIslandSettingsActivityTest {
   assertEquals(View.GONE,required("island-settings-preview").getVisibility());
   verifyNoInteractions(live);assertNoPermissionRequest();
  }
+ private void choose(String tag,int index){
+  required(tag).performClick();AlertDialog dialog=ShadowAlertDialog.getLatestAlertDialog();assertNotNull(dialog);
+  dialog.getListView().performItemClick(dialog.getListView().getChildAt(index),index,index);
+ }
+ @Test public void topAreaChoiceIsExplicitExplainsFallbackAndResetPreservesOtherPreferences(){
+  prefs.edit().putBoolean(CallIslandPosition.SET,true).putInt(CallIslandPosition.X,8000).putInt(CallIslandPosition.Y,6000).putBoolean("island_show_timer",false).commit();
+  open();assertEquals("below",prefs.getString(CallIslandPosition.MODE,"below"));
+  assertTrue(((TextView)required("island_position_compatibility")).getText().toString().contains("protected status bar"));
+  choose("island_position_mode",1);assertEquals("status_area",prefs.getString(CallIslandPosition.MODE,"below"));assertFalse(prefs.contains(CallIslandPosition.SET));
+  assertFalse(prefs.getBoolean("island_show_timer",true));assertNoPermissionRequest();
+  prefs.edit().putBoolean(CallIslandPosition.SET,true).putInt(CallIslandPosition.X,9999).commit();required("island_position_reset").performClick();
+  assertFalse(prefs.contains(CallIslandPosition.SET));assertFalse(prefs.contains(CallIslandPosition.X));assertEquals("status_area",prefs.getString(CallIslandPosition.MODE,"below"));assertNoPermissionRequest();
+ }
+ @Test public void hiddenCallHasAReachableRestoreControlWithoutPhoneOrPermissionCommands(){
+  prefs.edit().putString("island_hidden_token","current-call").putBoolean("island_enabled",true).commit();open();
+  required("island_restore").performClick();assertFalse(prefs.contains("island_hidden_token"));assertTrue(prefs.getBoolean("island_enabled",false));assertNoPermissionRequest();
+ }
+ @Test public void seeThroughIsAnAdditionalStyleWithAccessibleBackgroundOnlyOpacity(){
+  open();SeekBar slider=(SeekBar)required("island_background_opacity");assertFalse(slider.isEnabled());assertEquals(35,slider.getProgress());
+  choose("island_style",3);assertEquals("transparent",prefs.getString("island_style","apple"));assertTrue(slider.isEnabled());
+  Bundle value=new Bundle();value.putFloat(AccessibilityNodeInfo.ACTION_ARGUMENT_PROGRESS_VALUE,0);
+  assertTrue(slider.performAccessibilityAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SET_PROGRESS.getId(),value));
+  assertEquals(0,prefs.getInt("island_background_opacity",-1));assertEquals(1f,required("island-settings-preview").getAlpha(),0f);
+  value.putFloat(AccessibilityNodeInfo.ACTION_ARGUMENT_PROGRESS_VALUE,100);assertTrue(slider.performAccessibilityAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SET_PROGRESS.getId(),value));assertEquals(100,prefs.getInt("island_background_opacity",-1));
+  choose("island_style",0);assertEquals("apple",prefs.getString("island_style",""));assertFalse(slider.isEnabled());assertEquals(100,prefs.getInt("island_background_opacity",-1));assertNoPermissionRequest();
+ }
+
+ @Test public void pendingRestoreKeepsPersistedIslandChoicesAndDragPositionWhileTransientRestoreWorks()throws Exception{
+  prefs.edit().putString("island_style","transparent").putBoolean(CallIslandPosition.SET,true).putInt(CallIslandPosition.X,8000)
+    .putString("island_hidden_token","current-call").commit();open();
+  java.io.File journal=new java.io.File(activity.getFilesDir(),"settings_archive_restore.pending");
+  java.nio.file.Files.write(journal.toPath(),"synthetic pending restore".getBytes(java.nio.charset.StandardCharsets.UTF_8));
+  try{
+   outside().performClick();assertFalse(outside().isChecked());assertFalse(prefs.getBoolean("island_outside_app",false));
+   Switch enabled=(Switch)required("island_enabled");enabled.performClick();assertTrue(enabled.isChecked());assertTrue(prefs.getBoolean("island_enabled",true));
+   choose("island_style",0);assertEquals("transparent",prefs.getString("island_style",""));
+   choose("island_position_mode",1);assertEquals("below",prefs.getString(CallIslandPosition.MODE,"below"));
+   choose("island_size",1);assertEquals("compact",prefs.getString("island_size","compact"));
+   required("island_position_reset").performClick();assertTrue(prefs.getBoolean(CallIslandPosition.SET,false));
+   CallIslandPosition.save(activity,prefs,new android.graphics.Rect(12,8,308,780),180,56,12,8);assertEquals(8000,prefs.getInt(CallIslandPosition.X,-1));
+   SeekBar slider=(SeekBar)required("island_background_opacity");Bundle value=new Bundle();value.putFloat(AccessibilityNodeInfo.ACTION_ARGUMENT_PROGRESS_VALUE,100);
+   assertTrue(slider.performAccessibilityAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SET_PROGRESS.getId(),value));assertEquals(35,slider.getProgress());assertEquals(35,prefs.getInt("island_background_opacity",35));
+   required("island_restore").performClick();assertFalse(prefs.contains("island_hidden_token"));assertNoPermissionRequest();
+  }finally{new android.util.AtomicFile(journal).delete();}
+ }
+
 }

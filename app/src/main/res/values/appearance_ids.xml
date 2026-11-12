@@ -1,0 +1,4 @@
+<resources>
+ <item name="appearance_dialog_fonts" type="id"/>
+ <item name="appearance_dialog_font" type="id"/>
+</resources>

@@ -16,7 +16,6 @@ import android.widget.FrameLayout;
 import android.net.Uri;
 import java.io.InputStream;
 import java.io.ByteArrayOutputStream;
-import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -58,7 +57,7 @@ public final class ContactEditorActivity extends Activity {
  private int ink(){return dark()?Color.WHITE:0xFF202020;}
  private int surface(){return dark()?0xFF272727:Color.WHITE;}
  private int muted(){return dark()?0xFFAAAAAA:0xFF777777;}
- private int accent(){return dark()?0xFFE3C68A:0xFF987132;}
+ private int accent(){return "silver".equals(prefs.getString("accent","gold"))?(dark()?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark());}
  private String tr(String heb){return I18n.text(this,heb);}
  private TextView progress,saveButton;
  private int dp(float value){return (int)(getResources().getDisplayMetrics().density*value+.5f);}
@@ -67,7 +66,7 @@ public final class ContactEditorActivity extends Activity {
  }
  private TextView text(String value,int size,int color,boolean bold){
   TextView label=new TextView(this);label.setText(tr(value));label.setTextSize(size);label.setTextColor(color);
-  if(bold)label.setTypeface(Typeface.create("sans-serif-medium",Typeface.NORMAL));
+  AppAppearance.font(label,bold);
   return label;
  }
  @Override public void onCreate(Bundle b){
@@ -89,9 +88,10 @@ public final class ContactEditorActivity extends Activity {
   root.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);root.setBackgroundColor(background());
   setContentView(root);
   LinearLayout toolbar=new LinearLayout(this);toolbar.setGravity(Gravity.CENTER_VERTICAL);
-  toolbar.setPadding(dp(17),dp(9),dp(17),dp(9));root.addView(toolbar,new LinearLayout.LayoutParams(-1,dp(64)));
-  TextView close=text("✕",23,ink(),false);close.setGravity(Gravity.CENTER);
-  toolbar.addView(close,new LinearLayout.LayoutParams(dp(42),dp(43)));close.setOnClickListener(v->finish());
+  toolbar.setPadding(dp(17),dp(8),dp(17),dp(8));root.addView(toolbar,new LinearLayout.LayoutParams(-1,dp(64)));
+  ImageView close=new ImageView(this);close.setImageDrawable(AppAppearance.backArrow(this,ink()));close.setScaleType(ImageView.ScaleType.CENTER);
+  close.setContentDescription(tr("חזרה"));close.setFocusable(true);
+  toolbar.addView(close,new LinearLayout.LayoutParams(dp(48),dp(48)));close.setOnClickListener(v->finish());
   TextView title=text(contactId>0?"עריכת איש קשר":"איש קשר חדש",21,ink(),true);
   title.setPadding(dp(12),0,0,0);toolbar.addView(title,new LinearLayout.LayoutParams(0,-2,1));
   TextView mark=text("DA",15,accent(),true);toolbar.addView(mark);
@@ -153,7 +153,7 @@ public final class ContactEditorActivity extends Activity {
   nativeEdit.setOnClickListener(v->NativeContacts.open(this,contactId,(get("first")+" "+get("last")).trim(),get("phone0")));
   progress=text("",12,accent(),false);form.addView(progress);
   saveButton=text("שמירת איש הקשר",16,Color.WHITE,true);
-  saveButton.setGravity(Gravity.CENTER);saveButton.setBackground(shape(0xFF178F61,16));
+  saveButton.setGravity(Gravity.CENTER);saveButton.setBackground(shape(0xFF8F2D52,16));
   LinearLayout.LayoutParams sb=new LinearLayout.LayoutParams(-1,dp(57));sb.setMargins(dp(15),dp(7),dp(15),dp(13));
   root.addView(saveButton,sb);saveButton.setOnClickListener(v->save());
  }
@@ -166,7 +166,7 @@ public final class ContactEditorActivity extends Activity {
   EditText entry=new EditText(this);controls.put(key,entry);
   entry.setId(0x01000000 | (key.hashCode() & 0x00ffffff));
   entry.setSingleLine(!key.equals("notes"));entry.setHint(tr(hint));entry.setInputType(inputType);
-  entry.setTextSize(15);entry.setTextColor(ink());entry.setHintTextColor(muted());
+  entry.setTextSize(15);entry.setTextColor(ink());entry.setHintTextColor(muted());AppAppearance.font(entry,false);
   entry.setPadding(dp(13),dp(6),dp(13),dp(6));entry.setBackground(shape(surface(),13));
   LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(-1,dp(key.equals("notes")?97:52));
   params.bottomMargin=dp(8);parent.addView(entry,params);

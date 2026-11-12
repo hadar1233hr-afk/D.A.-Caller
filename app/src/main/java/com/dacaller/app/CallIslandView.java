@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.SystemClock;
+import android.view.MotionEvent;
+import android.view.ViewConfiguration;
 import android.graphics.drawable.GradientDrawable;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
@@ -25,6 +28,11 @@ final class CallIslandView extends FrameLayout {
   void onCollapse();
   void onAction(String action);
   void onOpen();
+  default void onHide(String token){}
+  default boolean draggable(){return false;}
+  default boolean onDragStart(String token){return false;}
+  default void onDragMove(String token,float dx,float dy){}
+  default void onDragEnd(String token,boolean cancelled){}
  }
  private final SharedPreferences prefs;
  private Listener listener;
@@ -35,6 +43,10 @@ final class CallIslandView extends FrameLayout {
  private int accent=0xFF64E69A;
  private int bodyTop=0xFF1B1B1D,bodyBottom=0xFF070708,edge=0xFF38383B;
  private long avatarBinding;
+ private String touchToken;
+ private float downX,downY;
+ private int pointerId;
+ private boolean tracking,dragging,consumeGesture,moveGesture;
 
  CallIslandView(Context context){
   super(context);
@@ -64,19 +76,20 @@ final class CallIslandView extends FrameLayout {
   return value.token+"/"+value.name+"/"+value.number+"/"+value.state+"/"+value.route+"/"+value.supportedRoutes
     +"/"+value.muted+"/"+value.canHold+"/"+value.canMute+"/"+value.contactId+"/"+value.connectedAtMillis+"/"+open
     +"/"+prefs.getString("language","he")+"/"+prefs.getString("island_style","apple")
-    +"/"+prefs.getString("island_size","compact")+"/"+prefs.getString("avatar_shape","circle")
+    +"/"+prefs.getInt("island_background_opacity",35)+"/"+prefs.getString("island_size","compact")+"/"+prefs.getString("avatar_shape","circle")
     +"/"+setting("island_show_timer",true)+"/"+setting("island_show_photo",true)
     +"/"+setting("island_animations",true)+"/"+setting("island_show_mute",true)
     +"/"+setting("island_show_speaker",true)+"/"+setting("island_show_hold",true);
  }
  void bind(CallIslandState next,boolean open){
-  if(next==null){state=null;rendered="";elapsed=null;++avatarBinding;removeAllViews();return;}
+  if(next==null){cancelGesture();state=null;rendered="";elapsed=null;++avatarBinding;removeAllViews();return;}
   String key=renderKey(next,open);state=next;
   if(rendered.equals(key)){tick(System.currentTimeMillis());return;}
+  cancelGesture();
   boolean morph=isLaidOut()&&!rendered.isEmpty()&&expanded!=open;
   rendered=key;expanded=open;elapsed=null;++avatarBinding;
   animate().cancel();setAlpha(1f);setScaleX(1f);setScaleY(1f);removeAllViews();
-  palette();setBackground(surface(open?31:100));setClipToOutline(true);
+  palette();setBackground(surface(open?31:100));setClipToOutline(true);setElevation(dp(transparent()?0:11));
   setLayoutDirection(I18n.isEnglish(getContext())?LAYOUT_DIRECTION_LTR:LAYOUT_DIRECTION_RTL);
   LinearLayout content=column();content.setGravity(Gravity.CENTER_VERTICAL);
   content.setPadding(dp(open?15:12),dp(open?10:4),dp(open?15:12),dp(open?10:4));
@@ -97,12 +110,15 @@ final class CallIslandView extends FrameLayout {
   String style=prefs.getString("island_style","apple");
   if("glass".equals(style)){bodyTop=0xFF30343D;bodyBottom=0xFF151920;edge=0xFF616671;accent=0xFF94F0BE;}
   else if("emerald".equals(style)){bodyTop=0xFF194C3C;bodyBottom=0xFF071D17;edge=0xFF42614C;accent=0xFFE6CA85;}
+  else if("transparent".equals(style)){bodyTop=0xFF17191D;bodyBottom=0xFF111318;edge=0xFFBBC1CC;accent=AppAppearance.gold(true);}
   else{bodyTop=0xFF1B1B1D;bodyBottom=0xFF070708;edge=0xFF38383B;accent=0xFF64E69A;}
  }
+ private boolean transparent(){return "transparent".equals(prefs.getString("island_style","apple"));}
+ private int backgroundAlpha(int color){return transparent()?(color&0x00FFFFFF)|(Math.round(Math.max(0,Math.min(100,prefs.getInt("island_background_opacity",35)))*2.55f)<<24):color;}
  private boolean motion(){return setting("island_animations",true)&&ValueAnimator.areAnimatorsEnabled();}
  private GradientDrawable surface(float radius){
-  GradientDrawable drawable=new GradientDrawable(GradientDrawable.Orientation.TL_BR,new int[]{bodyTop,bodyBottom});
-  drawable.setCornerRadius(dp(radius));drawable.setStroke(dp(1),edge);return drawable;
+  GradientDrawable drawable=new GradientDrawable(GradientDrawable.Orientation.TL_BR,new int[]{backgroundAlpha(bodyTop),backgroundAlpha(bodyBottom)});
+  drawable.setCornerRadius(dp(radius));drawable.setStroke(dp(1),backgroundAlpha(edge));return drawable;
  }
  private GradientDrawable shape(int color,float radius){
   GradientDrawable drawable=new GradientDrawable();drawable.setColor(color);drawable.setCornerRadius(dp(radius));return drawable;
@@ -111,7 +127,8 @@ final class CallIslandView extends FrameLayout {
  private LinearLayout row(){LinearLayout view=new LinearLayout(getContext());view.setGravity(Gravity.CENTER_VERTICAL);return view;}
  private TextView text(String value,float size,int color,boolean strong){
   TextView view=new TextView(getContext());view.setText(value);view.setTextSize(size);view.setTextColor(color);
-  view.setTypeface(Typeface.create(strong?"sans-serif-medium":"sans-serif",Typeface.NORMAL));
+  AppAppearance.font(view,strong);
+  if(transparent()){view.setBackground(shape(0xE6111318,5));view.setPadding(dp(2),0,dp(2),0);}
   view.setIncludeFontPadding(false);view.setGravity(Gravity.CENTER_VERTICAL);return view;
  }
  private ImageView icon(int resource,int color){
@@ -172,13 +189,14 @@ final class CallIslandView extends FrameLayout {
    elapsed=clock();LinearLayout.LayoutParams time=new LinearLayout.LayoutParams(-2,-2);time.setMarginStart(dp(8));line.addView(elapsed,time);
   }
   IslandWaveformView bars=new IslandWaveformView(getContext());bars.setTag("island-activity");
+  if(transparent())bars.setBackground(shape(0xCC111318,8));
   bars.configure(value.state==Call.STATE_HOLDING?0xFFFFCA6B:accent,motion(),value.state==Call.STATE_HOLDING);
   LinearLayout.LayoutParams waveform=new LinearLayout.LayoutParams(dp(20),dp(24));waveform.setMarginStart(dp(9));line.addView(bars,waveform);
   line.setContentDescription(identity(value)+". "+phase(value)+". "+tr("הרחבת פקדי שיחה","Expand call controls"));
   line.setOnClickListener(v->expand(token));line.setOnLongClickListener(v->{open(token);return true;});
  }
  private void expanded(LinearLayout content,CallIslandState value,String token){
-  LinearLayout header=row();content.addView(header,new LinearLayout.LayoutParams(-1,-2));
+  LinearLayout header=row();header.setTag("island-header");content.addView(header,new LinearLayout.LayoutParams(-1,-2));
   addAvatar(header,value,40);
   LinearLayout copy=column();header.addView(copy,new LinearLayout.LayoutParams(0,-2,1));
   TextView name=text(identity(value),16,Color.WHITE,true);name.setTag("island-caller");
@@ -190,7 +208,7 @@ final class CallIslandView extends FrameLayout {
   if(setting("island_show_timer",true)&&running(value)&&value.connectedAtMillis>0){
    elapsed=clock();LinearLayout.LayoutParams time=new LinearLayout.LayoutParams(-2,-2);time.setMarginStart(dp(6));detail.addView(elapsed,time);
   }
-  ImageView chevron=icon(R.drawable.ic_call_chevron,0xFFC7CACE);chevron.setRotation(180);chevron.setPadding(dp(13),dp(13),dp(13),dp(13));
+  ImageView chevron=new ImageView(getContext());chevron.setImageDrawable(AppAppearance.chevron(getContext(),true,0xFFC7CACE));chevron.setPadding(dp(13),dp(13),dp(13),dp(13));
   chevron.setTag("island-collapse");chevron.setContentDescription(tr("צמצום האי","Collapse island"));
   chevron.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);chevron.setBackground(shape(0x112D3034,24));
   LinearLayout.LayoutParams close=new LinearLayout.LayoutParams(dp(48),dp(48));close.setMarginStart(dp(5));header.addView(chevron,close);
@@ -231,11 +249,14 @@ final class CallIslandView extends FrameLayout {
   title.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
   title.setSingleLine(true);title.setEllipsize(TextUtils.TruncateAt.END);LinearLayout.LayoutParams titleParams=new LinearLayout.LayoutParams(0,-2,1);
   titleParams.setMarginStart(dp(8));titleParams.setMarginEnd(dp(8));full.addView(title,titleParams);
-  TextView arrow=text(I18n.isEnglish(getContext())?"↗":"↖",18,accent,false);arrow.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
-  full.addView(arrow,new LinearLayout.LayoutParams(dp(22),ViewGroup.LayoutParams.WRAP_CONTENT));
+  ImageView arrow=new ImageView(getContext());arrow.setImageDrawable(AppAppearance.forwardArrow(getContext(),accent));arrow.setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
+  full.addView(arrow,new LinearLayout.LayoutParams(dp(22),dp(22)));
   full.setContentDescription(tr("חזרה למסך השיחה המלא","Return to full call screen"));
   full.setOnClickListener(v->open(token));
   LinearLayout.LayoutParams fullParams=new LinearLayout.LayoutParams(-1,-2);fullParams.topMargin=dp(6);content.addView(full,fullParams);
+  TextView hide=text(tr("הסתרה לשיחה זו","Hide for this call"),12,0xFFE3E7EC,true);hide.setTag("island-hide");hide.setGravity(Gravity.CENTER);hide.setMinimumHeight(dp(48));
+  hide.setContentDescription(tr("הסתרת האי לשיחה זו. להצגה מחדש: הגדרות, אי שיחה דינמי, הצגת האי מחדש.","Hide island for this call. Restore in Settings, Dynamic call island, Show island again."));
+  hide.setOnClickListener(v->{if(bound(token)&&listener!=null)listener.onHide(token);});content.addView(hide,new LinearLayout.LayoutParams(-1,-2));
  }
  private View control(String token,String action,int resource,String label,String description,int color,int tint,int diameter){
   LinearLayout slot=column();slot.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL);slot.setPadding(dp(2),0,dp(2),0);
@@ -257,7 +278,49 @@ final class CallIslandView extends FrameLayout {
    elapsed.setText(value);elapsed.setContentDescription(tr("משך השיחה: ","Call duration: ")+value);
   }
  }
- @Override protected void onDetachedFromWindow(){animate().cancel();super.onDetachedFromWindow();}
+ /** Start with ordinary child dispatch. Crossing touch slop cancels that child before moving. */
+ @Override public boolean dispatchTouchEvent(MotionEvent event){
+  int action=event.getActionMasked();
+  if(action==MotionEvent.ACTION_DOWN){
+   cancelGesture();consumeGesture=false;tracking=state!=null;dragging=false;touchToken=state==null?null:state.token;
+   downX=event.getRawX();downY=event.getRawY();pointerId=event.getPointerId(0);moveGesture=listener!=null&&listener.draggable();
+   // An overflowing external surface still scrolls its controls; its header remains draggable.
+   if(getParent() instanceof android.widget.ScrollView){
+    android.widget.ScrollView scroll=(android.widget.ScrollView)getParent();View header=findViewWithTag("island-header");
+    if(scroll.getHeight()>0&&getHeight()>scroll.getHeight()&&header!=null){
+     android.graphics.Rect rect=new android.graphics.Rect();header.getDrawingRect(rect);offsetDescendantRectToMyCoords(header,rect);
+     if(event.getY()>rect.bottom)moveGesture=false;
+    }
+   }
+   if(moveGesture&&getParent()!=null)getParent().requestDisallowInterceptTouchEvent(true);
+  }else if(action==MotionEvent.ACTION_POINTER_DOWN){cancelGesture();consumeGesture=true;return true;}
+  if(consumeGesture){if(action==MotionEvent.ACTION_UP||action==MotionEvent.ACTION_CANCEL)consumeGesture=false;return true;}
+  if(tracking&&(!bound(touchToken)||event.getPointerId(0)!=pointerId)){cancelGesture();consumeGesture=action!=MotionEvent.ACTION_UP;return true;}
+  if(tracking&&moveGesture&&action==MotionEvent.ACTION_MOVE){
+   float dx=event.getRawX()-downX,dy=event.getRawY()-downY;
+   int slop=ViewConfiguration.get(getContext()).getScaledTouchSlop();
+   if(!dragging&&dx*dx+dy*dy>slop*slop&&listener!=null&&listener.onDragStart(touchToken)){
+    dragging=true;MotionEvent cancel=MotionEvent.obtain(event);cancel.setAction(MotionEvent.ACTION_CANCEL);super.dispatchTouchEvent(cancel);cancel.recycle();
+    if(getParent()!=null)getParent().requestDisallowInterceptTouchEvent(true);
+   }
+   if(dragging){listener.onDragMove(touchToken,dx,dy);return true;}
+  }
+  if(action==MotionEvent.ACTION_UP||action==MotionEvent.ACTION_CANCEL){
+   if(getParent()!=null)getParent().requestDisallowInterceptTouchEvent(false);
+   boolean moved=dragging;String owned=touchToken;tracking=false;dragging=false;touchToken=null;
+   if(moved){if(listener!=null)listener.onDragEnd(owned,action==MotionEvent.ACTION_CANCEL);return true;}
+  }
+  return super.dispatchTouchEvent(event);
+ }
+ private void cancelGesture(){
+  if(!tracking)return;
+  if(getParent()!=null)getParent().requestDisallowInterceptTouchEvent(false);
+  String owned=touchToken;boolean moved=dragging;tracking=false;dragging=false;touchToken=null;consumeGesture=true;
+  MotionEvent cancel=MotionEvent.obtain(SystemClock.uptimeMillis(),SystemClock.uptimeMillis(),MotionEvent.ACTION_CANCEL,0,0,0);
+  super.dispatchTouchEvent(cancel);cancel.recycle();
+  if(moved&&listener!=null)listener.onDragEnd(owned,true);
+ }
+ @Override protected void onDetachedFromWindow(){cancelGesture();animate().cancel();super.onDetachedFromWindow();}
 
  /** A 48dp control never shrinks to fit a narrow phone: extra controls wrap. */
  private final class AdaptiveControls extends ViewGroup {

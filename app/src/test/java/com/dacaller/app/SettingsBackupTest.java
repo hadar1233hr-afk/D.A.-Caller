@@ -17,8 +17,9 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
+import org.robolectric.annotation.SQLiteMode;
 
-@RunWith(RobolectricTestRunner.class) @Config(sdk=33)
+@RunWith(RobolectricTestRunner.class) @Config(sdk=33) @SQLiteMode(SQLiteMode.Mode.NATIVE)
 public final class SettingsBackupTest {
  private SharedPreferences prefs;
  @Before public void setup(){prefs=RuntimeEnvironment.getApplication().getSharedPreferences("da_caller",Context.MODE_PRIVATE);prefs.edit().clear().commit();}
@@ -52,6 +53,23 @@ public final class SettingsBackupTest {
   assertEquals("Legacy sparse backup must preserve choices absent from its file","emerald",prefs.getString("island_style",null));
   assertFalse(prefs.getBoolean("island_enabled",true));
   assertTrue(prefs.getBoolean("island_outside_app",false));
+ }
+ @Test public void positionedTransparentIslandBackupUsesInclusiveBoundsAndExcludesTransientHiddenCallToken()throws Exception{
+  SettingsBackup.Snapshot defaults=SettingsBackup.capture(prefs);
+  assertEquals(35,defaults.values.get("island_background_opacity"));assertEquals("below",defaults.values.get("island_position_mode"));
+  assertEquals(false,defaults.values.get("island_position_set"));assertEquals(5000,defaults.values.get("island_position_x"));assertEquals(0,defaults.values.get("island_position_y"));
+  for(int bound:new int[]{0,100}){
+   prefs.edit().putString("island_style","transparent").putInt("island_background_opacity",bound).putString("island_position_mode","status_area")
+     .putBoolean("island_position_set",true).putInt("island_position_x",bound==0?0:10000).putInt("island_position_y",bound==0?10000:0)
+     .putString("island_hidden_token","synthetic-current-call-only").commit();
+   String encoded=new String(SettingsBackup.encode(SettingsBackup.capture(prefs)),StandardCharsets.UTF_8);assertFalse(encoded.contains("island_hidden_token"));
+   SettingsBackup.Snapshot parsed=SettingsBackup.decode(encoded.getBytes(StandardCharsets.UTF_8));assertEquals("transparent",parsed.values.get("island_style"));
+   assertEquals(bound,parsed.values.get("island_background_opacity"));assertEquals(bound==0?0:10000,parsed.values.get("island_position_x"));
+   assertTrue(SettingsBackup.restore(prefs,SettingsBackup.decode(file("{\"dark\":true}")),id->true));assertEquals("status_area",prefs.getString("island_position_mode",null));
+  }
+  for(String settings:new String[]{"{\"island_background_opacity\":-1}","{\"island_background_opacity\":101}","{\"island_position_x\":-1}","{\"island_position_y\":10001}","{\"island_position_mode\":\"protected_systemui\"}","{\"island_hidden_token\":\"untrusted\"}"}){
+   try{SettingsBackup.decode(file(settings));fail(settings);}catch(IOException expected){}
+  }
  }
  @Test public void exportNeverIncludesPermissionsRuntimeFlagsOrLauncherInstanceBindings()throws Exception{
   prefs.edit().putBoolean("role_prompted",true).putBoolean("notifications_prompted",true)

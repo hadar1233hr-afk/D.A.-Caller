@@ -72,6 +72,8 @@ public class CallScreenActivityTest {
   }catch(ReflectiveOperationException e){throw new AssertionError(e);}
   ViewGroup root=(ViewGroup)activity.findViewById(android.R.id.content);
   assertNotNull(root);
+  assertTrue("emergency UI must retain the actual call phase",hasText(root,"Dialing…"));
+  assertFalse("emergency UI still carries app branding",hasText(root,"DA CALLER · Dialing…"));
   assertNotNull("emergency UI must retain accessible end action",find(activity,"End call"));
   assertFalse("end label is TalkBack-only",hasText(root,"End call"));
   find(activity,"End call").performClick();verify(call).disconnect();

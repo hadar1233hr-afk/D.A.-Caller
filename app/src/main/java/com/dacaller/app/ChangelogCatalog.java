@@ -26,7 +26,15 @@ final class ChangelogCatalog {
  // Version boundaries and notes are grounded in app/build.gradle history and
  // docs/DA_CALLER_{VISUAL_VERIFICATION,PERSONALIZATION_VERIFICATION,DYNAMIC_ISLAND}.
  private static final List<Entry> ENTRIES=Collections.unmodifiableList(Arrays.asList(
-  new Entry("0.13.0","בתי עסק בחיפוש נפרד","A separate business search",
+  new Entry("0.13.0","עיצוב, אי שיחה וגיבוי משופר","Refined interface, call island and backup",
+   change("פעולות שיחה נפתחות בתוך השורה בשיחות האחרונות, לצד סיכום ומועדפים בעיצוב חדש. לוח החיוג בסרגל התחתון והגדרות למעלה משמאל.",
+    "Recent-call actions expand within their row, with refreshed summary and favorites. The dialpad is in bottom navigation and Settings at top left."),
+   change("גופן עברי ואנגלי עגול ומודגש יותר, מתגי יין מודרניים, סמלים נוספים וזהב בהיר יותר. מסכי השיחה ללא כיתוב מיותר ועיצוב Nothing ממורכז.",
+    "Rounded, heavier Hebrew and English text, wine capsule switches, more launcher icons and brighter gold. Cleaner call screens and a centered Nothing layout."),
+   change("גרירת אי השיחה, הסתרה זמנית והחזרה מההגדרות, ועיצוב שקוף עם בחירת שקיפות. מיקום אופציונלי באזור שורת המצב היכן שנתמך; ביישומים אחרים נשמר מיקום בטוח מתחת לשורת המערכת.",
+    "Drag the call island, hide it temporarily and restore it from Settings, or choose a transparent style and opacity. Optional status-area placement where supported; other apps retain safe placement below protected SystemUI."),
+   change("בחירה לכלול גם את רשומות ארכיון השיחות באותו קובץ גיבוי. שחזור הארכיון הוא אופציונלי, ממזג רשומות ושומר נתונים קיימים.",
+    "Optionally include call-archive records in the same settings backup. Archive restoration is opt-in and merges records while keeping existing data."),
    change("חיפוש מקומי של בתי עסק ושירותים ציבוריים בלשונית נפרדת מאנשי הקשר; החיוג מתחיל רק בלחיצה מפורשת.",
     "Offline business and public-service search in a separate Contacts tab. A call starts only after an explicit tap."),
    change("לכל רשומה מוצגים המקור, הרישיון ותאריך המקור. הנתונים מבוססים על קובץ OpenStreetMap מ־3 בנובמבר 2026; חלק מפרטי המקור ישנים יותר.",

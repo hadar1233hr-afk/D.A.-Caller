@@ -10,6 +10,10 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.SystemClock;
+import android.view.MotionEvent;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.view.View;
@@ -84,6 +88,7 @@ public class CallIslandControllerTest {
  private SharedPreferences prefs;
  private FakeSession session;
  private CallIslandController island;
+ private int viewportWidth=480,viewportHeight=854;
  @Before public void setUp(){
   prefs=RuntimeEnvironment.getApplication().getSharedPreferences("da_caller",Context.MODE_PRIVATE);
   prefs.edit().clear().putString("language","en").putBoolean("haptics",false)
@@ -105,8 +110,8 @@ public class CallIslandControllerTest {
  private void layout(){
   for(int i=0;i<3;i++){
    shadowOf(Looper.getMainLooper()).idle();FrameLayout content=content();
-   content.measure(View.MeasureSpec.makeMeasureSpec(480,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(854,View.MeasureSpec.EXACTLY));
-   content.layout(0,0,480,854);content.getViewTreeObserver().dispatchOnGlobalLayout();
+   content.measure(View.MeasureSpec.makeMeasureSpec(viewportWidth,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(viewportHeight,View.MeasureSpec.EXACTLY));
+   content.layout(0,0,viewportWidth,viewportHeight);content.getViewTreeObserver().dispatchOnGlobalLayout();
   }
   shadowOf(Looper.getMainLooper()).idle();
  }
@@ -182,4 +187,92 @@ public class CallIslandControllerTest {
   island.start();layout();assertEquals(before+1,listeners.size());island.stop();layout();assertEquals(before,listeners.size());
   assertTrue(session.executed.isEmpty());
  }
+ private void pointer(View view,int action,float x,float y){
+  MotionEvent event=MotionEvent.obtain(SystemClock.uptimeMillis(),SystemClock.uptimeMillis(),action,x,y,0);view.dispatchTouchEvent(event);event.recycle();
+ }
+ @Test public void realPointerDragPersistsAClampedPositionAndRestoresUnderneathWithoutCallCommands(){
+  island.start();layout();View capsule=tag("island-root");int oldY=capsule.getTop();
+  pointer(capsule,MotionEvent.ACTION_DOWN,60,25);pointer(capsule,MotionEvent.ACTION_MOVE,120,325);pointer(capsule,MotionEvent.ACTION_UP,120,325);layout();
+  assertTrue(prefs.getBoolean(CallIslandPosition.SET,false));assertTrue(tag("island-root").getTop()>oldY);assertOriginalMargins(11);
+  int y=tag("island-root").getTop();island.stop();layout();island.start();layout();assertEquals(y,tag("island-root").getTop());
+  assertEquals("Original query",host.query.getText().toString());assertTrue(session.executed.isEmpty());
+ }
+ @Test public void cancelledAndStaleDragsDoNotSaveOrControlAReplacementCall(){
+  island.start();layout();View capsule=tag("island-root");int top=capsule.getTop();
+  pointer(capsule,MotionEvent.ACTION_DOWN,60,25);pointer(capsule,MotionEvent.ACTION_MOVE,120,325);pointer(capsule,MotionEvent.ACTION_CANCEL,120,325);layout();
+  assertFalse(prefs.getBoolean(CallIslandPosition.SET,false));assertEquals(top,tag("island-root").getTop());
+  pointer(capsule,MotionEvent.ACTION_DOWN,60,25);pointer(capsule,MotionEvent.ACTION_MOVE,120,325);
+  session.state=active("replacement","Alex");PhoneSessionService.notifyViews();layout();
+  assertEquals("An arriving call discards the old in-flight location before UP",top,tag("island-root").getTop());
+  pointer(capsule,MotionEvent.ACTION_UP,120,325);layout();
+  assertFalse(prefs.getBoolean(CallIslandPosition.SET,false));assertEquals("replacement",session.state.token);assertTrue(session.executed.isEmpty());
+ }
+ @Test public void hideIsScopedToThisCallAndRestorePreferenceIsReachableWithoutChangingCall(){
+  island.start();layout();expand();click("island-hide");assertFalse(visibleIsland());assertOriginalMargins(11);
+  assertEquals("original-call",prefs.getString("island_hidden_token",""));assertNotNull(session.state);assertTrue(session.executed.isEmpty());
+  island.stop();island.start();layout();assertFalse(visibleIsland());
+  prefs.edit().remove("island_hidden_token").commit();layout();assertTrue(visibleIsland());
+  island.onHide("original-call");layout();assertFalse(visibleIsland());
+  session.state=active("new-call","Alex");PhoneSessionService.notifyViews();layout();assertTrue(visibleIsland());assertTrue(session.executed.isEmpty());
+ }
+ @Test public void topAreaUsesOnlyNormalDecorAndRestoresStatusBarColorAndDefaultParent(){
+  int originalColor=0xFF3B4168;host.getWindow().setStatusBarColor(originalColor);
+  prefs.edit().putString(CallIslandPosition.MODE,"status_area").commit();island.start();layout();
+  View decor=host.getWindow().getDecorView();View capsule=decor.findViewWithTag("island-root");assertNotNull(capsule);assertSame(decor,capsule.getParent());
+  assertEquals(android.graphics.Color.TRANSPARENT,host.getWindow().getStatusBarColor());assertNull(content().findViewWithTag("island-root"));
+  assertTrue(session.executed.isEmpty());island.stop();assertEquals(originalColor,host.getWindow().getStatusBarColor());assertOriginalMargins(11);
+  prefs.edit().putString(CallIslandPosition.MODE,"below").commit();island.start();layout();assertSame(content(),tag("island-root").getParent());
+  assertEquals(originalColor,host.getWindow().getStatusBarColor());
+ }
+
+ @Test public void topAreaSurvivesHostPaletteAndFocusRepaintAndRestoresTheLatestHostColor(){
+  host.getWindow().setStatusBarColor(0xFF3B4168);
+  prefs.edit().putString(CallIslandPosition.MODE,"status_area").commit();island.start();layout();
+  int nextPageColor=0xFF142936;host.getWindow().setStatusBarColor(nextPageColor);
+  content().getViewTreeObserver().dispatchOnPreDraw();
+  assertEquals(android.graphics.Color.TRANSPARENT,host.getWindow().getStatusBarColor());
+  island.onHide("original-call");assertEquals(nextPageColor,host.getWindow().getStatusBarColor());
+  int hiddenPageColor=0xFF5B1327;host.getWindow().setStatusBarColor(hiddenPageColor);
+  content().getViewTreeObserver().dispatchOnPreDraw();assertEquals(hiddenPageColor,host.getWindow().getStatusBarColor());
+  assertTrue(session.executed.isEmpty());
+ }
+
+ @Test @Config(sdk=26) public void topAreaWorksOnTheMinimumApiWithoutCallingNewInsetsApis(){
+  int color=0xFF3B4168;host.getWindow().setStatusBarColor(color);
+  prefs.edit().putString(CallIslandPosition.MODE,"status_area").commit();island.start();layout();
+  assertNotNull(host.getWindow().getDecorView().findViewWithTag("island-root"));
+  assertEquals(android.graphics.Color.TRANSPARENT,host.getWindow().getStatusBarColor());
+  island.stop();assertEquals(color,host.getWindow().getStatusBarColor());assertTrue(session.executed.isEmpty());
+ }
+
+ @Test public void resizedViewportImmediatelyReclampsWidthAndScrollsOverflowOnlyWhileNeeded(){
+  island.start();layout();expand();
+  assertSame(content(),tag("island-root").getParent());
+  viewportWidth=240;viewportHeight=148;layout();
+  View capsule=tag("island-root");assertTrue(capsule.getParent() instanceof android.widget.ScrollView);
+  android.widget.ScrollView scroll=(android.widget.ScrollView)capsule.getParent();
+  assertTrue(scroll.getLeft()>=0);assertTrue(scroll.getRight()<=viewportWidth);assertTrue(scroll.getTop()>=0);assertTrue(scroll.getBottom()<=viewportHeight);
+  assertTrue(capsule.getHeight()>scroll.getHeight());
+  scroll.scrollTo(0,capsule.getHeight());layout();
+  View hide=tag("island-hide");Rect bounds=new Rect(0,0,hide.getWidth(),hide.getHeight());content().offsetDescendantRectToMyCoords(hide,bounds);
+  assertTrue("The last expanded control stays reachable: "+bounds,bounds.top>=0&&bounds.bottom<=viewportHeight);
+  viewportWidth=854;viewportHeight=480;layout();
+  assertSame("A normal viewport retains the original direct capsule",content(),tag("island-root").getParent());
+  assertTrue(session.executed.isEmpty());
+ }
+
+ @Test public void seeThroughStyleCompositesTheActualHostPageAndKeepsItsControlsOpaque(){
+  int backdrop=0xFF4386BC;host.page.setBackgroundColor(backdrop);
+  prefs.edit().putString("island_style","transparent").putInt("island_background_opacity",0)
+    .putBoolean(CallIslandPosition.SET,true).putInt(CallIslandPosition.X,5000).putInt(CallIslandPosition.Y,5000).commit();
+  island.start();layout();View capsule=tag("island-root");
+  int sampleX=capsule.getLeft()+capsule.getWidth()/2,sampleY=capsule.getBottom()-2;
+  android.graphics.Bitmap frame=android.graphics.Bitmap.createBitmap(viewportWidth,viewportHeight,android.graphics.Bitmap.Config.ARGB_8888);
+  content().draw(new android.graphics.Canvas(frame));assertEquals(backdrop,frame.getPixel(sampleX,sampleY));
+  assertEquals(1f,capsule.getAlpha(),0f);assertNotNull(tag("island-caller").getBackground());
+  prefs.edit().putInt("island_background_opacity",100).commit();layout();
+  content().draw(new android.graphics.Canvas(frame));assertNotEquals(backdrop,frame.getPixel(sampleX,sampleY));frame.recycle();
+  assertTrue(session.executed.isEmpty());
+ }
+
 }

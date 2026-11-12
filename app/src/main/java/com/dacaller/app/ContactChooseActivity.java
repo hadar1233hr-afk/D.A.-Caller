@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -33,7 +32,7 @@ public final class ContactChooseActivity extends Activity {
  private int bg(){return getSharedPreferences("da_caller",0).getBoolean("amoled",false)?Color.BLACK:dark()?0xFF141414:0xFFF7F7F5;}
  private int ink(){return dark()?Color.WHITE:0xFF1A1A1A;}
  private int muted(){return dark()?0xFFAEAEAE:0xFF777777;}
- private int accent(){return dark()?0xFFE2C48B:0xFF95662A;}
+ private int accent(){return "silver".equals(getSharedPreferences("da_caller",0).getString("accent","gold"))?(dark()?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark());}
  private String tr(String s){return I18n.text(this,s);}
  private int dp(int n){return (int)(getResources().getDisplayMetrics().density*n+.5f);}
  @Override public void onCreate(Bundle b){
@@ -46,18 +45,18 @@ public final class ContactChooseActivity extends Activity {
   setContentView(root);
   TextView title=new TextView(this);title.setText(tr("הוספה לאיש קשר קיים"));
   title.setTextSize(20);title.setTextColor(accent());
-  title.setTypeface(Typeface.create("sans-serif-medium",Typeface.NORMAL));
+  AppAppearance.font(title,true);
   root.addView(title,new LinearLayout.LayoutParams(-1,dp(43)));
   EditText query=new EditText(this);
   query.setSingleLine(true);query.setHint(tr("חיפוש שם או מספר"));
   query.setTextColor(ink());query.setHintTextColor(muted());
-  query.setTextSize(16);root.addView(query,new LinearLayout.LayoutParams(-1,dp(53)));
+  query.setTextSize(16);AppAppearance.font(query,false);root.addView(query,new LinearLayout.LayoutParams(-1,dp(53)));
   ListView list=new ListView(this);list.setDividerHeight(dp(1));
   root.addView(list,new LinearLayout.LayoutParams(-1,0,1));
   adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,new ArrayList<String>()){
    @Override public android.view.View getView(int position,android.view.View convert,android.view.ViewGroup parent){
     TextView label=(TextView)super.getView(position,convert,parent);
-    label.setTextColor(ink());label.setTextSize(16);label.setMinimumHeight(dp(56));return label;
+    label.setTextColor(ink());label.setTextSize(16);AppAppearance.font(label,false);label.setMinimumHeight(dp(56));return label;
    }
   };
   list.setAdapter(adapter);

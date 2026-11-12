@@ -52,7 +52,7 @@ final class BusinessDirectoryView implements AutoCloseable {
  private String query="",loadedQuery="";private int offset,position,top,generation;private long firstId=-1;
  private boolean closed,active,loading,touching,scrolling;
  private EditText searchField;
- private ResultsList list;private TextView status,empty,previous,next,details;
+ private ResultsList list;private TextView status,empty,previous,next,details;private android.widget.FrameLayout emptyHeader;
  private DirectoryAdapter adapter;private BusinessDirectory.Page page;
  private Runnable filter;private AlertDialog dialog;
  BusinessDirectoryView(Activity host,Runnable personal,Consumer<String> call){this(host,personal,call,BusinessDirectory::search,IO);}
@@ -68,12 +68,12 @@ final class BusinessDirectoryView implements AutoCloseable {
  private int surface(){return prefs.getBoolean("amoled",false)?0xFF090909:dark()?0xFF1D1D1D:Color.WHITE;}
  private int ink(){return dark()?0xFFF7F7F7:0xFF181818;}
  private int muted(){return dark()?0xFFB5BBB6:0xFF646D66;}
- private int gold(){return dark()?0xFFE5C987:0xFF805B27;}
+ private int gold(){return AppAppearance.gold(dark());}
  private GradientDrawable shape(int color,int radius){GradientDrawable value=new GradientDrawable();value.setColor(color);value.setCornerRadius(dp(radius));return value;}
  private TextView text(String value,int size,boolean bold,int color){
   TextView view=new TextView(host);view.setText(value);view.setTextSize(size);view.setTextColor(color);
   view.setGravity(Gravity.START|Gravity.CENTER_VERTICAL);view.setTextDirection(View.TEXT_DIRECTION_FIRST_STRONG);
-  view.setTypeface(Typeface.create(bold?"sans-serif-medium":"sans-serif",Typeface.NORMAL));return view;
+  AppAppearance.font(view,bold);return view;
  }
  private LinearLayout vertical(){LinearLayout view=new LinearLayout(host);view.setOrientation(LinearLayout.VERTICAL);return view;}
  private LinearLayout horizontal(){LinearLayout view=new LinearLayout(host);view.setGravity(Gravity.CENTER_VERTICAL);return view;}
@@ -101,18 +101,22 @@ final class BusinessDirectoryView implements AutoCloseable {
   tabs.addView(businesses,new LinearLayout.LayoutParams(0,-1,1));
   EditText search=new EditText(host);searchField=search;search.setTag("business_directory_search");search.setSingleLine(true);
   search.setHint(tr("חיפוש עסק, יישוב או מספר","Search business, city or number"));search.setTextSize(14);
+  AppAppearance.font(search,false);
   search.setTextColor(ink());search.setHintTextColor(muted());search.setPadding(dp(12),0,dp(12),0);
   search.setBackground(shape(surface(),13));search.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
   search.setFilters(new InputFilter[]{new InputFilter.LengthFilter(BusinessDirectory.MAX_QUERY_LENGTH)});search.setText(query);
   root.addView(search,new LinearLayout.LayoutParams(-1,dp(48)));
-  status=text(tr("טוען את מאגר העסקים…","Loading business directory…"),10,false,muted());status.setTag("business_directory_status");
-  status.setSingleLine(true);status.setEllipsize(TextUtils.TruncateAt.END);status.setPadding(dp(4),dp(2),dp(4),dp(2));
-  root.addView(status,new LinearLayout.LayoutParams(-1,dp(25)));
+  status=text(tr("טוען את מאגר העסקים…","Loading business directory…"),12,false,muted());status.setTag("business_directory_status");
+  status.setMaxLines(2);status.setPadding(dp(4),dp(2),dp(4),dp(2));status.setMinimumHeight(dp(48));
+  status.setContentDescription(tr("פרטי המקור, הייחוס והרישיון של מאגר העסקים","Business data source, attribution and license"));
+  action(status,this::showDataset);root.addView(status,new LinearLayout.LayoutParams(-1,dp(48)));
   list=new ResultsList();ListView current=list;list.setTag("call-island-page-list");
   list.setDivider(null);list.setSelector(android.R.color.transparent);list.setItemsCanFocus(true);list.setCacheColorHint(Color.TRANSPARENT);
   list.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
   empty=text("",14,false,muted());empty.setTag("business_directory_empty");empty.setPadding(dp(16),dp(22),dp(16),dp(22));empty.setGravity(Gravity.CENTER);empty.setMinimumHeight(dp(90));
-  list.addHeaderView(empty,null,false);
+  emptyHeader=new android.widget.FrameLayout(host);emptyHeader.setTag("business_directory_empty_header");
+  emptyHeader.setLayoutParams(new AbsListView.LayoutParams(-1,0));empty.setVisibility(View.GONE);
+  emptyHeader.addView(empty,new android.widget.FrameLayout.LayoutParams(-1,-2));list.addHeaderView(emptyHeader,null,false);
   LinearLayout footer=horizontal();footer.setTag("business_directory_pagination");
   previous=button(tr("הקודם","Previous"),()->changePage(Math.max(0,offset-BusinessDirectory.PAGE_SIZE)));previous.setTag("business_directory_previous");
   details=button(tr("פרטי המאגר","About data"),this::showDataset);details.setTag("business_directory_about");
@@ -166,6 +170,7 @@ final class BusinessDirectoryView implements AutoCloseable {
   previous.setEnabled(available&&offset>0);next.setEnabled(available&&result.hasMore);details.setEnabled(available&&result.manifest!=null);
   previous.setAlpha(previous.isEnabled()?1f:.35f);next.setAlpha(next.isEnabled()?1f:.35f);
   empty.setVisibility(result.entries.isEmpty()?View.VISIBLE:View.GONE);
+  emptyHeader.setLayoutParams(new AbsListView.LayoutParams(-1,result.entries.isEmpty()?-2:0));emptyHeader.requestLayout();
   if(!available){
    status.setText(tr("מאגר עסקים מקומי אינו זמין","Local business directory unavailable"));
    empty.setText(result.status==BusinessDirectory.Status.MISSING?
@@ -173,8 +178,10 @@ final class BusinessDirectoryView implements AutoCloseable {
     tr("לא ניתן לקרוא את מאגר העסקים המקומי. אפשר להמשיך להשתמש באנשי הקשר שלך.","The local business directory cannot be read. Your personal contacts remain available."));
   }else{
    BusinessDirectory.Manifest metadata=result.manifest;
-   String source=android.text.BidiFormatter.getInstance(!english()).unicodeWrap(metadata.sourceName);
-   status.setText(tr("מקור: ","Source: ")+source+" · "+NumberFormat.getIntegerInstance(english()?Locale.ENGLISH:new Locale("he","IL")).format(metadata.recordCount));
+   String count=NumberFormat.getIntegerInstance(english()?Locale.ENGLISH:new Locale("he","IL")).format(metadata.recordCount);
+   boolean osm=metadata.sourceName.contains("OpenStreetMap");
+   String source=android.text.BidiFormatter.getInstance(!english()).unicodeWrap(osm?"OpenStreetMap":metadata.sourceName);
+   status.setText(count+tr(" רשומות · "," records · ")+source+(osm?"\n© OpenStreetMap contributors":""));
    empty.setText(query.trim().isEmpty()?tr("אין רשומות במאגר הזה.","This dataset contains no records."):tr("לא נמצאו עסקים לחיפוש הזה.","No businesses match this search."));
   }
   if(restore){
@@ -214,13 +221,13 @@ final class BusinessDirectoryView implements AutoCloseable {
  private View dialogTitle(String value){TextView title=text(value,19,true,ink());title.setTag("business_directory_detail_title");title.setBackgroundColor(surface());title.setPadding(dp(22),dp(18),dp(22),dp(6));title.setLayoutDirection(english()?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);return title;}
  private View dialogText(String value){ScrollView scroll=new ScrollView(host);scroll.setTag("business_directory_detail_body");scroll.setBackgroundColor(surface());TextView copy=text(value,14,false,ink());copy.setTag("business_directory_detail_text");copy.setLayoutDirection(english()?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);copy.setTextIsSelectable(true);copy.setPadding(dp(20),dp(12),dp(20),dp(12));scroll.addView(copy);return scroll;}
  private void showDialog(){
-  dialog.show();if(dialog.getWindow()!=null)dialog.getWindow().setBackgroundDrawable(shape(surface(),22));
+  AppAppearance.show(dialog);if(dialog.getWindow()!=null)dialog.getWindow().setBackgroundDrawable(shape(surface(),22));
   for(int which:new int[]{AlertDialog.BUTTON_POSITIVE,AlertDialog.BUTTON_NEGATIVE,AlertDialog.BUTTON_NEUTRAL})if(dialog.getButton(which)!=null)dialog.getButton(which).setTextColor(gold());
  }
  private void showEntry(BusinessDirectory.Entry entry){
   if(closed||!active||loading||host.isFinishing()||host.isDestroyed())return;
   String phone=android.text.BidiFormatter.getInstance(!english()).unicodeWrap(entry.phoneDisplay,android.text.TextDirectionHeuristics.LTR);
-  String content=phone+optional(entry.city)+optional(entry.address)+optional(entry.category)+"\n\n"+
+  String content=phone+optional(entry.city)+optional(entry.address)+optional(BusinessCategoryLabels.label(entry.category,english()))+"\n\n"+
    tr("מקור: ","Source: ")+entry.sourceUrl+"\n"+entry.sourceLicense+"\n"+tr("תאריך מקור: ","Source date: ")+entry.sourceUpdatedAt+"\n\n"+
    tr("רשומה ציבורית; המספר עשוי להשתנות. אין שינוי באנשי הקשר הפרטיים שלך.","A public record; the number may change. Your private contacts are unchanged.");
   dialog=new AlertDialog.Builder(host).setCustomTitle(dialogTitle(entry.name)).setView(dialogText(content))
@@ -255,7 +262,8 @@ final class BusinessDirectoryView implements AutoCloseable {
   public long getItemId(int position){return getItem(position).id;}public boolean hasStableIds(){return true;}
   public View getView(int position,View convert,ViewGroup parent){
    Row row=convert!=null&&convert.getTag() instanceof Row?(Row)convert.getTag():new Row();BusinessDirectory.Entry entry=getItem(position);
-   row.name.setText(entry.name);row.name.setTag("business_directory_name_"+entry.id);row.phone.setText(entry.phoneDisplay);row.phone.setTag("business_directory_phone_"+entry.id);row.call.setTag("business_directory_call_"+entry.id);String extra=entry.city+(entry.city.isEmpty()||entry.category.isEmpty()?"":" · ")+entry.category;
+   row.name.setText(entry.name);row.name.setTag("business_directory_name_"+entry.id);row.phone.setText(entry.phoneDisplay);row.phone.setTag("business_directory_phone_"+entry.id);row.call.setTag("business_directory_call_"+entry.id);
+   String category=BusinessCategoryLabels.label(entry.category,english());String extra=entry.city+(entry.city.isEmpty()||category.isEmpty()?"":" · ")+category;
    row.extra.setText(extra);row.extra.setVisibility(extra.isEmpty()?View.GONE:View.VISIBLE);
    String initial=entry.name.isEmpty()?"•":entry.name.substring(0,Character.charCount(entry.name.codePointAt(0)));row.mark.setText(initial);
    row.root.setContentDescription(entry.name+". "+entry.phoneDisplay+". "+extra);
@@ -268,7 +276,7 @@ final class BusinessDirectoryView implements AutoCloseable {
   }
  }
  private final class Row {
-  final LinearLayout root=horizontal();final TextView name=text("",14,true,ink()),phone=text("",13,false,gold()),extra=text("",10,false,muted()),mark=text("",19,true,0xFFE9CD90);
+  final LinearLayout root=horizontal();final TextView name=text("",14,true,ink()),phone=text("",13,false,gold()),extra=text("",10,false,muted()),mark=text("",19,true,gold());
   final ImageView call=new ImageView(host);
   Row(){
    root.setTag(this);root.setPadding(dp(6),dp(7),dp(4),dp(7));root.setMinimumHeight(dp(76));root.setBackground(shape(surface(),14));

@@ -2,6 +2,7 @@ package com.dacaller.app;
 
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.provider.CallLog;
 import android.test.InstrumentationTestCase;
@@ -53,7 +54,14 @@ public final class ListDialDispatchTest extends InstrumentationTestCase {
    CallHistory.entries=entries;View page=pages.recents();host.setContentView(page);list=find(page);list.setFastScrollAlwaysVisible(true);
   });getInstrumentation().waitForIdleSync();
  }
- private View callControl(View row){ViewGroup group=(ViewGroup)row;return group.getChildAt(group.getChildCount()-1);}
+ private View tagged(View node,String tag){
+  if(tag.equals(node.getTag()))return node;
+  if(node instanceof ViewGroup)for(int i=0;i<((ViewGroup)node).getChildCount();i++){
+   View result=tagged(((ViewGroup)node).getChildAt(i),tag);if(result!=null)return result;
+  }
+  return null;
+ }
+ private View callControl(View row){View call=tagged(row,"recent_call");if(call!=null)return call;ViewGroup group=(ViewGroup)row;return group.getChildAt(group.getChildCount()-1);}
  private void motion(int action,float x,float y,long start,long at){
   MotionEvent event=MotionEvent.obtain(start,at,action,x,y,0);list.dispatchTouchEvent(event);event.recycle();
  }
@@ -82,9 +90,32 @@ public final class ListDialDispatchTest extends InstrumentationTestCase {
   final int[] first=new int[1];final String[] expected=new String[1];
   ui(()->{
    first[0]=list.getFirstVisiblePosition();expected[0]=((CallHistory.Entry)list.getAdapter().getItem(first[0])).number;
-   ViewGroup row=(ViewGroup)list.getChildAt(0);tap(row.getChildAt(2));
+   tap(tagged(list.getChildAt(0),"recent_expand"));
+  });getInstrumentation().waitForIdleSync();ui(()->{
+   assertEquals(0,host.detailsOpened);assertTrue(host.requestedNumbers.isEmpty());
+   assertEquals(View.VISIBLE,tagged(list.getChildAt(0),"recent_actions").getVisibility());tap(tagged(list.getChildAt(0),"recent_details"));
   });getInstrumentation().waitForIdleSync();ui(()->{assertEquals(1,host.detailsOpened);assertTrue(host.requestedNumbers.isEmpty());tap(callControl(list.getChildAt(0)));});
   getInstrumentation().waitForIdleSync();ui(()->{assertEquals(1,host.requestedNumbers.size());assertEquals(expected[0],host.requestedNumbers.get(0));assertEquals(first[0],list.getFirstVisiblePosition());});
+ }
+ public void testRecentInlineOwnershipSurvivesRecreationAndBackWithoutMovingAnchor()throws Exception{
+  showRecents();ui(()->list.setSelectionFromTop(400,-7));getInstrumentation().waitForIdleSync();
+  final long[] expanded=new long[1],anchor=new long[1];final int[] offset=new int[1];final Bundle saved=new Bundle();
+  ui(()->{
+   int first=list.getFirstVisiblePosition();anchor[0]=list.getAdapter().getItemId(first);offset[0]=list.getChildAt(0).getTop();
+   expanded[0]=list.getAdapter().getItemId(first+1);tap(tagged(list.getChildAt(1),"recent_expand"));
+  });getInstrumentation().waitForIdleSync();ui(()->{
+   assertEquals(anchor[0],list.getAdapter().getItemId(list.getFirstVisiblePosition()));assertEquals(offset[0],list.getChildAt(0).getTop());
+   assertEquals(View.VISIBLE,tagged(list.getChildAt(1),"recent_actions").getVisibility());pages.remember("recents");pages.saveState(saved);
+   assertEquals(expanded[0],saved.getLong("recent_expanded_id"));pages=new FastPages(host);pages.restoreState(saved);
+   View page=pages.recents();host.setContentView(page);list=find(page);pages.restore("recents");
+  });getInstrumentation().waitForIdleSync();ui(()->{
+   assertEquals(anchor[0],list.getAdapter().getItemId(list.getFirstVisiblePosition()));assertEquals(offset[0],list.getChildAt(0).getTop());
+   assertEquals(View.VISIBLE,tagged(list.getChildAt(1),"recent_actions").getVisibility());assertTrue(pages.collapseExpandedRecent());
+  });getInstrumentation().waitForIdleSync();ui(()->{
+   assertEquals(View.GONE,tagged(list.getChildAt(1),"recent_actions").getVisibility());assertFalse(pages.collapseExpandedRecent());
+   assertEquals(anchor[0],list.getAdapter().getItemId(list.getFirstVisiblePosition()));assertEquals(offset[0],list.getChildAt(0).getTop());
+   assertTrue(host.requestedNumbers.isEmpty());assertEquals(0,host.detailsOpened);
+  });
  }
  public void testVerticalFlickStartingAtCallIconNeverCalls()throws Exception{
   showContacts();

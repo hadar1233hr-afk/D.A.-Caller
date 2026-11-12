@@ -114,6 +114,41 @@ public class CallReturnNavigationTest {
   Bundle corrupt=CallReturnNavigation.mainState(app);assertEquals(0,corrupt.getInt("business_offset"));
   assertFalse(corrupt.getBoolean("contacts_business_mode"));assertEquals("",corrupt.getString("business_query"));
  }
+ @Test public void coldReturnRetainsExactExpandedIdentityAndSettingsOriginWithoutCallExtras(){
+  Bundle state=new Bundle();state.putString("page","settings");state.putString("settings_return_page","contacts");
+  state.putLong("recent_expanded_id",42);state.putLong("recent_expanded_date",1731101234567L);state.putString("recent_expanded_number","+972 50-123-4567");
+  state.putInt("recent_position",7);state.putInt("recent_offset",-19);state.putString("contact_query","דנה");
+  state.putString("requested_call","0501112222");state.putString("pending_role_call","0501112222");state.putString("dialpad","0501112222");
+  CallReturnNavigation.saveMain(app,state);Bundle actual=CallReturnNavigation.mainState(app);
+  assertEquals(42,actual.getLong("recent_expanded_id"));assertEquals(1731101234567L,actual.getLong("recent_expanded_date"));
+  assertEquals("+972 50-123-4567",actual.getString("recent_expanded_number"));assertEquals("contacts",actual.getString("settings_return_page"));
+  assertEquals(7,actual.getInt("recent_position"));assertEquals(-19,actual.getInt("recent_offset"));assertEquals("דנה",actual.getString("contact_query"));
+  assertFalse(actual.containsKey("requested_call"));assertFalse(actual.containsKey("pending_role_call"));assertFalse(actual.containsKey("dialpad"));
+  try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class,CallReturnNavigation.intent(app)).setup()){
+   controller.get().onBackPressed();Bundle saved=new Bundle();controller.get().onSaveInstanceState(saved);
+   assertEquals("contacts",saved.getString("page"));assertNull(Shadows.shadowOf(controller.get()).getNextStartedActivity());
+  }
+ }
+ @Test public void malformedRuntimeExpansionAndSettingsOriginCollapseSafely(){
+  runtime.edit().putString("recent_expanded_id","wrong type").putInt("recent_expanded_date",12).putBoolean("recent_expanded_number",true)
+   .putString("settings_return_page","place_call").commit();Bundle state=CallReturnNavigation.mainState(app);
+  assertEquals(Long.MIN_VALUE,state.getLong("recent_expanded_id"));assertEquals(0,state.getLong("recent_expanded_date"));
+  assertEquals("",state.getString("recent_expanded_number"));assertEquals("recents",state.getString("settings_return_page"));
+ }
+ @Test public void bottomDialpadAndTopLeftSettingsPreserveContactDestinationAndDoNotDial(){
+  try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup()){
+   MainActivity activity=controller.get();activity.openContactsTab();View content=activity.findViewById(android.R.id.content);
+   assertNull(content.findViewWithTag("floating_dial"));assertNull(content.findViewWithTag("main_nav_settings"));
+   View keypad=content.findViewWithTag("main_nav_keypad");assertNotNull(keypad);keypad.performClick();
+   android.app.Dialog dialog=org.robolectric.shadows.ShadowDialog.getLatestDialog();assertNotNull(dialog);assertTrue(dialog.isShowing());
+   assertNull(Shadows.shadowOf(activity).getNextStartedActivity());assertNull(PhoneSessionService.current);dialog.dismiss();
+   View settings=content.findViewWithTag("main_settings_button");assertNotNull(settings);assertTrue(settings.getLayoutParams().width>=48*activity.getResources().getDisplayMetrics().density);
+   settings.performClick();Bundle state=new Bundle();activity.onSaveInstanceState(state);assertEquals("settings",state.getString("page"));
+   controller.pause().stop();assertEquals("contacts",CallReturnNavigation.mainState(app).getString("settings_return_page"));
+   activity.onBackPressed();state.clear();activity.onSaveInstanceState(state);assertEquals("contacts",state.getString("page"));
+   assertFalse(activity.isFinishing());assertNull(Shadows.shadowOf(activity).getNextStartedActivity());
+  }
+ }
  @Test public void liveMainReturnKeepsItsActualPageAndIgnoresInjectedDialExtras(){
   try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup()){
    MainActivity activity=controller.get();activity.openContactsTab();

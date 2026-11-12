@@ -126,6 +126,47 @@ public class BusinessDirectoryViewTest {
   String body=((TextView)root.findViewWithTag("business_directory_empty")).getText().toString();
   assertFalse(body.contains("private/path"));assertFalse(body.contains("IllegalStateException"));assertEquals(2,list().getAdapter().getCount());
  }
+ @Test @org.robolectric.annotation.GraphicsMode(org.robolectric.annotation.GraphicsMode.Mode.NATIVE)
+ public void nonemptyHeaderActuallyCollapsesAndReturnsForEmptySearchWithoutCalling(){
+  show((context,query,offset)->query.isEmpty()?page(0,false,entry(1),entry(2)):page(0,false));complete();layoutSmall();
+  assertEquals(1,list().getHeaderViewsCount());assertEquals(0,root.findViewWithTag("business_directory_empty_header").getHeight());
+  assertEquals("No retained blank fixed-header gap",0,list().getChildAt(0).getHeight());
+  EditText search=(EditText)root.findViewWithTag("business_directory_search");search.setText("no results");
+  shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(160));complete();layoutSmall();
+  assertEquals(1,list().getHeaderViewsCount());assertTrue(root.findViewWithTag("business_directory_empty_header").getHeight()>0);
+  assertEquals(View.VISIBLE,root.findViewWithTag("business_directory_empty").getVisibility());
+  search.setText("");shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(160));complete();layoutSmall();
+  assertEquals(0,list().getChildAt(0).getHeight());assertTrue(dialled.isEmpty());
+ }
+ @Test @org.robolectric.annotation.GraphicsMode(org.robolectric.annotation.GraphicsMode.Mode.NATIVE)
+ public void fullSourceAttributionFitsTwoLinesAndTopTargetOpensFullDetailsInBothLanguages(){
+  BusinessDirectory.Manifest osm=new BusinessDirectory.Manifest("test",zeros(),2720,"OpenStreetMap contributors via Geofabrik","https://www.openstreetmap.org/copyright","ODbL 1.0","https://opendatacommons.org/licenses/odbl/1-0/","2026-11-03");
+  for(String language:new String[]{"he","en"}){
+   activity.getSharedPreferences("da_caller",0).edit().putString("language",language).commit();
+   android.content.res.Configuration configuration=new android.content.res.Configuration(activity.getResources().getConfiguration());configuration.fontScale=1.3f;
+   activity.getResources().updateConfiguration(configuration,activity.getResources().getDisplayMetrics());
+   if(directory!=null)directory.close();show((context,query,offset)->new BusinessDirectory.Page(BusinessDirectory.Status.AVAILABLE,osm,Arrays.asList(entry(1)),0,false));complete();layoutSmall();
+   TextView source=(TextView)root.findViewWithTag("business_directory_status");String text=source.getText().toString();
+   assertTrue(text.contains("2,720"));assertTrue(text.contains("© OpenStreetMap contributors"));assertEquals(500,source.getTypeface().getWeight());
+   assertTrue(source.getHeight()>=48*activity.getResources().getDisplayMetrics().density);assertNotNull(source.getLayout());
+   assertTrue(source.getLayout().getLineCount()<=2);for(int n=0;n<source.getLayout().getLineCount();n++)assertEquals(0,source.getLayout().getEllipsisCount(n));
+   assertEquals(text.length(),source.getLayout().getLineEnd(source.getLayout().getLineCount()-1));
+   source.performClick();AlertDialog dialog=ShadowAlertDialog.getLatestAlertDialog();TextView detail=dialog.getWindow().getDecorView().findViewWithTag("business_directory_detail_text");
+   String body=detail.getText().toString();assertTrue(body.contains(osm.sourceName));assertTrue(body.contains(osm.sourceUrl));assertTrue(body.contains(osm.license));assertTrue(body.contains(osm.updatedAt));
+   dialog.dismiss();assertTrue(dialled.isEmpty());assertNull(shadowOf(activity).getNextStartedActivity());
+  }
+ }
+ @Test public void taxonomyLabelsAreDisplayOnlyAndPreserveRawSourceIdentity(){
+  BusinessDirectory.Entry raw=new BusinessDirectory.Entry(1,"Test business","0500099901","0500099901","Test city","shop:mobile_phone_accessories","Test address","https://example.org/1","test/1","Test license","2026-11-02");
+  show((context,query,offset)->page(0,false,raw));complete();View row=row(0);
+  assertTrue(row.getContentDescription().toString().contains("אביזרי סלולר"));assertFalse(row.getContentDescription().toString().contains("shop:"));
+  row.performClick();TextView detail=ShadowAlertDialog.getLatestAlertDialog().getWindow().getDecorView().findViewWithTag("business_directory_detail_text");
+  assertTrue(detail.getText().toString().contains("אביזרי סלולר"));assertEquals("shop:mobile_phone_accessories",raw.category);assertEquals("0500099901",raw.phone);
+  assertEquals("Hostel",BusinessCategoryLabels.label("tourism:hostel",true));assertEquals("Local trade",BusinessCategoryLabels.label("craft:unmapped",true));assertEquals("Human label",BusinessCategoryLabels.label("Human label",true));assertTrue(dialled.isEmpty());
+ }
+ private void layoutSmall(){
+  for(int n=0;n<2;n++){root.measure(View.MeasureSpec.makeMeasureSpec(480,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(700,View.MeasureSpec.EXACTLY));root.layout(0,0,480,700);shadowOf(Looper.getMainLooper()).idle();}
+ }
  private static final class Tasks implements Executor {
   final List<Runnable> values=new ArrayList<>();public void execute(Runnable task){values.add(task);}
   void runFirst(){values.remove(0).run();}void runLast(){values.remove(values.size()-1).run();}

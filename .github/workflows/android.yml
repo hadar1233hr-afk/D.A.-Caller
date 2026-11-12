@@ -23,6 +23,7 @@ on:
       - 'scripts/tests/test_da_caller*.py'
       - 'scripts/business-directory/**'
       - 'scripts/verify-callback-business-matrix.py'
+      - 'scripts/verify-modern-features-native.py'
       - 'docs/evidence/callback-business-2026-11-04/**'
       - 'docs/DA_CALLER_SIGNING_POLICY.json'
       - 'docs/evidence/2026-10-25/**'
@@ -54,6 +55,7 @@ on:
       - 'scripts/tests/test_da_caller*.py'
       - 'scripts/business-directory/**'
       - 'scripts/verify-callback-business-matrix.py'
+      - 'scripts/verify-modern-features-native.py'
       - 'docs/evidence/callback-business-2026-11-04/**'
       - 'docs/DA_CALLER_SIGNING_POLICY.json'
   workflow_dispatch:
@@ -260,6 +262,7 @@ jobs:
             app/build/reports/androidTests/
             app/build/outputs/androidTest-results/
             app/build/ui-snapshots/
+            app/build/ui-modern-snapshots/
             app/build/ui-device-config.txt
             app/build/emulator-call-driver.*
           if-no-files-found: warn

@@ -6,6 +6,9 @@ import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.view.WindowInsets;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
+import android.widget.ScrollView;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.WeakHashMap;
@@ -28,8 +32,17 @@ final class CallIslandController implements CallIslandView.Listener {
  private final SharedPreferences prefs;
  private final Handler handler=new Handler(Looper.getMainLooper());
  private final IdentityHashMap<View,Integer> margins=new IdentityHashMap<>();
- private FrameLayout content;
+ private FrameLayout content,layer;
+ private boolean topAreaActive,statusColorSaved;
+ private int originalStatusColor,statusBottom;
+ private Rect positionArea=new Rect();
+ private final ArrayList<Rect> cutouts=new ArrayList<>();
+ private String dragToken;
+ private Point dragStart,dragCurrent;
  private CallIslandView view;
+ private ScrollView overflow;
+ private View floating;
+ private int desiredWidth,capsuleHeight;
  private CallIslandState shown;
  private boolean started,expanded,refreshPosted,layingOut;
  private android.graphics.drawable.Drawable originalContentBackground;
@@ -39,7 +52,7 @@ final class CallIslandController implements CallIslandView.Listener {
  private final Runnable changed=this::scheduleRefresh;
  private final Runnable update=()->{refreshPosted=false;refresh();};
  private final Runnable clock=new Runnable(){public void run(){
-  if(!started||view==null||view.getParent()==null)return;
+  if(!started||view==null||floating==null||floating.getParent()==null)return;
   CallIslandState live=session.current();
   if(live==null||shown==null||!samePresentation(live,shown)){refresh();return;}
   view.tick(System.currentTimeMillis());handler.postDelayed(this,1000);
@@ -49,7 +62,13 @@ final class CallIslandController implements CallIslandView.Listener {
  };
  private final ViewTreeObserver.OnGlobalLayoutListener layout=()->{
   if(!started||layingOut||shown==null||view==null)return;
-  if(view.getParent()!=content){scheduleRefresh();return;}reserveSpace();
+  if(floating==null||floating.getParent()!=layer){scheduleRefresh();return;}reserveSpace();
+ };
+ private final ViewTreeObserver.OnPreDrawListener systemBar=()->{
+  // Pages can apply their palette after resume or on a later focus change.
+  // Keep the opted-in decor surface visible without changing the host's flags.
+  if(started&&shown!=null&&topAreaActive)keepStatusTransparent();
+  return true;
  };
  CallIslandController(Activity host,CallIslandSession session){
   this.host=host;this.session=session;prefs=host.getSharedPreferences("da_caller",Context.MODE_PRIVATE);
@@ -78,13 +97,17 @@ final class CallIslandController implements CallIslandView.Listener {
   View root=host.findViewById(android.R.id.content);if(!(root instanceof FrameLayout))return;
   content=(FrameLayout)root;started=true;
   content.getViewTreeObserver().addOnGlobalLayoutListener(layout);
+  content.getViewTreeObserver().addOnPreDrawListener(systemBar);
   PhoneSessionService.register(changed);prefs.registerOnSharedPreferenceChangeListener(preferenceChanged);refresh();
  }
  void stop(){
   if(!started)return;started=false;
   PhoneSessionService.unregister(changed);prefs.unregisterOnSharedPreferenceChangeListener(preferenceChanged);
   handler.removeCallbacksAndMessages(null);refreshPosted=false;
-  if(content!=null&&content.getViewTreeObserver().isAlive())content.getViewTreeObserver().removeOnGlobalLayoutListener(layout);
+  if(content!=null&&content.getViewTreeObserver().isAlive()){
+   content.getViewTreeObserver().removeOnGlobalLayoutListener(layout);
+   content.getViewTreeObserver().removeOnPreDrawListener(systemBar);
+  }
   hide();
  }
  boolean isExpanded(){return expanded;}
@@ -101,23 +124,16 @@ final class CallIslandController implements CallIslandView.Listener {
   CallIslandState state=prefs.getBoolean("island_enabled",true)?session.current():null;
   if(state==null){expanded=false;token=null;hide();return;}
   if(!state.token.equals(token)){expanded=false;token=state.token;dismissConfirmation();}
+  if(state.token.equals(prefs.getString("island_hidden_token",""))){hide();return;}
+  configureLayer();
   if(view==null){view=new CallIslandView(host);view.setListener(this);}
   int oldWidth=view.getWidth(),oldHeight=view.getHeight();
   shown=state;view.bind(state,expanded);
-  int available=content.getWidth()>0?content.getWidth():host.getResources().getDisplayMetrics().widthPixels;
-  int maximum=dp(expanded?420:"comfortable".equals(prefs.getString("island_size","compact"))?300:260);
-  int width=Math.max(dp(160),Math.min(maximum,available-dp(24)));
-  FrameLayout.LayoutParams params=new FrameLayout.LayoutParams(width,ViewGroup.LayoutParams.WRAP_CONTENT,Gravity.TOP|Gravity.CENTER_HORIZONTAL);
-  params.topMargin=dp(8);params.bottomMargin=dp(8);
-  if(view.getParent()!=content){
-   if(view.getParent() instanceof ViewGroup)((ViewGroup)view.getParent()).removeView(view);
-   content.addView(view,params);
-  }else if(view.getLayoutParams().width!=width)view.setLayoutParams(params);
-  view.bringToFront();view.tick(System.currentTimeMillis());reserveSpace();
+  positionView();floating.bringToFront();view.tick(System.currentTimeMillis());reserveSpace();
   handler.removeCallbacks(clock);handler.postDelayed(clock,1000);
   if(oldWidth>0&&oldHeight>0&&prefs.getBoolean("island_animations",true)&&ValueAnimator.areAnimatorsEnabled()){
    view.post(()->{
-    if(!started||view==null||view.getParent()==null)return;
+    if(!started||view==null||floating==null||floating.getParent()==null)return;
     int height=view.getHeight();if(height<=0||oldWidth==view.getWidth()&&oldHeight==height)return;
     view.animate().cancel();view.setPivotX(view.getWidth()/2f);view.setPivotY(0);
     view.setScaleX(Math.max(.6f,Math.min(1.4f,oldWidth/(float)view.getWidth())));
@@ -137,12 +153,17 @@ final class CallIslandController implements CallIslandView.Listener {
   if(content==null||view==null||shown==null||layingOut)return;
   layingOut=true;
   try{
+   positionView();
+   boolean customPosition=prefs.getBoolean(CallIslandPosition.SET,false)||dragToken!=null;
+   if(customPosition){releaseSpace();return;}
    reserveBackground();
-   int width=view.getLayoutParams().width;
+   int width=desiredWidth;
    view.measure(View.MeasureSpec.makeMeasureSpec(width,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED));
-   int inset=view.getMeasuredHeight()+dp(16);
+   int inset=capsuleHeight+dp(16);
+   if(topAreaActive){int[] origin=new int[2];content.getLocationOnScreen(origin);int[] layerOrigin=new int[2];layer.getLocationOnScreen(layerOrigin);
+    inset=Math.max(0,((FrameLayout.LayoutParams)floating.getLayoutParams()).topMargin+capsuleHeight+layerOrigin[1]-origin[1])+dp(8);}
    for(int i=0;i<content.getChildCount();i++){
-    View child=content.getChildAt(i);if(child==view)continue;
+    View child=content.getChildAt(i);if(child==floating)continue;
     ViewGroup.LayoutParams raw=child.getLayoutParams();if(!(raw instanceof FrameLayout.LayoutParams))continue;
     FrameLayout.LayoutParams params=(FrameLayout.LayoutParams)raw;
     if(!margins.containsKey(child))margins.put(child,params.topMargin);
@@ -153,6 +174,77 @@ final class CallIslandController implements CallIslandView.Listener {
    if(host instanceof MainActivity)((MainActivity)host).adaptCallIslandContent(expanded);
   }finally{layingOut=false;}
  }
+ private void configureLayer(){
+  View decor=host.getWindow().getDecorView();
+  boolean requested=CallIslandPosition.topArea(prefs)&&decor instanceof FrameLayout;
+  FrameLayout next=requested?(FrameLayout)decor:content;
+  topAreaActive=requested;layer=next;
+  if(requested)keepStatusTransparent();else restoreStatusColor();
+ }
+ private void keepStatusTransparent(){
+  int current=host.getWindow().getStatusBarColor();
+  if(!statusColorSaved||current!=android.graphics.Color.TRANSPARENT){originalStatusColor=current;statusColorSaved=true;}
+  if(current!=android.graphics.Color.TRANSPARENT)host.getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
+ }
+ private void restoreStatusColor(){
+  if(statusColorSaved){host.getWindow().setStatusBarColor(originalStatusColor);statusColorSaved=false;}
+ }
+ private void positionView(){
+  if(layer==null||view==null)return;
+  int parentWidth=layer.getWidth()>0?layer.getWidth():host.getResources().getDisplayMetrics().widthPixels;
+  int parentHeight=layer.getHeight()>0?layer.getHeight():host.getResources().getDisplayMetrics().heightPixels;
+  int maximum=dp(expanded?420:"comfortable".equals(prefs.getString("island_size","compact"))?300:260);
+  if(topAreaActive&&!expanded&&parentWidth-dp(144)>=dp(160))maximum=Math.min(maximum,parentWidth-dp(144));
+  int width=Math.max(dp(48),Math.min(maximum,parentWidth-dp(24)));
+  int[] origin=new int[2];layer.getLocationOnScreen(origin);
+  Rect visible=new Rect();layer.getWindowVisibleDisplayFrame(visible);
+  int bottom=visible.bottom>origin[1]?Math.min(parentHeight,visible.bottom-origin[1]):parentHeight;
+  positionArea.set(dp(12),dp(8),Math.max(dp(12),parentWidth-dp(12)),Math.max(dp(8),bottom-dp(8)));
+  statusBottom=0;cutouts.clear();
+  WindowInsets insets=layer.getRootWindowInsets();
+  if(topAreaActive&&insets!=null){
+   int left=insets.getSystemWindowInsetLeft(),right=insets.getSystemWindowInsetRight(),top=insets.getSystemWindowInsetTop(),bottomInset=insets.getSystemWindowInsetBottom();
+   if(android.os.Build.VERSION.SDK_INT>=30){android.graphics.Insets bars=insets.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars()|WindowInsets.Type.displayCutout());left=bars.left;right=bars.right;top=bars.top;bottomInset=bars.bottom;}
+   statusBottom=top;
+   positionArea.left=Math.max(positionArea.left,left+dp(12));positionArea.right=Math.min(positionArea.right,parentWidth-right-dp(12));
+   positionArea.bottom=Math.min(positionArea.bottom,parentHeight-bottomInset-dp(8));
+   if(android.os.Build.VERSION.SDK_INT>=28&&insets.getDisplayCutout()!=null){
+    for(Rect rect:insets.getDisplayCutout().getBoundingRects())cutouts.add(new Rect(rect));
+    positionArea.top=Math.max(positionArea.top,insets.getDisplayCutout().getSafeInsetTop()+dp(8));
+   }
+   if(width>positionArea.width()-dp(120))positionArea.top=Math.max(positionArea.top,statusBottom+dp(8));
+  }
+  desiredWidth=width=Math.min(width,Math.max(dp(48),positionArea.width()));
+  view.measure(View.MeasureSpec.makeMeasureSpec(width,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED));
+  capsuleHeight=Math.min(view.getMeasuredHeight(),Math.max(dp(48),positionArea.height()));
+  boolean needsScroll=view.getMeasuredHeight()>capsuleHeight;
+  if(needsScroll){
+   if(overflow==null){overflow=new ScrollView(host);overflow.setTag("island-in-app-window");overflow.setVerticalScrollBarEnabled(false);overflow.setFillViewport(false);overflow.setClipToPadding(false);}
+   if(view.getParent()!=overflow){if(view.getParent() instanceof ViewGroup)((ViewGroup)view.getParent()).removeView(view);overflow.addView(view,new ScrollView.LayoutParams(-1,-2));}
+   floating=overflow;
+  }else{
+   if(overflow!=null&&view.getParent()==overflow)overflow.removeView(view);
+   if(overflow!=null&&overflow.getParent() instanceof ViewGroup)((ViewGroup)overflow.getParent()).removeView(overflow);
+   floating=view;
+  }
+  if(floating.getParent()!=layer){
+   if(floating.getParent() instanceof ViewGroup)((ViewGroup)floating.getParent()).removeView(floating);
+   layer.addView(floating,new FrameLayout.LayoutParams(width,needsScroll?capsuleHeight:ViewGroup.LayoutParams.WRAP_CONTENT,Gravity.TOP|Gravity.LEFT));
+  }
+  Point point=dragToken!=null&&dragCurrent!=null?dragCurrent:CallIslandPosition.resolve(prefs,positionArea,width,capsuleHeight);
+  point=CallIslandPosition.clamp(positionArea,width,capsuleHeight,point.x,point.y,statusBottom,dp(60),cutouts,dp(8));
+  if(dragToken!=null)dragCurrent=point;
+  FrameLayout.LayoutParams params=(FrameLayout.LayoutParams)floating.getLayoutParams();
+  int expectedHeight=needsScroll?capsuleHeight:ViewGroup.LayoutParams.WRAP_CONTENT;
+  if(params.width!=width||params.height!=expectedHeight||params.gravity!=(Gravity.TOP|Gravity.LEFT)||params.leftMargin!=point.x||params.topMargin!=point.y){
+   params.width=width;params.height=expectedHeight;params.gravity=Gravity.TOP|Gravity.LEFT;params.leftMargin=point.x;params.topMargin=point.y;params.rightMargin=0;params.bottomMargin=0;floating.setLayoutParams(params);
+  }
+ }
+ private void releaseSpace(){
+  for(View child:new ArrayList<>(margins.keySet()))restoreMargin(child);margins.clear();
+  if(backgroundReserved&&content!=null){content.setBackground(originalContentBackground);originalContentBackground=null;backgroundReserved=false;}
+  if(host instanceof MainActivity)((MainActivity)host).adaptCallIslandContent(false);
+ }
  private void reserveBackground(){
   if(!backgroundReserved){originalContentBackground=content.getBackground();backgroundReserved=true;}
   int color=prefs.getBoolean("amoled",false)?android.graphics.Color.BLACK:
@@ -160,7 +252,7 @@ final class CallIslandController implements CallIslandView.Listener {
   // The inset exposes android.R.id.content, which otherwise retains the
   // platform's white window background even above a dark app page.
   for(int i=0;i<content.getChildCount();i++){
-   View child=content.getChildAt(i);if(child==view)continue;
+   View child=content.getChildAt(i);if(child==floating)continue;
    if(child.getBackground() instanceof android.graphics.drawable.ColorDrawable){
     color=((android.graphics.drawable.ColorDrawable)child.getBackground()).getColor();break;
    }
@@ -176,10 +268,28 @@ final class CallIslandController implements CallIslandView.Listener {
  private void dismissConfirmation(){if(confirmation!=null){confirmation.dismiss();confirmation=null;}}
  private void hide(){
   shown=null;handler.removeCallbacks(clock);dismissConfirmation();
-  if(view!=null){view.animate().cancel();if(view.getParent() instanceof ViewGroup)((ViewGroup)view.getParent()).removeView(view);}
-  for(View child:new ArrayList<>(margins.keySet()))restoreMargin(child);margins.clear();
-  if(backgroundReserved&&content!=null){content.setBackground(originalContentBackground);originalContentBackground=null;backgroundReserved=false;}
-  if(host instanceof MainActivity)((MainActivity)host).adaptCallIslandContent(false);
+  if(view!=null){view.animate().cancel();if(floating!=null&&floating.getParent() instanceof ViewGroup)((ViewGroup)floating.getParent()).removeView(floating);}
+  dragToken=null;dragStart=null;dragCurrent=null;releaseSpace();restoreStatusColor();
+ }
+ private boolean owns(String token){
+  CallIslandState live=session.current();return started&&shown!=null&&shown.token.equals(token)&&live!=null&&live.token.equals(token)&&
+    prefs.getBoolean("island_enabled",true)&&!token.equals(prefs.getString("island_hidden_token",""));
+ }
+ @Override public void onHide(String token){if(!owns(token))return;prefs.edit().putString("island_hidden_token",token).apply();hide();}
+ @Override public boolean draggable(){return true;}
+ @Override public boolean onDragStart(String token){
+  if(!owns(token)||view==null)return false;dismissConfirmation();view.animate().cancel();view.setScaleX(1);view.setScaleY(1);dragToken=token;
+  FrameLayout.LayoutParams params=(FrameLayout.LayoutParams)floating.getLayoutParams();dragStart=new Point(params.leftMargin,params.topMargin);dragCurrent=new Point(dragStart);return true;
+ }
+ @Override public void onDragMove(String token,float dx,float dy){
+  if(dragToken==null||!dragToken.equals(token)||!owns(token)){scheduleRefresh();return;}
+  dragCurrent=new Point(Math.round(dragStart.x+dx),Math.round(dragStart.y+dy));positionView();releaseSpace();
+ }
+ @Override public void onDragEnd(String token,boolean cancelled){
+  boolean save=dragToken!=null&&dragToken.equals(token)&&!cancelled&&owns(token)&&dragCurrent!=null;
+  Point point=dragCurrent;dragToken=null;dragStart=null;dragCurrent=null;
+  if(save)CallIslandPosition.save(host,prefs,positionArea,desiredWidth,capsuleHeight,point.x,point.y);
+  scheduleRefresh();
  }
  @Override public void onExpand(){
   if(BuildConfig.DEBUG)android.util.Log.d("DA_CALLER_ISLAND","expand requested");

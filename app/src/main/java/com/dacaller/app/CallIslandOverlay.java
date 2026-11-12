@@ -10,6 +10,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.view.WindowInsets;
+import java.util.ArrayList;
 import android.hardware.display.DisplayManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,6 +52,11 @@ final class CallIslandOverlay implements CallIslandView.Listener {
  private ScrollView window;
  private WindowManager.LayoutParams layout;
  private CallIslandState shown;
+ private final Rect positionArea=new Rect();
+ private final ArrayList<Rect> cutouts=new ArrayList<>();
+ private int statusBottom;
+ private String dragToken;
+ private Point dragStart,dragCurrent;
  private String token;
  private AlertDialog confirmation;
  private boolean started,attached,expanded,posted,screenOff;
@@ -168,7 +177,7 @@ final class CallIslandOverlay implements CallIslandView.Listener {
   try{
    if(!prefs.getBoolean("island_enabled",true)||!prefs.getBoolean("island_outside_app",false)){hide();return;}
    live=session.current();
-   if(!outsideState(live)||!allowed()){hide();return;}
+   if(!outsideState(live)||!allowed()||live.token.equals(prefs.getString("island_hidden_token",""))){hide();return;}
    render(live);
   }catch(RuntimeException unavailable){CallFailureReporter.record(context,"island-overlay-ui",unavailable);hide();}
   finally{
@@ -188,43 +197,82 @@ final class CallIslandOverlay implements CallIslandView.Listener {
    window.addView(view,new ScrollView.LayoutParams(-1,-2));
   }
   shown=live;view.bind(live,expanded);view.tick(System.currentTimeMillis());
+  boolean topArea=CallIslandPosition.topArea(prefs)&&Build.VERSION.SDK_INT>=30;
   int availableWidth=context.getResources().getDisplayMetrics().widthPixels;
   int availableHeight=context.getResources().getDisplayMetrics().heightPixels;
+  statusBottom=0;cutouts.clear();
   if(Build.VERSION.SDK_INT>=30){
    android.view.WindowMetrics metrics=manager.getCurrentWindowMetrics();
    if(metrics!=null){
-    android.graphics.Rect bounds=metrics.getBounds();
-    android.graphics.Insets insets=metrics.getWindowInsets().getInsetsIgnoringVisibility(android.view.WindowInsets.Type.systemBars()|android.view.WindowInsets.Type.displayCutout());
+    Rect bounds=metrics.getBounds();
+    android.graphics.Insets insets=metrics.getWindowInsets().getInsetsIgnoringVisibility(WindowInsets.Type.systemBars()|WindowInsets.Type.displayCutout());
     availableWidth=bounds.width()-insets.left-insets.right;
-    availableHeight=bounds.height()-insets.top-insets.bottom;
+    availableHeight=bounds.height()-insets.bottom-(topArea?0:insets.top);
+    if(topArea){
+     statusBottom=metrics.getWindowInsets().isVisible(WindowInsets.Type.statusBars())?insets.top:0;
+     if(metrics.getWindowInsets().getDisplayCutout()!=null)for(Rect cutout:metrics.getWindowInsets().getDisplayCutout().getBoundingRects()){
+      Rect shifted=new Rect(cutout);shifted.offset(-insets.left,0);cutouts.add(shifted);
+     }
+    }
    }
   }
   int maximum=dp(expanded?420:"comfortable".equals(prefs.getString("island_size","compact"))?300:260);
   int width=Math.max(dp(160),Math.min(maximum,availableWidth-dp(24)));
   view.measure(View.MeasureSpec.makeMeasureSpec(width,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED));
   int height=Math.min(view.getMeasuredHeight(),Math.max(dp(56),availableHeight-dp(32)));
-  if(!attached){
-   layout=new WindowManager.LayoutParams(width,height,WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+  // An application overlay cannot establish whether another app's SystemUI bar is opaque.
+  // Keep the whole interactive capsule below a visible protected bar rather than let it be obscured.
+  int top=topArea&&statusBottom>0?statusBottom+dp(8):dp(8);
+  positionArea.set(dp(12),top,Math.max(dp(12),availableWidth-dp(12)),Math.max(top,availableHeight-dp(8)));
+  Point point=dragToken!=null&&dragCurrent!=null?dragCurrent:CallIslandPosition.resolve(prefs,positionArea,width,height);
+  point=CallIslandPosition.clamp(positionArea,width,height,point.x,point.y,statusBottom,dp(60),cutouts,dp(8));
+  if(dragToken!=null)dragCurrent=point;
+  if(layout==null)layout=new WindowManager.LayoutParams(width,height,WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
      WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE|WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,PixelFormat.TRANSLUCENT);
-   layout.gravity=Gravity.TOP|Gravity.CENTER_HORIZONTAL;layout.y=dp(8);layout.setTitle("DA CALLER call island");
-   layout.softInputMode=WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING;
-   manager.addView(window,layout);attached=true;
-  }else if(layout.width!=width||layout.height!=height){
-   layout.width=width;layout.height=height;manager.updateViewLayout(window,layout);
-  }
+  int flags=WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE|WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL|
+    (topArea?WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN:0);
+  boolean different=layout.width!=width||layout.height!=height||layout.x!=point.x||layout.y!=point.y||layout.flags!=flags;
+  layout.width=width;layout.height=height;layout.flags=flags;layout.gravity=Gravity.TOP|Gravity.LEFT;layout.x=point.x;layout.y=point.y;
+  layout.setTitle("DA CALLER call island");layout.softInputMode=WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING;
+  if(Build.VERSION.SDK_INT>=30)layout.setFitInsetsTypes(topArea?WindowInsets.Type.navigationBars():WindowInsets.Type.systemBars()|WindowInsets.Type.displayCutout());
+  if(Build.VERSION.SDK_INT>=28)layout.layoutInDisplayCutoutMode=WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER;
+  if(!attached){manager.addView(window,layout);attached=true;}
+  else if(different)manager.updateViewLayout(window,layout);
  }
+
  private void dismissConfirmation(){
   AlertDialog dialog=confirmation;confirmation=null;
   if(dialog!=null)try{dialog.dismiss();}
    catch(RuntimeException unavailable){CallFailureReporter.record(context,"island-overlay-confirmation-dismiss",unavailable);}
  }
  private void hide(){
-  dismissConfirmation();shown=null;token=null;expanded=false;
+  dismissConfirmation();shown=null;token=null;expanded=false;dragToken=null;dragStart=null;dragCurrent=null;
   if(attached){
    attached=false;
    try{manager.removeViewImmediate(window);}catch(RuntimeException unavailable){CallFailureReporter.record(context,"island-overlay-remove",unavailable);}
   }
   if(view!=null){view.animate().cancel();view.bind(null,false);}
+ }
+ private boolean owns(String token){
+  CallIslandState live=session.current();return shown!=null&&shown.token.equals(token)&&outsideState(live)&&live.token.equals(token)&&allowed()&&
+    !token.equals(prefs.getString("island_hidden_token",""));
+ }
+ @Override public void onHide(String token){if(!owns(token))return;prefs.edit().putString("island_hidden_token",token).apply();hide();}
+ @Override public boolean draggable(){return true;}
+ @Override public boolean onDragStart(String token){
+  if(!owns(token)||layout==null||!attached)return false;dismissConfirmation();view.animate().cancel();view.setScaleX(1);view.setScaleY(1);dragToken=token;
+  dragStart=new Point(layout.x,layout.y);dragCurrent=new Point(dragStart);return true;
+ }
+ @Override public void onDragMove(String token,float dx,float dy){
+  if(dragToken==null||!dragToken.equals(token)||!owns(token)){schedule();return;}
+  dragCurrent=CallIslandPosition.clamp(positionArea,layout.width,layout.height,dragStart.x+dx,dragStart.y+dy,statusBottom,dp(60),cutouts,dp(8));
+  layout.x=dragCurrent.x;layout.y=dragCurrent.y;
+  try{manager.updateViewLayout(window,layout);}catch(RuntimeException unavailable){CallFailureReporter.record(context,"island-overlay-drag",unavailable);hide();}
+ }
+ @Override public void onDragEnd(String token,boolean cancelled){
+  boolean save=dragToken!=null&&dragToken.equals(token)&&!cancelled&&owns(token)&&dragCurrent!=null;
+  Point point=dragCurrent;dragToken=null;dragStart=null;dragCurrent=null;
+  if(save)CallIslandPosition.save(context,prefs,positionArea,layout.width,layout.height,point.x,point.y);schedule();
  }
  @Override public void onExpand(){if(shown!=null){expanded=true;schedule();}}
  @Override public void onCollapse(){if(shown!=null){expanded=false;schedule();}}

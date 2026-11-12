@@ -1,0 +1,36 @@
+{
+  "scope": "SOURCE_ONLY_ACTIVITY_APPEARANCE_INTEGRATION",
+  "status": "IMPLEMENTED_NOT_COMPILED_OR_TESTED",
+  "files_sha256": {
+    "app/src/main/java/com/dacaller/app/ArchiveActivity.java": "13e75216e2d6c660b39a5dc668b03990931b5b274f0a190b1a1350acb20f7672",
+    "app/src/main/java/com/dacaller/app/CallbackReminderActivity.java": "2b08f4a4a83baf33b3ccf560d7336a0e303c24d34f95aa7a3eb02914514664c9",
+    "app/src/main/java/com/dacaller/app/ChangelogActivity.java": "23d4877c7ec8a55761836060a25765ae7c7e3c6517a8ebeb1031112637e6a931",
+    "app/src/main/java/com/dacaller/app/ContactChooseActivity.java": "5e866c6cb7c25eade9f291d40b92e6bec65283daf076d2fc2cb419d5b97399c5",
+    "app/src/main/java/com/dacaller/app/ContactDetailActivity.java": "86613a7e766a8508e14c8f96ecb8c8d67ecce69ae93bec9ce13a35a64713b0df",
+    "app/src/main/java/com/dacaller/app/ContactEditorActivity.java": "9533187bb22ca669dfc17614752580334799a45dc007133173020b36705668e4"
+  },
+  "changes": [
+    "Shared bundled Rubik normal500/strong650 for labels, list rows and editable fields",
+    "Shared brighter gold with selected silver preference retained",
+    "Consistent rounded Back arrows and Changelog expand/collapse chevrons",
+    "Actual48dp Back targets; existing listeners and identifiers retained",
+    "Archive/contact-detail dialog typography via AppAppearance.show",
+    "Wine contact-save button background; existing save/IO/permissions unchanged"
+  ],
+  "validation": [
+    "git diff --check PASS",
+    "Source review only; no Gradle slot used"
+  ],
+  "unexecuted": [
+    "Compile current six Activity integrations",
+    "ArchiveActivityTest and CallbackReminderTest regressions",
+    "Contact editor/detail/chooser interactions",
+    "Fresh emulator screenshots and all visual/large-text review"
+  ],
+  "prior_appearance_helper_tests": "11/11 host PASS before these six Activity source integrations; do not present as execution of these later changes",
+  "not_present": [
+    "CallArchiveActivity.java (actual screen is ArchiveActivity.java)",
+    "StatsPeriodActivity.java",
+    "PermissionHelpActivity.java"
+  ]
+}

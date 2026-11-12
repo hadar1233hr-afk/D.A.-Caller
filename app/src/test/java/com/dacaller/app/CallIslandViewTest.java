@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Looper;
+import android.os.SystemClock;
+import android.view.MotionEvent;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.view.View;
@@ -45,12 +47,18 @@ public class CallIslandViewTest {
  private long connected;
 
  private static final class Listener implements CallIslandView.Listener {
-  int expands,collapses,opens;
+  int expands,collapses,opens,starts,moves,finishes,cancels,hides;
+  boolean movable;
   final List<String> actions=new ArrayList<>();
   @Override public void onExpand(){expands++;}
   @Override public void onCollapse(){collapses++;}
   @Override public void onAction(String action){actions.add(action);}
   @Override public void onOpen(){opens++;}
+  @Override public void onHide(String token){hides++;}
+  @Override public boolean draggable(){return movable;}
+  @Override public boolean onDragStart(String token){if(movable)starts++;return movable;}
+  @Override public void onDragMove(String token,float dx,float dy){moves++;}
+  @Override public void onDragEnd(String token,boolean cancelled){if(cancelled)cancels++;else finishes++;}
  }
  @Before public void setup(){
   originalFontScale=RuntimeEnvironment.getApplication().getResources().getConfiguration().fontScale;
@@ -175,4 +183,60 @@ public class CallIslandViewTest {
    prefs.edit().putBoolean("island_show_timer",true).commit();
   }
  }
+ private void motion(int action,float x,float y){
+  MotionEvent event=MotionEvent.obtain(SystemClock.uptimeMillis(),SystemClock.uptimeMillis(),action,x,y,0);
+  island.dispatchTouchEvent(event);event.recycle();
+ }
+ @Test public void actualPointerDragCancelsTouchedCallControlBeforeUpAndKeepsTapBehavior(){
+  listener.movable=true;island.bind(active("drag-call"),true);layout(320);
+  Rect end=bounds(required("island-action-END"));float x=end.exactCenterX(),y=end.exactCenterY();
+  motion(MotionEvent.ACTION_DOWN,x,y);motion(MotionEvent.ACTION_MOVE,x+50,y+40);motion(MotionEvent.ACTION_UP,x+50,y+40);
+  assertEquals(1,listener.starts);assertEquals(1,listener.moves);assertEquals(1,listener.finishes);
+  assertTrue(listener.actions.isEmpty());assertEquals(0,listener.opens);assertEquals(0,listener.collapses);
+  island.bind(active("drag-call"),false);layout(320);
+  motion(MotionEvent.ACTION_DOWN,60,25);motion(MotionEvent.ACTION_MOVE,61,26);motion(MotionEvent.ACTION_UP,61,26);
+  assertEquals(1,listener.expands);assertEquals(1,listener.starts);
+ }
+ @Test public void cancelReplacementAndSecondPointerCannotDispatchOrCompleteAnOldGesture(){
+  listener.movable=true;island.bind(active("old-call"),true);layout(320);
+  Rect end=bounds(required("island-action-END"));float x=end.exactCenterX(),y=end.exactCenterY();
+  motion(MotionEvent.ACTION_DOWN,x,y);motion(MotionEvent.ACTION_MOVE,x+40,y+40);motion(MotionEvent.ACTION_CANCEL,x+40,y+40);
+  assertEquals(1,listener.cancels);assertEquals(0,listener.finishes);assertTrue(listener.actions.isEmpty());
+  motion(MotionEvent.ACTION_DOWN,x,y);island.bind(active("replacement-call"),true);layout(320);motion(MotionEvent.ACTION_UP,x,y);
+  assertTrue(listener.actions.isEmpty());assertEquals(0,listener.finishes);
+  motion(MotionEvent.ACTION_DOWN,x,y);motion(MotionEvent.ACTION_POINTER_DOWN,x,y);motion(MotionEvent.ACTION_UP,x,y);
+  assertTrue(listener.actions.isEmpty());assertEquals(0,listener.finishes);
+ }
+ @Test public void transparentBackgroundCompositesActualPixelsWhileTextAndControlsRemainOpaque(){
+  prefs.edit().putString("island_style","transparent").putInt("island_background_opacity",0).commit();
+  island.bind(active("clear"),true);layout(320);
+  android.graphics.Bitmap canvas=android.graphics.Bitmap.createBitmap(island.getWidth(),island.getHeight(),android.graphics.Bitmap.Config.ARGB_8888);
+  android.graphics.Canvas draw=new android.graphics.Canvas(canvas);draw.drawColor(0xFF4386BC);island.getBackground().setBounds(0,0,island.getWidth(),island.getHeight());island.getBackground().draw(draw);
+  assertEquals(0xFF4386BC,canvas.getPixel(island.getWidth()/2,island.getHeight()/2));
+  assertEquals(1f,island.getAlpha(),0f);assertNotNull(required("island-caller").getBackground());assertEquals(1f,required("island-action-END").getAlpha(),0f);
+  prefs.edit().putInt("island_background_opacity",100).commit();island.bind(active("clear"),true);layout(320);
+  draw.drawColor(0xFF4386BC);island.getBackground().setBounds(0,0,island.getWidth(),island.getHeight());island.getBackground().draw(draw);
+  assertNotEquals(0xFF4386BC,canvas.getPixel(island.getWidth()/2,island.getHeight()/2));canvas.recycle();
+ }
+
+ @Test public void overflowingControlsScrollWithoutDraggingOrCallingWhileTheHeaderStillDrags(){
+  listener.movable=true;content.removeView(island);
+  android.widget.ScrollView scroll=new android.widget.ScrollView(activity);content.addView(scroll,new FrameLayout.LayoutParams(-1,dp(130)));
+  scroll.addView(island,new android.widget.ScrollView.LayoutParams(-1,-2));island.bind(active("overflow"),true);layout(320);
+  assertTrue(island.getHeight()>scroll.getHeight());
+  Rect end=bounds(required("island-action-END"));scroll.scrollTo(0,end.top-dp(30));
+  int before=scroll.getScrollY();float x=end.exactCenterX(),y=end.exactCenterY()-before;
+  for(int action:new int[]{MotionEvent.ACTION_DOWN,MotionEvent.ACTION_MOVE,MotionEvent.ACTION_UP}){
+   MotionEvent event=MotionEvent.obtain(SystemClock.uptimeMillis(),SystemClock.uptimeMillis(),action,x,action==MotionEvent.ACTION_DOWN?y:y-dp(40),0);
+   scroll.dispatchTouchEvent(event);event.recycle();
+  }
+  assertEquals(0,listener.starts);assertTrue(listener.actions.isEmpty());assertTrue(scroll.getScrollY()>before);
+  scroll.scrollTo(0,0);
+  for(int action:new int[]{MotionEvent.ACTION_DOWN,MotionEvent.ACTION_MOVE,MotionEvent.ACTION_UP}){
+   MotionEvent event=MotionEvent.obtain(SystemClock.uptimeMillis(),SystemClock.uptimeMillis(),action,dp(60),action==MotionEvent.ACTION_DOWN?dp(25):dp(70),0);
+   scroll.dispatchTouchEvent(event);event.recycle();
+  }
+  assertEquals(1,listener.starts);assertEquals(1,listener.finishes);assertTrue(listener.actions.isEmpty());
+ }
+
 }

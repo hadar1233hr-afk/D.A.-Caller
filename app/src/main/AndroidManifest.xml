@@ -38,6 +38,18 @@
   <activity-alias android:name=".LauncherWave" android:targetActivity=".MainActivity" android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_wave" android:label="DA CALLER">
    <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
   </activity-alias>
+  <activity-alias android:name=".LauncherAureole" android:targetActivity=".MainActivity" android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_aureole" android:label="DA CALLER">
+   <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+  </activity-alias>
+  <activity-alias android:name=".LauncherFacet" android:targetActivity=".MainActivity" android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_facet" android:label="DA CALLER">
+   <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+  </activity-alias>
+  <activity-alias android:name=".LauncherWine" android:targetActivity=".MainActivity" android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_wine" android:label="DA CALLER">
+   <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+  </activity-alias>
+  <activity-alias android:name=".LauncherSignal" android:targetActivity=".MainActivity" android:enabled="false" android:exported="true" android:icon="@mipmap/ic_launcher_signal" android:label="DA CALLER">
+   <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+  </activity-alias>
   <activity android:name=".CallIslandSettingsActivity" android:exported="false"/>
   <activity android:name=".SettingsBackupActivity" android:exported="false"/>
   <activity android:name=".ChangelogActivity" android:exported="false"/>

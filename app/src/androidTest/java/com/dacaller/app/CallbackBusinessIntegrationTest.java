@@ -527,12 +527,12 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   Call unknown=PhoneSessionService.current;Thread.sleep(350);finishRemote(unknown,1);
   MainActivity activity=startMain("recents");assertEquals("recents",page(activity));
   await(()->nativeExactText(NUMBER)!=null,"Actual unknown Telecom row must appear in Recents");
-  tapNativeText(NUMBER);tapNativeText("כרטיס איש קשר");
-  await(()->nativeExactText("יצירת איש קשר חדש")!=null,"Unknown number must offer explicit new-contact action");
+  tapNativeText(NUMBER);
+  await(()->tag(activity,"recent_contact")!=null&&tag(activity,"recent_contact").isShown(),"Expanded unknown row must expose its explicit contact action");
   assertNull("Opening unknown-number actions must never dial",PhoneSessionService.current);
   JSONObject proof=new JSONObject().put("api",33).put("number",NUMBER).put("origin","actual emulator Telecom missed call").put("actions_dark",true).put("editor_dark",false)
    .put("actions_bars",snapshot("recents-unknown-number-actions",true)).put("call_log_before_editor",ownRows());
-  tapNativeText("יצירת איש קשר חדש");await(()->editor!=null&&!editor.isFinishing(),"Explicit action must launch the production editor");
+  tapView(tag(activity,"recent_contact"));await(()->editor!=null&&!editor.isFinishing(),"Explicit action must launch the production editor");
   launched.add(editor);ready(editor);assertEquals(NUMBER,editor.getIntent().getStringExtra("incoming_number"));assertFalse(editor.getIntent().hasExtra("contact_id"));
   EditText phone=editor.findViewById(0x01000000 | ("phone0".hashCode() & 0x00ffffff));assertNotNull(phone);
   await(()->NUMBER.contentEquals(phone.getText()),"Exact unknown number must prefill new contact");

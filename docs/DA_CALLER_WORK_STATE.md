@@ -1,5 +1,66 @@
 # DA CALLER continuation state
 
+## Preserved implementation checkpoint after environment restart — 2026-11-12 UTC
+
+The environment restarted again during focused follow-up work. All previous
+workers/processes were checked: no active overlap survived. Root resumed with
+three narrow source finishers and one serialized Gradle run. Source files and
+actual evidence survived. This is an environment interruption, **not an observed
+quota error**. The old quota stop remains historical.
+
+Optional archive/settings backup now has **47 actual host methods PASS**, API33
+NativeSQLite, retained in `work/archive-backup-013/final-pass` and the component
+checkpoint evidence. Its independent review fixed journal readback/publication,
+verified cleanup, resolved-token ordering and icon rollback tracking. Additional
+pending-recovery preference-write guards are now being completed and are not yet
+tested. Main refreshes only after pending recovery resolves; dialing stays available.
+
+Recents first focused run: **37/38 PASS**, one new drag fixture incorrectly assumed
+native fast scrolling on a three-row list. That result is retained; strengthen the
+real long-list fixture and verify rather than declaring PASS. The diagnostic
+attempt then compiled zero tests while a shared guard API was being added; do not
+reuse stale JUnit. Island has70 written host methods awaiting actual execution.
+New ModernFeatures native source is written/compile-only; its strict additive
+24-frame evidence profile is still being completed. No fresh emulator proof.
+
+Root added exact expanded-recents identity and Settings return-page persistence,
+modern bottom dialpad/top-left Settings, business header/attribution/category
+polish and meaningful regressions. Business DB/manifest/reader hashes were checked
+unchanged. All original245 captures/verifiers remain required; new evidence is
+separate and additive. Future signing/publication remains blocked by unchanged
+defaults. No new APK/link or release approval;0.12 already delivered/immutable.
+
+## New eleven requirements: implementation resumed, verification in progress — 2026-11-12
+
+The historical quota interruption below was followed by a normal scheduled
+continuation. No actual quota error has occurred in the current continuation.
+The shared worktree retains source implementations for the eleven requests
+and the business visual corrections; these are **uncommitted WIP, not fresh
+native or visual approval**. Current team ownership is coordinated by root:
+appearance/fonts; transactional optional archive backup; inline Recents; island
+position/drag/hide/transparency; new native regressions. Gradle is serialized.
+No independent overlapping checkout or CI is editing this source.
+
+Fresh actual component evidence: appearance/Settings **11 host methods PASS**
+(`work/appearance-013/thumb-optical-fix/summary.json`); launcher work **18 host
+methods PASS /18 host previews** (`/workspace/work/icons-013/restored-final-report/`);
+call layout work **27 focused methods PASS** at its recorded earlier component
+source (`/workspace/work/call-design-013-2026-11-12/second-focused/`). Subsequent
+integration still requires the full current-source suite. Archive, Recents and
+island new feature methods are not yet executed. Independent archive review
+found interrupted journal publication/cleanup and icon rollback hazards; fixes
+and failure-path regressions are underway before broader verification.
+
+Still required: finish runtime return state/navigation, rounded dialogs across
+remaining screens, business visual regressions; execute all focused/full host
+checks; extend real native interaction/evidence without losing the original245
+frames; new Telecom CI, actual screenshots and full visual review. No new APK,
+release or current-source native PASS. The existing 0.12.0 APK was already
+delivered; keep it immutable and do not resend. Future signing/publication
+defaults stay closed and the 0.12-only exception does not extend to0.13.
+Business reader/DB/manifest hashes stay frozen; no private archive in Git.
+The existing two-hour automation stays enabled for unfinished owner scope.
+
 ## Actual quota stop; eleven new owner requests queued — 2026-11-12
 
 Read [the eleven newest direct owner requirements](DA_CALLER_OWNER_REQUESTS_2026-11-12.md).

@@ -14,7 +14,6 @@ import android.telecom.TelecomManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.View;
@@ -48,7 +47,7 @@ final class SettingsScreen {
   ink=dark?Color.WHITE:0xFF161616;
   subtle=dark?0xFFA9A9A9:0xFF6B6B6B;
   surface=dark?0xFF232323:Color.WHITE;
-  accent=dark?0xFFE1C38A:0xFF926C37;
+  accent="silver".equals(prefs.getString("accent","gold"))?(dark?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark);
   divider=dark?0xFF383838:0xFFE5E5E2;
  }
  private GradientDrawable card(int c,int radius){
@@ -56,7 +55,7 @@ final class SettingsScreen {
  }
  private TextView text(String heb,int size,boolean bold,int color){
   TextView v=new TextView(host);v.setText(tr(heb));v.setTextSize(size);v.setTextColor(color);
-  v.setTypeface(Typeface.create(bold?"sans-serif-medium":"sans-serif",Typeface.NORMAL));
+  AppAppearance.font(v,bold);
   v.setGravity(Gravity.CENTER_VERTICAL);v.setIncludeFontPadding(false);return v;
  }
  private LinearLayout column(){LinearLayout l=new LinearLayout(host);l.setOrientation(LinearLayout.VERTICAL);
@@ -89,7 +88,7 @@ final class SettingsScreen {
      prefs.edit().putString("language",value).apply();
      WidgetSupport.refreshAll(host);host.refreshPagePreserveScroll();
     });
-  option("סמל האפליקציה","חמישה סמלים בירוק כהה וזהב",this::chooseLauncherIcon);
+  option("סמל האפליקציה",I18n.isEnglish(host)?"Distinct icons in vivid gold and wine":"מבחר סמלים בזהב חי ובגווני יין",this::chooseLauncherIcon);
   lastOption().setTag("settings_icons");
   option("צורת תמונות אנשי קשר","הצורה תחול בכל המסכים ובווידג׳טים",this::chooseAvatarShape);
   lastOption().setTag("settings_avatar_shapes");
@@ -125,6 +124,7 @@ final class SettingsScreen {
    TextView check=text(id.equals(val)?"●":"○",23,true,id.equals(val)?accent:subtle);
    item.addView(check);
    item.setOnClickListener(v->{
+    if(!SettingsBackup.allowPreferenceChange(host))return;
     TouchFeedback.pulse(host,prefs,item);
     prefs.edit().putString("call_theme",id).apply();
     host.refreshPagePreserveScroll();
@@ -185,7 +185,7 @@ final class SettingsScreen {
     host.startActivityForResult(SettingsBackupActivity.intent(host,false),310));
   lastOption().setTag("settings_import");
   option("מחיקת ארכיון","מחיקה מקומית שאינה משנה את יומן אנדרואיד",()->{
-   new AlertDialog.Builder(host)
+   AppAppearance.show(new AlertDialog.Builder(host)
     .setTitle(tr("מחיקת כל שיחות הארכיון?"))
     .setMessage(tr("הנתונים יימחקו מהמכשיר ולא ניתן יהיה לשחזרם."))
     .setNegativeButton(tr("ביטול"),null)
@@ -199,7 +199,7 @@ final class SettingsScreen {
        android.widget.Toast.makeText(host,tr(failed?"לא ניתן למחוק את הארכיון":"נמחק"),android.widget.Toast.LENGTH_LONG).show();
       });
      });
-    }).show();
+    }));
   });
   cardEnd();
   section("מחוות ונוחות","↔");
@@ -249,14 +249,14 @@ final class SettingsScreen {
     ()->granted(Manifest.permission.BLUETOOTH_CONNECT),()->requestPermission(Manifest.permission.BLUETOOTH_CONNECT,27));
   option("אבחון תקלה בחיוג","סוג התקלה ומיקום בקוד, ללא מספר טלפון",()->{
    String report=prefs.getString("last_call_failure",tr("לא נרשמה תקלה בשירות השיחות בגרסה זו."));
-   new AlertDialog.Builder(host)
+   AppAppearance.show(new AlertDialog.Builder(host)
      .setTitle(tr("אבחון שיחה"))
      .setMessage(report)
      .setPositiveButton(tr("העתק"),(dialog,which)->{
       android.content.ClipboardManager clipboard=(android.content.ClipboardManager)host.getSystemService(Context.CLIPBOARD_SERVICE);
       if(clipboard!=null)clipboard.setPrimaryClip(android.content.ClipData.newPlainText("DA CALLER diagnostic",report));
      })
-     .setNegativeButton(tr("סגור"),null).show();
+     .setNegativeButton(tr("סגור"),null));
   });
   cardEnd();
   section(I18n.isEnglish(host)?"End-of-day callback reminder":"תזכורת לסוף היום","◷");
@@ -270,9 +270,10 @@ final class SettingsScreen {
   String localTime=android.text.BidiFormatter.getInstance(!I18n.isEnglish(host)).unicodeWrap(reminderClock,android.text.TextDirectionHeuristics.LTR);
   option(I18n.isEnglish(host)?"Reminder time":"שעת התזכורת",
     I18n.isEnglish(host)?localTime+" · device local time":localTime+" · לפי השעון המקומי",()->{
-     new android.app.TimePickerDialog(host,(picker,hour,minute)->{
+     AppAppearance.show(new android.app.TimePickerDialog(host,(picker,hour,minute)->{
+      if(!SettingsBackup.allowPreferenceChange(host))return;
       CallbackReminder.setMinuteOfDay(host,hour*60+minute);host.refreshPagePreserveScroll();
-     },reminderMinute/60,reminderMinute%60,true).show();
+     },reminderMinute/60,reminderMinute%60,true));
     });
   lastOption().setTag("settings_callback_reminder_time");
   option(I18n.isEnglish(host)?"View today's callback list":"פתיחת רשימת החזרה של היום",
@@ -372,8 +373,8 @@ final class SettingsScreen {
   }
   TextView name=text(label,16,true,ink);
   header.addView(name,new LinearLayout.LayoutParams(0,-2,1));
-  TextView arrow=text(prefs.getBoolean(key,false)?"⌃":"⌄",23,true,accent);
-  arrow.setGravity(Gravity.CENTER);
+  ImageView arrow=new ImageView(host);arrow.setImageDrawable(AppAppearance.chevron(host,prefs.getBoolean(key,false),accent));
+  arrow.setScaleType(ImageView.ScaleType.CENTER);arrow.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
   header.addView(arrow,new LinearLayout.LayoutParams(dp(35),dp(48)));
   header.setContentDescription(tr(label));
   if(Build.VERSION.SDK_INT>=30)header.setStateDescription(tr(prefs.getBoolean(key,false)?"מורחב":"מכווץ"));
@@ -395,9 +396,10 @@ final class SettingsScreen {
    final LinearLayout header=sectionHeader;
    final Object[] state=(Object[])header.getTag();
    final String key=(String)state[0];
-   final TextView arrow=(TextView)state[1];
+   final ImageView arrow=(ImageView)state[1];
    content.setVisibility(prefs.getBoolean(key,false)?View.VISIBLE:View.GONE);
    header.setOnClickListener(v->{
+    if(!SettingsBackup.allowPreferenceChange(host))return;
     TouchFeedback.pulse(host,prefs,header);
     boolean expanded=content.getVisibility()!=View.VISIBLE;
     // Whole-tree AutoTransition used to animate every setting row and suppress
@@ -409,7 +411,7 @@ final class SettingsScreen {
      content.setAlpha(0f);content.animate().alpha(1f).setDuration(170).start();
     }
     if(Build.VERSION.SDK_INT>=30)header.setStateDescription(tr(expanded?"מורחב":"מכווץ"));
-    arrow.setText(expanded?"⌃":"⌄");
+    arrow.setImageDrawable(AppAppearance.chevron(host,expanded,accent));
     prefs.edit().putBoolean(key,expanded).apply();
    });
   }
@@ -437,7 +439,9 @@ final class SettingsScreen {
   item.addView(descriptionBlock,new LinearLayout.LayoutParams(0,-2,1));
   descriptionBlock.addView(text(label,14,true,ink));
   descriptionBlock.addView(text(description,11,false,subtle));
-  TextView arrow=text("›",25,false,accent);item.addView(arrow);
+  ImageView arrow=new ImageView(host);arrow.setImageDrawable(AppAppearance.forwardArrow(host,accent));
+  arrow.setScaleType(ImageView.ScaleType.CENTER);arrow.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+  item.addView(arrow,new LinearLayout.LayoutParams(dp(32),dp(48)));
   item.setOnClickListener(v->{TouchFeedback.pulse(host,prefs,item);click.run();});
   sep();
  }
@@ -448,8 +452,14 @@ final class SettingsScreen {
   item.addView(descriptionBlock,new LinearLayout.LayoutParams(0,-2,1));
   descriptionBlock.addView(text(label,14,true,ink));
   descriptionBlock.addView(text(description,11,false,subtle));
-  Switch sw=new Switch(host);sw.setChecked(checked);sw.setContentDescription(tr(label));item.addView(sw);
+  Switch sw=new Switch(host);sw.setChecked(checked);AppAppearance.styleSwitch(sw,dark);
+  sw.setContentDescription(tr(label));item.addView(sw);
+  boolean[] reverting={false};
   sw.setOnCheckedChangeListener((widget,value)->{
+   if(reverting[0])return;
+   if(!SettingsBackup.allowPreferenceChange(host)){
+    reverting[0]=true;sw.setChecked(prefs.getBoolean(key,checked));reverting[0]=false;return;
+   }
    if(key.equals("callback_reminder_enabled")){
     CallbackReminder.setEnabled(host,value);
     if(value){if(!isDefaultDialer())host.requestDefaultDialer();else host.requestCallbackReminderPermissions();}
@@ -471,11 +481,12 @@ final class SettingsScreen {
  }
  @android.annotation.SuppressLint("ApplySharedPref") // Choice is committed on IO, with a visible failure result.
  private void chooseVisual(String title,String[] ids,boolean icons){
+  if(!SettingsBackup.allowPreferenceChange(host))return;
   ScrollView scroll=new ScrollView(host);
   scroll.setBackgroundColor(surface);
   LinearLayout choices=column();choices.setPadding(dp(8),dp(8),dp(8),dp(8));scroll.addView(choices);
   android.content.Context dialogTheme=new android.view.ContextThemeWrapper(host,dark?
-    android.R.style.Theme_Material_Dialog_Alert:android.R.style.Theme_Material_Light_Dialog_Alert);
+    R.style.AppDialogDark:R.style.AppDialogLight);
   AlertDialog dialog=new AlertDialog.Builder(dialogTheme).setTitle(tr(title)).setView(scroll)
     .setNegativeButton(tr("ביטול"),null).create();
   String selected=icons?AppIcons.selected(host):AvatarShapes.selected(host);
@@ -495,24 +506,26 @@ final class SettingsScreen {
    item.setContentDescription(label+", "+tr(selected.equals(id)?"נבחר":"בחר"));
    item.setFocusable(true);TouchFeedback.bind(item,prefs);choices.addView(item,new LinearLayout.LayoutParams(-1,-2));
    item.setOnClickListener(v->{
+    if(!SettingsBackup.allowPreferenceChange(host))return;
     if(!saving.compareAndSet(false,true))return;
     TouchFeedback.pulse(host,prefs,item);
     for(int i=0;i<choices.getChildCount();i++)choices.getChildAt(i).setEnabled(false);
     Context app=host.getApplicationContext();
     IO.execute(()->{
-     boolean applied=icons?AppIcons.select(app,id):prefs.edit().putString("avatar_shape",id).commit();
+     boolean allowed=SettingsBackup.allowPreferenceChange(app);
+     boolean applied=allowed&&(icons?AppIcons.select(app,id):prefs.edit().putString("avatar_shape",id).commit());
      host.runOnUiThread(()->{
       if(host.isFinishing()||host.isDestroyed())return;
       if(!applied){
        saving.set(false);for(int i=0;i<choices.getChildCount();i++)choices.getChildAt(i).setEnabled(true);
-       android.widget.Toast.makeText(host,tr("לא ניתן לשמור את הבחירה. נסה שוב."),android.widget.Toast.LENGTH_LONG).show();return;
+       if(allowed)android.widget.Toast.makeText(host,tr("לא ניתן לשמור את הבחירה. נסה שוב."),android.widget.Toast.LENGTH_LONG).show();return;
       }
       dialog.dismiss();WidgetSupport.refreshAll(app);host.refreshPagePreserveScroll();
      });
     });
    });
   }
-  dialog.show();
+  AppAppearance.show(dialog);
  }
  private void choice(String label,String description,String key,String[] names,String[] values,String selected,Change changed){
   LinearLayout item=row();item.setPadding(dp(12),dp(7),dp(12),dp(7));
@@ -522,17 +535,21 @@ final class SettingsScreen {
   String found="";for(int i=0;i<values.length;i++)if(selected.equals(values[i]))found=tr(names[i]);
   String second=found.isEmpty()?tr(description):found;
   copy.addView(text(second,12,false,accent));
-  TextView arrow=text("⌄",23,false,subtle);item.addView(arrow);
+  ImageView arrow=new ImageView(host);arrow.setImageDrawable(AppAppearance.chevron(host,false,subtle));
+  arrow.setScaleType(ImageView.ScaleType.CENTER);arrow.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+  item.addView(arrow,new LinearLayout.LayoutParams(dp(32),dp(48)));
   item.setOnClickListener(v->{
+   if(!SettingsBackup.allowPreferenceChange(host))return;
    TouchFeedback.pulse(host,prefs,item);
    String[] translated=new String[names.length];
    int index=0;
    for(int i=0;i<names.length;i++){translated[i]=tr(names[i]);if(values[i].equals(selected))index=i;}
-   new AlertDialog.Builder(host)
+   AppAppearance.show(new AlertDialog.Builder(host)
     .setTitle(tr(label))
     .setSingleChoiceItems(translated,index,(dialog,which)->{
+     if(!SettingsBackup.allowPreferenceChange(host))return;
      dialog.dismiss();changed.value(values[which]);
-    }).setNegativeButton(tr("ביטול"),null).show();
+    }).setNegativeButton(tr("ביטול"),null));
   });
   sep();
  }

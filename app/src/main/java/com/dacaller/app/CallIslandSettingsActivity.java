@@ -25,6 +25,7 @@ import android.view.WindowInsetsController;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Switch;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,8 @@ public final class CallIslandSettingsActivity extends Activity {
  private int background,surface,ink,secondary,accent;
  private CallIslandView preview;
  private TextView phaseChoice,styleChoice,sizeChoice,previewToggle,previewEnd;
- private TextView outsidePermission,phoneRole;
+ private TextView outsidePermission,phoneRole,positionChoice,opacityLabel;
+ private SeekBar opacity;
  private final Handler handler=new Handler(Looper.getMainLooper());
  private final Runnable clock=new Runnable(){@Override public void run(){
   if(preview!=null&&!ended)preview.tick(System.currentTimeMillis());handler.postDelayed(this,1000);
@@ -47,7 +49,7 @@ public final class CallIslandSettingsActivity extends Activity {
  private GradientDrawable shape(int color,int radius){GradientDrawable drawable=new GradientDrawable();drawable.setColor(color);drawable.setCornerRadius(dp(radius));return drawable;}
  private TextView text(String value,int sp,boolean strong,int color){
   TextView view=new TextView(this);view.setText(value);view.setTextSize(sp);view.setTextColor(color);view.setGravity(Gravity.CENTER_VERTICAL);
-  view.setTypeface(Typeface.create(strong?"sans-serif-medium":"sans-serif",Typeface.NORMAL));return view;
+  AppAppearance.font(view,strong);return view;
  }
  private LinearLayout column(){LinearLayout result=new LinearLayout(this);result.setOrientation(LinearLayout.VERTICAL);return result;}
  @Override public void onCreate(Bundle state){
@@ -55,14 +57,14 @@ public final class CallIslandSettingsActivity extends Activity {
   dark=prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);
   background=prefs.getBoolean("amoled",false)?Color.BLACK:dark?0xFF121413:0xFFF5F6F3;
   surface=dark?0xFF202521:Color.WHITE;ink=dark?0xFFF5F7F4:0xFF17231B;
-  secondary=dark?0xFFB8C4BA:0xFF596B5D;accent=dark?0xFF9CE9AE:0xFF236B3B;
+  secondary=dark?0xFFB8C4BA:0xFF596B5D;accent=AppAppearance.gold(dark);
   if(state!=null){expanded=state.getBoolean("expanded");muted=state.getBoolean("muted");speaker=state.getBoolean("speaker");
    ended=state.getBoolean("ended");phase=state.getInt("phase",Call.STATE_ACTIVE);connectedAt=state.getLong("connected_at",connectedAt);}
   ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);scroll.setBackgroundColor(background);scroll.setTag("island-settings-scroll");
   LinearLayout root=column();root.setPadding(dp(16),dp(12),dp(16),dp(28));root.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);
   scroll.addView(root,new ScrollView.LayoutParams(-1,-2));setContentView(scroll);
   LinearLayout header=new LinearLayout(this);header.setGravity(Gravity.CENTER_VERTICAL);root.addView(header,new LinearLayout.LayoutParams(-1,-2));
-  TextView back=text(I18n.isEnglish(this)?"‹":"›",32,false,accent);back.setGravity(Gravity.CENTER);back.setContentDescription(tr("חזרה","Back"));
+  TextView back=text("",32,false,accent);back.setCompoundDrawablesRelativeWithIntrinsicBounds(AppAppearance.backArrow(this,accent),null,null,null);back.setPadding(dp(12),0,dp(12),0);back.setGravity(Gravity.CENTER);back.setContentDescription(tr("חזרה","Back"));
   header.addView(back,new LinearLayout.LayoutParams(dp(48),dp(48)));back.setOnClickListener(v->finish());
   TextView title=text(tr("אי שיחה דינמי","Dynamic call island"),23,true,ink);header.addView(title,new LinearLayout.LayoutParams(0,-2,1));
   TextView introduction=text(tr("השיחה נשארת בהישג יד באפליקציה, וגם במסך הבית ובאפליקציות אחרות אם בוחרים בכך.","Keep your call within reach in the app, and optionally on Home and above other apps."),14,false,secondary);
@@ -73,6 +75,7 @@ public final class CallIslandSettingsActivity extends Activity {
   Switch outsideSwitch=toggle(outside,tr("הצגה במסך הבית ובאפליקציות אחרות","Show on Home and above other apps"),
     tr("בזמן חיוג, שיחה פעילה והמתנה. שיחה נכנסת מוצגת בהתראת Android.","Shown during dialing, active and held calls. Incoming calls stay in Android's call notification."),"island_outside_app",false);
   outsideSwitch.setOnCheckedChangeListener((button,value)->{
+   if(!SettingsBackup.allowPreferenceChange(this)){button.setChecked(prefs.getBoolean("island_outside_app",false));return;}
    prefs.edit().putBoolean("island_outside_app",value).apply();updateIntegrationStatus();
    if(value&&!canDrawOutside())openOutsidePermission();
   });
@@ -96,8 +99,29 @@ public final class CallIslandSettingsActivity extends Activity {
   });
   phaseChoice=choice(demo,tr("מצב ההדגמה","Preview state"),"island_preview_state",()->choosePhase());
   previewToggle=choice(demo,"","island_preview_expand",()->{ended=false;expanded=!expanded;renderPreview();});
+  LinearLayout positioning=group(root,tr("מיקום והסתרה","Position and visibility"));
+  positionChoice=choice(positioning,"","island_position_mode",this::choosePosition);
+  TextView compatibility=text(tr("אזור שורת המצב זמין בחלון האפליקציה. השעון וסמלי Android נשארים גלויים; מגרעת או מרחב צר מעבירים את האי מתחת לשורה. מחוץ לאפליקציה האי נשאר מתחת לשורת המצב כשהיא גלויה.",
+    "The app window can use the top area. Android's clock and icons remain visible; a cutout or narrow space moves the island below. Outside the app, the island stays below the protected status bar while it is visible."),12,false,secondary);
+  compatibility.setTag("island_position_compatibility");compatibility.setPadding(dp(14),dp(4),dp(14),dp(12));positioning.addView(compatibility,new LinearLayout.LayoutParams(-1,-2));
+  choice(positioning,tr("איפוס המיקום שנגרר","Reset dragged position"),"island_position_reset",()->{if(CallIslandPosition.reset(this,prefs))Toast.makeText(this,tr("המיקום אופס","Position reset"),Toast.LENGTH_SHORT).show();});
+  choice(positioning,tr("הצגת האי מחדש בשיחה הנוכחית","Show island again for this call"),"island_restore",()->{prefs.edit().remove("island_hidden_token").apply();Toast.makeText(this,tr("האי מוצג שוב אם ההצגה מופעלת","Island restored when display is enabled"),Toast.LENGTH_SHORT).show();});
+  TextView hideNote=text(tr("להזזה, גוררים את האי. להסתרה מלאה, מרחיבים ובוחרים הסתרה לשיחה זו. השיחה וההתראה ממשיכות כרגיל; הכפתור מעל מציג את האי מחדש. בשיחה חדשה האי חוזר אוטומטית.",
+    "Drag the island to move it. Expand it and choose Hide for this call to hide it completely. The call and notification continue; restore it here. A new call shows the island again."),12,false,secondary);
+  hideNote.setPadding(dp(14),dp(4),dp(14),dp(12));positioning.addView(hideNote,new LinearLayout.LayoutParams(-1,-2));
   LinearLayout visibility=group(root,tr("מתי ואיך להציג","Presentation"));
   styleChoice=choice(visibility,tr("סגנון האי","Island style"),"island_style",()->chooseStyle());
+  opacityLabel=text("",13,true,ink);opacityLabel.setPadding(dp(14),dp(10),dp(14),0);visibility.addView(opacityLabel,new LinearLayout.LayoutParams(-1,-2));
+  opacity=new SeekBar(this);opacity.setTag("island_background_opacity");opacity.setMax(100);opacity.setProgress(Math.max(0,Math.min(100,prefs.getInt("island_background_opacity",35))));
+  opacity.setMinimumHeight(dp(48));opacity.setPadding(dp(16),0,dp(16),0);opacity.setProgressTintList(ColorStateList.valueOf(accent));opacity.setThumbTintList(ColorStateList.valueOf(accent));
+  visibility.addView(opacity,new LinearLayout.LayoutParams(-1,dp(48)));
+  opacity.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+   public void onProgressChanged(SeekBar bar,int value,boolean fromUser){if(fromUser){
+    if(!SettingsBackup.allowPreferenceChange(CallIslandSettingsActivity.this)){bar.setProgress(Math.max(0,Math.min(100,prefs.getInt("island_background_opacity",35))));return;}
+    prefs.edit().putInt("island_background_opacity",value).apply();renderPreview();
+   }}
+   public void onStartTrackingTouch(SeekBar bar){} public void onStopTrackingTouch(SeekBar bar){}
+  });
   sizeChoice=choice(visibility,tr("גודל האי","Island size"),"island_size",()->chooseSize());
   toggle(visibility,tr("משך השיחה","Call duration"),tr("הצגת הטיימר בשיחה פעילה.","Show the timer during an active call."),"island_show_timer",true);
   toggle(visibility,tr("תמונת איש הקשר","Contact photo"),tr("תמונה או ראשי תיבות ליד פרטי השיחה.","Show a photo or initials beside the call details."),"island_show_photo",true);
@@ -107,7 +131,7 @@ public final class CallIslandSettingsActivity extends Activity {
   toggle(controls,tr("כפתור רמקול","Speaker control"),tr("מעבר לרמקול וחזרה לפלט השמע הזמין.","Switch to speaker and back to an available private audio route."),"island_show_speaker",true);
   toggle(controls,tr("כפתור המתנה","Hold control"),tr("מוצג כשאפשר להשהות את השיחה או להמשיך אותה.","Shown when the call supports hold or resume."),"island_show_hold",true);
   toggle(controls,tr("אישור לפני סיום שיחה","Confirm before ending a call"),tr("אישור נוסף לסיום או לדחיית שיחה מתוך האי.","Ask before ending or declining a call from the island."),"island_confirm_end",true);
-  TextView tip=text(tr("נגיעה באי פותחת את הפקדים. לחיצה ממושכת מחזירה למסך השיחה.","Tap the island for controls. Touch and hold to return to the call screen."),13,false,secondary);
+  TextView tip=text(tr("נגיעה באי פותחת את הפקדים. גרירה מזיזה אותו. לחיצה ממושכת מחזירה למסך השיחה.","Tap for controls, drag to move, or touch and hold to return to the call screen."),13,false,secondary);
   tip.setPadding(dp(4),dp(18),dp(4),0);root.addView(tip,new LinearLayout.LayoutParams(-1,-2));
   applySystemBars();renderPreview();updateIntegrationStatus();
  }
@@ -117,7 +141,7 @@ public final class CallIslandSettingsActivity extends Activity {
  }
  private TextView choice(LinearLayout parent,String label,String tag,Runnable action){
   TextView view=text(label,15,true,ink);view.setTag(tag);view.setPadding(dp(14),dp(12),dp(14),dp(12));view.setMinimumHeight(dp(52));
-  view.setBackground(shape(surface,18));view.setFocusable(true);view.setClickable(true);
+  view.setBackground(shape(surface,18));view.setFocusable(true);view.setClickable(true);view.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,AppAppearance.forwardArrow(this,accent),null);view.setCompoundDrawablePadding(dp(8));
   parent.addView(view,new LinearLayout.LayoutParams(-1,-2));view.setOnClickListener(v->{TouchFeedback.pulse(this,prefs,v);action.run();});return view;
  }
  private Switch toggle(LinearLayout parent,String label,String description,String key,boolean fallback){
@@ -127,10 +151,12 @@ public final class CallIslandSettingsActivity extends Activity {
   words.addView(name,new LinearLayout.LayoutParams(-1,-2));words.addView(detail,new LinearLayout.LayoutParams(-1,-2));
   row.addView(words,new LinearLayout.LayoutParams(0,-2,1));
   Switch control=new Switch(this);control.setTag(key);control.setContentDescription(label);control.setChecked(prefs.getBoolean(key,fallback));control.setMinimumWidth(dp(52));control.setMinHeight(dp(48));
-  control.setThumbTintList(new ColorStateList(new int[][]{new int[]{android.R.attr.state_checked},new int[]{}},new int[]{accent,dark?0xFF9EAAA1:0xFFB3BDB5}));
-  control.setTrackTintList(new ColorStateList(new int[][]{new int[]{android.R.attr.state_checked},new int[]{}},new int[]{dark?0xFF3C6546:0xFFA8CEB0,dark?0xFF384039:0xFFDCE3DE}));
+  AppAppearance.styleSwitch(control,dark);
   LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(-2,-2);params.setMarginStart(dp(12));row.addView(control,params);
-  control.setOnCheckedChangeListener((button,value)->{prefs.edit().putBoolean(key,value).apply();renderPreview();});
+  control.setOnCheckedChangeListener((button,value)->{
+   if(!SettingsBackup.allowPreferenceChange(this)){button.setChecked(prefs.getBoolean(key,fallback));return;}
+   prefs.edit().putBoolean(key,value).apply();renderPreview();
+  });
   row.setOnClickListener(v->control.setChecked(!control.isChecked()));
   return control;
  }
@@ -164,12 +190,19 @@ public final class CallIslandSettingsActivity extends Activity {
   }catch(RuntimeException unavailable){Toast.makeText(this,tr("בחר ב־DA CALLER כחייגן ברירת המחדל בהגדרות המכשיר.","Choose DA CALLER as the default phone app in device settings."),Toast.LENGTH_LONG).show();}
  }
  private void chooseStyle(){
-  String[] values={"apple","glass","emerald"};String[] labels={tr("קלאסי שחור","Classic black"),tr("זכוכית רכה","Soft glass"),tr("אמרלד","Emerald")};
-  choose(tr("סגנון האי","Island style"),values,labels,prefs.getString("island_style","apple"),value->{prefs.edit().putString("island_style",value).apply();renderPreview();});
+  String[] values={"apple","glass","emerald","transparent"};String[] labels={tr("קלאסי שחור","Classic black"),tr("זכוכית רכה","Soft glass"),tr("אמרלד","Emerald"),tr("שקוף · רקע אמיתי","See-through · real background")};
+  choose(tr("סגנון האי","Island style"),values,labels,prefs.getString("island_style","apple"),value->{if(!SettingsBackup.allowPreferenceChange(this))return;prefs.edit().putString("island_style",value).apply();renderPreview();});
+ }
+ private void choosePosition(){
+  String[] values={"below","status_area"};String[] labels={tr("מתחת לשורת המצב · ברירת המחדל","Below status bar · default"),tr("אזור שורת המצב · במכשירים תומכים","Status-bar area · where supported")};
+  choose(tr("מיקום האי","Island position"),values,labels,prefs.getString(CallIslandPosition.MODE,"below"),value->{
+   if(!SettingsBackup.allowPreferenceChange(this))return;
+   prefs.edit().putString(CallIslandPosition.MODE,value).remove(CallIslandPosition.SET).remove(CallIslandPosition.X).remove(CallIslandPosition.Y).apply();renderPreview();
+  });
  }
  private void chooseSize(){
   String[] values={"compact","comfortable"};String[] labels={tr("קומפקטי","Compact"),tr("מרווח","Comfortable")};
-  choose(tr("גודל האי","Island size"),values,labels,prefs.getString("island_size","compact"),value->{prefs.edit().putString("island_size",value).apply();renderPreview();});
+  choose(tr("גודל האי","Island size"),values,labels,prefs.getString("island_size","compact"),value->{if(!SettingsBackup.allowPreferenceChange(this))return;prefs.edit().putString("island_size",value).apply();renderPreview();});
  }
  private void choosePhase(){
   String[] values={"active","incoming","outgoing","held"};String[] labels={tr("שיחה פעילה","Active call"),tr("שיחה נכנסת","Incoming call"),tr("שיחה יוצאת","Outgoing call"),tr("שיחה בהמתנה","Call on hold")};
@@ -200,6 +233,11 @@ public final class CallIslandSettingsActivity extends Activity {
     phase==Call.STATE_HOLDING?tr("שיחה בהמתנה","Call on hold"):tr("שיחה פעילה","Active call");
   phaseChoice.setText(tr("מצב ההדגמה","Preview state")+"  ·  "+state);
   previewToggle.setText(ended?tr("להפעיל שוב את ההדגמה","Restart preview"):expanded?tr("תצוגה קומפקטית","Compact preview"):tr("הרחבת האי","Expand island"));
+  positionChoice.setText(tr("מיקום האי","Island position")+"  ·  "+(CallIslandPosition.topArea(prefs)?tr("אזור שורת המצב, אם נתמך","Status-bar area, where supported"):tr("מתחת לשורת המצב","Below status bar")));
+  boolean seeThrough="transparent".equals(prefs.getString("island_style","apple"));opacity.setEnabled(seeThrough);
+  int amount=Math.max(0,Math.min(100,prefs.getInt("island_background_opacity",35)));
+  opacityLabel.setText(tr("אטימות רקע האי","Island background opacity")+"  ·  "+amount+"%"+(seeThrough?"":tr(" · בסגנון שקוף"," · see-through style")));
+  opacity.setContentDescription(tr("אטימות רקע האי; אפס שקוף לחלוטין","Island background opacity; zero is fully clear")+", "+amount+"%");
   styleChoice.setText(tr("סגנון האי","Island style")+"  ·  "+styleLabel());
   sizeChoice.setText(tr("גודל האי","Island size")+"  ·  "+("comfortable".equals(prefs.getString("island_size","compact"))?tr("מרווח","Comfortable"):tr("קומפקטי","Compact")));
   preview.setVisibility(ended?View.GONE:View.VISIBLE);previewEnd.setVisibility(ended?View.VISIBLE:View.GONE);
@@ -211,7 +249,7 @@ public final class CallIslandSettingsActivity extends Activity {
    preview.tick(System.currentTimeMillis());
   }
  }
- private String styleLabel(){String value=prefs.getString("island_style","apple");return "glass".equals(value)?tr("זכוכית רכה","Soft glass"):"emerald".equals(value)?tr("אמרלד","Emerald"):tr("קלאסי שחור","Classic black");}
+ private String styleLabel(){String value=prefs.getString("island_style","apple");return "transparent".equals(value)?tr("שקוף","See-through"):"glass".equals(value)?tr("זכוכית רכה","Soft glass"):"emerald".equals(value)?tr("אמרלד","Emerald"):tr("קלאסי שחור","Classic black");}
  private void applySystemBars(){
   getWindow().setStatusBarColor(background);getWindow().setNavigationBarColor(background);
   if(Build.VERSION.SDK_INT>=30){WindowInsetsController controller=getWindow().getInsetsController();if(controller!=null){

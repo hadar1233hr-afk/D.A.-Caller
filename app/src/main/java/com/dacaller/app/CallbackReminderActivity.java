@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.ContentObserver;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsetsController;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -52,19 +52,20 @@ public final class CallbackReminderActivity extends Activity {
  private TextView text(String value,int sp,boolean strong,int color){
   TextView view=new TextView(this);view.setText(value);view.setTextSize(sp);view.setTextColor(color);
   view.setGravity(Gravity.START|Gravity.CENTER_VERTICAL);view.setTextDirection(View.TEXT_DIRECTION_FIRST_STRONG);
-  view.setTypeface(Typeface.create(strong?"sans-serif-medium":"sans-serif",Typeface.NORMAL));view.setLineSpacing(dp(2),1f);return view;
+  AppAppearance.font(view,strong);view.setLineSpacing(dp(2),1f);return view;
  }
  private GradientDrawable shape(int color,int radius){GradientDrawable view=new GradientDrawable();view.setColor(color);view.setCornerRadius(dp(radius));return view;}
  @Override public void onCreate(Bundle state){
   super.onCreate(state);CallReturnNavigation.install(this);prefs=getSharedPreferences("da_caller",Context.MODE_PRIVATE);
   english=I18n.isEnglish(this);dark=prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);
   background=prefs.getBoolean("amoled",false)?Color.BLACK:dark?0xFF141414:0xFFF7F7F5;
-  surface=dark?0xFF232323:Color.WHITE;ink=dark?0xFFF5F5F3:0xFF161C17;secondary=dark?0xFFB8BEB9:0xFF59635B;accent=dark?0xFFE1C38A:0xFF805B27;
+  surface=dark?0xFF232323:Color.WHITE;ink=dark?0xFFF5F5F3:0xFF161C17;secondary=dark?0xFFB8BEB9:0xFF59635B;
+  accent="silver".equals(prefs.getString("accent","gold"))?(dark?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark);
   selectedDay=state==null?getIntent().getStringExtra(CallbackReminder.EXTRA_DAY):state.getString(CallbackReminder.EXTRA_DAY);
   LinearLayout root=column();root.setTag("callback-reminder-root");root.setBackgroundColor(background);
   root.setLayoutDirection(english?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);root.setPadding(dp(12),dp(8),dp(12),dp(10));setContentView(root);
   LinearLayout header=new LinearLayout(this);header.setGravity(Gravity.CENTER_VERTICAL);root.addView(header,new LinearLayout.LayoutParams(-1,-2));
-  TextView back=text(english?"‹":"›",28,false,accent);back.setGravity(Gravity.CENTER);back.setContentDescription(tr("חזרה","Back"));
+  ImageView back=new ImageView(this);back.setImageDrawable(AppAppearance.backArrow(this,accent));back.setScaleType(ImageView.ScaleType.CENTER);back.setContentDescription(tr("חזרה","Back"));
   back.setTag("callback-reminder-back");back.setFocusable(true);header.addView(back,new LinearLayout.LayoutParams(dp(48),dp(48)));back.setOnClickListener(v->leave());
   TextView title=text(tr("שיחות לחזור אליהן","Calls to return"),22,true,ink);title.setTag("callback-reminder-title");header.addView(title,new LinearLayout.LayoutParams(0,-2,1));
   date=text("",13,false,secondary);date.setTag("callback-reminder-date");date.setPadding(dp(6),dp(5),dp(6),0);root.addView(date,new LinearLayout.LayoutParams(-1,-2));

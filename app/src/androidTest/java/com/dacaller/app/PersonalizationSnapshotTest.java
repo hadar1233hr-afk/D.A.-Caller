@@ -354,9 +354,11 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
     fullyVisible(summary);textFits(summary);
     String average="en".equals(language)?"Average call length":"משך שיחה ממוצע";
     assertTrue("Expanded summary must retain its average-duration label in "+language,containsText(summary,average));
-    assertNotNull("Outgoing count must remain visible after expansion",exactText(summary,"↗ 4"));
-    assertNotNull("Incoming count must remain visible after expansion",exactText(summary,"↙ 5"));
-    assertNotNull("Missed count must remain visible after expansion",exactText(summary,"× 3"));
+    for(String metric:new String[]{"outgoing","incoming","missed"}){
+     View card=summary.findViewWithTag("stats_metric_"+metric);assertNotNull("Missing metric card "+metric,card);fullyVisible(card);
+     TextView count=(TextView)summary.findViewWithTag("stats_"+metric+"_count");assertNotNull(count);fullyVisible(count);textFits(count);
+     assertEquals("outgoing".equals(metric)?"4":"incoming".equals(metric)?"5":"3",count.getText().toString());
+    }
     assertTrue(host.requestedNumbers.isEmpty());
    });screenshot("recents-"+suffix+"-expanded");
   }
@@ -521,7 +523,7 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
   assertEquals("Nothing may change before confirmation",before,settings.getAll());clickAccessible("Cancel");settle();assertEquals(before,settings.getAll());
   Activity importing=backup(false,Activity.RESULT_OK);awaitAccessible("Restore settings");backupSnapshot(importing,true,true,"backup-restore-confirmation");
   assertEquals(before,settings.getAll());clickAccessible("Restore");
-  await(()->containsText(importing.getWindow().getDecorView(),"Settings restored. Contacts and the archive were preserved."),"Restore did not complete");
+  await(()->containsText(importing.getWindow().getDecorView(),"Settings restored. Existing calls and contacts were preserved."),"Restore did not complete");
   assertEquals("hexagon",settings.getString("avatar_shape",""));assertTrue(settings.getBoolean("stats_expanded",false));assertTrue(settings.getBoolean("dark",false));
   assertEquals(new HashSet<>(Arrays.asList("0500099011","0500099000")),settings.getStringSet("favorites",Collections.emptySet()));
   assertEquals("Synthetic test note",settings.getString("note_0500099011",""));
@@ -532,6 +534,10 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
   Instrumentation.ActivityMonitor monitor=getInstrumentation().addMonitor(filter,new Instrumentation.ActivityResult(result,data),true);
   try{
    Activity activity=getInstrumentation().startActivitySync(SettingsBackupActivity.intent(target,export).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));launched.add(activity);settle();
+   if(export){
+    android.widget.CheckBox archive=find(activity.getWindow().getDecorView(),android.widget.CheckBox.class);assertNotNull(archive);assertFalse("Legacy settings backup must default to no archive",archive.isChecked());
+    TextView choose=exactText(activity.getWindow().getDecorView(),"Choose file and save backup");assertNotNull("Export requires an explicit file choice",choose);tap(choose);
+   }
    assertEquals("Production SAF action was not launched",1,monitor.getHits());return activity;
   }finally{getInstrumentation().removeMonitor(monitor);}
  }

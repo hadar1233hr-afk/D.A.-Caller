@@ -356,7 +356,7 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
     snapshot(app,true,"app-"+page+"-expanded");
     tap(tagged(app,"island-collapse"));await(()->!controller.isExpanded(),"Actual MainActivity island did not collapse");settle();
     assertFictionalMainData(app,list);
-    visible(tagged(app,"floating_dial"));visible(tagged(app,"call-island-secondary"));
+    visible(tagged(app,"main_nav_keypad"));visible(tagged(app,"call-island-secondary"));
     assertEquals("Main list identity changed after expand/collapse",identity,list.getAdapter().getItemId(list.getFirstVisiblePosition()));
     assertEquals("Main list offset changed after expand/collapse",top,list.getChildAt(0).getTop());
    }
@@ -377,14 +377,14 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
    assertTrue("Actual MainActivity content overlaps call controls",pageBounds.top>=islandBounds.bottom);
    ListView list=find(app.getWindow().getDecorView(),ListView.class);assertNotNull(list);
    assertTrue((expanded?"Expanded":"Compact")+" island must leave a usable real app list",list.getHeight()>=dp(60));
-   View dial=tagged(app,"floating_dial");
+   View dial=tagged(app,"main_nav_keypad");
    if(dial.isShown()){
     Rect dialBounds=new Rect();assertTrue(dial.getGlobalVisibleRect(dialBounds));
     ArrayList<View> protectedControls=new ArrayList<>();protectedControls.add(tagged(app,"favorites_strip"));
     if(recents)protectedControls.add(tagged(app,"stats_summary"));
     EditText search=find(page,EditText.class);if(search!=null&&search.isShown())protectedControls.add(search);
     for(View control:protectedControls){Rect bounds=new Rect();assertTrue(control.getGlobalVisibleRect(bounds));
-     assertFalse("Floating dial overlaps "+control.getTag(),Rect.intersects(dialBounds,bounds));}
+     assertFalse("Bottom keypad entry overlaps "+control.getTag(),Rect.intersects(dialBounds,bounds));}
    }
   });
  }

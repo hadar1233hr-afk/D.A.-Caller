@@ -1,6 +1,9 @@
 <resources>
  <style name="AppThemeBase" parent="android:style/Theme.Material.Light.NoActionBar">
-  <item name="android:fontFamily">sans</item>
+  <item name="android:fontFamily">@font/app_round</item>
+  <item name="android:colorAccent">#8F2D52</item>
+  <item name="android:colorControlActivated">#8F2D52</item>
+  <item name="android:alertDialogTheme">@style/AppDialogLight</item>
   <item name="android:windowActionModeOverlay">true</item>
   <item name="android:windowLightStatusBar">true</item>
   <item name="android:statusBarColor">#F5F5F4</item>
@@ -8,4 +11,14 @@
   <item name="android:windowBackground">#F5F5F4</item>
  </style>
  <style name="AppTheme" parent="AppThemeBase"/>
+ <style name="AppDialogLight" parent="android:style/Theme.Material.Light.Dialog.Alert">
+  <item name="android:fontFamily">@font/app_round</item>
+  <item name="android:colorAccent">#8F2D52</item>
+  <item name="android:colorControlActivated">#8F2D52</item>
+ </style>
+ <style name="AppDialogDark" parent="android:style/Theme.Material.Dialog.Alert">
+  <item name="android:fontFamily">@font/app_round</item>
+  <item name="android:colorAccent">#C76589</item>
+  <item name="android:colorControlActivated">#C76589</item>
+ </style>
 </resources>

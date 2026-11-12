@@ -15,7 +15,7 @@ mkdir -p app/build
   adb shell cmd overlay list --user 0
   adb shell settings get secure navigation_mode
 } > app/build/ui-device-config.txt
-adb shell rm -rf /sdcard/Download/DA-CALLER-snapshots
+adb shell rm -rf /sdcard/Download/DA-CALLER-snapshots /sdcard/Download/DA-CALLER-next-snapshots
 # Only this host bridge may drive the disposable emulator's simulated modem.
 # The native integration test communicates requests through bounded JSON files;
 # it receives actual Android Telecom calls instead of injecting fixture state.
@@ -49,6 +49,8 @@ if [ "$test_status" -ne 0 ]; then
 fi
 # Keep failing renders for visual debugging, even if instrumentation failed.
 adb pull /sdcard/Download/DA-CALLER-snapshots/ app/build/ui-snapshots/ || true
+mkdir -p app/build/ui-modern-snapshots
+adb pull /sdcard/Download/DA-CALLER-next-snapshots/ app/build/ui-modern-snapshots/ || true
 if [ "$test_status" -ne 0 ]; then exit "$test_status"; fi
 python3 scripts/verify-ui-matrix.py app/build/ui-snapshots
 python3 scripts/verify-personalization-matrix.py app/build/ui-snapshots
@@ -57,3 +59,6 @@ python3 scripts/verify-island-matrix.py app/build/ui-snapshots
 python3 scripts/verify-external-island-matrix.py app/build/ui-snapshots
 python3 scripts/verify-followup-matrix.py app/build/ui-snapshots
 python3 scripts/verify-callback-business-matrix.py app/build/ui-snapshots
+
+# Additive current-feature proof; every original245-frame verifier above remains required.
+python3 scripts/verify-modern-features-native.py app/build/ui-snapshots app/build/ui-modern-snapshots

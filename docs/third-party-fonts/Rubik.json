@@ -1,0 +1,55 @@
+{
+  "family": "Rubik",
+  "source_repository": "https://github.com/google/fonts",
+  "source_commit": "35e77c3854970a550d9894a85aba21420813a019",
+  "source": "https://raw.githubusercontent.com/google/fonts/35e77c3854970a550d9894a85aba21420813a019/ofl/rubik/Rubik%5Bwght%5D.ttf",
+  "font_file": "app/src/main/res/font/rubik_round.ttf",
+  "font_sha256": "1b3a7437ba2af80e465e773ed60c5036d1ba6ace492d89046dbcf18fb31e4e88",
+  "font_bytes": 359804,
+  "license": "SIL Open Font License 1.1",
+  "license_file": "app/src/main/assets/licenses/Rubik-OFL.txt",
+  "license_source": "https://raw.githubusercontent.com/google/fonts/35e77c3854970a550d9894a85aba21420813a019/ofl/rubik/OFL.txt",
+  "license_sha256": "472cbe7c25441df63e9c7864b43eb3c0f4b3df950c66a76224e6cfe1eae843fb",
+  "modified": false,
+  "weights_used": {
+    "normal": 500,
+    "strong": 650
+  },
+  "variable_axes": [
+    {
+      "tag": "wght",
+      "min": 300.0,
+      "default": 300.0,
+      "max": 900.0
+    }
+  ],
+  "cmap_audit": {
+    "unicode_mappings": 885,
+    "all_Hebrew_letters_U05D0_U05EA": true,
+    "all_Basic_Latin_U0020_U007E": true,
+    "Hebrew_marks_present": [
+      "U+05B0",
+      "U+05B1",
+      "U+05B2",
+      "U+05B3",
+      "U+05B4",
+      "U+05B5",
+      "U+05B6",
+      "U+05B7",
+      "U+05B8",
+      "U+05B9",
+      "U+05BA",
+      "U+05BB",
+      "U+05BC",
+      "U+05BE",
+      "U+05C1",
+      "U+05C2",
+      "U+05C7"
+    ]
+  },
+  "runtime_network_required": false,
+  "google_call_digits_exception": "Existing unmodified Nunito at weight650 remains the Google call-screen digit font.",
+  "metadata_file": "docs/third-party-fonts/Rubik-METADATA.pb",
+  "metadata_sha256": "2e81cc9a038e89bcf9a14cd4e2d4513c1b5959e8b9189b835d4ecf4af11968a6",
+  "metadata_source": "https://raw.githubusercontent.com/google/fonts/35e77c3854970a550d9894a85aba21420813a019/ofl/rubik/METADATA.pb"
+}
