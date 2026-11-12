@@ -1,0 +1,69 @@
+{
+  "status": "NATIVE_PASS_VISUAL_NO_GO_NO_PUBLICATION",
+  "source_sha": "3f6702b92aba8feaa329fbb92c5a6f23b24e194d",
+  "app_tree": "53c8d212db8a80c4df2fc49dfdcede9e5259913f",
+  "run_id": 43202338930,
+  "raw_export_commit": "669b47d",
+  "native": {
+    "tests": 36,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "real_pngs": 245,
+  "visual": {
+    "assigned_and_actually_viewed": 245,
+    "call_pass": 101,
+    "island_pass": 44,
+    "other_pass": 96,
+    "business_fail": 4,
+    "whole_matrix_approved": false
+  },
+  "business_manual_native_case": "PASS_REAL_UI_TO_TELECOM_DISPATCH_AND_NATIVE_HANGUP_NOT_CARRIER_OR_AUDIBLE_CALL",
+  "business_directory_rows": 2720,
+  "extra_source_aliases": 4,
+  "actual_about_data_attribution_checked": true,
+  "unit_baseline": 361,
+  "artifacts": {
+    "tested-apk": {
+      "artifact_id": 13937630057,
+      "artifact_name": "DA-CALLER-0.13.0-tested-debug-66df1813d5eeb0eb0564400fb445bf7caf5f88d1",
+      "github_digest": "sha256:e83263619eeed56cfdeb38c0f15e25f1f0e474eadcb2b60841bf6e6311b72065",
+      "sha256": "e83263619eeed56cfdeb38c0f15e25f1f0e474eadcb2b60841bf6e6311b72065",
+      "bytes": 1130163,
+      "path": "tested-apk.zip"
+    },
+    "ui": {
+      "artifact_id": 13936642210,
+      "artifact_name": "DA-CALLER-Android13-UI-66df1813d5eeb0eb0564400fb445bf7caf5f88d1",
+      "github_digest": "sha256:c931e55199bab839151ac3944052d8e90b6eae9e3a50b0046bd8fc7270a34972",
+      "sha256": "c931e55199bab839151ac3944052d8e90b6eae9e3a50b0046bd8fc7270a34972",
+      "bytes": 14468159,
+      "path": "ui.zip"
+    },
+    "validate-apk": {
+      "artifact_id": 13935887516,
+      "artifact_name": "DA-CALLER-0.13.0-debug-66df1813d5eeb0eb0564400fb445bf7caf5f88d1",
+      "github_digest": "sha256:133ceebae46a012bd36d6163f948507895a4e40c7fc62cb921f950a7eaf5f608",
+      "sha256": "133ceebae46a012bd36d6163f948507895a4e40c7fc62cb921f950a7eaf5f608",
+      "bytes": 1130050,
+      "path": "validate-apk.zip"
+    },
+    "checks": {
+      "artifact_id": 13935707771,
+      "artifact_name": "DA-CALLER-checks-66df1813d5eeb0eb0564400fb445bf7caf5f88d1",
+      "github_digest": "sha256:377347e1f91e9e2c5f594ee45fd408a1ae307d4e48737245561b1ab4edb1ef09",
+      "sha256": "377347e1f91e9e2c5f594ee45fd408a1ae307d4e48737245561b1ab4edb1ef09",
+      "bytes": 131395,
+      "path": "checks.zip"
+    }
+  },
+  "signer_mode": "ephemeral-test-only",
+  "publication_allowed": false,
+  "new_owner_requirements": 11,
+  "new_owner_requirements_implemented": 0,
+  "new_owner_requirements_tested": 0,
+  "interruption": "Actual usage-limit error in visual_islands_013 after its report was written; save-only stop, no bypass",
+  "hardware_and_matching_key_upgrade": "NOT_TESTED",
+  "already_delivered012_unchanged": true
+}

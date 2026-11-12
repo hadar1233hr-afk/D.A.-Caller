@@ -1,5 +1,87 @@
 # DA CALLER continuation state
 
+## Actual quota stop; eleven new owner requests queued — 2026-11-12
+
+Read [the eleven newest direct owner requirements](DA_CALLER_OWNER_REQUESTS_2026-11-12.md).
+They extend the task and are **not implemented/tested**. Later scheduled repeats
+of the older 0.12.0 prompt do not cancel them. No new feature implementation or
+business visual correction started before this interruption. Keep0.13.0/code22
+as the current unreleased next-version work; do not create artificial intermediate
+version numbers. Published0.12.0 was already delivered and remains immutable.
+
+An actual usage-limit error occurred in visual_islands_013 after its island
+review file had been written: "You've hit your usage limit ... try again at
+3:01 PM." The error did not establish a reset date/timezone; do not invent one
+or query an assumed quota API. Work stopped and only handoff/evidence is saved.
+There was no model/account/identity switch or bypass. The environment restarted;
+the current coordination tree showed root only, with no overlapping worker.
+The existing two-hour automation remains active for the unfinished requests;
+resume on a later available run, with no duplicate timer or repeated old APK link.
+
+### Genuine second native result, distinct from the failed first run
+
+**CI43202338930 SUCCESS**, source
+`3f6702b92aba8feaa329fbb92c5a6f23b24e194d`, app tree
+`53c8d212db8a80c4df2fc49dfdcede9e5259913f`. Validate succeeded; actual native
+JUnit has **36 cases /0failures /0errors /0skips**,438.092seconds, all245realPNGs.
+Every original matrix verifier, including the unchanged245-frame business gate,
+passed. Preview/publication jobs skipped; signing remains ephemeral-test-only,
+publication_allowed:false, required beta9 certificate mismatch. No0.13Release.
+
+Exact official artifacts are retained at immutable review-branch export
+`669b47d` under `native-review-export/43202338930/`; GitHub digests, sizes, local
+SHA and every ZIP CRC were checked before extraction. Private extracted files:
+`/workspace/work/business-013-ci-43202338930/` and actual review sheets/manifest:
+`/workspace/work/business-013-reviewed-43202338930/`. UI ZIP14,468,159bytes;
+tested-APK ZIP1,130,163bytes. Retained native APK SHA
+`22e5cdb7076be9a3c643b8ce57759407ce3fc5efc47627391b5d3541f687896d`,
+certificate`ede2bec2f6be2988c132f10e5c9a1964df127ac342238ee2f8b7c205db27b2f7`.
+These are unapproved test artifacts, not a new public release or update claim.
+
+The genuine new manual business call test passed: selected actual source Bershka,
+OSMnode10001924959, unchanged source+9721599510510 /national1599510510, real row
+button→production Telecom `tel:1599510510`, bound token, native end and one retained
+OUTGOINGCallLog row (duration0, local disconnect2). No automatic call preceded
+the tap; contacts/baseline call rows were retained. Hardware/carrier/reachability/
+current phone ownership remain unverified. Separate browsing proof correctly
+records0calls, four native UAN aliases and actual About-data source/ODbL/date/count.
+
+### Visual NO-GO despite all native tests passing
+
+All245actual images were inspected in assigned groups; exact per-group files are
+in `docs/evidence/business-integration-0.13.0/final-ci/`:
+
+- 101call images:PASS, bounded long-name/caption ellipses explicitly recorded.
+ The temporary apparent keypad-dot issue was resolved by inspecting the same
+ raw frame at full pixel detail; the actual3×3glyph is complete.
+- 44island images:PASS, with identical incoming/permission-denied frame hashes
+ and hardware/audio limits explicitly retained. The reviewer hit quota after
+ writing its report; this is not a whole-release approval.
+- 100other images:96PASS, **four business frames visualFAIL**. Root independently
+ viewed all four originals and confirmed the findings with the other reviewer.
+
+The new business UI has a large blank region between the source line and the
+first result, leaving only two complete rows on the small screen. `empty` is a
+90dp-minimum ListView header; hiding the child leaves the fixed-header wrapper's
+height. The single source/status line truncates the contributor attribution and
+measured coverage. Raw taxonomy codes (`shop:mobile_phone_accessories`,
+`tourism:hostel`) are exposed in ordinary product text. Required modest polish:
+genuinely collapse/remove the empty header for nonempty results; use a compact,
+legible source/count summary with full attribution/license accessible; render
+friendly localized categories while preserving the raw dataset/provenance.
+These source-data/reader hashes must remain unchanged unless a new data run is
+explicitly justified. No correction for these visual failures has yet been made.
+
+Next available work: read/coordinate ownership of all eleven new requirements,
+implement them and the above visual fixes within `:app`, preserve data/offline/
+navigation/archive and all baseline captures, add meaningful actual native proof
+for drag/hide/status-area fallback/transparent composition/inline actions/optional
+archive backup/new controls/navigation, then re-run and visually review the new
+source. Optional status-area placement must respect Android SystemUI protection;
+do not promise Apple-like protected-layer access. Future signing/private backup/
+authorized CI-secret setup and publication approvals remain separate unresolved
+work;0.12-only authorization cannot cover a future release. Never uninstall.
+
 ## First0.13 native run found a test-coordinate defect; corrected source needs rerun
 
 Source21150b4 / CI43199541915 passed361actualunits but **34/36 native cases**;
