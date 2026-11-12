@@ -1,5 +1,45 @@
 # DA CALLER continuation state
 
+## 0.12.0 published; all public bytes independently verified — 2026-11-12
+
+Owner-approved workflow43153233564 completed SUCCESS at publication source/tag
+2199b6f655b63907b48b69f6fa918ba9c3e8b138 / v0.12.0. The exact retained native-tested
+469,326-byte APK SHA f025fad667edafe2c76ab3f574c7ff1bfd2aeb301fdd1d035ac1acb6b311e16a
+was copied without rebuild/re-sign. Embedded package/version/code and actual
+certificate fbf3... were independently checked. The separate approved release
+scope passed all retained356unit/35native/243reviewed-image proofs and seven
+functional replays;79 publication contract cases also passed in CI. This does
+not relabel the old245-scope workflow as successful or claim fresh emulator work.
+
+All six public release assets were anonymously downloaded independently in the
+workspace with HTTP200 and matched GitHub asset digests/sizes. APK/checksum/
+original14,225,526-byte UI ZIP/signature/metadata match the retained reviewed
+bytes. The dynamic CI verification JSON binds publication source2199b6f, exact
+owner authorization, signing result, full visual ledger and release scope; its
+semantic content equals reviewed proof except the expected time/source identity.
+The UI ZIP CRC/all243 PNGs passed; the actual v0.12.0 tag points to2199b6f.
+The workflow separately performed byte-for-byte comparison of all six downloads.
+[Published summary](evidence/release-0.12.0/publication/publication-summary.json)
+and [independent download proof](evidence/release-0.12.0/publication/public-verification.json)
+retain URLs, source, actual bytes/hashes and limits. The release's prepublication
+report intentionally records public checking as pending at creation; these new
+postpublication proofs record the completed checks without replacing any asset.
+
+The new APK includes unknown-Recents contact creation, organized Nothing/Xiaomi,
+larger digits/all five designs/rounded heavier Google font, real incoming swipe,
+optional daily callback reminders and modest Settings polish. It stays offline
+and business-free. Physical Jelly Star/carrier/audio/BT/proximity/Doze and a
+matching-key upgrade remain NOT TESTED; the owner waived hardware as prerequisite.
+Its different signer cannot update beta9, and durable future signing is unresolved.
+Never advise uninstalling an existing installation; that deletes archive/settings.
+
+The release-012-approved label was removed after success to prevent reruns;
+old default/future signing and245business guards remain unchanged. Do not overwrite
+this release or repeat its APK link after the Hebrew completion message. Remaining
+requested work is future business production/native integration and durable
+signing/key recovery; existing2hour automation remains active until ALL work and
+verified delivery finish, with no duplicate timer or invented tasks.
+
 ## Owner approved the bounded publication exception — 2026-11-12
 
 The owner directly replied "כמובן" to the precise signing/publication-mechanism
