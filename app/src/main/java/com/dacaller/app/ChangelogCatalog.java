@@ -26,6 +26,15 @@ final class ChangelogCatalog {
  // Version boundaries and notes are grounded in app/build.gradle history and
  // docs/DA_CALLER_{VISUAL_VERIFICATION,PERSONALIZATION_VERIFICATION,DYNAMIC_ISLAND}.
  private static final List<Entry> ENTRIES=Collections.unmodifiableList(Arrays.asList(
+  new Entry("0.13.0","בתי עסק בחיפוש נפרד","A separate business search",
+   change("חיפוש מקומי של בתי עסק ושירותים ציבוריים בלשונית נפרדת מאנשי הקשר; החיוג מתחיל רק בלחיצה מפורשת.",
+    "Offline business and public-service search in a separate Contacts tab. A call starts only after an explicit tap."),
+   change("לכל רשומה מוצגים המקור, הרישיון ותאריך המקור. הנתונים מבוססים על קובץ OpenStreetMap מ־3 בנובמבר 2026; חלק מפרטי המקור ישנים יותר.",
+    "Each record shows its source, license and source date. Data comes from the November 3, 2026 OpenStreetMap extract; individual source edits can be older."),
+   change("זהו מאגר חלקי בלבד, ללא אימות שהמספר עדיין שייך לבית העסק. מספר הרשומות המעודכן מוצג בפרטי המאגר; אין שינוי באנשי הקשר הפרטיים, ביומן או בארכיון.",
+    "Coverage is partial and current phone ownership is unverified. About data shows the actual record count. Private contacts, call history and the archive are unchanged."),
+   change("חיפוש מספרי שירות ישראליים כגון 1599 גם עם הקידומת הבין־לאומית, תוך שמירת מספר המקור.",
+    "Find Israeli service numbers such as 1599 using national or international prefixes while preserving the source phone number.")),
   new Entry("0.12.0","תזכורת לחזרה לשיחות","A reminder to return calls",
    change("יצירת איש קשר חדש ממספר לא מוכר בשיחות האחרונות, בלי חיוג אוטומטי.",
     "Create a new contact from an unknown recent caller without automatically dialing."),

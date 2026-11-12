@@ -1,5 +1,96 @@
 # DA CALLER continuation state
 
+## Remaining business integration: local verification complete, fresh native pending — 2026-11-12
+
+The verified0.12.0 APK completion link has already been delivered in Hebrew.
+Do not repeat, rebuild, re-sign or overwrite that release. The owner-authorized
+business directory and durable signing requests remain. No competing worker or
+active CI was present at resume; all parallel tasks in this turn were coordinated.
+After an environment restart, two pending workers were interrupted before root
+took their file ownership; no overlapping implementation or model/account switch
+was used. No actual usage-quota failure occurred in this continuation.
+
+Future development is **0.13.0 / code22**, without BETA, preserving applicationId.
+The original research rows lacked complete access/lifecycle flags. Fresh actual
+PBF re-reading found seven newly withheld source rows (one restricted-access
+office, six residential-building flags). A new explicit source-spatial exporter
+now rebuilds a clean12-column database/FTS and new admission ledger; it never
+renames a research/candidate database or fabricates IL country tags/old scopes.
+All2,728 exact raw/history rows remain downloadable under ODbL1.0.
+
+Final v2 measures **2,720 rows /2,660 source objects /2,616 dial identities**,
+78 shared-phone groups preserved separately,2,704 admitted source-countryNULLs.
+Eight rows remain withheld, including unsafe Rena city/address. Ten unchanged
+source E.1641599 rows are now supported by the new business-only native/Python
+phone v2 contract; two exact source-name fallbacks remain explicit. Individual
+source edits span2010–2026, snapshot2026-11-03, no current ownership/reachability
+or nationwide coverage claim. Transfer is owner-upload authenticated only against
+GitHub/ZIP bytes; independent Geofabrik publisher authentication remains false.
+
+Independent full audit re-read all2,668 source objects and four actual boundary
+relations/489 supporting ways/16,516 nodes; checked every raw/source field, full
+point/way/true-hole relation geometry, publicness/text/phone/country decisions,
+all2,720 projected fields/FTS rows,167bindings and every archive byte/CRC.
+Final clean DB1,363,968bytes SHA
+`cbc7dc7b41c3fa9335cbf37907243681820fe23107e40541efb306dc1b566af3`;
+manifest500bytes SHA
+`fec348522615f62d36fa62ee65ff317340ea4806a85f15c457daa30378805cfa`.
+The3,169,035-byte corresponding-source ZIP SHA
+`5d6358c7d8ebc7b3be51717c3829a1b3c56e0f1aacf90bbf54fa1a04f71a5224`
+includes raw/history/new ledger/fresh tags/geometry/policy/receipt/bindings.
+Visible manifest attribution is ©OpenStreetMapcontributors; its native About-data
+check is prepared. [Data/ODbL/reproduction and exact evidence](evidence/business-acquisition/owner-261103/verified-geometry-README.md).
+
+Final actual-current-reader **HOST_ROBOLECTRIC_API33_NATIVE_SQLITE** run passed
+nine unique methods,0failures/errors/skips: all2,720 records/55pages,2,616phones,
+78shared groups,13,080generic phonequeries,32UAN aliases,selectedArabic/English
+names,withheld rows absent and corruption/cache guards. Original firstv1 wrapper
+retention report incorrectly looked in AGP's overridden custom JUnit location;
+actual9case JUnit was retained separately, and finalv2 reran genuinely with fixed
+fresh-report capture. Both history and final exact JUnit are retained truthfully.
+Host checks are not emulator/Telecom/real-user archive or upgrade verification.
+Only after independent final data+host GO were the clean three native assets
+copied into `:app` and its separate Contacts business tab enabled.
+
+Code review found a new overlength-query truncation defect that could turn a
+malformed suffix into a country-only listing. Full-input length rejection now
+precedes query routing;75 integration vectors and valid short queries cover it.
+Independent code review GO; current reader SHA
+`5d8c3d01e4aab6f5dd198b4c2fe588e301c7298003192c21ec97332e279efa52`.
+Pure phone parity previously passed8,105Java/Python vectors; only query routing
+changed afterwards. Old strict data helpers and global dialing/Telecom remain
+unchanged. A new local0.13changelog entry retains all older versions.
+
+Fresh clean local verification passed **361 unique main app units** (0failures/
+errors/skips), **68 business Python methods** (including24new export contracts),
+debug/unsigned-release builds, lint and finalAndroid-testJava compilation.
+The nine external host cases are excluded from361; main build used no external
+init script and clean removed its stale compiled tests. APK metadata confirms
+com.dacaller.app/0.13.0/code22/min26/noINTERNET; bundled database bytes equal the
+reviewed clean database; separate-product and test-provider DEX are absent.
+[Exact local preflight/logs/JUnit](evidence/business-integration-0.13.0/local-preflight.json).
+This disposable local APK is not native-tested or approved for publication.
+
+Fresh native verification is pending: new36th case will tap an actual source
+business call icon on an explicitly guarded disposableAPI33 emulator, verify the
+bound production Telecom token/exact address, native hang-up, genuine retained
+OUTGOINGCallLog row and unchanged contacts/baseline rows. It writes a separate
+proof; the old browsing scenario correctly remains0calls. Four native UAN query
+aliases and About-data attribution/source/license/date/count assertions also
+await actual execution. Existing245 screenshots/all old cases remain required;
+no fresh emulator/PNG/visual PASS is claimed at this preflight checkpoint.
+
+The stale visual-reviewed label was removed. Default future signing and the old
+245-frame gates remain unchanged; the0.12-only exact-binary exception cannot
+publish0.13. Read [concrete remaining signing setup](DA_CALLER_SIGNING_NEXT_STEPS.md):
+known local disposable key matches neither published signer; stable identity,
+independent owner-controlled private backup and supported authorized repo-secret
+provisioning remain missing. Current runtime secret metadata does not prove repo
+secrets absent. No private key was generated/exported/uploaded or guard bypassed.
+Hardware/JellyStar/carrier/audio/matching-key update remain NOT TESTED. Never
+recommend uninstalling. Existing2-hour automation remains active for these original
+unfinished requests, without a duplicate timer or changes to separate products.
+
 ## 0.12.0 published; all public bytes independently verified — 2026-11-12
 
 Owner-approved workflow43153233564 completed SUCCESS at publication source/tag

@@ -76,6 +76,7 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
  private volatile MainActivity main;private volatile CallbackReminderActivity reminder;private volatile CallScreenActivity callScreen;private volatile ContactEditorActivity editor;private boolean reminderScenario;
  private final List<Activity> launched=new ArrayList<>();
  private Uri insertedContact;private boolean modemRequested;private long requestSequence,started;
+ private boolean businessDialAttempted;private String businessDialNumber;private Call businessDialCall;
  private final Set<Long> baselineIds=new HashSet<>();
  private final JSONArray modemCommands=new JSONArray(),calls=new JSONArray(),events=new JSONArray(),readObservations=new JSONArray();
  private String lastAction="none";
@@ -123,6 +124,21 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   // Every restoration runs even when actual modem/notification cleanup fails;
   // one failing feature must not change the environment of the old233 renders.
   cleanup(()->shell("cmd statusbar collapse"),failures);
+  if(businessDialAttempted)cleanup(()->{
+   // This branch is guarded by setUp's disposable-emulator check. Never end an
+   // unrelated call or use the incoming-fixture modem driver's fixed number.
+   Call active=PhoneSessionService.current;
+   if(active!=null&&active.getState()!=Call.STATE_DISCONNECTED&&active.getState()!=Call.STATE_DISCONNECTING){
+    if(businessDialCall!=null)assertSame("Cleanup may end only this test's bound call",businessDialCall,active);
+    else assertEquals(businessDialNumber,active.getDetails().getHandle().getSchemeSpecificPart());
+    CallIslandState owned=PhoneSessionService.islandSnapshot();assertNotNull(owned);
+    assertTrue(PhoneSessionService.commandMatches(active,owned.token));
+    ui(()->assertTrue(PhoneSessionService.performIslandAction(owned.token,"END")));
+   }
+   await(()->PhoneSessionService.current==null&&PhoneSessionService.instance==null,"Business cleanup must await actual Telecom unbind");
+   if(businessDialCall!=null)await(()->businessDialCall.getState()==Call.STATE_DISCONNECTED&&newCallRows().length()>0,
+    "Business cleanup must retain Telecom's own outgoing row");
+  },failures);
   if(modemRequested)cleanup(()->{
    Call active=PhoneSessionService.current;int before=ownRows().length();boolean pending=active!=null&&active.getState()!=Call.STATE_DISCONNECTED;
    modem("cancel");await(()->PhoneSessionService.current==null&&PhoneSessionService.instance==null,"Cleanup must await actual Telecom unbind");
@@ -526,6 +542,17 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
  public void testBundledBusinessDirectoryNativeIsolationSearchAndProvenance()throws Exception{
   try{businessScenario();}catch(Throwable failure){failureEvidence(failure);if(failure instanceof Exception)throw (Exception)failure;throw (Error)failure;}
  }
+ public void testBundledBusinessManualNativeCallUsesExactSourceIdentity()throws Exception{
+  try{businessManualDialScenario();}catch(Throwable failure){
+   // No additional PNG: this separate Telecom regression keeps the existing
+   // 245-frame visual matrix unchanged, including when native execution fails.
+   writeFile("business-manual-dial-native.json",new JSONObject().put("status","FAIL").put("api",33)
+    .put("test",getName()).put("failure",String.valueOf(failure)).put("last_action",lastAction)
+    .put("number",businessDialNumber==null?JSONObject.NULL:businessDialNumber).put("dial_attempted",businessDialAttempted)
+    .put("physical_cellular_audio_verified",false).toString(2));
+   if(failure instanceof Exception)throw (Exception)failure;throw (Error)failure;
+  }
+ }
  private long contactRows(){try(Cursor cursor=target.getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI,new String[]{ContactsContract.RawContacts._ID},null,null,null)){
   assertNotNull(cursor);return cursor.getCount();}}
  private String contactDigest()throws Exception{
@@ -542,6 +569,95 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
  private AlertDialog businessDialog()throws Exception{
   java.lang.reflect.Field field=MainActivity.class.getDeclaredField("businessDirectory");field.setAccessible(true);Object directory=field.get(main);assertNotNull(directory);
   java.lang.reflect.Field dialog=BusinessDirectoryView.class.getDeclaredField("dialog");dialog.setAccessible(true);return (AlertDialog)dialog.get(directory);
+ }
+ private JSONObject businessRecord(BusinessDirectory.Entry entry)throws Exception{
+  return new JSONObject().put("id",entry.id).put("name",entry.name).put("phone",entry.phone).put("phone_display",entry.phoneDisplay)
+   .put("source_id",entry.sourceId).put("source_url",entry.sourceUrl).put("source_license",entry.sourceLicense).put("source_updated_at",entry.sourceUpdatedAt);
+ }
+ private void typeBusinessQuery(String value,BusinessDirectory.Entry selected)throws Exception{
+  EditText search=(EditText)tag(main,"business_directory_search");assertNotNull(search);ui(()->search.setText(""));tapView(search);
+  getInstrumentation().sendStringSync(value);key(KeyEvent.KEYCODE_BACK);
+  await(()->value.contentEquals(((EditText)tag(main,"business_directory_search")).getText())
+   &&tag(main,"business_directory_name_"+selected.id)!=null&&tag(main,"business_directory_call_"+selected.id)!=null
+   &&tag(main,"business_directory_call_"+selected.id).isEnabled(),"Native phone query must finish and retain the exact source row: "+value);
+  assertEquals(selected.name,text(main,"business_directory_name_"+selected.id));
+  assertEquals(selected.phoneDisplay,text(main,"business_directory_phone_"+selected.id));
+ }
+ private JSONArray businessUanQueries()throws Exception{
+  BusinessDirectory.Page services=businessPage("1599");assertEquals(BusinessDirectory.Status.AVAILABLE,services.status);
+  assertFalse("Admitted dataset must retain its source UAN1599 rows",services.entries.isEmpty());BusinessDirectory.Entry selected=services.entries.get(0);
+  assertTrue(selected.phone.startsWith("1599"));assertEquals(selected.phone,BusinessDirectory.normalizedPhone(selected.phoneDisplay));
+  JSONArray queries=new JSONArray();String national=selected.phone;
+  for(String alias:new String[]{national,"+972"+national,"00972"+national,"972"+national}){
+   BusinessDirectory.Page result=businessPage(alias);assertEquals(BusinessDirectory.Status.AVAILABLE,result.status);boolean exact=false;JSONArray ids=new JSONArray();
+   for(BusinessDirectory.Entry row:result.entries){ids.put(row.id);assertEquals(national,row.phone);if(row.id==selected.id)exact=true;}
+   assertTrue("Whole-number alias must retain the selected source object",exact);typeBusinessQuery(alias,selected);
+   assertNull("Searching a source UAN alias must not place a call",PhoneSessionService.current);
+   assertEquals("Searching a source alias must not produce any call-log row",0,newCallRows().length());
+   queries.put(new JSONObject().put("query",alias).put("selected_record",businessRecord(selected)).put("result_ids",ids)
+    .put("native_text_input",true).put("no_automatic_call",true));
+  }
+  return queries;
+ }
+ private JSONArray newCallRows()throws Exception{
+  JSONArray rows=new JSONArray();String[] projection={CallLog.Calls._ID,CallLog.Calls.NUMBER,CallLog.Calls.DATE,CallLog.Calls.DURATION,CallLog.Calls.TYPE};
+  try(Cursor cursor=target.getContentResolver().query(CallLog.Calls.CONTENT_URI,projection,CallLog.Calls.DATE+">=?",new String[]{String.valueOf(started-2000)},CallLog.Calls.DATE+" ASC,"+CallLog.Calls._ID+" ASC")){
+   assertNotNull(cursor);while(cursor.moveToNext())if(!baselineIds.contains(cursor.getLong(0)))
+    rows.put(new JSONObject().put("id",cursor.getLong(0)).put("number",cursor.getString(1)).put("date",cursor.getLong(2)).put("duration",cursor.getLong(3)).put("type",cursor.getInt(4)));
+  }return rows;
+ }
+ private void baselineCallRowsRetained(){
+  Set<Long> ids=new HashSet<>();try(Cursor cursor=target.getContentResolver().query(CallLog.Calls.CONTENT_URI,new String[]{CallLog.Calls._ID},null,null,null)){
+   assertNotNull(cursor);while(cursor.moveToNext())ids.add(cursor.getLong(0));}assertTrue("Actual pre-existing call-log rows must remain",ids.containsAll(baselineIds));
+ }
+ private void businessManualDialScenario()throws Exception{
+  if(!BuildConfig.BUSINESS_DIRECTORY_ENABLED){
+   writeFile("business-manual-dial-native.json",new JSONObject().put("status","DEFERRED_BY_OWNER").put("api",33).put("enabled",false)
+    .put("business_numbers_dialed",0).put("physical_cellular_audio_verified",false).toString(2));return;
+  }
+  // Repeat the emulator-only guard immediately before the only real outgoing
+  // dispatch in this class. A physical device can never reach this tap.
+  assertEquals("Refuse real business calls on hardware","1",shell("getprop ro.kernel.qemu").trim());assertEquals(33,android.os.Build.VERSION.SDK_INT);
+  assertFalse("No existing platform call may be replaced",target.getSystemService(TelecomManager.class).isInCall());
+  assertNull("No existing Telecom call may be replaced",PhoneSessionService.current);assertNull(PhoneSessionService.instance);
+  long privateBefore=contactRows();String privateDigest=contactDigest();BusinessDirectory.Page services=businessPage("1599");
+  assertEquals(BusinessDirectory.Status.AVAILABLE,services.status);assertNotNull(services.manifest);assertFalse(services.entries.isEmpty());
+  BusinessDirectory.Entry selected=services.entries.get(0);assertTrue(selected.phone.startsWith("1599"));
+  assertEquals(selected.phone,BusinessDirectory.normalizedPhone(selected.phoneDisplay));assertTrue(BusinessDirectory.https(selected.sourceUrl));
+  assertFalse(selected.sourceLicense.isEmpty());assertFalse(selected.sourceUpdatedAt.isEmpty());businessDialNumber=selected.phone;
+  assertEquals(0,newCallRows().length());startMain("contacts");tapView(tag(main,"contacts_directory_tab"));
+  await(()->tag(main,"business_directory_search")!=null,"Actual business tab must open");typeBusinessQuery(selected.phone,selected);ready(main);
+  assertNull("Opening and searching a public source must never auto-dial",PhoneSessionService.current);assertNull(PhoneSessionService.instance);
+  assertEquals(0,newCallRows().length());assertFalse("Platform must still have no call immediately before the explicit tap",target.getSystemService(TelecomManager.class).isInCall());
+  assertEquals(privateBefore,contactRows());assertEquals(privateDigest,contactDigest());
+  View button=tag(main,"business_directory_call_"+selected.id);assertNotNull(button);assertTrue(button.isEnabled());
+  businessDialAttempted=true;Rect tap=tapView(button);
+  await(()->PhoneSessionService.current!=null&&PhoneSessionService.current.getDetails()!=null&&PhoneSessionService.current.getDetails().getHandle()!=null
+   &&PhoneSessionService.islandSnapshot()!=null,"Manual native call button must bind a real production Telecom call");
+  Call connected=PhoneSessionService.current;businessDialCall=connected;Uri actual=connected.getDetails().getHandle();
+  assertEquals("tel",actual.getScheme());assertEquals("Telecom must receive the whole exact source identity",selected.phone,actual.getSchemeSpecificPart());
+  await(()->connected.getState()==Call.STATE_DIALING||connected.getState()==Call.STATE_CONNECTING||connected.getState()==Call.STATE_ACTIVE,
+   "Bound production call must leave any initial Telecom selection/creation state");assertSame(connected,PhoneSessionService.current);
+  CallIslandState owned=PhoneSessionService.islandSnapshot();assertNotNull(owned);assertFalse(owned.token.isEmpty());assertTrue(PhoneSessionService.commandMatches(connected,owned.token));
+  assertEquals(selected.phone,owned.number);int observedState=connected.getState();assertTrue(observedState==Call.STATE_DIALING||observedState==Call.STATE_CONNECTING||observedState==Call.STATE_ACTIVE);
+  await(()->callScreen!=null&&!callScreen.isFinishing()&&tag(callScreen,"call-end")!=null,"Actual outgoing call screen must expose its production end control");
+  if(!launched.contains(callScreen))launched.add(callScreen);ready(callScreen);assertSame(connected,PhoneSessionService.current);
+  Rect end=tapView(tag(callScreen,"call-end"));
+  await(()->connected.getState()==Call.STATE_DISCONNECTED&&PhoneSessionService.current==null&&PhoneSessionService.instance==null,"Native end tap must disconnect and unbind that same call");
+  await(()->newCallRows().length()==1,"Telecom must persist exactly one actual outgoing call row, with no extra destinations");
+  JSONArray rows=newCallRows();assertEquals(1,rows.length());assertEquals(CallLog.Calls.OUTGOING_TYPE,rows.getJSONObject(0).getInt("type"));
+  assertEquals(selected.phone,BusinessDirectory.normalizedPhone(rows.getJSONObject(0).getString("number")));baselineCallRowsRetained();
+  assertEquals(privateBefore,contactRows());assertEquals(privateDigest,contactDigest());
+  writeFile("business-manual-dial-native.json",new JSONObject().put("status","PASS").put("api",33).put("emulator_only",true)
+   .put("test",getName()).put("dataset_version",services.manifest.datasetVersion).put("dataset_sha256",services.manifest.sha256)
+   .put("record_count",services.manifest.recordCount).put("selected_record",businessRecord(selected)).put("no_automatic_call_before_tap",true).put("no_new_call_log_rows_before_tap",true)
+   .put("dispatch_method","native-UiAutomation-touchscreen-business-row-call-button-to-production-TelecomManager.placeCall")
+   .put("call_button_bounds",tap.toShortString()).put("call_token",owned.token).put("call_address",actual.toString()).put("call_number",actual.getSchemeSpecificPart())
+   .put("observed_call_state",observedState).put("bound_call_token_verified",true).put("end_method","native-production-call-end-touchscreen")
+   .put("end_button_bounds",end.toShortString()).put("disconnect_cause",connected.getDetails().getDisconnectCause().getCode())
+   .put("disconnected_and_service_unbound",true).put("call_log_rows",rows).put("preexisting_call_log_ids_preserved",true)
+   .put("no_call_log_delete",true).put("private_contacts_digest_before",privateDigest).put("private_contacts_digest_after",contactDigest())
+   .put("business_numbers_dialed",1).put("additional_png_count",0).put("physical_cellular_audio_verified",false).put("current_business_phone_ownership_verified",false).toString(2));
  }
  private void businessScenario()throws Exception{
   if(!BuildConfig.BUSINESS_DIRECTORY_ENABLED){
@@ -583,8 +699,7 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
     .put("entry_bounds",tabBounds.toShortString()).put("root_rtl",true).put("phone_ltr",true).put("bar_contrast",bars)
     .put("font_scale",main.getResources().getConfiguration().fontScale).put("first_record_id",selected.id));
   }
-  EditText query=(EditText)tag(main,"business_directory_search");assertNotNull(query);tapView(query);
-  getInstrumentation().sendStringSync(selected.phone);key(KeyEvent.KEYCODE_BACK);
+  JSONArray uanQueries=businessUanQueries();typeBusinessQuery(selected.phone,selected);
   await(()->selected.phone.contentEquals(((EditText)tag(main,"business_directory_search")).getText())&&tag(main,"business_directory_name_"+selected.id)!=null,
    "Native typed phone query must return the exact source identity");
   BusinessDirectory.Page matched=businessPage(selected.phone);assertEquals(BusinessDirectory.Status.AVAILABLE,matched.status);boolean exact=false;
@@ -598,12 +713,28 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   assertNull("Inspecting provenance must never dial a real business",PhoneSessionService.current);snapshot("business-detail",true);
   key(KeyEvent.KEYCODE_BACK);ready(main);assertFalse(dialog.isShowing());assertNotNull(tag(main,"business_directory_root"));
   assertEquals(selected.phone,((EditText)tag(main,"business_directory_search")).getText().toString());
+  View aboutButton=tag(main,"business_directory_about");assertNotNull(aboutButton);assertTrue(aboutButton.isEnabled());Rect aboutTap=tapView(aboutButton);
+  await(()->businessDialog()!=null&&businessDialog().isShowing(),"Actual About data control must open its native attribution dialog");
+  AlertDialog aboutDialog=businessDialog();View aboutBody=aboutDialog.getWindow().getDecorView().findViewWithTag("business_directory_detail_text");
+  assertTrue(aboutBody instanceof TextView);assertTrue("Source attribution must be displayed by the actual dialog",aboutBody.isShown());
+  String aboutText=((TextView)aboutBody).getText().toString(),formattedCount=java.text.NumberFormat.getIntegerInstance().format(initial.manifest.recordCount);
+  assertTrue(initial.manifest.sourceName.contains("© OpenStreetMap contributors"));assertTrue(aboutText.contains(initial.manifest.sourceName));
+  assertTrue(aboutText.contains("© OpenStreetMap contributors"));assertTrue(aboutText.contains(initial.manifest.sourceUrl));
+  assertTrue(aboutText.contains(initial.manifest.license));assertTrue(aboutText.contains(initial.manifest.licenseUrl));
+  assertTrue(aboutText.contains(initial.manifest.updatedAt));assertTrue(aboutText.contains(formattedCount));
+  assertNull("Reading dataset attribution must never dial",PhoneSessionService.current);assertEquals(0,newCallRows().length());
+  key(KeyEvent.KEYCODE_BACK);ready(main);assertFalse(aboutDialog.isShowing());
+  assertEquals(selected.phone,((EditText)tag(main,"business_directory_search")).getText().toString());assertNotNull(tag(main,"business_directory_name_"+selected.id));
+  JSONObject aboutProof=new JSONObject().put("method","native-business_directory_about-touchscreen-dialog-and-Back").put("button_bounds",aboutTap.toShortString())
+   .put("dialog_text",aboutText).put("formatted_record_count",formattedCount).put("source_name_with_osm_copyright",true)
+   .put("source_url_license_license_url_snapshot_and_measured_count",true).put("back_preserved_query_and_source_row",true).put("no_automatic_call",true).put("additional_png_count",0);
   tapView(tag(main,"business_directory_personal_tab"));await(()->tag(main,"contacts_directory_tab")!=null,"Native personal tab must remain available");
   assertNull(tag(main,"business_directory_root"));tapView(tag(main,"contacts_directory_tab"));
   await(()->tag(main,"business_directory_name_"+selected.id)!=null,"Returning to businesses must retain query and exact identity");
   assertEquals(selected.phone,((EditText)tag(main,"business_directory_search")).getText().toString());assertEquals(privateBefore,contactRows());assertEquals(privateDigest,contactDigest());assertNull(PhoneSessionService.current);
+  assertEquals("Read-only source queries and provenance must not create any call",0,newCallRows().length());
   JSONObject checks=new JSONObject();for(String flag:new String[]{"actual_nonempty_licensed_bundled_dataset","native_small_contacts_tab","native_light_dark_rtl_ltr_phone",
-   "native_phone_query_keeps_source_identity","details_show_source_license_and_source_date","private_contacts_unchanged","no_automatic_business_call",
+   "native_phone_query_keeps_source_identity","native_uan_alias_queries_keep_source_identity","details_show_source_license_and_source_date","native_about_data_visible_odbl_attribution","private_contacts_unchanged","no_automatic_business_call",
    "native_detail_back_and_private_public_switch_preserve_query","bounded_production_pages"})checks.put(flag,true);
   completedBusiness=new JSONObject().put("checks",checks).put("readiness","AVAILABLE").put("dataset",new JSONObject().put("version",initial.manifest.datasetVersion)
    .put("record_count",initial.manifest.recordCount).put("sha256",initial.manifest.sha256).put("source_name",initial.manifest.sourceName)
@@ -612,7 +743,7 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
     .put("source_id",selected.sourceId).put("source_license",selected.sourceLicense).put("source_updated_at",selected.sourceUpdatedAt))
    .put("first_page_rows",initial.entries.size()).put("search_rows",matched.entries.size()).put("private_contacts_before",privateBefore).put("private_contacts_after",contactRows())
    .put("private_contacts_digest_before",privateDigest).put("private_contacts_digest_after",contactDigest())
-   .put("palettes",palettes).put("query",selected.phone).put("detail_text",content).put("business_numbers_dialed",0);writeCombined();
+   .put("palettes",palettes).put("query",selected.phone).put("detail_text",content).put("uan_source_alias_queries",uanQueries).put("native_about_data_attribution",aboutProof).put("business_numbers_dialed",0);writeCombined();
  }
  private void writeCombined()throws Exception{
   // Preserve independently measured reminder proof when data acquisition blocks

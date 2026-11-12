@@ -54,29 +54,40 @@ final class BusinessDirectory {
   final File database;final Manifest manifest;final String appKey;
   Installed(File database,Manifest manifest,String appKey){this.database=database;this.manifest=manifest;this.appKey=appKey;}
  }
- static String normalizedPhone(String raw){
-  if(raw==null)return "";
+ private static String phoneCharacters(String raw){
+  if(raw==null)return null;
   String value=raw.trim().replace('\u00a0',' ');
   // Do not turn post-dial digits, extensions or multiple numbers into another identity.
-  if(!value.matches("[+*0-9() .\\-]+"))return "";
-  String dial=value.replaceAll("[^0-9+*]","");
-  if(dial.startsWith("+972"))dial="0"+dial.substring(4);
-  else if(dial.startsWith("00972"))dial="0"+dial.substring(5);
-  else if(dial.startsWith("972"))dial="0"+dial.substring(3);
+  if(!value.matches("[+*0-9() .\\-]+"))return null;
+  return value.replaceAll("[^0-9+*]","");
+ }
+ private static String nationalBusinessDigits(String dial){
+  String national=null;
+  if(dial.startsWith("+972"))national=dial.substring(4);
+  else if(dial.startsWith("00972"))national=dial.substring(5);
+  else if(dial.startsWith("972"))national=dial.substring(3);
+  if(national==null)return dial;
+  if(national.isEmpty())return "";
+  // Israeli service identities such as 1599 have no national trunk zero.
+  // Numbering-plan/source admission remains the offline packager's job.
+  return national.startsWith("1")?national:"0"+national;
+ }
+ static String normalizedPhone(String raw){
+  String characters=phoneCharacters(raw);if(characters==null)return "";
+  String dial=nationalBusinessDigits(characters);
   if(dial.matches("0(?:[2-489][0-9]{7}|[57][0-9]{8})"))return dial;
   if(dial.matches("\\*[0-9]{3,6}")||dial.matches("1[0-9]{2,9}"))return dial;
   return "";
  }
  static String phonePrefix(String raw){
-  if(raw==null)return "";
-  String value=raw.trim().replace('\u00a0',' ');
-  if(!value.matches("[+*0-9() .\\-]+"))return "";
-  String digits=value.replaceAll("[^0-9+*]","");
-  if(digits.startsWith("+972"))digits="0"+digits.substring(4);
-  else if(digits.startsWith("00972"))digits="0"+digits.substring(5);
-  else if(digits.startsWith("972"))digits="0"+digits.substring(3);
+  String characters=phoneCharacters(raw);if(characters==null)return "";
+  String digits=nationalBusinessDigits(characters);
   if(digits.indexOf('+')>=0||!digits.matches("[0-9*]{1,16}"))return "";
   return digits;
+ }
+ static boolean countryCodeOnly(String raw){
+  String digits=phoneCharacters(raw);
+  return "+972".equals(digits)||"00972".equals(digits)||"972".equals(digits);
  }
  static String matchExpression(String query){
   String limited=query==null?"":query.substring(0,Math.min(MAX_QUERY_LENGTH,query.length()));
@@ -198,10 +209,17 @@ final class BusinessDirectory {
   catch(RuntimeException unavailable){synchronized(INSTALL_LOCK){installed=null;}return Page.unavailable(Status.UNAVAILABLE);}
  }
  static Page query(SQLiteDatabase database,Manifest manifest,String text,int requestedOffset){
-  String query=text==null?"":text.trim();query=query.substring(0,Math.min(MAX_QUERY_LENGTH,query.length()));
+  String query=text==null?"":text.trim();
   int offset=Math.max(0,Math.min(2_000_000,requestedOffset));String where="";String[] arguments;
+  // Truncation could hide a malformed/post-dial suffix and turn it into a
+  // different phone prefix or a country-only request for the whole directory.
+  if(query.length()>MAX_QUERY_LENGTH)return new Page(Status.AVAILABLE,manifest,Collections.emptyList(),offset,false);
   String prefix=phonePrefix(query),match=matchExpression(query);
-  if(!query.isEmpty()&&!prefix.isEmpty()){
+  if(!query.isEmpty()&&countryCodeOnly(query)){
+   // Include both international and national source forms, including 1xxx
+   // services. An FTS-only fallback would omit rows indexed as 050.../1599....
+   arguments=new String[]{String.valueOf(PAGE_SIZE+1),String.valueOf(offset)};
+  }else if(!query.isEmpty()&&!prefix.isEmpty()){
    where=" WHERE normalized_phone LIKE ?";arguments=new String[]{prefix+"%",String.valueOf(PAGE_SIZE+1),String.valueOf(offset)};
   }else if(!query.isEmpty()&&!match.isEmpty()){
    where=" WHERE id IN (SELECT docid FROM business_search WHERE business_search MATCH ?)";

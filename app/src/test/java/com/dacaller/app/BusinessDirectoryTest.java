@@ -71,6 +71,74 @@ public class BusinessDirectoryTest {
   assertEquals("*3456",BusinessDirectory.normalizedPhone("*3456"));
   for(String invalid:new String[]{"+1 2025550100","0501234567;123","0501234567,0521234567","phone 0501234567","טלפון0501234567","050\u202e1234567","+972+501234567"})assertEquals(invalid,"",BusinessDirectory.normalizedPhone(invalid));
  }
+ @Test public void serviceSourcePhonesAndInternationalPrefixesKeepTheirWholeNationalIdentity(){
+  row(1,"International service","+9721599555535","A");row(2,"National service","1599500901","B");
+  row(3,"Shared service other branch","+9721599555535","C");row(4,"Mobile","+972501234567","D");
+  for(String query:new String[]{"159955","+972 1599-55","00972-1599-55","972159955","+9721599555535"}){
+   BusinessDirectory.Page page=BusinessDirectory.query(database,metadata,query,0);assertEquals(query,2,page.entries.size());
+   assertEquals(1,page.entries.get(0).id);assertEquals(3,page.entries.get(1).id);
+   for(BusinessDirectory.Entry entry:page.entries){assertEquals("1599555535",entry.phone);assertEquals("+9721599555535",entry.phoneDisplay);}
+  }
+  for(String query:new String[]{"1599","+9721599","009721599","9721599"})assertEquals(query,3,BusinessDirectory.query(database,metadata,query,0).entries.size());
+  assertEquals("1599555535",BusinessDirectory.normalizedPhone("+972 1599-555-535"));
+  assertEquals("1599555535",BusinessDirectory.normalizedPhone("00972-1599-555-535"));
+  assertEquals("1599555535",BusinessDirectory.normalizedPhone("9721599555535"));
+  assertTrue(BusinessDirectory.query(database,metadata,"555535",0).entries.isEmpty());
+  assertTrue(BusinessDirectory.query(database,metadata,"01599555535",0).entries.isEmpty());
+ }
+ @Test public void exactCountryCodeListingIncludesNationalMobileAndServiceSourceForms(){
+  row(1,"A mobile national","0501234567","A");row(2,"B mobile international","+972521234567","B");
+  row(3,"C service national","1599555535","C");row(4,"D service international","+9721599500901","D");
+  row(5,"E fixed national","031234567","E");row(6,"F star service","*3456","F");
+  for(String query:new String[]{"+972","00972","972"," (+972) ","00 972","\u00a0+972\u00a0"}){
+   assertTrue(query,BusinessDirectory.countryCodeOnly(query));assertEquals(query,"",BusinessDirectory.phonePrefix(query));
+   assertEquals(query,"",BusinessDirectory.normalizedPhone(query));
+   BusinessDirectory.Page page=BusinessDirectory.query(database,metadata,query,0);assertEquals(query,6,page.entries.size());
+   Set<Long> ids=new HashSet<>();for(BusinessDirectory.Entry entry:page.entries)assertTrue(ids.add(entry.id));
+   assertEquals(query,6,ids.size());
+  }
+  assertEquals(1,BusinessDirectory.query(database,metadata,"+97250",0).entries.size());
+  assertEquals(2,BusinessDirectory.query(database,metadata,"+9721599",0).entries.size());
+  for(String query:new String[]{"+1","+44","+972+","+972;12","+972,","+972/","972 OR *","+972\u2009","%"}){
+   assertFalse(query,BusinessDirectory.countryCodeOnly(query));
+   // Rejected phone grammar retains the existing literal FTS fallback, never an unfiltered listing.
+   BusinessDirectory.Page page=BusinessDirectory.query(database,metadata,query,0);assertTrue(query,page.entries.size()<6);
+   for(BusinessDirectory.Entry entry:page.entries)assertEquals(entry.phone,BusinessDirectory.normalizedPhone(entry.phoneDisplay));
+  }
+ }
+ @Test public void longMalformedQueriesCannotLoseTheirSuffixAndBecomeDirectoryOrPhoneQueries(){
+  row(1,"Mobile source","+972501234567","A");row(2,"Service source","+9721599555535","B");
+  for(String prefix:new String[]{"+972","00972","972","+97250","+9721599"}){
+   for(String pad:new String[]{" ","-","."})for(String suffix:new String[]{";12",",12","/44"," ext 12","\u202e12"}){
+    StringBuilder query=new StringBuilder(prefix);while(query.length()<BusinessDirectory.MAX_QUERY_LENGTH)query.append(pad);query.append(suffix);
+    BusinessDirectory.Page page=BusinessDirectory.query(database,metadata,query.toString(),0);
+    assertEquals(BusinessDirectory.Status.AVAILABLE,page.status);assertTrue(query.toString(),page.entries.isEmpty());assertFalse(page.hasMore);
+   }
+  }
+  assertEquals(2,BusinessDirectory.query(database,metadata,"+972",0).entries.size());
+  assertEquals(1,BusinessDirectory.query(database,metadata,"+97250",0).entries.size());
+ }
+ @Test public void serviceGrammarRejectsForeignPostDialAndFalseIdentityRows(){
+  for(String invalid:new String[]{"01599555535","+97201599555535","+1 599555535","+44 1599555535","+972+1599555535","+9721599555535;12",
+    "1599555535,1599500901","1599555535 ext 12","1599555535/1599500901","1599555535-1599500901","1599\u202e555535","١٥٩٩٥٥٥٥٣٥","1599\t555535"}){
+   assertEquals(invalid,"",BusinessDirectory.normalizedPhone(invalid));assertFalse(invalid,BusinessDirectory.countryCodeOnly(invalid));
+  }
+  for(String invalid:new String[]{"+1 599555535","+44 1599555535","+972+1599555535","+9721599555535;12","1599555535 ext 12","1599555535/1599500901","1599\t555535"})assertEquals(invalid,"",BusinessDirectory.phonePrefix(invalid));
+  row(1,"Service","+9721599555535","City");database.execSQL("UPDATE businesses SET normalized_phone='01599555535'");
+  try{BusinessDirectory.query(database,metadata,"",0);fail("A manufactured trunk zero must not become the dial identity");}catch(IllegalStateException expected){}
+  database.execSQL("UPDATE businesses SET normalized_phone='1599555535',phone_display='+9721599500901'");
+  try{BusinessDirectory.query(database,metadata,"",0);fail("A different visible service identity must not be dialled");}catch(IllegalStateException expected){}
+ }
+ @Test public void fixedMobileAndStarIdentitiesRemainSupportedWithoutCountrySuffixGuessing(){
+  String[][] phones={{"031234567","031234567"},{"+97231234567","031234567"},{"00972 4-123-4567","041234567"},{"97291234567","091234567"},
+    {"+972501234567","0501234567"},{"00972581234567","0581234567"},{"972771234567","0771234567"},{"*3456","*3456"}};
+  for(String[] phone:phones){assertEquals(phone[0],phone[1],BusinessDirectory.normalizedPhone(phone[0]));assertEquals(phone[0],phone[1],BusinessDirectory.phonePrefix(phone[0]));}
+  row(1,"Fixed line","+97231234567","A");row(2,"Mobile line","0581234567","B");row(3,"Star service","*3456","C");
+  assertEquals(1,BusinessDirectory.query(database,metadata,"+9723",0).entries.get(0).id);
+  assertEquals(2,BusinessDirectory.query(database,metadata,"0097258",0).entries.get(0).id);
+  assertEquals(3,BusinessDirectory.query(database,metadata,"*34",0).entries.get(0).id);
+  assertTrue(BusinessDirectory.query(database,metadata,"1234567",0).entries.isEmpty());
+ }
  @Test public void ftsAndSqlOperatorsAreLiteralDataAndCannotBroadenTheQuery(){
   row(1,"Coffee shop","0501234567","Haifa");row(2,"A different store","0521234567","Tel Aviv");
   for(String query:new String[]{"coffee\" OR name:*","' OR 1=1 --","%","*","()\""}){
