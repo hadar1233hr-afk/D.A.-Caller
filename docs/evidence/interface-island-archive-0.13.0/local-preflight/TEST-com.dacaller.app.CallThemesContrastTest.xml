@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.CallThemesContrastTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:14:36" hostname="3ebae333e153" time="0.026">
+  <properties/>
+  <testcase name="labelsAndGesturePromptsRemainReadableInEveryPaletteAndMode" classname="com.dacaller.app.CallThemesContrastTest" time="0.026"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

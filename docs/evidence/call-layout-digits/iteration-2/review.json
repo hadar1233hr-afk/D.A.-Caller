@@ -1,0 +1,32 @@
+{
+  "source": "bb1466d6dedd2d531486a58a1696b3272733af85",
+  "run": 41960992905,
+  "immutable_raw_export": "f9c81ebe8f87337434ce08aa6947421bea9f9e1c",
+  "unit": {
+    "unique": 356,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native": {
+    "unique": 35,
+    "passed": 34,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "failure": "Licensed business dataset MISSING"
+  },
+  "images": {
+    "functional": 241,
+    "diagnostic": 2
+  },
+  "actual_incoming_frames_viewed": true,
+  "phase_and_pill_geometry": "PASS: native assertions and actual pixels",
+  "unobscured_caller_design_review": "NOT APPROVED: sticky SystemUI incoming heads-up covers caller after direct content PendingIntent.send",
+  "next_harness_change": "Use actual SystemUI caller-body touchscreen navigation, actual touch-guard resource, require same call still RINGING and heads-up removed before capture; no production HIGH/Telecom change.",
+  "sha256": {
+    "incoming-swipe-resting.png": "14412f188b53af63c2fd51256d8a47b54bb6934555a098227bb7af68f358cc6d",
+    "incoming-swipe-dragging.png": "b582a085587e020749cdc3b59c9d0aa9a4691a33f4513cfdb6bca34629c4af2f"
+  },
+  "publication_approved": false
+}

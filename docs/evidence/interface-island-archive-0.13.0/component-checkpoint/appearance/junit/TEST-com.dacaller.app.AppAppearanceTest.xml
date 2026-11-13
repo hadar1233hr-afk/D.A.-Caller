@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.AppAppearanceTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-12T22:07:53" hostname="3ebae333e153" time="10.273">
+  <properties/>
+  <testcase name="nativeWineSwitchKeeps48dpTargetSemanticsRtlThumbContainmentAndActualDrag" classname="com.dacaller.app.AppAppearanceTest" time="9.156"/>
+  <testcase name="themeAndDialogsUseRoundedFontAndBothWeightsFitLargerHebrewAndEnglish" classname="com.dacaller.app.AppAppearanceTest" time="0.392"/>
+  <testcase name="bundledFontContainsHebrewAndLatinWithoutSystemFallbackAndHasRetainedLicense" classname="com.dacaller.app.AppAppearanceTest" time="0.053"/>
+  <testcase name="dialogFontsAlsoReachLazyNativeChoiceRowsInBothPalettes" classname="com.dacaller.app.AppAppearanceTest" time="0.499"/>
+  <testcase name="sharedChevronsHaveRoundedStrokesAndBackArrowMirrorsSelectedLanguage" classname="com.dacaller.app.AppAppearanceTest" time="0.091"/>
+  <testcase name="brightGoldKeepsOrdinaryTextContrastOnLightDarkAndAmoledSurfaces" classname="com.dacaller.app.AppAppearanceTest" time="0.08"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

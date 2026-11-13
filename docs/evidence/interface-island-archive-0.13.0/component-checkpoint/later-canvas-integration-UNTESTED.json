@@ -1,0 +1,29 @@
+{
+  "scope": "SOURCE_ONLY_CANVAS_APPEARANCE_INTEGRATION",
+  "status": "IMPLEMENTED_NOT_COMPILED_OR_TESTED",
+  "files_sha256": {
+    "app/src/main/java/com/dacaller/app/AppAppearance.java": "1f206bf209bb4e71254957565400f6890ad6b2d1a0497ea261adac827ee94c6c",
+    "app/src/main/java/com/dacaller/app/AvatarShapes.java": "47dd795c8fd274f528f38d9fc1280269877c47d0405862b1f3e2450799dc3f4d",
+    "app/src/main/java/com/dacaller/app/WidgetSupport.java": "91a783457edc95d1abfe8fec6a7d713259cd45aadecbf56857f75ed857d7ef7b",
+    "app/src/test/java/com/dacaller/app/AppAppearanceTest.java": "3355a5038980cca9d9ff205300d283b3c2a2fc370091b8c6270ba8c8bb2c601c"
+  },
+  "changes": [
+    "AppAppearance.font(Paint,Context,boolean) loads bundled licensed app_round and applies normal500/strong650 with API26 font variation support; exact weighted Typeface factory guarded API28+",
+    "AvatarShapes preview initials now use the shared strong font",
+    "WidgetSupport bitmap initials now use the shared strong font",
+    "Existing geometry, centering formula, sizes, colors, cache, photo handling and IO preserved"
+  ],
+  "new_test": {
+    "class": "AppAppearanceTest",
+    "method": "canvasTypographyShapesHebrewAndLatinWithTheActualBundledFontAtBothWeights",
+    "status": "NOT_EXECUTED",
+    "purpose": "Native shaping verifies nonmissing Hebrew+Latin glyphs,500/650 weights and SHA256 of the actual font buffer selected per glyph, detecting platform fallback"
+  },
+  "validation": [
+    "git diff --check PASS",
+    "Source review only; no Gradle slot used"
+  ],
+  "prior_appearance_helper_tests": "11/11 host PASS preceded this new Paint helper and seventh appearance method; fresh full-suite execution remains required",
+  "emulator_verified": false,
+  "visual_release_approval": false
+}

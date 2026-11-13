@@ -1,0 +1,65 @@
+{
+  "status": "PASS_INDEPENDENT_ANONYMOUS_PUBLIC_RELEASE_VERIFICATION",
+  "verified_at_utc": "2026-11-12T04:14:07.391507+00:00",
+  "release_id": 442488097,
+  "tag": "v0.12.0",
+  "publication_commit": "2199b6f655b63907b48b69f6fa918ba9c3e8b138",
+  "native_apk_sha256": "f025fad667edafe2c76ab3f574c7ff1bfd2aeb301fdd1d035ac1acb6b311e16a",
+  "all_six_public_assets_verified": true,
+  "original_243_ui_archive_exact_bytes_equal": true,
+  "dynamic_ci_verification_matches_reviewed_source_and_proofs": true,
+  "assets": {
+    "DA-CALLER-v0.12.0-Android13-evidence.zip": {
+      "url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.12.0/DA-CALLER-v0.12.0-Android13-evidence.zip",
+      "http_status": 200,
+      "bytes": 14225526,
+      "sha256": "55ae41e1c1c710985d7bf5b722148554e144ce5e19c84225a9dafd3c5b97f0fa",
+      "github_asset_digest_matches": true,
+      "exact_reviewed_bytes_equal": true
+    },
+    "DA-CALLER-v0.12.0-metadata.txt": {
+      "url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.12.0/DA-CALLER-v0.12.0-metadata.txt",
+      "http_status": 200,
+      "bytes": 2134,
+      "sha256": "be8af4e2f34adf9912342e84672de31742b67b1463fb0fc2b6da390057497d7c",
+      "github_asset_digest_matches": true,
+      "exact_reviewed_bytes_equal": true
+    },
+    "DA-CALLER-v0.12.0-signature.txt": {
+      "url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.12.0/DA-CALLER-v0.12.0-signature.txt",
+      "http_status": 200,
+      "bytes": 955,
+      "sha256": "b2dd9b4d1fac4e53c0057eaf2285a3274fd48ef140c24453188a70e98651238a",
+      "github_asset_digest_matches": true,
+      "exact_reviewed_bytes_equal": true
+    },
+    "DA-CALLER-v0.12.0-verification.json": {
+      "url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.12.0/DA-CALLER-v0.12.0-verification.json",
+      "http_status": 200,
+      "bytes": 73826,
+      "sha256": "7657e37e1f2b62f6f996506f5d0a857b38cfec994157c4c6e4171fca2162925a",
+      "github_asset_digest_matches": true,
+      "exact_reviewed_bytes_equal": null,
+      "semantic_reviewed_evidence_equal": true,
+      "ci_publication_commit_bound": true
+    },
+    "DA-CALLER-v0.12.0.apk": {
+      "url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.12.0/DA-CALLER-v0.12.0.apk",
+      "http_status": 200,
+      "bytes": 469326,
+      "sha256": "f025fad667edafe2c76ab3f574c7ff1bfd2aeb301fdd1d035ac1acb6b311e16a",
+      "github_asset_digest_matches": true,
+      "exact_reviewed_bytes_equal": true
+    },
+    "DA-CALLER-v0.12.0.apk.sha256": {
+      "url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.12.0/DA-CALLER-v0.12.0.apk.sha256",
+      "http_status": 200,
+      "bytes": 88,
+      "sha256": "15ad36fcb82612fbebdeca792df0ac195d389b28857d66f320bda458083b047a",
+      "github_asset_digest_matches": true,
+      "exact_reviewed_bytes_equal": true
+    }
+  },
+  "hardware_tested": false,
+  "beta9_compatible_upgrade": false
+}

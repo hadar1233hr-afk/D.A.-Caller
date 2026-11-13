@@ -1,0 +1,19 @@
+{
+  "unit_unique": 356,
+  "unit_failures_errors_skips": 0,
+  "lint_severities": {
+    "Warning": 6
+  },
+  "debug_build": "PASS",
+  "native_java_compile": "PASS including final real-Recents scenario",
+  "native_execution": "PENDING",
+  "visual_review": "NOT TESTED",
+  "font_provenance": "docs/third-party-fonts/Nunito.json",
+  "all_previous_pngs_retained": 233,
+  "required_full_pngs": 245,
+  "expected_native_cases": 35,
+  "production_business_records": 0,
+  "publication_approved": false,
+  "final_shared_gesture_view_type_check": "PASS",
+  "final_focused_call_navigation_cases": 31
+}

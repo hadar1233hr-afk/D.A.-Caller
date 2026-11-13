@@ -17,7 +17,6 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Shader;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -170,7 +169,7 @@ final class WidgetSupport {
    photo.recycle();
   }else{
    p.setColor(dark(c)?0xFF405646:0xFFDCEADA);canvas.drawPath(AvatarShapes.path(AvatarShapes.selected(c),size,size),p);
-   p.setColor(dark(c)?0xFFECF4E7:0xFF28452E);p.setTypeface(Typeface.create("sans-serif-medium",Typeface.NORMAL));p.setTextSize(size*.35f);p.setTextAlign(Paint.Align.CENTER);
+   p.setColor(dark(c)?0xFFECF4E7:0xFF28452E);AppAppearance.font(p,c,true);p.setTextSize(size*.35f);p.setTextAlign(Paint.Align.CENTER);
    Paint.FontMetrics f=p.getFontMetrics();canvas.drawText(initials(name),center,center-(f.ascent+f.descent)/2f,p);
   }
   return result;

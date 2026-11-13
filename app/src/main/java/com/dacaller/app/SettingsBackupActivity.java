@@ -12,7 +12,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ContextThemeWrapper;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -31,13 +33,17 @@ public final class SettingsBackupActivity extends Activity {
  private TextView status;
  private ProgressBar progress;
  private Button close;
+ private Button exportDocument;
+ private CheckBox exportArchive;
  private AlertDialog confirmation;
+ private int dialogTheme;
  static Intent intent(Context context,boolean export){return new Intent(context,SettingsBackupActivity.class).putExtra(EXPORT,export);}
  private String tr(String he,String en){return I18n.isEnglish(this)?en:he;}
  private int dp(float n){return Math.round(getResources().getDisplayMetrics().density*n);}
  @Override protected void onCreate(Bundle state){
   super.onCreate(state);setResult(RESULT_CANCELED);
   SharedPreferences prefs=SettingsBackup.preferences(this);boolean dark=prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);
+  dialogTheme=dark?R.style.AppDialogDark:R.style.AppDialogLight;
   int background=prefs.getBoolean("amoled",false)?Color.BLACK:dark?0xFF141414:0xFFF7F7F5;
   int ink=dark?0xFFF6F3EC:0xFF17291F;
   getWindow().setStatusBarColor(background);getWindow().setNavigationBarColor(background);
@@ -47,30 +53,38 @@ public final class SettingsBackupActivity extends Activity {
   root.setPadding(dp(24),dp(24),dp(24),dp(24));root.setBackgroundColor(background);
   ScrollView viewport=new ScrollView(this);viewport.setFillViewport(true);viewport.setBackgroundColor(background);
   viewport.addView(root,new ScrollView.LayoutParams(-1,-2));setContentView(viewport);
-  TextView title=new TextView(this);title.setText(tr("גיבוי ושחזור הגדרות","Settings backup and restore"));title.setTextSize(24);title.setTextColor(ink);
+  TextView title=new TextView(this);title.setText(tr("גיבוי ושחזור הגדרות","Settings backup and restore"));title.setTextSize(24);title.setTextColor(ink);AppAppearance.font(title,true);
   root.addView(title,new LinearLayout.LayoutParams(-1,-2));
-  status=new TextView(this);status.setTextSize(16);status.setTextColor(ink);status.setPadding(0,dp(18),0,dp(18));root.addView(status,new LinearLayout.LayoutParams(-1,-2));
+  status=new TextView(this);status.setTextSize(16);status.setTextColor(ink);AppAppearance.font(status,false);status.setPadding(0,dp(18),0,dp(18));root.addView(status,new LinearLayout.LayoutParams(-1,-2));
+  exportArchive=new CheckBox(new ContextThemeWrapper(this,dialogTheme));exportArchive.setText(tr("כלול גם רשומות מארכיון השיחות","Also include call-archive records"));exportArchive.setTextColor(ink);AppAppearance.font(exportArchive,false);
+  exportArchive.setMinHeight(dp(48));root.addView(exportArchive,new LinearLayout.LayoutParams(-1,-2));
+  exportDocument=new Button(this);exportDocument.setText(tr("בחר קובץ ושמור גיבוי","Choose file and save backup"));exportDocument.setMinHeight(dp(48));AppAppearance.font(exportDocument,true);
+  exportDocument.setOnClickListener(v->{session.includeArchiveExport=exportArchive.isChecked();session.phase=Phase.PICKING;render();chooseDocument();});
+  root.addView(exportDocument,new LinearLayout.LayoutParams(-1,-2));
   progress=new ProgressBar(this);progress.setContentDescription(tr("מעבד קובץ","Processing file"));root.addView(progress,new LinearLayout.LayoutParams(dp(48),dp(48)));
-  close=new Button(this);close.setText(tr("סגור","Close"));close.setMinHeight(dp(48));close.setOnClickListener(v->finish());root.addView(close,new LinearLayout.LayoutParams(-1,-2));
+  close=new Button(this);close.setText(tr("סגור","Close"));close.setMinHeight(dp(48));AppAppearance.font(close,false);close.setOnClickListener(v->finish());root.addView(close,new LinearLayout.LayoutParams(-1,-2));
   TextView note=new TextView(this);note.setText(tr(
-    "הקובץ כולל הגדרות, מועדפים והערות שיחה מקומיות. הוא עשוי לכלול מספרי טלפון. אנשי הקשר, תמונותיהם, יומן השיחות והארכיון אינם נכללים ואינם נמחקים. הרשאות מערכת ומיקומי ווידג׳טים אינם ניתנים להעברה. ניתן לשמור קובץ במכשיר ללא אינטרנט.",
-    "The file includes settings, favorites and local call notes, and may contain phone numbers. Contacts, photos, call history and the archive are not included or deleted. System permissions and launcher widget placements cannot be transferred. Save locally to work offline."));
-  note.setTextSize(14);note.setTextColor(ink);note.setPadding(0,dp(18),0,dp(18));root.addView(note,new LinearLayout.LayoutParams(-1,-2));
+    "הקובץ כולל הגדרות, מועדפים והערות שיחה מקומיות. רק אם תבחר בכך, ייכללו גם כל רשומות הארכיון השמורות, עם מספרים וזמני שיחות. הקובץ פרטי ולא מוצפן: שמור אותו במקום מהימן. אנשי קשר, תמונות, הקלטות ויומן השיחות של Android אינם נכללים ואינם נמחקים. הרשאות ומיקומי ווידג׳טים אינם ניתנים להעברה. ניתן לשמור במכשיר ללא אינטרנט.",
+    "The file includes settings, favorites and local call notes. Only when selected, it also includes all stored archive records with phone numbers and call times. The file is private and unencrypted: save it somewhere trusted. Contacts, photos, recordings and Android call history are not included or deleted. Permissions and widget placements cannot be transferred. Save locally to work offline."));
+  note.setTextSize(14);note.setTextColor(ink);AppAppearance.font(note,false);note.setPadding(0,dp(18),0,dp(18));root.addView(note,new LinearLayout.LayoutParams(-1,-2));
   Object retained=getLastNonConfigurationInstance();
   if(retained instanceof Session)session=(Session)retained;
   else{
    session=new Session(getApplicationContext(),getIntent().getBooleanExtra(EXPORT,true));
    if(state!=null){
     String uri=state.getString("document_uri");String phase=state.getString("phase",Phase.PICKING.name());
+    session.includeArchiveExport=state.getBoolean("include_archive_export",false);session.includeArchiveRestore=state.getBoolean("include_archive_restore",false);
     if(uri!=null)session.uri=Uri.parse(uri);
     if(phase.equals(Phase.READING.name())||phase.equals(Phase.CONFIRM.name()))session.read();
     else if(phase.equals(Phase.EXPORTING.name()))session.export();
     else if(phase.equals(Phase.SUCCESS.name()))session.phase=Phase.SUCCESS;
+    else if(phase.equals(Phase.PICKING.name()))session.phase=Phase.PICKING;
     else if(phase.equals(Phase.APPLYING.name())||phase.equals(Phase.ERROR.name()))session.phase=Phase.ERROR;
    }
   }
+  exportArchive.setChecked(session.includeArchiveExport);
   session.observer=this;render();
-  if(state==null&&retained==null)chooseDocument();
+  if(state==null&&retained==null&&!session.exportMode)chooseDocument();
  }
  private void chooseDocument(){
   Intent document=new Intent(session.exportMode?Intent.ACTION_CREATE_DOCUMENT:Intent.ACTION_OPEN_DOCUMENT);
@@ -92,7 +106,9 @@ public final class SettingsBackupActivity extends Activity {
   if(isFinishing()||isDestroyed())return;
   Phase phase=session.phase;boolean working=phase==Phase.EXPORTING||phase==Phase.READING||phase==Phase.APPLYING;
   progress.setVisibility(working?View.VISIBLE:View.GONE);close.setVisibility(working?View.GONE:View.VISIBLE);
-  if(phase==Phase.PICKING)status.setText(tr("בחר קובץ באמצעות מנהל הקבצים של Android.","Choose a file using Android's document picker."));
+  exportArchive.setVisibility(phase==Phase.EXPORT_OPTIONS?View.VISIBLE:View.GONE);exportDocument.setVisibility(phase==Phase.EXPORT_OPTIONS?View.VISIBLE:View.GONE);
+  if(phase==Phase.EXPORT_OPTIONS)status.setText(tr("בחר אם להוסיף את הארכיון לאותו קובץ גיבוי.","Choose whether to add the archive to the same backup file."));
+  else if(phase==Phase.PICKING)status.setText(tr("בחר קובץ באמצעות מנהל הקבצים של Android.","Choose a file using Android's document picker."));
   else if(phase==Phase.EXPORTING)status.setText(tr("שומר גיבוי…","Saving backup…"));
   else if(phase==Phase.READING)status.setText(tr("בודק את קובץ הגיבוי…","Validating backup file…"));
   else if(phase==Phase.APPLYING)status.setText(tr("משחזר הגדרות…","Restoring settings…"));
@@ -100,8 +116,12 @@ public final class SettingsBackupActivity extends Activity {
     "לא ניתן להשלים את הפעולה. בדוק שהקובץ הוא גיבוי הגדרות נתמך של DA CALLER ושיש הרשאת גישה ומקום פנוי. נתוני השיחות לא נמחקו.",
     "Could not complete the operation. Check that this is a supported DA CALLER settings backup and that storage access and space are available. Call data was not deleted."));
   else if(phase==Phase.SUCCESS){
-   status.setText(session.exportMode?tr("הגיבוי נשמר בקובץ שבחרת.","Backup saved to the file you selected."):
-     tr("ההגדרות שוחזרו. אנשי הקשר והארכיון נשמרו.","Settings restored. Contacts and the archive were preserved."));
+   String result=session.exportMode?tr("הגיבוי נשמר בקובץ שבחרת.","Backup saved to the file you selected."):
+     tr("ההגדרות שוחזרו. נתוני שיחות ואנשי קשר קיימים נשמרו.","Settings restored. Existing calls and contacts were preserved.");
+   if(!session.exportMode&&session.merge!=null&&session.includeArchiveRestore)result+="\n"+String.format(I18n.locale(this),tr(
+     "נוספו %d רשומות ארכיון; %d רשומות זהות ו־%d רשומות עם מידע שונה נשמרו כפי שהיו במכשיר.",
+     "Added %d archive records; kept %d identical and %d conflicting existing records unchanged."),session.merge.added,session.merge.duplicates,session.merge.conflicts);
+   status.setText(result);
    setResult(RESULT_OK,new Intent().putExtra("settings_restored",!session.exportMode));
   }else if(phase==Phase.CONFIRM){
    status.setText(tr("הקובץ תקין. יש לאשר לפני שינוי הגדרות.","The file is valid. Confirm before changing settings."));
@@ -113,10 +133,20 @@ public final class SettingsBackupActivity extends Activity {
      snapshot.settings(),snapshot.favorites(),snapshot.notes());
    if(snapshot.values.containsKey(CallArchive.PREF))summary+="\n\n"+tr("שמירת ארכיון לאחר השחזור: ","Archive retention after restore: ")+
      retention((String)snapshot.values.get(CallArchive.PREF));
-   confirmation=new AlertDialog.Builder(this).setTitle(tr("שחזור הגדרות","Restore settings")).setMessage(summary)
+   if(snapshot.archive!=null)summary+="\n\n"+String.format(I18n.locale(this),tr(
+     "הקובץ מכיל גם %d רשומות ארכיון. אפשר למזג אותן בבחירה מפורשת למטה. רשומות קיימות בעלות אותה זהות יישמרו ללא שינוי, גם אם המידע בקובץ שונה. אין מחיקה או החלפה של הארכיון. כללי השמירה יחולו בעדכוני ארכיון עתידיים.",
+     "This file also contains %d archive records. Select below to merge them. Existing records with the same identity stay unchanged, including conflicts. The archive is never deleted or replaced. Retention rules apply during future archive updates."),snapshot.archive.rows.size());
+   else summary+="\n\n"+tr("זהו גיבוי הגדרות בלבד. הארכיון הקיים יישמר ללא שינוי.","This is a settings-only backup. The existing archive stays unchanged.");
+   AlertDialog.Builder builder=new AlertDialog.Builder(this,dialogTheme).setTitle(tr("שחזור הגדרות","Restore settings")).setMessage(summary);
+   if(snapshot.archive!=null){
+    CheckBox merge=new CheckBox(builder.getContext());merge.setText(tr("מזג גם את רשומות הארכיון שבקובץ","Also merge archive records from this file"));merge.setMinHeight(dp(48));AppAppearance.font(merge,false);
+    merge.setPadding(dp(20),dp(8),dp(20),dp(8));merge.setChecked(session.includeArchiveRestore);
+    merge.setOnCheckedChangeListener((button,checked)->session.includeArchiveRestore=checked);builder.setView(merge);
+   }
+   confirmation=AppAppearance.show(builder
      .setNegativeButton(tr("ביטול","Cancel"),(dialog,which)->finish())
      .setPositiveButton(tr("שחזר","Restore"),(dialog,which)->session.restore())
-     .setOnCancelListener(dialog->finish()).show();
+     .setOnCancelListener(dialog->finish()));
   }
  }
  private String retention(String policy){
@@ -130,18 +160,21 @@ public final class SettingsBackupActivity extends Activity {
  @Override public Object onRetainNonConfigurationInstance(){return session;}
  @Override protected void onSaveInstanceState(Bundle state){
   super.onSaveInstanceState(state);state.putString("phase",session.phase.name());
+  if(session.phase==Phase.EXPORT_OPTIONS)session.includeArchiveExport=exportArchive.isChecked();
+  state.putBoolean("include_archive_export",session.includeArchiveExport);state.putBoolean("include_archive_restore",session.includeArchiveRestore);
   if(session.uri!=null)state.putString("document_uri",session.uri.toString());
  }
  @Override protected void onDestroy(){
   if(session!=null&&session.observer==this)session.observer=null;
   if(confirmation!=null)confirmation.dismiss();super.onDestroy();
  }
- private enum Phase {PICKING,EXPORTING,READING,CONFIRM,APPLYING,SUCCESS,ERROR}
+ private enum Phase {EXPORT_OPTIONS,PICKING,EXPORTING,READING,CONFIRM,APPLYING,SUCCESS,ERROR}
  /** Retained work owns application context; dialogs and Activities never escape their lifecycle. */
  private static final class Session {
   final Context app;final boolean exportMode;final Handler main=new Handler(Looper.getMainLooper());
-  Phase phase=Phase.PICKING;Uri uri;SettingsBackup.Snapshot snapshot;SettingsBackupActivity observer;
-  Session(Context app,boolean exportMode){this.app=app;this.exportMode=exportMode;}
+  Phase phase;Uri uri;SettingsBackup.Snapshot snapshot;SettingsBackupActivity observer;
+  boolean includeArchiveExport,includeArchiveRestore;CallArchive.MergeResult merge;
+  Session(Context app,boolean exportMode){this.app=app;this.exportMode=exportMode;phase=exportMode?Phase.EXPORT_OPTIONS:Phase.PICKING;}
   void update(Phase value){phase=value;if(observer!=null)observer.render();}
   void export(){
    if(uri==null){update(Phase.ERROR);return;}update(Phase.EXPORTING);
@@ -149,7 +182,7 @@ public final class SettingsBackupActivity extends Activity {
     boolean ok=false;
     try{
      // Validate and encode completely before opening/truncating the selected output.
-     byte[] bytes=SettingsBackup.encode(SettingsBackup.capture(SettingsBackup.preferences(app)));
+     byte[] bytes=SettingsBackup.encode(SettingsBackup.capture(app,includeArchiveExport));
      try(OutputStream output=app.getContentResolver().openOutputStream(uri,"wt")){
       if(output==null)throw new java.io.IOException("Missing output stream");output.write(bytes);output.flush();
      }
@@ -170,7 +203,7 @@ public final class SettingsBackupActivity extends Activity {
    if(phase!=Phase.CONFIRM||snapshot==null)return;update(Phase.APPLYING);
    IO.execute(()->{
     boolean ok=false;
-    try{ok=SettingsBackup.restore(SettingsBackup.preferences(app),snapshot,id->AppIcons.apply(app,id));}catch(Exception ignored){}
+    try{merge=SettingsBackup.restore(app,SettingsBackup.preferences(app),snapshot,includeArchiveRestore,id->AppIcons.apply(app,id));ok=merge!=null;}catch(Exception ignored){}
     final boolean success=ok;main.post(()->{
      if(success){ContactPhotos.clearCache();WidgetSupport.refreshAll(app);}
      update(success?Phase.SUCCESS:Phase.ERROR);

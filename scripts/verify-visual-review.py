@@ -24,6 +24,34 @@ if "personalization" in str(review_path):
         "compact_summary", "avatar_shapes", "archive_contact_identity",
         "call_notifications", "return_from_call"
     }, "Review must cover all eight requested features"
+if "callback-business-" in str(review_path):
+    assert expected == 245, "All233 earlier and12 callback/business/swipe/contact captures must be reviewed"
+    assert set(review.get("verified_features", [])) == {
+        "compact_expanded_island", "call_actions_guarded", "island_customization_backup",
+        "activity_lifecycle_and_list_state", "offline_optional_overlay_permission",
+        "real_telecom_external_island", "missed_call_notifications", "local_version_changelog",
+        "daily_callback_reminder", "licensed_offline_business_directory", "real_incoming_swipe_answer", "create_contact_from_unknown_recents"
+    }, "Review must include actual callbacks, the OS alarm and the sourced business dataset"
+elif "call-followup-" in str(review_path):
+    assert expected == 233, "All227 prior and6 missed-call/changelog captures must be reviewed"
+    assert set(review.get("verified_features", [])) == {
+        "compact_expanded_island", "call_actions_guarded", "island_customization_backup",
+        "activity_lifecycle_and_list_state", "offline_optional_overlay_permission",
+        "real_telecom_external_island", "missed_call_notifications", "local_version_changelog"
+    }, "Review must cover the external island, real missed calls and local changelog"
+elif "external-island-" in str(review_path):
+    assert expected == 227, "All219 previous and8 actual Telecom captures must be reviewed"
+    assert set(review.get("verified_features", [])) == {
+        "compact_expanded_island", "call_actions_guarded", "island_customization_backup",
+        "activity_lifecycle_and_list_state", "offline_optional_overlay_permission",
+        "real_telecom_external_island"
+    }, "Review must cover actual external call windows and explicit optional overlay access"
+elif "island-" in str(review_path):
+    assert expected == 219, "All 183 regressions and 36 island captures must be reviewed"
+    assert set(review.get("verified_features", [])) == {
+        "compact_expanded_island", "call_actions_guarded", "island_customization_backup",
+        "activity_lifecycle_and_list_state", "offline_no_overlay_permission"
+    }, "Review must cover island controls, customization, lifecycle and permission scope"
 source = str(review.get("screenshot_source_sha", ""))
 run_id = str(review.get("screenshot_run_id", ""))
 tree = str(review.get("reviewed_app_tree", ""))

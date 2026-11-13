@@ -1,0 +1,105 @@
+{
+  "schema": "DA_CALLER_RESEARCH_SEARCH_V1_NOT_APP_ACCEPTED",
+  "builder_profile": "EXPLICIT_FIVE_SOURCE_COHORTS_RESEARCH_ONLY",
+  "research_only": true,
+  "app_accepted": false,
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "source_pbf_bytes": 121050024,
+  "cohorts": [
+    {
+      "kind": "node",
+      "corpus_path": "/workspace/work/business-data/node-geography-owner-261103-v2/research-node-businesses.ndjson",
+      "rows": 2448,
+      "source_objects": 2393,
+      "corpus_sha256": "37ce40b735e144cc38eee1e72ce75c785424f0213d05c9c35feb766c1b2704df",
+      "report_sha256": "08008cc5dc305a7c6a1d0e8a92bafd186d24d0a61424cec45aebeefe388e8f1f",
+      "audit_sha256": "3da31677ac4a8897ecf2c3be77e51ab714f857c2dd8bf38e815c5adfc40b821f",
+      "audit_status": "INDEPENDENT_ACTUAL_SOURCE_NODE_AUDIT_PASS_RESEARCH_ONLY",
+      "scope": "research-node-source-IL-interior-minus-filled-WB-and-Gaza"
+    },
+    {
+      "kind": "way",
+      "corpus_path": "/workspace/work/business-data/way-geography-owner-261103-v1/research-way-businesses.ndjson",
+      "rows": 247,
+      "source_objects": 242,
+      "corpus_sha256": "cdbac300bf164e252e606d990f648c040e7193444b525786b16aba9049a692d6",
+      "report_sha256": "33ee5cf3296aca31c0771deadb6b44b59051d857d12bd88b869c9a49c5025cf8",
+      "audit_sha256": "172e3510b485879725e13bdfe9e54ed1c5f91a8c5bee1e0ee4b9bb3fa426360b",
+      "audit_status": "PASS_RESEARCH_SOURCE_AND_COMPLETE_POLYGON_AUDIT_ONLY",
+      "scope": "research-complete-closed-way-source-IL-interior-minus-filled-WB-and-Gaza"
+    },
+    {
+      "kind": "relation",
+      "corpus_path": "/workspace/work/business-data/relation-geography-owner-261103-v2/research-relation-businesses.ndjson",
+      "rows": 1,
+      "source_objects": 1,
+      "corpus_sha256": "2e56ba410ea38bc06897d43c50108b5d007895d41856daeffa55e136dda58ae8",
+      "report_sha256": "14b12e58052b8d26ca1271a175024bc50b1cf5230a5dc15187d2650b65fe568c",
+      "audit_sha256": "3d93f9f508c9c4ef056c67c320b7124b7c2cd5136aa5fe2639c55ff46b66b584",
+      "audit_status": "PASS_RESEARCH_SOURCE_AND_HOLE_AWARE_RELATION_AUDIT_ONLY",
+      "scope": "research-complete-role-aware-multipolygon-source-IL-minus-filled-WB-and-Gaza"
+    },
+    {
+      "kind": "extra_node",
+      "physical_source_type": "node",
+      "corpus_path": "/workspace/work/business-data/extra-category-nodes-owner-261103-v2/research-extra-category-nodes.ndjson",
+      "rows": 29,
+      "source_objects": 29,
+      "corpus_sha256": "8f9fbe7d47041e47b38aec62f1f5b4f7b199c2671ac4b199cf4f27ec2a5a8fe8",
+      "report_sha256": "fbc642fb5653178f552468b3f6c4f1cfd89ae2c873c0b94904294b2276d01044",
+      "audit_sha256": "3a565df79d5c04412fba4a4e2cece2387d9059719a6542b53fea038c570a0ea5",
+      "audit_status": "PASS_RESEARCH_EXTRA_CATEGORY_NODE_SOURCE_AND_POINT_AUDIT_ONLY",
+      "scope": "research-extra-category-node-source-IL-minus-filled-WB-and-Gaza"
+    },
+    {
+      "kind": "extra_way",
+      "physical_source_type": "way",
+      "corpus_path": "/workspace/work/business-data/extra-category-ways-owner-261103-v1/research-way-businesses.ndjson",
+      "rows": 3,
+      "source_objects": 3,
+      "corpus_sha256": "dd35def488f06705a128986681a4d775970ad3357b55a74fecb00e63585f5df1",
+      "report_sha256": "496adeee2ed819f44b23d71c445ec546b75edfb3b8729b92030348a370d0b36b",
+      "audit_sha256": "872e3d363a58de3365db726398953942af5824f6efd8d6990a66321d2cf4b18d",
+      "audit_status": "PASS_RESEARCH_SOURCE_AND_COMPLETE_POLYGON_AUDIT_ONLY",
+      "scope": "research-complete-closed-way-source-IL-interior-minus-filled-WB-and-Gaza"
+    }
+  ],
+  "counts": {
+    "IDENTITY_UNCHANGED": 2718,
+    "RESEARCH_REFORMAT_PROPOSAL": 10,
+    "SOURCE_TEXT_WITHHELD": 3,
+    "SOURCE_TEXT_WITHIN_BOUNDS": 2725,
+    "default_searchable_rows": 2715,
+    "raw_rows": 2728
+  },
+  "observed_at_utc": "2026-11-06T02:09:04.642049+00:00",
+  "staging_script_sha256": "7e2ec2a6976ae22ba98e9a6f60a8d46378bfb03898be711ded230bd6a5045ce0",
+  "code_sha256": {
+    "stage_expanded_research_sqlite.py": "7e2ec2a6976ae22ba98e9a6f60a8d46378bfb03898be711ded230bd6a5045ce0",
+    "stage_research_sqlite.py": "5d4d264c8f88dccd9ed5dc1ae432bac767446105b8be9779f3dcf83714f82743",
+    "phone_identity_review.py": "89452692195fa9e9b7b3dc65a75f7943d0fddbffa26fb4d28ad3b747b58759f0",
+    "source_text_review.py": "a0ba075c107a17e990fb285752f4447156d4c429a770303fb560e689a52d64a5",
+    "extended_business_category.py": "b9ff71844e21a2605d26452920edae8fa62026383a4008581191a40e78d7c060",
+    "research_extra_category_nodes.py": "1b9d358cbeee8b807c4033be32ac22a1a7d6c998c8d6ffdbda3557e654c45c1d",
+    "research_node_geography.py": "a5a01b32666bf4c22585de39b79801aedbadc0d1e2bf0d5074e20bc4a2518d0f",
+    "research_way_geography.py": "78b943a603b16bd4763cc45cc1546438967427a8b3a009fb252c481196802787",
+    "research_relation_geography.py": "a644adeb89ab294096eb588497dd078e33b9151e71741900c53f22319b7dafea",
+    "audit_extra_category_nodes.py": "87596823f3bfe1aa0ca341a662d3b903a14ba28b625b5e9918e273abb04a3d37",
+    "audit_way_geography.py": "d179364bf7034c108371fae3b11e32f9de64f8d880ab262dc4d7cae83e9e450b",
+    "audit_relation_geography.py": "c042c0642c15de83b9b4edf04af6eff9fc978aa0e20ec9522cf6cc8cac21dd77",
+    "package_app_dataset.py": "d0ffd2392ed43a356f6e84ee6b4a7526cf84a50dc555e5536d85975b3d0c123f",
+    "extract_osm_businesses.py": "3b770ebf3af5322e77421d4e2458b360a7488985b8d4e36e69a42e0ad55577d8",
+    "requirements-lock.txt": "40f702ed012b78157fe9ef0791811376a336e60a7840283105835696b36dfe37",
+    "node-geography-executed-source-audit.py": "56a0aae27269fa6e322df0f1b7b166418d55f8192642d4748b17193631dcd96d"
+  },
+  "phonenumbers_version": "9.0.42",
+  "sqlite_version": "3.53.1",
+  "limits": [
+    "Explicit additional research cohorts retain their own audit families and source scopes.",
+    "All raw lines/country fields remain original; no production admission or phone/name repair.",
+    "Research schema/searchability is not app integration, ownership verification or national coverage.",
+    "Base tool, prior2696-row DB, app, signing/CI and production guards remain unchanged."
+  ],
+  "database_sha256": "1a015426c33835a247198120bd05be026f4f0c25aa874d6c506cc7f07e1ad255",
+  "database_bytes": 6975488
+}

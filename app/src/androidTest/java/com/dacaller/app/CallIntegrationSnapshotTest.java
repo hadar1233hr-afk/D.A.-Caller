@@ -58,6 +58,7 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
  private int originalAccessibilityFlags;
  private String originalFont;
  private MainActivity main;
+ private static JSONObject initialForeground;
  private final List<Activity> launched=new ArrayList<>();
  private final List<Uri> rawContacts=new ArrayList<>();
 
@@ -109,6 +110,46 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
   long deadline=SystemClock.uptimeMillis()+7000;
   do{getInstrumentation().waitForIdleSync();if(check.ready())return;Thread.sleep(40);}while(SystemClock.uptimeMillis()<deadline);
   fail(message);
+ }
+ private void awaitMainForeground()throws Exception{
+  // Granting the default dialer role can briefly rebuild/focus the native
+  // windows. A fixed setup delay is not proof that a legal foreground FGS
+  // start is available; require the actual Activity and platform window state.
+  long start=SystemClock.uptimeMillis(),stableSince=-1;
+  String component=target.getPackageName()+"/.MainActivity";
+  String qualified=target.getPackageName()+"/"+MainActivity.class.getName();
+  while(SystemClock.uptimeMillis()-start<7000){
+   getInstrumentation().waitForIdleSync();
+   final boolean[] focused={false};
+   ui(()->{
+    View decor=main.getWindow().getDecorView();
+    focused[0]=!main.isFinishing()&&!main.isDestroyed()&&main.hasWindowFocus()
+      &&decor.isAttachedToWindow()&&decor.isShown()&&decor.hasWindowFocus()
+      &&decor.getWindowVisibility()==View.VISIBLE;
+   });
+   String resumedLine="";
+   for(String line:shell("dumpsys activity activities").split("\n"))
+    if(line.contains("topResumedActivity")&&(line.contains(component)||line.contains(qualified))){resumedLine=line.trim();break;}
+   boolean nativeWindow=false;
+   for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+    AccessibilityNodeInfo root=window.getRoot();
+    if(window.getType()==AccessibilityWindowInfo.TYPE_APPLICATION&&window.isActive()&&window.isFocused()
+      &&root!=null&&root.isVisibleToUser()&&root.getPackageName()!=null
+      &&target.getPackageName().contentEquals(root.getPackageName())){nativeWindow=true;break;}
+   }
+   long now=SystemClock.uptimeMillis();
+   if(focused[0]&&!resumedLine.isEmpty()&&nativeWindow){
+    if(stableSince<0)stableSince=now;
+    if(now-stableSince>=350){
+     initialForeground=new JSONObject().put("activity",MainActivity.class.getName()).put("activity_and_decor_focused",true)
+       .put("native_application_window_active_and_focused",true).put("top_resumed_activity",resumedLine)
+       .put("stable_millis",now-stableSince).put("wait_millis",now-start);
+     return;
+    }
+   }else stableSince=-1;
+   Thread.sleep(60);
+  }
+  fail("Initial FGS start requires stable focused MainActivity, its native application window and actual topResumedActivity");
  }
  private void field(String name,Object value){
   try{Field field=MainActivity.class.getDeclaredField(name);field.setAccessible(true);field.set(main,value);}
@@ -290,6 +331,7 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
   // the instrumentation UID and would invalidate later test cases.
   shell("cmd role add-role-holder --user 0 android.app.role.DIALER "+target.getPackageName());
   await(()->target.getSystemService(RoleManager.class).isRoleHeld(RoleManager.ROLE_DIALER),"Disposable emulator did not grant dialer role");
+  awaitMainForeground();
   assertTrue("Initial FGS start must happen while MainActivity is in the foreground",main.hasWindowFocus());
   post(Call.STATE_RINGING,"he",false);
   getInstrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_HOME);settle();
@@ -334,6 +376,10 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
 
  private void notificationFailureDiagnostics(Throwable failure)throws Exception{
   shell("screencap -p "+DIRECTORY+"/call-integration-failed-notification-shade.png");
+  final String[] activity={""};
+  ui(()->activity[0]="mainDestroyed="+main.isDestroyed()+" mainFinishing="+main.isFinishing()+" mainFocus="+main.hasWindowFocus()
+    +" decorShown="+main.getWindow().getDecorView().isShown()+" decorFocus="+main.getWindow().getDecorView().hasWindowFocus());
+  diagnosticFile("call-integration-failed-foreground.txt",activity[0]+"\n"+shell("dumpsys activity activities")+"\n"+shell("dumpsys window windows"));
   StringWriter xml=new StringWriter();XmlSerializer serializer=android.util.Xml.newSerializer();
   serializer.setOutput(xml);serializer.startDocument("UTF-8",true);serializer.startTag(null,"accessibility-windows");
   serializer.attribute(null,"failure",failure.toString());
@@ -433,6 +479,7 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
   evidence.put("notification_actions_acknowledged",notificationsPassed);evidence.put("native_back_returns_to_app",backPassed);
   evidence.put("call_state_source","debug-only synthetic snapshots, shared production CallNotifications builder");
   evidence.put("real_phone_call_foreground_service",notificationsPassed);
+  if(initialForeground!=null)evidence.put("initial_foreground",initialForeground);
   evidence.put("foreground_service_type","phoneCall");
   evidence.put("dialer_role","Granted with Android role manager on disposable emulator before foreground start; emulator discarded after suite");
   evidence.put("telecom_commands","Unit-tested separately; no physical carrier/SIM assertion");

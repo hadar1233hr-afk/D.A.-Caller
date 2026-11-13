@@ -1,0 +1,12 @@
+{
+  "database_sha256": "36a7c0a07fad679249c44c975cba7c8d4fb00171d593d19f4ff0c6413a0f115a",
+  "dataset_version": "owner-261103-exact-source-name-candidate-v1",
+  "format": "DA_CALLER_BUSINESSES",
+  "license": "ODbL-1.0",
+  "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+  "record_count": 2717,
+  "schema_version": 1,
+  "source_name": "OpenStreetMap exact source-name derivative; NOT ADMITTED",
+  "source_url": "https://download.geofabrik.de/asia/israel-and-palestine.html",
+  "updated_at": "2026-11-03"
+}

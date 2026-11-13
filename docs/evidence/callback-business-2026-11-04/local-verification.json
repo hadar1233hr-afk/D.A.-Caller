@@ -1,0 +1,62 @@
+{
+  "recorded_at_utc": "2026-11-04T08:53:33.447836+00:00",
+  "application_tree": "1ce289c4ba733312821173549d2efd99f19f9bfc",
+  "version": "0.11.0-beta.10",
+  "version_code": 20,
+  "local_unit": {
+    "tests": 349,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "unique_tests": 349,
+    "xml_files": 36
+  },
+  "python_tooling": {
+    "signing": {
+      "tests": 36,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "business_extraction_packaging": {
+      "tests": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "scope": "Temporary synthetic fixtures with real libosmium; no production source acquired"
+    }
+  },
+  "results_zip_sha256": "769987d364bcac14561b5c37bf270e8f71ccc483b0ca5fd2a3382fc384de1dba",
+  "native": {
+    "status": "NOT TESTED",
+    "planned_tests": 34,
+    "planned_png": 241
+  },
+  "publication_status": "BLOCKED",
+  "blockers": [
+    "Original installed beta9 private signing key unavailable; no compatible update verified",
+    "Production business dataset unavailable: source host denied by executor policy;0 source bytes/0 production rows"
+  ],
+  "physical_tests": "NOT TESTED: JellyStar,SIM/carrier,audibleaudio,Bluetooth,lock/proximity/OEM,fullTalkBack,matching-keyupgrade",
+  "gradle": {
+    "status": "PASS",
+    "command": "gradle --offline --no-daemon --continue :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleRelease :app:compileDebugAndroidTestJavaWithJavac",
+    "lint_errors": 0,
+    "lint_warnings": 6,
+    "release_apk": "Unsigned compilation artifact, not a release",
+    "native_compilation": "PASS; no emulator execution locally"
+  },
+  "local_debug_apk": {
+    "sha256": "801b45c5dde7daebd4afa30ff5da25ba4ee88472a3dee401643e8fedb755e229",
+    "certificate_sha256": "fb4a138563caff0c59a35327a8e2865c91fea72c6d28c667c56623b1ba9110fc",
+    "identity": "com.dacaller.app",
+    "version_code": 20,
+    "version": "0.11.0-beta.10",
+    "min_sdk": 26,
+    "target_sdk": 34,
+    "internet_permission": false,
+    "signature_verified": true,
+    "mode": "local disposable debug test artifact; not published or approved",
+    "beta9_update_compatible": false
+  }
+}

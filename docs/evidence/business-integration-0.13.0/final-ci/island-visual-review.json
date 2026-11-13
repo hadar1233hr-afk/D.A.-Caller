@@ -1,0 +1,1198 @@
+{
+  "schema_version": 1,
+  "review_kind": "INDEPENDENT_VISUAL_REVIEW_OF_RETAINED_NATIVE_SCREENSHOTS",
+  "reviewer": "/root/visual_islands_013",
+  "reviewed_at_utc": "2026-11-12T10:58:39.219781+00:00",
+  "application": ":app / DA CALLER / 0.13.0 / code22",
+  "source_sha": "3f6702b92aba8feaa329fbb92c5a6f23b24e194d",
+  "run_id": 43202338930,
+  "run_attempt": 1,
+  "run_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/actions/runs/43202338930",
+  "source_run_context": "Retained source-run.json reports SUCCESS for this exact source/run. Native result context is 36 genuine cases and 245 PNG filenames; this report does not derive visual PASS from that result.",
+  "immutable_export_commit": "669b47dd34bb3018c472dcab5e72247eb6497be2",
+  "immutable_export_path": "native-review-export/43202338930",
+  "ui_artifact": {
+    "id": 13936642210,
+    "name": "DA-CALLER-Android13-UI-66df1813d5eeb0eb0564400fb445bf7caf5f88d1",
+    "bytes": 14468159,
+    "github_digest": "sha256:c931e55199bab839151ac3944052d8e90b6eae9e3a50b0046bd8fc7270a34972",
+    "independently_recomputed_zip_sha256": "c931e55199bab839151ac3944052d8e90b6eae9e3a50b0046bd8fc7270a34972",
+    "all_zip_entry_crcs_checked": true,
+    "all_reviewed_raw_bytes_equal_official_zip_entries": true
+  },
+  "review_manifest_sha256": "f106106ad75d235ccdb3b752cc34139f7cb16ad609d96442a01ca716e18f1242",
+  "review_manifest_group": "groups.island",
+  "method": "Actually opened all eleven supplied contact sheets with tools.view_image and displayed each via image(). Each sheet contains four original 480x854 raw screenshots without resizing; independently checked all 44 source hashes, 11 sheet hashes and exact RGB tile equality. Additionally opened four original raw PNGs individually. Evaluated visible names, timer/status text, controls, RTL/LTR, compact/expanded layouts, native bars, permissions fallback, confirmation and cleanup.",
+  "status": "PASS",
+  "status_scope": "CAPTURED_ISLAND_VISUAL_SCOPE_ONLY",
+  "actually_viewed_sheet_count": 11,
+  "actually_reviewed_raw_filename_count": 44,
+  "verified_raw_hash_count": 44,
+  "distinct_raw_sha256_count": 43,
+  "extra_individual_raw_view_count": 4,
+  "extra_individual_raw_views": [
+    {
+      "filename": "island-glass-dark-en-expanded.png",
+      "sha256": "eb85fcb475137d08a1edcc5127899b064635a321ff4f0d2663a28ffbd4289097"
+    },
+    {
+      "filename": "island-glass-dark-he-expanded.png",
+      "sha256": "91047f96d965c42872ed3d60898eecfa735574ac5b5298588b6828dcdebed9c5"
+    },
+    {
+      "filename": "external-end-confirmation.png",
+      "sha256": "f8ce08c3c42e7c86ba6a12fc777c823774a982bb4cb528dff8955a6440cede30"
+    },
+    {
+      "filename": "external-launcher-native-incoming.png",
+      "sha256": "8698aad72ba558ffbebca1e702090a43eb2a55617a421bb2cf8766739afe5cd7"
+    }
+  ],
+  "identical_byte_captures": [
+    {
+      "sha256": "8698aad72ba558ffbebca1e702090a43eb2a55617a421bb2cf8766739afe5cd7",
+      "filenames": [
+        "external-launcher-native-incoming.png",
+        "external-permission-denied-launcher.png"
+      ],
+      "interpretation": "Two named retained captures are visually identical native incoming fallback. Counted as two reviewed filenames, one distinct image hash; no separate transition inferred from pixels."
+    }
+  ],
+  "findings": [],
+  "nonblocking_observations": [
+    "Compact English and external Hebrew caller names, some native-notification header text and app list/favorite rows use visible bounded ellipses. Expanded caller names and action labels are readable in the captured cases. This is not a claim that arbitrary longer text is fully shown.",
+    "No duplicate custom island, clipped island action label, hidden timer, native-bar collision or stale island after the captured ended state was observed.",
+    "The two Glass-dark expanded originals show complete microphone icons when individually viewed; no raw-image icon defect was found."
+  ],
+  "limits": [
+    {
+      "status": "NOT TESTED",
+      "scope": "Physical Unihertz Jelly Star or other physical hardware; physical touch-target usability, OEM overlay behavior, real call audio, speaker/microphone/Bluetooth audio and physical-device navigation."
+    },
+    {
+      "status": "NOT TESTED",
+      "scope": "Matching-key installed-app upgrade, durable signing backup/provisioning, publication and public APK bytes. This visual review supplies no owner/signing/publication approval."
+    },
+    {
+      "status": "NOT TESTED",
+      "scope": "Action dispatch, actual permission transitions, timer progression and lifecycle behavior cannot be proven from stills alone. Root native-test/provenance review supplies any separate executed behavioral evidence."
+    },
+    {
+      "status": "BOUNDED",
+      "scope": "Only these 44 retained filenames at 480x854 and their captured themes/languages/states were visually reviewed here. Other call-screen/business/UI groups are assigned to separate reviewers; arbitrary longer names, unshown font scales, animation frames and viewport sizes are outside this report."
+    }
+  ],
+  "viewed_sheets": [
+    {
+      "sheet": "island-01.png",
+      "sheet_sha256": "8254440a22b2b3d252d6a751bc3cbee4202a8a74af3ad8255748dcfce07cf192",
+      "dimensions_px": [
+        960,
+        1768
+      ],
+      "actual_tool_view": "tools.view_image forwarded with image()",
+      "status": "PASS",
+      "observations": [
+        "External confirmation shows the full caller identity, end-call question, end and cancel buttons, with the active island and Clock app dimmed behind the dialog.",
+        "Ended Home capture has no remaining call island. Returning to DA CALLER shows one inline compact island. Active Home capture shows one compact external island, a readable timer and native system status/navigation bars. Compact caller text is intentionally ellipsized."
+      ],
+      "files": [
+        {
+          "filename": "external-end-confirmation.png",
+          "sha256": "f8ce08c3c42e7c86ba6a12fc777c823774a982bb4cb528dff8955a6440cede30",
+          "bytes": 50246,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": true,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/external-end-confirmation.png",
+          "official_zip_crc32": "f14b3d52",
+          "tile_crop_xywh": [
+            0,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "external-ended-launcher.png",
+          "sha256": "84ace48525323eea1ecc4b5284e27ca5923580a2de4cf0f1b3069680b4e6c25a",
+          "bytes": 321737,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/external-ended-launcher.png",
+          "official_zip_crc32": "6ed24616",
+          "tile_crop_xywh": [
+            480,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "external-inapp-return.png",
+          "sha256": "996dc8b3f6d0c827ac5f579f172554680062ffd916300399eea5aa5cc0160b43",
+          "bytes": 51960,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/external-inapp-return.png",
+          "official_zip_crc32": "38a537f2",
+          "tile_crop_xywh": [
+            0,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "external-launcher-active-compact.png",
+          "sha256": "2357fc3b2a22469d5615e9dc654caa137056c887e88ef22fcfd54efea3ef0549",
+          "bytes": 300196,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/external-launcher-active-compact.png",
+          "official_zip_crc32": "7ba9d35c",
+          "tile_crop_xywh": [
+            480,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "island-02.png",
+      "sheet_sha256": "464ffa316c8db2f9939a0314b7ecda406dd148f917b76e175a4451cd8838e752",
+      "dimensions_px": [
+        960,
+        1768
+      ],
+      "actual_tool_view": "tools.view_image forwarded with image()",
+      "status": "PASS",
+      "observations": [
+        "Expanded external island on Home and Clock has caller identity, timer, labeled end/hold/mute actions and open-call row fully within the screen. Native incoming heads-up notification has readable caller/state and red/green actions, with no custom island visible.",
+        "The native-incoming and permission-denied filenames contain identical image bytes. Both tiles were viewed; the visual conclusion is the same visible native-notification fallback. These stills alone do not establish separate permission transitions."
+      ],
+      "files": [
+        {
+          "filename": "external-launcher-active-expanded.png",
+          "sha256": "1301bd800addb018cffc0c4b2211dfefacb338f379b65975fc1d25e21aa1c123",
+          "bytes": 218040,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/external-launcher-active-expanded.png",
+          "official_zip_crc32": "686295db",
+          "tile_crop_xywh": [
+            0,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "external-launcher-native-incoming.png",
+          "sha256": "8698aad72ba558ffbebca1e702090a43eb2a55617a421bb2cf8766739afe5cd7",
+          "bytes": 238923,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": true,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/external-launcher-native-incoming.png",
+          "official_zip_crc32": "3d3cbe1e",
+          "tile_crop_xywh": [
+            480,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "external-other-app-active-expanded.png",
+          "sha256": "7e149a65b144d7e81287d579385672d823f52b0728344e11de95151c64f736e6",
+          "bytes": 54325,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/external-other-app-active-expanded.png",
+          "official_zip_crc32": "cbb18654",
+          "tile_crop_xywh": [
+            0,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "external-permission-denied-launcher.png",
+          "sha256": "8698aad72ba558ffbebca1e702090a43eb2a55617a421bb2cf8766739afe5cd7",
+          "bytes": 238923,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/external-permission-denied-launcher.png",
+          "official_zip_crc32": "3d3cbe1e",
+          "tile_crop_xywh": [
+            480,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "island-03.png",
+      "sheet_sha256": "3c3989263f7b5150b52687d15611630122906ef42a13ff6d819f13a30df3c12f",
+      "dimensions_px": [
+        960,
+        1768
+      ],
+      "actual_tool_view": "tools.view_image forwarded with image()",
+      "status": "PASS",
+      "observations": [
+        "Real DA CALLER Contacts and Recents captures each show one inline island in compact and expanded states. Timers, current caller identity and expanded mute/speaker/hold/end/open-call labels are readable in Hebrew.",
+        "Expanded island occupies its own layout space above favorites/content. Native bars and bottom navigation remain visible. Existing list/favorite names and compact row metadata use ellipses in their constrained rows."
+      ],
+      "files": [
+        {
+          "filename": "island-app-contacts-compact.png",
+          "sha256": "e9f904bda4bfe5c3f8b6b9af3a934613b8f38ed2f7446db34947dd92f523ad4a",
+          "bytes": 65128,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-app-contacts-compact.png",
+          "official_zip_crc32": "3c35974d",
+          "tile_crop_xywh": [
+            0,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-app-contacts-expanded.png",
+          "sha256": "4704ec40fe1402b89d35a063c9996da6aa99aa035593ae4dac4ccf4004954fdd",
+          "bytes": 65635,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-app-contacts-expanded.png",
+          "official_zip_crc32": "5fbfcc1a",
+          "tile_crop_xywh": [
+            480,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-app-recents-compact.png",
+          "sha256": "5a43ddad7cf4a31ce39c9960a6500ee5a86acbed4fa802f13c8e4f03cacbcfad",
+          "bytes": 63179,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-app-recents-compact.png",
+          "official_zip_crc32": "71feb087",
+          "tile_crop_xywh": [
+            0,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-app-recents-expanded.png",
+          "sha256": "91b7ce4932dbebf57e0b96ef66c50f9f6e86a09829b51a9826147e86e339dbbe",
+          "bytes": 66734,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-app-recents-expanded.png",
+          "official_zip_crc32": "6eae5358",
+          "tile_crop_xywh": [
+            480,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "island-04.png",
+      "sheet_sha256": "5425ee07bd15f4dceb088f1cdadd8dc23a352bcc523cd6202d666d7a2e0643c8",
+      "dimensions_px": [
+        960,
+        1768
+      ],
+      "actual_tool_view": "tools.view_image forwarded with image()",
+      "status": "PASS",
+      "observations": [
+        "Apple dark compact and expanded captures show readable English/LTR and Hebrew/RTL timer, status and caller identity. Expanded action labels and icons fit their controls; expanded English caller name is complete.",
+        "English compact name is bounded by an ellipsis and does not collide with the timer. One island is visible in each capture; native bars remain separate."
+      ],
+      "files": [
+        {
+          "filename": "island-apple-dark-en-compact.png",
+          "sha256": "f75ebeba1c18fd2f39722b36bb866e17d7b12b9e0fcf983454dbbfdf4b700197",
+          "bytes": 55187,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-apple-dark-en-compact.png",
+          "official_zip_crc32": "76e0f293",
+          "tile_crop_xywh": [
+            0,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-apple-dark-en-expanded.png",
+          "sha256": "58718daae18da3ca367f87d7463c01f47c4e9393d90b857e292d9cd28bedab3c",
+          "bytes": 63746,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-apple-dark-en-expanded.png",
+          "official_zip_crc32": "73421fe1",
+          "tile_crop_xywh": [
+            480,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-apple-dark-he-compact.png",
+          "sha256": "7e59fcaf352ae44ae5f6e473f7a79fada2678b4fc16baa90edd2fd0c2957d05c",
+          "bytes": 48258,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-apple-dark-he-compact.png",
+          "official_zip_crc32": "b4becf8a",
+          "tile_crop_xywh": [
+            0,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-apple-dark-he-expanded.png",
+          "sha256": "f1e1ab56cad9411b824060eb0c995908918459c7a796a81f2fac0a656dc3cb33",
+          "bytes": 56145,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-apple-dark-he-expanded.png",
+          "official_zip_crc32": "98a40eb3",
+          "tile_crop_xywh": [
+            480,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "island-05.png",
+      "sheet_sha256": "4921013f0387752bbb8a69c51972ac81754fe7ebe7fbfd61b0ff742a853ff93f",
+      "dimensions_px": [
+        960,
+        1768
+      ],
+      "actual_tool_view": "tools.view_image forwarded with image()",
+      "status": "PASS",
+      "observations": [
+        "Apple light English/Hebrew compact and expanded variants preserve readable dark island controls against the light contact-demo screen. Timer, status, action labels and open-call row fit.",
+        "Compact English name uses a bounded ellipsis; expanded name is complete. Native status/navigation icons contrast with the light page."
+      ],
+      "files": [
+        {
+          "filename": "island-apple-light-en-compact.png",
+          "sha256": "b6024b024d0f00719c2b3a7d730e0352544ccde57f6b23874b1b320191985a74",
+          "bytes": 58928,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-apple-light-en-compact.png",
+          "official_zip_crc32": "2e9c44ac",
+          "tile_crop_xywh": [
+            0,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-apple-light-en-expanded.png",
+          "sha256": "48a2faeec26e7369b03cb28b490e77f7f5fbd91bddbe701f47e7498f47cbafc6",
+          "bytes": 67251,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-apple-light-en-expanded.png",
+          "official_zip_crc32": "3f413abd",
+          "tile_crop_xywh": [
+            480,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-apple-light-he-compact.png",
+          "sha256": "175580db4cd5294f4961996b709d3ca6f3863efd95b8caff7ebe6f1a99d61e84",
+          "bytes": 52360,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-apple-light-he-compact.png",
+          "official_zip_crc32": "18e66484",
+          "tile_crop_xywh": [
+            0,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-apple-light-he-expanded.png",
+          "sha256": "22a8482c688e5bf72487a9417917eed461c3211ec1e96c27294d08945b85ce51",
+          "bytes": 60155,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-apple-light-he-expanded.png",
+          "official_zip_crc32": "bb4a3131",
+          "tile_crop_xywh": [
+            480,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "island-06.png",
+      "sheet_sha256": "9ceddb63edf6cf545f776b3f7fb429549c18250747aba2af8bce82e2694a82d9",
+      "dimensions_px": [
+        960,
+        1768
+      ],
+      "actual_tool_view": "tools.view_image forwarded with image()",
+      "status": "PASS",
+      "observations": [
+        "Emerald dark English/Hebrew compact and expanded variants show distinct green background and gold timer/accent, readable identity/status and complete action labels.",
+        "LTR/RTL ordering and one-island layout remain coherent. Compact English caller ellipsis does not obscure timer or waveform; native bars remain visible."
+      ],
+      "files": [
+        {
+          "filename": "island-emerald-dark-en-compact.png",
+          "sha256": "5de4ca9ebe6387e87fa6c69b1778146f88b8176a15872d505d5193e44ddfe610",
+          "bytes": 56938,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-emerald-dark-en-compact.png",
+          "official_zip_crc32": "4bf033f1",
+          "tile_crop_xywh": [
+            0,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-emerald-dark-en-expanded.png",
+          "sha256": "327128b6d683fadf8aacf91f672b8e7ee4d97bf010852f9f79e4fdfbb420243b",
+          "bytes": 68006,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-emerald-dark-en-expanded.png",
+          "official_zip_crc32": "afa2e97e",
+          "tile_crop_xywh": [
+            480,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-emerald-dark-he-compact.png",
+          "sha256": "d66e8ef8076da525b542f92b100181a475a89aefc2888e108af8929517e6d531",
+          "bytes": 50088,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-emerald-dark-he-compact.png",
+          "official_zip_crc32": "82a2636d",
+          "tile_crop_xywh": [
+            0,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-emerald-dark-he-expanded.png",
+          "sha256": "48edada205048a3d8ad9621260028dd9b5e77cf6456a25596c3b8b1e16bcf9b5",
+          "bytes": 61318,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-emerald-dark-he-expanded.png",
+          "official_zip_crc32": "41f60c68",
+          "tile_crop_xywh": [
+            480,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "island-07.png",
+      "sheet_sha256": "7c3d9266b597bd096015616738209084b2aa387909c240626b7e34fde3ab43f2",
+      "dimensions_px": [
+        960,
+        1768
+      ],
+      "actual_tool_view": "tools.view_image forwarded with image()",
+      "status": "PASS",
+      "observations": [
+        "Emerald light English/Hebrew compact and expanded variants retain readable green/gold island content on a light page. Controls and open-call row stay inside the island.",
+        "Compact English identity uses a bounded ellipsis; expanded identity is complete. No duplicate island or native-bar collision is visible."
+      ],
+      "files": [
+        {
+          "filename": "island-emerald-light-en-compact.png",
+          "sha256": "8ddec8bfc4de80b2eec476364da437b295fd91e128ab99aa129f05ab906e7fdb",
+          "bytes": 60501,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-emerald-light-en-compact.png",
+          "official_zip_crc32": "71e34ec3",
+          "tile_crop_xywh": [
+            0,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-emerald-light-en-expanded.png",
+          "sha256": "a368fbaf9460d81bff74b926dcfd5c15773a1c0ffe7598c56a76494217ece650",
+          "bytes": 71596,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-emerald-light-en-expanded.png",
+          "official_zip_crc32": "8a09cf45",
+          "tile_crop_xywh": [
+            480,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-emerald-light-he-compact.png",
+          "sha256": "b19d5c4a5b4be2a02822e1ec4b2e3405cb130045af296bd8ad993fa2c866795d",
+          "bytes": 54041,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-emerald-light-he-compact.png",
+          "official_zip_crc32": "f4a933c4",
+          "tile_crop_xywh": [
+            0,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-emerald-light-he-expanded.png",
+          "sha256": "28d0f7b348a32631f8eadd6b493bf980788721295f8508a929f0506ca774585a",
+          "bytes": 64787,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-emerald-light-he-expanded.png",
+          "official_zip_crc32": "34e4d066",
+          "tile_crop_xywh": [
+            480,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "island-08.png",
+      "sheet_sha256": "5c3c23bf061d155e3c2ac37f63a3897c1ffb395f13d1631dbf36b6a70f8661dd",
+      "dimensions_px": [
+        960,
+        1768
+      ],
+      "actual_tool_view": "tools.view_image forwarded with image()",
+      "status": "PASS",
+      "observations": [
+        "Glass dark English/Hebrew compact and expanded variants show readable light text, green timer/accent and separate mute/speaker/hold/end controls.",
+        "Both expanded originals were additionally opened individually to resolve tiny icon appearance in the displayed sheet: both raw originals show complete microphone icons. One island is visible in every capture."
+      ],
+      "files": [
+        {
+          "filename": "island-glass-dark-en-compact.png",
+          "sha256": "50b9c8c2b24966cde92f5442ec0e66a4e0759d0f2438db73c411980d56ee3ef8",
+          "bytes": 55092,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-glass-dark-en-compact.png",
+          "official_zip_crc32": "a9a612c8",
+          "tile_crop_xywh": [
+            0,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-glass-dark-en-expanded.png",
+          "sha256": "eb85fcb475137d08a1edcc5127899b064635a321ff4f0d2663a28ffbd4289097",
+          "bytes": 63414,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": true,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-glass-dark-en-expanded.png",
+          "official_zip_crc32": "0bfac2ff",
+          "tile_crop_xywh": [
+            480,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-glass-dark-he-compact.png",
+          "sha256": "ac98a4b590977c15b4ef0ac3002705a106f3368a1f600787d6c52e18f116b10c",
+          "bytes": 48175,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-glass-dark-he-compact.png",
+          "official_zip_crc32": "7a9b5ee5",
+          "tile_crop_xywh": [
+            0,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-glass-dark-he-expanded.png",
+          "sha256": "91047f96d965c42872ed3d60898eecfa735574ac5b5298588b6828dcdebed9c5",
+          "bytes": 56728,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": true,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-glass-dark-he-expanded.png",
+          "official_zip_crc32": "7b543b6a",
+          "tile_crop_xywh": [
+            480,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "island-09.png",
+      "sheet_sha256": "12bc498b03572e5bd81ecf39466dab42d26c3c8543021a014ddcf1e8f1e5e159",
+      "dimensions_px": [
+        960,
+        1768
+      ],
+      "actual_tool_view": "tools.view_image forwarded with image()",
+      "status": "PASS",
+      "observations": [
+        "Glass light English/Hebrew compact and expanded variants have readable identity, status, timer and control labels, with visible borders against the light page.",
+        "Compact English name ellipsis is bounded; expanded identity/action rows are complete and native bars stay unobscured."
+      ],
+      "files": [
+        {
+          "filename": "island-glass-light-en-compact.png",
+          "sha256": "4bfd7c506170f80d729fbf5205dd32013c7d918c87f3d6e706d93e048294fb82",
+          "bytes": 58453,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-glass-light-en-compact.png",
+          "official_zip_crc32": "6c0b7dfe",
+          "tile_crop_xywh": [
+            0,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-glass-light-en-expanded.png",
+          "sha256": "9f9e21eee21a804d89baa8349a26e120ea06b2b89aa92b009dd7db9d08a43c7d",
+          "bytes": 66677,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-glass-light-en-expanded.png",
+          "official_zip_crc32": "a83023fa",
+          "tile_crop_xywh": [
+            480,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-glass-light-he-compact.png",
+          "sha256": "dcbd3f19ff42223d7fbcf0475c3db60d073f55a0ec1642920d945c0690dcf2b4",
+          "bytes": 51949,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-glass-light-he-compact.png",
+          "official_zip_crc32": "f64e45f7",
+          "tile_crop_xywh": [
+            0,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-glass-light-he-expanded.png",
+          "sha256": "807bfadbed489584f569158170834674e41e5d61a7148731e74a69dc675585b4",
+          "bytes": 60179,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-glass-light-he-expanded.png",
+          "official_zip_crc32": "02d741dc",
+          "tile_crop_xywh": [
+            480,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "island-10.png",
+      "sheet_sha256": "596a0743e0dbbca36b104803b82441ed300761d3b0c65aaa26a279251b4a66b7",
+      "dimensions_px": [
+        960,
+        1768
+      ],
+      "actual_tool_view": "tools.view_image forwarded with image()",
+      "status": "PASS",
+      "observations": [
+        "Settings top and bottom scroll positions are readable in both dark and light themes: island/external mode explanation, native Android permission explanation, mute/speaker/hold toggles and end-confirmation toggle.",
+        "Description text wraps within its cards. Controls remain visible without text collisions at the captured scroll positions; content continuing outside a scroll viewport is not classified as clipping."
+      ],
+      "files": [
+        {
+          "filename": "island-settings-dark-bottom.png",
+          "sha256": "08000eae4f979e7a3ba637f134a4c6743285be77d0759ebd14c005e5ff27002d",
+          "bytes": 59445,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-settings-dark-bottom.png",
+          "official_zip_crc32": "a95920a3",
+          "tile_crop_xywh": [
+            0,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-settings-dark.png",
+          "sha256": "90675ac204680759b279caf7b9200e50a8f3ae0efa27f91067edb33ec4b8335d",
+          "bytes": 64172,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-settings-dark.png",
+          "official_zip_crc32": "9bbafc0e",
+          "tile_crop_xywh": [
+            480,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-settings-light-bottom.png",
+          "sha256": "68c9efb14ca3d231b4785e9461a734d10ac625e8f414cf9aff758a5a365d93aa",
+          "bytes": 59680,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-settings-light-bottom.png",
+          "official_zip_crc32": "bc09f991",
+          "tile_crop_xywh": [
+            0,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-settings-light.png",
+          "sha256": "7bd68d1103c523ff16d4921d8987eaea8d73159effea2b17628821b520bca417",
+          "bytes": 63471,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-settings-light.png",
+          "official_zip_crc32": "7dce52bf",
+          "tile_crop_xywh": [
+            480,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "island-11.png",
+      "sheet_sha256": "0a9398e10c8496830c5ef627c0c6296e2c3eea6092025a162af97352c203fa80",
+      "dimensions_px": [
+        960,
+        1768
+      ],
+      "actual_tool_view": "tools.view_image forwarded with image()",
+      "status": "PASS",
+      "observations": [
+        "Held state shows a readable held label, timer and resume control. Incoming state shows distinct answer/reject controls and no active-call timer. Outgoing state shows outgoing status and no elapsed active timer.",
+        "No-audio variant keeps end/hold/open-call controls and omits mute/speaker controls. Captured labels/icons fit the island; each capture shows one island and readable native bars."
+      ],
+      "files": [
+        {
+          "filename": "island-state-held.png",
+          "sha256": "3d65707c6140b46779d454eaabb6d69472f66abe2f65831375ae4e487589fbb0",
+          "bytes": 57317,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-state-held.png",
+          "official_zip_crc32": "86b7fdd6",
+          "tile_crop_xywh": [
+            0,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-state-incoming.png",
+          "sha256": "a2a79bf1d270ffe544d6ca5545f1a40f0f968094c99a1362ad2f2551c4d2649f",
+          "bytes": 51549,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-state-incoming.png",
+          "official_zip_crc32": "9e0dde5f",
+          "tile_crop_xywh": [
+            480,
+            30,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-state-noaudio.png",
+          "sha256": "0b5b5b6867bbcac2afb405d705f340093f9cb15fc67bf8093e5b0b11196fcf29",
+          "bytes": 51663,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-state-noaudio.png",
+          "official_zip_crc32": "cae4ede9",
+          "tile_crop_xywh": [
+            0,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        },
+        {
+          "filename": "island-state-outgoing.png",
+          "sha256": "fc6b1f7ca282dbd57a546b204728374534e411cd86611c972d722df472a08ec8",
+          "bytes": 55565,
+          "dimensions_px": [
+            480,
+            854
+          ],
+          "actual_visual_review": "VIEWED_IN_ORIGINAL_SIZE_CONTACT_SHEET",
+          "individual_raw_viewed": false,
+          "official_zip_entry": "ui-snapshots/DA-CALLER-snapshots/island-state-outgoing.png",
+          "official_zip_crc32": "5ab3f6bb",
+          "tile_crop_xywh": [
+            480,
+            914,
+            480,
+            854
+          ],
+          "tile_rgb_pixel_equality_to_raw": true,
+          "status": "PASS"
+        }
+      ]
+    }
+  ],
+  "scope_guardrails": {
+    "production_changes": false,
+    "data_changes": false,
+    "signing_changes": false,
+    "ci_changes": false,
+    "release_changes": false,
+    "label_changes": false,
+    "new_tasks_created": false,
+    "owner_publication_approval": false,
+    "previous_0_12_0_release_untouched": true
+  }
+}

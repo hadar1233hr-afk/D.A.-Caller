@@ -1,0 +1,35 @@
+{
+  "time_utc": "2026-11-13T06:11:47.134835+00:00",
+  "source": "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java",
+  "source_sha256": "b1e0b7b9a00e2d30144af5a821c1cf696f983934626f0c1bfa1748b6dd1d2a75",
+  "javac_exit": 0,
+  "javac_kind": "Direct JDK17 javac -source8 -target8 using SDK35 android.jar +official optional test jars and existing debug classes; no Gradle",
+  "javac_log_sha256": "5be45ec721738722d4428b1d6810a05431691a0a1fab237bc5864ea9b888bbe7",
+  "native_methods_written": [
+    "testModernInlineNavigationNineIconsAndWineSwitchPointer",
+    "testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns",
+    "testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency"
+  ],
+  "native_methods_executed": 0,
+  "capture_count_planned": 24,
+  "new_native_PASS_claimed": false,
+  "production_code_changed": false,
+  "fixes": [
+    "Create both snapshot/bridge remote directories explicitly",
+    "Resolve actual launcher component; top-resumed plus native-visible Home checks at five stages",
+    "Bind SystemUI Answer to owned Call/token/NUMBER, real high-importance CallStyle person/caller-row, refreshed stable native bounds and configured touch guard",
+    "Require measured external-window and normalized-position movement on completed drag starting at End, with call/notification preserved and no confirmation",
+    "Set compact size/control/photo/timer preferences explicitly for deterministic nonoverflow gesture fixture",
+    "Assert each of nine launcher picker entries exists",
+    "Reject synthetic archive key collision and include inserts in finally cleanup scope",
+    "Recompute current owned caller identity each readiness iteration; reset touch stability after asynchronous contact rename without changing token/NUMBER ownership"
+  ],
+  "limits": [
+    "No emulator/Telecom/native screenshot methods executed",
+    "Direct compiler used existing compiled application/test classes; root fresh full build/Android-test compile required",
+    "New JSON fields must pass final independent verifier contracts before actualCI"
+  ],
+  "independent_readonly_review": "Bridge, Home, owned Answer, END movement and regex changes reviewed; no further confirmed incorrect precondition",
+  "remaining_robustness_risk": "No outstanding confirmed source issue from the focused audit; full fresh Android-test compilation and actual emulator methods remain pending.",
+  "javac_log": "final-javac.log"
+}

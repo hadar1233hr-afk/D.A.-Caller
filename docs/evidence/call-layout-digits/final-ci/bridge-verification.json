@@ -1,0 +1,66 @@
+{
+  "provenance_verified_against_connector_digests": true,
+  "source": "3cf0990386312f1848e16ee3cd2afd7e80b03f4f",
+  "run": 41963339463,
+  "conclusion": "failure",
+  "artifacts": {
+    "ui": {
+      "artifact_id": 13386922422,
+      "artifact_name": "DA-CALLER-Android13-UI-f7a40cc88a9d54e861474afc688688779a254076",
+      "sha256": "58677726f0d132d6b33fd8efca49c600275804f5c4bb9251eaf00f3e4c0deeba",
+      "bytes": 14760768,
+      "path": "/workspace/work/call-layout-navigation-ui",
+      "zip": "/workspace/da-caller-native-evidence/native-review-export/41963339463/ui.zip"
+    },
+    "native-failure-candidate": {
+      "artifact_id": 13386772788,
+      "artifact_name": "DA-CALLER-native-failure-candidate-f7a40cc88a9d54e861474afc688688779a254076",
+      "sha256": "23c2a0a67c653546637dee9c4d368647b323fd0d8bf1f9310bb13bfacd86f127",
+      "bytes": 454687,
+      "path": "/workspace/work/call-layout-navigation-native-failure-candidate",
+      "zip": "/workspace/da-caller-native-evidence/native-review-export/41963339463/native-failure-candidate.zip"
+    },
+    "validate-apk": {
+      "artifact_id": 13385959247,
+      "artifact_name": "DA-CALLER-0.11.0-beta.10-debug-f7a40cc88a9d54e861474afc688688779a254076",
+      "sha256": "b770df79a0fcd3aae278ac59fa9cd21fdad83944acd4ca8c68e4b49339e920be",
+      "bytes": 454493,
+      "path": "/workspace/work/call-layout-navigation-validate-apk",
+      "zip": "/workspace/da-caller-native-evidence/native-review-export/41963339463/validate-apk.zip"
+    },
+    "checks": {
+      "artifact_id": 13385954248,
+      "artifact_name": "DA-CALLER-checks-f7a40cc88a9d54e861474afc688688779a254076",
+      "sha256": "f67d171e0f4ba18bf58f5ce04537d89cb4e303d10ba0a471260fa3686e87a120",
+      "bytes": 127974,
+      "path": "/workspace/work/call-layout-navigation-checks",
+      "zip": "/workspace/da-caller-native-evidence/native-review-export/41963339463/checks.zip"
+    }
+  },
+  "export_commit": "661b1357c9f255464967b6cfc8bdd84736b376d7",
+  "export_commit_identity_source": "local Git checkout",
+  "native_png_count": 243,
+  "unit": {
+    "tests": 356,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native": {
+    "tests": 35,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_failures": [
+    {
+      "test": {
+        "name": "testBundledBusinessDirectoryNativeIsolationSearchAndProvenance",
+        "classname": "com.dacaller.app.CallbackBusinessIntegrationTest",
+        "time": "1.36"
+      },
+      "message": {},
+      "text": "junit.framework.AssertionFailedError: BLOCKED: no verified licensed business asset is bundled expected:<AVAILABLE> but was:<MISSING>\nat com.dacaller.app.CallbackBusinessIntegrationTest.businessScenario(CallbackBusinessIntegrationTest.java:550)\nat com.dacaller.app.CallbackBusinessIntegrationTest.testBundledBusinessDirectoryNativeIsolationSearchAndProvenance(CallbackBusinessIntegrationTest.java:527)\nat android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)\nat android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)\nat android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)\nat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)\n"
+    }
+  ]
+}

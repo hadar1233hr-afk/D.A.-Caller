@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.SettingsScreenTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-12T22:08:03" hostname="3ebae333e153" time="8.401">
+  <properties/>
+  <testcase name="narrowRtlHeaderAndPermissionCardKeepTouchTargets" classname="com.dacaller.app.SettingsScreenTest" time="5.431"/>
+  <testcase name="returningFromPermissionUiRefreshesStatusWithoutReplacingOrScrollingCard" classname="com.dacaller.app.SettingsScreenTest" time="0.954"/>
+  <testcase name="callsHeaderHasNoTelephoneAndLastSectionRepeatedlyOpensAndCloses" classname="com.dacaller.app.SettingsScreenTest" time="0.887"/>
+  <testcase name="grantedPermissionAndPermanentlyDeniedPermissionHaveUsefulSettingsAction" classname="com.dacaller.app.SettingsScreenTest" time="0.606"/>
+  <testcase name="defaultRoleAndNotificationPermissionUseActualAndroidState" classname="com.dacaller.app.SettingsScreenTest" time="0.521"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

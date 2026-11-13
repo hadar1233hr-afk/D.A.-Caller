@@ -1,0 +1,86 @@
+{
+  "source_sha": "6a7cd0c647b021aaf95f03d6171e485fe1947677",
+  "app_tree": "10a732de609b4624628918b86c41b0650a993eed",
+  "workflow_run_id": 40593201477,
+  "native_job_id": 122503450835,
+  "unit_tests": {
+    "tests": 239,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_tests": {
+    "tests": 29,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "required_pngs": 219,
+  "actual_pngs": 219,
+  "native_status": "PASS",
+  "visual_status": "FAIL",
+  "root_reviewed_island_images": 36,
+  "blocking_visual_findings": [
+    {
+      "file": "island-settings-light.png",
+      "observation": "The native navigation buttons are white against the near-white navigation surface in the first light settings capture. They have low contrast. The bottom capture in the same Activity has proper dark navigation icons.",
+      "cause_status": "A system-bar transition sampled before convergence is plausible, but not certified solely by these two screenshots. No production change is justified until a bounded real compositor contrast check establishes persistence.",
+      "correction": "Wait boundedly for focused native bar insets and actual contrasting icon pixels, then save the exact checked compositor Bitmap. Require the proof in the island manifest. Preserve all four screenshots and existing native assertions."
+    }
+  ],
+  "resolved_visual_findings": [
+    "Actual contacts and recents expanded layouts retain a complete usable list row; native minimum60dp passes.",
+    "The floating dial and metadata toolbar hide temporarily in constrained expanded state and restore after collapse.",
+    "The exposed backdrop matches actual dark MainActivity; all three island palettes, RTL/LTR and four call/capability states are readable."
+  ],
+  "inspected_files_sha256": {
+    "island-app-contacts-compact.png": "82a5f2c8cfb766ec633a27d82bad6753c8444a7d18a23d7d2b7fa710d008a498",
+    "island-app-contacts-expanded.png": "a0542ec5f5983e87dfb011f91aeb28bc46b696f29b58d348f288652d34ea4d86",
+    "island-app-recents-compact.png": "f53bf32954264b5906f248c8cf4ddb1d8a7cc1c93a0ab9780e5deb97666075dc",
+    "island-app-recents-expanded.png": "49f4110877b3e69ba7e2002aa1cdb2fe2082a394ea17a6dd587e465f59d38ec4",
+    "island-apple-dark-en-compact.png": "8a53d77aebd2f4eea9735ef77459f56bd54c2265fec182dfa69f6bd1926d988d",
+    "island-apple-dark-en-expanded.png": "317ec7cf4dc390e6f207f403aa4a98e0c7fd65a4276f88688184538514f1ba28",
+    "island-apple-dark-he-compact.png": "64b6075ad2ecf0f4a1d713adb9f46db37477a8e5c83e77fbae4a3f8ca086ab07",
+    "island-apple-dark-he-expanded.png": "7e940c96adad2bf0e3c7135d48c72e90ad735fa7636830f0f836644f6610f80a",
+    "island-apple-light-en-compact.png": "4fe009b7a016a9bb938ca033ed980c71185a3bf75863293a901865019a2eab4c",
+    "island-apple-light-en-expanded.png": "dc26ee9506de7dc981c3e6839650fdaea04e84b7c06700d31c4355332ea3bd69",
+    "island-apple-light-he-compact.png": "31a67f31c316abab7bf626fb807f6237a43d3126b3ea78bba5ab517a3908217f",
+    "island-apple-light-he-expanded.png": "f52629a4ecd5e929f32dc16172637da63675d0cb221ffaa2c85c4097e903328d",
+    "island-emerald-dark-en-compact.png": "0c3fd8b8489ecfc1597ef610e1cf59515f0999ce53fcd9a98de8a0b12dde469b",
+    "island-emerald-dark-en-expanded.png": "b8be2a093c612617f7eabe102db5d7dd393ffd443a9df3c4fe7341a0d048f346",
+    "island-emerald-dark-he-compact.png": "87dcaf11d496c019ea750aa794d57ac8a3613f5d9ad489e7d0a252805a768104",
+    "island-emerald-dark-he-expanded.png": "5888c0e4453cda578ef7d9641a2ffda9acae88950add2537da37be8e63e48243",
+    "island-emerald-light-en-compact.png": "e2049454bea0030af77a3208bd28aab4280b5e839b1300ce70b3fdba33ac724e",
+    "island-emerald-light-en-expanded.png": "c8082363519426440420fc3d06bd486c82425bb3012015bf093a1fd92ba8ea5e",
+    "island-emerald-light-he-compact.png": "9c6835cb9876c39c49cb534fe5ad235a9ee1dfd19becd4f2e1af42bfe560c54a",
+    "island-emerald-light-he-expanded.png": "280b43e06e558ebb163edb65a59aa0effb09ded8c1aaf0de30238a17f7ddbc0f",
+    "island-glass-dark-en-compact.png": "8bdfa8f13beb95e3f9663aa27a36a8b9f4422822ad612dc8eafbf48e0468ab4e",
+    "island-glass-dark-en-expanded.png": "1ce1d4c1164b760df2b52ed9dd88c95f76c103956ba81fe9337584c2b20a5046",
+    "island-glass-dark-he-compact.png": "20b9e5b87c3d94e0ae7fd60969ffdefb347a6074055500d6dcae6727a7cc2d4c",
+    "island-glass-dark-he-expanded.png": "6dbebba077593b10e48051c3ee62297d94a53dad855f98b015512210a39896ec",
+    "island-glass-light-en-compact.png": "c71b6ef50acace9c96caff9d3441d0e18b49cf103b09e14ad43de1503de14afb",
+    "island-glass-light-en-expanded.png": "ed6c454db5c6caf0642956d641032fb32004e764d5780fd7091832ae2ed1a4e2",
+    "island-glass-light-he-compact.png": "2692ed778bb927bcd922154bc6d5425257ca2e1c6978c5014c0af8f3a8f29da3",
+    "island-glass-light-he-expanded.png": "d2948bec23f6ee6aa4cd6dfa3ad69e5b0efe659db841f53557cf0a06706ff474",
+    "island-settings-dark-bottom.png": "cd40edb62688f2a9e4da6777f926ac3407d3c5ad59dad321fcfdbbece0b7074e",
+    "island-settings-dark.png": "e57fc5f413f28f57696ad4b5b4e166fcaa4e9abf780382486d7b4bd8b1dd7f42",
+    "island-settings-light-bottom.png": "b52bc9bfe52397a9ba4a1946c9e6ea369f5cbcbbd2009bb9ca673b42cd6aba38",
+    "island-settings-light.png": "e003f7d24a7400e65561fa9d97b737fc2947e844188efa917a83eacc1014b4e2",
+    "island-state-held.png": "553801600b01c59f1d1b98687cbf9b2875b82dd5d6c70a370e40673c2fc16ba7",
+    "island-state-incoming.png": "9165bda257b00013a5f66270ea397e857d208b309befec2106108cca1ffac6d5",
+    "island-state-noaudio.png": "3eb8c3592b075ef3c1d2d06c4f9c75fd3bc4a69046a0980a20e08e8dc2f58d1f",
+    "island-state-outgoing.png": "dd4b0ce74e4bd254c726c970aa255ef01d18331be88033698532c4b91087a3f0"
+  },
+  "exact_native_tested_apk_sha256": "38e7bede3ce32592ae79426a58501362d02db44748f75ae03a1a2587129e8eb9",
+  "limits": "No visual approval or release for this source despite a successful native run. Physical SIM/Bluetooth/Jelly Star and full TalkBack are not tested.",
+  "native_bar_dark_pixel_counts": {
+    "island-settings-light.png": {
+      "status": 480,
+      "navigation": 0
+    },
+    "island-settings-light-bottom.png": {
+      "status": 946,
+      "navigation": 1276
+    }
+  }
+}

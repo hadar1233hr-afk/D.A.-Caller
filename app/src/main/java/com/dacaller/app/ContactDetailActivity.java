@@ -12,7 +12,6 @@ import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -46,14 +45,14 @@ public final class ContactDetailActivity extends Activity {
  private int surface(){return dark()?0xFF242424:Color.WHITE;}
  private int ink(){return dark()?Color.WHITE:0xFF151515;}
  private int muted(){return dark()?0xFFAEAEAE:0xFF737373;}
- private int accent(){return dark()?0xFFE0C385:0xFF88652C;}
+ private int accent(){return "silver".equals(prefs.getString("accent","gold"))?(dark()?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark());}
  private String tr(String s){return I18n.text(this,s);}
  private GradientDrawable shape(int color,int radius){
   GradientDrawable bg=new GradientDrawable();bg.setColor(color);bg.setCornerRadius(d(radius));return bg;
  }
  private TextView label(String s,int sp,boolean bold,int color){
   TextView t=new TextView(this);t.setText(tr(s));t.setTextSize(sp);t.setTextColor(color);
-  t.setTypeface(Typeface.create(bold?"sans-serif-medium":"sans-serif",Typeface.NORMAL));
+  AppAppearance.font(t,bold);
   t.setGravity(Gravity.CENTER_VERTICAL);t.setIncludeFontPadding(false);return t;
  }
  private LinearLayout row(){LinearLayout l=new LinearLayout(this);l.setGravity(Gravity.CENTER_VERTICAL);l.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);return l;}
@@ -71,9 +70,10 @@ public final class ContactDetailActivity extends Activity {
   getWindow().setStatusBarColor(page());getWindow().setNavigationBarColor(page());
   getWindow().getDecorView().setSystemUiVisibility(dark()?0:View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
   LinearLayout root=col();root.setBackgroundColor(page());setContentView(root);
-  LinearLayout top=row();top.setPadding(d(14),d(7),d(14),d(7));root.addView(top,new LinearLayout.LayoutParams(-1,d(58)));
-  TextView back=label("‹",30,false,accent());back.setGravity(Gravity.CENTER);
-  top.addView(back,new LinearLayout.LayoutParams(d(45),-1));back.setOnClickListener(v->finish());
+  LinearLayout top=row();top.setPadding(d(14),d(7),d(14),d(7));root.addView(top,new LinearLayout.LayoutParams(-1,d(62)));
+  ImageView back=new ImageView(this);back.setImageDrawable(AppAppearance.backArrow(this,accent()));back.setScaleType(ImageView.ScaleType.CENTER);
+  back.setContentDescription(tr("חזרה"));back.setFocusable(true);
+  top.addView(back,new LinearLayout.LayoutParams(d(48),d(48)));back.setOnClickListener(v->finish());
   TextView heading=label("כרטיס איש קשר",17,true,ink());top.addView(heading,new LinearLayout.LayoutParams(0,-2,1));
   TextView edit=label("עריכה",15,true,accent());edit.setPadding(d(10),d(10),d(10),d(10));top.addView(edit);
   edit.setOnClickListener(v->editContact());
@@ -181,7 +181,7 @@ public final class ContactDetailActivity extends Activity {
     call.setImageTintList(ColorStateList.valueOf(accent()));call.setPadding(d(11),d(11),d(11),d(11));
     line.addView(call,new LinearLayout.LayoutParams(d(51),d(51)));
     call.setContentDescription(tr("התקשר")+" "+phone[0]);
-    call.setOnClickListener(v->call(phone[0]));left.setOnClickListener(v->new AlertDialog.Builder(this)
+    call.setOnClickListener(v->call(phone[0]));left.setOnClickListener(v->AppAppearance.show(new AlertDialog.Builder(this)
      .setTitle(phone[0])
      .setItems(new String[]{tr("התקשר"),tr("העתק")},(dialog,which)->{
       if(which==0)call(phone[0]);
@@ -189,7 +189,7 @@ public final class ContactDetailActivity extends Activity {
        ClipboardManager clip=(ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
        clip.setPrimaryClip(ClipData.newPlainText("number",phone[0]));
       }
-     }).show());
+     })));
    }
   }
   if(!emails.isEmpty()){

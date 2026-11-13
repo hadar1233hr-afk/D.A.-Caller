@@ -146,4 +146,53 @@ public class MainActivityRegressionTest {
   if(view instanceof ViewGroup)for(int i=0;i<((ViewGroup)view).getChildCount();i++)if(hasText(((ViewGroup)view).getChildAt(i),expected))return true;
   return false;
  }
+ @Test public void unknownNumberOffersExplicitNewContactWithExactNumberAndNeverDials()throws Exception{
+  try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup()){
+   MainActivity activity=controller.get();String number="+972 50-009-9971";
+   java.lang.reflect.Method method=MainActivity.class.getDeclaredMethod("showNumberOnly",String.class);method.setAccessible(true);method.invoke(activity,number);
+   android.app.AlertDialog dialog=org.robolectric.shadows.ShadowAlertDialog.getLatestAlertDialog();
+   assertNotNull(dialog.getButton(android.content.DialogInterface.BUTTON_NEUTRAL));
+   assertNull(Shadows.shadowOf(activity).getNextStartedActivity());
+   dialog.getButton(android.content.DialogInterface.BUTTON_NEUTRAL).performClick();Shadows.shadowOf(android.os.Looper.getMainLooper()).idle();
+   Intent next=Shadows.shadowOf(activity).getNextStartedActivity();assertNotNull(next);
+   assertEquals(ContactEditorActivity.class.getName(),next.getComponent().getClassName());
+   assertEquals(number,next.getStringExtra("incoming_number"));assertNotEquals(Intent.ACTION_CALL,next.getAction());
+  }
+ }
+ @Test public void hiddenAndUnavailableNumbersNeverOfferCreateContact()throws Exception{
+  try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup()){
+   java.lang.reflect.Method method=MainActivity.class.getDeclaredMethod("showNumberOnly",String.class);method.setAccessible(true);
+   for(String number:new String[]{"","-1","-2","-3"}){
+    method.invoke(controller.get(),number);android.app.AlertDialog dialog=org.robolectric.shadows.ShadowAlertDialog.getLatestAlertDialog();
+    assertEquals(View.GONE,dialog.getButton(android.content.DialogInterface.BUTTON_NEUTRAL).getVisibility());dialog.dismiss();
+   }
+   assertNull(Shadows.shadowOf(controller.get()).getNextStartedActivity());
+  }
+ }
+
+ @Test @org.robolectric.annotation.SQLiteMode(org.robolectric.annotation.SQLiteMode.Mode.NATIVE)
+ public void pendingRecoveryDefersFavoriteEditsAndRefreshesVisibleMainAfterDurableUndo()throws Exception{
+  Context app=RuntimeEnvironment.getApplication();android.content.SharedPreferences prefs=SettingsBackup.preferences(app);
+  java.util.Map<String,Object> prior=new java.util.LinkedHashMap<>();prior.put("dark",true);prior.put(CallArchive.PREF,CallArchive.FOREVER);prior.put(CallbackReminder.PREF_ENABLED,true);prior.put(CallbackReminder.PREF_MINUTE,1260);
+  prefs.edit().putString(CallArchive.PREF,CallArchive.FOREVER).putBoolean(CallbackReminder.PREF_ENABLED,true).putInt(CallbackReminder.PREF_MINUTE,1260).commit();
+  CallArchive.schedule(app);CallbackReminder.schedule(app);
+  android.app.job.JobScheduler jobs=app.getSystemService(android.app.job.JobScheduler.class);assertNotNull(jobs.getPendingJob(CallArchive.JOB_ID));
+  org.robolectric.shadows.ShadowAlarmManager alarms=Shadows.shadowOf(app.getSystemService(android.app.AlarmManager.class));assertNotNull(alarms.peekNextScheduledAlarm());
+  SettingsBackup.PendingRestore pending=new SettingsBackup.PendingRestore(app,java.util.UUID.randomUUID().toString(),"crest",new SettingsBackup.Snapshot(prior),java.util.Collections.emptySet());
+  pending.write();prefs.edit().putBoolean("dark",false).putString(CallArchive.PREF,CallArchive.OFF).putBoolean(CallbackReminder.PREF_ENABLED,false).commit();Contacts.Person person=new Contacts.Person("Synthetic recovery","0500099971",8123);
+  try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup()){
+   MainActivity activity=controller.get();activity.favoriteFromList(person);
+   assertTrue(SettingsBackup.hasPendingRestore(app));assertTrue(prefs.getStringSet("favorites",java.util.Collections.emptySet()).isEmpty());
+   assertFalse(activity.isFinishing());assertNull(Shadows.shadowOf(activity).getNextStartedActivity());
+   assertNull(jobs.getPendingJob(CallArchive.JOB_ID));assertNotNull("Pending recovery preserves the valid callback alarm",alarms.peekNextScheduledAlarm());
+   SettingsBackup.recoverPendingRestore(app,id->true);assertFalse(SettingsBackup.hasPendingRestore(app));
+   Shadows.shadowOf(android.os.Looper.getMainLooper()).idleFor(java.time.Duration.ofMillis(550));
+   java.lang.reflect.Field field=MainActivity.class.getDeclaredField("root");field.setAccessible(true);
+   assertNotNull("Recovered archive scheduling must resume",jobs.getPendingJob(CallArchive.JOB_ID));assertNotNull("Recovered reminder scheduling must resume",alarms.peekNextScheduledAlarm());
+   View root=(View)field.get(activity);assertEquals(0xFF131313,((android.graphics.drawable.ColorDrawable)root.getBackground()).getColor());
+   activity.favoriteFromList(person);assertTrue(prefs.getStringSet("favorites",java.util.Collections.emptySet()).contains(person.key));
+   assertNull(Shadows.shadowOf(activity).getNextStartedActivity());
+  }finally{new android.util.AtomicFile(new java.io.File(app.getFilesDir(),"settings_archive_restore.pending")).delete();}
+ }
+
 }

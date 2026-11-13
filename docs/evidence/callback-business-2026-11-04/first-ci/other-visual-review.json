@@ -1,0 +1,2236 @@
+{
+  "review_status": "RENDERING_PASS_WITH_MINOR_AND_BOUNDED_FINDINGS",
+  "publication_approval": false,
+  "source_sha": "402da24a939113fa08655e704633d86a0375d959",
+  "app_tree": "1ce289c4ba733312821173549d2efd99f19f9bfc",
+  "workflow_run_id": "41803113785",
+  "workflow_run_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/actions/runs/41803113785",
+  "candidate_version": "0.11.0-beta.10",
+  "version_code": 20,
+  "reviewed_at_utc": "2026-11-04T14:35:34.562928+00:00",
+  "reviewed_png_count": 92,
+  "unique_filenames": 92,
+  "unique_png_byte_hashes": 90,
+  "reviewed_sheet_count": 23,
+  "review_manifest": "/workspace/work/callback-business-first-review/manifest.json",
+  "original_directory": "/workspace/work/callback-business-first-ui/ui-snapshots/DA-CALLER-snapshots",
+  "review_method": "Actually opened all23 original-resolution2x2 other-01.png through other-23.png sheets with view_image and forwarded every resulting image to the model, inspecting all92 frames. Also opened the four callback originals and Hebrew large-font compact/expanded Recents originals individually. Recomputed every original SHA256, checked480x854 dimensions, and compared all92 presented sheet crops byte-for-byte as RGB pixels to the originals:92/92 match. No prior screenshot approval reused.",
+  "native_environment": {
+    "api": 33,
+    "size_px": [
+      480,
+      854
+    ],
+    "navigation_mode": "threebutton",
+    "new_callback_capture_font_scale": 1.3,
+    "matrix_font_scales": "standard and large as identified in filenames"
+  },
+  "individual_source_checks": [
+    "personalization-recents-dark-he-largefont-compact.png",
+    "personalization-recents-dark-he-largefont-expanded.png",
+    "callback-list-dark.png",
+    "callback-list-light.png",
+    "callback-settings-dark.png",
+    "callback-settings-light.png"
+  ],
+  "positive_rendering_findings": [
+    "All four new Hebrew callback list/Settings light/dark captures have readable headings, off switch/description and available actions without unintended text overlap or native navigation collision.",
+    "Hebrew RTL caller and navigation text is readable; visible phone identities and beta.10 version tokens are drawn in correct LTR order.",
+    "Contacts/Recents upper search, favorites, summaries and app tabs remain readable across pictured language/theme/font states; visible row identity remains distinct from dial/star controls.",
+    "Settings/backup/archive dialogs, avatar/icon choices, widget states and native notification actions remain within their pictured viewport boundaries."
+  ],
+  "minor_findings": [
+    {
+      "id": "MINOR-01",
+      "severity": "minor",
+      "description": "The new English Businesses button wraps within its single word as Business/es in all four large-font Contacts captures. Whole label remains readable with no text/control overlap. Standard English and Hebrew labels fit.",
+      "files": [
+        "personalization-contacts-dark-en-largefont-collapsed.png",
+        "personalization-contacts-dark-en-largefont-expanded.png",
+        "personalization-contacts-light-en-largefont-collapsed.png",
+        "personalization-contacts-light-en-largefont-expanded.png"
+      ]
+    }
+  ],
+  "bounded_observations": [
+    {
+      "id": "BOUNDED-01",
+      "description": "Contacts/Recents fixed keypad overlaps a lower row dial control at these captured scroll positions; some lowest rows are partial above fixed app navigation. Adjacent visible row name/number identity remains readable. Screenshot review does not establish touch/scroll behavior."
+    },
+    {
+      "id": "BOUNDED-02",
+      "description": "Long contact names and secondary Recents type/date/time metadata are ellipsized within fixed row widths. Visible row phone identities remain readable and LTR."
+    },
+    {
+      "id": "BOUNDED-03",
+      "description": "Native SystemUI ellipsizes some call metadata, the Hebrew speaker-on action text and missed-call phone suffixes; caller/state/count body, speaker glyph and separate main actions stay readable."
+    },
+    {
+      "id": "BOUNDED-04",
+      "description": "Scrollable icon chooser endpoint rows are partly outside the pictured list viewport in top/bottom captures; paired offsets expose all five designs and Cancel stays visible."
+    },
+    {
+      "id": "BOUNDED-05",
+      "description": "Narrow widget previews ellipsize a long contact label or large-font DA CALLER header. Other names, initials/shapes and state instructions stay readable."
+    }
+  ],
+  "blocking_rendering_findings": [],
+  "scope_limits": [
+    "This report assesses rendering only for these92 exact fresh native PNGs, source/tree/run above; it is not functional, accessibility or publication approval.",
+    "The reminder Settings time selector is below the pictured viewport; these four callback frames do not establish its visual appearance. Screenshots do not prove scheduling, modem/Telecom behavior, notification semantics, touch, scroll, storage retention or Back-state behavior.",
+    "This92-image group does not include the call-design, island or diagnostic image groups. Only237 functional PNGs actually exist for this run, plus2 diagnostics; the planned241 functional matrix was not reached.",
+    "Run context:349 unique unit tests passed;34 unique native tests ran,33 passed and1 expected production-business-asset check failed. Full release remains BLOCKED with0 production business records/source bytes and missing beta.9 matching private signing key. These are context supplied by independent evidence audit, not conclusions from screenshot pixels.",
+    "Widget previews do not establish arbitrary OEM launcher placement. No physical Jelly Star, SIM/carrier/audible audio/Bluetooth/proximity/lockscreen, full TalkBack, measured contrast audit or compatible-key data-preserving upgrade is claimed."
+  ],
+  "files": [
+    {
+      "file": "call-integration-notification-active-private-en.png",
+      "sha256": "b1e1b97cc84463e517252ceeec48eae81c194ff043824ec44b56ecf7f53bb863",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-01.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "call-integration-notification-active-private-he.png",
+      "sha256": "1cb67882a14d6005c9372b735e11b82d340c0d2475e78ff2d499ac51fa351575",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-01.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-03"
+      ],
+      "notes": [
+        "SystemUI truncates some notification metadata; caller/state body and main call actions remain distinct.",
+        "SystemUI ellipsizes Hebrew speaker-on action text while the speaker glyph stays visible."
+      ]
+    },
+    {
+      "file": "call-integration-notification-active-speaker-en.png",
+      "sha256": "dc1135076e95c50dd51e6efc793d08454f6619888e71ebc9f363fb7b41323108",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-01.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "call-integration-notification-active-speaker-he.png",
+      "sha256": "c422bb3f2f70c2c021e8750f1ff08d62ca6127405ea3226ec33a7d08613802f3",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-01.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-03"
+      ],
+      "notes": [
+        "SystemUI truncates some notification metadata; caller/state body and main call actions remain distinct."
+      ]
+    },
+    {
+      "file": "call-integration-notification-incoming-he.png",
+      "sha256": "864d27223fd41bcdde34f73d45d295e80b9003ecb747fc2cf0e6a14c3993b234",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-02.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-03"
+      ],
+      "notes": [
+        "SystemUI truncates some notification metadata; caller/state body and main call actions remain distinct."
+      ]
+    },
+    {
+      "file": "call-integration-notification-outgoing-he.png",
+      "sha256": "c2b93cb8b910f792754b8fa77e6206c655e6313242432fb48049e09a206e2223",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-02.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-03"
+      ],
+      "notes": [
+        "SystemUI truncates some notification metadata; caller/state body and main call actions remain distinct."
+      ]
+    },
+    {
+      "file": "call-integration-return-contacts.png",
+      "sha256": "99b1ead237448d8b689ff26c563016798391fdfcafea700472e51578654aed1c",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-02.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "call-integration-return-settings.png",
+      "sha256": "e708e2f7e24441827296414a3d7277cd68dee73dc3d1abda677a9393ba551bb9",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-02.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "callback-list-dark.png",
+      "sha256": "41a2f7c6e226412fd7a5f001f1393c04fbc7bfb04ee26cfef94d20b8f9a46028",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-03.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": true,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "callback-list-light.png",
+      "sha256": "760691c9a86cdcb9abd2926f4fbc6020cd0e5915d7962dc97883ffa30afa1e74",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-03.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": true,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "callback-settings-dark.png",
+      "sha256": "c2246b1b9d5ca023de8e13421f992bf01bdc3dfb712c1408dce4fb6675b89b5f",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-03.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": true,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "callback-settings-light.png",
+      "sha256": "37f5ef16c543fcea23818b446e097d9631697951ec5bc611052f7d8050d02528",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-03.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": true,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "changelog-dark-bottom.png",
+      "sha256": "2a78505990fc095335a3d3c241d36752e9eefaec459c1a280715907381c32474",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-04.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "changelog-dark.png",
+      "sha256": "a4b83cfeca436de08dd0d93aceb114581ec15f2d94367487ca57f654ecc62e82",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-04.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "changelog-light-bottom.png",
+      "sha256": "8f0d028d9a3718373c670392cccd6fd6efe0d92136a7e38c3c433ee84a4d6736",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-04.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "changelog-light.png",
+      "sha256": "164813c238a96c6210135c9d84229768ac25b5b579e3c957cccc520562a227f4",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-04.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "missed-multiple-he.png",
+      "sha256": "49cd864abcaaa188391109626ad007154dadbcb6366754f25b9ff33b25916482",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-05.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-03"
+      ],
+      "notes": [
+        "Native single/multiple title, caller name and Clear fit; number suffix is bounded by ellipsis."
+      ]
+    },
+    {
+      "file": "missed-single-he.png",
+      "sha256": "9b76a8e4fe33ff3a5f4b92798fcdbec659a9706c6e03d0317b435d722cc29f6b",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-05.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-03"
+      ],
+      "notes": [
+        "Native single/multiple title, caller name and Clear fit; number suffix is bounded by ellipsis."
+      ]
+    },
+    {
+      "file": "personalization-archive-dark.png",
+      "sha256": "667f82bcbd5d2103058cda7783b53159e85a36abb85148f7b843b92a079fa53c",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-05.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "personalization-archive-light.png",
+      "sha256": "7f322985ce7c4525ba60a3d9463b7f63ce7b31f114b418164f4bf7312f3bb6d8",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-05.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "personalization-backup-restore-confirmation.png",
+      "sha256": "4bee400a9341eadd8d9480ba8352f1f3edc1286fc9f96c0e1424a43f49b6762b",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-06.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "personalization-backup-saved-dark.png",
+      "sha256": "261a4029d7c5cb82a8c710dc30db90e28c93e1ebf82199b89c4b0fc1d46e076b",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-06.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "personalization-backup-saved-light.png",
+      "sha256": "b78f731e61a54084e9d3f2c2c142029aa756a8efe758cb8a52c47aef3743ceea",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-06.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "personalization-chooser-dark-avatar_shapes-bottom.png",
+      "sha256": "40311a246a1f353cc8edd3405240f3f56e1a31382a241469dc1b3af7752b7b56",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-06.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "personalization-chooser-dark-avatar_shapes.png",
+      "sha256": "40311a246a1f353cc8edd3405240f3f56e1a31382a241469dc1b3af7752b7b56",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-07.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "personalization-chooser-dark-icons-bottom.png",
+      "sha256": "59fe8946f02c44bddc014d067d926365354740d1779ccb6b2fb6ff9016e55e22",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-07.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-04"
+      ],
+      "notes": [
+        "Top/bottom list captures show opposite clipped endpoints of the scrollable five-icon list; Cancel remains visible."
+      ]
+    },
+    {
+      "file": "personalization-chooser-dark-icons.png",
+      "sha256": "be5129ab5884807ae4b73abddc117a8316f0d5de3aebb760940d350b74d3f594",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-07.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-04"
+      ],
+      "notes": [
+        "Top/bottom list captures show opposite clipped endpoints of the scrollable five-icon list; Cancel remains visible."
+      ]
+    },
+    {
+      "file": "personalization-chooser-light-avatar_shapes-bottom.png",
+      "sha256": "c8504140a3b78ddc0863eeb0765d2878a6dde8841474c9f9bf60e9791f63aa99",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-07.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "personalization-chooser-light-avatar_shapes.png",
+      "sha256": "c8504140a3b78ddc0863eeb0765d2878a6dde8841474c9f9bf60e9791f63aa99",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-08.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "personalization-chooser-light-icons-bottom.png",
+      "sha256": "919ac9fc6c27d03e4953972675e2a49964ee097af3b19da90b15e64687090458",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-08.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-04"
+      ],
+      "notes": [
+        "Top/bottom list captures show opposite clipped endpoints of the scrollable five-icon list; Cancel remains visible."
+      ]
+    },
+    {
+      "file": "personalization-chooser-light-icons.png",
+      "sha256": "72ca72c8ed85f42497d9b4216e9e41ffd119d14716538dbc6ef14ec5559fa442",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-08.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-04"
+      ],
+      "notes": [
+        "Top/bottom list captures show opposite clipped endpoints of the scrollable five-icon list; Cancel remains visible."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-en-largefont-collapsed.png",
+      "sha256": "69e2ab4a23cbe2c734d73e7836e9ef786d41cfa223a90a369e14dbb61540a0da",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-08.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_MINOR_FINDING",
+      "finding_ids": [
+        "MINOR-01",
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "New Businesses label wraps inside the word as Business/es; whole label remains visible.",
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-en-largefont-expanded.png",
+      "sha256": "a905fc661764d7f436a0e7aea9442152581b0e1a03aaeb5cf7b2b404c388ad15",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-09.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_MINOR_FINDING",
+      "finding_ids": [
+        "MINOR-01",
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "New Businesses label wraps inside the word as Business/es; whole label remains visible.",
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-en-standard-collapsed.png",
+      "sha256": "ca5bd9b86f74f00f5676eab7fc66889b31213a7f55d289e701367ae3795e4a0a",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-09.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-en-standard-expanded.png",
+      "sha256": "a3293df6eaee9cb367c265fc27cc6b19ffc706b2a95eb1a4341cd039870ee122",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-09.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-he-largefont-collapsed.png",
+      "sha256": "45644f1d2c33c980027930e9ffa08ff11829d7c094db740c39a4f1b49300f413",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-09.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-he-largefont-expanded.png",
+      "sha256": "81cc9a4a0b10d92e39e2b0dc4fb2500f6d8dbdc9b2e5865d7bf185d3f27eabe2",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-10.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-he-standard-collapsed.png",
+      "sha256": "76a4db62690700d32a80551fb808bfc2e2a9d1c5554571d9496bbcbd382cad1d",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-10.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-he-standard-expanded.png",
+      "sha256": "79b75f4d9036e1c0735b92cfd3eecc1654296a44d31f261d035690bb85ca9a08",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-10.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-en-largefont-collapsed.png",
+      "sha256": "e21876bb41d67657dc4e57c5290f384faf9af88bf4dd663883b67a300161d691",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-10.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_MINOR_FINDING",
+      "finding_ids": [
+        "MINOR-01",
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "New Businesses label wraps inside the word as Business/es; whole label remains visible.",
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-en-largefont-expanded.png",
+      "sha256": "dff2be6109a2f5f2eb1d17bb50a0f4ee509de8de6af07758ee88096d1b9d48f7",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-11.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_MINOR_FINDING",
+      "finding_ids": [
+        "MINOR-01",
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "New Businesses label wraps inside the word as Business/es; whole label remains visible.",
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-en-standard-collapsed.png",
+      "sha256": "1509fae3902d0d240ee39948adf6bff252e49e02da1ff78d32c196b655477e47",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-11.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-en-standard-expanded.png",
+      "sha256": "c92ca66e5a6875d6f7d017ad098c031de883912aad79b7b7d1c072eb21a01ae3",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-11.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-he-largefont-collapsed.png",
+      "sha256": "c101bc9e45e9f4c07cb090bdcf5efcacc3668736ca612b0c68dac6c4204c7fe7",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-11.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-he-largefont-expanded.png",
+      "sha256": "2788fe23ee404a0c649142108260c2b032224754f0cf357720a09670574392c6",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-12.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-he-standard-collapsed.png",
+      "sha256": "84592b0a7a008e2432c7abc44a11b48938ffaacd15dd41948ccd6ab64f0dc980",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-12.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-he-standard-expanded.png",
+      "sha256": "3732e574be7a24fafd8153382371d05e4ed783ff69aecee6c544d4b65fbc0329",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-12.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-shape-circle.png",
+      "sha256": "f4f4d457f356cc46dcdf52b23f6ac39fbc0f613c534d376c511cbdfbf670a9a4",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-12.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-shape-hexagon.png",
+      "sha256": "d6873eea3c43504ff66833c5f9fe5807462b7d4d72dd6a6153531a0f50c42bbd",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-13.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-shape-rounded_square.png",
+      "sha256": "de062717bf1aca6cf0271e49b0fc29d3b86704e7c57f152dd457c2742ffbbc9f",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-13.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-contacts-shape-square.png",
+      "sha256": "a9de85b7a2a106de35d5694d3480babde3817ec847cb9f90bac09c12cffb3e96",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-13.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-en-largefont-compact.png",
+      "sha256": "c57ebbf5aa950ae22b26c6282c6cc9dcb72a05b2364112f7f86c2f71df344d72",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-13.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01",
+        "BOUNDED-02"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence.",
+        "Secondary type/date/time metadata is ellipsized; full visible-row numeric identity remains readable and LTR."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-en-largefont-expanded.png",
+      "sha256": "e3d14be7242522279da980a0cacd6b027ddc86444f8b6bc6db8f37ce3fc7b961",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-14.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01",
+        "BOUNDED-02"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence.",
+        "Secondary type/date/time metadata is ellipsized; full visible-row numeric identity remains readable and LTR."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-en-standard-compact.png",
+      "sha256": "c5c7c4b0daef51288474efecb27c70f54cdf18c6d5844cda7081b07e88053097",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-14.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01",
+        "BOUNDED-02"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence.",
+        "Secondary type/date/time metadata is ellipsized; full visible-row numeric identity remains readable and LTR."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-en-standard-expanded.png",
+      "sha256": "2097ddca6889615e783a0142ffdf32723ceb643fb064042a770d3b808ebbd178",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-14.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01",
+        "BOUNDED-02"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence.",
+        "Secondary type/date/time metadata is ellipsized; full visible-row numeric identity remains readable and LTR."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-he-largefont-compact.png",
+      "sha256": "7c958bc70850ac53ba11ef107c920dc36cf212fe29f350f3ae1ba966c57f7d25",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-14.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": true,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01",
+        "BOUNDED-02"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence.",
+        "Secondary type/date/time metadata is ellipsized; full visible-row numeric identity remains readable and LTR."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-he-largefont-expanded.png",
+      "sha256": "2664a5cbe5b984b2bda84909d576758c064385cb23ae75ef00191df853c22411",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-15.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": true,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01",
+        "BOUNDED-02"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence.",
+        "Secondary type/date/time metadata is ellipsized; full visible-row numeric identity remains readable and LTR."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-he-standard-compact.png",
+      "sha256": "e0139df09b13407e656ce0f9eb550346c868baa9429e748c25cde28f9e42d017",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-15.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01",
+        "BOUNDED-02"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence.",
+        "Secondary type/date/time metadata is ellipsized; full visible-row numeric identity remains readable and LTR."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-he-standard-expanded.png",
+      "sha256": "2bd846f52c1fc9555a4a3c3d8305d60241c66ce4a2000622132f0b5b256f8c2d",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-15.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01",
+        "BOUNDED-02"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence.",
+        "Secondary type/date/time metadata is ellipsized; full visible-row numeric identity remains readable and LTR."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-en-largefont-compact.png",
+      "sha256": "57223b372ca2f99a9fe80000936e3d605b8ce423aad2c6af7e39d78feaaa92ac",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-15.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01",
+        "BOUNDED-02"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence.",
+        "Secondary type/date/time metadata is ellipsized; full visible-row numeric identity remains readable and LTR."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-en-largefont-expanded.png",
+      "sha256": "a6ec2ec11006cd81539b1afe71304fd334c40fc11df05f663a897d4b9c7db7a1",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-16.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01",
+        "BOUNDED-02"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence.",
+        "Secondary type/date/time metadata is ellipsized; full visible-row numeric identity remains readable and LTR."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-en-standard-compact.png",
+      "sha256": "9deb75fe3d54d441cced5daec0a6482a659871e06094dc0a05f7d968007d300c",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-16.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01",
+        "BOUNDED-02"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence.",
+        "Secondary type/date/time metadata is ellipsized; full visible-row numeric identity remains readable and LTR."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-en-standard-expanded.png",
+      "sha256": "f7726e83f6959e97d2ebde8937b6e7ae3587dae0342c34278620d7e6d4e317dd",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-16.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01",
+        "BOUNDED-02"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence.",
+        "Secondary type/date/time metadata is ellipsized; full visible-row numeric identity remains readable and LTR."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-he-largefont-compact.png",
+      "sha256": "89ae0947c9da8c30d74d42cad3fff9f76e3b40eb9e091dff1c21f593aa4aef93",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-16.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01",
+        "BOUNDED-02"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence.",
+        "Secondary type/date/time metadata is ellipsized; full visible-row numeric identity remains readable and LTR."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-he-largefont-expanded.png",
+      "sha256": "9511045fbd3ee26dee7b5abe853fa9729a88ff2d85ef4afcb7bb500efc054149",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-17.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01",
+        "BOUNDED-02"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence.",
+        "Secondary type/date/time metadata is ellipsized; full visible-row numeric identity remains readable and LTR."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-he-standard-compact.png",
+      "sha256": "984feee9e46c976268d5eb59fa849960d90ef70c8b78b0349925103968f86788",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-17.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01",
+        "BOUNDED-02"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence.",
+        "Secondary type/date/time metadata is ellipsized; full visible-row numeric identity remains readable and LTR."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-he-standard-expanded.png",
+      "sha256": "474584e8e5b1abea5d97498632450e75cdee35cb665306ad661950b618dc256b",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-17.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-01",
+        "BOUNDED-02"
+      ],
+      "notes": [
+        "Fixed keypad overlaps a lower visible row dial control at the captured offset. Adjacent visible row identity remains readable; scrolling/actionability requires native evidence.",
+        "Secondary type/date/time metadata is ellipsized; full visible-row numeric identity remains readable and LTR."
+      ]
+    },
+    {
+      "file": "personalization-widgets-shape-circle.png",
+      "sha256": "14545f21e11bbb8f513f5602dee1f727c8b0ef1f62dac9d5c92780a6d74e334b",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-17.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-05"
+      ],
+      "notes": [
+        "A long name or narrow large-font app header is ellipsized within its intended widget bounds; other labels remain readable."
+      ]
+    },
+    {
+      "file": "personalization-widgets-shape-hexagon.png",
+      "sha256": "b39c2c5470225f7ceb657d9d722cef4b088aace0c90d81a33624e6d30ecb7e18",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-18.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-05"
+      ],
+      "notes": [
+        "A long name or narrow large-font app header is ellipsized within its intended widget bounds; other labels remain readable."
+      ]
+    },
+    {
+      "file": "personalization-widgets-shape-rounded_square.png",
+      "sha256": "35a3450b1b05dbfb42a820009c015283a8813441395dc35a91a9cd1e0c1efc69",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-18.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-05"
+      ],
+      "notes": [
+        "A long name or narrow large-font app header is ellipsized within its intended widget bounds; other labels remain readable."
+      ]
+    },
+    {
+      "file": "personalization-widgets-shape-square.png",
+      "sha256": "3aec86d398121804c7d848bfd10a860683bb304ad59e3d1a24b350862d639e90",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-18.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-05"
+      ],
+      "notes": [
+        "A long name or narrow large-font app header is ellipsized within its intended widget bounds; other labels remain readable."
+      ]
+    },
+    {
+      "file": "settings-dark-bottom.png",
+      "sha256": "52cca7ca79bc6305a5fe091a5f159059d87b9792c151775eaf2edb33509913bf",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-18.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "settings-dark.png",
+      "sha256": "b5a4bd162a134993071d9ec186a5e317e0b47f8abdbf857f95101f0451d20392",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-19.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "settings-light-bottom.png",
+      "sha256": "1210f0053461f3df024e0322da7f4fe20308065169b2d0f9c1f66f3f2332d869",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-19.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "settings-light.png",
+      "sha256": "b28ba2d072a832b1ee88ca24555197c543edc5aae40d1fce57a3bede427f0392",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-19.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "widget-dark-contact-2x1.png",
+      "sha256": "b789cda80109b43ff9cffff853a769c918193e6fff2582fd0fcd72ee21b912b5",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-19.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "widget-dark-empty.png",
+      "sha256": "c849357f435266ed2766ff531a8846c1a954f9106949f1beed392048689ebeed",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-20.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "widget-dark-favorites-2x2-largefont.png",
+      "sha256": "fcf182cd889f477df2a6db058137fb544010f33de2d25838902bfa764ea00bb8",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-20.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-05"
+      ],
+      "notes": [
+        "A long name or narrow large-font app header is ellipsized within its intended widget bounds; other labels remain readable."
+      ]
+    },
+    {
+      "file": "widget-dark-favorites-2x2.png",
+      "sha256": "a7ab930a6ea4277c7db0c4ce82e905246134239d89d820f1e09e22747c98cd31",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-20.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "widget-dark-favorites-4x2.png",
+      "sha256": "c1816ff42d0c05d8e0c2962769ad7a3a3e3bf7dba838528c3a9aa85f614daf5f",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-20.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "widget-dark-permission.png",
+      "sha256": "2cefd6a2f451b664004f014d9f322b6a280ae907eb5cad25e358e2ca40f678d8",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-21.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "widget-dark-quick-1x1.png",
+      "sha256": "81eae874051b55979ede370bca903100d782ecdc5f187028909676ae0cd410ef",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-21.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-05"
+      ],
+      "notes": [
+        "A long name or narrow large-font app header is ellipsized within its intended widget bounds; other labels remain readable."
+      ]
+    },
+    {
+      "file": "widget-dark-two-favorites.png",
+      "sha256": "4008c6d154574f797af67ebca236589fb3f5c07bbf7d8340de69e3aeb3ca2acb",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-21.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "widget-light-contact-2x1.png",
+      "sha256": "d64a189b331a18cbc5ccd2062294d67251a649867f421e20b60f1443c2c23780",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-21.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "widget-light-empty.png",
+      "sha256": "438d86f168b99cb5f951901cd3d034510b3b6a671a6a2c5743c0ef810d0db991",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-22.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "widget-light-favorites-2x2-largefont.png",
+      "sha256": "f38d3da8d36f466e0474c7afc152d1556c5bcdc602b8443dca98afd53cdb4466",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-22.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-05"
+      ],
+      "notes": [
+        "A long name or narrow large-font app header is ellipsized within its intended widget bounds; other labels remain readable."
+      ]
+    },
+    {
+      "file": "widget-light-favorites-2x2.png",
+      "sha256": "1f7b10a0cb990882eda5aa28b724c5fbc0e6ef43cc8948f391bdff45a05bdfe3",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-22.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "widget-light-favorites-4x2.png",
+      "sha256": "f378fe3026169cae20dca180b52c66d72b76c657cdc25c0d171c86a8e084d476",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-22.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "widget-light-permission.png",
+      "sha256": "7f6a1cca4ef97774c34d3a244890c46d5c563b22e6e775058e3fbfe47426d92c",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-23.png",
+      "sheet_position": "top_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "widget-light-quick-1x1.png",
+      "sha256": "075750e7fd6a8a71408314d6b45471660d34eb81cf0253d5c6e6c6e298d175ff",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-23.png",
+      "sheet_position": "top_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS_WITH_BOUNDED_OBSERVATIONS",
+      "finding_ids": [
+        "BOUNDED-05"
+      ],
+      "notes": [
+        "A long name or narrow large-font app header is ellipsized within its intended widget bounds; other labels remain readable."
+      ]
+    },
+    {
+      "file": "widget-light-two-favorites.png",
+      "sha256": "51cde5db48bac0b703a7de6fabec5cd8303e3a31c9306f6ec3e32b4706cb7353",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-23.png",
+      "sheet_position": "bottom_left",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    },
+    {
+      "file": "widget-reconfigured.png",
+      "sha256": "ee9217225561a64371a9f2733d13e2e4aa84ace29e380dc6d356a6fc07255dcc",
+      "size_px": [
+        480,
+        854
+      ],
+      "review_sheet": "other-23.png",
+      "sheet_position": "bottom_right",
+      "visual_reviewed": true,
+      "individual_source_opened": false,
+      "source_hash_matches_manifest": true,
+      "presented_sheet_crop_matches_original_pixels": true,
+      "rendering_result": "PASS",
+      "finding_ids": [],
+      "notes": []
+    }
+  ],
+  "sheets": [
+    {
+      "sheet": "other-01.png",
+      "sha256": "b2eb46cb037595d75d5bb6126d63530718d65882e9f9a3caf4e3ef5b206b5452",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "call-integration-notification-active-private-en.png",
+        "call-integration-notification-active-private-he.png",
+        "call-integration-notification-active-speaker-en.png",
+        "call-integration-notification-active-speaker-he.png"
+      ],
+      "rendering_observation": "Native active-call EN/HE private/speaker notifications: caller body, state, timer, hang-up, speaker glyph and return action fit within SystemUI notification cards. Hebrew speaker-on action and some metadata are ellipsized by SystemUI."
+    },
+    {
+      "sheet": "other-02.png",
+      "sha256": "73563c00b2152aaa7300dc73c0ece0dfe7c379948bef3ded1a75a1c7512024ba",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "call-integration-notification-incoming-he.png",
+        "call-integration-notification-outgoing-he.png",
+        "call-integration-return-contacts.png",
+        "call-integration-return-settings.png"
+      ],
+      "rendering_observation": "Native incoming/outgoing Hebrew call notifications retain distinct visible call-state text and actions. Returned Contacts shows query, LTR phone identities, business entry and app tabs; returned Settings shows the captured scroll state and app tabs. Lower fixed keypad overlaps a Contacts row dial control."
+    },
+    {
+      "sheet": "other-03.png",
+      "sha256": "52a5a23db9d1d417fd76d5d299bd2a6214f708248e8a12c9c13e2feff6039449",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "callback-list-dark.png",
+        "callback-list-light.png",
+        "callback-settings-dark.png",
+        "callback-settings-light.png"
+      ],
+      "rendering_observation": "All four new callback captures at font scale1.3: Hebrew title/count/explanation and caller card fit in light/dark. Phone0500099971 is ordered LTR; callback and Recent Calls buttons fit above native navigation. Expanded reminder Settings heading, off switch, label and description are readable above app navigation. Time selector is below this pictured viewport and is not visually assessed."
+    },
+    {
+      "sheet": "other-04.png",
+      "sha256": "252d60df784b34ed9389a2846bdcae9b2354b2c5129b76f19029af21f1b68549",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "changelog-dark-bottom.png",
+        "changelog-dark.png",
+        "changelog-light-bottom.png",
+        "changelog-light.png"
+      ],
+      "rendering_observation": "Changelog top/current beta.10 and bottom/first-version cards in light/dark: readable Hebrew RTL paragraphs and intact card boundaries. Inline installed version and version card show0.11.0-beta.10 in correct LTR order; content is naturally cut at scroll viewport edges."
+    },
+    {
+      "sheet": "other-05.png",
+      "sha256": "93d004f9ca2fe78ac8bc9c530e2c96c345dd1f618a2c13a35772e497379b4166",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "missed-multiple-he.png",
+        "missed-single-he.png",
+        "personalization-archive-dark.png",
+        "personalization-archive-light.png"
+      ],
+      "rendering_observation": "Native missed-call single/multiple count titles, caller names and Clear text remain readable; phone suffix is bounded by ellipsis. Light/dark archive displays contact name, LTR phone and date/duration metadata with no control collision."
+    },
+    {
+      "sheet": "other-06.png",
+      "sha256": "2d95d08740789c57f4169380656583f8bf108a69e7b60ab6d84ba999b47a7649",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "personalization-backup-restore-confirmation.png",
+        "personalization-backup-saved-dark.png",
+        "personalization-backup-saved-light.png",
+        "personalization-chooser-dark-avatar_shapes-bottom.png"
+      ],
+      "rendering_observation": "Restore confirmation has readable scrollable text and separate Cancel/Restore actions. Backup-saved light/dark pages fit title, Close and scope explanation. Avatar dialog shows four shapes, radio choices and Cancel."
+    },
+    {
+      "sheet": "other-07.png",
+      "sha256": "ebcb33afbd00dc00de0a9981dc1bbfb94f591cff530376e581e397df1fbf1d63",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "personalization-chooser-dark-avatar_shapes.png",
+        "personalization-chooser-dark-icons-bottom.png",
+        "personalization-chooser-dark-icons.png",
+        "personalization-chooser-light-avatar_shapes-bottom.png"
+      ],
+      "rendering_observation": "Avatar chooser remains legible in dark/light. Dark icon chooser top/bottom offsets collectively expose all five icon designs; scrollable endpoint clipping stays within list viewport and Cancel remains visible."
+    },
+    {
+      "sheet": "other-08.png",
+      "sha256": "5d73b21db776f379d96d3bc844b1c4a3581bfb2626d1983e5edd37a752a5464e",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "personalization-chooser-light-avatar_shapes.png",
+        "personalization-chooser-light-icons-bottom.png",
+        "personalization-chooser-light-icons.png",
+        "personalization-contacts-dark-en-largefont-collapsed.png"
+      ],
+      "rendering_observation": "Light avatar and icon dialogs retain labels, icons/radios and Cancel. English dark large-font Contacts remains readable, with new Businesses button visibly wrapping inside the word."
+    },
+    {
+      "sheet": "other-09.png",
+      "sha256": "cf5bc520057dce0954271ffbc5717fcd4a4c2e52322697fd4a5381bb9a5ca08f",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "personalization-contacts-dark-en-largefont-expanded.png",
+        "personalization-contacts-dark-en-standard-collapsed.png",
+        "personalization-contacts-dark-en-standard-expanded.png",
+        "personalization-contacts-dark-he-largefont-collapsed.png"
+      ],
+      "rendering_observation": "Dark Contacts EN standard/large and HE large: Favorites, search, list identities, stars, dial buttons and tabs are distinct. English large-font Businesses label wraps Business/es; fixed keypad overlaps a lower dial control while name/phone identity remains visible."
+    },
+    {
+      "sheet": "other-10.png",
+      "sha256": "d9a9634745d5323436a4348be2631cd720668fadbfcc2bcb932dfaa376d37f29",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "personalization-contacts-dark-he-largefont-expanded.png",
+        "personalization-contacts-dark-he-standard-collapsed.png",
+        "personalization-contacts-dark-he-standard-expanded.png",
+        "personalization-contacts-light-en-largefont-collapsed.png"
+      ],
+      "rendering_observation": "Dark Hebrew Favorites expanded/collapsed standard/large and light English large Contacts retain readable search, list identity and tabs. Long English name is ellipsized; English large Businesses label wraps Business/es. Fixed keypad overlays a lower row dial control."
+    },
+    {
+      "sheet": "other-11.png",
+      "sha256": "49e7f2829be138b7820219ba41a8f7c18211a09295473c48c108289802fed006",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "personalization-contacts-light-en-largefont-expanded.png",
+        "personalization-contacts-light-en-standard-collapsed.png",
+        "personalization-contacts-light-en-standard-expanded.png",
+        "personalization-contacts-light-he-largefont-collapsed.png"
+      ],
+      "rendering_observation": "Light English standard/large and Hebrew large Contacts retain readable Favorites/search and contact identities. Large English Businesses label wraps Business/es. Fixed keypad overlays lower dial controls without hiding adjacent name/phone identity."
+    },
+    {
+      "sheet": "other-12.png",
+      "sha256": "ca1c98916095903189f27ce68060a462758094690eb76e9fa0e8f85d246773e4",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "personalization-contacts-light-he-largefont-expanded.png",
+        "personalization-contacts-light-he-standard-collapsed.png",
+        "personalization-contacts-light-he-standard-expanded.png",
+        "personalization-contacts-shape-circle.png"
+      ],
+      "rendering_observation": "Light Hebrew standard/large Contacts and dark circle-shape Contacts retain readable RTL Favorites/search/list identity with LTR phone digits. Circle photo and fallback initials are visible; fixed keypad overlays a lower dial control."
+    },
+    {
+      "sheet": "other-13.png",
+      "sha256": "e0e0f194002545e8dfdfdf2fa91d56f375d11491f77aec0f239289f45ba6c57d",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "personalization-contacts-shape-hexagon.png",
+        "personalization-contacts-shape-rounded_square.png",
+        "personalization-contacts-shape-square.png",
+        "personalization-recents-dark-en-largefont-compact.png"
+      ],
+      "rendering_observation": "Hexagon/rounded-square/square Contacts visibly reflect chosen avatar shape in strip and rows. Dark English large compact Recents shows complete numeric identities and summary, with ellipsized timestamp/type metadata and fixed keypad over a lower row dial control."
+    },
+    {
+      "sheet": "other-14.png",
+      "sha256": "31c99b1fa82fab74f5255a693f988466ff1365db25c7748e15a2f30bd34cedee",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "personalization-recents-dark-en-largefont-expanded.png",
+        "personalization-recents-dark-en-standard-compact.png",
+        "personalization-recents-dark-en-standard-expanded.png",
+        "personalization-recents-dark-he-largefont-compact.png"
+      ],
+      "rendering_observation": "Dark English compact/expanded standard/large summaries and Hebrew large compact summary remain readable and fit their cards. Expanded stats show counts/directions. Full LTR numeric row identities remain visible; date/time metadata is ellipsized. Native-size Hebrew large compact original confirms the summary fits without edge clipping."
+    },
+    {
+      "sheet": "other-15.png",
+      "sha256": "e59932b81332e01bf9300002ac952a6ac9fe7d2b23bf41ed31e317aad58f6acd",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "personalization-recents-dark-he-largefont-expanded.png",
+        "personalization-recents-dark-he-standard-compact.png",
+        "personalization-recents-dark-he-standard-expanded.png",
+        "personalization-recents-light-en-largefont-compact.png"
+      ],
+      "rendering_observation": "Dark Hebrew compact/expanded standard/large and light English large compact Recents: summary text, direction counts and average duration fit. Numeric row identities remain distinct; secondary date/time metadata is ellipsized. Native-size Hebrew large expanded original confirms summary fits; fixed keypad overlays a lower row dial action."
+    },
+    {
+      "sheet": "other-16.png",
+      "sha256": "cbc35b21da4767b4e655bdfc53b779fe0ae21a65d02825e1b3351ed2c8d9af39",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "personalization-recents-light-en-largefont-expanded.png",
+        "personalization-recents-light-en-standard-compact.png",
+        "personalization-recents-light-en-standard-expanded.png",
+        "personalization-recents-light-he-largefont-compact.png"
+      ],
+      "rendering_observation": "Light English compact/expanded standard/large and Hebrew large compact Recents: statistics, summary headings and LTR numeric identities fit. Some secondary row metadata is ellipsized; fixed keypad overlays a lower row dial action. App and native navigation remain separate."
+    },
+    {
+      "sheet": "other-17.png",
+      "sha256": "0f373a8b961ccadbaf0c9a070a7087f8963c4ce7c978f5d542bba5aeaa9b49f3",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "personalization-recents-light-he-largefont-expanded.png",
+        "personalization-recents-light-he-standard-compact.png",
+        "personalization-recents-light-he-standard-expanded.png",
+        "personalization-widgets-shape-circle.png"
+      ],
+      "rendering_observation": "Light Hebrew standard/large Recents summaries/stats and dark circle widget preview: RTL labels and numeric identity remain readable. Widget contact-name ellipsis is bounded; fixed keypad overlap is visible only on list frames."
+    },
+    {
+      "sheet": "other-18.png",
+      "sha256": "21b2b4893aa5b087948e10fa107de97fce19ef913b1a9ed236de2ca4eafe1b35",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "personalization-widgets-shape-hexagon.png",
+        "personalization-widgets-shape-rounded_square.png",
+        "personalization-widgets-shape-square.png",
+        "settings-dark-bottom.png"
+      ],
+      "rendering_observation": "Hexagon/rounded-square/square widget previews show intended distinct shapes and readable Hebrew labels, with one long name bounded by ellipsis. Settings dark bottom shows reminder entry and changelog/version; installed version token is correctly LTR."
+    },
+    {
+      "sheet": "other-19.png",
+      "sha256": "f2296c1fb826c54bf12b9eb048dfb87d27b37c7e282acc8c9bd2969151af7367",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "settings-dark.png",
+        "settings-light-bottom.png",
+        "settings-light.png",
+        "widget-dark-contact-2x1.png"
+      ],
+      "rendering_observation": "Settings light/dark permission sections, reminder/changelog footer and version are readable at captured scroll offsets. Footer0.11.0-beta.10 is correctly LTR. Dark contact2x1 widget retains caller name and phone without overlap."
+    },
+    {
+      "sheet": "other-20.png",
+      "sha256": "c533b429612a93b3c30313181de3ff7710dcf0296ae851b1f8c1b511fabcf19d",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "widget-dark-empty.png",
+        "widget-dark-favorites-2x2-largefont.png",
+        "widget-dark-favorites-2x2.png",
+        "widget-dark-favorites-4x2.png"
+      ],
+      "rendering_observation": "Dark empty,2x2 standard/large and4x2 widget previews retain readable title/state text and per-contact labels. Large2x2 app header is bounded by ellipsis; no card or native-bar collision."
+    },
+    {
+      "sheet": "other-21.png",
+      "sha256": "77f11fc14528d40920cc25922a7abc42208ab7d66c96ffa7cf15e8c8bf102d77",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "widget-dark-permission.png",
+        "widget-dark-quick-1x1.png",
+        "widget-dark-two-favorites.png",
+        "widget-light-contact-2x1.png"
+      ],
+      "rendering_observation": "Dark permission/quick/two-favorites and light contact2x1 widget previews: state instructions, names and phone fit. Long1x1 name is ellipsized within its tile; native bars remain clear."
+    },
+    {
+      "sheet": "other-22.png",
+      "sha256": "db8bfd874be1d266a5290a3a9607bc8cf289f2582e9ec047dfffdfcba5d5b856",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "widget-light-empty.png",
+        "widget-light-favorites-2x2-largefont.png",
+        "widget-light-favorites-2x2.png",
+        "widget-light-favorites-4x2.png"
+      ],
+      "rendering_observation": "Light empty,2x2 standard/large and4x2 widget previews retain readable state instructions and contact labels. Large2x2 app header is bounded by ellipsis; no card or native-bar collision."
+    },
+    {
+      "sheet": "other-23.png",
+      "sha256": "921ca7977375fe8aba713adbd12ba1e44130317e2a49b24718f501e358fa7ccb",
+      "visually_opened_with_view_image": true,
+      "forwarded_as_image_to_model": true,
+      "original_pixels_verified": true,
+      "files": [
+        "widget-light-permission.png",
+        "widget-light-quick-1x1.png",
+        "widget-light-two-favorites.png",
+        "widget-reconfigured.png"
+      ],
+      "rendering_observation": "Light permission/quick/two-favorites and reconfigured dark quick widget retain readable state/name labels;1x1 long name is bounded by ellipsis. Native bars remain clear."
+    }
+  ]
+}

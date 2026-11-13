@@ -1,0 +1,613 @@
+{
+  "checks": {
+    "default_off_native_opt_in": true,
+    "actual_modem_calls_and_protected_missed_receiver": true,
+    "actual_contact_identity_and_grouped_counts": true,
+    "private_os_alarm_delivered": true,
+    "reminder_load_and_delivery_preserve_call_rows_and_read_flags": true,
+    "actual_active_connection_over_one_second_resolves": true,
+    "later_missed_call_restores_pending": true,
+    "native_settings_and_list_light_dark": true,
+    "direct_notification_details_never_autodial": true,
+    "native_back_to_previous_settings": true
+  },
+  "modem_commands": [
+    {
+      "id": "17938711392520",
+      "operation": "call",
+      "number": "0500099971",
+      "serial": "emulator-5554",
+      "returncode": 0,
+      "stdout": "OK",
+      "stderr": ""
+    },
+    {
+      "id": "17938711402021",
+      "operation": "cancel",
+      "number": "0500099971",
+      "serial": "emulator-5554",
+      "returncode": 0,
+      "stdout": "OK",
+      "stderr": ""
+    },
+    {
+      "id": "17938711424212",
+      "operation": "call",
+      "number": "0500099971",
+      "serial": "emulator-5554",
+      "returncode": 0,
+      "stdout": "OK",
+      "stderr": ""
+    },
+    {
+      "id": "17938711429733",
+      "operation": "cancel",
+      "number": "0500099971",
+      "serial": "emulator-5554",
+      "returncode": 0,
+      "stdout": "OK",
+      "stderr": ""
+    },
+    {
+      "id": "17938711560094",
+      "operation": "call",
+      "number": "0500099971",
+      "serial": "emulator-5554",
+      "returncode": 0,
+      "stdout": "OK",
+      "stderr": ""
+    },
+    {
+      "id": "17938711625125",
+      "operation": "cancel",
+      "number": "0500099971",
+      "serial": "emulator-5554",
+      "returncode": 0,
+      "stdout": "OK",
+      "stderr": ""
+    },
+    {
+      "id": "17938711650476",
+      "operation": "call",
+      "number": "0500099971",
+      "serial": "emulator-5554",
+      "returncode": 0,
+      "stdout": "OK",
+      "stderr": ""
+    },
+    {
+      "id": "17938711657347",
+      "operation": "cancel",
+      "number": "0500099971",
+      "serial": "emulator-5554",
+      "returncode": 0,
+      "stdout": "OK",
+      "stderr": ""
+    }
+  ],
+  "calls": [
+    {
+      "token": "tel:0500099971",
+      "disconnect_cause": 5,
+      "row": {
+        "id": 3,
+        "number": "0500099971",
+        "date": 1793871139492,
+        "duration": 0,
+        "type": 3,
+        "new": 1,
+        "is_read": 0
+      }
+    },
+    {
+      "token": "tel:0500099971",
+      "disconnect_cause": 5,
+      "row": {
+        "id": 4,
+        "number": "0500099971",
+        "date": 1793871142471,
+        "duration": 0,
+        "type": 3,
+        "new": 1,
+        "is_read": 0
+      }
+    },
+    {
+      "token": "tel:0500099971",
+      "disconnect_cause": 3,
+      "row": {
+        "id": 5,
+        "number": "0500099971",
+        "date": 1793871156200,
+        "duration": 2,
+        "type": 1,
+        "new": 1,
+        "is_read": 0
+      }
+    },
+    {
+      "token": "tel:0500099971",
+      "disconnect_cause": 5,
+      "row": {
+        "id": 6,
+        "number": "0500099971",
+        "date": 1793871165202,
+        "duration": 0,
+        "type": 3,
+        "new": 1,
+        "is_read": 0
+      }
+    }
+  ],
+  "pending_before_connection": {
+    "key": "0500099971",
+    "number": "0500099971",
+    "name": "נועה תזכורת לשיחה",
+    "missed_count": 2,
+    "missed_today": 2,
+    "callback_attempts": 0,
+    "latest_missed_id": 4,
+    "latest_missed_at": 1793871142471
+  },
+  "pending_after_later_miss": {
+    "key": "0500099971",
+    "number": "0500099971",
+    "name": "נועה תזכורת לשיחה",
+    "missed_count": 1,
+    "missed_today": 3,
+    "callback_attempts": 0,
+    "latest_missed_id": 6,
+    "latest_missed_at": 1793871165202
+  },
+  "alarm": {
+    "method": "production-private-immutable-PendingIntent-via-AlarmManager.setAndAllowWhileIdle",
+    "accelerated_delivery": true,
+    "waited_until_user_cutoff": false,
+    "app_background_before_alarm": true,
+    "scheduled_at": 1793871146448,
+    "due": 1793871147448,
+    "observed_at": 1793871151484,
+    "post_time": 1793871151472,
+    "day": "2026-11-05",
+    "channel": "dacaller_callbacks_v1",
+    "category": "reminder",
+    "id": 1504,
+    "people": 1,
+    "missed": 2
+  },
+  "answered_call": {
+    "id": 5,
+    "number": "0500099971",
+    "date": 1793871156200,
+    "duration": 2,
+    "type": 1,
+    "new": 1,
+    "is_read": 0
+  },
+  "rows_before_delivery": [
+    {
+      "id": 3,
+      "number": "0500099971",
+      "date": 1793871139492,
+      "duration": 0,
+      "type": 3,
+      "new": 1,
+      "is_read": 0
+    },
+    {
+      "id": 4,
+      "number": "0500099971",
+      "date": 1793871142471,
+      "duration": 0,
+      "type": 3,
+      "new": 1,
+      "is_read": 0
+    }
+  ],
+  "rows_after_all_reminder_reads": [
+    {
+      "id": 3,
+      "number": "0500099971",
+      "date": 1793871139492,
+      "duration": 0,
+      "type": 3,
+      "new": 1,
+      "is_read": 0
+    },
+    {
+      "id": 4,
+      "number": "0500099971",
+      "date": 1793871142471,
+      "duration": 0,
+      "type": 3,
+      "new": 1,
+      "is_read": 0
+    },
+    {
+      "id": 5,
+      "number": "0500099971",
+      "date": 1793871156200,
+      "duration": 2,
+      "type": 1,
+      "new": 1,
+      "is_read": 0
+    },
+    {
+      "id": 6,
+      "number": "0500099971",
+      "date": 1793871165202,
+      "duration": 0,
+      "type": 3,
+      "new": 1,
+      "is_read": 0
+    }
+  ],
+  "read_observations": [
+    {
+      "before": [
+        {
+          "id": 3,
+          "number": "0500099971",
+          "date": 1793871139492,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        },
+        {
+          "id": 4,
+          "number": "0500099971",
+          "date": 1793871142471,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        }
+      ],
+      "after": [
+        {
+          "id": 3,
+          "number": "0500099971",
+          "date": 1793871139492,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        },
+        {
+          "id": 4,
+          "number": "0500099971",
+          "date": 1793871142471,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        }
+      ],
+      "observed_at": 1793871145419
+    },
+    {
+      "before": [
+        {
+          "id": 3,
+          "number": "0500099971",
+          "date": 1793871139492,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        },
+        {
+          "id": 4,
+          "number": "0500099971",
+          "date": 1793871142471,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        }
+      ],
+      "after": [
+        {
+          "id": 3,
+          "number": "0500099971",
+          "date": 1793871139492,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        },
+        {
+          "id": 4,
+          "number": "0500099971",
+          "date": 1793871142471,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        }
+      ],
+      "observed_at": 1793871162512
+    },
+    {
+      "before": [
+        {
+          "id": 3,
+          "number": "0500099971",
+          "date": 1793871139492,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        },
+        {
+          "id": 4,
+          "number": "0500099971",
+          "date": 1793871142471,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        },
+        {
+          "id": 5,
+          "number": "0500099971",
+          "date": 1793871156200,
+          "duration": 2,
+          "type": 1,
+          "new": 1,
+          "is_read": 0
+        }
+      ],
+      "after": [
+        {
+          "id": 3,
+          "number": "0500099971",
+          "date": 1793871139492,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        },
+        {
+          "id": 4,
+          "number": "0500099971",
+          "date": 1793871142471,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        },
+        {
+          "id": 5,
+          "number": "0500099971",
+          "date": 1793871156200,
+          "duration": 2,
+          "type": 1,
+          "new": 1,
+          "is_read": 0
+        }
+      ],
+      "observed_at": 1793871165047
+    },
+    {
+      "before": [
+        {
+          "id": 3,
+          "number": "0500099971",
+          "date": 1793871139492,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        },
+        {
+          "id": 4,
+          "number": "0500099971",
+          "date": 1793871142471,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        },
+        {
+          "id": 5,
+          "number": "0500099971",
+          "date": 1793871156200,
+          "duration": 2,
+          "type": 1,
+          "new": 1,
+          "is_read": 0
+        },
+        {
+          "id": 6,
+          "number": "0500099971",
+          "date": 1793871165202,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        }
+      ],
+      "after": [
+        {
+          "id": 3,
+          "number": "0500099971",
+          "date": 1793871139492,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        },
+        {
+          "id": 4,
+          "number": "0500099971",
+          "date": 1793871142471,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        },
+        {
+          "id": 5,
+          "number": "0500099971",
+          "date": 1793871156200,
+          "duration": 2,
+          "type": 1,
+          "new": 1,
+          "is_read": 0
+        },
+        {
+          "id": 6,
+          "number": "0500099971",
+          "date": 1793871165202,
+          "duration": 0,
+          "type": 3,
+          "new": 1,
+          "is_read": 0
+        }
+      ],
+      "observed_at": 1793871168102
+    }
+  ],
+  "observations": [
+    {
+      "event": "settings-opt-in",
+      "palette": "light",
+      "enabled": true,
+      "minute": 1439,
+      "bar_contrast": {
+        "status": 953,
+        "navigation": 1276
+      },
+      "input_method": "native-pointer"
+    },
+    {
+      "event": "settings-opt-in",
+      "palette": "dark",
+      "enabled": true,
+      "minute": 1439,
+      "bar_contrast": {
+        "status": 1016,
+        "navigation": 1276
+      },
+      "input_method": "persisted-native-switch"
+    },
+    {
+      "event": "reminder-list-palette",
+      "palette": "light",
+      "name": "נועה תזכורת לשיחה",
+      "counts": "שיחות שלא נענו ביום זה: 2",
+      "number_ltr": true,
+      "root_rtl": true,
+      "font_scale": 1.2999999523162842,
+      "bar_contrast": {
+        "status": 1141,
+        "navigation": 1276
+      }
+    },
+    {
+      "event": "reminder-list-palette",
+      "palette": "dark",
+      "name": "נועה תזכורת לשיחה",
+      "counts": "שיחות שלא נענו ביום זה: 2",
+      "number_ltr": true,
+      "root_rtl": true,
+      "font_scale": 1.2999999523162842,
+      "bar_contrast": {
+        "status": 1210,
+        "navigation": 1276
+      }
+    }
+  ],
+  "answer_method": "production-real-touchscreen-swipe",
+  "incoming_swipe": {
+    "navigation": {
+      "method": "native-SystemUI-caller-body-pointer",
+      "touch_guard_resource": "com.android.systemui:integer\/touch_acceptance_delay",
+      "touch_guard_ms": 700,
+      "body_bounds": [
+        144,
+        354,
+        295,
+        396
+      ],
+      "incoming_remained_ringing": true,
+      "heads_up_removed_before_capture": true
+    },
+    "dark": true,
+    "incoming_header_outside_swipe": true,
+    "input_method": "UiAutomation.injectInputEvent SOURCE_TOUCHSCREEN",
+    "answer_mode": "ios",
+    "threshold_px": 96,
+    "bounds": [
+      38,
+      505,
+      442,
+      622
+    ],
+    "resting_bars": {
+      "status": 1291,
+      "navigation": 1279
+    },
+    "tap_stayed_ringing": true,
+    "short_drag_stayed_ringing": true,
+    "drag_keeps_prompt_fully_visible": true,
+    "drag_translation_px": 11,
+    "dragging_bars": {
+      "status": 1291,
+      "navigation": 1279
+    },
+    "cancelled_drag_stayed_ringing": true,
+    "cancel_reset_translation": true,
+    "completed_swipe_activated_owned_call": true
+  },
+  "cleanup": {
+    "method": "production-own-missed-notification-delete-PendingIntent-after-read-only-proof",
+    "retained_rows": [
+      {
+        "id": 3,
+        "number": "0500099971",
+        "date": 1793871139492,
+        "duration": 0,
+        "type": 3,
+        "new": 0,
+        "is_read": 1
+      },
+      {
+        "id": 4,
+        "number": "0500099971",
+        "date": 1793871142471,
+        "duration": 0,
+        "type": 3,
+        "new": 0,
+        "is_read": 1
+      },
+      {
+        "id": 5,
+        "number": "0500099971",
+        "date": 1793871156200,
+        "duration": 2,
+        "type": 1,
+        "new": 1,
+        "is_read": 0
+      },
+      {
+        "id": 6,
+        "number": "0500099971",
+        "date": 1793871165202,
+        "duration": 0,
+        "type": 3,
+        "new": 0,
+        "is_read": 1
+      }
+    ],
+    "acknowledged_ids": [
+      6,
+      4,
+      3
+    ],
+    "all_missed_rows_read": true,
+    "no_call_log_delete": true
+  }
+}

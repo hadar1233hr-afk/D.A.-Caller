@@ -1,0 +1,15 @@
+{
+  "scope": "Unknown-number dialog reachable from Recents avatar/contact card",
+  "unit_tests": 10,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "checked": [
+    "Exact selected number prefills new ContactEditorActivity",
+    "No automatic CALL intent",
+    "Private/unknown sentinels have no create-contact action"
+  ],
+  "native_screenshots": "NOT TESTED for this new action",
+  "full_regression": "PENDING fresh CI",
+  "publication_approved": false
+}

@@ -1,0 +1,66 @@
+{
+  "source_sha": "8debefaa6a62a60bb488aad4bd587fff665554d5",
+  "app_tree": "fe9b477a0075318da27e2c918c7ae185d3534451",
+  "workflow_run_id": 40640497150,
+  "validate_job_id": 122657256694,
+  "native_job_id": 122657922751,
+  "ui_artifact_id": 12794989447,
+  "ui_artifact_sha256": "2e508edc14d28a76781cdc5d7a22fc0620d519f10f40fcdc6297aaf1f0c08b07",
+  "native_status": "FAIL",
+  "publication_status": "SKIPPED",
+  "unit_tests": {
+    "tests": 239,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_tests": {
+    "tests": 29,
+    "passed": 28,
+    "failed": 1,
+    "errors": 0,
+    "skipped": 0
+  },
+  "png_count_including_failure_diagnostics": 218,
+  "failed_assertion": "Expanded island must leave a usable real app list",
+  "observation": "Compact actual MainActivity capture contains20 fictional contacts and6 favorites. Before expanded geometry the activity instead contains0contacts/0favorites and an empty-state label. The screenshot list was rebuilt and has0x0 size. This is replacement of the reflected screenshot dataset by a real provider refresh, not evidence that the reviewed twenty-row viewport lost its sizing.",
+  "cause_scope": "MainActivity provider observers remained registered while the test installed a fictional dataset by reflection. Its contacts observer can schedule a350ms debounced reload; the async provider result replaces contacts and rebuilds FastPages. The two native screenshots certify20-to0 replacement; the exact triggering observer callback was not logged, so its scheduling origin remains inferred from code.",
+  "production_source_changed_since_visual_review": false,
+  "correction": "Isolate only the actual screenshot MainActivity instance from contacts/calls provider observers. Observe pending debounce/loading state before clearing only its two known callbacks and pending contacts reload. Fence both existing single-thread workers on the instrumentation thread and drain their posted UI result callbacks. Require a continuously observed500ms quiescent window, sampled every40ms within one shared5-second deadline, before fictional installation. Keep production provider code and all60dp/query/list-anchor controls unchanged. Add explicit current attached list and20-row model checks around expansion/collapse.",
+  "existing_successful_native_flags": {
+    "real_renderer_and_controller": true,
+    "matrix_native_layout_assertions": false,
+    "app_main_integration": false,
+    "native_action_dispatch_and_acknowledgement": true,
+    "confirmed_end_cancel_and_accept": true,
+    "disabled_ui_preserves_session": true,
+    "content_margin_and_list_anchor_restored": true,
+    "pause_stops_surface_and_resume_restores": true,
+    "activity_recreation_preserves_fixture_session_and_query": true,
+    "customization_preview_and_bottom_controls": true,
+    "animations_lifecycle": true,
+    "native_preference_persistence": true,
+    "native_settings_bar_contrast": true
+  },
+  "failure_and_comparison_sha256": {
+    "island-failed-app-main.png": "3ce284bbf4e3539e3bce8f5282ab434b2cce1d20c2cba0e98e5cfdebe7a81816",
+    "island-failed-app-main.json": "d8547fff4ba6bf78bba02eb28c2f166664ec2232ce6c8bcadd66ae5932d5f91e",
+    "island-failed-app-main.xml": "d353b92e8fc01295f95d02134a13dfa19e65d1377956b71a8999ca0046715414",
+    "island-failed-matrix.png": "318ae262e5e13c65f835c52c79ef8c4f47f3b7e406b9b6f253e1a30a196d1ff0",
+    "island-failed-matrix.json": "578e0477348c80617febd44920da76c25f415c94324d19b6ccef70334fb799fa",
+    "island-app-contacts-compact.png": "20603e37be0c7c0465744add8b34d2ed09d003819f7aa02dd6b0fb7c2702d439"
+  },
+  "limits": "No publication or complete final-run approval. Prior source6 has a successful29-test native run and219-image review of the same production app tree. This final test-fixture race must be corrected and reverified. Physical SIM/Bluetooth/Jelly Star and installed-key upgrade remain untested.",
+  "fixture_quiescence": {
+    "observation_window_ms": 500,
+    "sample_interval_ms": 40,
+    "shared_deadline_ms": 5000,
+    "pending_sampled_before_removal": true,
+    "ui_thread_blocking_future_waits": false,
+    "removed_callbacks": [
+      "reloadChangedContacts",
+      "reloadChangedCalls"
+    ],
+    "contacts_generation_modified": false
+  }
+}

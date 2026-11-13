@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.ContentObserver;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -64,7 +63,7 @@ public final class ArchiveActivity extends Activity {
  private int card(){return dark()?0xFF232323:Color.WHITE;}
  private int ink(){return dark()?Color.WHITE:0xFF1B1B1B;}
  private int muted(){return dark()?0xFFBBBBBB:0xFF666666;}
- private int gold(){return dark()?0xFFE1C58D:0xFF8D672E;}
+ private int gold(){return "silver".equals(prefs.getString("accent","gold"))?(dark()?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark());}
  private Locale locale(){return I18n.isEnglish(this)?Locale.ENGLISH:new Locale("he","IL");}
  private String tr(String he,String en){return I18n.isEnglish(this)?en:he;}
  private void applySystemBars(){
@@ -82,7 +81,7 @@ public final class ArchiveActivity extends Activity {
  private GradientDrawable shape(int color,int radius){GradientDrawable bg=new GradientDrawable();bg.setColor(color);bg.setCornerRadius(dp(radius));return bg;}
  private TextView text(String s,int sp,boolean bold,int color){
   TextView view=new TextView(this);view.setText(I18n.text(this,s));view.setTextColor(color);view.setTextSize(sp);
-  view.setGravity(Gravity.CENTER_VERTICAL);view.setTypeface(Typeface.create(bold?"sans-serif-medium":"sans-serif",Typeface.NORMAL));return view;
+  view.setGravity(Gravity.CENTER_VERTICAL);AppAppearance.font(view,bold);return view;
  }
  @Override public void onCreate(Bundle state){
   super.onCreate(state);prefs=getSharedPreferences("da_caller",MODE_PRIVATE);
@@ -92,7 +91,7 @@ public final class ArchiveActivity extends Activity {
   applySystemBars();
   LinearLayout header=new LinearLayout(this);header.setGravity(Gravity.CENTER_VERTICAL);header.setPadding(dp(8),dp(4),dp(8),dp(4));
   root.addView(header,new LinearLayout.LayoutParams(-1,-2));
-  TextView back=text(I18n.isEnglish(this)?"‹":"›",32,false,gold());back.setGravity(Gravity.CENTER);
+  ImageView back=new ImageView(this);back.setImageDrawable(AppAppearance.backArrow(this,gold()));back.setScaleType(ImageView.ScaleType.CENTER);
   back.setContentDescription(tr("חזרה","Back"));header.addView(back,new LinearLayout.LayoutParams(dp(48),dp(48)));
   back.setOnClickListener(v->finish());
   TextView title=text("ארכיון שיחות",20,true,ink());header.addView(title,new LinearLayout.LayoutParams(0,-2,1));
@@ -106,7 +105,7 @@ public final class ArchiveActivity extends Activity {
   contactNotice.setPadding(dp(16),0,dp(16),dp(8));root.addView(contactNotice,new LinearLayout.LayoutParams(-1,-2));
   refreshContactAccess();
   search=new EditText(this);search.setSingleLine(true);search.setTextColor(ink());search.setHintTextColor(muted());
-  search.setTextSize(15);search.setHint(tr("חיפוש שם או מספר בארכיון","Search archive by name or number"));
+  search.setTextSize(15);AppAppearance.font(search,false);search.setHint(tr("חיפוש שם או מספר בארכיון","Search archive by name or number"));
   search.setContentDescription(search.getHint());search.setMinHeight(dp(48));search.setBackground(shape(card(),12));
   search.setPadding(dp(14),dp(6),dp(14),dp(6));
   LinearLayout.LayoutParams searchParams=new LinearLayout.LayoutParams(-1,-2);searchParams.setMargins(dp(12),0,dp(12),dp(8));root.addView(search,searchParams);
@@ -150,7 +149,7 @@ public final class ArchiveActivity extends Activity {
       try{startActivity(new Intent(Intent.ACTION_DIAL,Uri.fromParts("tel",entry.number,null)));}
       catch(RuntimeException unavailable){Toast.makeText(ArchiveActivity.this,I18n.text(ArchiveActivity.this,"לא ניתן להתקשר"),Toast.LENGTH_LONG).show();}
      });
-     dialog.show();
+     AppAppearance.show(dialog);
     });
     return row.root;
    }

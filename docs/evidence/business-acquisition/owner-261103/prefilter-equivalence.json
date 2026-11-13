@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "comparison": "Full original extractor versus same Extractor with C++ category-key prefilter; imported_at differs by run and is excluded from comparison",
+  "records": 24,
+  "all_ids_and_all_other_record_values_identical": true,
+  "full_original_output": "/workspace/work/business-data/extracted-owner-261103-explicit-il",
+  "prefiltered_research_output": "/workspace/work/business-data/extracted-owner-261103-explicit-il-filtered",
+  "candidate_counter_note": "objects_seen counts in prefiltered run are only category-key objects; original full counts retained in primary manifest. Neither output is app-bundled.",
+  "experiment_script_sha256": "3bf59a9f13e86b0f1ae92049ae26e382f451f1d698e50197a20c293e0a8e2608"
+}

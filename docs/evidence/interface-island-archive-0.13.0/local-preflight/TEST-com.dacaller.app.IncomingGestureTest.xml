@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.IncomingGestureTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:14:47" hostname="3ebae333e153" time="0.003">
+  <properties/>
+  <testcase name="allFourModesHaveExplicitPhysicalDirections" classname="com.dacaller.app.IncomingGestureTest" time="0.002"/>
+  <testcase name="tapsShortDragsAndDiagonalScrollCannotAnswer" classname="com.dacaller.app.IncomingGestureTest" time="0.001"/>
+  <testcase name="unknownStoredModeSafelyFallsBackToIos" classname="com.dacaller.app.IncomingGestureTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

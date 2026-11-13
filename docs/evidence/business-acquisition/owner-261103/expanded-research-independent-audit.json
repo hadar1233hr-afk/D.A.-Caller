@@ -1,0 +1,344 @@
+{
+  "status": "PASS_EXPANDED_RESEARCH_SQLITE_FIDELITY_AND_QUERY_AUDIT_ONLY",
+  "observed_at_utc": "2026-11-06T02:13:41.501664+00:00",
+  "elapsed_seconds": 1.289,
+  "database_sha256": "1a015426c33835a247198120bd05be026f4f0c25aa874d6c506cc7f07e1ad255",
+  "database_bytes": 6975488,
+  "manifest_sha256": "e400db80e964d763f5a5df342781c671f1b4c7083b50afdc9ae83c049d56eee7",
+  "audit_script_sha256": "7ad822ddbe2d96481ee035ff5d64a7febe0d5987eec9bea2686e8cfe29694c3d",
+  "reviewed_expanded_builder_sha256": "7e2ec2a6976ae22ba98e9a6f60a8d46378bfb03898be711ded230bd6a5045ce0",
+  "unchanged_base_builder_sha256": "5d4d264c8f88dccd9ed5dc1ae432bac767446105b8be9779f3dcf83714f82743",
+  "unchanged_prior_database_sha256": "b8d5f5209ea87969a1b42d3907e73f99466f869f7df2afcd8d7bb4eeb4dda274",
+  "shared_projection_audit_sha256": "2ae29a54d8983b9cb35b196f76030ae75f78dafe246770c8757ea19d9bb0adb1",
+  "reference_production_normalizer_sha256": "d0ffd2392ed43a356f6e84ee6b4a7526cf84a50dc555e5536d85975b3d0c123f",
+  "retained_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "original_pbf_objects_reread": false,
+  "phonenumbers_version": "9.0.42",
+  "sqlite_version": "3.53.1",
+  "raw_source_rows": 2728,
+  "source_objects": 2668,
+  "distinct_source_phones": 2623,
+  "measured_review_counts": {
+    "IDENTITY_UNCHANGED": 2718,
+    "RESEARCH_REFORMAT_PROPOSAL": 10,
+    "SOURCE_TEXT_WITHHELD": 3,
+    "SOURCE_TEXT_WITHIN_BOUNDS": 2725,
+    "default_searchable_rows": 2715,
+    "raw_rows": 2728
+  },
+  "checks_passed": {
+    "exact_fts_binding": 2725,
+    "exact_raw_line_and_sha": 2728,
+    "exact_reconstructed_source_cohorts": 5,
+    "exact_source_projection_and_scope": 2728,
+    "independent_text_phone_projection": 2728,
+    "null_country_fields_preserved": 2712
+  },
+  "cohorts": [
+    {
+      "kind": "node",
+      "corpus_path": "/workspace/work/business-data/node-geography-owner-261103-v2/research-node-businesses.ndjson",
+      "rows": 2448,
+      "source_objects": 2393,
+      "corpus_sha256": "37ce40b735e144cc38eee1e72ce75c785424f0213d05c9c35feb766c1b2704df",
+      "report_sha256": "08008cc5dc305a7c6a1d0e8a92bafd186d24d0a61424cec45aebeefe388e8f1f",
+      "audit_sha256": "3da31677ac4a8897ecf2c3be77e51ab714f857c2dd8bf38e815c5adfc40b821f",
+      "audit_status": "INDEPENDENT_ACTUAL_SOURCE_NODE_AUDIT_PASS_RESEARCH_ONLY",
+      "scope": "research-node-source-IL-interior-minus-filled-WB-and-Gaza"
+    },
+    {
+      "kind": "way",
+      "corpus_path": "/workspace/work/business-data/way-geography-owner-261103-v1/research-way-businesses.ndjson",
+      "rows": 247,
+      "source_objects": 242,
+      "corpus_sha256": "cdbac300bf164e252e606d990f648c040e7193444b525786b16aba9049a692d6",
+      "report_sha256": "33ee5cf3296aca31c0771deadb6b44b59051d857d12bd88b869c9a49c5025cf8",
+      "audit_sha256": "172e3510b485879725e13bdfe9e54ed1c5f91a8c5bee1e0ee4b9bb3fa426360b",
+      "audit_status": "PASS_RESEARCH_SOURCE_AND_COMPLETE_POLYGON_AUDIT_ONLY",
+      "scope": "research-complete-closed-way-source-IL-interior-minus-filled-WB-and-Gaza"
+    },
+    {
+      "kind": "relation",
+      "corpus_path": "/workspace/work/business-data/relation-geography-owner-261103-v2/research-relation-businesses.ndjson",
+      "rows": 1,
+      "source_objects": 1,
+      "corpus_sha256": "2e56ba410ea38bc06897d43c50108b5d007895d41856daeffa55e136dda58ae8",
+      "report_sha256": "14b12e58052b8d26ca1271a175024bc50b1cf5230a5dc15187d2650b65fe568c",
+      "audit_sha256": "3d93f9f508c9c4ef056c67c320b7124b7c2cd5136aa5fe2639c55ff46b66b584",
+      "audit_status": "PASS_RESEARCH_SOURCE_AND_HOLE_AWARE_RELATION_AUDIT_ONLY",
+      "scope": "research-complete-role-aware-multipolygon-source-IL-minus-filled-WB-and-Gaza"
+    },
+    {
+      "kind": "extra_node",
+      "physical_source_type": "node",
+      "corpus_path": "/workspace/work/business-data/extra-category-nodes-owner-261103-v2/research-extra-category-nodes.ndjson",
+      "rows": 29,
+      "source_objects": 29,
+      "corpus_sha256": "8f9fbe7d47041e47b38aec62f1f5b4f7b199c2671ac4b199cf4f27ec2a5a8fe8",
+      "report_sha256": "fbc642fb5653178f552468b3f6c4f1cfd89ae2c873c0b94904294b2276d01044",
+      "audit_sha256": "3a565df79d5c04412fba4a4e2cece2387d9059719a6542b53fea038c570a0ea5",
+      "audit_status": "PASS_RESEARCH_EXTRA_CATEGORY_NODE_SOURCE_AND_POINT_AUDIT_ONLY",
+      "scope": "research-extra-category-node-source-IL-minus-filled-WB-and-Gaza"
+    },
+    {
+      "kind": "extra_way",
+      "physical_source_type": "way",
+      "corpus_path": "/workspace/work/business-data/extra-category-ways-owner-261103-v1/research-way-businesses.ndjson",
+      "rows": 3,
+      "source_objects": 3,
+      "corpus_sha256": "dd35def488f06705a128986681a4d775970ad3357b55a74fecb00e63585f5df1",
+      "report_sha256": "496adeee2ed819f44b23d71c445ec546b75edfb3b8729b92030348a370d0b36b",
+      "audit_sha256": "872e3d363a58de3365db726398953942af5824f6efd8d6990a66321d2cf4b18d",
+      "audit_status": "PASS_RESEARCH_SOURCE_AND_COMPLETE_POLYGON_AUDIT_ONLY",
+      "scope": "research-complete-closed-way-source-IL-interior-minus-filled-WB-and-Gaza"
+    }
+  ],
+  "actual_query_checks": {
+    "all_extra_source_phone_queries": [
+      {
+        "source_id": "osm:node:1132313897",
+        "query": "+972559590632",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:2078968855",
+        "query": "+972773502500",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:2079021088",
+        "query": "+972506667337",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:5031221922",
+        "query": "+972502893333",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:5089769114",
+        "query": "+972556674537",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:5128943159",
+        "query": "+97249122929",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:5143642973",
+        "query": "+97246949988",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:6920228663",
+        "query": "+972539533466",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:6968270785",
+        "query": "+97239290032",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:7315467467",
+        "query": "+97235441344",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:8921852328",
+        "query": "+97236193464",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:9929326869",
+        "query": "+972552521331",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:10106572767",
+        "query": "+97239177399",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:10240137201",
+        "query": "+97289366603",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:10884395332",
+        "query": "+972528343578",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:10964998254",
+        "query": "+97229663330",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:10979710350",
+        "query": "+972544321603",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:11149161576",
+        "query": "+972506360030",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:11737238669",
+        "query": "+97289718300",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:12606502568",
+        "query": "+972548001516",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:12636775817",
+        "query": "+972733453541",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:12636827231",
+        "query": "+972722431431",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:12809543355",
+        "query": "+97233083219",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:13422081817",
+        "query": "+97225659786",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:13530084689",
+        "query": "+97249888869",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:13619434589",
+        "query": "+972546338138",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:14133772655",
+        "query": "+972549764916",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:14158294099",
+        "query": "+972773627570",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:node:14289161237",
+        "query": "+97236287272",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:way:713138416",
+        "query": "+972559906500",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:way:1082150162",
+        "query": "+972526757834",
+        "returned": 1,
+        "known_source_found": true
+      },
+      {
+        "source_id": "osm:way:1463233442",
+        "query": "+97286751949",
+        "returned": 1,
+        "known_source_found": true
+      }
+    ],
+    "hebrew_name": {
+      "query": "\u05d0\u05d2\u05f3\u05e0\u05d3\u05d4",
+      "returned": 1,
+      "known_source_found": true
+    },
+    "shop_keyset_pagination": {
+      "pages": 33,
+      "rows": 1217,
+      "extra_rows_found": 0,
+      "repeated_or_omitted": 0
+    },
+    "fitness_keyset_pagination": {
+      "pages": 4,
+      "rows": 19,
+      "extra_rows_found": 19,
+      "repeated_or_omitted": 0
+    },
+    "uan_optin_default": "PASS",
+    "literal_unknown_and_boolean_optin": "PASS"
+  },
+  "actual_query_plan": [
+    [
+      5,
+      0,
+      10,
+      "SCAN f VIRTUAL TABLE INDEX 7:"
+    ],
+    [
+      10,
+      0,
+      45,
+      "SEARCH e USING INTEGER PRIMARY KEY (rowid=?)"
+    ],
+    [
+      25,
+      0,
+      0,
+      "USE TEMP B-TREE FOR ORDER BY"
+    ]
+  ],
+  "expanded_database_unchanged": true,
+  "prior_database_unchanged": true,
+  "source_rows_merged": 0,
+  "app_records_added": 0,
+  "production_admission": false,
+  "publication_approval": false,
+  "limits": [
+    "Original source audits are hash-bound reference evidence; this audit checks retained PBF bytes but does not reread its objects.",
+    "Text/phone projection algorithms reuse the earlier independent audit, and numbering metadata/normalizer are shared reference contracts.",
+    "Actual queries exercise the unchanged base query API; no staging insert/validator or expanded producer is called.",
+    "Desktop SQLite/FTS uses temporary B-tree sorting; no Android UI/device, million-record performance or phone ownership claim.",
+    "Explicit research cohorts retain original null countries/scopes and are not app/production/release admission."
+  ]
+}

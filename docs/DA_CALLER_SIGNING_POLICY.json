@@ -1,0 +1,20 @@
+{
+  "format": "DA_CALLER_SIGNING_POLICY",
+  "schema_version": 1,
+  "application_id": "com.dacaller.app",
+  "permanent_certificate_sha256": null,
+  "previous_permanent_certificate_sha256": null,
+  "required_update_version": "0.11.0-beta.9",
+  "required_update_certificate_sha256": "3d41dabd6e32a28ba6af2c57bb872fb3dfafa1f85a5c8523b72b54e4d8a32f56",
+  "status": "BLOCKED: original beta.9 private key unavailable; no permanent identity provisioned. Never generate a replacement during build or recommend uninstalling.",
+  "approved_preview_012": {
+    "approved": true,
+    "application_id": "com.dacaller.app",
+    "version_name": "0.12.0",
+    "version_code": 21,
+    "apk_sha256": "f025fad667edafe2c76ab3f574c7ff1bfd2aeb301fdd1d035ac1acb6b311e16a",
+    "certificate_sha256": "fbf3b0bc4d5cda06e2bbe0e07e2e2aa1828f30f09e86e82e9afc1f302a38b723",
+    "app_tree": "9f15350b457405bf88a35c0ac5badc8f3a85cd94",
+    "approval_record": "docs/releases/0.12.0-publication-approval.md"
+  }
+}

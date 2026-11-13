@@ -1,0 +1,22 @@
+{
+  "scope": "Owner-upload data preparation only; no app/signing/CI gate changes",
+  "contracts": {
+    "tests": 37,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "new_owner_upload_cases": 14,
+    "existing_extractor_and_packager_cases": 23,
+    "input_kind": "synthetic contracts, not phone ownership verification"
+  },
+  "actual_owner_upload_package": {
+    "records": 24,
+    "unique_phones": 23,
+    "sqlite_integrity": "ok",
+    "database_sha256": "ecea0fc10d4df8a2699d094d3c6cac677a5a95bc6550709af163b38bb1a5e61c",
+    "app_bundled": false,
+    "publisher_authenticated": false
+  },
+  "packager_sha256": "d0ffd2392ed43a356f6e84ee6b4a7526cf84a50dc555e5536d85975b3d0c123f",
+  "publication_approved": false
+}

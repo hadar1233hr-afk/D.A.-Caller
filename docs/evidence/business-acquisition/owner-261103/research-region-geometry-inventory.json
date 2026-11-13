@@ -1,0 +1,214 @@
+{
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "method": "C++ EntityFilter+IdFilter for actual country member ways and referenced nodes; no full Python callback rescan",
+  "total_boundary_way_ids_requested": 551,
+  "boundary_ways_found": 551,
+  "missing_way_ids": [],
+  "node_ids_requested": 30993,
+  "valid_nodes_found": 30993,
+  "missing_node_ids": [],
+  "countries": {
+    "source_IL": {
+      "relation_id": 1473946,
+      "ISO3166-1": "IL",
+      "name_en": "Israel",
+      "source_type": "boundary",
+      "all_source_roles": {
+        "outer": 212
+      },
+      "inner_holes_filled_for_conservative_exclusion": false,
+      "boundary": "administrative",
+      "admin_level": "2",
+      "disputed": null,
+      "member_way_count": 212,
+      "duplicate_way_refs": 0,
+      "missing_way_ids": [],
+      "endpoint_degrees_other_than_two": {},
+      "missing_referenced_nodes": [],
+      "ring_assembly_error": null,
+      "closed_outer_ring_count": 1,
+      "all_member_ways_used": true,
+      "member_roles": {
+        "outer": 212
+      },
+      "bounds_lon_lat": [
+        34.2674994,
+        29.4533796,
+        35.8950234,
+        33.3356317
+      ],
+      "geos_parse_success": true,
+      "geos_is_valid": true,
+      "geos_validity_reason": "Valid Geometry"
+    },
+    "source_PS_partial": {
+      "relation_id": 1703814,
+      "ISO3166-1": "PS",
+      "name_en": "Palestinian Territories",
+      "source_type": "boundary",
+      "all_source_roles": {
+        "outer": 352
+      },
+      "inner_holes_filled_for_conservative_exclusion": false,
+      "boundary": "disputed",
+      "admin_level": null,
+      "disputed": "yes",
+      "member_way_count": 352,
+      "duplicate_way_refs": 0,
+      "missing_way_ids": [],
+      "endpoint_degrees_other_than_two": {},
+      "missing_referenced_nodes": [],
+      "ring_assembly_error": null,
+      "closed_outer_ring_count": 168,
+      "all_member_ways_used": true,
+      "member_roles": {
+        "outer": 352
+      },
+      "bounds_lon_lat": [
+        34.2158979,
+        31.2201289,
+        35.5402484,
+        32.5490241
+      ],
+      "geos_parse_success": true,
+      "geos_is_valid": true,
+      "geos_validity_reason": "Valid Geometry"
+    },
+    "Gaza_admin4": {
+      "relation_id": 1473938,
+      "ISO3166-1": null,
+      "name_en": "Gaza Strip",
+      "source_type": "boundary",
+      "all_source_roles": {
+        "outer": 44
+      },
+      "inner_holes_filled_for_conservative_exclusion": false,
+      "boundary": "administrative",
+      "admin_level": "4",
+      "disputed": null,
+      "member_way_count": 44,
+      "duplicate_way_refs": 0,
+      "missing_way_ids": [],
+      "endpoint_degrees_other_than_two": {},
+      "missing_referenced_nodes": [],
+      "ring_assembly_error": null,
+      "closed_outer_ring_count": 1,
+      "all_member_ways_used": true,
+      "member_roles": {
+        "outer": 44
+      },
+      "bounds_lon_lat": [
+        34.2158979,
+        31.2201289,
+        34.5673243,
+        31.5968541
+      ],
+      "geos_parse_success": true,
+      "geos_is_valid": true,
+      "geos_validity_reason": "Valid Geometry"
+    },
+    "WestBank_admin4_patches": {
+      "relation_id": 1613659,
+      "ISO3166-1": null,
+      "name_en": "West Bank",
+      "source_type": "boundary",
+      "all_source_roles": {
+        "outer": 308
+      },
+      "inner_holes_filled_for_conservative_exclusion": false,
+      "boundary": "administrative",
+      "admin_level": "4",
+      "disputed": null,
+      "member_way_count": 308,
+      "duplicate_way_refs": 0,
+      "missing_way_ids": [],
+      "endpoint_degrees_other_than_two": {},
+      "missing_referenced_nodes": [],
+      "ring_assembly_error": null,
+      "closed_outer_ring_count": 167,
+      "all_member_ways_used": true,
+      "member_roles": {
+        "outer": 308
+      },
+      "bounds_lon_lat": [
+        34.9020503,
+        31.3663071,
+        35.5402484,
+        32.5490241
+      ],
+      "geos_parse_success": true,
+      "geos_is_valid": true,
+      "geos_validity_reason": "Valid Geometry"
+    },
+    "JudeaSamaria_admin4_outer_filled": {
+      "relation_id": 1803010,
+      "ISO3166-1": null,
+      "name_en": "Judea and Samaria",
+      "source_type": "boundary",
+      "all_source_roles": {
+        "outer": 103,
+        "inner": 308
+      },
+      "inner_holes_filled_for_conservative_exclusion": true,
+      "boundary": "administrative",
+      "admin_level": "4",
+      "disputed": null,
+      "member_way_count": 103,
+      "duplicate_way_refs": 0,
+      "missing_way_ids": [],
+      "endpoint_degrees_other_than_two": {},
+      "missing_referenced_nodes": [],
+      "ring_assembly_error": null,
+      "closed_outer_ring_count": 1,
+      "all_member_ways_used": true,
+      "member_roles": {
+        "outer": 103
+      },
+      "bounds_lon_lat": [
+        34.8800552,
+        31.3421068,
+        35.5739235,
+        32.5521479
+      ],
+      "geos_parse_success": true,
+      "geos_is_valid": true,
+      "geos_validity_reason": "Valid Geometry"
+    },
+    "WestBank_historic_outer_filled": {
+      "relation_id": 12331025,
+      "ISO3166-1": null,
+      "name_en": "West Bank",
+      "source_type": "boundary",
+      "all_source_roles": {
+        "outer": 93,
+        "inner": 1
+      },
+      "inner_holes_filled_for_conservative_exclusion": true,
+      "boundary": "historic",
+      "admin_level": null,
+      "disputed": null,
+      "member_way_count": 93,
+      "duplicate_way_refs": 0,
+      "missing_way_ids": [],
+      "endpoint_degrees_other_than_two": {},
+      "missing_referenced_nodes": [],
+      "ring_assembly_error": null,
+      "closed_outer_ring_count": 1,
+      "all_member_ways_used": true,
+      "member_roles": {
+        "outer": 93
+      },
+      "bounds_lon_lat": [
+        34.8800552,
+        31.3421068,
+        35.5739235,
+        32.5521479
+      ],
+      "geos_parse_success": true,
+      "geos_is_valid": true,
+      "geos_validity_reason": "Valid Geometry"
+    }
+  },
+  "purpose": "Conservative exclusion research, not territorial/country inclusion validation; all source outer rings filled and inner holes deliberately excluded from this research polygon assembly",
+  "limits": "Research-only source geometry. Source ISO tags/boundaries are not a legal/official determination. No untagged phone record imported or shipped."
+}

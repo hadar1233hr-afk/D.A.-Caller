@@ -1,0 +1,131 @@
+{
+  "acquisition": {
+    "archive_bytes": 120936686,
+    "archive_sha256": "578d67213db0cb617f18ccd12c60eab5c532f073fa5520b399d9f5d36973b11e",
+    "asset_id": 712722687,
+    "method": "owner-upload",
+    "origin_note": "Retained uploaded ZIP/PBF consistency; not an authenticated publisher download or source-country admission",
+    "production_admission": false,
+    "publisher_provenance_independently_verified": false,
+    "source_bytes": 121050024,
+    "source_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+    "url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.11.0-beta.9-debug/israel-and-palestine-261103.osm.zip",
+    "zip_crc_rechecked": true,
+    "zip_pbf_hash_rechecked": true
+  },
+  "app_records_added": 0,
+  "builder_sha256": "5b37e14930bf738d8a4073b0b7381e99a482c77fd56ca55113151fce1bce4814",
+  "candidate_contract": "Identity-unchanged, exact safe source display, full source geometry minus filled WB/Gaza; not explicit source-country admission",
+  "candidate_only_source_spatial_contract": true,
+  "counts": {
+    "PROJECTED_FOR_REVIEW_NOT_ADMITTED": 2715,
+    "WITHHELD_PHONE_FORMAT_REVIEW": 10,
+    "WITHHELD_SOURCE_TEXT": 3,
+    "app_records_added": 0,
+    "candidate_distinct_normalized_phones": 2612,
+    "candidate_null_countries": 2699,
+    "candidate_rows": 2715,
+    "candidate_source_objects": 2655,
+    "raw_null_countries": 2712,
+    "raw_source_rows": 2728,
+    "source_mutations": 0,
+    "source_rows_merged": 0
+  },
+  "current_apk_changed": false,
+  "database_bytes": 6631424,
+  "database_file": "candidate-businesses.sqlite",
+  "database_sha256": "4eee8e84a3ccab3f291cb58be1e384a0dc16351612511cfe884e14519af3fd0e",
+  "decision_ledger_sha256": "18303b1c9e46f49adddcb6ba3323f64e86ce0c8ec5f691f38c61d34ce72421de",
+  "limits": [
+    "Not copied to app assets; source-country/production/signing/CI guards unchanged.",
+    "Reader schema is loadable if manually copied; candidate fields are not a runtime security boundary.",
+    "Null source countries remain null. Source geometry is not an official/legal country determination.",
+    "Source/node version absent in original research stays absent, never invented.",
+    "Numbering metadata does not verify phone ownership, activity, reachability or present-day business status.",
+    "No national coverage percentage, million-record, Android/native/device or publication claim."
+  ],
+  "native_integration": "NOT_TESTED",
+  "new_source_pbf_objects_reread": false,
+  "observed_at_utc": "2026-11-11T10:15:41.079307+00:00",
+  "original_source_audits_hash_bound": true,
+  "production_admission": false,
+  "publication_approval": false,
+  "publisher_provenance_independently_verified": false,
+  "reader_manifest_sha256": "be9ce29231392c50920fdaaf53a9375a24a810a9b5bf65a3d6bf200f1179ee88",
+  "retained_zip_crc_rechecked": true,
+  "reviewed_research_database_sha256": "1a015426c33835a247198120bd05be026f4f0c25aa874d6c506cc7f07e1ad255",
+  "source_geometry_provenance": {
+    "input_sha256": {
+      "country-relation-inventory.json": "cef27b1ec8c92b6a68d5bd57b0c65eb4ecd282ed949b75b767996069d3104125",
+      "disputed-region-relation-inventory.json": "b96552bfa717e01d9ad4d6275f45ee04ebe967a267e2a30c9a6cd42e5fc5d3f1",
+      "geography-research-review.json": "84ee86f8d48083ffb32c3cc51bfc4f0f3d0a507435d78068a8d7265c6360a0cc",
+      "owner-upload-receipt.json": "8ac1da66a8771f289b73a01cf15ca0351b13795ac5cb552fcb0a5fbc4c6532c2",
+      "research-region-geometry-inventory.json": "ba44cf5695ada7b33a33acf86976a185768c8fb6396e9156ecc4c00c9fd823b1",
+      "research-region-outer-rings.json": "04b9d0ed2ad8d28e2947bb9fde88cbe39dd7f37c666940ab48869fdb3939750f"
+    },
+    "relations": {
+      "Gaza_admin4": {
+        "all_members_complete": true,
+        "inner_holes_filled_for_exclusion_only": false,
+        "relation_id": 1473938,
+        "source_tags": {
+          "ISO3166-1": null,
+          "admin_level": "4",
+          "boundary": "administrative",
+          "disputed": null,
+          "name:en": "Gaza Strip",
+          "type": "boundary"
+        },
+        "source_updated_at": "2026-10-10T16:02:40+00:00",
+        "source_url": "https://www.openstreetmap.org/relation/1473938"
+      },
+      "JudeaSamaria_admin4_outer_filled": {
+        "all_members_complete": true,
+        "inner_holes_filled_for_exclusion_only": true,
+        "relation_id": 1803010,
+        "source_tags": {
+          "ISO3166-1": null,
+          "admin_level": "4",
+          "boundary": "administrative",
+          "disputed": null,
+          "name:en": "Judea and Samaria",
+          "type": "boundary"
+        },
+        "source_updated_at": "2026-09-28T11:34:35+00:00",
+        "source_url": "https://www.openstreetmap.org/relation/1803010"
+      },
+      "WestBank_historic_outer_filled": {
+        "all_members_complete": true,
+        "inner_holes_filled_for_exclusion_only": true,
+        "relation_id": 12331025,
+        "source_tags": {
+          "ISO3166-1": null,
+          "admin_level": null,
+          "boundary": "historic",
+          "disputed": null,
+          "name:en": "West Bank",
+          "type": "boundary"
+        },
+        "source_updated_at": "2025-12-24T19:52:27+00:00",
+        "source_url": "https://www.openstreetmap.org/relation/12331025"
+      },
+      "source_IL": {
+        "all_members_complete": true,
+        "inner_holes_filled_for_exclusion_only": false,
+        "relation_id": 1473946,
+        "source_tags": {
+          "ISO3166-1": "IL",
+          "admin_level": "2",
+          "boundary": "administrative",
+          "disputed": null,
+          "name:en": "Israel",
+          "type": "boundary"
+        },
+        "source_updated_at": "2026-09-18T15:07:24+00:00",
+        "source_url": "https://www.openstreetmap.org/relation/1473946"
+      }
+    }
+  },
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "status": "CANDIDATE_FOR_REVIEW_NOT_ADMITTED"
+}

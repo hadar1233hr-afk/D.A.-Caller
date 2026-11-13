@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.graphics.Rect;
@@ -48,7 +48,7 @@ final class FastPages {
  private final SharedPreferences prefs;
  private final Handler handler=new Handler(Looper.getMainLooper());
  private DateFormat format;
- private final int gold=0xFFD2AE69;
+ private final RecentExpansionState expandedRecent=new RecentExpansionState();
  private int period=0;
  private SwipeListView liveRecents,liveContacts;
  private int recentPos=0,recentOffset=0,contactPos=0,contactOffset=0;
@@ -70,7 +70,7 @@ final class FastPages {
  private int panel(){return prefs.getBoolean("amoled",false)?0xFF090909:dark()?0xFF1D1D1D:0xFFFFFFFF;}
  private int ink(){return dark()?0xFFF6F6F6:0xFF161616;}
  private int subtle(){return dark()?0xFF9A9A9A:0xFF696969;}
- private int tint(){return "silver".equals(prefs.getString("accent","gold"))?(dark()?0xFFE4E4E4:0xFF616161):(dark()?0xFFE1C58D:0xFF947030);}
+ private int tint(){return "silver".equals(prefs.getString("accent","gold"))?(dark()?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark());}
  private int soft(){return dark()?0xFF28231B:0xFFF1EBDD;}
  private GradientDrawable bg(int color,int radius){
   GradientDrawable g=new GradientDrawable();g.setColor(color);g.setCornerRadius(dp(radius));return g;
@@ -82,7 +82,7 @@ final class FastPages {
   TextView t=new TextView(host);
   t.setText(I18n.text(host,value));t.setTextColor(color);t.setTextSize(sp);
   t.setIncludeFontPadding(false);t.setGravity(Gravity.CENTER_VERTICAL);
-  t.setTypeface(Typeface.create(bold?"sans-serif-medium":"sans-serif",Typeface.NORMAL));
+  AppAppearance.font(t,bold);
   return t;
  }
  private ImageView icon(int res,int color){
@@ -90,6 +90,10 @@ final class FastPages {
   v.setImageTintList(ColorStateList.valueOf(color));
   v.setPadding(dp(9),dp(9),dp(9),dp(9));v.setScaleType(ImageView.ScaleType.FIT_CENTER);
   return v;
+ }
+ private ImageView stroke(Drawable drawable){
+  ImageView v=new ImageView(host);v.setImageDrawable(drawable);
+  v.setScaleType(ImageView.ScaleType.CENTER_INSIDE);return v;
  }
  private LinearLayout vertical(){
   LinearLayout v=new LinearLayout(host);v.setOrientation(LinearLayout.VERTICAL);v.setLayoutDirection(I18n.isEnglish(host)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);return v;
@@ -132,6 +136,7 @@ final class FastPages {
   state.putLong("recent_id",recentId);state.putLong("contact_id",contactId);
   state.putString("contact_query",contactQuery);state.putInt("stats_period",period);
   state.putInt("favorite_scroll",favoriteScroll);
+  expandedRecent.saveState(state);
  }
  void restoreState(Bundle state){
   if(state==null)return;
@@ -140,6 +145,38 @@ final class FastPages {
   recentId=state.getLong("recent_id",-1);contactId=state.getLong("contact_id",-1);
   contactQuery=state.getString("contact_query","");period=Math.max(0,Math.min(3,state.getInt("stats_period")));
   favoriteScroll=Math.max(0,state.getInt("favorite_scroll"));
+  expandedRecent.restoreState(state);
+ }
+ /** Main consumes Back before leaving Recents, without rebuilding its list. */
+ boolean collapseExpandedRecent(){
+  if(!expandedRecent.collapse())return false;
+  refreshRecentExpansion();return true;
+ }
+ private void toggleRecent(CallHistory.Entry entry){
+  expandedRecent.toggle(entry);refreshRecentExpansion();
+ }
+ private void refreshRecentExpansion(){
+  SwipeListView list=liveRecents;
+  if(list==null)return;
+  int first=list.getFirstVisiblePosition();
+  int offset=list.getChildCount()==0?0:list.getChildAt(0).getTop();
+  if(list.getAdapter()!=null&&first<list.getAdapter().getCount()){
+   recentPos=first;recentOffset=offset;recentId=list.getAdapter().getItemId(first);
+  }
+  for(int i=0;i<list.getChildCount();i++){
+   Object tag=list.getChildAt(i).getTag();
+   if(tag instanceof CallRow)((CallRow)tag).showExpansion();
+  }
+  // A height change must not reanchor to position zero or detach a finger's row.
+  // A later gesture/provider rebuild owns the position and cancels this post.
+  int revision=list.touchRevision,restore=++list.restoreRevision;
+  list.restorePending=true;
+  list.post(()->{
+   if(liveRecents!=list||list.touchRevision!=revision||list.touching||list.restoreRevision!=restore){
+    if(list.restoreRevision==restore)list.restorePending=false;return;
+   }
+   list.restoreRequested=true;list.setSelectionFromTop(first,offset);
+  });
  }
  void restore(String tab){
   SwipeListView view=tab.equals("recents")?liveRecents:
@@ -209,7 +246,8 @@ final class FastPages {
    if(row==null)return true;
    Object tag=row.getTag();
    if(tag instanceof CallRow){
-    CallRow r=(CallRow)tag;return inside(r.avatar,x,y)||inside(r.call,x,y);
+    CallRow r=(CallRow)tag;return inside(r.avatar,x,y)||inside(r.call,x,y)||
+      r.actions.getVisibility()==View.VISIBLE&&inside(r.actions,x,y);
    }
    if(tag instanceof ContactRow){
     ContactRow r=(ContactRow)tag;return inside(r.avatar,x,y)||inside(r.star,x,y)||inside(r.quick,x,y);
@@ -282,15 +320,16 @@ final class FastPages {
   }
   addFavorites(page,host.contactsSnapshot());
   if(prefs.getBoolean("show_stats",true))addSummary(page);
-  LinearLayout top=horizontal();page.addView(top,lp(-1,41));
+  LinearLayout top=horizontal();top.setTag("call-island-secondary");page.addView(top,lp(-1,48));
   TextView title=text(tr("כל השיחות"),15,ink(),true);
   top.addView(title,new LinearLayout.LayoutParams(0,-1,1));
   TextView count=text(String.valueOf(CallHistory.entries.size()),11,subtle(),false);
-  top.addView(count,lp(-2,38));
-  ImageView refresh=icon(R.drawable.ic_refresh,tint());top.addView(refresh,lp(42,40));
+  top.addView(count,lp(-2,48));
+  ImageView refresh=icon(R.drawable.ic_refresh,tint());top.addView(refresh,lp(48,48));
   touch(refresh);refresh.setContentDescription(tr("רענון יומן השיחות"));
   refresh.setOnClickListener(v->{pulse(refresh);host.reloadCallLog();});
   SwipeListView list=new SwipeListView();
+  list.setTag("call-island-page-list");
   liveRecents=list;
   list.setDivider(null);list.setDividerHeight(0);
   list.setCacheColorHint(Color.TRANSPARENT);list.setScrollingCacheEnabled(true);
@@ -331,8 +370,10 @@ final class FastPages {
   if(minutes>0)return minutes+" "+tr("דק׳");
   return total+" "+tr("שניות");
  }
- private void summaryMetric(LinearLayout parent,String title,String symbol,int value,int baseColor){
+ private void summaryMetric(LinearLayout parent,String title,int type,int value,int baseColor){
   LinearLayout item=vertical();
+  String kind=type==CallLog.Calls.OUTGOING_TYPE?"outgoing":type==CallLog.Calls.INCOMING_TYPE?"incoming":"missed";
+  item.setTag("stats_metric_"+kind);
   item.setGravity(Gravity.CENTER);
   item.setPadding(dp(1),dp(2),dp(1),dp(2));
   item.setBackground(bg(dark()?0xFF262626:0xFFF5F3F0,12));
@@ -341,24 +382,33 @@ final class FastPages {
   ip.leftMargin=dp(3);ip.rightMargin=dp(3);
   parent.addView(item,ip);
   int tone=dark()?ink():baseColor;
-  TextView count=text(symbol+" "+value,16,tone,true);
-  count.setGravity(Gravity.CENTER);item.addView(count);
+  LinearLayout headline=horizontal();headline.setGravity(Gravity.CENTER);item.addView(headline);
+  headline.addView(stroke(RecentIcons.direction(host,type,tone)),lp(16,16));
+  TextView count=text(String.valueOf(value),17,tone,true);
+  count.setTag("stats_"+kind+"_count");
+  count.setPadding(dp(4),0,dp(4),0);count.setGravity(Gravity.CENTER);headline.addView(count);
   TextView label=text(title,10,subtle(),false);
   label.setGravity(Gravity.CENTER);item.addView(label);
  }
  View contacts(List<Contacts.Person> contacts,boolean favorites){
   if(filterTask!=null){handler.removeCallbacks(filterTask);filterTask=null;}
   if(host.checkSelfPermission(Manifest.permission.READ_CONTACTS)!=PackageManager.PERMISSION_GRANTED){
-   return permission("כדי לראות אנשי קשר נדרשת הרשאה","אפשר גישה לאנשי קשר",()->host.requestContacts());
+   LinearLayout denied=vertical();denied.setBackgroundColor(background());
+   LinearLayout tabs=horizontal();denied.addView(tabs,lp(-1,48));
+   TextView personal=text(I18n.isEnglish(host)?"My contacts":"אנשי הקשר שלי",12,ink(),true);
+   tabs.addView(personal,new LinearLayout.LayoutParams(0,dp(48),1));addBusinessTab(tabs);
+   denied.addView(permission("כדי לראות אנשי קשר נדרשת הרשאה","אפשר גישה לאנשי קשר",()->host.requestContacts()),new LinearLayout.LayoutParams(-1,0,1));
+   return denied;
   }
   LinearLayout page=vertical();page.setBackgroundColor(background());
   page.setFocusableInTouchMode(true);page.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
   page.setPadding(dp(12),dp(7),dp(12),0);
-  if(favorites)prefs.edit().putBoolean("favorites_expanded",true).apply(); // Legacy deep link.
+  if(favorites&&SettingsBackup.allowPreferenceChange(host))prefs.edit().putBoolean("favorites_expanded",true).apply(); // Legacy deep link.
   addFavorites(page,contacts);
   LinearLayout head=horizontal();page.addView(head,lp(-1,48));
   EditText search=new EditText(host);
   search.setSingleLine(true);search.setHint(tr("חיפוש שם או מספר"));
+  AppAppearance.font(search,false);
   search.setHintTextColor(subtle());search.setTextColor(ink());search.setTextSize(15);
   search.setPadding(dp(12),0,dp(12),0);search.setBackground(edge(panel(),14));
   head.addView(search,new LinearLayout.LayoutParams(0,dp(48),1));
@@ -367,9 +417,10 @@ final class FastPages {
   head.addView(add,lp(51,48));touch(add);
   add.setOnClickListener(v->{pulse(add);host.newContact(null);});
   // Keep the 48dp refresh target inside a matching-height parent on small screens.
-  LinearLayout small=horizontal();page.addView(small,lp(-1,48));
+  LinearLayout small=horizontal();small.setTag("call-island-secondary");page.addView(small,lp(-1,48));
   TextView count=text(I18n.count(host,contacts.size(),"אנשי קשר","contacts"),11,subtle(),false);
   small.addView(count,new LinearLayout.LayoutParams(0,-1,1));
+  count.setTag("contacts_personal_tab");addBusinessTab(small);
   ImageView refresh=icon(R.drawable.ic_refresh,tint());small.addView(refresh,lp(48,48));
   refresh.setContentDescription(I18n.isEnglish(host)?"Refresh contacts":"רענון אנשי קשר");
   touch(refresh);refresh.setOnClickListener(v->{pulse(refresh);host.reloadContacts();});
@@ -378,6 +429,7 @@ final class FastPages {
   adapter.filter(contactQuery);search.setText(contactQuery);
   count.setText(I18n.count(host,adapter.getCount(),"אנשי קשר","contacts"));
   SwipeListView list=new SwipeListView();
+  list.setTag("call-island-page-list");
   liveContacts=list;
   list.setDivider(null);list.setFastScrollEnabled(true);list.setVerticalScrollBarEnabled(false);
   list.setSelector(android.R.color.transparent);
@@ -409,12 +461,24 @@ final class FastPages {
   empty.setGravity(Gravity.CENTER);page.addView(empty,lp(-1,100));list.setEmptyView(empty);
   return page;
  }
+ private void addBusinessTab(LinearLayout row){
+  if(!BuildConfig.BUSINESS_DIRECTORY_ENABLED)return;
+  TextView businesses=text(I18n.isEnglish(host)?"Businesses":"בתי עסק",12,tint(),true);
+  businesses.setTag("contacts_directory_tab");businesses.setGravity(Gravity.CENTER);
+  // Keep the full English label readable at 1.3x font scale without growing the toolbar.
+  businesses.setSingleLine(true);businesses.setEllipsize(android.text.TextUtils.TruncateAt.END);
+  businesses.setBackground(edge(panel(),12));businesses.setPadding(dp(6),0,dp(6),0);
+  row.addView(businesses,lp(96,48));touch(businesses);
+  businesses.setContentDescription(I18n.isEnglish(host)?"Search businesses separately from personal contacts":"חיפוש בתי עסק בנפרד מאנשי הקשר האישיים");
+  businesses.setOnClickListener(view->{pulse(businesses);host.openBusinessDirectory();});
+ }
  private View permission(String info,String action,Runnable callback){
   LinearLayout box=vertical();box.setGravity(Gravity.CENTER);box.setPadding(dp(20),dp(20),dp(20),dp(20));
   box.setBackgroundColor(background());
   TextView t=text(info,16,ink(),true);t.setGravity(Gravity.CENTER);box.addView(t,lp(-1,61));
   TextView button=text(action,15,Color.BLACK,true);button.setGravity(Gravity.CENTER);
-  button.setBackground(bg(gold,14));box.addView(button,lp(-1,54));
+  button.setTextColor(dark()?Color.BLACK:Color.WHITE);
+  button.setBackground(bg(AppAppearance.gold(dark()),14));box.addView(button,lp(-1,54));
   touch(button);button.setOnClickListener(v->{pulse(button);callback.run();});
   return box;
  }
@@ -445,6 +509,7 @@ final class FastPages {
  private final class RecentsAdapter extends BaseAdapter {
   // CallHistory publishes an immutable snapshot; retain its identity for this adapter.
   private final List<CallHistory.Entry> entries=CallHistory.entries;
+  RecentsAdapter(){if(!entries.isEmpty()||CallHistory.fetchedAt>0)expandedRecent.retain(entries);}
   @Override public int getCount(){return entries.size();}
   @Override public Object getItem(int p){return entries.get(p);}
   @Override public long getItemId(int p){return entries.get(p).id;}
@@ -454,27 +519,51 @@ final class FastPages {
    CallRow recycled=convert!=null&&convert.getTag() instanceof CallRow?(CallRow)convert.getTag():null;
    final CallRow row=recycled!=null?recycled:new CallRow();
    CallHistory.Entry entry=entries.get(position);
-   row.bound=entry.number+"|"+entry.date;
+   row.entry=entry;row.bound=entry.id+"|"+entry.number+"|"+entry.date;
    row.initials.setText(entry.number.isEmpty()?"?":entry.number.substring(0,1));
    row.photo.setVisibility(View.GONE);
    row.name.setText(contactName(entry.number));
-   row.arrow.setText(entry.type==CallLog.Calls.OUTGOING_TYPE?"↗":
-      entry.type==CallLog.Calls.REJECTED_TYPE||entry.type==CallLog.Calls.BLOCKED_TYPE?"⊘":"↙");
-   row.arrow.setTextColor(color(entry.type,entry.duration));
-   row.arrow.setContentDescription(tr(category(entry.type,entry.duration)));
+   row.direction.setImageDrawable(RecentIcons.direction(host,entry.type,color(entry.type,entry.duration)));
+   row.direction.setContentDescription(tr(category(entry.type,entry.duration)));
    String phone=entry.number;
    String duration=entry.duration>0?String.format(Locale.ROOT," · %d:%02d",entry.duration/60,entry.duration%60):"";
    row.info.setText(String.format(I18n.isEnglish(host)?Locale.ENGLISH:new Locale("he","IL"),"%s  ·  %s%s",
     category(entry.type,entry.duration),format.format(new Date(entry.date)),duration));
    row.dialIcon.setImageTintList(ColorStateList.valueOf(recentCallColor()));
    row.avatar.setOnClickListener(v->{pulse(row.avatar);host.openContactFromNumber(phone);});
-   row.center.setOnClickListener(v->{pulse(row.center);host.showCallNumber(entry);});
+   row.center.setOnClickListener(v->{pulse(row.center);toggleRecent(entry);});
+   row.header.setOnClickListener(v->{pulse(row.header);toggleRecent(entry);});
+   row.setKnownContact(host.nameIndex().containsKey(Contacts.canonical(phone)));
+   row.number.setText(CallLauncher.isCallable(phone)?phone:tr("מספר חסוי"));
+   row.number.setTextDirection(View.TEXT_DIRECTION_LTR);
+   row.actionCall.setContentDescription(tr("התקשר")+" "+phone);
+   row.message.setContentDescription((I18n.isEnglish(host)?"Message ":"הודעה אל ")+phone);
+   row.details.setContentDescription((I18n.isEnglish(host)?"Call details ":"פרטי השיחה ")+phone);
+   row.actionCall.setEnabled(CallLauncher.isCallable(phone));row.message.setEnabled(CallLauncher.isCallable(phone));
+   row.contact.setEnabled(CallLauncher.isCallable(phone));
+   row.actionCall.setAlpha(row.actionCall.isEnabled()?1f:0.35f);
+   row.message.setAlpha(row.message.isEnabled()?1f:0.35f);row.contact.setAlpha(row.contact.isEnabled()?1f:0.35f);
+   row.actionCall.setOnClickListener(v->{pulse(row.actionCall);host.dialFromList(phone);});
+   row.message.setOnClickListener(v->{pulse(row.message);host.sendMessageFromList(phone);});
+   row.contact.setOnClickListener(v->{
+    pulse(row.contact);
+    if(row.knownContact||host.nameIndex().containsKey(Contacts.canonical(phone))){host.openContactFromNumber(phone);return;}
+    // Contacts may still be loading when a row first appears. Resolve the
+    // selected number again before offering a new card for an existing person.
+    ContactPhotos.lookup(host,phone,(id,n,bitmap)->{
+     if(host.isFinishing()||host.isDestroyed())return;
+     if(id>0)host.openContactDetail(id);else host.newContact(phone);
+    });
+   });
+   row.details.setOnClickListener(v->{pulse(row.details);host.showCallNumber(entry);});
    row.call.setEnabled(CallLauncher.isCallable(phone));row.call.setAlpha(row.call.isEnabled()?1f:0.35f);
    row.call.setContentDescription(tr("התקשר")+" "+phone);
    row.call.setOnClickListener(v->{pulse(row.call);host.dialFromList(phone);});
+   row.showExpansion();
    String expected=row.bound;
    ContactPhotos.lookup(host,phone,(id,n,bitmap)->{
     if(!expected.equals(row.bound))return;
+    if(id>0)row.setKnownContact(true);
     if(n!=null&&!n.isEmpty()&&!n.equals(phone))row.name.setText(n);
     if(bitmap!=null){row.photo.setImageBitmap(bitmap);row.photo.setVisibility(View.VISIBLE);}
    });
@@ -482,52 +571,77 @@ final class FastPages {
   }
  }
  private final class CallRow {
-  final LinearLayout root,center;
+  final LinearLayout root,header,center,actions,actionCall,message,contact,details;
   final FrameLayout avatar,call;
-  final TextView initials,arrow,name,info;
-  final ImageView photo,dialIcon;
+  final TextView initials,name,info,number,contactLabel;
+  final ImageView photo,dialIcon,direction,chevron;
+  CallHistory.Entry entry;
+  boolean knownContact;
   String bound="";
   CallRow(){
-   root=horizontal();
+   root=vertical();
    root.setPadding(dp(6),dp(6),dp(6),dp(6));
-   root.setBackground(bg(panel(),16));
+   root.setBackground(edge(panel(),20));
    root.setMinimumHeight(dp(76));
+   header=horizontal();header.setTag("recent_header");root.addView(header,lp(-1,-2));header.setMinimumHeight(dp(64));
    avatar=AvatarShapes.frame(host);
-   avatar.setBackground(bg(soft(),16));AvatarShapes.apply(avatar);
-   LinearLayout.LayoutParams avatarParams=lp(52,52);
-   avatarParams.setMargins(dp(2),0,dp(5),0);
-   root.addView(avatar,avatarParams);
+   avatar.setTag("recent_avatar");avatar.setBackground(bg(soft(),24));AvatarShapes.apply(avatar);
+   LinearLayout.LayoutParams avatarParams=lp(48,48);
+   avatarParams.setMargins(dp(2),0,dp(4),0);header.addView(avatar,avatarParams);
    initials=text("?",20,tint(),true);initials.setGravity(Gravity.CENTER);
    avatar.addView(initials,new FrameLayout.LayoutParams(-1,-1));
    photo=new ImageView(host);photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
    photo.setVisibility(View.GONE);
    avatar.addView(photo,new FrameLayout.LayoutParams(-1,-1));
-   View lineA=new View(host);lineA.setBackgroundColor(dark()?0xFF3A3A3A:0xFFE6E6E6);
-   root.addView(lineA,lp(1,34));
-   center=horizontal();center.setPadding(dp(9),0,dp(9),0);
-   root.addView(center,new LinearLayout.LayoutParams(0,dp(59),1));
+   center=horizontal();center.setTag("recent_expand");center.setPadding(dp(7),dp(3),dp(4),dp(3));center.setMinimumHeight(dp(64));
+   header.addView(center,new LinearLayout.LayoutParams(0,-2,1));
    LinearLayout details=vertical();center.addView(details,new LinearLayout.LayoutParams(0,-2,1));
    name=text("",15,ink(),true);name.setSingleLine(true);name.setEllipsize(android.text.TextUtils.TruncateAt.END);
    details.addView(name);
-   info=text("",11,subtle(),false);info.setSingleLine(true);info.setEllipsize(android.text.TextUtils.TruncateAt.END);
-   details.addView(info);
-   arrow=text("",19,subtle(),true);arrow.setGravity(Gravity.CENTER);
-   center.addView(arrow,lp(27,40));
-   View lineB=new View(host);lineB.setBackgroundColor(dark()?0xFF3A3A3A:0xFFE6E6E6);
-   root.addView(lineB,lp(1,34));
+   LinearLayout metadata=horizontal();details.addView(metadata,lp(-1,-2));
+   direction=stroke(null);metadata.addView(direction,lp(14,18));
+   info=text("",11,subtle(),false);info.setMaxLines(2);info.setEllipsize(android.text.TextUtils.TruncateAt.END);
+   info.setPadding(dp(3),0,dp(3),0);metadata.addView(info,new LinearLayout.LayoutParams(0,-2,1));
+   chevron=stroke(AppAppearance.chevron(host,false,subtle()));center.addView(chevron,lp(20,32));
    call=new FrameLayout(host);
-   call.setBackground(bg(dark()?0xFF22372D:0xFFE7F4EA,15));
-   LinearLayout.LayoutParams cp=lp(60,56);cp.setMargins(dp(5),0,0,0);
-   root.addView(call,cp);
+   call.setTag("recent_call");call.setBackground(bg(soft(),24));
+   LinearLayout.LayoutParams cp=lp(48,48);cp.setMargins(dp(3),0,dp(2),0);header.addView(call,cp);
    dialIcon=icon(R.drawable.ic_phone_line,recentCallColor());
    dialIcon.setPadding(dp(11),dp(11),dp(11),dp(11));
    call.addView(dialIcon,new FrameLayout.LayoutParams(-1,-1));
-   touch(avatar);touch(center);touch(call);
+   actions=vertical();actions.setTag("recent_actions");actions.setPadding(dp(5),dp(3),dp(5),dp(3));root.addView(actions,lp(-1,-2));
+   View divider=new View(host);divider.setBackgroundColor(dark()?0xFF443A29:0xFFE6DDCA);actions.addView(divider,lp(-1,1));
+   number=text("",14,ink(),true);number.setTag("recent_number");number.setGravity(Gravity.CENTER);number.setPadding(dp(4),dp(8),dp(4),dp(8));
+   number.setMaxLines(2);actions.addView(number,lp(-1,-2));
+   LinearLayout controls=horizontal();controls.setBaselineAligned(false);actions.addView(controls,lp(-1,-2));
+   actionCall=recentAction(controls,"recent_action_call",tr("התקשר"),host.getDrawable(R.drawable.ic_phone_line));
+   message=recentAction(controls,"recent_sms",I18n.isEnglish(host)?"Message":"הודעה",new RecentIcons(host,RecentIcons.MESSAGE,tint()));
+   contact=recentAction(controls,"recent_contact","",host.getDrawable(R.drawable.ic_contacts));contactLabel=(TextView)contact.getChildAt(1);
+   this.details=recentAction(controls,"recent_details",I18n.isEnglish(host)?"Details":"פרטים",new RecentIcons(host,RecentIcons.DETAILS,tint()));
+   touch(avatar);touch(center);touch(call);touch(header);
    avatar.setContentDescription(tr("כרטיס איש קשר"));
-   center.setContentDescription(tr("הצג מספר"));
    call.setContentDescription(tr("התקשר"));
    root.setTag(this);
   }
+  void setKnownContact(boolean known){
+   knownContact=known;String label=I18n.isEnglish(host)?(known?"Contact":"Add contact"):(known?"איש קשר":"הוספה");
+   contactLabel.setText(label);contact.setContentDescription((I18n.isEnglish(host)?(known?"View contact ":"Create new contact "):(known?"כרטיס איש קשר ":"יצירת איש קשר חדש "))+(entry==null?"":entry.number));
+  }
+  void showExpansion(){
+   boolean expanded=expandedRecent.isExpanded(entry);actions.setVisibility(expanded?View.VISIBLE:View.GONE);
+   root.setBackground(edge(expanded?soft():panel(),20));chevron.setImageDrawable(AppAppearance.chevron(host,expanded,tint()));
+   String label=(I18n.isEnglish(host)?(expanded?"Collapse call actions ":"Expand call actions "):(expanded?"סגירת פעולות שיחה ":"הרחבת פעולות שיחה "))+(entry==null?"":contactName(entry.number));
+   center.setContentDescription(label);header.setContentDescription(label);
+   if(android.os.Build.VERSION.SDK_INT>=30)center.setStateDescription(I18n.isEnglish(host)?(expanded?"Expanded":"Collapsed"):(expanded?"מורחב":"מכווץ"));
+  }
+ }
+ private LinearLayout recentAction(LinearLayout parent,String tag,String title,Drawable glyph){
+  LinearLayout action=vertical();action.setTag(tag);action.setGravity(Gravity.CENTER);action.setMinimumHeight(dp(78));
+  action.setPadding(dp(2),dp(5),dp(2),dp(5));action.setBackground(bg(panel(),16));
+  LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(0,-1,1);params.setMargins(dp(2),0,dp(2),0);parent.addView(action,params);
+  ImageView icon=stroke(glyph);icon.setImageTintList(ColorStateList.valueOf(tint()));action.addView(icon,lp(24,24));
+  TextView label=text(title,11,ink(),true);label.setGravity(Gravity.CENTER);label.setMaxLines(2);label.setMinLines(2);label.setPadding(0,dp(4),0,0);action.addView(label,lp(-1,-2));
+  touch(action);action.setContentDescription(title);return action;
  }
  private final class ContactAdapter extends BaseAdapter {
   private final List<Contacts.Person> all;
@@ -615,25 +729,28 @@ final class FastPages {
   boolean expanded=prefs.getBoolean("stats_expanded",false);
   String[] periods={tr("היום"),tr("השבוע"),tr("החודש"),tr("השנה")};
   LinearLayout summary=vertical();summary.setTag("stats_summary");
-  summary.setPadding(dp(10),0,dp(3),expanded?dp(5):0);summary.setBackground(edge(panel(),14));
+  summary.setPadding(dp(10),0,dp(3),expanded?dp(5):0);summary.setBackground(edge(panel(),20));
   LinearLayout.LayoutParams block=lp(-1,-2);block.bottomMargin=dp(6);page.addView(summary,block);
   LinearLayout header=horizontal();header.setMinimumHeight(dp(48));summary.addView(header,lp(-1,-2));
+  ImageView overview=icon(R.drawable.ic_recent,tint());overview.setPadding(dp(6),dp(6),dp(6),dp(6));
+  overview.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);header.addView(overview,lp(32,32));
   String compact=periods[period]+" · "+data.calls[period]+" "+tr("שיחות")+" · "+durationText(data.seconds[period]);
   TextView selector=text(compact,12,ink(),true);selector.setTag("stats_period");
   selector.setSingleLine(!expanded);selector.setMaxLines(expanded?2:1);selector.setEllipsize(android.text.TextUtils.TruncateAt.END);
   selector.setMinimumHeight(dp(48));selector.setContentDescription(tr("סיכום פעילות")+". "+compact+". "+tr("תקופת הסיכום"));
   header.addView(selector,new LinearLayout.LayoutParams(0,-2,1));touch(selector);
   selector.setOnClickListener(v->{pulse(selector);period=(period+1)%4;host.refreshPage();});
-  TextView toggle=text(expanded?"⌃":"⌄",24,tint(),true);toggle.setTag("stats_toggle");toggle.setGravity(Gravity.CENTER);
+  ImageView toggle=stroke(AppAppearance.chevron(host,expanded,tint()));toggle.setTag("stats_toggle");
+  toggle.setPadding(dp(12),dp(12),dp(12),dp(12));
   toggle.setContentDescription(I18n.isEnglish(host)?(expanded?"Collapse call summary":"Expand call summary"):(expanded?"הקטנת סיכום שיחות":"הרחבת סיכום שיחות"));
   header.addView(toggle,lp(48,48));touch(toggle);
-  toggle.setOnClickListener(v->{pulse(toggle);prefs.edit().putBoolean("stats_expanded",!expanded).apply();host.refreshPage();});
+  toggle.setOnClickListener(v->{if(!SettingsBackup.allowPreferenceChange(host))return;pulse(toggle);prefs.edit().putBoolean("stats_expanded",!expanded).apply();host.refreshPage();});
   if(!expanded)return;
   LinearLayout breakdown=horizontal();breakdown.setBaselineAligned(false);
   breakdown.setMinimumHeight(dp(42));summary.addView(breakdown,lp(-1,-2));
-  summaryMetric(breakdown,tr("יוצאות"),"↗",data.outgoing[period],0xFF2375B4);
-  summaryMetric(breakdown,tr("נכנסות"),"↙",data.incoming[period],0xFF25815F);
-  summaryMetric(breakdown,tr("שלא נענו"),"×",data.missed[period],0xFFBD4748);
+  summaryMetric(breakdown,tr("יוצאות"),CallLog.Calls.OUTGOING_TYPE,data.outgoing[period],0xFF2375B4);
+  summaryMetric(breakdown,tr("נכנסות"),CallLog.Calls.INCOMING_TYPE,data.incoming[period],0xFF25815F);
+  summaryMetric(breakdown,tr("שלא נענו"),CallLog.Calls.MISSED_TYPE,data.missed[period],0xFFBD4748);
   int answered=data.outgoing[period]+data.incoming[period];
   TextView average=text(tr("משך שיחה ממוצע")+": "+durationText(answered>0?data.seconds[period]/answered:0),11,subtle(),false);
   average.setPadding(dp(4),dp(6),dp(4),dp(3));summary.addView(average,lp(-1,-2));
@@ -645,13 +762,16 @@ final class FastPages {
   // Preserve every starred contact, including two people sharing a phone number.
   // The legacy favorite identity is a number; deduplicating it hides real cards.
   for(Contacts.Person person:contacts)if(!person.phone.isEmpty()&&starred.contains(person.key))chosen.add(person);
-  LinearLayout band=horizontal();band.setTag("favorites_strip");band.setBackground(edge(panel(),14));
+  LinearLayout band=horizontal();band.setTag("favorites_strip");band.setBackground(edge(panel(),20));
   LinearLayout.LayoutParams block=lp(-1,expanded&&!chosen.isEmpty()?82:48);block.bottomMargin=dp(6);page.addView(band,block);
-  TextView toggle=text(tr("מועדפים")+" ★\n"+chosen.size()+"  "+(expanded?"⌃":"⌄"),11,tint(),true);
-  toggle.setTag("favorites_toggle");toggle.setGravity(Gravity.CENTER);toggle.setPadding(dp(3),0,dp(3),0);
+  LinearLayout toggle=vertical();toggle.setTag("favorites_toggle");toggle.setGravity(Gravity.CENTER);toggle.setPadding(dp(3),0,dp(3),0);
+  TextView heading=text(tr("מועדפים"),11,tint(),true);heading.setGravity(Gravity.CENTER);toggle.addView(heading,lp(-1,-2));
+  LinearLayout details=horizontal();details.setGravity(Gravity.CENTER);toggle.addView(details,lp(-1,-2));
+  TextView count=text(String.valueOf(chosen.size()),12,subtle(),true);count.setPadding(dp(3),0,dp(3),0);details.addView(count);
+  details.addView(stroke(AppAppearance.chevron(host,expanded,tint())),lp(18,18));
   toggle.setContentDescription((I18n.isEnglish(host)?(expanded?"Collapse favorites":"Expand favorites"):(expanded?"הקטנת מועדפים":"הרחבת מועדפים"))+" · "+chosen.size());
-  band.addView(toggle,lp(expanded&&!chosen.isEmpty()?68:96,-1));touch(toggle);
-  toggle.setOnClickListener(v->{pulse(toggle);prefs.edit().putBoolean("favorites_expanded",!expanded).apply();host.refreshPage();});
+  band.addView(toggle,lp(expanded&&!chosen.isEmpty()?76:96,-1));touch(toggle);
+  toggle.setOnClickListener(v->{if(!SettingsBackup.allowPreferenceChange(host))return;pulse(toggle);prefs.edit().putBoolean("favorites_expanded",!expanded).apply();host.refreshPage();});
   liveFavoriteStrip=null;
   if(expanded&&!chosen.isEmpty()){
    FavoriteStrip strip=new FavoriteStrip(chosen);strip.setTag("favorites_scroll");liveFavoriteStrip=strip;
@@ -662,7 +782,7 @@ final class FastPages {
    hint.setSingleLine(true);hint.setEllipsize(android.text.TextUtils.TruncateAt.END);hint.setPadding(dp(8),0,dp(8),0);
    band.addView(hint,new LinearLayout.LayoutParams(0,-1,1));
    if(!chosen.isEmpty()){
-    touch(hint);hint.setOnClickListener(v->{pulse(hint);prefs.edit().putBoolean("favorites_expanded",true).apply();host.refreshPage();});
+    touch(hint);hint.setOnClickListener(v->{if(!SettingsBackup.allowPreferenceChange(host))return;pulse(hint);prefs.edit().putBoolean("favorites_expanded",true).apply();host.refreshPage();});
    }
   }
  }
@@ -717,7 +837,7 @@ final class FastPages {
   final LinearLayout root;
   FavoriteTile(Contacts.Person person){
    root=vertical();root.setTag("favorite_tile:"+person.id);root.setGravity(Gravity.CENTER);root.setPadding(dp(3),dp(4),dp(3),dp(3));
-   FrameLayout picture=AvatarShapes.frame(host);picture.setBackground(bg(soft(),24));AvatarShapes.apply(picture);
+   FrameLayout picture=AvatarShapes.frame(host);picture.setBackground(edge(soft(),24));AvatarShapes.apply(picture);
    root.addView(picture,lp(40,40));
    TextView initials=text(person.name.isEmpty()?"?":person.name.substring(0,1),19,tint(),true);initials.setGravity(Gravity.CENTER);
    picture.addView(initials,new FrameLayout.LayoutParams(-1,-1));

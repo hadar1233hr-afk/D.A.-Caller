@@ -1,0 +1,77 @@
+{
+  "source_sha": "865d55fe362787c79d32c82b05d30c377e97075b",
+  "app_tree": "a272d99cd1d200f4aa2ec0a5f1a02ae8f1bf346d",
+  "workflow_run_id": 40588808569,
+  "native_job_id": 122488326225,
+  "ui_artifact_id": 12774370840,
+  "ui_artifact_sha256": "fb27453c701b5b1cb212808c25e6b5b18510b39873d25a95910043ea533b7e73",
+  "status": "FAIL",
+  "unit_tests": {
+    "tests": 239,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "lint": {
+    "errors": 0,
+    "warnings": 5,
+    "warning_ids": [
+      "OldTargetApi",
+      "SetTextI18n"
+    ]
+  },
+  "native_tests": {
+    "tests": 29,
+    "passed": 27,
+    "failed": 2
+  },
+  "png_count_including_failure_diagnostics": 218,
+  "required_success_png_count": 219,
+  "native_matrix_completed": true,
+  "native_visual_approval": false,
+  "failed_checks": [
+    {
+      "assertion": "Confirmed end did not remove the island",
+      "last_raw_tap": [
+        333,
+        230
+      ],
+      "observed_result": "The confirmation was dismissed but the session remained active. Failure screenshot/accessibility dump no longer contain the dialog, so the positive button's pre-tap screen bounds were not recorded.",
+      "cause_status": "The test helper corrected the rotated origin but omitted a dialog's window-to-screen translation. This explains a click outside the dialog and its dismissal, although the exact positive-button screen rectangle cannot be reconstructed from the post-failure dump alone.",
+      "correction": "Add the screen-location minus window-location translation to the visible-rectangle center. Preserve raw input and the session-removal assertion. Record pre-tap visible bounds, window translation and native accessibility positive-button bounds for later failures."
+    },
+    {
+      "assertion": "Native three-button navigation must be present",
+      "observed_result": "The archive test sampled a zero bottom navigation inset before saving a screenshot. No archive failure screenshot was produced by that version of the harness.",
+      "supporting_log_observations": [
+        "21:51:02.023 and 21:51:02.042: systemWindowInsets bottom=0",
+        "21:51:02.082: NavigationBar0 input channel disposed",
+        "21:51:02.141 onward: native window configurations repeatedly switch between h497dp and h545dp",
+        "21:51:02.315 and 21:51:02.328: NavigationModeController reports mode=0"
+      ],
+      "cause_status": "A transient SystemUI/navigation rebuild during the test's font-scale change is probable; the exact cause is uncertified without the missing archive screenshot and sampled-inset diagnostic.",
+      "correction": "Boundedly wait for stable positive status/navigation insets on the focused archive window, retain strict native-bar size and rendered-contrast assertions, and save a screenshot plus sampled insets before asserting on future failure. No production ArchiveActivity change is justified by this evidence."
+    }
+  ],
+  "visual_blockers_found_despite_passing_native_matrix": [
+    "Actual MainActivity expanded contacts and recents images leave almost no usable list area at 320dp width and font scale 1.3.",
+    "The floating keypad button overlaps the contact search / recent-call summary headers when the island is expanded.",
+    "The exposed space behind the capsule is light on the actual dark MainActivity."
+  ],
+  "visual_corrective_work": [
+    "Temporarily suppress secondary count/refresh chrome and the floating keypad only when expanded small-screen space is constrained, without changing stored preferences or replacing the list; restore them on collapse/stop.",
+    "Match the exposed content inset to the actual page background, preserving and restoring its original drawable on hide/stop.",
+    "Strengthen native actual-app checks to require at least 48dp list height in both island states, prevent floating-keypad overlap with favorites/summary/search, and verify secondary controls restore after collapse.",
+    "Review actual screenshots again after the correction; a passing native test is not sufficient for visual approval."
+  ],
+  "failure_and_actual_app_files_sha256": {
+    "island-failed-actions.png": "b8d0def72bf59d16d27326c84d4eb35ccb88dbfc450dd6a95d86ed3dffaa8045",
+    "island-failed-actions.json": "3f862a517c871419327c0e04f34da389792d85c23b5c3013994ac426341a3c2c",
+    "island-failed-actions.xml": "cd462fa8cb5acfd453ef1468571cd725c6f931ac4915c5c91eb4f51647cf2096",
+    "island-app-contacts-compact.png": "d7686006250ac319bb5e35763899436bd07746295eb7e3bfceb7a78cdcf6949c",
+    "island-app-contacts-expanded.png": "fb87871a782ba3b52cf14547e535fc40aa3659f06800730f95e2c032ce002d1c",
+    "island-app-recents-compact.png": "42bdfb0642b29f6d83b191798c4febf18ab07f438ac47f64598d62385330693d",
+    "island-app-recents-expanded.png": "b39239663515b115e672cd4b6ba887f7265ab251ad74e08d8e1606b13f129466"
+  },
+  "limits": "No release or complete visual/native approval for this source. The island style/state matrix and customization native tests passed, but the actual MainActivity screenshots reveal layout blockers and the action/lifecycle test stopped at confirmation. Physical SIM/Bluetooth/Jelly Star remain untested."
+}

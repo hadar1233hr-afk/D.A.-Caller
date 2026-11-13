@@ -1,0 +1,19 @@
+{
+  "version": "0.12.0",
+  "version_code": 21,
+  "scope": "business directory excluded by owner; signing/CI exception not applied",
+  "local_checks": {
+    "tests": 356,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "debug_build": "PASS",
+  "native_test_java_compilation": "PASS",
+  "lint": "PASS",
+  "new_native_telecom_run": "NOT TESTED",
+  "new_visual_review": "NOT TESTED",
+  "publication_approved": false,
+  "signing_gate_change": "REJECTED by automatic approval review; awaiting explicit owner approval",
+  "log": "/workspace/work/release-0.12-scope-final-checks.log"
+}

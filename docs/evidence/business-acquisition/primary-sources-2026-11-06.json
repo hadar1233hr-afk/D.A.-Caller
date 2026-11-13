@@ -1,0 +1,140 @@
+{
+  "status": "PRIMARY_METADATA_RESEARCH_ONLY_NO_SOURCE_FILES_OR_PHONE_IMPORT",
+  "observed_at_utc": "2026-11-06T02:04:01.439036+00:00",
+  "scope": "DA CALLER future sourced business data only",
+  "records_acquired": 0,
+  "records_imported_to_app": 0,
+  "raw_downloads": 0,
+  "bulk_downloads": 0,
+  "phone_calls": 0,
+  "runtime_policy_observed": {
+    "observations_current": true,
+    "state": "enforced",
+    "mode": "restricted",
+    "data.gov.il_in_allowed_hosts": false,
+    "data.alltheplaces.xyz_in_allowed_hosts": false,
+    "github.com_in_allowed_hosts": true,
+    "vpn_configured": false
+  },
+  "general_dataset_license": {
+    "url": "https://data.gov.il/he/terms-of-use",
+    "displayed_updated_at": "2025-08-30",
+    "observed_permissions": [
+      "copy",
+      "distribute",
+      "technical_derivatives",
+      "commercial_and_noncommercial_use"
+    ],
+    "conditions": [
+      "source_attribution",
+      "dataset_specific_license_precedence",
+      "privacy_and_thirdparty_exclusions",
+      "no_misrepresentation_or_implied_state_endorsement"
+    ],
+    "license_snapshot_bytes_acquired": false
+  },
+  "sources": [
+    {
+      "id": "beer_sheva_business_licensing",
+      "publisher": "Municipality of Beer Sheva",
+      "dataset_url": "https://data.gov.il/he/datasets/beer-sheva/business-licensing-br7",
+      "resource_url": "https://data.gov.il/he/datasets/beer-sheva/business-licensing-br7/7d4c61e2-2416-453e-8efb-bd02ec89db35",
+      "resource_id": "7d4c61e2-2416-453e-8efb-bd02ec89db35",
+      "metadata_license_label": "Other (Open)",
+      "metadata_row_count": 3108,
+      "row_count_semantics": "License rows in official indexed preview, not verified distinct businesses or usable phones",
+      "usable_phone_count": null,
+      "metadata_update_labels_observed": [
+        "2026-10-18",
+        "2026-10-25"
+      ],
+      "field_names_observed": [
+        "business_name",
+        "business_telephone",
+        "street",
+        "house",
+        "license_identifier",
+        "status",
+        "expiry"
+      ],
+      "quality_observations": [
+        "missing_or_zero_phones",
+        "same_business_phone_address_repeated_for_different_licenses"
+      ],
+      "scope_note": "Municipal licensed-business subset, not all businesses",
+      "raw_file_sha256": null,
+      "approved_for_import": false
+    },
+    {
+      "id": "boi_physical_branches_datagov",
+      "publisher": "Bank of Israel via DataGov",
+      "dataset_url": "https://data.gov.il/he/datasets/bank_israel/branches",
+      "resource_url": "https://data.gov.il/he/datasets/bank_israel/branches/2202bada-4baf-45f5-aa61-8c5bad9646d3",
+      "resource_id": "2202bada-4baf-45f5-aa61-8c5bad9646d3",
+      "metadata_license_label": "Other (Open)",
+      "metadata_row_count": 1157,
+      "row_count_semantics": "Branch rows in official indexed preview, not verified active branches or distinct phones",
+      "usable_phone_count": null,
+      "metadata_update_labels_observed": [
+        "2026-10-21",
+        "2026-10-30",
+        "2026-11-01"
+      ],
+      "fields_observed": [
+        "Bank_Code",
+        "Bank_Name",
+        "Branch_Code",
+        "Branch_Name",
+        "Branch_Address",
+        "City",
+        "Telephone",
+        "Open_Date",
+        "Close_Date",
+        "Merge_Bank",
+        "Merge_Branch",
+        "X_Coordinate",
+        "Y_Coordinate"
+      ],
+      "quality_observations": [
+        "shared_central_numbers",
+        "closed_and_merged_branches",
+        "coordinate_axis_specification_not_confirmed"
+      ],
+      "direct_provider_terms_url": "https://www.boi.org.il/website_terms/",
+      "direct_provider_restriction_observed": "Prior written consent for copying/distribution, subject to law; do not apply DataGov assumption to direct-BOI files",
+      "full_dataset_license_override_metadata_acquired": false,
+      "raw_file_sha256": null,
+      "approved_for_import": false
+    },
+    {
+      "id": "alltheplaces_generated_data",
+      "license_url": "https://github.com/alltheplaces/alltheplaces/blob/master/LICENSE",
+      "api_docs_url": "https://github.com/alltheplaces/alltheplaces/blob/master/API.md",
+      "format_docs_url": "https://github.com/alltheplaces/alltheplaces/blob/master/DATA_FORMAT.md",
+      "generated_website_data_license": "CC0",
+      "software_license": "MIT",
+      "documented_history_url": "https://data.alltheplaces.xyz/runs/history.json",
+      "documented_latest_url": "https://data.alltheplaces.xyz/runs/latest.json",
+      "documented_spider_output_template": "https://data.alltheplaces.xyz/runs/latest/output/{spider_name}.geojson",
+      "official_github_releases_url": "https://api.github.com/repos/alltheplaces/alltheplaces/releases",
+      "official_github_releases_count_observed": 0,
+      "actual_run_manifest_acquired": false,
+      "israel_phone_count": null,
+      "raw_file_sha256": null,
+      "quality_warnings": [
+        "country_may_be_reverse_geocoded",
+        "geometry_may_be_null",
+        "invalid_phone_values_may_remain",
+        "formatting_may_be_wrong_in_territorial_ambiguity",
+        "source_errors_or_stale_runs_can_persist"
+      ],
+      "approved_for_import": false
+    }
+  ],
+  "limits": [
+    "Web/indexed metadata previews are not source-file acquisition or full phone data.",
+    "No record count implies complete national coverage, active businesses or verified current phone ownership.",
+    "No synthetic/code fixture or search snippet was imported as a phonebook.",
+    "No app/production data/signing/CI/release safeguard changes; publication exception remains pending."
+  ]
+}

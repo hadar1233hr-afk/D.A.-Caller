@@ -1,0 +1,77 @@
+{
+  "api": 33,
+  "number": "0500099971",
+  "origin": "actual emulator Telecom missed call",
+  "actions_dark": true,
+  "editor_dark": false,
+  "actions_bars": {
+    "status": 1178,
+    "navigation": 1281
+  },
+  "call_log_before_editor": [
+    {
+      "id": 7,
+      "number": "0500099971",
+      "date": 1793850794976,
+      "duration": 0,
+      "type": 3,
+      "new": 1,
+      "is_read": 0
+    }
+  ],
+  "editor_bars": {
+    "status": 997,
+    "navigation": 1276
+  },
+  "exact_number_prefilled": true,
+  "new_contact_without_existing_id": true,
+  "no_automatic_dial": true,
+  "cancel_keeps_contacts_and_call_rows": true,
+  "back_to_recents": true,
+  "call_log_after_cancel": [
+    {
+      "id": 7,
+      "number": "0500099971",
+      "date": 1793850794976,
+      "duration": 0,
+      "type": 3,
+      "new": 1,
+      "is_read": 0
+    }
+  ],
+  "modem_commands": [
+    {
+      "id": "17938507946780",
+      "operation": "call",
+      "number": "0500099971",
+      "serial": "emulator-5554",
+      "returncode": 0,
+      "stdout": "OK",
+      "stderr": ""
+    },
+    {
+      "id": "17938507954671",
+      "operation": "cancel",
+      "number": "0500099971",
+      "serial": "emulator-5554",
+      "returncode": 0,
+      "stdout": "OK",
+      "stderr": ""
+    }
+  ],
+  "calls": [
+    {
+      "token": "tel:0500099971",
+      "disconnect_cause": 5,
+      "row": {
+        "id": 7,
+        "number": "0500099971",
+        "date": 1793850794976,
+        "duration": 0,
+        "type": 3,
+        "new": 1,
+        "is_read": 0
+      }
+    }
+  ]
+}
