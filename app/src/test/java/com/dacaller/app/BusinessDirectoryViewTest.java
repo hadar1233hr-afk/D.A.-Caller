@@ -159,6 +159,10 @@ public class BusinessDirectoryViewTest {
  @Test public void taxonomyLabelsAreDisplayOnlyAndPreserveRawSourceIdentity(){
   BusinessDirectory.Entry raw=new BusinessDirectory.Entry(1,"Test business","0500099901","0500099901","Test city","shop:mobile_phone_accessories","Test address","https://example.org/1","test/1","Test license","2026-11-02");
   show((context,query,offset)->page(0,false,raw));complete();View row=row(0);
+  android.widget.FrameLayout avatar=(android.widget.FrameLayout)((android.view.ViewGroup)row).getChildAt(0);
+  TextView initial=(TextView)avatar.getChildAt(0);double foreground=android.graphics.Color.luminance(initial.getCurrentTextColor());
+  double background=android.graphics.Color.luminance(((android.graphics.drawable.ColorDrawable)avatar.getBackground()).getColor());
+  assertTrue("Light-theme initials need legible contrast on their fixed dark avatar",(Math.max(foreground,background)+.05)/(Math.min(foreground,background)+.05)>=4.5);
   assertTrue(row.getContentDescription().toString().contains("אביזרי סלולר"));assertFalse(row.getContentDescription().toString().contains("shop:"));
   row.performClick();TextView detail=ShadowAlertDialog.getLatestAlertDialog().getWindow().getDecorView().findViewWithTag("business_directory_detail_text");
   assertTrue(detail.getText().toString().contains("אביזרי סלולר"));assertEquals("shop:mobile_phone_accessories",raw.category);assertEquals("0500099901",raw.phone);

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.MainActivityRegressionTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:13:09" hostname="3ebae333e153" time="12.27">
+  <properties/>
+  <testcase name="repeatedTapWhilePermissionPendingKeepsFirstDestination" classname="com.dacaller.app.MainActivityRegressionTest" time="6.325"/>
+  <testcase name="tabAndPendingPermissionSurviveActivityRecreation" classname="com.dacaller.app.MainActivityRegressionTest" time="0.374"/>
+  <testcase name="providerRefreshDuringFingerDownDefersRebuildAndStillCallsCorrectNumber" classname="com.dacaller.app.MainActivityRegressionTest" time="2.002"/>
+  <testcase name="unknownNumberOffersExplicitNewContactWithExactNumberAndNeverDials" classname="com.dacaller.app.MainActivityRegressionTest" time="0.441"/>
+  <testcase name="pendingRecoveryDefersFavoriteEditsAndRefreshesVisibleMainAfterDurableUndo" classname="com.dacaller.app.MainActivityRegressionTest" time="0.448"/>
+  <testcase name="rerenderCannotConsumePendingPermissionDestination" classname="com.dacaller.app.MainActivityRegressionTest" time="0.218"/>
+  <testcase name="phoneRoleMustBeGrantedBeforeCallAndPreservesNumber" classname="com.dacaller.app.MainActivityRegressionTest" time="0.457"/>
+  <testcase name="secondDialIntentUpdatesAlreadyVisibleKeypad" classname="com.dacaller.app.MainActivityRegressionTest" time="0.385"/>
+  <testcase name="englishNavigationIsLeftToRightAndSettingsUsesActualVersion" classname="com.dacaller.app.MainActivityRegressionTest" time="1.035"/>
+  <testcase name="hiddenAndUnavailableNumbersNeverOfferCreateContact" classname="com.dacaller.app.MainActivityRegressionTest" time="0.46"/>
+  <testcase name="rapidRepeatedGrantedTapsPlaceOnlyOneCall" classname="com.dacaller.app.MainActivityRegressionTest" time="0.123"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

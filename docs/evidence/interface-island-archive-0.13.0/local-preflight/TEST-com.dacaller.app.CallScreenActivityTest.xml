@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.CallScreenActivityTest" tests="19" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:14:25" hostname="3ebae333e153" time="3.772">
+  <properties/>
+  <testcase name="staleAccessibleAnswerCannotAnswerReplacementCall" classname="com.dacaller.app.CallScreenActivityTest" time="0.061"/>
+  <testcase name="tappingOrCancellingGestureDoesNotAnswer" classname="com.dacaller.app.CallScreenActivityTest" time="0.066"/>
+  <testcase name="allEndButtonsAreIconOnlyAccessibleAndDisconnectTheRightCall" classname="com.dacaller.app.CallScreenActivityTest" time="0.43"/>
+  <testcase name="holdUsesCapabilityAndNewCallPreservesExistingDialerEntryPoint" classname="com.dacaller.app.CallScreenActivityTest" time="0.285"/>
+  <testcase name="emergencyCallControlsHaveCallEndAction" classname="com.dacaller.app.CallScreenActivityTest" time="0.115"/>
+  <testcase name="dialingAndConnectedScreensRenderAllFiveLayoutsWithoutCrashing" classname="com.dacaller.app.CallScreenActivityTest" time="0.767"/>
+  <testcase name="pendingRestoreDefersNoteSaveWhileOwnedCallControlsRemainAvailable" classname="com.dacaller.app.CallScreenActivityTest" time="0.105"/>
+  <testcase name="sheetTransitionsAreExclusiveAndExplicitCloseKeepsCallVisible" classname="com.dacaller.app.CallScreenActivityTest" time="0.308"/>
+  <testcase name="newInstallDefaultsToGoogleWithoutOverwritingSavedChoice" classname="com.dacaller.app.CallScreenActivityTest" time="0.082"/>
+  <testcase name="audioPickerTargetsTheHeadsetWhoseNameWasDisplayed" classname="com.dacaller.app.CallScreenActivityTest" time="0.078"/>
+  <testcase name="completedSwipeAnswersExactlyOnce" classname="com.dacaller.app.CallScreenActivityTest" time="0.054"/>
+  <testcase name="android26UsesCompatibleLockscreenFlags" classname="com.dacaller.app.CallScreenActivityTest" time="0.17"/>
+  <testcase name="replacingCallStopsToneAndStaleKeyCannotAffectSuccessor" classname="com.dacaller.app.CallScreenActivityTest" time="0.164"/>
+  <testcase name="closingKeypadAndPausingStopsDtmf" classname="com.dacaller.app.CallScreenActivityTest" time="0.35"/>
+  <testcase name="unsupportedHoldDoesNotIssueTelecomCommand" classname="com.dacaller.app.CallScreenActivityTest" time="0.116"/>
+  <testcase name="iosModeKeepsExplicitAccessibleAnswerAndVisibleDecline" classname="com.dacaller.app.CallScreenActivityTest" time="0.111"/>
+  <testcase name="allFiveThemesRespectLightDarkAndAmoled" classname="com.dacaller.app.CallScreenActivityTest" time="0.058"/>
+  <testcase name="capabilityChangesInTheSameCallStateRefreshAndGuardCommands" classname="com.dacaller.app.CallScreenActivityTest" time="0.232"/>
+  <testcase name="noBluetoothOptionWithoutAnActualSupportedRoute" classname="com.dacaller.app.CallScreenActivityTest" time="0.217"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

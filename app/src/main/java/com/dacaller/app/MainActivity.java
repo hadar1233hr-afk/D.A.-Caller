@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
  private final Runnable backupRecoveryUi=new Runnable(){public void run(){
   if(!backupRecoveryObserved||isFinishing()||isDestroyed())return;
   if(SettingsBackup.hasPendingRestore(MainActivity.this)){handler.postDelayed(this,500);return;}
-  backupRecoveryObserved=false;AppIcons.ensure(MainActivity.this);
+  backupRecoveryObserved=false;SettingsBackup.reconcileAfterRecovery(MainActivity.this);
   render();SettingsScreen.refreshAttached(MainActivity.this);
  }};
  private LinearLayout root,nav;

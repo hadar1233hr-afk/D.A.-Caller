@@ -258,4 +258,74 @@ public final class CallbackReminderTest {
   enable();miss(1,FIRST,10);assertTrue(deliver());logs.duringQuery=()->manager.cancel(CallbackReminder.ID);
   assertFalse(deliver());assertNull(note());assertEquals(0,logs.writes);
  }
+ @Test @org.robolectric.annotation.SQLiteMode(org.robolectric.annotation.SQLiteMode.Mode.NATIVE)
+ public void pendingRecoveryRetainsExistingAlarmAndSummaryUntilDurablePreferencesReturn()throws Exception{
+  enable();prefs().edit().putInt(CallbackReminder.PREF_MINUTE,1260).commit();miss(1,FIRST,10);assertTrue(deliver());
+  Notification original=note();AlarmManager alarms=app.getSystemService(AlarmManager.class);
+  android.app.PendingIntent operation=CallbackReminder.alarmOperation(app,NOW,TimeZone.getDefault());
+  alarms.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,NOW,operation);
+  Map<String,?> priorRuntime=new HashMap<>(state().getAll());int logReads=logs.queries,contactReads=people.queries;
+  Map<String,Object> prior=new HashMap<>();prior.put(CallbackReminder.PREF_ENABLED,true);prior.put(CallbackReminder.PREF_MINUTE,1260);
+  SettingsBackup.PendingRestore pending=new SettingsBackup.PendingRestore(app,java.util.UUID.randomUUID().toString(),"crest",new SettingsBackup.Snapshot(prior),java.util.Collections.emptySet());
+  pending.write();
+  try{
+   prefs().edit().putBoolean(CallbackReminder.PREF_ENABLED,false).putInt(CallbackReminder.PREF_MINUTE,540).commit();
+   CallbackReminder.schedule(app,NOW);CallbackReminder.maybeRefresh(app);refresh();assertFalse(deliver());
+   CallbackReminder.setEnabled(app,true);CallbackReminder.setMinuteOfDay(app,500);
+   assertFalse(CallbackReminder.enabled(app));assertEquals(540,CallbackReminder.minuteOfDay(app));
+   org.robolectric.shadows.ShadowAlarmManager.ScheduledAlarm scheduled=shadowOf(alarms).getNextScheduledAlarm();
+   assertNotNull(scheduled);assertEquals(NOW,scheduled.triggerAtTime);assertEquals(operation,scheduled.operation);
+   assertSame(original,note());assertEquals(priorRuntime,state().getAll());assertEquals(logReads,logs.queries);assertEquals(contactReads,people.queries);
+   assertEquals(1,logs.rows.size());assertEquals(0,logs.writes);assertEquals(0,people.writes);
+   SettingsBackup.recoverPendingRestore(app,id->true);assertFalse(SettingsBackup.hasPendingRestore(app));
+   assertTrue(CallbackReminder.enabled(app));assertEquals(1260,CallbackReminder.minuteOfDay(app));
+   CallbackReminder.setEnabled(app,false);assertNull(note());assertNull(shadowOf(alarms).getNextScheduledAlarm());
+   assertEquals(1,logs.rows.size());assertEquals(0,logs.writes);assertEquals(0,people.writes);
+  }finally{new android.util.AtomicFile(new java.io.File(app.getFilesDir(),"settings_archive_restore.pending")).delete();}
+ }
+ @Test @org.robolectric.annotation.SQLiteMode(org.robolectric.annotation.SQLiteMode.Mode.NATIVE)
+ public void pendingRecoveryCannotScheduleOrPostFromAnUncommittedOptIn()throws Exception{
+  miss(1,FIRST,10);Map<String,Object> prior=new HashMap<>();prior.put(CallbackReminder.PREF_ENABLED,false);
+  SettingsBackup.PendingRestore pending=new SettingsBackup.PendingRestore(app,java.util.UUID.randomUUID().toString(),"crest",new SettingsBackup.Snapshot(prior),java.util.Collections.emptySet());
+  pending.write();
+  try{
+   prefs().edit().putBoolean(CallbackReminder.PREF_ENABLED,true).putInt(CallbackReminder.PREF_MINUTE,0).commit();
+   CallbackReminder.schedule(app,NOW);CallbackReminder.maybeRefresh(app);refresh();assertFalse(deliver());
+   assertNull(shadowOf(app.getSystemService(AlarmManager.class)).getNextScheduledAlarm());assertNull(note());
+   assertTrue(state().getAll().isEmpty());assertEquals(0,logs.queries);assertEquals(0,people.queries);assertEquals(0,logs.writes);assertEquals(0,people.writes);
+   SettingsBackup.recoverPendingRestore(app,id->true);assertFalse(SettingsBackup.hasPendingRestore(app));assertFalse(CallbackReminder.enabled(app));
+   CallbackReminder.setMinuteOfDay(app,500);assertEquals(500,CallbackReminder.minuteOfDay(app));
+   assertNull(note());assertNull(shadowOf(app.getSystemService(AlarmManager.class)).getNextScheduledAlarm());
+  }finally{new android.util.AtomicFile(new java.io.File(app.getFilesDir(),"settings_archive_restore.pending")).delete();}
+ }
+
+ @Test public void pendingRecoveryStillCancelsOnlyOurSummaryOnActualPrivacyRevocation()throws Exception{
+  for(String revoked:new String[]{Manifest.permission.READ_CALL_LOG,Manifest.permission.POST_NOTIFICATIONS,"role"}){
+   shadowOf(app).grantPermissions(Manifest.permission.READ_CALL_LOG,Manifest.permission.POST_NOTIFICATIONS);
+   shadowOf(app.getSystemService(TelecomManager.class)).setDefaultDialerPackage(app.getPackageName());
+   state().edit().clear().commit();logs.rows.clear();enable();miss(1,FIRST,10);assertTrue(deliver());
+   manager.notify(1502,new Notification.Builder(app,CallbackReminder.CHANNEL).setContentTitle("Ongoing call").setSmallIcon(android.R.drawable.stat_sys_phone_call).build());
+   AlarmManager alarms=app.getSystemService(AlarmManager.class);
+   android.app.PendingIntent operation=CallbackReminder.alarmOperation(app,NOW,TimeZone.getDefault());
+   alarms.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,NOW,operation);int logReads=logs.queries,contactReads=people.queries;
+   Map<String,Object> prior=new HashMap<>();prior.put(CallbackReminder.PREF_ENABLED,true);
+   SettingsBackup.PendingRestore pending=new SettingsBackup.PendingRestore(app,java.util.UUID.randomUUID().toString(),"crest",new SettingsBackup.Snapshot(prior),java.util.Collections.emptySet());
+   pending.write();
+   try{
+    prefs().edit().putBoolean(CallbackReminder.PREF_ENABLED,false).commit();
+    if("role".equals(revoked))shadowOf(app.getSystemService(TelecomManager.class)).setDefaultDialerPackage("another.dialer");
+    else shadowOf(app).denyPermissions(revoked);
+    CallbackReminder.schedule(app,NOW);CallbackReminder.maybeRefresh(app);refresh();assertFalse(deliver());
+    assertNull("Revoked "+revoked+" must remove private caller summary despite pending undo",note());
+    assertNotNull(shadowOf(manager).getNotification(1502));
+    assertFalse(CallbackReminder.enabled(app));assertTrue(SettingsBackup.hasPendingRestore(app));
+    org.robolectric.shadows.ShadowAlarmManager.ScheduledAlarm scheduled=shadowOf(alarms).getNextScheduledAlarm();
+    assertNotNull(scheduled);assertEquals(NOW,scheduled.triggerAtTime);assertEquals(operation,scheduled.operation);
+    assertEquals(logReads,logs.queries);assertEquals(contactReads,people.queries);
+    assertEquals(1,logs.rows.size());assertEquals(0,logs.writes);assertEquals(0,people.writes);
+    assertEquals(day().key,state().getString("notified_day",""));
+   }finally{new android.util.AtomicFile(new java.io.File(app.getFilesDir(),"settings_archive_restore.pending")).delete();}
+  }
+ }
+
 }

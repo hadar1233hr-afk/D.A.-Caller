@@ -1,5 +1,49 @@
 # DA CALLER continuation state
 
+## Current-source local verification complete; fresh native CI next — 2026-11-13 UTC
+
+The next scheduled run resumed normally after the prior quota stop. No actual
+quota error occurred in this continuation; overlap checked: root only/noJava
+process before starting, all Gradle runs serialized. All70 island methods
+actually PASS, including the three preceding failures. Their corrected pointer
+bounds/multi-MOVE/settled-resize fixtures retained genuinebehaviorassertions;
+historical67/70FAIL remains preserved, not relabelled.
+
+Current-source full preflight **451 methods/43classes PASS**,0failures/errors/
+skips; debug APK, Android-test APK and lint PASS (0errors/0fatal,16warnings).
+Every tracked appsource hash stayed identical throughout this final run.
+95Python tool contracts PASS, including16synthetic additive-native verifier
+contracts (not emulator evidence). New regression verifies realdurableundo
+resumes archive job/callback alarm, refreshes Main theme and protects favorites.
+Independent review found/fixed lost scheduling after pendingrecovery and low
+initials contrast on the fixed dark business avatar. Reminders retain valid
+alarm/summary whilepending, but real role/permissionrevocation still removes
+only the private reminder; three concrete regressions added. No immediateprune.
+
+First full run448PASS preceded these scheduler/contrast followups. Second run
+449PASS/1FAIL consumed the shadowalarm throughgetNextScheduledAlarm in the new
+Main fixture; non-consumingpeek fixed the fixture, then final451PASS. Exact
+logs/JUnit/lint/sourcehashes/APKmetadata/certificates retained in
+`docs/evidence/interface-island-archive-0.13.0/local-preflight/`. Local APK SHA
+61b1bb6e4aa159a0b860dea9354ecf895820dea5bd75f69c881e3e95966610b5
+is an unapproved local debugbuild, NOT the forthcoming native-tested artifact.
+
+Additive native fixture reviewed/directJava compilePASS,40written cases total/
+24newplannedrealcaptures; native methods still NOT EXECUTED on this source.
+Fixed missing modembridgefolder, actualHomeforeground checks, sameownedCall/
+token/number nativeAnswer readiness/guard/bounds, meaningfulENDdrag movement,
+asynccontactname stability and fixturecleanup. Strictnewgate independently
+fixed nestedlegacyAPI/hash/JUnit/JSON validation; all7original verifier files
+remain byte-identical. All245baseline+24additive frames (269total) required;
+new evidence has separate folder. Native/actualvisual/publication remainPENDING.
+
+Next: commit/push validatedsource, genuinefreshAndroid13TelecomCI, retain
+officialexactartifacts and actuallyreviewall269frames. Business DB/manifest/
+reader hashes frozen, dataset2720rows/2660objects/2616phones/2728rawretained.
+0.13code22 remainsunreleased;0.12alreadydelivered immutable/noresend; no future
+signing/publicationguard relaxation or inventedprivatekey/secret provision.
+Existing2hautomation remainsenabled for unfinished owner work.
+
 ## Actual usage-limit stop after112 current-interface PASS — saved continuation
 
 An actual usage-limit error interrupted native_profile_finish_013: reported

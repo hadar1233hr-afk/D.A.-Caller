@@ -5,8 +5,12 @@ import android.accessibilityservice.AccessibilityServiceInfo;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.app.NotificationManager;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.app.Person;
 import android.app.role.RoleManager;
 import android.content.Context;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -77,6 +81,8 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
  private List<CallHistory.Entry> originalCalls;
  private boolean originalReadFailed;private long originalFetchedAt;
  private final JSONArray modemCommands=new JSONArray();
+ private final JSONArray nativeAnswers=new JSONArray(),foregroundEvidence=new JSONArray();
+ private String launcherPackage;
 
  @Override protected void setUp()throws Exception {
   super.setUp();target=getInstrumentation().getTargetContext();
@@ -90,7 +96,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   AccessibilityServiceInfo service=getInstrumentation().getUiAutomation().getServiceInfo();originalAccessibilityFlags=service.flags;
   service.flags|=AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS|AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS;
   getInstrumentation().getUiAutomation().setServiceInfo(service);
-  shell("mkdir -p "+DIRECTORY);shell("settings put system font_scale 1.3");
+  shell("mkdir -p "+DIRECTORY+" "+BRIDGE);shell("settings put system font_scale 1.3");
  }
  @Override protected void tearDown()throws Exception {
   try {
@@ -213,6 +219,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
    assertTrue(host.requestedNumbers.isEmpty());screenshot("modern-bottom-dialpad-"+suffix+".png");key(KeyEvent.KEYCODE_BACK);
    tap(tag(host,"main_settings_button"));View icons=tag(host,"settings_icons");reveal(icons);tap(icons);
    assertEquals("All durable icon choices retained",9,AppIcons.IDS.length);
+   for(String id:AppIcons.IDS){View choice=windowTag("launcher-icon-"+id);assertNotNull("Missing durable picker choice "+id,choice);assertNotNull(find(choice,ImageView.class));}
    View last=windowTag("launcher-icon-"+AppIcons.IDS[8]);assertNotNull(last);reveal(last);
    assertNotNull(find(last,ImageView.class));bounds(last);screenshot("modern-icons-all-nine-"+suffix+".png");tap(last);
    await(()->"signal".equals(AppIcons.selected(host)),"Ninth icon choice was not persisted");
@@ -243,8 +250,10 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   prefs.edit().putString("language","en").putBoolean("dark",false).putBoolean("amoled",false).putString(CallArchive.PREF,CallArchive.OFF).commit();
   CallArchive.Backup prior=CallArchive.captureBackup(target);long stamp=System.currentTimeMillis()-86_400_000L;
   CallArchive.BackupRow added=row(912300001,"0500099021",stamp,31),conflict=row(912300002,"0500099022",stamp+1,42);
-  insert(added);insert(conflict);JSONArray observations=new JSONArray();
+  assertFalse("Synthetic archive key must not alias existing data",containsKey(prior,added.key)||containsKey(prior,conflict.key));
+  JSONArray observations=new JSONArray();
   try {
+   insert(added);insert(conflict);
    Activity settingsOnly=exportBackup(false,"modern-backup-options-off.png");byte[] legacy=readDocument();
    JSONObject settingsJson=new JSONObject(new String(legacy,StandardCharsets.UTF_8));assertEquals(1,settingsJson.getInt("version"));assertFalse(settingsJson.has("archive"));
    ui(settingsOnly::finish);settle();
@@ -319,6 +328,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   byte[] buffer=new byte[4096];for(int n;(n=input.read(buffer))!=-1;)out.write(buffer,0,n);return out.toByteArray();}}
 
  public void testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency()throws Exception {
+  resolveHome();
   for(String permission:new String[]{Manifest.permission.READ_CONTACTS,Manifest.permission.READ_CALL_LOG,Manifest.permission.READ_PHONE_STATE,Manifest.permission.CALL_PHONE,Manifest.permission.POST_NOTIFICATIONS})
    shell("pm grant "+target.getPackageName()+" "+permission);
   shell("cmd role add-role-holder --user 0 android.app.role.DIALER "+target.getPackageName());
@@ -328,14 +338,16 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   prefs.edit().putBoolean("role_prompted",true).putBoolean("notifications_prompted",true).putBoolean("voice_permission_prompted",true)
    .putString("language","en").putBoolean("dark",false).putBoolean("amoled",false).putBoolean("haptics",false).putString(CallArchive.PREF,CallArchive.OFF)
    .putString("start_page","recents").putBoolean("island_enabled",true).putBoolean("island_outside_app",true).putBoolean("island_animations",false)
-   .putBoolean("island_confirm_end",true).putString("island_style","transparent").putInt("island_background_opacity",35)
+   .putBoolean("island_confirm_end",true).putString("island_size","compact")
+   .putBoolean("island_show_mute",true).putBoolean("island_show_speaker",true).putBoolean("island_show_hold",true)
+   .putBoolean("island_show_photo",true).putBoolean("island_show_timer",true).putString("avatar_shape","circle").putString("island_style","transparent").putInt("island_background_opacity",35)
    .putString(CallIslandPosition.MODE,"below").remove(CallIslandPosition.SET).remove(CallIslandPosition.X).remove(CallIslandPosition.Y).remove("island_hidden_token").commit();
   MainActivity main=launch(MainActivity.class);await(main::hasWindowFocus,"Main did not become visible");
   JSONObject proof=new JSONObject();JSONArray gestures=new JSONArray(),surfaces=new JSONArray();
   modem("call");await(()->state(Call.STATE_RINGING)&&PhoneSessionService.islandSnapshot()!=null,"Actual modem call did not bind");
   Call call=PhoneSessionService.current;String token=PhoneSessionService.islandSnapshot().token;
   assertEquals(NUMBER,call.getDetails().getHandle().getSchemeSpecificPart());key(KeyEvent.KEYCODE_HOME);answerNative();
-  await(()->external()!=null,"Actual answered call must show external island on Home");assertOwned(call,token);
+  await(()->external()!=null,"Actual answered call must show external island on Home");assertOwned(call,token);awaitHome("active-home");
   Rect before=bounds(external());drag(windowTag("island-expand"),0,dp(105),false);
   await(()->prefs.getBoolean(CallIslandPosition.SET,false),"Native drag did not save normalized position");Rect moved=bounds(external());
   assertTrue("The actual external window must move",moved.top>before.top+dp(50));assertOwned(call,token);
@@ -344,18 +356,26 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   drag(windowTag("island-expand"),0,dp(40),true);assertEquals(x,prefs.getInt(CallIslandPosition.X,-1));assertEquals(y,prefs.getInt(CallIslandPosition.Y,-1));assertEquals(moved,bounds(external()));assertOwned(call,token);
   gestures.put(new JSONObject().put("kind","cancelled_external_drag").put("normalized_position_preserved",true).put("geometry_restored",true).put("call_state",Call.STATE_ACTIVE));
   tap(windowTag("island-expand"));await(()->windowTag("island-action-END")!=null,"External call controls missing");
-  View end=windowTag("island-action-END");reveal(end);drag(end,0,dp(50),false);
+  View end=windowTag("island-action-END");reveal(end);
+  Rect endDragBefore=bounds(external());int endPositionBefore=prefs.getInt(CallIslandPosition.Y,-1);
+  assertTrue("This fixture requires a complete, non-overflowing control surface",external().getParent() instanceof ScrollView);
+  ScrollView externalScroll=(ScrollView)external().getParent();
+  assertFalse("Use the non-overflow drag path, not body scrolling",externalScroll.canScrollVertically(1)||externalScroll.canScrollVertically(-1));
+  drag(end,0,dp(50),false);Rect endDragAfter=bounds(external());
+  assertTrue("Drag beginning on End must move the actual window",endDragAfter.top>endDragBefore.top+dp(25));
+  assertTrue("Successful End-control drag must persist a new position",prefs.getInt(CallIslandPosition.Y,-1)>endPositionBefore);
   assertOwned(call,token);assertNull("Dragging over End must cancel the child before click",windowButton(android.R.id.button1));
-  gestures.put(new JSONObject().put("kind","drag_started_on_end_control").put("call_state",Call.STATE_ACTIVE).put("end_confirmation_opened",false));
+  gestures.put(new JSONObject().put("kind","drag_started_on_end_control").put("call_state",Call.STATE_ACTIVE).put("end_confirmation_opened",false)
+   .put("before",endDragBefore.toShortString()).put("after",endDragAfter.toShortString()).put("position_before",endPositionBefore).put("position_after",prefs.getInt(CallIslandPosition.Y,-1)).put("body_scrolling_required",false));
   screenshot("modern-island-dragged.png");View hide=windowTag("island-hide");reveal(hide);tap(hide);
   await(()->external()==null,"Hide must remove external window");assertEquals(token,prefs.getString("island_hidden_token",""));assertOwned(call,token);assertTrue(ongoingNotification());
-  screenshot("modern-island-hide-home.png");
+  awaitHome("hide-home");screenshot("modern-island-hide-home.png");
   CallIslandSettingsActivity settings=launch(CallIslandSettingsActivity.class);View restore=tag(settings,"island_restore");reveal(restore);tap(restore);
   assertFalse(prefs.contains("island_hidden_token"));key(KeyEvent.KEYCODE_HOME);await(()->external()!=null,"Settings Restore must show island again on Home");assertOwned(call,token);
-  screenshot("modern-island-restore-home.png");
+  awaitHome("restore-home");screenshot("modern-island-restore-home.png");
   prefs.edit().putString(CallIslandPosition.MODE,"status_area").remove(CallIslandPosition.SET).remove(CallIslandPosition.X).remove(CallIslandPosition.Y).commit();settle();
   Rect externalTop=bounds(external());int statusTop=statusInset(main);assertTrue("Unprivileged external overlay must remain below protected status bar",externalTop.top>=statusTop+dp(8));
-  assertOwned(call,token);surfaces.put(surface("external-protected-status-fallback",externalTop,token));screenshot("modern-island-status-external.png");
+  assertOwned(call,token);awaitHome("status-external");surfaces.put(surface("external-protected-status-fallback",externalTop,token));screenshot("modern-island-status-external.png");
   ui(settings::finish);target.startActivity(new Intent(target,MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
   await(()->main.hasWindowFocus()&&main.getWindow().getDecorView().findViewWithTag("island-root")!=null&&external()==null,"Own app must use one in-app island only");
   View inapp=tag(main,"island-root");Rect inappTop=bounds(inapp);assertTrue(statusInset(main)>0);assertEquals(Color.TRANSPARENT,main.getWindow().getStatusBarColor());
@@ -395,8 +415,9 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   key(KeyEvent.KEYCODE_HOME);modem("call");await(()->state(Call.STATE_RINGING)&&PhoneSessionService.islandSnapshot()!=null,"Second actual call did not bind");
   String second=PhoneSessionService.islandSnapshot().token;assertFalse("Call UUID must not be reused",token.equals(second));key(KeyEvent.KEYCODE_HOME);answerNative();
   await(()->external()!=null,"New actual call must show despite prior call's hidden token");assertEquals(token,prefs.getString("island_hidden_token",""));assertEquals(second,PhoneSessionService.islandSnapshot().token);
-  screenshot("modern-island-new-call-shown.png");assertTrue(ongoingNotification());modem("cancel");await(()->external()==null&&(PhoneSessionService.current==null||PhoneSessionService.current.getState()==Call.STATE_DISCONNECTED),"Modem end must remove island");
+  awaitHome("new-call-home");screenshot("modern-island-new-call-shown.png");assertTrue(ongoingNotification());modem("cancel");await(()->external()==null&&(PhoneSessionService.current==null||PhoneSessionService.current.getState()==Call.STATE_DISCONNECTED),"Modem end must remove island");
   proof.put("role_held",roles.isRoleHeld(RoleManager.ROLE_DIALER)).put("default_dialer",telecom.getDefaultDialerPackage()).put("data_origin","Emulator GSM modem -> Android Telecom -> production PhoneSessionService; no injected Call/session")
+   .put("launcher_package",launcherPackage).put("foreground_evidence",foregroundEvidence).put("answers",nativeAnswers)
    .put("first_token",token).put("second_token",second).put("modem_commands",modemCommands).put("gestures",gestures).put("surfaces",surfaces)
    .put("hide_preserves_call_and_notification",true).put("settings_restore_on_home",true).put("new_call_ignores_previous_hidden_token",true)
    .put("single_owned_surface",true).put("protected_status_icons_remain_visible",true).put("modem_end_removes_island",true);
@@ -427,21 +448,99 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   if(node.isVisibleToUser()&&node.isClickable()&&node.isEnabled()&&("Answer".equalsIgnoreCase(label)||"Answer".equalsIgnoreCase(description)||"ענה".equals(label)||"ענה".equals(description)))return node;
   for(int i=0;i<node.getChildCount();i++){AccessibilityNodeInfo answer=answerNode(node.getChild(i));if(answer!=null)return answer;}return null;
  }
- private AccessibilityNodeInfo nativeAnswer(){for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
-  AccessibilityNodeInfo root=window.getRoot();if(root!=null&&"com.android.systemui".contentEquals(String.valueOf(root.getPackageName()))){AccessibilityNodeInfo answer=answerNode(root);if(answer!=null)return answer;}}return null;}
+ private boolean callerIdentity(AccessibilityNodeInfo node,String identity){
+  String text=String.valueOf(node.getText()),description=String.valueOf(node.getContentDescription());
+  return text.contains(identity)||description.contains(identity);
+ }
+ private AccessibilityNodeInfo callerRow(AccessibilityNodeInfo node,String identity,int depth,int[] budget){
+  if(node==null||depth>70||--budget[0]<0)return null;
+  if(node.isVisibleToUser()&&callerIdentity(node,identity)){
+   AccessibilityNodeInfo ancestor=node;
+   for(int parents=0;ancestor!=null&&parents<24;parents++,ancestor=ancestor.getParent()){
+    String id=String.valueOf(ancestor.getViewIdResourceName()),type=String.valueOf(ancestor.getClassName());
+    if((id.endsWith("/expandableNotificationRow")||type.endsWith("ExpandableNotificationRow"))&&ancestor.isVisibleToUser()){
+     Rect bounds=new Rect();ancestor.getBoundsInScreen(bounds);if(!bounds.isEmpty())return ancestor;break;
+    }
+   }
+  }
+  for(int i=0;i<node.getChildCount();i++){AccessibilityNodeInfo found=callerRow(node.getChild(i),identity,depth+1,budget);if(found!=null)return found;}
+  return null;
+ }
+ private AccessibilityNodeInfo nativeAnswer(String identity){
+  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+   if(window.getType()!=AccessibilityWindowInfo.TYPE_SYSTEM)continue;
+   AccessibilityNodeInfo root=window.getRoot();
+   if(root!=null&&"com.android.systemui".contentEquals(String.valueOf(root.getPackageName()))){
+    AccessibilityNodeInfo row=callerRow(root,identity,0,new int[]{5000});AccessibilityNodeInfo answer=answerNode(row);if(answer!=null)return answer;
+   }
+  }return null;
+ }
+ private boolean incomingNotificationMatches(String identity){
+  for(StatusBarNotification item:target.getSystemService(NotificationManager.class).getActiveNotifications()){
+   if(item.getId()!=1502||!target.getPackageName().equals(item.getPackageName()))continue;
+   Notification notification=item.getNotification();
+   android.app.NotificationChannel channel=target.getSystemService(NotificationManager.class).getNotificationChannel(CallNotifications.INCOMING_CHANNEL);
+   Person person=notification.extras.getParcelable(Notification.EXTRA_CALL_PERSON,Person.class);
+   return CallNotifications.INCOMING_CHANNEL.equals(notification.getChannelId())&&notification.fullScreenIntent!=null&&channel!=null
+    &&channel.getImportance()==NotificationManager.IMPORTANCE_HIGH&&person!=null&&identity.contentEquals(person.getName())
+    &&notification.extras.getParcelable(Notification.EXTRA_ANSWER_INTENT,PendingIntent.class)!=null
+    &&notification.extras.getParcelable(Notification.EXTRA_DECLINE_INTENT,PendingIntent.class)!=null
+    &&String.valueOf(notification.extras.getString(Notification.EXTRA_TEMPLATE)).endsWith("$CallStyle");
+  }return false;
+ }
  private void answerNative()throws Exception {
+  Call owned=PhoneSessionService.current;CallIslandState initial=PhoneSessionService.islandSnapshot();assertNotNull(owned);assertNotNull(initial);
+  String token=initial.token,identity=initial.name.trim().isEmpty()?initial.number:initial.name;
+  assertEquals(NUMBER,initial.number);assertEquals(NUMBER,owned.getDetails().getHandle().getSchemeSpecificPart());
   String configured=shell("cmd overlay lookup com.android.systemui com.android.systemui:integer/touch_acceptance_delay").trim();assertTrue(configured.matches("[0-9]+"));int delay=Integer.parseInt(configured);assertTrue(delay>=0&&delay<=3000);
-  long required=Math.max(350,delay+100),started=SystemClock.uptimeMillis(),stable=-1;Rect previous=new Rect();int window=-1;AccessibilityNodeInfo answer=null;
+  long required=Math.max(350,delay+100),started=SystemClock.uptimeMillis(),stable=-1,stableMillis=0;Rect previous=new Rect();int window=-1;AccessibilityNodeInfo answer=null;
   while(SystemClock.uptimeMillis()-started<12000){
-   AccessibilityNodeInfo candidate=nativeAnswer();Rect now=new Rect();if(candidate!=null)candidate.getBoundsInScreen(now);
-   if(candidate!=null&&!now.isEmpty()&&state(Call.STATE_RINGING)){
+   CallIslandState current=PhoneSessionService.islandSnapshot();
+   String currentIdentity=current==null?"":current.name.trim().isEmpty()?current.number:current.name;
+   // Contact lookup may resolve after Telecom first binds. Keep the same owned
+   // call/number, but restart the native touch guard for its newly rendered row.
+   if(!identity.equals(currentIdentity)){identity=currentIdentity;stable=-1;}
+   boolean currentOwned=current!=null&&PhoneSessionService.current==owned&&token.equals(current.token)&&NUMBER.equals(current.number);
+   AccessibilityNodeInfo candidate=currentOwned&&!identity.isEmpty()?nativeAnswer(identity):null;
+   Rect now=new Rect();if(candidate!=null)candidate.getBoundsInScreen(now);
+   boolean ready=currentOwned&&candidate!=null&&candidate.isEnabled()&&!now.isEmpty()&&state(Call.STATE_RINGING)&&incomingNotificationMatches(identity);
+   if(ready){
     if(stable<0||!now.equals(previous)||window!=candidate.getWindowId())stable=SystemClock.uptimeMillis();previous.set(now);window=candidate.getWindowId();
-    if(SystemClock.uptimeMillis()-stable>=required){answer=candidate;break;}
+    if(SystemClock.uptimeMillis()-stable>=required){
+     AccessibilityNodeInfo fresh=nativeAnswer(identity);Rect freshBounds=new Rect();if(fresh!=null)fresh.getBoundsInScreen(freshBounds);
+     if(fresh!=null&&fresh.isEnabled()&&window==fresh.getWindowId()&&now.equals(freshBounds)){answer=fresh;stableMillis=SystemClock.uptimeMillis()-stable;break;}
+     stable=-1;
+    }
    }else stable=-1;Thread.sleep(50);
   }
-  assertNotNull("Real SystemUI Answer must settle beyond native touch guard",answer);assertTrue(new Rect(0,0,480,854).contains(previous));
+  assertNotNull("Owned-caller SystemUI Answer must settle beyond native touch guard",answer);assertTrue(new Rect(0,0,480,854).contains(previous));
+  assertSame(owned,PhoneSessionService.current);assertEquals(token,PhoneSessionService.islandSnapshot().token);assertTrue(state(Call.STATE_RINGING));assertTrue(incomingNotificationMatches(identity));
   long down=SystemClock.uptimeMillis();pointer(down,MotionEvent.ACTION_DOWN,previous.centerX(),previous.centerY());Thread.sleep(50);pointer(down,MotionEvent.ACTION_UP,previous.centerX(),previous.centerY());
-  await(()->state(Call.STATE_ACTIVE),"Native SystemUI pointer answer did not receive Telecom acknowledgement");
+  await(()->PhoneSessionService.current==owned&&state(Call.STATE_ACTIVE)&&PhoneSessionService.islandSnapshot()!=null&&token.equals(PhoneSessionService.islandSnapshot().token),"Native SystemUI pointer answer did not activate its owned Telecom call");
+  nativeAnswers.put(new JSONObject().put("token",token).put("number",NUMBER).put("window_id",window).put("bounds",previous.toShortString())
+   .put("stable_millis",stableMillis).put("configured_touch_acceptance_delay_millis",delay).put("input_method","native-pointer").put("native_caller_row",true));
+ }
+ private void resolveHome()throws Exception {
+  String output=shell("cmd package resolve-activity --brief --user 0 -a android.intent.action.MAIN -c android.intent.category.HOME");ComponentName home=null;
+  for(String line:output.split("\\n")){ComponentName candidate=ComponentName.unflattenFromString(line.trim());if(candidate!=null)home=candidate;}
+  assertNotNull("Platform must resolve its actual Home component: "+output,home);launcherPackage=home.getPackageName();
+  assertFalse("A resolver is not the Home app","android".equals(launcherPackage));
+ }
+ private boolean homeResumed()throws Exception {
+  boolean resumed=false;for(String line:shell("dumpsys activity activities").split("\\n"))
+   if((line.contains("mResumedActivity")||line.contains("topResumedActivity"))&&line.contains(" "+launcherPackage+"/")){resumed=true;break;}
+  return resumed;
+ }
+ private boolean homeNativeVisible(){
+  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+   if(window.getType()!=AccessibilityWindowInfo.TYPE_APPLICATION)continue;AccessibilityNodeInfo root=window.getRoot();
+   if(root!=null&&root.isVisibleToUser()&&launcherPackage.contentEquals(String.valueOf(root.getPackageName())))return true;
+  }return false;
+ }
+ private void awaitHome(String stage)throws Exception {
+  await(()->homeResumed()&&homeNativeVisible(),"Actual native Home foreground missing: "+stage);
+  assertTrue(homeResumed());assertTrue(homeNativeVisible());
+  foregroundEvidence.put(new JSONObject().put("stage",stage).put("foreground_package",launcherPackage).put("top_resumed",true).put("native_application_window_visible",true));
  }
  private static void restore(SharedPreferences preferences,Map<String,?> values){
   SharedPreferences.Editor editor=preferences.edit().clear();for(Map.Entry<String,?> item:values.entrySet()){

@@ -287,6 +287,12 @@ final class SettingsBackup {
   java.io.File file=new java.io.File(app.getFilesDir(),"settings_archive_restore.pending");
   return file.exists()||new java.io.File(file+".bak").exists();
  }
+ /** Restore side effects from the resolved preferences; a pending journal must stay inert. */
+ static void reconcileAfterRecovery(Context context){
+  if(hasPendingRestore(context))return;
+  Context app=context.getApplicationContext();AppIcons.ensure(app);CallArchive.schedule(app);
+  CallbackReminder.schedule(app);ContactPhotos.clearCache();WidgetSupport.refreshAll(app);
+ }
  /** Pause explicit preference edits while an interrupted restore still owns its undo keys. */
  static boolean allowPreferenceChange(Context context){
   if(!hasPendingRestore(context))return true;

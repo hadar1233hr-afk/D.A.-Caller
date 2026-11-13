@@ -1,0 +1,40 @@
+{
+  "time_utc": "2026-11-13T06:11:26.366308+00:00",
+  "state": "SOURCE_AND_SYNTHETIC_CONTRACTS_PASS_NOT_NATIVE_APPROVAL",
+  "actual_contract_methods_pass": 16,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "final_command": "GITHUB_RUN_ID=987654321 python3 -m unittest scripts.tests.test_da_caller_modern_native -v",
+  "log": "/workspace/work/modern-native-verifier-contracts-final.log",
+  "source_sha256": {
+    "scripts/verify-modern-features-native.py": "b7cac8ef0b4ae17d14ac38300baf1803e978ff2c001030ac37c319ae25f5022f",
+    "scripts/tests/test_da_caller_modern_native.py": "a292d65b0f0d7ce2e35801a231c7d2d0a634bd71ab71d1a3ba66f0488b55ebbd"
+  },
+  "all_original_seven_verifiers_byte_unchanged": true,
+  "original_verifier_sha256": {
+    "verify-ui-matrix.py": "e3fd18f544b028ffeddaddee272b2f4e7aefa2cc47f5d2d90fac5d9580c9dab2",
+    "verify-personalization-matrix.py": "0fa3106ef1832cd5fb7fd8df167c56e19c70b5a034ae1ffc20636659220d2825",
+    "verify-call-integration-matrix.py": "0dbe8072173a2417ce9bb46fb686c9ab8fc194255c38dabdb1e396d5e0b22e6f",
+    "verify-island-matrix.py": "a2f0b025aeb20536acadd574ec36a500141516a9cefe3f99e4b4478fa051be36",
+    "verify-external-island-matrix.py": "db313c16aea96a65b1d194de80a3562e9a73204efb845473c89cff4664844c65",
+    "verify-followup-matrix.py": "6f7c540bc7703f25957be11566789e021eb438208942fc9c0d73c94579c14fa8",
+    "verify-callback-business-matrix.py": "18c3f965bd85cb4ed68ace00f83e1384b8b9416dc07a4323c5f3bfec4c0c70f2"
+  },
+  "actual_retained_legacy_artifact_check": {
+    "root": "/workspace/work/business-013-ci-43202338930/ui/ui-snapshots",
+    "old_reports": 7,
+    "old_pngs": 245,
+    "is_not_verification_of_new_native_code": true
+  },
+  "native_cases_not_executed_by_agent": 40,
+  "new_native_pngs_not_captured_by_agent": 24,
+  "publication_authorized": false,
+  "fixed": [
+    "Actual nestedAPI schema for unchangedcallintegration report",
+    "Actual baselinebytebinding to123complementary oldSHAhashes plusfull245PNGparse",
+    "Strictcounter/type/JSONduplicate andaggregateemptyJUnit guards",
+    "IndependentactualPNGARGBblenddecode",
+    "OwnedHome/Answer/ENDdrag metadata gates matchedfreshnativefixture"
+  ]
+}

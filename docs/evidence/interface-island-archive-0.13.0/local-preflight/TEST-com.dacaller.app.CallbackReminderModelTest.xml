@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.CallbackReminderModelTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:14:36" hostname="3ebae333e153" time="0.55">
+  <properties/>
+  <testcase name="outgoingConnectedTwoSecondsResolves" classname="com.dacaller.app.CallbackReminderModelTest" time="0.013"/>
+  <testcase name="onlyTodayObservedMissedCallsAppear" classname="com.dacaller.app.CallbackReminderModelTest" time="0.0"/>
+  <testcase name="localDaysFollowDstRatherThanTwentyFourHourArithmetic" classname="com.dacaller.app.CallbackReminderModelTest" time="0.002"/>
+  <testcase name="hiddenNumbersAreNotDialableOrResolvedByVisibleSentinels" classname="com.dacaller.app.CallbackReminderModelTest" time="0.0"/>
+  <testcase name="allDayMissesAreGroupedAcrossIsraeliAliases" classname="com.dacaller.app.CallbackReminderModelTest" time="0.0"/>
+  <testcase name="equalTimestampUsesStableCallLogOrder" classname="com.dacaller.app.CallbackReminderModelTest" time="0.0"/>
+  <testcase name="incomingConnectedConversationAlsoResolves" classname="com.dacaller.app.CallbackReminderModelTest" time="0.0"/>
+  <testcase name="unusuallyLargeDayIsReducedWithoutPairwiseScanning" classname="com.dacaller.app.CallbackReminderModelTest" time="0.522"/>
+  <testcase name="outputIsNewestFirstImmutableAndInputOrderIndependent" classname="com.dacaller.app.CallbackReminderModelTest" time="0.001"/>
+  <testcase name="earlierConversationCannotResolveLaterMiss" classname="com.dacaller.app.CallbackReminderModelTest" time="0.0"/>
+  <testcase name="notificationDayValidationCannotBroadenToInvalidOrFutureDay" classname="com.dacaller.app.CallbackReminderModelTest" time="0.001"/>
+  <testcase name="serviceCodesAndPostdialIdentityAreNotMergedIntoOrdinaryNumbers" classname="com.dacaller.app.CallbackReminderModelTest" time="0.0"/>
+  <testcase name="otherCallerCannotResolveOrCountAsAttempt" classname="com.dacaller.app.CallbackReminderModelTest" time="0.0"/>
+  <testcase name="rejectedBlockedAndVoicemailDurationsNeverResolve" classname="com.dacaller.app.CallbackReminderModelTest" time="0.0"/>
+  <testcase name="laterMissMakesEarlierSuccessfulCallbackInsufficient" classname="com.dacaller.app.CallbackReminderModelTest" time="0.0"/>
+  <testcase name="zeroAndOneSecondCallbacksDoNotResolveAndAreAttempts" classname="com.dacaller.app.CallbackReminderModelTest" time="0.001"/>
+  <testcase name="cutoffRollsToNextLocalDayAfterCurrentMinute" classname="com.dacaller.app.CallbackReminderModelTest" time="0.001"/>
+  <testcase name="uriAndNonPhoneInputCannotBecomeNumbers" classname="com.dacaller.app.CallbackReminderModelTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

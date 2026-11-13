@@ -276,7 +276,7 @@ final class BusinessDirectoryView implements AutoCloseable {
   }
  }
  private final class Row {
-  final LinearLayout root=horizontal();final TextView name=text("",14,true,ink()),phone=text("",13,false,gold()),extra=text("",10,false,muted()),mark=text("",19,true,gold());
+  final LinearLayout root=horizontal();final TextView name=text("",14,true,ink()),phone=text("",13,false,gold()),extra=text("",10,false,muted()),mark=text("",19,true,AppAppearance.gold(true));
   final ImageView call=new ImageView(host);
   Row(){
    root.setTag(this);root.setPadding(dp(6),dp(7),dp(4),dp(7));root.setMinimumHeight(dp(76));root.setBackground(shape(surface(),14));

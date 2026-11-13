@@ -13,7 +13,7 @@ public final class DaCallerApplication extends Application {
     try{
      SettingsBackup.recoverPendingRestore(this,id->AppIcons.apply(this,id));
      new android.os.Handler(android.os.Looper.getMainLooper()).post(()->{
-      if(!SettingsBackup.hasPendingRestore(this))AppIcons.ensure(this);
+      if(!SettingsBackup.hasPendingRestore(this))SettingsBackup.reconcileAfterRecovery(this);
      });
     }
     catch(java.io.IOException incomplete){android.util.Log.e("DA_CALLER","Backup recovery is pending; archive pruning remains paused");}

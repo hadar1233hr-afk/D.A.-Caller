@@ -46,10 +46,25 @@ def require(value, message):
         raise AssertionError(message)
 
 
+def integer(value, expected=None):
+    return type(value) is int and (expected is None or value == expected)
+
+
+def strict_object(pairs):
+    result = {}
+    for key, value in pairs:
+        require(key not in result, "Duplicate JSON key: " + key)
+        result[key] = value
+    return result
+
+
 def one(root, name):
     files = [p for p in root.rglob(name) if p.is_file()]
     require(len(files) == 1, f"Missing/duplicate {name}: {len(files)}")
-    return json.loads(files[0].read_text())
+    value = json.loads(files[0].read_text(), object_pairs_hook=strict_object,
+                       parse_constant=lambda value: require(False, "Invalid JSON number: " + value))
+    require(type(value) is dict, "Evidence must be a JSON object: " + name)
+    return value
 
 
 def flags(value, names):
@@ -89,6 +104,8 @@ def png(content, name, decode=False):
         elif kind == b"IDAT":
             require(header is not None and not ended, f"Invalid PNG data order: {name}")
             payload.extend(chunk)
+        elif kind == b"tRNS":
+            require(False, f"Native compositor PNG cannot use color-key transparency: {name}")
         elif kind == b"IEND":
             require(length == 0 and end == len(content), f"Invalid PNG ending: {name}")
             ended = True
@@ -157,9 +174,15 @@ def junit(root, sources):
             for key in ("failures", "errors", "skipped"):
                 if key in suite.attrib:
                     require(suite.attrib[key] == "0", "Nonzero native JUnit " + key)
-            cases = suite.findall("testcase")
-            if cases and "tests" in suite.attrib:
+            cases = list(suite.iter("testcase"))
+            if "tests" in suite.attrib:
                 require(suite.attrib["tests"].isdigit() and int(suite.attrib["tests"]) == len(cases), "Native JUnit counter mismatch")
+        if document.tag == "testsuites" and "tests" in document.attrib:
+            count = document.attrib["tests"]
+            require(count.isdigit() and int(count) == len(list(document.iter("testcase"))), "Native JUnit aggregate counter mismatch")
+        for key in ("failures", "errors", "skipped"):
+            if key in document.attrib:
+                require(document.attrib[key] == "0", "Nonzero native JUnit aggregate " + key)
         for case in document.iter("testcase"):
             identity = (case.get("classname"), case.get("name"))
             require(identity not in actual, "Duplicate native JUnit method")
@@ -175,7 +198,7 @@ def presentation(proof):
     require([(o.get("theme"), o.get("language")) for o in observations] == [("light", "en"), ("dark", "he")], "Both native theme/language cases required")
     for value in observations:
         require(large_font(value.get("font_scale")), "Actual large-font configuration missing")
-        require(value.get("inline_expansion_dial_requests") == 0 and value.get("icon_choices") == 9
+        require(integer(value.get("inline_expansion_dial_requests"), 0) and integer(value.get("icon_choices"), 9)
                 and value.get("selected_last_icon") == "signal", "Inline no-dial/ninth picker entry failed")
         left, top, right, bottom = rectangle(value.get("settings_bounds"))
         require(left < 30 and right - left >= 72 and bottom - top >= 72, "Settings must be top-left and48dp")
@@ -201,7 +224,7 @@ def backup(proof):
                           "pending_recovery_after_success": False, "raw_archive_uploaded": False}.items():
         require(type(value.get(key)) is type(expected) and value[key] == expected, "Wrong backup result: " + key)
     before = value.get("preexisting_rows_preserved")
-    require(type(before) is int and before >= 0 and value.get("stored_rows_before") == value.get("stored_rows_exported") == before + 2,
+    require(type(before) is int and before >= 0 and integer(value.get("stored_rows_before"), before + 2) and integer(value.get("stored_rows_exported"), before + 2),
             "All stored rows including OFF-policy records must be exported and retained")
 
 
@@ -219,32 +242,56 @@ def island(proof, images):
     require(proof.get("default_dialer") == "com.dacaller.app" and "Android Telecom -> production PhoneSessionService" in proof.get("data_origin", ""), "Actual production Telecom binding missing")
     first, second = proof.get("first_token"), proof.get("second_token")
     require(isinstance(first, str) and first and isinstance(second, str) and second and first != second, "Two distinct real call tokens required")
+    launcher = proof.get("launcher_package")
+    require(isinstance(launcher, str) and re.fullmatch(r"[A-Za-z][A-Za-z0-9_]*(?:\.[A-Za-z][A-Za-z0-9_]*)+", launcher)
+            and launcher not in {"com.dacaller.app", "com.android.systemui"}, "Resolved native Home package missing")
+    foreground = proof.get("foreground_evidence", [])
+    require([value.get("stage") for value in foreground] == ["active-home", "hide-home", "restore-home", "status-external", "new-call-home"], "Every named Home frame needs actual foreground evidence")
+    for value in foreground:
+        require(value.get("foreground_package") == launcher, "Home capture belongs to another app")
+        flags(value, ("top_resumed", "native_application_window_visible"))
+    answers = proof.get("answers", [])
+    require([value.get("token") for value in answers] == [first, second], "Native answer must bind each distinct owned call")
+    for value in answers:
+        rectangle(value.get("bounds"))
+        delay, stable, window = (value.get(key) for key in ("configured_touch_acceptance_delay_millis", "stable_millis", "window_id"))
+        require(integer(delay) and 0 <= delay <= 3000 and integer(stable) and stable >= max(350, delay + 100)
+                and integer(window) and window >= 0 and value.get("number") == "0500099971"
+                and value.get("input_method") == "native-pointer" and value.get("native_caller_row") is True,
+                "Native answer must use stable caller-owned SystemUI bounds beyond its actual touch guard")
     commands = proof.get("modem_commands", [])
     require([c.get("operation") for c in commands] == ["call", "cancel", "call", "cancel"], "Actual modem lifecycle required")
-    require(len({c.get("id") for c in commands}) == 4 and len({c.get("serial") for c in commands}) == 1, "Unique modem acknowledgements required")
+    require(all(isinstance(c.get("id"), str) and re.fullmatch(r"[0-9]+", c["id"]) for c in commands)
+            and len({c["id"] for c in commands}) == 4 and len({c.get("serial") for c in commands}) == 1, "Unique modem acknowledgements required")
     for command in commands:
-        require(command.get("number") == "0500099971" and command.get("returncode") == 0
+        require(command.get("number") == "0500099971" and integer(command.get("returncode"), 0)
                 and re.fullmatch(r"emulator-[0-9]+", str(command.get("serial", ""))), "Invalid emulator modem acknowledgement")
         if command.get("operation") == "call":
             require("OK" in command.get("stdout", ""), "Modem call not acknowledged")
     gestures = proof.get("gestures", [])
     require([g.get("kind") for g in gestures] == ["completed_external_drag", "cancelled_external_drag", "drag_started_on_end_control"], "All real drag outcomes required")
-    require(all(g.get("call_state") == 4 for g in gestures), "Dragging must preserve active Telecom call")
+    require(all(integer(g.get("call_state"), 4) for g in gestures), "Dragging must preserve active Telecom call")
     completed, cancelled, child = gestures
     initial, moved = rectangle(completed.get("before")), rectangle(completed.get("after"))
     require(moved[1] > initial[1] + 75 and type(completed.get("x")) is int and type(completed.get("y")) is int
             and 0 <= completed["x"] <= 10000 and 0 < completed["y"] <= 10000, "Real drag must move window and save normalized position")
     flags(cancelled, ("normalized_position_preserved", "geometry_restored"))
     require(child.get("end_confirmation_opened") is False, "Dragging End must not dispatch click")
+    child_before, child_after = rectangle(child.get("before")), rectangle(child.get("after"))
+    before_position, after_position = child.get("position_before"), child.get("position_after")
+    require(child_after[1] > child_before[1] + 38 and integer(before_position) and integer(after_position)
+            and 0 <= before_position < after_position <= 10000 and child.get("body_scrolling_required") is False,
+            "Drag beginning on End must actually move and save its non-overflowing owned window")
     surfaces = proof.get("surfaces", [])
     require([s.get("stage") for s in surfaces] == ["external-protected-status-fallback", "inapp-supported-central-status-area", "inapp-default-below-restored"], "Protected fallback/default restoration proof missing")
     for value, overlays in zip(surfaces, (1, 0, 0)):
         rectangle(value.get("bounds"))
-        require(value.get("token") == first and value.get("call_state") == 4 and value.get("external_overlay_count") == overlays, "Wrong owned island surface")
+        require(value.get("token") == first and integer(value.get("call_state"), 4) and integer(value.get("external_overlay_count"), overlays), "Wrong owned island surface")
     transparent = proof.get("transparency", {})
     flags(transparent, ("background_is_real_app_compositor",))
-    require(transparent.get("view_alpha") == transparent.get("caller_alpha") == 1
-            and transparent.get("background_alpha_35") == 89 and transparent.get("rgb_tolerance") == 3, "Opacity must affect background only")
+    require(type(transparent.get("view_alpha")) in (int, float) and transparent["view_alpha"] == 1
+            and type(transparent.get("caller_alpha")) in (int, float) and transparent["caller_alpha"] == 1
+            and integer(transparent.get("background_alpha_35"), 89) and integer(transparent.get("rgb_tolerance"), 3), "Opacity must affect background only")
     left, top, right, bottom = rectangle(transparent.get("sample_region"))
     samples = transparent.get("samples", [])
     require(len(samples) == 5 and len({(s.get("x"), s.get("y")) for s in samples}) == 5, "Five distinct real compositor samples required")
@@ -254,7 +301,7 @@ def island(proof, images):
         x, y = sample.get("x"), sample.get("y")
         require(type(x) is int and type(y) is int and left <= x < right and top <= y < bottom, "Sample outside actual capsule")
         for key, data in decoded.items():
-            require(type(sample.get(key)) is int and sample[key] & 0xffffffff == argb(data, x, y), "Reported sample differs from actual saved PNG: " + key)
+            require(integer(sample.get(key)) and -(1 << 31) <= sample[key] < (1 << 31) and sample[key] & 0xffffffff == argb(data, x, y), "Reported sample differs from actual saved PNG: " + key)
         base, zero, partial, opaque = (sample[k] & 0xffffffff for k in ("background", "opacity0", "opacity35", "opacity100"))
         require(base == zero, "Zero background opacity must expose exact real underlying pixels")
         difference = 0
@@ -266,6 +313,37 @@ def island(proof, images):
         require(difference > 80, "Samples cannot distinguish actual underlying content and opaque capsule")
 
 
+def legacy(baseline, all_baseline, source, app_tree):
+    images = {p.name: p for p in all_baseline}
+    hashes = {}
+    for name, path in images.items():
+        content = path.read_bytes()
+        png(content, name)
+        hashes[name] = hashlib.sha256(content).hexdigest()
+    reports, covered = {}, set()
+    for name, count in LEGACY.items():
+        report = one(baseline, name)
+        api = report.get("native_assertions", {}).get("api") if name == "call-integration-verification.json" else report.get("api")
+        require(report.get("source_sha") == source and report.get("app_tree") == app_tree
+                and integer(api, 33) and integer(report.get("required_real_png_files"), count),
+                "Original gate was not completed on current source: " + name)
+        if os.environ.get("GITHUB_RUN_ID") is not None:
+            require(report.get("workflow_run_id") == os.environ["GITHUB_RUN_ID"], "Legacy report belongs to another workflow run: " + name)
+        if name == "call-integration-verification.json":
+            flags(report.get("native_assertions", {}), ("real_systemui", "notification_actions_acknowledged", "native_back_returns_to_app", "real_phone_call_foreground_service"))
+        if name != "matrix-verification.json":
+            saved = report.get("sha256", {})
+            require(type(saved) is dict and len(saved) == count, "Missing original PNG hashes: " + name)
+            for frame, digest in saved.items():
+                require(frame in hashes and re.fullmatch(r"[0-9a-f]{64}", str(digest)) and digest == hashes[frame], "Original saved PNG bytes differ: " + frame)
+            require(not covered.intersection(saved), "Ambiguous original report coverage: " + name)
+            covered.update(saved)
+        reports[name] = hashlib.sha256(json.dumps(report, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+    require(len(covered) == 123, "Original complementary123-frame reports missing")
+    require(one(baseline, "matrix-verification.json").get("all_files") == sorted(images), "Original matrix names differ from required native gate")
+    return reports
+
+
 def verify(baseline, modern, junit_root):
     require(baseline.resolve() != modern.resolve(), "Baseline and additive PNG roots must be separate")
     source = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
@@ -273,14 +351,7 @@ def verify(baseline, modern, junit_root):
     all_baseline = [p for p in baseline.rglob("*.png") if p.is_file()]
     require(len(all_baseline) == len({p.name for p in all_baseline}) == 245, "All original245 real PNGs must remain present exactly once")
     require(not any("modern-" in p.name or any(bad in p.name for bad in ("failed", "unreachable", "not-ready")) for p in all_baseline), "No additive/diagnostic filtering in original matrix")
-    legacy_reports = {}
-    for name, count in LEGACY.items():
-        report = one(baseline, name)
-        require(report.get("source_sha") == source and report.get("app_tree") == app_tree
-                and report.get("api") == 33 and report.get("required_real_png_files") == count,
-                "Original gate was not completed on current source: " + name)
-        legacy_reports[name] = hashlib.sha256(json.dumps(report, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
-    require(one(baseline, "matrix-verification.json").get("all_files") == sorted(p.name for p in all_baseline), "Original matrix names differ from required native gate")
+    legacy_reports = legacy(baseline, all_baseline, source, app_tree)
     files = [p for p in modern.rglob("*.png") if p.is_file()]
     counts = collections.Counter(p.name for p in files)
     require(set(counts) == REQUIRED and all(v == 1 for v in counts.values()) and len(files) == 24, "Require exactly24 new real PNGs; no missing/duplicate/unknown diagnostic frame")
@@ -291,13 +362,13 @@ def verify(baseline, modern, junit_root):
     proofs = {}
     for name, expected in PROOFS.items():
         proof = one(modern, name)
-        require(proof.get("api") == 33 and proof.get("density_dpi") == 240 and large_font(proof.get("font_scale"))
-                and proof.get("package") == "com.dacaller.app" and proof.get("version_name") == "0.13.0" and proof.get("version_code") == 22, "Wrong native package/version/configuration")
+        require(integer(proof.get("api"), 33) and integer(proof.get("density_dpi"), 240) and large_font(proof.get("font_scale"))
+                and proof.get("package") == "com.dacaller.app" and proof.get("version_name") == "0.13.0" and integer(proof.get("version_code"), 22), "Wrong native package/version/configuration")
         require(proof.get("physical_carrier_audio_verified") is False and proof.get("matching_key_upgrade_verified") is False, "Emulator cannot establish hardware/audio/upgrade proof")
         captures = proof.get("captures", {})
         require(set(captures) == expected, "Exact per-scenario saved captures missing: " + name)
         for frame, value in captures.items():
-            require(value.get("sha256") == hashes[frame] and value.get("width") == 480 and value.get("height") == 854
+            require(value.get("sha256") == hashes[frame] and integer(value.get("width"), 480) and integer(value.get("height"), 854)
                     and value.get("method") == "UiAutomation.takeScreenshot", "Real compositor saved bytes differ: " + frame)
         proofs[name] = proof
     presentation(proofs["modern-presentation-native.json"])

@@ -57,13 +57,21 @@ final class CallbackReminder {
  private static SharedPreferences prefs(Context context){return context.getSharedPreferences("da_caller",Context.MODE_PRIVATE);}
  static boolean enabled(Context context){return prefs(context).getBoolean(PREF_ENABLED,false);}
  static int minuteOfDay(Context context){return Math.max(0,Math.min(1439,prefs(context).getInt(PREF_MINUTE,DEFAULT_MINUTE)));}
- static void setEnabled(Context context,boolean value){prefs(context).edit().putBoolean(PREF_ENABLED,value).apply();schedule(context);}
+ static void setEnabled(Context context,boolean value){if(!SettingsBackup.allowPreferenceChange(context))return;prefs(context).edit().putBoolean(PREF_ENABLED,value).apply();schedule(context);}
  static void setMinuteOfDay(Context context,int minute){
   if(minute<0||minute>1439)throw new IllegalArgumentException("Reminder minute must be0..1439");
+  if(!SettingsBackup.allowPreferenceChange(context))return;
   prefs(context).edit().putInt(PREF_MINUTE,minute).apply();schedule(context);
  }
  static String tr(Context context,String he,String en){return I18n.isEnglish(context)?en:he;}
  private static boolean permitted(Context context,String permission){return context.checkSelfPermission(permission)==PackageManager.PERMISSION_GRANTED;}
+ /** Pending preferences may be transient; live privacy revocation still removes our summary. */
+ private static boolean deferForRecovery(Context app){
+  if(!SettingsBackup.hasPendingRestore(app))return false;
+  if(!MissedCallNotifications.isDefaultDialer(app)||!permitted(app,Manifest.permission.READ_CALL_LOG)
+    ||Build.VERSION.SDK_INT>=33&&!permitted(app,Manifest.permission.POST_NOTIFICATIONS))cancelNotification(app);
+  return true;
+ }
  static Intent alarmIntent(Context context,long due,TimeZone zone){
   return new Intent(context,CallbackReminderReceiver.class).setAction(ACTION_ALARM)
    .putExtra(EXTRA_DAY,CallbackReminderModel.day(due,zone).key).putExtra(EXTRA_ZONE,zone.getID()).putExtra(EXTRA_DUE,due);
@@ -73,7 +81,10 @@ final class CallbackReminder {
  }
  static void schedule(Context context){schedule(context,System.currentTimeMillis());}
  static void schedule(Context context,long now){
-  Context app=context.getApplicationContext();AlarmManager manager=app.getSystemService(AlarmManager.class);if(manager==null)return;
+  Context app=context.getApplicationContext();
+  // Recovery still owns these preferences; retain the last valid alarm/summary.
+  if(deferForRecovery(app))return;
+  AlarmManager manager=app.getSystemService(AlarmManager.class);if(manager==null)return;
   if(!enabled(app)){
    PendingIntent old=PendingIntent.getBroadcast(app,15040,new Intent(app,CallbackReminderReceiver.class).setAction(ACTION_ALARM),
     PendingIntent.FLAG_NO_CREATE|PendingIntent.FLAG_IMMUTABLE);
@@ -91,7 +102,7 @@ final class CallbackReminder {
  }
  static void maybeRefresh(Context context){maybeRefresh(context,System.currentTimeMillis());}
  private static void maybeRefresh(Context context,long now){
-  Context app=context.getApplicationContext();
+  Context app=context.getApplicationContext();if(deferForRecovery(app))return;
   if(!enabled(app)){refreshAgain.set(false);cancelNotification(app);return;}
   for(PhoneSessionService.CallbackConnection active:PhoneSessionService.callbackConnections()){
    if(active.connectedAtMillis<=0)continue;long elapsed=now-active.connectedAtMillis;
@@ -106,7 +117,8 @@ final class CallbackReminder {
  }
  /** Runs on the reminder worker. Existing summaries remain current if the user postpones the cutoff. */
  static void refreshNow(Context context,long now){
-  Context app=context.getApplicationContext();if(!enabled(app)){cancelNotification(app);return;}
+  Context app=context.getApplicationContext();if(deferForRecovery(app))return;
+  if(!enabled(app)){cancelNotification(app);return;}
   TimeZone zone=TimeZone.getDefault();CallbackReminderModel.Day today=CallbackReminderModel.day(now,zone);
   // Calculating via the next-day helper retains local-clock/DST semantics.
   long cutoff=CallbackReminderModel.nextAlarm(today.start-1,minuteOfDay(app),zone);
@@ -188,7 +200,8 @@ final class CallbackReminder {
  }
  static boolean deliver(Context context,Intent alarm,long now){
   long began=android.os.SystemClock.elapsedRealtime();
-  Context app=context.getApplicationContext();CallbackReminderModel.Day today=CallbackReminderModel.day(now,TimeZone.getDefault());
+  Context app=context.getApplicationContext();if(deferForRecovery(app))return false;
+  CallbackReminderModel.Day today=CallbackReminderModel.day(now,TimeZone.getDefault());
   if(alarm==null||!ACTION_ALARM.equals(alarm.getAction())||!enabled(app))return false;
   if(!today.key.equals(alarm.getStringExtra(EXTRA_DAY))||!today.zone.equals(alarm.getStringExtra(EXTRA_ZONE))
     ||alarm.getLongExtra(EXTRA_DUE,Long.MAX_VALUE)>now)return false;
