@@ -113,7 +113,13 @@ public class CallIslandControllerTest {
    content.measure(View.MeasureSpec.makeMeasureSpec(viewportWidth,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(viewportHeight,View.MeasureSpec.EXACTLY));
    content.layout(0,0,viewportWidth,viewportHeight);content.getViewTreeObserver().dispatchOnGlobalLayout();
   }
-  shadowOf(Looper.getMainLooper()).idle();
+  // A visible Robolectric ViewRoot still owns its original window dimensions.
+  // Leave this explicitly resized content pane laid out after draining traversal.
+  FrameLayout pane=content();
+  pane.measure(View.MeasureSpec.makeMeasureSpec(viewportWidth,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(viewportHeight,View.MeasureSpec.EXACTLY));
+  pane.layout(0,0,viewportWidth,viewportHeight);pane.getViewTreeObserver().dispatchOnGlobalLayout();
+  pane.measure(View.MeasureSpec.makeMeasureSpec(viewportWidth,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(viewportHeight,View.MeasureSpec.EXACTLY));
+  pane.layout(0,0,viewportWidth,viewportHeight);
  }
  private View tag(String value){return content().findViewWithTag(value);}
  private boolean visibleIsland(){View view=tag("island-root");return view!=null&&view.getVisibility()==View.VISIBLE&&view.getParent()!=null;}
@@ -249,7 +255,9 @@ public class CallIslandControllerTest {
   island.start();layout();expand();
   assertSame(content(),tag("island-root").getParent());
   viewportWidth=240;viewportHeight=148;layout();
-  View capsule=tag("island-root");assertTrue(capsule.getParent() instanceof android.widget.ScrollView);
+  assertEquals("The host pane must actually be resized",viewportWidth,content().getWidth());
+  assertEquals("The host pane must actually be resized",viewportHeight,content().getHeight());
+  View capsule=tag("island-root");assertTrue("Overflowing capsule must be scrollable: "+capsule.getHeight()+" in "+content().getHeight(),capsule.getParent() instanceof android.widget.ScrollView);
   android.widget.ScrollView scroll=(android.widget.ScrollView)capsule.getParent();
   assertTrue(scroll.getLeft()>=0);assertTrue(scroll.getRight()<=viewportWidth);assertTrue(scroll.getTop()>=0);assertTrue(scroll.getBottom()<=viewportHeight);
   assertTrue(capsule.getHeight()>scroll.getHeight());

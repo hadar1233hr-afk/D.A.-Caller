@@ -46,6 +46,39 @@ public class CallScreenActivityTest {
  private void send(View view,int action,float x,float y){
   MotionEvent event=MotionEvent.obtain(10,20,action,x,y,0);view.dispatchTouchEvent(event);event.recycle();
  }
+ @Test @org.robolectric.annotation.SQLiteMode(org.robolectric.annotation.SQLiteMode.Mode.NATIVE)
+ public void pendingRestoreDefersNoteSaveWhileOwnedCallControlsRemainAvailable()throws Exception{
+  when(call.getState()).thenReturn(Call.STATE_ACTIVE);CallScreenActivity activity=open();
+  preferences.edit().putString("note_","Original note").commit();
+  java.lang.reflect.Method note=CallScreenActivity.class.getDeclaredMethod("openNote",Call.class);note.setAccessible(true);note.invoke(activity,call);
+  android.app.Dialog dialog=org.robolectric.shadows.ShadowDialog.getLatestDialog();assertNotNull(dialog);assertTrue(dialog.isShowing());
+  android.widget.EditText editor=findType(dialog.getWindow().getDecorView(),android.widget.EditText.class);assertNotNull(editor);editor.setText("New note after recovery");
+  android.widget.TextView save=findTextValue(dialog.getWindow().getDecorView(),"Save");assertNotNull(save);
+  java.util.Map<String,Object> prior=new java.util.LinkedHashMap<>();prior.put("note_","Original note");
+  SettingsBackup.PendingRestore pending=new SettingsBackup.PendingRestore(activity,java.util.UUID.randomUUID().toString(),"crest",new SettingsBackup.Snapshot(prior),java.util.Collections.emptySet());
+  try{
+   pending.write();preferences.edit().putString("note_","Interrupted imported note").commit();save.performClick();
+   assertTrue(dialog.isShowing());assertEquals("Interrupted imported note",preferences.getString("note_",""));assertSame(call,PhoneSessionService.current);
+   assertNotNull(tagged(activity,"call-end"));verify(call,never()).disconnect();verify(call,never()).answer(anyInt());
+   SettingsBackup.recoverPendingRestore(activity,id->true);assertEquals("Original note",preferences.getString("note_",""));
+   save.performClick();assertEquals("New note after recovery",preferences.getString("note_",""));assertFalse(dialog.isShowing());
+   assertSame(call,PhoneSessionService.current);verify(call,never()).disconnect();
+  }finally{pending.clear();dialog.dismiss();}
+ }
+ private <T extends View>T findType(View view,Class<T> type){
+  if(type.isInstance(view))return type.cast(view);
+  if(view instanceof ViewGroup)for(int i=0;i<((ViewGroup)view).getChildCount();i++){
+   T found=findType(((ViewGroup)view).getChildAt(i),type);if(found!=null)return found;
+  }
+  return null;
+ }
+ private android.widget.TextView findTextValue(View view,String value){
+  if(view instanceof android.widget.TextView&&value.contentEquals(((android.widget.TextView)view).getText()))return (android.widget.TextView)view;
+  if(view instanceof ViewGroup)for(int i=0;i<((ViewGroup)view).getChildCount();i++){
+   android.widget.TextView found=findTextValue(((ViewGroup)view).getChildAt(i),value);if(found!=null)return found;
+  }
+  return null;
+ }
  @Test public void dialingAndConnectedScreensRenderAllFiveLayoutsWithoutCrashing(){
   // Previous tests only covered RINGING. Real outgoing calls reach DIALING first.
   for(String theme:CallThemes.IDS){

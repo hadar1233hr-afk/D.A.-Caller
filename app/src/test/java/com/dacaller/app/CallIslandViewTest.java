@@ -194,7 +194,11 @@ public class CallIslandViewTest {
   assertEquals(1,listener.starts);assertEquals(1,listener.moves);assertEquals(1,listener.finishes);
   assertTrue(listener.actions.isEmpty());assertEquals(0,listener.opens);assertEquals(0,listener.collapses);
   island.bind(active("drag-call"),false);layout(320);
-  motion(MotionEvent.ACTION_DOWN,60,25);motion(MotionEvent.ACTION_MOVE,61,26);motion(MotionEvent.ACTION_UP,61,26);
+  Rect compact=bounds(required("island-expand"));float tapX=compact.exactCenterX(),tapY=compact.exactCenterY();
+  assertTrue(compact.contains((int)tapX,(int)tapY));
+  motion(MotionEvent.ACTION_DOWN,tapX,tapY);motion(MotionEvent.ACTION_MOVE,tapX+1,tapY+1);motion(MotionEvent.ACTION_UP,tapX+1,tapY+1);
+  // Attached Android Views post PerformClick after UP; execute that real callback.
+  Shadows.shadowOf(Looper.getMainLooper()).idle();
   assertEquals(1,listener.expands);assertEquals(1,listener.starts);
  }
  @Test public void cancelReplacementAndSecondPointerCannotDispatchOrCompleteAnOldGesture(){
@@ -226,17 +230,26 @@ public class CallIslandViewTest {
   assertTrue(island.getHeight()>scroll.getHeight());
   Rect end=bounds(required("island-action-END"));scroll.scrollTo(0,end.top-dp(30));
   int before=scroll.getScrollY();float x=end.exactCenterX(),y=end.exactCenterY()-before;
-  for(int action:new int[]{MotionEvent.ACTION_DOWN,MotionEvent.ACTION_MOVE,MotionEvent.ACTION_UP}){
-   MotionEvent event=MotionEvent.obtain(SystemClock.uptimeMillis(),SystemClock.uptimeMillis(),action,x,action==MotionEvent.ACTION_DOWN?y:y-dp(40),0);
-   scroll.dispatchTouchEvent(event);event.recycle();
-  }
-  assertEquals(0,listener.starts);assertTrue(listener.actions.isEmpty());assertTrue(scroll.getScrollY()>before);
+  // The first MOVE lets ScrollView intercept; the next MOVE must actually scroll.
+  scrollMotion(scroll,MotionEvent.ACTION_DOWN,x,y);
+  scrollMotion(scroll,MotionEvent.ACTION_MOVE,x,y-dp(20));
+  scrollMotion(scroll,MotionEvent.ACTION_MOVE,x,y-dp(60));
+  scrollMotion(scroll,MotionEvent.ACTION_UP,x,y-dp(60));
+  Shadows.shadowOf(Looper.getMainLooper()).idle();
+  assertEquals("Body scrolling must not start island dragging",0,listener.starts);
+  assertTrue("Body scrolling must cancel its touched call action",listener.actions.isEmpty());
+  assertTrue("Real ScrollView must advance from "+before+" but was "+scroll.getScrollY(),scroll.getScrollY()>before);
   scroll.scrollTo(0,0);
-  for(int action:new int[]{MotionEvent.ACTION_DOWN,MotionEvent.ACTION_MOVE,MotionEvent.ACTION_UP}){
-   MotionEvent event=MotionEvent.obtain(SystemClock.uptimeMillis(),SystemClock.uptimeMillis(),action,dp(60),action==MotionEvent.ACTION_DOWN?dp(25):dp(70),0);
-   scroll.dispatchTouchEvent(event);event.recycle();
-  }
+  Rect header=bounds(required("island-header"));float headerX=header.exactCenterX(),headerY=header.exactCenterY();
+  assertTrue(header.contains((int)headerX,(int)headerY));
+  scrollMotion(scroll,MotionEvent.ACTION_DOWN,headerX,headerY);
+  scrollMotion(scroll,MotionEvent.ACTION_MOVE,headerX,headerY+dp(45));
+  scrollMotion(scroll,MotionEvent.ACTION_UP,headerX,headerY+dp(45));
   assertEquals(1,listener.starts);assertEquals(1,listener.finishes);assertTrue(listener.actions.isEmpty());
  }
 
+ private void scrollMotion(android.widget.ScrollView scroll,int action,float x,float y){
+  long now=SystemClock.uptimeMillis();MotionEvent event=MotionEvent.obtain(now,now,action,x,y,0);
+  try{scroll.dispatchTouchEvent(event);}finally{event.recycle();}
+ }
 }

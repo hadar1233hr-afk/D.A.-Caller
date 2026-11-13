@@ -403,7 +403,7 @@ final class FastPages {
   LinearLayout page=vertical();page.setBackgroundColor(background());
   page.setFocusableInTouchMode(true);page.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
   page.setPadding(dp(12),dp(7),dp(12),0);
-  if(favorites)prefs.edit().putBoolean("favorites_expanded",true).apply(); // Legacy deep link.
+  if(favorites&&SettingsBackup.allowPreferenceChange(host))prefs.edit().putBoolean("favorites_expanded",true).apply(); // Legacy deep link.
   addFavorites(page,contacts);
   LinearLayout head=horizontal();page.addView(head,lp(-1,48));
   EditText search=new EditText(host);
@@ -744,7 +744,7 @@ final class FastPages {
   toggle.setPadding(dp(12),dp(12),dp(12),dp(12));
   toggle.setContentDescription(I18n.isEnglish(host)?(expanded?"Collapse call summary":"Expand call summary"):(expanded?"הקטנת סיכום שיחות":"הרחבת סיכום שיחות"));
   header.addView(toggle,lp(48,48));touch(toggle);
-  toggle.setOnClickListener(v->{pulse(toggle);prefs.edit().putBoolean("stats_expanded",!expanded).apply();host.refreshPage();});
+  toggle.setOnClickListener(v->{if(!SettingsBackup.allowPreferenceChange(host))return;pulse(toggle);prefs.edit().putBoolean("stats_expanded",!expanded).apply();host.refreshPage();});
   if(!expanded)return;
   LinearLayout breakdown=horizontal();breakdown.setBaselineAligned(false);
   breakdown.setMinimumHeight(dp(42));summary.addView(breakdown,lp(-1,-2));
@@ -771,7 +771,7 @@ final class FastPages {
   details.addView(stroke(AppAppearance.chevron(host,expanded,tint())),lp(18,18));
   toggle.setContentDescription((I18n.isEnglish(host)?(expanded?"Collapse favorites":"Expand favorites"):(expanded?"הקטנת מועדפים":"הרחבת מועדפים"))+" · "+chosen.size());
   band.addView(toggle,lp(expanded&&!chosen.isEmpty()?76:96,-1));touch(toggle);
-  toggle.setOnClickListener(v->{pulse(toggle);prefs.edit().putBoolean("favorites_expanded",!expanded).apply();host.refreshPage();});
+  toggle.setOnClickListener(v->{if(!SettingsBackup.allowPreferenceChange(host))return;pulse(toggle);prefs.edit().putBoolean("favorites_expanded",!expanded).apply();host.refreshPage();});
   liveFavoriteStrip=null;
   if(expanded&&!chosen.isEmpty()){
    FavoriteStrip strip=new FavoriteStrip(chosen);strip.setTag("favorites_scroll");liveFavoriteStrip=strip;
@@ -782,7 +782,7 @@ final class FastPages {
    hint.setSingleLine(true);hint.setEllipsize(android.text.TextUtils.TruncateAt.END);hint.setPadding(dp(8),0,dp(8),0);
    band.addView(hint,new LinearLayout.LayoutParams(0,-1,1));
    if(!chosen.isEmpty()){
-    touch(hint);hint.setOnClickListener(v->{pulse(hint);prefs.edit().putBoolean("favorites_expanded",true).apply();host.refreshPage();});
+    touch(hint);hint.setOnClickListener(v->{if(!SettingsBackup.allowPreferenceChange(host))return;pulse(hint);prefs.edit().putBoolean("favorites_expanded",true).apply();host.refreshPage();});
    }
   }
  }

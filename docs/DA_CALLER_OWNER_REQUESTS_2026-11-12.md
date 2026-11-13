@@ -1,5 +1,11 @@
 # New direct owner requirements — 2026-11-12
 
+Current implementation status: source checkpoint81ae791 now implements these
+requirements in unreleased0.13.0/code22. Component/current-source verification
+is still in progress; no new native/visual/publication approval. The initial
+queued-status paragraph below describes the earlier handoff, not current code.
+Read the newest WORK_STATE before continuing.
+
 These eleven requirements were added directly by the owner after 0.12.0 had
 already been published, verified and delivered. Later scheduled repeats of the
 older 0.12.0 prompt do **not** cancel them. They extend the unfinished business

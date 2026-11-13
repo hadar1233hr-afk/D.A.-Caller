@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.MainActivityRegressionTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-12T22:23:18" hostname="3ebae333e153" time="2.03">
+  <properties/>
+  <testcase name="repeatedTapWhilePermissionPendingKeepsFirstDestination" classname="com.dacaller.app.MainActivityRegressionTest" time="0.116"/>
+  <testcase name="tabAndPendingPermissionSurviveActivityRecreation" classname="com.dacaller.app.MainActivityRegressionTest" time="0.115"/>
+  <testcase name="providerRefreshDuringFingerDownDefersRebuildAndStillCallsCorrectNumber" classname="com.dacaller.app.MainActivityRegressionTest" time="0.307"/>
+  <testcase name="unknownNumberOffersExplicitNewContactWithExactNumberAndNeverDials" classname="com.dacaller.app.MainActivityRegressionTest" time="0.125"/>
+  <testcase name="rerenderCannotConsumePendingPermissionDestination" classname="com.dacaller.app.MainActivityRegressionTest" time="0.09"/>
+  <testcase name="phoneRoleMustBeGrantedBeforeCallAndPreservesNumber" classname="com.dacaller.app.MainActivityRegressionTest" time="0.183"/>
+  <testcase name="secondDialIntentUpdatesAlreadyVisibleKeypad" classname="com.dacaller.app.MainActivityRegressionTest" time="0.291"/>
+  <testcase name="englishNavigationIsLeftToRightAndSettingsUsesActualVersion" classname="com.dacaller.app.MainActivityRegressionTest" time="0.443"/>
+  <testcase name="hiddenAndUnavailableNumbersNeverOfferCreateContact" classname="com.dacaller.app.MainActivityRegressionTest" time="0.276"/>
+  <testcase name="rapidRepeatedGrantedTapsPlaceOnlyOneCall" classname="com.dacaller.app.MainActivityRegressionTest" time="0.082"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

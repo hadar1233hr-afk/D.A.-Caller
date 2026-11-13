@@ -1,5 +1,48 @@
 # DA CALLER continuation state
 
+## Actual usage-limit stop after112 current-interface PASS — saved continuation
+
+An actual usage-limit error interrupted native_profile_finish_013: reported
+"try again at Nov13th2026 2:58AM" without an established timezone. Stop requested
+work until the next scheduled run; do not retry that agent, switch account/model,
+query a guessed quota API or bypass. A subsequent environment restart removed
+all workers; root checked no overlapping agent/Java process before save-only
+handoff. No new task implementation or test was started after the limit.
+
+The already-running root interface task completed honestly before the restart:
+**112/112 actual API33 host methods PASS**,0failures/errors/skips. This includes
+Recents39 (12inline+17touch+10favorites), business-view15, return-navigation16,
+Main10, appearance7, Settings6, call-screen19. The strengthened long-list drag
+fixture and pending preference/note guard regressions passed. Raw JUnit/log/hash
+summary are in `docs/evidence/interface-island-archive-0.13.0/quota-checkpoint/`.
+These are focused host methods, not the full current-source suite/native proof.
+
+Island's actual run was **67/70 PASS,3FAIL**, retained separately in the same
+checkpoint. Failing methods: Controller resizedViewportImmediatelyReclampsWidthAndScrollsOverflowOnlyWhileNeeded;
+View actualPointerDragCancelsTouchedCallControlBeforeUpAndKeepsTapBehavior;
+View overflowingControlsScrollWithoutDraggingOrCallingWhileTheHeaderStillDrags.
+Follow-up source-only edits use visible target bounds/multiple pointerMOVE and
+correct settled host resize, but were interrupted before rerun: **NOT VERIFIED**.
+Do not relabel this failed run PASS or remove/relax its behavioral assertions.
+
+New native source has40 written cases in total (historical36 +ListDial1 +Modern3),
+with24 planned additive real frames. Modern test follow-up and new strict
+`scripts/verify-modern-features-native.py` survived, but the verifier was interrupted
+before final review/execution. Inspect its completeness, reject any synthetic
+PASS assumptions, and independently validate before relying on it. Every original
+245 frame and seven baseline verifiers remains required; new captures stay in
+separate `DA-CALLER-next-snapshots` / `app/build/ui-modern-snapshots`. No new
+emulator, current full-unit/build/lint or real visual proof, no new APK/publication.
+
+Next available scheduled run: check overlap and pending source/evidence first;
+resolve/retest island3cases; inspect/test additive native verifier and new native
+fixture; run full current-source suite/build/lint/Android-test compile, then fresh
+Telecom CI, raw-artifact retention and full actual visual review. Keepbusiness
+DBcbc7dc7.../manifestfec348.../reader5d8c... frozen,0.13.0/code22 unreleased.
+0.12 is delivered/immutable/noresend. Future signing defaults remain closed,
+0.12-only approval cannot extend to0.13; no private key/backup/CI secret provision
+was invented. Existing2h automation stays enabled for unfinished owner scope.
+
 ## Preserved implementation checkpoint after environment restart — 2026-11-12 UTC
 
 The environment restarted again during focused follow-up work. All previous

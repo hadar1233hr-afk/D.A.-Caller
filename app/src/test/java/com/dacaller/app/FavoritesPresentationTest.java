@@ -128,6 +128,21 @@ public class FavoritesPresentationTest {
   assertEquals(dp(48),collapsed.getHeight());assertNull(tag(collapsed,"favorites_scroll"));assertTrue(host.calls.isEmpty());
   tag(collapsed,"favorites_toggle").performClick();assertTrue(prefs.getBoolean("favorites_expanded",false));
  }
+ @Test public void pendingRestoreRejectsSummaryFavoriteAndLegacyPreferenceEditsUntilResolved()throws Exception{
+  people(3);prefs.edit().putBoolean("stats_expanded",false).putBoolean("favorites_expanded",false).commit();
+  java.util.Map<String,?> before=new java.util.HashMap<>(prefs.getAll());
+  java.io.File journal=new java.io.File(host.getFilesDir(),"settings_archive_restore.pending");
+  java.nio.file.Files.write(journal.toPath(),"synthetic interrupted restore".getBytes(java.nio.charset.StandardCharsets.UTF_8));
+  try{
+   View page=attach(pages.recents());View stats=tag(page,"stats_toggle"),favorites=tag(page,"favorites_toggle");
+   stats.performClick();favorites.performClick();
+   ViewGroup band=(ViewGroup)tag(page,"favorites_strip");assertTrue(hasText(band,"Tap to expand"));band.getChildAt(1).performClick();
+   attach(pages.contacts(host.people,true));assertEquals("Pending undo keys must not receive later user preference edits",before,prefs.getAll());
+   assertEquals(0,host.refreshes);assertTrue(host.calls.isEmpty());
+   new android.util.AtomicFile(journal).delete();assertFalse(SettingsBackup.hasPendingRestore(host));
+   stats.performClick();favorites.performClick();assertTrue(prefs.getBoolean("stats_expanded",false));assertTrue(prefs.getBoolean("favorites_expanded",false));assertEquals(2,host.refreshes);
+  }finally{new android.util.AtomicFile(journal).delete();}
+ }
  @Test public void thousandFavoritesAreReachableWithoutThousandInflatedTiles(){
   people(1000);View page=attach(pages.contacts(host.people,false));
   HorizontalScrollView scroll=(HorizontalScrollView)tag(page,"favorites_scroll");ViewGroup track=(ViewGroup)scroll.getChildAt(0);

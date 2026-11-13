@@ -75,6 +75,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
  private long sequence;
  private CallHistory.Summary originalSummary;
  private List<CallHistory.Entry> originalCalls;
+ private boolean originalReadFailed;private long originalFetchedAt;
  private final JSONArray modemCommands=new JSONArray();
 
  @Override protected void setUp()throws Exception {
@@ -85,7 +86,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   originalNavigation=target.getSharedPreferences(CallReturnNavigation.PREFERENCES,Context.MODE_PRIVATE).getAll();
   originalFont=shell("settings get system font_scale").trim();originalOverlay=shell("cmd appops get "+target.getPackageName()+" SYSTEM_ALERT_WINDOW");
   originalDialer=target.getSystemService(TelecomManager.class).getDefaultDialerPackage();
-  originalCalls=CallHistory.entries;originalSummary=CallHistory.summary;
+  originalCalls=CallHistory.entries;originalSummary=CallHistory.summary;originalReadFailed=CallHistory.readFailed;originalFetchedAt=CallHistory.fetchedAt;
   AccessibilityServiceInfo service=getInstrumentation().getUiAutomation().getServiceInfo();originalAccessibilityFlags=service.flags;
   service.flags|=AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS|AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS;
   getInstrumentation().getUiAutomation().setServiceInfo(service);
@@ -97,7 +98,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
    for(int i=activities.size()-1;i>=0;i--){Activity activity=activities.get(i);if(!activity.isDestroyed())ui(activity::finish);}
    settle();restore(prefs,original);assertTrue(AppIcons.apply(target,originalIcon));
    restore(target.getSharedPreferences(CallReturnNavigation.PREFERENCES,Context.MODE_PRIVATE),originalNavigation);
-   CallHistory.entries=originalCalls;CallHistory.summary=originalSummary;
+   CallHistory.entries=originalCalls;CallHistory.summary=originalSummary;CallHistory.readFailed=originalReadFailed;CallHistory.fetchedAt=originalFetchedAt;
    String mode="default";for(String candidate:new String[]{"allow","ignore","deny","default"})if(originalOverlay.contains("SYSTEM_ALERT_WINDOW: "+candidate)){mode=candidate;break;}
    shell("cmd appops set "+target.getPackageName()+" SYSTEM_ALERT_WINDOW "+mode);
    if(!target.getPackageName().equals(originalDialer)){
@@ -132,6 +133,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
  }
  private void proof(String name,JSONObject value)throws Exception {
   value.put("api",33).put("density_dpi",240).put("font_scale",1.3).put("captures",captures)
+   .put("package",target.getPackageName()).put("version_name",BuildConfig.VERSION_NAME).put("version_code",BuildConfig.VERSION_CODE)
    .put("physical_carrier_audio_verified",false).put("matching_key_upgrade_verified",false);
   write(DIRECTORY,name,value.toString(2));
  }

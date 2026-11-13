@@ -152,7 +152,9 @@ public class RecentInlinePresentationTest {
   assertTrue(find(row,"recent_details").isEnabled());tap(list,find(row,"recent_details"));assertEquals(501,host.details);assertTrue(host.calls.isEmpty());
  }
  @Test public void gesturesStartingOnInlineControlsNeverBecomeSwipeCalls(){
+  ArrayList<CallHistory.Entry> entries=new ArrayList<>();for(int i=0;i<200;i++)entries.add(entry(i+1,"050100"+i));CallHistory.entries=entries;
   ListView list=attach();View row=list.getChildAt(0);tap(list,find(row,"recent_expand"));View control=find(row,"recent_sms");
+  assertTrue("The long list must actually enable native fast scroll before the gesture",list.isFastScrollEnabled());
   android.graphics.Rect bounds=new android.graphics.Rect();control.getDrawingRect(bounds);list.offsetDescendantRectToMyCoords(control,bounds);
   motion(list,MotionEvent.ACTION_DOWN,bounds.exactCenterX(),bounds.exactCenterY(),300);motion(list,MotionEvent.ACTION_MOVE,bounds.exactCenterX()+dp(80),bounds.exactCenterY(),340);
   motion(list,MotionEvent.ACTION_UP,bounds.exactCenterX()+dp(100),bounds.exactCenterY(),380);Shadows.shadowOf(Looper.getMainLooper()).idleFor(Duration.ofMillis(200));
