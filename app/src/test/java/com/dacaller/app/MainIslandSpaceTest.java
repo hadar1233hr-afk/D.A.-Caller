@@ -124,6 +124,43 @@ public class MainIslandSpaceTest {
    public void open(android.app.Activity activity,String token){throw new AssertionError("Layout cannot open a call");}
   });
  }
+ private void fullyVisible(View view,String name){
+  android.graphics.Rect bounds=new android.graphics.Rect(),frame=new android.graphics.Rect();view.getWindowVisibleDisplayFrame(frame);
+  boolean shown=view.isShown()&&view.getGlobalVisibleRect(bounds);int[] location=new int[2];view.getLocationOnScreen(location);
+  String geometry=name+" @"+location[0]+","+location[1]+" size="+view.getWidth()+"x"+view.getHeight()+" visible="+bounds+" frame="+frame;
+  assertEquals(geometry+" visibility",View.VISIBLE,view.getVisibility());assertTrue(geometry+" shown",shown);
+  assertEquals(geometry+" full height",view.getHeight(),bounds.height());assertEquals(geometry+" full width",view.getWidth(),bounds.width());
+ }
+ // The actual app-content viewports below must fit inside the host decor;
+ // Robolectric's default shorter display would clip this manually laid-out window.
+ @Test @Config(qualifiers="w320dp-h700dp-mdpi") public void nativeSizedViewportKeepsFavoritesAndSummaryVisibleWhileExpandedControlsRemainReachable()throws Exception{
+  prefs.edit().putBoolean("island_enabled",true).putBoolean("island_animations",false).commit();LinearLayout chrome=attachMainChrome();
+  for(String page:new String[]{"contacts","recents"})for(boolean expandedSummary:new boolean[]{false,true}){
+   prefs.edit().putBoolean("stats_expanded",expandedSummary).commit();View personal=attach(page);layoutWindow(569);
+   ListView list=personal.findViewWithTag("call-island-page-list");list.setSelectionFromTop(4,-7);layoutWindow(569);
+   long anchor=list.getAdapter().getItemId(list.getFirstVisiblePosition());int top=list.getChildAt(0).getTop();CallIslandController island=readOnlyIsland();
+   try{
+    island.start();layoutWindow(569);island.onExpand();
+    for(int height:new int[]{569,520,497,569}){
+     for(int repeat=0;repeat<4;repeat++){
+      layoutWindow(height);assertTrue("Native-size personal list remains usable: "+dimensions(personal),list.getHeight()>=dp(60));
+      fullyVisible(personal.findViewWithTag("favorites_strip"),page+" favorites");
+      if("recents".equals(page))fullyVisible(personal.findViewWithTag("stats_summary"),"Recents summary");
+      fullyVisible(chrome.findViewWithTag("main_settings_toolbar"),"Settings toolbar");fullyVisible(chrome.findViewWithTag("main_bottom_navigation"),"Bottom navigation");
+     }
+     View overflow=host.findViewById(android.R.id.content).findViewWithTag("island-in-app-window");assertTrue("Full controls scroll inside the bounded viewport",overflow instanceof ScrollView);
+     fullyVisible(overflow,"Island viewport");View hide=overflow.findViewWithTag("island-hide");assertNotNull(hide);
+     ((ScrollView)overflow).scrollTo(0,((ScrollView)overflow).getChildAt(0).getHeight());layoutWindow(height);
+     fullyVisible(hide,"Hide control after scrolling");assertTrue(hide.getHeight()>=dp(48));
+     ((ScrollView)overflow).scrollTo(0,0);layoutWindow(height);View collapse=overflow.findViewWithTag("island-collapse");
+     fullyVisible(collapse,"Collapse control after returning to top");assertTrue(collapse.getHeight()>=dp(48));
+    }
+    island.onCollapse();layoutWindow(569);assertEquals(View.VISIBLE,personal.findViewWithTag("call-island-secondary").getVisibility());
+    assertEquals(anchor,list.getAdapter().getItemId(list.getFirstVisiblePosition()));assertEquals(top,list.getChildAt(0).getTop());
+    assertTrue(prefs.getBoolean("favorites_expanded",false));assertEquals(expandedSummary,prefs.getBoolean("stats_expanded",!expandedSummary));
+   }finally{island.stop();layoutWindow(569);}
+  }
+ }
  @Test public void realControllerCapsPersonalPagesIncludingTheirVisibleReadErrorWithoutChangingTheListAnchor()throws Exception{
   prefs.edit().putBoolean("island_enabled",true).putBoolean("island_animations",false).commit();LinearLayout chrome=attachMainChrome();
   for(String page:new String[]{"contacts","recents"}){

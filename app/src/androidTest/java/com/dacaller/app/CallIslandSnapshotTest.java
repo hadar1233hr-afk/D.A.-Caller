@@ -15,6 +15,7 @@ import android.os.SystemClock;
 import android.telecom.Call;
 import android.telecom.CallAudioState;
 import android.test.InstrumentationTestCase;
+import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -58,6 +59,7 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
  private static final int BAR_CAPTURE_DEADLINE_MS=5000,BAR_CAPTURE_MAX_SAMPLES=50;
  private static final int BAR_CAPTURE_INTERVAL_MS=100,BAR_CAPTURE_STABLE_SAMPLES=3,BAR_CAPTURE_MIN_PIXELS=40;
  private static final Map<String,JSONObject> nativeBarCaptures=new LinkedHashMap<>();
+ private static JSONArray mainIslandScrollEvidence=new JSONArray();
  private static boolean matrixPassed,actionsPassed,settingsPassed,animationsPassed,appMainPassed,settingsBarsPassed;
  private int settingsBarCaptures;
  private Context target;
@@ -197,7 +199,7 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   checked("matrix",this::matrixScenario);
  }
  private void matrixScenario()throws Exception{
-  matrixPassed=false;appMainPassed=false;nativeBarCaptures.keySet().removeIf(name->!name.startsWith("island-settings-"));
+  matrixPassed=false;appMainPassed=false;mainIslandScrollEvidence=new JSONArray();nativeBarCaptures.keySet().removeIf(name->!name.startsWith("island-settings-"));
   for(boolean dark:new boolean[]{false,true})for(String language:new String[]{"he","en"})for(String style:new String[]{"apple","glass","emerald"}){
    launch(language,dark,style,Call.STATE_ACTIVE,false);String suffix=style+"-"+(dark?"dark":"light")+"-"+language;
    assertFalse(host.controller.isExpanded());geometry();snapshot(host,dark,suffix+"-compact");
@@ -330,10 +332,10 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
    });settle();
    CallIslandState sample=new CallIslandState("island-actual-main","נועה בדיקת אי","0500099971",Call.STATE_ACTIVE,CallAudioState.ROUTE_EARPIECE,
      CallAudioState.ROUTE_EARPIECE|CallAudioState.ROUTE_SPEAKER,false,true,true,System.currentTimeMillis()-11_000,-1);
-   CallIslandSession readOnly=new CallIslandSession(){
+   int[] readOnlyDispatches={0};CallIslandSession readOnly=new CallIslandSession(){
     public CallIslandState current(){return sample;}
-    public boolean perform(String token,String action){throw new AssertionError("Actual-app screenshot must not dispatch a call command: "+action);}
-    public void open(Activity activity,String token){throw new AssertionError("Actual-app screenshot must not launch a call");}
+    public boolean perform(String token,String action){readOnlyDispatches[0]++;throw new AssertionError("Actual-app screenshot must not dispatch a call command: "+action);}
+    public void open(Activity activity,String token){readOnlyDispatches[0]++;throw new AssertionError("Actual-app screenshot must not launch a call");}
    };
    appIsland=new CallIslandController(app,readOnly);final CallIslandController controller=appIsland;ui(controller::start);settle();
    assertEquals(1.3f,app.getResources().getConfiguration().fontScale,0.05f);
@@ -351,6 +353,8 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
     tap(tagged(app,"island-expand"));await(controller::isExpanded,"Actual MainActivity island did not expand");settle();
     assertFictionalMainData(app,list);
     actualMainGeometry(app,true,"recents".equals(page));
+    assertSame("Native viewport scrolling must retain the same synthetic call",sample,readOnly.current());
+    assertEquals("Native scrolling must never dispatch a call/open command",0,readOnlyDispatches[0]);
     if("contacts".equals(page))assertEquals("לדוגמה",find(app.getWindow().getDecorView(),EditText.class).getText().toString());
     if(list.getHeight()>=dp(48)&&list.getChildCount()>0){assertEquals(identity,list.getAdapter().getItemId(list.getFirstVisiblePosition()));assertEquals(top,list.getChildAt(0).getTop());}
     snapshot(app,true,"app-"+page+"-expanded");
@@ -369,11 +373,19 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   }
  }
  private void actualMainGeometry(MainActivity app,boolean expanded,boolean recents)throws Exception{
+  ScrollView[] scrolling={null};
   ui(()->{
-   View island=tagged(app,"island-root");visible(island);textFits(island);
+   View island=tagged(app,"island-root"),surface=island;
+   if(island.getParent() instanceof ScrollView&&"island-in-app-window".equals(((View)island.getParent()).getTag())){
+    scrolling[0]=(ScrollView)island.getParent();surface=scrolling[0];visible(surface);
+    assertSame("Only the production island may occupy this viewport",island,scrolling[0].getChildAt(0));
+    if(island.getHeight()<=surface.getHeight())visible(island);
+    else assertTrue("Overflowing island must retain its complete horizontal extent",surface.getWidth()>=island.getWidth());
+   }else visible(island);
+   textFits(island);
    View page=(View)mainField(app,"root"),nav=(View)mainField(app,"nav");visible(nav);visible(tagged(app,"favorites_strip"));
    if(recents)visible(tagged(app,"stats_summary"));
-   Rect islandBounds=new Rect(),pageBounds=new Rect();island.getGlobalVisibleRect(islandBounds);assertTrue(page.getGlobalVisibleRect(pageBounds));
+   Rect islandBounds=new Rect(),pageBounds=new Rect();assertTrue(surface.getGlobalVisibleRect(islandBounds));assertTrue(page.getGlobalVisibleRect(pageBounds));
    assertTrue("Actual MainActivity content overlaps call controls",pageBounds.top>=islandBounds.bottom);
    ListView list=find(app.getWindow().getDecorView(),ListView.class);assertNotNull(list);
    assertTrue((expanded?"Expanded":"Compact")+" island must leave a usable real app list",list.getHeight()>=dp(60));
@@ -387,6 +399,83 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
      assertFalse("Bottom keypad entry overlaps "+control.getTag(),Rect.intersects(dialBounds,bounds));}
    }
   });
+  if(expanded&&scrolling[0]!=null&&tagged(app,"island-root").getHeight()>scrolling[0].getHeight())
+   mainIslandScrollEvidence.put(assertMainIslandScrollAccess(app,scrolling[0],recents?"recents":"contacts"));
+ }
+ private Rect screenVisibleBounds(View view){
+  visible(view);Rect bounds=new Rect();assertTrue(view.getGlobalVisibleRect(bounds));
+  int[] screen=new int[2],window=new int[2];view.getLocationOnScreen(screen);view.getLocationInWindow(window);
+  bounds.offset(screen[0]-window[0],screen[1]-window[1]);return bounds;
+ }
+ private Rect unclippedScreenBounds(View view){
+  int[] location=new int[2];view.getLocationOnScreen(location);
+  return new Rect(location[0]-view.getScrollX(),location[1]-view.getScrollY(),
+   location[0]-view.getScrollX()+view.getWidth(),location[1]-view.getScrollY()+view.getHeight());
+ }
+ private Rect focusedNativeBounds(MainActivity app,View view)throws Exception{
+  Rect[] result={null};int[] windowId={-1};ui(()->{
+   assertTrue("Viewport controls require the actual focused MainActivity",app.hasWindowFocus());
+   result[0]=screenVisibleBounds(view);assertTrue(result[0].width()>0&&result[0].height()>0);
+   AccessibilityNodeInfo node=view.createAccessibilityNodeInfo();Rect nativeBounds=new Rect();node.getBoundsInScreen(nativeBounds);
+   assertEquals("Native AX must expose the complete actual visible control",result[0],nativeBounds);windowId[0]=node.getWindowId();
+  });
+  boolean focused=false;for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows())
+   if(window.getId()==windowId[0]&&window.isFocused()){focused=true;break;}
+  assertTrue("Main viewport must belong to the focused native window",focused);return result[0];
+ }
+ private void nativeViewportSwipe(MainActivity app,ScrollView viewport,boolean towardsBottom,int distance)throws Exception{
+  Rect bounds=focusedNativeBounds(app,viewport);int[] headerBottom={0};ui(()->headerBottom[0]=unclippedScreenBounds(tagged(app,"island-header")).bottom);
+  int margin=dp(10),startY=towardsBottom?bounds.bottom-margin:Math.max(bounds.top+margin,headerBottom[0]+margin);
+  int endY=towardsBottom?Math.max(bounds.top+margin,startY-distance):Math.min(bounds.bottom-margin,startY+distance);
+  assertTrue("A native scroll requires a visible body lane below the header",startY>headerBottom[0]&&bounds.contains(bounds.centerX(),startY));
+  assertTrue("Native viewport swipe must cross touch slop inside its visible bounds",bounds.contains(bounds.centerX(),endY)&&Math.abs(endY-startY)>=dp(20));
+  long down=SystemClock.uptimeMillis();
+  for(int step=0;step<=10;step++){
+   if(step>0)Thread.sleep(20);int action=step==0?MotionEvent.ACTION_DOWN:MotionEvent.ACTION_MOVE;
+   MotionEvent event=MotionEvent.obtain(down,SystemClock.uptimeMillis(),action,bounds.centerX(),startY+(endY-startY)*step/10f,0);event.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+   try{getInstrumentation().sendPointerSync(event);}finally{event.recycle();}
+  }
+  // Stop the finger before UP: evidence needs deterministic scrolling, without
+  // a fling settling at a different control after the geometry assertion.
+  Thread.sleep(140);MotionEvent still=MotionEvent.obtain(down,SystemClock.uptimeMillis(),MotionEvent.ACTION_MOVE,bounds.centerX(),endY,0);still.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+  try{getInstrumentation().sendPointerSync(still);}finally{still.recycle();}
+  MotionEvent up=MotionEvent.obtain(down,SystemClock.uptimeMillis(),MotionEvent.ACTION_UP,bounds.centerX(),endY,0);up.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+  try{getInstrumentation().sendPointerSync(up);}finally{up.recycle();}settle();
+ }
+ private JSONObject assertMainIslandScrollAccess(MainActivity app,ScrollView viewport,String page)throws Exception{
+  assertEquals("Expanded viewport evidence must start at its genuine top",0,viewport.getScrollY());
+  ListView list=find(app.getWindow().getDecorView(),ListView.class);assertNotNull(list);assertNotNull(list.getChildAt(0));
+  long anchor=list.getAdapter().getItemId(list.getFirstVisiblePosition());int anchorTop=list.getChildAt(0).getTop();
+  boolean positioned=prefs.getBoolean(CallIslandPosition.SET,false);int savedX=prefs.getInt(CallIslandPosition.X,-1),savedY=prefs.getInt(CallIslandPosition.Y,-1);
+  Rect viewportBounds=focusedNativeBounds(app,viewport);JSONArray targets=new JSONArray();
+  for(String tag:new String[]{"island-action-MUTE_ON","island-action-SPEAKER_ON","island-action-HOLD","island-action-END","island-open","island-hide"}){
+   View control=tagged(app,tag);boolean reached=false;
+   for(int step=0;step<12;step++){
+    Rect[] full={null};ui(()->full[0]=unclippedScreenBounds(control));
+    if(viewportBounds.contains(full[0])){reached=true;break;}
+    assertTrue("Each complete call control must fit the real capped viewport",control.getHeight()<=viewportBounds.height());
+    boolean down=full[0].bottom>viewportBounds.bottom;int gap=down?full[0].bottom-viewportBounds.bottom:viewportBounds.top-full[0].top;
+    int before=viewport.getScrollY();nativeViewportSwipe(app,viewport,down,Math.max(dp(36),gap+dp(8)));
+    assertTrue("Native body pointer must scroll the production viewport",down?viewport.getScrollY()>before:viewport.getScrollY()<before);
+    assertEquals(positioned,prefs.getBoolean(CallIslandPosition.SET,false));assertEquals(savedX,prefs.getInt(CallIslandPosition.X,-1));assertEquals(savedY,prefs.getInt(CallIslandPosition.Y,-1));
+   }
+   assertTrue("Native scrolling could not expose the complete "+tag,reached);Rect controlBounds=focusedNativeBounds(app,control);
+   assertTrue("Control must be wholly inside the actual visible viewport",viewportBounds.contains(controlBounds));
+   assertTrue("Every scrolled action must retain its48dp native touch target",controlBounds.width()>=dp(48)&&controlBounds.height()>=dp(48));ui(()->textFits(control));
+   assertFictionalMainData(app,list);assertEquals(anchor,list.getAdapter().getItemId(list.getFirstVisiblePosition()));assertEquals(anchorTop,list.getChildAt(0).getTop());
+   targets.put(new JSONObject().put("tag",tag).put("bounds",controlBounds.toShortString()).put("scroll_y",viewport.getScrollY()));
+  }
+  assertTrue("Bottom control proof must involve genuine native scrolling",viewport.getScrollY()>0);
+  for(int step=0;step<12&&viewport.getScrollY()>0;step++){
+   int before=viewport.getScrollY();nativeViewportSwipe(app,viewport,false,Math.max(dp(36),before));
+   assertTrue("Native return gesture must move toward the real top",viewport.getScrollY()<before);
+  }
+  assertEquals("Native gestures must restore the true top before capture/collapse",0,viewport.getScrollY());
+  Rect collapse=focusedNativeBounds(app,tagged(app,"island-collapse"));assertTrue(viewportBounds.contains(collapse));
+  assertEquals(positioned,prefs.getBoolean(CallIslandPosition.SET,false));assertEquals(savedX,prefs.getInt(CallIslandPosition.X,-1));assertEquals(savedY,prefs.getInt(CallIslandPosition.Y,-1));
+  assertFictionalMainData(app,list);assertEquals(anchor,list.getAdapter().getItemId(list.getFirstVisiblePosition()));assertEquals(anchorTop,list.getChildAt(0).getTop());
+  return new JSONObject().put("page",page).put("viewport_bounds",viewportBounds.toShortString()).put("input_method","native-pointer-body-scroll")
+   .put("targets",targets).put("returned_scroll_y",0).put("collapse_bounds",collapse.toShortString()).put("list_anchor_preserved",true).put("normalized_position_preserved",true);
  }
  private View dialogButton(int id){
   for(View window:WindowInspector.getGlobalWindowViews()){View button=window.findViewById(id);if(button!=null&&button.isShown())return button;}
@@ -733,6 +822,7 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   JSONObject proof=new JSONObject();proof.put("api",android.os.Build.VERSION.SDK_INT);proof.put("real_renderer_and_controller",true);
   proof.put("matrix_native_layout_assertions",matrixPassed);proof.put("app_main_integration",appMainPassed);
   proof.put("app_main_screens","Actual MainActivity/FastPages contacts and recents, compact/expanded, favorites/summary/navigation, synthetic rows, no call commands");
+  proof.put("app_main_scroll_access",mainIslandScrollEvidence);
   proof.put("native_action_dispatch_and_acknowledgement",actionsPassed);
   proof.put("confirmed_end_cancel_and_accept",actionsPassed);proof.put("disabled_ui_preserves_session",actionsPassed);
   proof.put("content_margin_and_list_anchor_restored",actionsPassed);proof.put("pause_stops_surface_and_resume_restores",actionsPassed);

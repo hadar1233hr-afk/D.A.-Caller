@@ -434,7 +434,7 @@ public class MainActivity extends Activity {
    if(child.getVisibility()!=visibility)child.setVisibility(visibility);
   }
  }
- /** Minimum content below a reserved island, independent of the current island inset. */
+ /** Preserve saved-visible cards before giving the expanded island its remaining space. */
  int minimumCallIslandContentHeight(){
   if(root==null||workspace==null)return 0;
   View list=workspace.findViewWithTag("call-island-page-list");
@@ -449,7 +449,10 @@ public class MainActivity extends Activity {
   if(workspaceParams instanceof ViewGroup.MarginLayoutParams){ViewGroup.MarginLayoutParams margins=(ViewGroup.MarginLayoutParams)workspaceParams;minimum+=margins.topMargin+margins.bottomMargin;}
   for(int i=0;i<pageContainer.getChildCount();i++){
    View child=pageContainer.getChildAt(i);Object tag=child.getTag();
-   if(child==list||child.getVisibility()==View.GONE||"call-island-secondary".equals(tag)||"favorites_strip".equals(tag)||"stats_summary".equals(tag))continue;
+   int original=islandChromeVisibility.containsKey(child)?islandChromeVisibility.get(child):child.getVisibility();
+   // Use original visibility even while adaptation temporarily hides a card.
+   // Otherwise the cap and the following header restoration would alternate.
+   if(child==list||original==View.GONE||"call-island-secondary".equals(tag))continue;
    minimum+=callIslandChildExtent(child);
   }
   return minimum;

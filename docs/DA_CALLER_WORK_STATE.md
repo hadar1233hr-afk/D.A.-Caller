@@ -1,5 +1,50 @@
 # DA CALLER continuation state
 
+## Actual usage-limit stop after further layout findings — 2026-11-18 UTC
+
+STOPPED/save-only. The focused MainIslandSpaceTest command was **not executed**:
+automatic approval review could not complete because its actual usage limit was
+hit (reported retry4:56PM, timezone unknown). This was a review-capacity failure,
+not an unsafe-action determination. native_failures_nov18 also errored at the
+same real limit. No retry, account/model switch or alternate route was used.
+No active subagents remained when the checkpoint was saved.
+
+Pushed source da08214fc4bc42b7918980b81a0410b4136a0657/appTree3818476df40e26ca5991d6d821a0573517e91197
+actually passed455 host methods/44classes locally, builds/lint0errors16warnings;
+CI44303504696 validate also PASS455uniqueunits and tooling/business contracts.
+The official checks ZIP is161838bytes/SHA9c380659975d04fb914f1a54d16703670c35b6571fd0e92aeadb6c5677ffc613,
+all CRC verified, raw at /workspace/work/native-013-ci-44303504696.
+The Android job was last observed RUNNING; final native result has not been
+fetched. Do not infer success, complete screenshots or visual approval.
+
+Further source review caught two existing native requirements before their
+outcome was observed: full favorites/summary visibility plus60dp list, and full
+island-root visibility. A bounded ScrollView cannot expose its entire taller
+child at once. WIP now preserves original-visible favorites/summary in the cap
+budget and adds stronger viewport/native pointer-scroll reachability checks
+while keeping full-root visibility when no overflow exists. All seven old
+verifier scripts remain unchanged; do not silently weaken native assertions.
+
+The new fifth host case actually ran with4PASS/1FAIL: its enclosing Robolectric
+window clipped the manual viewport's bottom navigation. The proposed explicit
+w320dp-h700dp-mdpi enclosing window keeps the content at320x569 (also520/497),
+and full visibility/60dp/prefs/anchor/48dp controls assertions are retained. This
+fixture correction is NOT RETESTED. Main/host-test followups are source-only.
+CallIslandSnapshotTest has about102lines of a native scrolling draft written
+before its worker errored; it is uncompiled/unreviewed and may be incomplete.
+Source hashes and genuine five-case failure evidence: nov18-usage-stop.
+
+Next available scheduled run: inspect overlap and remote44303504696 outcome,
+retain exact native artifacts/diagnostics; inspect the draft; verify all five
+space cases, then complete current-source units/build/lint/Android-test APK and
+fresh40-case/269-frame native/visual review. Current WIP invalidates prior455
+results as approval for the latest source. No new quota API or bypass.
+
+Frozen business data/reader and signing/workflow guards remain unchanged.
+0.12.0 was already delivered and is immutable/noresend;0.13.0/code22 remains
+unreleased. Future owner-controlled private signing backup/repository secrets
+and applicable approval remain unresolved. Existing automation stays enabled.
+
 ## Expanded island and native harness corrections in verification — 2026-11-18 UTC
 
 Only the existing DA CALLER PR is being continued; no competing agent/Gradle/CI
