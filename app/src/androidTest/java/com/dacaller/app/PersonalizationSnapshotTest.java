@@ -74,6 +74,7 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
  private final List<Activity> launched=new ArrayList<>();
  private List<CallHistory.Entry> originalCalls;
  private CallHistory.Summary originalSummary;
+ private int originalAccessibilityFlags;
 
  @Override protected void setUp()throws Exception{
   super.setUp();target=getInstrumentation().getTargetContext();
@@ -81,7 +82,13 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
   originalSettings=settings.getAll();originalIcon=AppIcons.selected(target);
   originalFontScale=shell("settings get system font_scale").trim();
   originalCalls=CallHistory.entries;originalSummary=CallHistory.summary;
+  android.accessibilityservice.AccessibilityServiceInfo service=getInstrumentation().getUiAutomation().getServiceInfo();
+  originalAccessibilityFlags=service.flags;
+  service.flags|=android.accessibilityservice.AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
+    |android.accessibilityservice.AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS;
+  getInstrumentation().getUiAutomation().setServiceInfo(service);
   shell("mkdir -p "+DIRECTORY);
+  dismissNativeEducation();
  }
  @Override protected void tearDown()throws Exception{
   try{
@@ -91,7 +98,19 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
    CallHistory.entries=originalCalls;CallHistory.summary=originalSummary;
    target.getContentResolver().delete(BackupDocumentProvider.DOCUMENT,null,null);
    shell("settings put system font_scale "+(originalFontScale.matches("[0-9.]+")?originalFontScale:"1.0"));
-  }finally{super.tearDown();}
+  }finally{
+   try{dismissNativeEducation();}
+   finally{
+    try{android.accessibilityservice.AccessibilityServiceInfo service=getInstrumentation().getUiAutomation().getServiceInfo();
+     service.flags=originalAccessibilityFlags;getInstrumentation().getUiAutomation().setServiceInfo(service);}
+    finally{
+     // JUnit keeps the test instances until the suite ends. Finished Activity
+     // references would otherwise keep every earlier window/view tree alive.
+     launched.clear();host=null;originalCalls=null;originalSummary=null;originalSettings=null;
+     super.tearDown();
+    }
+   }
+  }
  }
  private void ui(Runnable action)throws Exception{
   AtomicReference<Throwable> error=new AtomicReference<>();
@@ -171,15 +190,83 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
   if(view instanceof ViewGroup)for(int i=0;i<((ViewGroup)view).getChildCount();i++)textFits(((ViewGroup)view).getChildAt(i));
  }
  private void tap(View view)throws Exception{
-  final int[] location=new int[2];ui(()->{fullyVisible(view);view.getLocationOnScreen(location);location[0]+=view.getWidth()/2;location[1]+=view.getHeight()/2;});
-  tap(location[0],location[1]);settle();
+  Rect bounds=stableNativeBounds(view);tap(bounds.centerX(),bounds.centerY());settle();
  }
- private void tap(int x,int y){
+ private void tap(int x,int y)throws Exception{
+  awaitNativeApplicationWindow();
   long now=SystemClock.uptimeMillis();MotionEvent down=MotionEvent.obtain(now,now,MotionEvent.ACTION_DOWN,x,y,0),up=MotionEvent.obtain(now,now+50,MotionEvent.ACTION_UP,x,y,0);
-  getInstrumentation().sendPointerSync(down);getInstrumentation().sendPointerSync(up);down.recycle();up.recycle();
+  try{getInstrumentation().sendPointerSync(down);Thread.sleep(50);getInstrumentation().sendPointerSync(up);}finally{down.recycle();up.recycle();}
+ }
+ private Rect stableNativeBounds(View view)throws Exception{
+  assertNotNull("Missing actual native target",view);
+  awaitNativeApplicationWindow();
+  long deadline=SystemClock.uptimeMillis()+7000,stableSince=-1;Rect previous=null;String state="not sampled";
+  while(SystemClock.uptimeMillis()<deadline){
+   getInstrumentation().waitForIdleSync();Rect bounds=new Rect(),nativeBounds=new Rect();int[] window={-1};boolean[] ready={false};
+   ui(()->{
+    View root=view.getRootView();
+    ready[0]=view.isAttachedToWindow()&&view.isShown()&&view.isLaidOut()&&!view.isLayoutRequested()&&!root.isLayoutRequested()
+      &&root.hasWindowFocus()&&view.getWidth()>0&&view.getHeight()>0&&view.getGlobalVisibleRect(bounds)
+      &&bounds.width()==view.getWidth()&&bounds.height()==view.getHeight();
+    if(ready[0]){AccessibilityNodeInfo node=view.createAccessibilityNodeInfo();
+     try{node.getBoundsInScreen(nativeBounds);window[0]=node.getWindowId();}finally{node.recycle();}
+     ready[0]=nativeBounds.equals(bounds);
+    }
+   });
+   boolean focused=false;
+   for(android.view.accessibility.AccessibilityWindowInfo item:getInstrumentation().getUiAutomation().getWindows())
+    if(item.getId()==window[0]&&item.isFocused()){focused=true;break;}
+   state="visible="+bounds+", native="+nativeBounds+", window="+window[0]+", focused="+focused+", ready="+ready[0];
+   long now=SystemClock.uptimeMillis();
+   if(ready[0]&&focused){if(!bounds.equals(previous)){previous=new Rect(bounds);stableSince=now;}if(now-stableSince>=80)return bounds;}
+   else{previous=null;stableSince=-1;}
+   Thread.sleep(20);
+  }
+  fail("Pointer requires stable full native bounds in its focused window: "+state);return null;
+ }
+ private void awaitNativeApplicationWindow()throws Exception{
+  dismissNativeEducation();long deadline=SystemClock.uptimeMillis()+7000;
+  do{
+   AccessibilityNodeInfo root=getInstrumentation().getUiAutomation().getRootInActiveWindow();
+   if(root!=null)try{if(target.getPackageName().contentEquals(String.valueOf(root.getPackageName())))return;}finally{root.recycle();}
+   getInstrumentation().waitForIdleSync();Thread.sleep(30);
+  }while(SystemClock.uptimeMillis()<deadline);
+  fail("DA CALLER must own the active native window before input or capture");
+ }
+ private boolean nativeText(AccessibilityNodeInfo root,String text){
+  List<AccessibilityNodeInfo> nodes=root.findAccessibilityNodeInfosByText(text);boolean found=!nodes.isEmpty();
+  for(AccessibilityNodeInfo node:nodes)node.recycle();return found;
+ }
+ private void dismissNativeEducation()throws Exception{
+  // The retained failure showed Android's first-use immersive education surface,
+  // not the backup Activity. Dismiss only that genuine native prompt, using its
+  // own AX button and UiAutomation input; never change the app's bar flags or
+  // weaken the compositor contrast/inset checks below.
+  shell("cmd statusbar collapse");getInstrumentation().waitForIdleSync();
+  AccessibilityNodeInfo root=getInstrumentation().getUiAutomation().getRootInActiveWindow();if(root==null)return;
+  Rect button=new Rect();int owner=-1;
+  try{
+   String pkg=String.valueOf(root.getPackageName());
+   if(!("android".equals(pkg)||"com.android.systemui".equals(pkg))||!nativeText(root,"Viewing full")||!nativeText(root,"To exit"))return;
+   List<AccessibilityNodeInfo> nodes=root.findAccessibilityNodeInfosByText("Got it");
+   try{for(AccessibilityNodeInfo node:nodes)if(node.isVisibleToUser()&&node.isClickable()){
+    node.getBoundsInScreen(button);owner=node.getWindowId();break;
+   }}finally{for(AccessibilityNodeInfo node:nodes)node.recycle();}
+  }finally{root.recycle();}
+  assertFalse("Native immersive education must expose its own visible confirmation",button.isEmpty());
+  boolean focused=false;for(android.view.accessibility.AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows())
+   if(window.getId()==owner&&window.isFocused()){focused=true;break;}
+  assertTrue("Native education button must belong to its focused native window",focused);
+  long now=SystemClock.uptimeMillis();MotionEvent down=MotionEvent.obtain(now,now,MotionEvent.ACTION_DOWN,button.centerX(),button.centerY(),0);
+  MotionEvent up=null;
+  try{assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(down,true));Thread.sleep(50);
+   up=MotionEvent.obtain(now,SystemClock.uptimeMillis(),MotionEvent.ACTION_UP,button.centerX(),button.centerY(),0);
+   assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(up,true));
+  }finally{down.recycle();if(up!=null)up.recycle();}
+  settle();
  }
  private void screenshot(String name)throws Exception{
-  settle();String path=DIRECTORY+"/personalization-"+name+".png";shell("screencap -p "+path);
+  awaitNativeApplicationWindow();settle();String path=DIRECTORY+"/personalization-"+name+".png";shell("screencap -p "+path);
   assertEquals("regular file",shell("stat -c %F "+path).trim());assertTrue(Long.parseLong(shell("stat -c %s "+path).trim())>1000);
  }
  private int contrastingBarPixels(Bitmap capture,int left,int right,int top,int bottom,boolean dark){
@@ -219,12 +306,13 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
   // Capture the actual compositor, including native status/navigation icons.
   // Requested appearance flags alone do not prove the rendered icon contrast
   // while Android transfers bar ownership between Activity windows.
-  long started=SystemClock.uptimeMillis(),deadline=started+BAR_CAPTURE_DEADLINE_MS;
+  awaitNativeApplicationWindow();long started=SystemClock.uptimeMillis(),deadline=started+BAR_CAPTURE_DEADLINE_MS;
   int stable=0,statusPixels=0,navigationPixels=0;int[] bars=new int[7];
   Bitmap capture=null;boolean passed=false;JSONArray samples=new JSONArray();String filename="personalization-"+name+".png";
   try{
    do{
     bars=nativeBarState(activity,confirmation);
+    if(bars[3]==0){dismissNativeEducation();bars=nativeBarState(activity,confirmation);}
     if(capture!=null)capture.recycle();capture=getInstrumentation().getUiAutomation().takeScreenshot();
     int[] after=nativeBarState(activity,confirmation);long sampled=SystemClock.uptimeMillis();
     // The left half includes the clock and excludes Android's right-side

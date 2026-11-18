@@ -2,6 +2,7 @@ package com.dacaller.app;
 
 import static org.junit.Assert.*;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import java.io.ByteArrayInputStream;
 import java.util.Collections;
 import java.util.Map;
@@ -94,6 +97,57 @@ public final class SettingsBackupActivityTest {
    assertEquals(Activity.RESULT_OK,shadowOf(ctl.get()).getResultCode());assertFalse(prefs.getBoolean("dark",true));assertEquals(CallArchive.OFF,CallArchive.policy(app));
    java.util.List<CallArchive.BackupRow> rows=CallArchive.captureBackup(app).rows;assertEquals(2,rows.size());assertTrue(added.same(rows.get(0)));assertTrue(saved.same(rows.get(1)));
   }finally{app.deleteDatabase("calls_archive.db");}
+ }
+ @Test @Config(qualifiers="w320dp-h497dp-mdpi") public void longRestoreDisclosureAndArchiveChoiceStayReachableAtLargeFontWithoutApplying()throws Exception{
+  float oldScale=app.getResources().getConfiguration().fontScale;RuntimeEnvironment.setFontScale(1.3f);
+  try{
+   for(boolean english:new boolean[]{false,true})for(boolean dark:new boolean[]{false,true}){
+    prefs.edit().putString("language",english?"en":"he").putBoolean("dark",dark).commit();Map<String,?> before=prefs.getAll();app.deleteDatabase("calls_archive.db");
+    java.util.LinkedHashMap<String,Object> values=new java.util.LinkedHashMap<>();values.put("dark",!dark);values.put(CallArchive.PREF,CallArchive.YEAR);
+    values.put("favorites",Collections.singleton("0500099911"));values.put("note_991","from file");
+    SettingsBackup.Snapshot source=new SettingsBackup.Snapshot(values,new CallArchive.Backup(500,Collections.singletonList(
+     new CallArchive.BackupRow("1|100|2|synthetic-ui",1,"synthetic-ui",100,2,2,200,201,8))));
+    Uri uri=Uri.parse("content://synthetic.backup/large-confirmation-"+english+"-"+dark+".json");
+    shadowOf(app.getContentResolver()).registerInputStream(uri,new ByteArrayInputStream(SettingsBackup.encode(source)));
+    try(ActivityController<SettingsBackupActivity> ctl=Robolectric.buildActivity(SettingsBackupActivity.class,SettingsBackupActivity.intent(app,false)).setup().visible()){
+     ctl.get().onActivityResult(731,Activity.RESULT_OK,new Intent().setData(uri));
+     long until=System.nanoTime()+java.util.concurrent.TimeUnit.SECONDS.toNanos(10);AlertDialog dialog;
+     do{shadowOf(android.os.Looper.getMainLooper()).idle();dialog=ShadowAlertDialog.getLatestAlertDialog();if(dialog!=null&&dialog.isShowing())break;Thread.sleep(10);}while(System.nanoTime()<until);
+     assertNotNull(dialog);assertTrue(dialog.isShowing());layoutConfirmation(dialog);
+     TextView disclosure=dialog.getWindow().getDecorView().findViewWithTag("backup_restore_summary");assertNotNull(disclosure);
+     String text=disclosure.getText().toString();
+     assertTrue(text.contains(english?"Restore 2 settings, 1 favorites and 1 call notes?":"לשחזר 2 הגדרות, 1 מועדפים ו־1 הערות שיחה?"));
+     assertTrue(text.contains(english?"Notes absent from the file will be kept.":"הערות שאינן בקובץ יישמרו."));
+     assertTrue(text.contains(english?"Calls and contacts will not be deleted.":"שיחות ואנשי קשר לא יימחקו."));
+     assertTrue(text.contains(english?"One extra year":"שנה נוספת"));
+     assertTrue(text.contains(english?"This file also contains 1 archive records.":"הקובץ מכיל גם 1 רשומות ארכיון."));
+     assertTrue(text.contains(english?"Existing records with the same identity stay unchanged, including conflicts.":"רשומות קיימות בעלות אותה זהות יישמרו ללא שינוי, גם אם המידע בקובץ שונה."));
+     assertTrue(text.contains(english?"Retention rules apply during future archive updates.":"כללי השמירה יחולו בעדכוני ארכיון עתידיים."));
+     Button restore=dialog.getButton(AlertDialog.BUTTON_POSITIVE),cancel=dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+     fullyVisible(restore,"Restore button");fullyVisible(cancel,"Cancel button");
+     int minimum=Math.round(48*app.getResources().getDisplayMetrics().density);assertTrue(restore.getHeight()>=minimum);assertTrue(cancel.getHeight()>=minimum);
+     CheckBox archive=find(dialog.getWindow().getDecorView(),CheckBox.class);assertNotNull(archive);assertFalse(archive.isChecked());
+     ScrollView body=dialog.getWindow().getDecorView().findViewWithTag("backup_restore_body");assertNotNull(body);
+     assertTrue("The disclosure is genuinely taller than the available confirmation viewport",body.getChildAt(0).getHeight()>body.getHeight());
+     body.scrollTo(0,body.getChildAt(0).getHeight());layoutConfirmation(dialog);fullyVisible(archive,"Archive choice after scrolling");assertTrue(archive.getHeight()>=minimum);
+     fullyVisible(restore,"Restore stays available after scrolling");fullyVisible(cancel,"Cancel stays available after scrolling");
+     assertEquals("Viewing and scrolling do not restore",before,prefs.getAll());assertFalse(app.getDatabasePath("calls_archive.db").exists());
+     archive.setChecked(true);assertEquals("Choosing archive does not confirm restore",before,prefs.getAll());cancel.performClick();shadowOf(android.os.Looper.getMainLooper()).idle();
+     assertTrue(ctl.get().isFinishing());assertEquals(before,prefs.getAll());assertFalse(app.getDatabasePath("calls_archive.db").exists());
+    }
+   }
+  }finally{RuntimeEnvironment.setFontScale(oldScale);app.deleteDatabase("calls_archive.db");}
+ }
+ private void layoutConfirmation(AlertDialog dialog){
+  View decor=dialog.getWindow().getDecorView();int width=Math.round(320*app.getResources().getDisplayMetrics().density),height=Math.round(497*app.getResources().getDisplayMetrics().density);
+  for(int i=0;i<3;i++){
+   decor.measure(View.MeasureSpec.makeMeasureSpec(width,View.MeasureSpec.AT_MOST),View.MeasureSpec.makeMeasureSpec(height,View.MeasureSpec.AT_MOST));
+   decor.layout(0,0,decor.getMeasuredWidth(),decor.getMeasuredHeight());decor.getViewTreeObserver().dispatchOnGlobalLayout();
+  }
+ }
+ private static void fullyVisible(View view,String name){
+  android.graphics.Rect bounds=new android.graphics.Rect();assertTrue(name+" must be shown",view.isShown()&&view.getGlobalVisibleRect(bounds));
+  assertTrue(name+" must have a positive area",view.getWidth()>0&&view.getHeight()>0);assertEquals(name+" full width",view.getWidth(),bounds.width());assertEquals(name+" full height",view.getHeight(),bounds.height());
  }
  private static void clickExport(SettingsBackupActivity activity){
   Button save=exportButton(activity.getWindow().getDecorView());assertNotNull(save);save.performClick();

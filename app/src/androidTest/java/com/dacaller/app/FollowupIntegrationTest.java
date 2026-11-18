@@ -126,13 +126,20 @@ public final class FollowupIntegrationTest extends InstrumentationTestCase {
     target.getSystemService(NotificationManager.class).cancel(MissedCallNotifications.ID);
    }
    for(int i=launched.size()-1;i>=0;i--){Activity activity=launched.get(i);if(activity!=null&&!activity.isDestroyed())ui(activity::finish);}
+   settle();
    if(insertedContact!=null){target.getContentResolver().delete(insertedContact,null,null);ContactPhotos.clearCache();}
    restore(settings,original);restore(target.getSharedPreferences(CallReturnNavigation.PREFERENCES,Context.MODE_PRIVATE),originalNavigation);
    if(modemRequested)restore(missedState,originalMissed);
    AccessibilityServiceInfo service=getInstrumentation().getUiAutomation().getServiceInfo();service.flags=originalAccessibilityFlags;
    getInstrumentation().getUiAutomation().setServiceInfo(service);
    shell("settings put system font_scale "+(originalFont.matches("[0-9.]+")?originalFont:"1.0"));
-  }finally{if(application!=null)application.unregisterActivityLifecycleCallbacks(activityCallbacks);super.tearDown();}
+  }finally{
+   try{if(application!=null)application.unregisterActivityLifecycleCallbacks(activityCallbacks);}
+   finally{
+    launched.clear();main=null;target=null;application=null;settings=null;missedState=null;insertedContact=null;
+    original=null;originalNavigation=null;originalMissed=null;originalFont=null;super.tearDown();
+   }
+  }
  }
  private interface Check{boolean ready()throws Exception;}
  private void await(Check check,String message)throws Exception{

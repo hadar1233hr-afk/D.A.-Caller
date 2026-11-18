@@ -101,8 +101,16 @@ public class MainIslandSpaceTest {
   host.adaptCallIslandContent(false);layout(480);assertEquals(View.VISIBLE,next.findViewWithTag("favorites_strip").getVisibility());assertTrue(prefs.getBoolean("favorites_expanded",false));
  }
  private void layoutWindow(int height){
+  FrameLayout content=host.findViewById(android.R.id.content);
+  ViewGroup.LayoutParams frame=content.getLayoutParams();
+  // Keep real ViewRoot traversals at this same constrained app viewport.
+  // Leaving MATCH_PARENT would let idle restore the enclosing700dp decor,
+  // repeatedly calculating a larger island inset than the manual viewport.
+  if(frame.width!=dp(320)||frame.height!=dp(height)){
+   frame.width=dp(320);frame.height=dp(height);content.setLayoutParams(frame);
+  }
   for(int repeat=0;repeat<3;repeat++){
-   Shadows.shadowOf(Looper.getMainLooper()).idle();FrameLayout content=host.findViewById(android.R.id.content);
+   Shadows.shadowOf(Looper.getMainLooper()).idle();
    content.measure(View.MeasureSpec.makeMeasureSpec(dp(320),View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(dp(height),View.MeasureSpec.EXACTLY));
    content.layout(0,0,dp(320),dp(height));content.getViewTreeObserver().dispatchOnGlobalLayout();
   }
@@ -154,6 +162,13 @@ public class MainIslandSpaceTest {
      fullyVisible(hide,"Hide control after scrolling");assertTrue(hide.getHeight()>=dp(48));
      ((ScrollView)overflow).scrollTo(0,0);layoutWindow(height);View collapse=overflow.findViewWithTag("island-collapse");
      fullyVisible(collapse,"Collapse control after returning to top");assertTrue(collapse.getHeight()>=dp(48));
+     island.onCollapse();layoutWindow(height);
+     assertTrue("Compact personal list remains usable: "+dimensions(personal),list.getHeight()>=dp(60));
+     fullyVisible(personal.findViewWithTag("favorites_strip"),page+" compact favorites");
+     if("recents".equals(page))fullyVisible(personal.findViewWithTag("stats_summary"),"Compact Recents summary");
+     fullyVisible(host.findViewById(android.R.id.content).findViewWithTag("island-root"),"Compact island");
+     fullyVisible(chrome.findViewWithTag("main_bottom_navigation"),"Compact bottom navigation");
+     island.onExpand();layoutWindow(height);
     }
     island.onCollapse();layoutWindow(569);assertEquals(View.VISIBLE,personal.findViewWithTag("call-island-secondary").getVisibility());
     assertEquals(anchor,list.getAdapter().getItemId(list.getFirstVisiblePosition()));assertEquals(top,list.getChildAt(0).getTop());
@@ -161,7 +176,7 @@ public class MainIslandSpaceTest {
    }finally{island.stop();layoutWindow(569);}
   }
  }
- @Test public void realControllerCapsPersonalPagesIncludingTheirVisibleReadErrorWithoutChangingTheListAnchor()throws Exception{
+ @Test @Config(qualifiers="w320dp-h900dp-mdpi") public void realControllerCapsPersonalPagesIncludingTheirVisibleReadErrorWithoutChangingTheListAnchor()throws Exception{
   prefs.edit().putBoolean("island_enabled",true).putBoolean("island_animations",false).commit();LinearLayout chrome=attachMainChrome();
   for(String page:new String[]{"contacts","recents"}){
    CallHistory.readFailed="recents".equals(page);View personal=attach(page);layoutWindow(760);
@@ -178,7 +193,15 @@ public class MainIslandSpaceTest {
      if(error!=null){assertEquals(View.VISIBLE,error.getVisibility());assertEquals(dp(64),error.getHeight());}
     }
     island.onCollapse();layoutWindow(480);
-    assertEquals(View.VISIBLE,personal.findViewWithTag("favorites_strip").getVisibility());assertEquals(View.VISIBLE,personal.findViewWithTag("call-island-secondary").getVisibility());
+    assertTrue("Compact controls must also leave a usable list beside a fixed error: "+dimensions(personal),list.getHeight()>=dp(60));
+    if(error!=null){fullyVisible(error,"Compact fixed read-error message");assertEquals(dp(64),error.getHeight());}
+    assertTrue(prefs.getBoolean("favorites_expanded",false));assertTrue(prefs.getBoolean("stats_expanded",false));
+    assertEquals("Compact adaptation retains the selected row",anchor,list.getAdapter().getItemId(list.getFirstVisiblePosition()));assertEquals(top,list.getChildAt(0).getTop());
+    layoutWindow(760);
+    fullyVisible(personal.findViewWithTag("favorites_strip"),"Favorites restored after growing the compact viewport");
+    fullyVisible(personal.findViewWithTag("call-island-secondary"),"Secondary controls restored after growing the compact viewport");
+    View summary=personal.findViewWithTag("stats_summary");if(summary!=null)fullyVisible(summary,"Summary restored after growing the compact viewport");
+    assertTrue("Restoring cards retains a usable list",list.getHeight()>=dp(60));
     assertTrue(prefs.getBoolean("favorites_expanded",false));assertTrue(prefs.getBoolean("stats_expanded",false));
    }finally{island.stop();layoutWindow(760);}
    assertEquals("List identity survives expansion and restoration",anchor,list.getAdapter().getItemId(list.getFirstVisiblePosition()));assertEquals(top,list.getChildAt(0).getTop());

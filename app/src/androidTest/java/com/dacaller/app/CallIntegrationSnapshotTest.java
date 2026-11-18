@@ -97,7 +97,10 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
    AccessibilityServiceInfo accessibility=getInstrumentation().getUiAutomation().getServiceInfo();accessibility.flags=originalAccessibilityFlags;
    getInstrumentation().getUiAutomation().setServiceInfo(accessibility);
    shell("settings put system font_scale "+(originalFont.matches("[0-9.]+")?originalFont:"1.0"));
-  }finally{super.tearDown();}
+  }finally{
+   launched.clear();rawContacts.clear();main=null;target=null;settings=null;
+   original=null;originalNavigation=null;originalFont=null;super.tearDown();
+  }
  }
  private void ui(Runnable action)throws Exception{
   AtomicReference<Throwable> failure=new AtomicReference<>();

@@ -164,6 +164,7 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
   try{
    if(modemRequested)try{modem("cancel");}catch(Throwable ignored){}
    if(main!=null&&!main.isDestroyed())ui(main::finish);
+   settle();
    if(insertedContact!=null){target.getContentResolver().delete(insertedContact,null,null);ContactPhotos.clearCache();}
    if(prefs!=null&&original!=null)restore(prefs,original);
    if(originalNavigation!=null)restore(target.getSharedPreferences(CallReturnNavigation.PREFERENCES,Context.MODE_PRIVATE),originalNavigation);
@@ -184,7 +185,10 @@ public final class CallIslandExternalIntegrationTest extends InstrumentationTest
    if(originalFont!=null)shell("settings put system font_scale "+(originalFont.matches("[0-9.]+")?originalFont:"1.0"));
    AccessibilityServiceInfo accessibility=getInstrumentation().getUiAutomation().getServiceInfo();accessibility.flags=originalAccessibilityFlags;
    getInstrumentation().getUiAutomation().setServiceInfo(accessibility);
-  }finally{super.tearDown();}
+  }finally{
+   main=null;target=null;prefs=null;original=null;originalNavigation=null;insertedContact=null;
+   originalFont=null;originalOverlayMode=null;originalDialer=null;launcherPackage=null;clockComponent=null;super.tearDown();
+  }
  }
  private void insertContact()throws Exception{
   ArrayList<ContentProviderOperation> batch=new ArrayList<>();

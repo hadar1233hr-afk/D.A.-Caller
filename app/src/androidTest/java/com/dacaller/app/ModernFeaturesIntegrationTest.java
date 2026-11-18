@@ -112,7 +112,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   try {
    if(modemRequested)try{modem("cancel");}catch(Throwable ignored){}
    for(int i=activities.size()-1;i>=0;i--){Activity activity=activities.get(i);if(!activity.isDestroyed())ui(activity::finish);}
-   settle();restore(prefs,original);assertTrue(AppIcons.apply(target,originalIcon));
+   settle();activities.clear();restore(prefs,original);assertTrue(AppIcons.apply(target,originalIcon));
    restore(target.getSharedPreferences(CallReturnNavigation.PREFERENCES,Context.MODE_PRIVATE),originalNavigation);
    CallHistory.entries=originalCalls;CallHistory.summary=originalSummary;CallHistory.readFailed=originalReadFailed;CallHistory.fetchedAt=originalFetchedAt;
    String mode="default";for(String candidate:new String[]{"allow","ignore","deny","default"})if(originalOverlay.contains("SYSTEM_ALERT_WINDOW: "+candidate)){mode=candidate;break;}
@@ -152,8 +152,11 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
  }
  private boolean nativeWindowFocused(View view)throws Exception {
   AtomicReference<Integer> id=new AtomicReference<>();ui(()->id.set(view.createAccessibilityNodeInfo().getWindowId()));
+  return nativeWindowFocused(id.get());
+ }
+ private boolean nativeWindowFocused(int id){
   for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows())
-   if(window.getId()==id.get()&&window.isFocused())return true;
+   if(window.getId()==id&&window.isFocused())return true;
   return false;
  }
  private void awaitActivityForeground(Activity activity)throws Exception {
@@ -186,6 +189,26 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   shell("cp "+file.getAbsolutePath()+" "+DIRECTORY+"/"+name);return bitmap;
  }
  private void screenshot(String name)throws Exception {Bitmap capture=capture(name);capture.recycle();}
+ private int[] uniformBackgroundSamples(Bitmap background,Rect composition){
+  int py=composition.top+dp(3),spacing=dp(2),span=2*spacing;
+  int left=composition.left+composition.width()/4+span,right=composition.right-composition.width()/4-span;
+  assertTrue("Real padding must contain the baseline sample guard",py-1>=composition.top&&py+1<composition.bottom&&left<=right);
+  // Search nearest the center first. Selection sees only the no-island native
+  // baseline, never any opacity result, and requires five guarded empty pixels.
+  for(int distance=0;distance<=composition.width();distance++)for(int side=0;side<(distance==0?1:2);side++){
+   int center=composition.centerX()+(side==0?distance:-distance);if(center<left||center>right)continue;
+   int color=background.getPixel(center,py);
+   if(Color.alpha(color)!=255||Color.red(color)<200||Color.green(color)<200||Color.blue(color)<200)continue;
+   int[] points=new int[5];boolean uniform=true;
+   for(int n=0;n<5;n++){
+    points[n]=center+(n-2)*spacing;
+    for(int gx=-1;gx<=1;gx++)for(int gy=-1;gy<=1;gy++)
+     if(background.getPixel(points[n]+gx,py+gy)!=color)uniform=false;
+   }
+   if(uniform)return points;
+  }
+  fail("Real baseline has no uniform guarded background patch in the capsule's empty top padding");return null;
+ }
  private <T extends Activity>T launch(Class<T> type)throws Exception {
   T activity=type.cast(getInstrumentation().startActivitySync(new Intent(target,type).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));activities.add(activity);settle();awaitActivityForeground(activity);return activity;
  }
@@ -200,22 +223,32 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
  private View tag(Activity activity,String value){View view=activity.getWindow().getDecorView().findViewWithTag(value);assertNotNull("Missing "+value,view);return view;}
  private View windowTag(String value){for(View root:WindowInspector.getGlobalWindowViews()){View view=root.findViewWithTag(value);if(view!=null&&view.isShown())return view;}return null;}
  private Rect bounds(View view)throws Exception {
-  assertNotNull("Missing actual touch target",view);Rect result=new Rect();
-  await(()->{AtomicReference<Boolean> ready=new AtomicReference<>(false),outside=new AtomicReference<>(false);ui(()->{
+  assertNotNull("Missing actual touch target",view);AtomicReference<Rect> accepted=new AtomicReference<>(),previous=new AtomicReference<>();
+  await(()->{AtomicReference<Rect> candidate=new AtomicReference<>();AtomicReference<Boolean> outside=new AtomicReference<>(false);AtomicReference<Integer> windowId=new AtomicReference<>();ui(()->{
    View root=view.getRootView();ViewGroup.LayoutParams raw=root.getLayoutParams();
    boolean overlay=raw instanceof WindowManager.LayoutParams&&((WindowManager.LayoutParams)raw).type==WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
    outside.set(overlay);
-   ready.set(view.isAttachedToWindow()&&view.isShown()&&view.isLaidOut()&&view.getWidth()>0&&view.getHeight()>0&&
-     !view.isLayoutRequested());
-  });return ready.get()&&(outside.get()?!systemUiFocused():nativeWindowFocused(view));},"Target must be laid out in its real visible native window before pointer input: "+view.getTag());
-  ui(()->{
+   if(!view.isAttachedToWindow()||!view.isShown()||!view.isLaidOut()||view.getWidth()<=0||view.getHeight()<=0||
+     view.isLayoutRequested()||root.isLayoutRequested())return;
    int[] location=new int[2];view.getLocationOnScreen(location);
    // Android TextView can include its own internal RTL scroll in this API.
+   Rect result=new Rect();
    result.set(location[0]-view.getScrollX(),location[1]-view.getScrollY(),location[0]-view.getScrollX()+view.getWidth(),location[1]-view.getScrollY()+view.getHeight());
-   assertTrue("Target must be shown",view.isShown());assertTrue("Target has no native touch area",result.width()>0&&result.height()>0);
-   assertTrue("Target outside native display "+result,new Rect(0,0,480,854).contains(result));
-   AccessibilityNodeInfo node=view.createAccessibilityNodeInfo();Rect nativeBounds=new Rect();node.getBoundsInScreen(nativeBounds);assertEquals("View and native AX disagree",nativeBounds,result);
-  });return result;
+   if(result.width()<=0||result.height()<=0||!new Rect(0,0,480,854).contains(result))return;
+   Rect visible=new Rect();if(!view.getGlobalVisibleRect(visible)||!visible.equals(result))return;
+   AccessibilityNodeInfo node=view.createAccessibilityNodeInfo();Rect nativeBounds=new Rect();node.getBoundsInScreen(nativeBounds);
+   if(!nativeBounds.equals(result))return;
+   windowId.set(node.getWindowId());candidate.set(result);
+  });
+   Rect result=candidate.get();
+   if(result==null||(outside.get()?systemUiFocused():!nativeWindowFocused(windowId.get()))){previous.set(null);return false;}
+   // Capture readiness, layout geometry and AX bounds together on main, then
+   // require the same full native target twice. A dialog relayout between the
+   // old readiness check and geometry read could otherwise yield negative size.
+   if(!result.equals(previous.get())){previous.set(new Rect(result));return false;}
+   accepted.set(new Rect(result));return true;
+  },"Target must be fully visible, stably laid out and focused in its actual native window: "+view.getTag());
+  return accepted.get();
  }
  private void pointer(long down,int action,float x,float y)throws Exception {
   MotionEvent event=MotionEvent.obtain(down,SystemClock.uptimeMillis(),action,x,y,0);event.setSource(InputDevice.SOURCE_TOUCHSCREEN);
@@ -260,7 +293,10 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
    Rect bottom=bounds(tag(host,"main_nav_keypad"));assertTrue(bottom.top>854/2);assertTrue(bottom.height()>=dp(48));
    tap(tag(host,"recent_expand"));await(()->tag(host,"recent_actions").isShown(),"Native row pointer must visibly expand its actions");assertTrue("Expansion must not dial",host.requestedNumbers.isEmpty());
    for(String action:new String[]{"recent_action_call","recent_sms","recent_contact","recent_details"}){Rect control=bounds(tag(host,action));assertTrue(action,control.height()>=dp(48));}
-   screenshot("modern-recents-inline-"+suffix+".png");key(KeyEvent.KEYCODE_BACK);assertNull(host.getWindow().getDecorView().findViewWithTag("recent_actions"));
+   screenshot("modern-recents-inline-"+suffix+".png");key(KeyEvent.KEYCODE_BACK);
+   await(()->host.hasWindowFocus()&&!host.isFinishing()&&tag(host,"recent_actions").getVisibility()==View.GONE&&!tag(host,"recent_actions").isShown(),
+    "Back must collapse the retained row actions while keeping the current Activity");
+   assertTrue("Back from the row must not dial",host.requestedNumbers.isEmpty());
    tap(tag(host,"main_nav_keypad"));await(()->windowFind(EditText.class)!=null,"Bottom dialpad did not open");
    assertTrue(host.requestedNumbers.isEmpty());screenshot("modern-bottom-dialpad-"+suffix+".png");key(KeyEvent.KEYCODE_BACK);
    tap(tag(host,"main_settings_button"));View icons=tag(host,"settings_icons");reveal(icons);tap(icons);
@@ -353,7 +389,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   try {
    Activity activity=getInstrumentation().startActivitySync(SettingsBackupActivity.intent(target,true).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));activities.add(activity);settle();awaitActivityForeground(activity);
    CheckBox check=find(activity.getWindow().getDecorView(),CheckBox.class);assertNotNull(check);assertFalse("Archive inclusion is always opt-in",check.isChecked());
-   assertEquals("No SAF output before user chooses",0,monitor.getHits());if(archive)tap(check);assertEquals(archive,check.isChecked());screenshot(filename);
+   assertEquals("No SAF output before user chooses",0,monitor.getHits());if(archive){reveal(check);tap(check);}assertEquals(archive,check.isChecked());screenshot(filename);
    TextView save=text(activity.getWindow().getDecorView(),"Choose file and save backup");assertNotNull(save);reveal(save);tap(save);
    await(()->monitor.getHits()==1,"Explicit Save pointer must launch exactly one native SAF output request");assertEquals(1,monitor.getHits());await(()->text(activity.getWindow().getDecorView(),"Backup saved to the file you selected.")!=null,"Export did not finish");return activity;
   }finally{getInstrumentation().removeMonitor(monitor);}
@@ -366,7 +402,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
    Activity activity=getInstrumentation().startActivitySync(SettingsBackupActivity.intent(target,false).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));activities.add(activity);
    await(()->windowFind(CheckBox.class)!=null,"Archive restore choice missing");assertEquals(1,monitor.getHits());
    CheckBox check=windowFind(CheckBox.class);assertFalse("Importing the bundle must not implicitly import archive",check.isChecked());if(archive){reveal(check);tap(check);}assertEquals(archive,check.isChecked());
-   screenshot(filename);View restore=windowButton(android.R.id.button1);assertNotNull(restore);tap(restore);return activity;
+   screenshot(filename);View restore=windowButton(android.R.id.button1);assertNotNull(restore);reveal(restore);tap(restore);return activity;
   }finally{getInstrumentation().removeMonitor(monitor);}
  }
  private View windowButton(int id){for(View root:WindowInspector.getGlobalWindowViews()){View button=root.findViewById(id);if(button!=null&&button.isShown())return button;}return null;}
@@ -436,8 +472,13 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   // top padding avoids opaque caller-label backplates and proves compositor blending.
   prefs.edit().putBoolean(CallIslandPosition.SET,true).putInt(CallIslandPosition.X,5000).putInt(CallIslandPosition.Y,6000).commit();settle();
   Rect composition=bounds(tag(main,"island-root"));prefs.edit().putString("island_hidden_token",token).commit();await(()->main.getWindow().getDecorView().findViewWithTag("island-root")==null,"Composition baseline must have no island");
-  Bitmap background=capture("modern-island-composition-background.png");Bitmap[] levels=new Bitmap[3];int[] opacity={0,35,100};
+  Bitmap background=capture("modern-island-composition-background.png");
+  // Choose empty, uniform real background using this baseline only, before
+  // any opacity image exists. Text antialiasing below a transparent layer can
+  // quantize by one channel; it is not the empty padding this proof samples.
+  Bitmap[] levels=new Bitmap[3];int[] opacity={0,35,100};
   try {
+   int[] sampleXs=uniformBackgroundSamples(background,composition);
    for(int i=0;i<opacity.length;i++){
     prefs.edit().remove("island_hidden_token").putInt("island_background_opacity",opacity[i]).commit();
     await(()->main.getWindow().getDecorView().findViewWithTag("island-root")!=null,"Transparent island did not return");settle();
@@ -445,8 +486,8 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
     levels[i]=capture("modern-island-opacity-"+opacity[i]+".png");assertOwned(call,token);
    }
    JSONArray pixels=new JSONArray();
-   for(int offset=-2;offset<=2;offset++){
-    int px=composition.centerX()+offset*dp(2),py=composition.top+dp(3);
+   for(int px:sampleXs){
+    int py=composition.top+dp(3);
     int base=background.getPixel(px,py),zero=levels[0].getPixel(px,py),partial=levels[1].getPixel(px,py),opaque=levels[2].getPixel(px,py);
     assertEquals("Zero background opacity must expose exact real pixels",base,zero);int difference=0;
     for(int shift:new int[]{16,8,0}){int bg=(base>>shift)&255,fg=(opaque>>shift)&255,actual=(partial>>shift)&255;
@@ -455,7 +496,9 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
     pixels.put(new JSONObject().put("x",px).put("y",py).put("background",base).put("opacity0",zero).put("opacity35",partial).put("opacity100",opaque));
    }
    proof.put("transparency",new JSONObject().put("sample_region",composition.toShortString()).put("background_is_real_app_compositor",true).put("view_alpha",1)
-    .put("caller_alpha",1).put("background_alpha_35",89).put("rgb_tolerance",3).put("samples",pixels));
+    .put("caller_alpha",1).put("background_alpha_35",89).put("rgb_tolerance",3).put("samples",pixels)
+    .put("sample_selection","baseline-only uniform light background in central top padding")
+    .put("baseline_uniform_guard_pixels",1).put("baseline_min_rgb",200));
   }finally{background.recycle();for(Bitmap bitmap:levels)if(bitmap!=null)bitmap.recycle();}
   prefs.edit().putString("island_hidden_token",token).commit();modem("cancel");await(()->PhoneSessionService.current==null||PhoneSessionService.current.getState()==Call.STATE_DISCONNECTED,"First actual call did not end");
   key(KeyEvent.KEYCODE_HOME);modem("call");await(()->state(Call.STATE_RINGING)&&PhoneSessionService.islandSnapshot()!=null,"Second actual call did not bind");

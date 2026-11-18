@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.MainIslandSpaceTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-18T20:14:05" hostname="3ebae333e153" time="6.863">
+  <properties/>
+  <testcase name="replacingThePageRestoresDetachedCardsAndAdaptsOnlyTheNewPage" classname="com.dacaller.app.MainIslandSpaceTest" time="0.866"/>
+  <testcase name="zeroHeightListsRecoverAcrossRepeatedLayoutsWithoutChangingPreferencesOrAnchors" classname="com.dacaller.app.MainIslandSpaceTest" time="0.991"/>
+  <testcase name="nativeSizedViewportKeepsFavoritesAndSummaryVisibleWhileExpandedControlsRemainReachable" classname="com.dacaller.app.MainIslandSpaceTest" time="3.869"/>
+  <testcase name="businessHeadersKeepTheirListAndFullIslandControlsScrollOnlyUntilViewportOrPositionChanges" classname="com.dacaller.app.MainIslandSpaceTest" time="0.248"/>
+  <testcase name="realControllerCapsPersonalPagesIncludingTheirVisibleReadErrorWithoutChangingTheListAnchor" classname="com.dacaller.app.MainIslandSpaceTest" time="0.887"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

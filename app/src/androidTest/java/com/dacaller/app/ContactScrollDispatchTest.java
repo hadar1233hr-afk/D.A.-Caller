@@ -29,7 +29,8 @@ public final class ContactScrollDispatchTest extends InstrumentationTestCase {
   ui(()->{pages=new FastPages(host);show(contacts);});getInstrumentation().waitForIdleSync();
  }
  @Override protected void tearDown()throws Exception{
-  if(host!=null)ui(()->host.finish());getInstrumentation().waitForIdleSync();super.tearDown();
+  try{if(host!=null)ui(()->host.finish());getInstrumentation().waitForIdleSync();}
+  finally{host=null;pages=null;list=null;contacts.clear();super.tearDown();}
  }
  private void ui(Runnable task)throws Exception{
   AtomicReference<Throwable> error=new AtomicReference<>();

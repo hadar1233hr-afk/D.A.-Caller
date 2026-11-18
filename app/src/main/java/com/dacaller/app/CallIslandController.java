@@ -171,7 +171,9 @@ final class CallIslandController implements CallIslandView.Listener {
     if(params.topMargin!=expected){params.topMargin=expected;child.setLayoutParams(params);}
    }
    for(View child:new ArrayList<>(margins.keySet()))if(child.getParent()!=content){restoreMargin(child);margins.remove(child);}
-   if(host instanceof MainActivity)((MainActivity)host).adaptCallIslandContent(expanded);
+   // Compact controls also reserve space: at large fonts an expanded call
+   // summary may otherwise consume the last usable row below that capsule.
+   if(host instanceof MainActivity)((MainActivity)host).adaptCallIslandContent(true);
   }finally{layingOut=false;}
  }
  private void configureLayer(){

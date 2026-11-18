@@ -1,0 +1,194 @@
+{
+  "source_sha256": "5c2a19951dcc15b5da54a290b9873eba7001caa4bdba994c94e693d59503cd96",
+  "source_file": "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java",
+  "test_methods_preserved": [
+    "testModernInlineNavigationNineIconsAndWineSwitchPointer",
+    "testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns",
+    "testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency"
+  ],
+  "literal_capture_names_preserved": [
+    "modern-archive-merged.png",
+    "modern-archive-restore-off.png",
+    "modern-archive-restore-on.png",
+    "modern-backup-options-off.png",
+    "modern-backup-options-on.png",
+    "modern-island-below-inapp.png",
+    "modern-island-composition-background.png",
+    "modern-island-dragged.png",
+    "modern-island-hide-home.png",
+    "modern-island-new-call-shown.png",
+    "modern-island-restore-home.png",
+    "modern-island-status-external.png",
+    "modern-island-status-inapp.png"
+  ],
+  "normal_profile_frames": 24,
+  "actual_historical_native_run": 44303504696,
+  "observed_opacity_failure": "original top-padding samples crossed underlying date glyph antialias: x234,y436 baseline203,203,203 vs zero204,204,204",
+  "selection_policy": "Before creating overlay captures, choose five distinct flat light baseline-only points, all guarded by3x3 identical native compositor pixels. Never inspect opacity result when selecting. Fail if no eligible patch. Exact zero, 35% blend tolerance3 and opaque contrast>80 retained.",
+  "historical_same_row_baseline_only_selection_replay": [
+    {
+      "x": 316,
+      "y": 436,
+      "background": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "opacity0": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "opacity35": [
+        173,
+        173,
+        175,
+        255
+      ],
+      "opacity100": [
+        19,
+        21,
+        26,
+        255
+      ],
+      "zero_exact": true,
+      "partial_max_rgb_error": 0
+    },
+    {
+      "x": 319,
+      "y": 436,
+      "background": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "opacity0": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "opacity35": [
+        173,
+        173,
+        175,
+        255
+      ],
+      "opacity100": [
+        19,
+        21,
+        26,
+        255
+      ],
+      "zero_exact": true,
+      "partial_max_rgb_error": 0
+    },
+    {
+      "x": 322,
+      "y": 436,
+      "background": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "opacity0": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "opacity35": [
+        173,
+        173,
+        175,
+        255
+      ],
+      "opacity100": [
+        19,
+        21,
+        26,
+        255
+      ],
+      "zero_exact": true,
+      "partial_max_rgb_error": 0
+    },
+    {
+      "x": 325,
+      "y": 436,
+      "background": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "opacity0": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "opacity35": [
+        173,
+        173,
+        175,
+        255
+      ],
+      "opacity100": [
+        19,
+        21,
+        26,
+        255
+      ],
+      "zero_exact": true,
+      "partial_max_rgb_error": 0
+    },
+    {
+      "x": 328,
+      "y": 436,
+      "background": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "opacity0": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "opacity35": [
+        173,
+        173,
+        175,
+        255
+      ],
+      "opacity100": [
+        19,
+        21,
+        26,
+        255
+      ],
+      "zero_exact": true,
+      "partial_max_rgb_error": 0
+    }
+  ],
+  "raw_png_sha256": {
+    "modern-island-composition-background.png": "61ebc29a1bbf619cd0a2847976985fef9ca54c6df88d7927b7562b1418478814",
+    "modern-island-opacity-0.png": "cb41e669b5a805294d67cd3047b0f32ee3ca86f8d0e2675b9afbc94a3ee5ff81",
+    "modern-island-opacity-35.png": "521b16428a3cd31eee763808451a52cab81ad4e7c5922decfc65f56149896462",
+    "modern-island-opacity-100.png": "61996fb13be34716583331408b2f47f36b6353769f10aa729819aa346cd119cb"
+  },
+  "back_fixture_fix": "Retained row actions are GONE after actual Back, activity stays focused/alive and no dial request. Production container intentionally persists.",
+  "backup_actual_defect": "Long message plus separate custom checkbox squeezes dialog; parent assigned production scrollable-body fix independently. Test retains separate opt-ins/native pointers/one SAF hit.",
+  "bounds_change": "Read readiness, positive full global rectangle and exact AX rectangle atomically on main; require focused native window and two identical full rectangles.",
+  "native_execution_performed": false,
+  "direct_javac_exit": 0,
+  "gradle_executed_by_worker": false,
+  "production_source_modified_by_worker": false,
+  "heap_retention_fix": "Clear finished test activities after finish/settle so retained JUnit test instances do not keep full view trees."
+}

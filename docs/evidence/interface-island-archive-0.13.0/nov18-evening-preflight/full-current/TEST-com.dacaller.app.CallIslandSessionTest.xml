@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.CallIslandSessionTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-11-18T20:13:20" hostname="3ebae333e153" time="2.48">
+  <properties/>
+  <testcase name="muteIsExplicitAndPresentationWaitsForActualAudioState" classname="com.dacaller.app.CallIslandSessionTest" time="0.652"/>
+  <testcase name="openUsesExplicitOwnScreenAndPreservesCurrentActivityStackWithoutDialing" classname="com.dacaller.app.CallIslandSessionTest" time="0.628"/>
+  <testcase name="incomingOffersOnlyAudioAnswerAndDeclineInsteadOfOngoingActions" classname="com.dacaller.app.CallIslandSessionTest" time="0.029"/>
+  <testcase name="snapshotShowsPermissionScopedIdentityAudioTimerAndCurrentHoldCapability" classname="com.dacaller.app.CallIslandSessionTest" time="0.025"/>
+  <testcase name="holdAndResumeRequireLiveStateAndActionCapabilityNotOnlySupport" classname="com.dacaller.app.CallIslandSessionTest" time="0.054"/>
+  <testcase name="externalOpenUsesGuardedOwnCallAndNewTaskOnlyForNonActivityContext" classname="com.dacaller.app.CallIslandSessionTest" time="0.023"/>
+  <testcase name="localIdentityRefreshNotifiesIslandOffThreadAndRevocationDropsPhotoAndName" classname="com.dacaller.app.CallIslandSessionTest" time="0.419"/>
+  <testcase name="speakerCommandsRespectActualSupportedRouteAndDoNotInvertLaterBluetooth" classname="com.dacaller.app.CallIslandSessionTest" time="0.056"/>
+  <testcase name="restrictedAndUnknownPresentationCannotExposeNumberPhotoOrName" classname="com.dacaller.app.CallIslandSessionTest" time="0.038"/>
+  <testcase name="ongoingEndsOnlyBoundCallAndRejectsIncomingAndUnknownCommands" classname="com.dacaller.app.CallIslandSessionTest" time="0.022"/>
+  <testcase name="lateProviderResultCannotRenameAnIslandForAReplacementCall" classname="com.dacaller.app.CallIslandSessionTest" time="0.366"/>
+  <testcase name="unavailableAudioAndProviderExceptionsDisablePresentationWithoutLosingCall" classname="com.dacaller.app.CallIslandSessionTest" time="0.03"/>
+  <testcase name="staleIslandCannotChangeAnswerOrEndAReplacementOrWaitingCall" classname="com.dacaller.app.CallIslandSessionTest" time="0.089"/>
+  <testcase name="snapshotsRequireOwnedLivingCallAndStopAfterServiceDestruction" classname="com.dacaller.app.CallIslandSessionTest" time="0.045"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

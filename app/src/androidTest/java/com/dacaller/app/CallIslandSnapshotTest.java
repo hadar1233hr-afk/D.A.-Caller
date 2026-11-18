@@ -91,8 +91,15 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
    settle();restore(prefs,original);shell("settings put system font_scale "+(originalFont.matches("[0-9.]+")?originalFont:"1.0"));
    shell("settings put global animator_duration_scale "+(originalDuration.matches("[0-9.]+")?originalDuration:"1.0"));
   }finally{
-   AccessibilityServiceInfo accessibility=getInstrumentation().getUiAutomation().getServiceInfo();accessibility.flags=originalAccessibilityFlags;
-   getInstrumentation().getUiAutomation().setServiceInfo(accessibility);super.tearDown();
+   try{
+    AccessibilityServiceInfo accessibility=getInstrumentation().getUiAutomation().getServiceInfo();accessibility.flags=originalAccessibilityFlags;
+    getInstrumentation().getUiAutomation().setServiceInfo(accessibility);
+   }finally{
+    // JUnit3 keeps completed test instances for the suite. Finished windows and
+    // their complete renderer/controller trees must not remain rooted here.
+    launched.clear();host=null;diagnosticHost=null;target=null;prefs=null;original=null;
+    originalFont=null;originalDuration=null;lastTap="none";super.tearDown();
+   }
   }
  }
  private void ui(Runnable action)throws Exception{
@@ -430,17 +437,26 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   assertTrue("A native scroll requires a visible body lane below the header",startY>headerBottom[0]&&bounds.contains(bounds.centerX(),startY));
   assertTrue("Native viewport swipe must cross touch slop inside its visible bounds",bounds.contains(bounds.centerX(),endY)&&Math.abs(endY-startY)>=dp(20));
   long down=SystemClock.uptimeMillis();
-  for(int step=0;step<=10;step++){
-   if(step>0)Thread.sleep(20);int action=step==0?MotionEvent.ACTION_DOWN:MotionEvent.ACTION_MOVE;
-   MotionEvent event=MotionEvent.obtain(down,SystemClock.uptimeMillis(),action,bounds.centerX(),startY+(endY-startY)*step/10f,0);event.setSource(InputDevice.SOURCE_TOUCHSCREEN);
-   try{getInstrumentation().sendPointerSync(event);}finally{event.recycle();}
+  lastTap="native body scroll "+(towardsBottom?"down":"up")+" viewport="+bounds.toShortString()+" header-bottom="+headerBottom[0]+" from="+startY+" to="+endY;
+  try{
+   for(int step=0;step<=10;step++){
+    if(step>0)Thread.sleep(20);int action=step==0?MotionEvent.ACTION_DOWN:MotionEvent.ACTION_MOVE;
+    MotionEvent event=MotionEvent.obtain(down,SystemClock.uptimeMillis(),action,bounds.centerX(),startY+(endY-startY)*step/10f,0);event.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+    try{getInstrumentation().sendPointerSync(event);}finally{event.recycle();}
+   }
+   // Stop the finger before UP: evidence needs deterministic scrolling, without
+   // a fling settling at a different control after the geometry assertion.
+   Thread.sleep(140);MotionEvent still=MotionEvent.obtain(down,SystemClock.uptimeMillis(),MotionEvent.ACTION_MOVE,bounds.centerX(),endY,0);still.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+   try{getInstrumentation().sendPointerSync(still);}finally{still.recycle();}
+   MotionEvent up=MotionEvent.obtain(down,SystemClock.uptimeMillis(),MotionEvent.ACTION_UP,bounds.centerX(),endY,0);up.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+   try{getInstrumentation().sendPointerSync(up);}finally{up.recycle();}
+  }catch(Exception|Error failure){
+   // Do not leave a held native pointer behind if a gesture fails midway.
+   MotionEvent cancel=MotionEvent.obtain(down,SystemClock.uptimeMillis(),MotionEvent.ACTION_CANCEL,bounds.centerX(),endY,0);cancel.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+   try{getInstrumentation().sendPointerSync(cancel);}catch(Exception|Error cleanupFailure){failure.addSuppressed(cleanupFailure);}finally{cancel.recycle();}
+   throw failure;
   }
-  // Stop the finger before UP: evidence needs deterministic scrolling, without
-  // a fling settling at a different control after the geometry assertion.
-  Thread.sleep(140);MotionEvent still=MotionEvent.obtain(down,SystemClock.uptimeMillis(),MotionEvent.ACTION_MOVE,bounds.centerX(),endY,0);still.setSource(InputDevice.SOURCE_TOUCHSCREEN);
-  try{getInstrumentation().sendPointerSync(still);}finally{still.recycle();}
-  MotionEvent up=MotionEvent.obtain(down,SystemClock.uptimeMillis(),MotionEvent.ACTION_UP,bounds.centerX(),endY,0);up.setSource(InputDevice.SOURCE_TOUCHSCREEN);
-  try{getInstrumentation().sendPointerSync(up);}finally{up.recycle();}settle();
+  settle();
  }
  private JSONObject assertMainIslandScrollAccess(MainActivity app,ScrollView viewport,String page)throws Exception{
   assertEquals("Expanded viewport evidence must start at its genuine top",0,viewport.getScrollY());
@@ -450,9 +466,10 @@ public final class CallIslandSnapshotTest extends InstrumentationTestCase {
   Rect viewportBounds=focusedNativeBounds(app,viewport);JSONArray targets=new JSONArray();
   for(String tag:new String[]{"island-action-MUTE_ON","island-action-SPEAKER_ON","island-action-HOLD","island-action-END","island-open","island-hide"}){
    View control=tagged(app,tag);boolean reached=false;
-   for(int step=0;step<12;step++){
+   for(int step=0;step<=12;step++){
     Rect[] full={null};ui(()->full[0]=unclippedScreenBounds(control));
     if(viewportBounds.contains(full[0])){reached=true;break;}
+    if(step==12)break; // Recheck the twelfth real swipe before declaring failure.
     assertTrue("Each complete call control must fit the real capped viewport",control.getHeight()<=viewportBounds.height());
     boolean down=full[0].bottom>viewportBounds.bottom;int gap=down?full[0].bottom-viewportBounds.bottom:viewportBounds.top-full[0].top;
     int before=viewport.getScrollY();nativeViewportSwipe(app,viewport,down,Math.max(dp(36),gap+dp(8)));

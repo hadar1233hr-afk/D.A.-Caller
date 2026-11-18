@@ -28,7 +28,8 @@ public final class ListDialDispatchTest extends InstrumentationTestCase {
   ui(()->pages=new FastPages(host));
  }
  @Override protected void tearDown()throws Exception{
-  ui(()->{CallHistory.entries=original;host.finish();});getInstrumentation().waitForIdleSync();super.tearDown();
+  try{ui(()->{CallHistory.entries=original;if(host!=null)host.finish();});getInstrumentation().waitForIdleSync();}
+  finally{host=null;pages=null;list=null;original=null;super.tearDown();}
  }
  private void ui(Runnable action)throws Exception{
   AtomicReference<Throwable> error=new AtomicReference<>();

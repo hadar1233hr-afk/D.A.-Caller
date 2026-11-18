@@ -147,6 +147,7 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   },failures);
   cleanup(()->CallbackReminder.setEnabled(target,false),failures);
   for(int n=launched.size()-1;n>=0;n--){Activity value=launched.get(n);if(value!=null&&!value.isDestroyed())cleanup(()->ui(value::finish),failures);}
+  cleanup(this::settle,failures);
   if(insertedContact!=null)cleanup(()->{target.getContentResolver().delete(insertedContact,null,null);ContactPhotos.clearCache();},failures);
   cleanup(()->restore(settings,original),failures);
   cleanup(()->restore(target.getSharedPreferences(CallReturnNavigation.PREFERENCES,0),originalNavigation),failures);
@@ -155,7 +156,11 @@ public final class CallbackBusinessIntegrationTest extends InstrumentationTestCa
   cleanup(()->{AccessibilityServiceInfo service=getInstrumentation().getUiAutomation().getServiceInfo();service.flags=originalAccessibilityFlags;
    getInstrumentation().getUiAutomation().setServiceInfo(service);},failures);
   cleanup(()->shell("settings put system font_scale "+(originalFont.matches("[0-9.]+")?originalFont:"1.0")),failures);
-  cleanup(()->{if(application!=null)application.unregisterActivityLifecycleCallbacks(activityCallbacks);},failures);cleanup(()->super.tearDown(),failures);
+  cleanup(()->{if(application!=null)application.unregisterActivityLifecycleCallbacks(activityCallbacks);},failures);
+  launched.clear();main=null;reminder=null;callScreen=null;editor=null;businessDialCall=null;
+  target=null;application=null;settings=null;missedState=null;reminderState=null;insertedContact=null;
+  original=null;originalNavigation=null;originalMissed=null;originalReminder=null;originalFont=null;
+  cleanup(()->super.tearDown(),failures);
   if(!failures.isEmpty()){AssertionError failure=new AssertionError("Native cleanup failed: "+failures);for(Throwable item:failures)failure.addSuppressed(item);throw failure;}
  }
  private interface Check{boolean ready()throws Exception;}

@@ -137,12 +137,22 @@ public final class SettingsBackupActivity extends Activity {
      "הקובץ מכיל גם %d רשומות ארכיון. אפשר למזג אותן בבחירה מפורשת למטה. רשומות קיימות בעלות אותה זהות יישמרו ללא שינוי, גם אם המידע בקובץ שונה. אין מחיקה או החלפה של הארכיון. כללי השמירה יחולו בעדכוני ארכיון עתידיים.",
      "This file also contains %d archive records. Select below to merge them. Existing records with the same identity stay unchanged, including conflicts. The archive is never deleted or replaced. Retention rules apply during future archive updates."),snapshot.archive.rows.size());
    else summary+="\n\n"+tr("זהו גיבוי הגדרות בלבד. הארכיון הקיים יישמר ללא שינוי.","This is a settings-only backup. The existing archive stays unchanged.");
-   AlertDialog.Builder builder=new AlertDialog.Builder(this,dialogTheme).setTitle(tr("שחזור הגדרות","Restore settings")).setMessage(summary);
+   AlertDialog.Builder builder=new AlertDialog.Builder(this,dialogTheme).setTitle(tr("שחזור הגדרות","Restore settings"));
+   // A separate AlertDialog message panel can consume the whole height at a
+   // large font, squeezing the custom archive choice below zero. Keep all
+   // confirmation content in one bounded scroller; native buttons stay outside.
+   ScrollView body=new ScrollView(builder.getContext());body.setTag("backup_restore_body");body.setFillViewport(false);
+   LinearLayout content=new LinearLayout(builder.getContext());content.setOrientation(LinearLayout.VERTICAL);
+   content.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);
+   content.setPadding(dp(20),dp(8),dp(20),dp(8));body.addView(content,new ScrollView.LayoutParams(-1,-2));
+   TextView details=new TextView(builder.getContext());details.setTag("backup_restore_summary");details.setText(summary);details.setTextSize(16);AppAppearance.font(details,false);
+   content.addView(details,new LinearLayout.LayoutParams(-1,-2));
    if(snapshot.archive!=null){
-    CheckBox merge=new CheckBox(builder.getContext());merge.setText(tr("מזג גם את רשומות הארכיון שבקובץ","Also merge archive records from this file"));merge.setMinHeight(dp(48));AppAppearance.font(merge,false);
-    merge.setPadding(dp(20),dp(8),dp(20),dp(8));merge.setChecked(session.includeArchiveRestore);
-    merge.setOnCheckedChangeListener((button,checked)->session.includeArchiveRestore=checked);builder.setView(merge);
+    CheckBox merge=new CheckBox(builder.getContext());merge.setTag("backup_restore_archive");merge.setText(tr("מזג גם את רשומות הארכיון שבקובץ","Also merge archive records from this file"));merge.setMinHeight(dp(48));AppAppearance.font(merge,false);
+    merge.setPadding(0,dp(8),0,dp(8));merge.setChecked(session.includeArchiveRestore);
+    merge.setOnCheckedChangeListener((button,checked)->session.includeArchiveRestore=checked);content.addView(merge,new LinearLayout.LayoutParams(-1,-2));
    }
+   builder.setView(body);
    confirmation=AppAppearance.show(builder
      .setNegativeButton(tr("ביטול","Cancel"),(dialog,which)->finish())
      .setPositiveButton(tr("שחזר","Restore"),(dialog,which)->session.restore())

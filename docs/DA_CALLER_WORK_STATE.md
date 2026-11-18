@@ -1,5 +1,62 @@
 # DA CALLER continuation state
 
+## Normal scheduled resume; actual native failures corrected under verification — 2026-11-18 evening UTC
+
+Resumed normally at19:59UTC after environment startup and root-only/noJava/no
+active-CI overlap check. No new usage-limit error occurred. The local usage-stop
+checkpointb80626c was preserved; remote PR still had da08214. Full current-source
+host/build/lint/Android-test APK verification is now running serially; the new
+source has no full/native/visual/publication approval yet.
+
+Actual CI44303504696/source da08214/appTree3818476df40e26ca5991d6d821a0573517e91197
+completed: validate455uniqueunitsPASS, native JUnit39entries (31PASS,7assertion
+failures+1process-abort failure), one of40expected methods absent.232rawPNGs:
+212/245original,14/24modern,6diagnostics. Exact official UI ZIP16509797bytes
+SHAfd732fbae23111874843efd2e75b6bed459c02442d3d028ab8ac9fbbd3cdfb40;
+failure ZIP1330306bytes SHA4875882d8f6665f493d181a311db2c1687d855976c1aa4ec3a8afa7905e6160b.
+GitHubdigest/size/allCRC verified via connectedGitHub+Sediment. Raw files under
+/workspace/work/native-013-ci-44303504696; inrepo second-native-ci retains actual
+JUnit, failures, hashes, incomplete frame inventory and exact memory excerpts.
+Two root-viewed diagnostics confirm hidden favorites and actual island surfaces;
+other targeted captures were viewed by scoped reviewers. No whole-matrix review.
+
+Concrete fixes and proof:
+
+- Default expanded budget includes original-visible favorites/summary natural
+  heights; compact reserved islands also adapt only as necessary. Full cards,
+  navigation,60dp list, resize/anchor/preferences and reachable controls are
+  checked at497/520/569dp. Five current MainIslandSpace methods actually PASS.
+  Earlier false fixture failure was proved by real geometry logs: idle restored
+  MATCH_PARENTcontent to700dp before each manual569dp pass. The fixture now
+  constrains the real content LP before idle; full assertions are retained.
+- Actual restore-dialog defect: long AlertDialog message consumed all height and
+  squeezed the custom archive checkbox below zero at1.3font. One bounded body
+  now scrolls disclosure+explicit archive choice; native buttons remain outside.
+  Seven SettingsBackupActivity methods actually PASS, including new320x497/
+  font1.3/both-language+theme/48dpbuttons/choice-reachability/cancel/no-write case.
+- Snapshot native checks now require full bounded viewport and genuine body-lane
+  pointer scrolling to every48dpaction/Open/Hide and back to Collapse. Full-root
+  visibility still required without overflow; prefs, list anchor, no call-command
+  dispatch, nativefocus/AX checks and all capture names retained.
+- Modern Back correctly checks retained actions become GONE. Native touch bounds
+  are atomic, fully visible, stable and actualAX/focus-bound; restore choice is
+  revealed before touching. Transparency selects guarded uniform pixels using
+  only the real no-island baseline; exact0equality/35%blend/contrast remain strict.
+  Actual historical pixel replay passed; this is not new native execution.
+- Native logcat proves LMK killed the foreground app (RSS711780kB/swap1205776kB)
+  before the final Widget case. JUnit suite retained finished Activity/Viewtrees;
+  test-only teardown references now clear after realfinish/settle/unregister/
+  restore/proofwriting. This does not prove a production leak or its resolution.
+  Legacy focus handling dismisses only the actual native fullscreen education
+  prompt through its real control, preserving unchanged compositor thresholds.
+
+All40native methods/245original names+24modern, seven original verifier scripts,
+signing policy/workflows and frozen business DB/manifest/reader remain unchanged.
+Direct javac and independent source reviews passed the native producer changes;
+full Gradle/actual fresh40native/269PNGs/fullvisual review remain next. No signing
+exception extends beyond delivered immutable0.12.0;0.13.0/code22 unreleased,
+existing automation active, owner-controlled durable backup/CIsecrets unresolved.
+
 ## Actual usage-limit stop after further layout findings — 2026-11-18 UTC
 
 STOPPED/save-only. The focused MainIslandSpaceTest command was **not executed**:

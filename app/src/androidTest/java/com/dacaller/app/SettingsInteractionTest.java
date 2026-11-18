@@ -16,8 +16,14 @@ import java.util.concurrent.atomic.AtomicReference;
 @SuppressWarnings("deprecation")
 public final class SettingsInteractionTest extends InstrumentationTestCase {
  private ListDispatchHostActivity host;
+ private int originalAccessibilityFlags;
  @Override protected void setUp()throws Exception{
   super.setUp();
+  android.accessibilityservice.AccessibilityServiceInfo service=getInstrumentation().getUiAutomation().getServiceInfo();
+  originalAccessibilityFlags=service.flags;
+  service.flags|=android.accessibilityservice.AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
+    |android.accessibilityservice.AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS;
+  getInstrumentation().getUiAutomation().setServiceInfo(service);
   Intent intent=new Intent(getInstrumentation().getTargetContext(),ListDispatchHostActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
   host=(ListDispatchHostActivity)getInstrumentation().startActivitySync(intent);getInstrumentation().waitForIdleSync();
   // The fixture mounts SettingsScreen directly below. Keep MainActivity's
@@ -27,7 +33,13 @@ public final class SettingsInteractionTest extends InstrumentationTestCase {
   ui(()->{try{page.set(host,"settings");}catch(IllegalAccessException failure){throw new AssertionError(failure);}});
  }
  @Override protected void tearDown()throws Exception{
-  ui(()->host.finish());getInstrumentation().waitForIdleSync();super.tearDown();
+  try{if(host!=null)ui(()->host.finish());getInstrumentation().waitForIdleSync();}
+  finally{
+   host=null;
+   try{android.accessibilityservice.AccessibilityServiceInfo service=getInstrumentation().getUiAutomation().getServiceInfo();
+    service.flags=originalAccessibilityFlags;getInstrumentation().getUiAutomation().setServiceInfo(service);}
+   finally{super.tearDown();}
+  }
  }
  private void ui(Runnable action)throws Exception{
   AtomicReference<Throwable> error=new AtomicReference<>();
@@ -56,9 +68,9 @@ public final class SettingsInteractionTest extends InstrumentationTestCase {
    ui(()->assertCurrentViewport(viewport[0]));
    for(int n=0;n<6;n++){
     reveal(viewport[0],header[0]);tap(header[0]);
-    ui(()->assertEquals(View.VISIBLE,content[0].getVisibility()));
+    awaitVisibility(viewport[0],content[0],View.VISIBLE);
     reveal(viewport[0],header[0]);tap(header[0]);
-    ui(()->assertEquals(View.GONE,content[0].getVisibility()));
+    awaitVisibility(viewport[0],content[0],View.GONE);
    }
    reveal(viewport[0],header[0]);tap(header[0]);
    ui(()->{
@@ -166,19 +178,55 @@ public final class SettingsInteractionTest extends InstrumentationTestCase {
   });getInstrumentation().waitForIdleSync();
  }
  private void tap(View target)throws Exception{
-  final int[] point=new int[2];
-  ui(()->{
-   assertTrue("Settings touch target must belong to the shown current content",inCurrentContent(target)&&target.isShown()&&host.hasWindowFocus());
-   target.getLocationOnScreen(point);point[0]+=target.getWidth()/2;point[1]+=target.getHeight()/2;
-   android.graphics.Rect visible=new android.graphics.Rect();
-   assertTrue("Settings touch center must be visibly reachable",target.getLocalVisibleRect(visible)
-    &&visible.contains(target.getWidth()/2,target.getHeight()/2));
-  });
+  android.graphics.Rect bounds=stableNativeBounds(target);
   long at=SystemClock.uptimeMillis();
-  MotionEvent down=MotionEvent.obtain(at,at,MotionEvent.ACTION_DOWN,point[0],point[1],0);
-  MotionEvent up=MotionEvent.obtain(at,at+40,MotionEvent.ACTION_UP,point[0],point[1],0);
-  getInstrumentation().sendPointerSync(down);getInstrumentation().sendPointerSync(up);down.recycle();up.recycle();
+  MotionEvent down=MotionEvent.obtain(at,at,MotionEvent.ACTION_DOWN,bounds.centerX(),bounds.centerY(),0);
+  getInstrumentation().sendPointerSync(down);down.recycle();Thread.sleep(40);
+  MotionEvent up=MotionEvent.obtain(at,SystemClock.uptimeMillis(),MotionEvent.ACTION_UP,bounds.centerX(),bounds.centerY(),0);
+  try{getInstrumentation().sendPointerSync(up);}finally{up.recycle();}
   getInstrumentation().waitForIdleSync();
+ }
+ private android.graphics.Rect stableNativeBounds(View target)throws Exception{
+  long deadline=SystemClock.uptimeMillis()+7000,stableSince=-1;
+  android.graphics.Rect previous=null;String state="not sampled";
+  while(SystemClock.uptimeMillis()<deadline){
+   getInstrumentation().waitForIdleSync();
+   final android.graphics.Rect bounds=new android.graphics.Rect(),nativeBounds=new android.graphics.Rect();
+   final int[] window={-1};final boolean[] ready={false};
+   ui(()->{
+    View decor=host.getWindow().getDecorView();
+    int minimum=Math.round(48*host.getResources().getDisplayMetrics().density);
+    ready[0]=inCurrentContent(target)&&target.isShown()&&target.isLaidOut()&&!target.isLayoutRequested()
+      &&host.hasWindowFocus()&&decor.hasWindowFocus()&&target.getWidth()>=minimum&&target.getHeight()>=minimum
+      &&target.getGlobalVisibleRect(bounds)&&bounds.width()==target.getWidth()&&bounds.height()==target.getHeight();
+    if(ready[0]){
+     android.view.accessibility.AccessibilityNodeInfo node=target.createAccessibilityNodeInfo();
+     try{node.getBoundsInScreen(nativeBounds);window[0]=node.getWindowId();}finally{node.recycle();}
+     ready[0]=nativeBounds.equals(bounds);
+    }
+   });
+   boolean focused=false;
+   for(android.view.accessibility.AccessibilityWindowInfo item:getInstrumentation().getUiAutomation().getWindows())
+    if(item.getId()==window[0]&&item.isFocused()){focused=true;break;}
+   state="visible="+bounds+", native="+nativeBounds+", window="+window[0]+", focused="+focused+", ready="+ready[0];
+   long now=SystemClock.uptimeMillis();
+   if(ready[0]&&focused){
+    if(!bounds.equals(previous)){previous=new android.graphics.Rect(bounds);stableSince=now;}
+    if(now-stableSince>=80)return bounds;
+   }else{previous=null;stableSince=-1;}
+   Thread.sleep(20);
+  }
+  fail("Settings pointer must target stable complete native bounds in its focused window: "+state);return null;
+ }
+ private void awaitVisibility(ScrollView viewport,View content,int expected)throws Exception{
+  long deadline=SystemClock.uptimeMillis()+2000;final int[] visibility={-1};
+  do{
+   getInstrumentation().waitForIdleSync();
+   ui(()->{assertCurrentViewport(viewport);visibility[0]=content.getVisibility();});
+   if(visibility[0]==expected)return;
+   Thread.sleep(20);
+  }while(SystemClock.uptimeMillis()<deadline);
+  assertEquals("One actual header pointer must change the category visibility",expected,visibility[0]);
  }
  private void snapshot(String name)throws Exception{
   String directory="/sdcard/Download/DA-CALLER-snapshots";

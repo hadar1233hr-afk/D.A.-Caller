@@ -406,8 +406,8 @@ public class MainActivity extends Activity {
   });
  }
  /** Keep a real list row reachable without changing saved card expansion preferences. */
- void adaptCallIslandContent(boolean expanded){
-  if(!expanded||workspace==null||(!"contacts".equals(page)&&!"recents".equals(page))){restoreCallIslandContent();return;}
+ void adaptCallIslandContent(boolean reserved){
+  if(!reserved||workspace==null||(!"contacts".equals(page)&&!"recents".equals(page))){restoreCallIslandContent();return;}
   View list=workspace.findViewWithTag("call-island-page-list");
   if(list==null||!(list.getParent() instanceof LinearLayout)){restoreCallIslandContent();return;}
   ViewGroup pageContainer=(ViewGroup)list.getParent();
