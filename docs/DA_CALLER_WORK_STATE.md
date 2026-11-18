@@ -1,5 +1,38 @@
 # DA CALLER continuation state
 
+## Fresh native failure retained; normal scheduled continuation — 2026-11-18 UTC
+
+CI43377691773/sourcea6eaf11/appTreefffa19a74c26c48991ad51e6bc3ae89bde5b7897
+completed: validate451unit/tooling/businesschecksPASS, **native30/40PASS,10FAIL**
+(0errors/skips,493.286seconds). No native/visual/publication approval. Exact
+official artifacts were downloaded through the connectedGitHub artifact tool
+and Sedimentdownload_file; SHA/GitHubdigest/allZIPCRC matched. No alternateAPI
+route, account/model switch or localgh bypass. Retained rawextract: 
+`/workspace/work/native-013-ci-43377691773`; inrepo first-native-ci has rawJUnit,
+all10failures, hashes, signingdiagnostics and actual diagnosticcaptures.
+
+There are 199 actualPNG files: 194/245 originalnamedframes, 1/24modernframes,
+4diagnostics. Three actualframes were viewed directly: expandedMain's capsule
+plusnewtoolbar/favorites/search leaves insufficientlistspace (real regression);
+host-failed and modern-backup-options-off show expandedSystemUI shade rather
+than focusedapp. Modern's drag/save, visibleRecents action andSAFpointer checks
+failed; later5Personalization+Settingsfocus/input failures maycascade fromshade.
+Confirm eachcause, keep full60dplist/focus/token/URIcount assertions intact.
+No productionSAFdefect independently established. DiagnosticAPK432aaad1...
+/certb7820bd... is explicitlyNOTAPPROVED/publication_allowed:false.
+
+After source/focus review was requested, three workers hit an ACTUALusage-limit
+error onNov13 (reportedNov18 10:07AM, timezoneunknown); their followupfixes did
+notexecute. Subsequent scheduledcontinuation now resumed normally; overlap
+checkedrootonly/noJava. Two scopedworkers handle Modernfixture and expanded
+Mainspace; no newquotaerror observed in this run. Stop/saveagainifoneoccurs.
+
+Next: fixrealexpandedMainspacing preservingnav/Settings, savedfavorites/anchors
+andrestoration; repairSystemUIpointer/foreground/cleanup harness withoutweakening
+checks; focusedthenfullcurrenttests/build/lint andfreshnativeCI/all269actualvisual
+review. All7legacyverifiers/signingguards/frozenbusinessdata remainunchanged;
+0.12deliveredimmutable/noresend,0.13code22unreleased,existing2htimeractive.
+
 ## Current-source local verification complete; fresh native CI next — 2026-11-13 UTC
 
 The next scheduled run resumed normally after the prior quota stop. No actual
