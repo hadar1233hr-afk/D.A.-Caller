@@ -2,6 +2,16 @@
 
 ## Normal scheduled resume; actual native failures corrected under verification — 2026-11-18 evening UTC
 
+Final current-source preflight actually completed457methods/44classesPASS,
+0failures/errors/skips; debug+Android-test APK builds and lintPASS (0errors,
+16warnings), appsource hashes unchanged throughout. Full log/JUnit/lint/source
+maps/APKhashes and focused attempts retained in nov18-evening-preflight.
+LocalAPK9653562e... is NOT a new native-tested binary. FiveMainspace+sevenBackup
+focused methods passed. Pushed source3db5a5f7af9b0bcebb5a34fe1e67802a62c61e7c,
+appTreedbdf015c1af5ffe0b024814dd8ccd31e138babac; fresh CI44389278862RUNNING.
+No new native/visual/publication approval; all40/269actualreview remain pending.
+
+
 Resumed normally at19:59UTC after environment startup and root-only/noJava/no
 active-CI overlap check. No new usage-limit error occurred. The local usage-stop
 checkpointb80626c was preserved; remote PR still had da08214. Full current-source
