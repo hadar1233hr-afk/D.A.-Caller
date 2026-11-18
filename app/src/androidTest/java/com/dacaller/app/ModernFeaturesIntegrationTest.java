@@ -84,6 +84,16 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
  private final JSONArray nativeAnswers=new JSONArray(),foregroundEvidence=new JSONArray();
  private String launcherPackage;
 
+ @Override protected void runTest()throws Throwable {
+  try{super.runTest();}
+  catch(Throwable failure){
+   // Retain the actual failed surface before tearDown closes SystemUI. These
+   // diagnostic-only names are outside the strict 24-frame passing profile.
+   try{screenshot("modern-failed-"+getName()+".png");}catch(Throwable captureFailure){failure.addSuppressed(captureFailure);}
+   throw failure;
+  }
+ }
+
  @Override protected void setUp()throws Exception {
   super.setUp();target=getInstrumentation().getTargetContext();
   assertEquals("Native integration is restricted to the disposable emulator","1",shell("getprop ro.kernel.qemu").trim());
@@ -96,7 +106,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   AccessibilityServiceInfo service=getInstrumentation().getUiAutomation().getServiceInfo();originalAccessibilityFlags=service.flags;
   service.flags|=AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS|AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS;
   getInstrumentation().getUiAutomation().setServiceInfo(service);
-  shell("mkdir -p "+DIRECTORY+" "+BRIDGE);shell("settings put system font_scale 1.3");
+  shell("mkdir -p "+DIRECTORY+" "+BRIDGE);shell("settings put system font_scale 1.3");collapseShade();
  }
  @Override protected void tearDown()throws Exception {
   try {
@@ -112,9 +122,11 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
     if(originalDialer!=null&&originalDialer.matches("[A-Za-z0-9_.]+"))shell("cmd role add-role-holder --user 0 android.app.role.DIALER "+originalDialer+" 1");
    }
    shell("settings put system font_scale "+(originalFont.matches("[0-9.]+")?originalFont:"1.0"));
-   AccessibilityServiceInfo service=getInstrumentation().getUiAutomation().getServiceInfo();service.flags=originalAccessibilityFlags;getInstrumentation().getUiAutomation().setServiceInfo(service);
    target.getContentResolver().delete(BackupDocumentProvider.DOCUMENT,null,null);
-  }finally{super.tearDown();}
+  }finally{try{collapseShade();}finally{
+   try{AccessibilityServiceInfo service=getInstrumentation().getUiAutomation().getServiceInfo();service.flags=originalAccessibilityFlags;getInstrumentation().getUiAutomation().setServiceInfo(service);}
+   finally{super.tearDown();}
+  }}
  }
  private interface Check {boolean ready()throws Exception;}
  private void await(Check condition,String message)throws Exception {
@@ -127,6 +139,27 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   if(error.get()!=null)throw new AssertionError(error.get());
  }
  private void settle()throws Exception {getInstrumentation().waitForIdleSync();Thread.sleep(220);getInstrumentation().waitForIdleSync();}
+ private boolean systemUiFocused(){
+  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+   if(!window.isFocused())continue;AccessibilityNodeInfo root=window.getRoot();
+   if(root!=null&&"com.android.systemui".contentEquals(String.valueOf(root.getPackageName())))return true;
+  }return false;
+ }
+ private void collapseShade()throws Exception {
+  // Test-only cleanup of the real native surface. Answer broadcasts can leave
+  // the shade open; finishing an underlying Activity does not close SystemUI.
+  shell("cmd statusbar collapse");settle();await(()->!systemUiFocused(),"Native notification shade must relinquish focus before app interaction");
+ }
+ private boolean nativeWindowFocused(View view)throws Exception {
+  AtomicReference<Integer> id=new AtomicReference<>();ui(()->id.set(view.createAccessibilityNodeInfo().getWindowId()));
+  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows())
+   if(window.getId()==id.get()&&window.isFocused())return true;
+  return false;
+ }
+ private void awaitActivityForeground(Activity activity)throws Exception {
+  await(()->activity.hasWindowFocus()&&activity.getWindow().getDecorView().hasWindowFocus()&&
+    nativeWindowFocused(activity.getWindow().getDecorView()),"Production Activity must own its focused native window: "+activity.getClass().getSimpleName());
+ }
  private int dp(float value){return Math.round(value*target.getResources().getDisplayMetrics().density);}
  private String shell(String command)throws Exception {
   try(InputStream input=new ParcelFileDescriptor.AutoCloseInputStream(getInstrumentation().getUiAutomation().executeShellCommand(command));ByteArrayOutputStream output=new ByteArrayOutputStream()){
@@ -154,7 +187,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
  }
  private void screenshot(String name)throws Exception {Bitmap capture=capture(name);capture.recycle();}
  private <T extends Activity>T launch(Class<T> type)throws Exception {
-  T activity=type.cast(getInstrumentation().startActivitySync(new Intent(target,type).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));activities.add(activity);settle();return activity;
+  T activity=type.cast(getInstrumentation().startActivitySync(new Intent(target,type).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));activities.add(activity);settle();awaitActivityForeground(activity);return activity;
  }
  private <T extends View>T find(View root,Class<T> type){
   if(type.isInstance(root))return type.cast(root);
@@ -167,11 +200,20 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
  private View tag(Activity activity,String value){View view=activity.getWindow().getDecorView().findViewWithTag(value);assertNotNull("Missing "+value,view);return view;}
  private View windowTag(String value){for(View root:WindowInspector.getGlobalWindowViews()){View view=root.findViewWithTag(value);if(view!=null&&view.isShown())return view;}return null;}
  private Rect bounds(View view)throws Exception {
-  assertNotNull("Missing actual touch target",view);Rect result=new Rect();ui(()->{
+  assertNotNull("Missing actual touch target",view);Rect result=new Rect();
+  await(()->{AtomicReference<Boolean> ready=new AtomicReference<>(false),outside=new AtomicReference<>(false);ui(()->{
+   View root=view.getRootView();ViewGroup.LayoutParams raw=root.getLayoutParams();
+   boolean overlay=raw instanceof WindowManager.LayoutParams&&((WindowManager.LayoutParams)raw).type==WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+   outside.set(overlay);
+   ready.set(view.isAttachedToWindow()&&view.isShown()&&view.isLaidOut()&&view.getWidth()>0&&view.getHeight()>0&&
+     !view.isLayoutRequested());
+  });return ready.get()&&(outside.get()?!systemUiFocused():nativeWindowFocused(view));},"Target must be laid out in its real visible native window before pointer input: "+view.getTag());
+  ui(()->{
    int[] location=new int[2];view.getLocationOnScreen(location);
    // Android TextView can include its own internal RTL scroll in this API.
    result.set(location[0]-view.getScrollX(),location[1]-view.getScrollY(),location[0]-view.getScrollX()+view.getWidth(),location[1]-view.getScrollY()+view.getHeight());
-   assertTrue("Target must be shown",view.isShown());assertTrue("Target outside native display "+result,new Rect(0,0,480,854).contains(result));
+   assertTrue("Target must be shown",view.isShown());assertTrue("Target has no native touch area",result.width()>0&&result.height()>0);
+   assertTrue("Target outside native display "+result,new Rect(0,0,480,854).contains(result));
    AccessibilityNodeInfo node=view.createAccessibilityNodeInfo();Rect nativeBounds=new Rect();node.getBoundsInScreen(nativeBounds);assertEquals("View and native AX disagree",nativeBounds,result);
   });return result;
  }
@@ -181,7 +223,11 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
  }
  private void tap(View view)throws Exception {Rect rect=bounds(view);long now=SystemClock.uptimeMillis();pointer(now,MotionEvent.ACTION_DOWN,rect.centerX(),rect.centerY());Thread.sleep(50);pointer(now,MotionEvent.ACTION_UP,rect.centerX(),rect.centerY());settle();}
  private void drag(View view,int dx,int dy,boolean cancel)throws Exception {
-  Rect rect=bounds(view);long now=SystemClock.uptimeMillis();int x=rect.centerX(),y=rect.centerY();pointer(now,MotionEvent.ACTION_DOWN,x,y);
+  Rect rect=bounds(view);long now=SystemClock.uptimeMillis();int x=rect.centerX(),y=rect.centerY();
+  int status=target.getSystemService(WindowManager.class).getCurrentWindowMetrics().getWindowInsets().getInsetsIgnoringVisibility(WindowInsets.Type.statusBars()).top;
+  assertTrue("Drag must begin inside a laid-out app target below protected SystemUI",rect.contains(x,y)&&y>=status);
+  assertTrue("Drag must remain inside the native display",new Rect(0,status,480,854).contains(x+dx,y+dy));
+  pointer(now,MotionEvent.ACTION_DOWN,x,y);
   for(int n=1;n<=8;n++){Thread.sleep(25);pointer(now,MotionEvent.ACTION_MOVE,x+dx*n/8f,y+dy*n/8f);}
   pointer(now,cancel?MotionEvent.ACTION_CANCEL:MotionEvent.ACTION_UP,x+dx,y+dy);settle();
  }
@@ -212,7 +258,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
    assertNull("Floating dialpad removed",host.getWindow().getDecorView().findViewWithTag("floating_dial"));
    Rect settings=bounds(tag(host,"main_settings_button"));assertTrue("Settings must be physically top-left",settings.left<dp(20));assertTrue(settings.width()>=dp(48)&&settings.height()>=dp(48));
    Rect bottom=bounds(tag(host,"main_nav_keypad"));assertTrue(bottom.top>854/2);assertTrue(bottom.height()>=dp(48));
-   tap(tag(host,"recent_expand"));assertNotNull(tag(host,"recent_actions"));assertTrue("Expansion must not dial",host.requestedNumbers.isEmpty());
+   tap(tag(host,"recent_expand"));await(()->tag(host,"recent_actions").isShown(),"Native row pointer must visibly expand its actions");assertTrue("Expansion must not dial",host.requestedNumbers.isEmpty());
    for(String action:new String[]{"recent_action_call","recent_sms","recent_contact","recent_details"}){Rect control=bounds(tag(host,action));assertTrue(action,control.height()>=dp(48));}
    screenshot("modern-recents-inline-"+suffix+".png");key(KeyEvent.KEYCODE_BACK);assertNull(host.getWindow().getDecorView().findViewWithTag("recent_actions"));
    tap(tag(host,"main_nav_keypad"));await(()->windowFind(EditText.class)!=null,"Bottom dialpad did not open");
@@ -305,11 +351,11 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   Instrumentation.ActivityMonitor monitor=getInstrumentation().addMonitor(filter,new Instrumentation.ActivityResult(Activity.RESULT_OK,new Intent().setData(BackupDocumentProvider.DOCUMENT)
    .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_GRANT_WRITE_URI_PERMISSION)),true);
   try {
-   Activity activity=getInstrumentation().startActivitySync(SettingsBackupActivity.intent(target,true).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));activities.add(activity);settle();
+   Activity activity=getInstrumentation().startActivitySync(SettingsBackupActivity.intent(target,true).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));activities.add(activity);settle();awaitActivityForeground(activity);
    CheckBox check=find(activity.getWindow().getDecorView(),CheckBox.class);assertNotNull(check);assertFalse("Archive inclusion is always opt-in",check.isChecked());
    assertEquals("No SAF output before user chooses",0,monitor.getHits());if(archive)tap(check);assertEquals(archive,check.isChecked());screenshot(filename);
    TextView save=text(activity.getWindow().getDecorView(),"Choose file and save backup");assertNotNull(save);reveal(save);tap(save);
-   assertEquals(1,monitor.getHits());await(()->text(activity.getWindow().getDecorView(),"Backup saved to the file you selected.")!=null,"Export did not finish");return activity;
+   await(()->monitor.getHits()==1,"Explicit Save pointer must launch exactly one native SAF output request");assertEquals(1,monitor.getHits());await(()->text(activity.getWindow().getDecorView(),"Backup saved to the file you selected.")!=null,"Export did not finish");return activity;
   }finally{getInstrumentation().removeMonitor(monitor);}
  }
  private Activity importBackup(boolean archive,String filename)throws Exception {
@@ -517,6 +563,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   assertSame(owned,PhoneSessionService.current);assertEquals(token,PhoneSessionService.islandSnapshot().token);assertTrue(state(Call.STATE_RINGING));assertTrue(incomingNotificationMatches(identity));
   long down=SystemClock.uptimeMillis();pointer(down,MotionEvent.ACTION_DOWN,previous.centerX(),previous.centerY());Thread.sleep(50);pointer(down,MotionEvent.ACTION_UP,previous.centerX(),previous.centerY());
   await(()->PhoneSessionService.current==owned&&state(Call.STATE_ACTIVE)&&PhoneSessionService.islandSnapshot()!=null&&token.equals(PhoneSessionService.islandSnapshot().token),"Native SystemUI pointer answer did not activate its owned Telecom call");
+  collapseShade();
   nativeAnswers.put(new JSONObject().put("token",token).put("number",NUMBER).put("window_id",window).put("bounds",previous.toShortString())
    .put("stable_millis",stableMillis).put("configured_touch_acceptance_delay_millis",delay).put("input_method","native-pointer").put("native_caller_row",true));
  }
@@ -534,7 +581,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
  private boolean homeNativeVisible(){
   for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
    if(window.getType()!=AccessibilityWindowInfo.TYPE_APPLICATION)continue;AccessibilityNodeInfo root=window.getRoot();
-   if(root!=null&&root.isVisibleToUser()&&launcherPackage.contentEquals(String.valueOf(root.getPackageName())))return true;
+   if(window.isFocused()&&root!=null&&root.isVisibleToUser()&&launcherPackage.contentEquals(String.valueOf(root.getPackageName())))return true;
   }return false;
  }
  private void awaitHome(String stage)throws Exception {

@@ -1,0 +1,81 @@
+{
+  "reviewed_at_utc": "2026-11-18T12:11:45.047971+00:00",
+  "reviewer": "business_visual_prelim_nov18",
+  "scope": "PRELIMINARY_ONLY_FOUR_HISTORICAL_NATIVE_FRAMES",
+  "native_run_id": 43377691773,
+  "source_sha": "a6eaf11affb08bb54bf2e150fbf24e9900edd3f2",
+  "current_source_differs": true,
+  "current_source_or_whole_matrix_approval": false,
+  "native_run_overall_result": "FAIL_30_OF_40_NATIVE_CASES",
+  "frames": [
+    {
+      "name": "business-tab-light.png",
+      "path": "/workspace/work/native-013-ci-43377691773/ui/ui-snapshots/DA-CALLER-snapshots/business-tab-light.png",
+      "sha256": "68653aac54cc62ebe25110f506bea02e9f73865104a286265e2a5c09af75f332",
+      "size": [
+        480,
+        854
+      ],
+      "actually_viewed": true
+    },
+    {
+      "name": "business-tab-dark.png",
+      "path": "/workspace/work/native-013-ci-43377691773/ui/ui-snapshots/DA-CALLER-snapshots/business-tab-dark.png",
+      "sha256": "190fe99e6bf226ac411c6f17015767499965180b61f291d0f0f16dacfb36599e",
+      "size": [
+        480,
+        854
+      ],
+      "actually_viewed": true
+    },
+    {
+      "name": "business-search.png",
+      "path": "/workspace/work/native-013-ci-43377691773/ui/ui-snapshots/DA-CALLER-snapshots/business-search.png",
+      "sha256": "e71eb17be6a5b9b73344d6b213e5eebf98bf66a665207df11d8201a7b0b551c2",
+      "size": [
+        480,
+        854
+      ],
+      "actually_viewed": true
+    },
+    {
+      "name": "business-detail.png",
+      "path": "/workspace/work/native-013-ci-43377691773/ui/ui-snapshots/DA-CALLER-snapshots/business-detail.png",
+      "sha256": "c09c692703b459cce809e5fc8f5f87e150798d1578132ff8b4fd1bb27ee10eff",
+      "size": [
+        480,
+        854
+      ],
+      "actually_viewed": true
+    }
+  ],
+  "findings": [
+    {
+      "check": "retained_empty_header_gap",
+      "result": "RESOLVED_IN_THESE_FRAMES",
+      "observation": "Business tabs directly follow the visible Settings toolbar; search, two-line attribution and rows follow without the earlier retained personal favorites/summary empty block."
+    },
+    {
+      "check": "attribution_truncation",
+      "result": "RESOLVED_IN_THESE_FRAMES",
+      "observation": "2,720 records, OpenStreetMap and full copyright contributor attribution are visible over two lines in light, dark and search captures."
+    },
+    {
+      "check": "raw_taxonomy_labels",
+      "result": "RESOLVED_IN_THESE_FRAMES",
+      "observation": "Visible rows and detail use Hebrew category names such as אביזרי סלולר and אכסניה, with no raw shop:/tourism: taxonomy displayed."
+    },
+    {
+      "check": "avatar_contrast",
+      "result": "VISUALLY_ACCEPTABLE_IN_THESE_FRAMES",
+      "observation": "Bright gold initials remain clearly visible on opaque dark green avatar backgrounds in both themes."
+    }
+  ],
+  "remaining_material_visual_issues_observed": [],
+  "limits": [
+    "Only these four 480x854 actual Android13 PNGs were inspected.",
+    "Partially visible bottom list row is ordinary scroll viewport clipping; item content is not asserted complete by this visual check.",
+    "Detail source URL and ISO date are dense but fully visible; no additional release blocker established.",
+    "No current-source, full269-frame, Telecom, signing, physical hardware or publication PASS is claimed."
+  ]
+}

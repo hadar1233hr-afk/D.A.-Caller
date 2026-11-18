@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.AppIconsTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-11-18T12:19:44" hostname="3ebae333e153" time="10.018">
+  <properties/>
+  <testcase name="invalidChoiceCannotMutatePreferencesOrComponentState" classname="com.dacaller.app.AppIconsTest" time="4.778"/>
+  <testcase name="originalPreferenceIdsAliasesAndOrderRemainStable" classname="com.dacaller.app.AppIconsTest" time="0.159"/>
+  <testcase name="android13RejectionRestoresTheExactSnapshotAtomically" classname="com.dacaller.app.AppIconsTest" time="0.182"/>
+  <testcase name="everyChoiceAlsoWorksOnOldestSupportedAndroid" classname="com.dacaller.app.AppIconsTest" time="1.8"/>
+  <testcase name="startupOnlyReconcilesWhenSettingsAndSystemDiffer" classname="com.dacaller.app.AppIconsTest" time="0.086"/>
+  <testcase name="android13SwitchIsAtomicAndNeverKillsTheApp" classname="com.dacaller.app.AppIconsTest" time="0.071"/>
+  <testcase name="inabilityToReadSnapshotDoesNotAttemptAnyMutation" classname="com.dacaller.app.AppIconsTest" time="0.054"/>
+  <testcase name="failedPreferenceCommitRestoresAliasesAndExactPreviousPreference" classname="com.dacaller.app.AppIconsTest" time="0.209"/>
+  <testcase name="rejectedSwitchRestoresOriginalComponentStatesWithoutSavingChoice" classname="com.dacaller.app.AppIconsTest" time="1.402"/>
+  <testcase name="allNineIconsHaveDistinctAdaptiveResourcesAndThemedForeground" classname="com.dacaller.app.AppIconsTest" time="0.482"/>
+  <testcase name="iconChangesPreserveLegacyExplicitMainIntentAndHeldDialerRole" classname="com.dacaller.app.AppIconsTest" time="0.171"/>
+  <testcase name="manifestKeepsOneDefaultLauncherAndEveryAliasTargetsOriginalDialActivity" classname="com.dacaller.app.AppIconsTest" time="0.055"/>
+  <testcase name="everyOldAndNewChoiceRoundTripsThroughSettingsBackupAndAliases" classname="com.dacaller.app.AppIconsTest" time="0.264"/>
+  <testcase name="oldAndroidEnablesReplacementBeforeDisablingPreviousEntry" classname="com.dacaller.app.AppIconsTest" time="0.162"/>
+  <testcase name="bothLanguagesGiveEveryChoiceADistinctReadableLabel" classname="com.dacaller.app.AppIconsTest" time="0.045"/>
+  <testcase name="everyChoiceLeavesExactlyOneLauncherAndKeepsDialActivityEnabled" classname="com.dacaller.app.AppIconsTest" time="0.095"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

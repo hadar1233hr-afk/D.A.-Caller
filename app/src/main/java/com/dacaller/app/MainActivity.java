@@ -23,6 +23,7 @@ import android.content.res.ColorStateList;
 import android.widget.FrameLayout;
 import android.provider.ContactsContract;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -72,9 +73,9 @@ public class MainActivity extends Activity {
  private ScrollView pageScroll;
  private String appliedTheme="";
  private String lastPage="";
- private View islandSecondary,islandFloatingDial;
- private int islandSecondaryVisibility,islandFloatingVisibility,islandSecondaryHeight;
- private boolean islandContentConstrained;
+ private ViewGroup islandChromePage;
+ private final java.util.IdentityHashMap<View,Integer> islandChromeVisibility=new java.util.IdentityHashMap<>();
+ private final java.util.IdentityHashMap<View,Integer> islandChromeExtent=new java.util.IdentityHashMap<>();
  private final android.database.ContentObserver contactsObserver=new android.database.ContentObserver(new Handler(Looper.getMainLooper())){
   @Override public void onChange(boolean selfChange){handler.removeCallbacks(reloadChangedContacts);handler.postDelayed(reloadChangedContacts,350);}
  };
@@ -404,36 +405,81 @@ public class MainActivity extends Activity {
    render();
   });
  }
- /** Keep one real list row reachable below expanded call controls on small phones. */
+ /** Keep a real list row reachable without changing saved card expansion preferences. */
  void adaptCallIslandContent(boolean expanded){
-  if(!expanded||workspace==null||(!"contacts".equals(page)&&!"recents".equals(page))){
-   restoreCallIslandContent();return;
-  }
-  View secondary=workspace.findViewWithTag("call-island-secondary");
-  View floating=workspace.findViewWithTag("floating_dial");
+  if(!expanded||workspace==null||(!"contacts".equals(page)&&!"recents".equals(page))){restoreCallIslandContent();return;}
   View list=workspace.findViewWithTag("call-island-page-list");
-  if(secondary==null||list==null){restoreCallIslandContent();return;}
-  if(secondary!=islandSecondary||floating!=islandFloatingDial){
-   restoreCallIslandContent();
-   islandSecondary=secondary;islandFloatingDial=floating;
-   islandSecondaryVisibility=secondary.getVisibility();islandFloatingVisibility=floating==null?View.GONE:floating.getVisibility();
-   int fixedHeight=secondary.getLayoutParams().height;
-   islandSecondaryHeight=islandSecondaryVisibility==View.GONE?0:Math.max(0,fixedHeight>0?fixedHeight:secondary.getHeight());
+  if(list==null||!(list.getParent() instanceof LinearLayout)){restoreCallIslandContent();return;}
+  ViewGroup pageContainer=(ViewGroup)list.getParent();
+  if(islandChromePage!=pageContainer){restoreCallIslandContent();islandChromePage=pageContainer;}
+  if(!pageContainer.isLaidOut())return;
+  View[] optional={pageContainer.findViewWithTag("call-island-secondary"),
+    pageContainer.findViewWithTag("favorites_strip"),pageContainer.findViewWithTag("stats_summary")};
+  for(View child:optional)if(child!=null&&child.getParent()==pageContainer&&!islandChromeVisibility.containsKey(child))
+   islandChromeVisibility.put(child,child.getVisibility());
+  // A weighted ListView clamps its measured height at zero. Compute the signed
+  // budget from its actual parent instead, so an overflowing header cannot make
+  // hide/show alternate between layouts or conceal the real height deficit.
+  int budget=pageContainer.getHeight()-pageContainer.getPaddingTop()-pageContainer.getPaddingBottom();
+  for(int i=0;i<pageContainer.getChildCount();i++){
+   View child=pageContainer.getChildAt(i);if(child==list)continue;
+   int original=islandChromeVisibility.containsKey(child)?islandChromeVisibility.get(child):child.getVisibility();
+   if(original!=View.GONE)budget-=callIslandChildExtent(child);
   }
-  if(!list.isLaidOut())return;
-  // Compare with the height BEFORE this temporary adaptation. Using the newly
-  // enlarged list directly would repeatedly hide and restore the toolbar.
-  int unadaptedHeight=list.getHeight()-(islandContentConstrained?islandSecondaryHeight:0);
-  boolean constrained=unadaptedHeight<d(60);
-  if(constrained==islandContentConstrained)return;
-  islandContentConstrained=constrained;
-  secondary.setVisibility(constrained?View.GONE:islandSecondaryVisibility);
-  if(floating!=null)floating.setVisibility(constrained?View.GONE:islandFloatingVisibility);
+  for(View child:optional)if(child!=null&&child.getParent()==pageContainer){
+   int original=islandChromeVisibility.get(child);
+   boolean hide=original!=View.GONE&&budget<d(60);
+   if(hide)budget+=callIslandChildExtent(child);
+   int visibility=hide?View.GONE:original;
+   if(child.getVisibility()!=visibility)child.setVisibility(visibility);
+  }
+ }
+ /** Minimum content below a reserved island, independent of the current island inset. */
+ int minimumCallIslandContentHeight(){
+  if(root==null||workspace==null)return 0;
+  View list=workspace.findViewWithTag("call-island-page-list");
+  if(list==null||!(list.getParent() instanceof LinearLayout))return 0;
+  ViewGroup pageContainer=(ViewGroup)list.getParent();
+  int minimum=d(60)+root.getPaddingTop()+root.getPaddingBottom()+workspace.getPaddingTop()+workspace.getPaddingBottom()
+    +pageContainer.getPaddingTop()+pageContainer.getPaddingBottom();
+  for(int i=0;i<root.getChildCount();i++){
+   View child=root.getChildAt(i);if(child!=workspace&&child.getVisibility()!=View.GONE)minimum+=callIslandChildExtent(child);
+  }
+  ViewGroup.LayoutParams workspaceParams=workspace.getLayoutParams();
+  if(workspaceParams instanceof ViewGroup.MarginLayoutParams){ViewGroup.MarginLayoutParams margins=(ViewGroup.MarginLayoutParams)workspaceParams;minimum+=margins.topMargin+margins.bottomMargin;}
+  for(int i=0;i<pageContainer.getChildCount();i++){
+   View child=pageContainer.getChildAt(i);Object tag=child.getTag();
+   if(child==list||child.getVisibility()==View.GONE||"call-island-secondary".equals(tag)||"favorites_strip".equals(tag)||"stats_summary".equals(tag))continue;
+   minimum+=callIslandChildExtent(child);
+  }
+  return minimum;
+ }
+ private int callIslandChildExtent(View child){
+  ViewGroup.LayoutParams params=child.getLayoutParams();
+  if(child.getVisibility()!=View.GONE||!islandChromeExtent.containsKey(child)){
+   int height=Math.max(child.getHeight(),child.getMeasuredHeight());
+   if(params.height==ViewGroup.LayoutParams.WRAP_CONTENT&&child.getParent() instanceof ViewGroup){
+    ViewGroup parent=(ViewGroup)child.getParent();
+    if(parent.getWidth()>0){
+     int horizontal=parent.getPaddingLeft()+parent.getPaddingRight();
+     if(params instanceof ViewGroup.MarginLayoutParams){ViewGroup.MarginLayoutParams margins=(ViewGroup.MarginLayoutParams)params;horizontal+=margins.leftMargin+margins.rightMargin;}
+     // A preceding fixed header can constrain a later WRAP_CONTENT card to
+     // zero during LinearLayout measurement. Budget its natural height at
+     // the real width so hiding another card cannot reveal a new deficit.
+     child.measure(ViewGroup.getChildMeasureSpec(View.MeasureSpec.makeMeasureSpec(parent.getWidth(),View.MeasureSpec.EXACTLY),horizontal,params.width),
+       View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED));
+     height=child.getMeasuredHeight();
+    }
+   }
+   if(height<=0&&params.height>0)height=params.height;
+   if(params instanceof ViewGroup.MarginLayoutParams){ViewGroup.MarginLayoutParams margins=(ViewGroup.MarginLayoutParams)params;height+=margins.topMargin+margins.bottomMargin;}
+   islandChromeExtent.put(child,Math.max(0,height));
+  }
+  return islandChromeExtent.get(child);
  }
  private void restoreCallIslandContent(){
-  if(islandSecondary!=null)islandSecondary.setVisibility(islandSecondaryVisibility);
-  if(islandFloatingDial!=null)islandFloatingDial.setVisibility(islandFloatingVisibility);
-  islandSecondary=null;islandFloatingDial=null;islandSecondaryHeight=0;islandContentConstrained=false;
+  for(java.util.Map.Entry<View,Integer> entry:islandChromeVisibility.entrySet())entry.getKey().setVisibility(entry.getValue());
+  islandChromeVisibility.clear();islandChromeExtent.clear();islandChromePage=null;
  }
  private void addNav(String title,int drawable,String target){
   boolean active="keypad".equals(target)?keypadDialog!=null&&keypadDialog.isShowing():page.equals(target);

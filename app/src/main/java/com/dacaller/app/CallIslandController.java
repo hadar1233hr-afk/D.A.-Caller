@@ -216,7 +216,17 @@ final class CallIslandController implements CallIslandView.Listener {
   }
   desiredWidth=width=Math.min(width,Math.max(dp(48),positionArea.width()));
   view.measure(View.MeasureSpec.makeMeasureSpec(width,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED));
-  capsuleHeight=Math.min(view.getMeasuredHeight(),Math.max(dp(48),positionArea.height()));
+  int availableHeight=Math.max(dp(48),positionArea.height());
+  boolean positioned=prefs.getBoolean(CallIslandPosition.SET,false)||dragToken!=null;
+  if(expanded&&!positioned&&host instanceof MainActivity){
+   int minimum=((MainActivity)host).minimumCallIslandContentHeight();
+   if(minimum>0&&content!=null&&content.getHeight()>0){
+    int[] contentOrigin=new int[2];content.getLocationOnScreen(contentOrigin);
+    int separation=Math.max(0,positionArea.top+origin[1]-contentOrigin[1])+dp(8);
+    availableHeight=Math.min(availableHeight,Math.max(dp(48),content.getHeight()-minimum-separation));
+   }
+  }
+  capsuleHeight=Math.min(view.getMeasuredHeight(),availableHeight);
   boolean needsScroll=view.getMeasuredHeight()>capsuleHeight;
   if(needsScroll){
    if(overflow==null){overflow=new ScrollView(host);overflow.setTag("island-in-app-window");overflow.setVerticalScrollBarEnabled(false);overflow.setFillViewport(false);overflow.setClipToPadding(false);}

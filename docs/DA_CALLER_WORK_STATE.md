@@ -1,5 +1,60 @@
 # DA CALLER continuation state
 
+## Expanded island and native harness corrections in verification — 2026-11-18 UTC
+
+Only the existing DA CALLER PR is being continued; no competing agent/Gradle/CI
+work was active before this scheduled run. The previous 30/40 native failure
+remains historical evidence, not approval. Current uncommitted production fix
+uses signed remaining page height instead of an already-clamped zero-height
+ListView. Optional secondary/favorites/summary cards hide temporarily only when
+necessary; original visibility, saved preferences and anchors are preserved.
+Default expanded islands account for toolbar/navigation and fixed page headers,
+keeping at least60dp of list area through the existing scroll container. Custom
+dragged positions retain their behavior. Independent source review found no
+material defect; fresh native evidence is still required.
+
+The Modern native fixture now verifies actual focused native windows, laid-out
+positive touch bounds and protected status-area coordinates before pointer input.
+It closes the real notification shade at setup/after Answer/cleanup and retains
+strict Telecom token/number/call, exact SAF-request count, three cases and24
+passing-frame requirements. Failure-only actual captures are separate diagnostics.
+Independent read-only review and direct Java compilation passed, not native QA.
+
+The first focused execution actually ran30 methods: Controller16PASS and
+MainRegression11PASS; the three new space cases produced1PASS/2FAIL. The business
+headers/scroll/resize case passed. The personal fixtures initially left shared
+CallHistory.readFailed undefined; explicit save/reset/restore was added, along
+with a real Controller/error-header regression. A second focused run actually
+ran4 methods: both real Controller cases PASS, but the two one-step personal
+fixtures still FAIL with readFailed=false. Their diagnostics show the wrap-content
+summary growing after other cards hide, leaving a zero-height list in that
+single layout. Measurement/settling is being investigated; the60dp assertion
+remains unchanged. Raw logs/JUnit are in work/nov18-native-fixes/focused and
+space4. The earlier missing-import compile attempt ran zero tests and is recorded
+separately; stale prior JUnit was not counted.
+
+Natural WRAP_CONTENT measurement at the actual parent width fixed the first-pass
+undercount without weakening assertions. All four space regressions now actually
+PASS, including both real Controller fixtures. Full current-source units/builds/
+lint/Android-test APK compilation are running serially; no full/native approval
+yet. Independent source review accepted the natural-height calculation. Exact
+focused attempts and source review are retained under nov18-local-corrections.
+
+Final current-source preflight actually passed455 methods/44classes, no failures,
+errors or skips; debug and Android-test APK builds plus lint passed (0errors,
+16warnings). All app source hashes stayed unchanged during the run. Raw full
+JUnit/log/lint and before/after maps are retained in nov18-local-corrections/full.
+Local APK SHA204b3557... is not the future native artifact and is not approved.
+No new Python-tool test run is claimed: those scripts are unchanged and the next
+CI will execute their existing contracts. Next step is fresh40-case/269-frame CI.
+
+A preliminary delegated review actually viewed the four historical native
+business frames from43377691773: prior empty gap, attribution clipping, raw
+category labels and avatar contrast were resolved in those frames. This is not
+current-source or full269-frame visual approval. Business DB/manifest/reader stay
+frozen. The delivered0.12.0 remains immutable/noresend;0.13.0/code22 is unreleased,
+future signing guards remain closed and the existing automation stays enabled.
+
 ## Fresh native failure retained; normal scheduled continuation — 2026-11-18 UTC
 
 CI43377691773/sourcea6eaf11/appTreefffa19a74c26c48991ad51e6bc3ae89bde5b7897
@@ -7,7 +62,7 @@ completed: validate451unit/tooling/businesschecksPASS, **native30/40PASS,10FAIL*
 (0errors/skips,493.286seconds). No native/visual/publication approval. Exact
 official artifacts were downloaded through the connectedGitHub artifact tool
 and Sedimentdownload_file; SHA/GitHubdigest/allZIPCRC matched. No alternateAPI
-route, account/model switch or localgh bypass. Retained rawextract: 
+route, account/model switch or localgh bypass. Retained rawextract:
 `/workspace/work/native-013-ci-43377691773`; inrepo first-native-ci has rawJUnit,
 all10failures, hashes, signingdiagnostics and actual diagnosticcaptures.
 
