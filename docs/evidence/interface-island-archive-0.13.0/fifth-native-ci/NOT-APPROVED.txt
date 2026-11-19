@@ -1,0 +1,1 @@
+Native39/40FAIL1; no native/visual/publication approval. Diagnostic APK is ephemeral test only.

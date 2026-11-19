@@ -1,5 +1,50 @@
 # DA CALLER continuation state
 
+## Fresh native input evidence: 39/40 pass; coordinate guard stopped before DOWN — 2026-11-19 UTC
+
+CI44447145702, source71dd0f409552628b2fe255285e6c7b3c7b497413,
+appTree4c52f1a156b793e7532d06c0321cf37be8ad7b05: validate457 unique host
+methods/44classes PASS; Android JUnit40cases,39PASS/1FAIL,0errors/skips.
+All245original +13modern +2diagnostics =260 actual PNGs, incomplete269.
+No native, whole-matrix visual or publication approval. Exact official artifacts
+were downloaded through connected GitHub/Sediment, size/SHA/GitHub digest/allCRC
+checked. UI ZIP16082041bytes SHA fbb235bf95ed233fadcea200a3ab34417cec41eb26ceb8fe1cb4f1aa67037caf;
+failure ZIP1331224bytes SHA e89d055a1e019d538660281506640729526ecabd8cd2d3b4df22ae0bac00c40e.
+Raw JUnit/input routing/signature/policy/failures/source inventory retained in
+fifth-native-ci and /workspace/work/native-013-ci-44447145702.
+Diagnostic APK66e2efc8d767703df21abe1918ef24c9d8f630078c17fe0bf4a0d29cb7db729d,
+certificate aef2c0b78fb02b6c547a5dda82b106f4e886ac2d8998ea81ff84253f6846e50f,
+is ephemeral-test-only, publication_allowed:false.
+
+The sole failure is the new test's pre-DOWN input guard: native_status_bar_bottom
+remained-1 because it compared the untransformed server-frame top35 to screen
+top0. The existing title matcher already handles the WMS hex prefix. Raw API33
+input data exposes transformed server window coordinates: Display0 is
+480x854, matrix scale1.5/1.5009 and y translation-52.5308, while window frames
+are in320-wide coordinates. Root actually viewed this run's failure PNG:
+Home intact, compact island below the statusbar, no shade. No DOWN was injected.
+This is distinct from the older44442075483 shade screenshot and does not prove
+its historical routing cause. Test-only exact coordinate correction is now compiled: explicit native ROT_0
+display-matrix inverse for hit points, forward mapping for protected StatusBar,
+bounded dump-rounding uncertainty and nine neighboring native hit points all
+requiring the identical first window. Two stable samples retain actual window
+geometry/matrix; the one real gesture/foreground-stream checks remain. Android
+test APK build and lint PASS,0errors16warnings; exact app hashes unchanged.
+No new host tests ran:457PASS is the unchanged production/unit baseline; fresh
+CI must independently execute it. Independent source CODEGO at exact fd158b3a...;
+29 offline real-dump/adversarial replay cases PASS,1,334 nativefloat/algebra integer
+axis comparisons matched. These are test-fixture audits, not new Android test
+results. All40 native declarations/one-gesture/post-slop code unchanged. Current
+native execution remains pending. Proof in nov19-input-coordinate-preflight.
+Production gesture logic, old seven
+verifiers, all40cases/269frames and frozen data/signing/CI remain unchanged.
+
+PR comments/review timeline fetched through the connected tool is empty; no new
+0.13 publication approval was found there. Owner-controlled durable key backup/
+repository secret provisioning and applicable approval remain unresolved.
+0.12alreadydeliveredimmutable/noresend;0.13code22unreleased; existing automation
+stays enabled. No new actual usage-limit error or overlapping worker found.
+
 ## Native input-window guard and overflow polish verified locally — 2026-11-19 UTC
 
 Latest completed CI44442075483/source77b4374/appTreea58c9e6821c65a5e97bbe8bbbc40dc8716e998cd

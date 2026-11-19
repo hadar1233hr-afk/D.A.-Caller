@@ -275,6 +275,41 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
  private static final String INPUT_REFERENCE="https://github.com/LineageOS/android_frameworks_native/blob/e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624/services/inputflinger/dispatcher/InputDispatcher.cpp";
  private static final Pattern INPUT_WINDOW=Pattern.compile("^\\s*(\\d+): name='(.*)', id=(-?\\d+), displayId=(-?\\d+), inputConfig=(.*?), alpha=([0-9.]+), frame=\\[(-?\\d+),(-?\\d+)\\]\\[(-?\\d+),(-?\\d+)\\], globalScale=([0-9.]+), applicationInfo\\.name=(.*?), applicationInfo\\.token=(.*?), touchableRegion=(.*?), ownerPid=(-?\\d+), ownerUid=(-?\\d+), dispatchingTimeout=(-?\\d+)ms, hasToken=(true|false), touchOcclusionMode=(\\S+)\\s*$");
  private static final Pattern INPUT_REGION=Pattern.compile("\\[(-?\\d+),(-?\\d+)\\]\\[(-?\\d+),(-?\\d+)\\]");
+ private final class NativeInputDisplay {
+  final double sx,sy,tx,ty;final String raw;
+  NativeInputDisplay(String dispatcher)throws Exception {
+   // Injection uses logical display coordinates; native window frames/regions
+   // use display space. InputDispatcher::transformMotionEntryForInjectionLocked
+   // applies this display matrix's inverse before native hit testing. Never use
+   // a window's local transform, density, or guessed screenshot-size ratio.
+   int start=dispatcher.indexOf("\n  Display: 0\n");assertTrue("Missing native display0 geometry",start>=0);
+   int end=dispatcher.indexOf("\n    Windows:",start);assertTrue("Missing native display0 window boundary",end>start);
+   raw=dispatcher.substring(start,end);String[] lines=raw.trim().split("\n");
+   assertEquals("Unexpected native display matrix format",6,lines.length);
+   assertEquals("logicalSize=480x854",lines[1].trim());
+   assertTrue("This portrait fixture requires an explicit native ROT_0 matrix",lines[2].trim().matches("transform \\(ROT_0\\) \\((?:IDENTITY|SCALE|TRANSLATE|SCALE TRANSLATE)\\)"));
+   double[][] matrix=new double[3][3];
+   for(int row=0;row<3;row++){
+    String[] values=lines[row+3].trim().split("\\s+");assertEquals("Native transform row must have three entries",3,values.length);
+    for(int col=0;col<3;col++){matrix[row][col]=Double.parseDouble(values[col]);assertTrue("Non-finite native transform",Double.isFinite(matrix[row][col]));}
+   }
+   assertTrue("Unsupported native rotation/shear/perspective",matrix[0][1]==0&&matrix[1][0]==0&&matrix[2][0]==0&&matrix[2][1]==0&&matrix[2][2]==1);
+   sx=matrix[0][0];sy=matrix[1][1];tx=matrix[0][2];ty=matrix[1][2];
+   assertTrue("Invalid native portrait scale",sx>0.00005&&sx<=16&&sy>0.00005&&sy<=16&&Math.abs(tx)<=10000&&Math.abs(ty)<=10000);
+  }
+  void requireBoundedInverse(int x,int y){
+   // A four-decimal matrix dump is not exact nativefloat. Bound the inverse
+   // uncertainty, then require the same native target at all nine neighboring
+   // integer points; no rounded coefficient can hide an adjacent SystemUI edge.
+   double ux=0.00005*(Math.abs((x-tx)/sx)+1)/(sx-0.00005),uy=0.00005*(Math.abs((y-ty)/sy)+1)/(sy-0.00005);
+   assertTrue("Native matrix dump cannot safely resolve this input point",ux<0.25&&uy<0.25);
+  }
+  int inputX(int logicalX){return (int)((logicalX-tx)/sx);}
+  int inputY(int logicalY){return (int)((logicalY-ty)/sy);}
+  double logicalX(int inputX){return sx*inputX+tx;}
+  double logicalY(int inputY){return sy*inputY+ty;}
+  JSONObject json()throws Exception {return new JSONObject().put("scale_x",sx).put("scale_y",sy).put("translate_x",tx).put("translate_y",ty).put("raw",raw);}
+ }
  private final class NativeInputWindow {
   final String name,config,raw;final int id,uid,index;final Rect frame;final boolean token;final List<Rect> regions=new ArrayList<>();
   NativeInputWindow(Matcher match,String line)throws Exception {
@@ -312,9 +347,22 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   assertFalse("No actual display0 input windows",windows.isEmpty());return windows;
  }
  private NativeInputWindow firstInputTarget(List<NativeInputWindow> windows,int x,int y){for(NativeInputWindow window:windows)if(window.accepts(x,y))return window;return null;}
+ private boolean inputNeighborhoodMatches(List<NativeInputWindow> windows,NativeInputWindow targetWindow,int x,int y){
+  if(targetWindow==null)return false;
+  for(int dx=-1;dx<=1;dx++)for(int dy=-1;dy<=1;dy++)if(firstInputTarget(windows,x+dx,y+dy)!=targetWindow)return false;
+  return true;
+ }
  private boolean ownsIslandInput(NativeInputWindow window){return window!=null&&window.uid==target.getApplicationInfo().uid&&window.token&&window.name.endsWith("DA CALLER call island")&&!window.flag("NO_INPUT_CHANNEL")&&!window.flag("PAUSE_DISPATCHING")&&!window.flag("DROP_INPUT")&&!window.flag("DROP_INPUT_IF_OBSCURED");}
- private int nativeStatusBottom(List<NativeInputWindow> windows){
-  int bottom=-1;for(NativeInputWindow window:windows)if(!window.flag("NOT_VISIBLE")&&(window.name.equals("StatusBar")||window.name.endsWith(" StatusBar"))&&window.frame.top==0&&window.frame.height()>0&&window.frame.height()<854/3)bottom=Math.max(bottom,window.frame.bottom);
+ private int nativeStatusBottom(List<NativeInputWindow> windows,NativeInputDisplay display){
+  int bottom=-1;
+  for(NativeInputWindow window:windows){
+   if(window.flag("NOT_VISIBLE")||!(window.name.equals("StatusBar")||window.name.endsWith(" StatusBar"))||window.frame.isEmpty())continue;
+   double left=display.logicalX(window.frame.left),right=display.logicalX(window.frame.right),top=display.logicalY(window.frame.top),edge=display.logicalY(window.frame.bottom);
+   // dumpsys prints four fractional digits. Permit at most one physical pixel
+   // of matrix-print rounding at the screen edge, retaining full-width/top
+   // SystemUI protection and rounding its bottom outward conservatively.
+   if(Math.abs(left)<=1&&Math.abs(right-480)<=1&&Math.abs(top)<=1&&edge>top&&edge<854/3d)bottom=Math.max(bottom,(int)Math.ceil(edge));
+  }
   return bottom;
  }
  private Rect awaitUnoccludedIslandInput(View view,JSONObject evidence)throws Exception {
@@ -325,9 +373,9 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
    Rect rect=bounds(view);int x=rect.centerX(),y=rect.centerY();String raw=shell("dumpsys input");
    int section=raw.indexOf("Input Dispatcher State:");String recorded=section<0?raw:raw.substring(section);
    evidence.put("last_raw_input",recorded.length()<=180000?recorded:recorded.substring(0,180000)).put("source_reference",INPUT_REFERENCE).put("point_x",x).put("point_y",y).put("target_bounds",rect.toShortString());
-   List<NativeInputWindow> windows=inputWindows(raw);NativeInputWindow first=firstInputTarget(windows,x,y);int status=nativeStatusBottom(windows);
-   JSONArray sampled=new JSONArray();for(NativeInputWindow window:windows)sampled.put(window.json());evidence.put("windows",sampled).put("first_target",first==null?JSONObject.NULL:first.json()).put("native_status_bar_bottom",status);
-   boolean ready=ownsIslandInput(first)&&status>0&&y>=status&&!systemUiFocused();String current=ready?first.id+"/"+first.name+"/"+rect.toShortString():"";
+   List<NativeInputWindow> windows=inputWindows(raw);NativeInputDisplay display=new NativeInputDisplay(recorded);display.requireBoundedInverse(x,y);int inputX=display.inputX(x),inputY=display.inputY(y);NativeInputWindow first=firstInputTarget(windows,inputX,inputY);int status=nativeStatusBottom(windows,display);boolean interior=inputNeighborhoodMatches(windows,first,inputX,inputY);
+   JSONArray sampled=new JSONArray();for(NativeInputWindow window:windows)sampled.put(window.json());evidence.put("windows",sampled).put("display_transform",display.json()).put("input_point_x",inputX).put("input_point_y",inputY).put("input_neighborhood_same_target",interior).put("first_target",first==null?JSONObject.NULL:first.json()).put("native_status_bar_bottom",status);
+   boolean ready=ownsIslandInput(first)&&interior&&status>0&&y>=status&&!systemUiFocused();String current=ready?first.raw+"/"+rect.toShortString()+"/"+display.raw+"/"+inputX+","+inputY+"/"+status:"";
    if(ready&&current.equals(previous)){accepted=rect;break;}previous=current;Thread.sleep(60);
   }while(SystemClock.uptimeMillis()<deadline);
   assertNotNull("One native island drag requires its unobscured InputDispatcher target, not only Home focus: "+evidence,accepted);return accepted;
