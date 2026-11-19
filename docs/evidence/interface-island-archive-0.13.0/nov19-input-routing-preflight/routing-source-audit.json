@@ -1,0 +1,52 @@
+{
+  "saved_at_utc": "2026-11-19T02:45:16.436672+00:00",
+  "source_sha256": "e33c5a845184217b033f042a29f75f07c161730df5beff3d1563769944ab32e2",
+  "status": "SOURCE_FROZEN_DIRECT_JAVAC_PASS_NATIVE_NOT_EXECUTED",
+  "reference_commit": "e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624",
+  "references": [
+    {
+      "url": "https://github.com/LineageOS/android_frameworks_native/blob/e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624/services/inputflinger/dispatcher/InputDispatcher.cpp",
+      "facts": [
+        "windowAcceptsTouchAt:display/NOT_VISIBLE/NOT_TOUCHABLE/region filter",
+        "findTouchedWindowAtLocked:front-to-back,skipSPY",
+        "dumpDispatchStateLocked:Display/orderedwindow fields andtouchableRegion rectangles",
+        "dumpRegion:exclusive[l,t][r,b]records joined by|, or<empty>"
+      ]
+    },
+    {
+      "url": "https://github.com/LineageOS/android_frameworks_native/blob/e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624/services/inputflinger/dispatcher/InputTarget.h",
+      "fact": "FLAG_FOREGROUND=1<<0;actualTouchStatesByDisplay flags printedhex"
+    },
+    {
+      "url": "https://github.com/LineageOS/android_frameworks_native/blob/e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624/include/ftl/flags.h",
+      "fact": "namedflags separatedby |;zero0x0;unknownnumericbits failclosed"
+    }
+  ],
+  "native_methods_unchanged": [
+    "testModernInlineNavigationNineIconsAndWineSwitchPointer",
+    "testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns",
+    "testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency"
+  ],
+  "old_failed_native_run": 44442075483,
+  "old_failure": "Native drag did not save normalizedposition;actualdiagnosticscreenshotshowsSystemUIshade",
+  "historical_actual_down_target_known": false,
+  "production_bug_or_harness_cause_proved_retrospectively": false,
+  "new_precondition": "actualInputDispatcherfirsteligiblepointtargetownUID/title/token/region;actualserverStatusBarframe;twoequalcurrentgeometries;calltokenunchanged",
+  "actual_stream": "oneDOWN/eightMOVE/oneUPorCANCEL;afteractualslopcrossreadnativeforegroundTouchStateowner;wrongtargetCANCELandfail;noactualgesture retry",
+  "strict_checks_retained": [
+    "normalizedposition saved",
+    "realactualwindowmovement",
+    "cancelrestoresgeometry/prefs",
+    "ENDcontroldragdoesnotclick",
+    "ownedactualTelecomcall/token/number",
+    "transparencyexactzero/35blend",
+    "all24literalprofileframes"
+  ],
+  "no_new_png_profile_entries": true,
+  "supplemental_json": "modern-drag-input-routing.json",
+  "production_files_changed": false,
+  "signing_or_CI_or_old_gates_changed": false,
+  "direct_javac": "PASS withSDK35optionalandroid.test.base/runner/mock+JUnit4;earlierclasspath-onlyfailure retained separately",
+  "native_execution": "NOT_RUN",
+  "publication_allowed": false
+}

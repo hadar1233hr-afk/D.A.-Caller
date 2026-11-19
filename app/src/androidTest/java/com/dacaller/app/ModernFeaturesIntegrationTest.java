@@ -56,6 +56,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -82,6 +84,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
  private boolean originalReadFailed;private long originalFetchedAt;
  private final JSONArray modemCommands=new JSONArray();
  private final JSONArray nativeAnswers=new JSONArray(),foregroundEvidence=new JSONArray();
+ private final JSONArray nativeDragRouting=new JSONArray();
  private String launcherPackage;
 
  @Override protected void runTest()throws Throwable {
@@ -269,14 +272,98 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   try{assertTrue("Native touchscreen injection rejected",getInstrumentation().getUiAutomation().injectInputEvent(event,true));}finally{event.recycle();}
  }
  private void tap(View view)throws Exception {Rect rect=bounds(view);long now=SystemClock.uptimeMillis();pointer(now,MotionEvent.ACTION_DOWN,rect.centerX(),rect.centerY());Thread.sleep(50);pointer(now,MotionEvent.ACTION_UP,rect.centerX(),rect.centerY());settle();}
+ private static final String INPUT_REFERENCE="https://github.com/LineageOS/android_frameworks_native/blob/e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624/services/inputflinger/dispatcher/InputDispatcher.cpp";
+ private static final Pattern INPUT_WINDOW=Pattern.compile("^\\s*(\\d+): name='(.*)', id=(-?\\d+), displayId=(-?\\d+), inputConfig=(.*?), alpha=([0-9.]+), frame=\\[(-?\\d+),(-?\\d+)\\]\\[(-?\\d+),(-?\\d+)\\], globalScale=([0-9.]+), applicationInfo\\.name=(.*?), applicationInfo\\.token=(.*?), touchableRegion=(.*?), ownerPid=(-?\\d+), ownerUid=(-?\\d+), dispatchingTimeout=(-?\\d+)ms, hasToken=(true|false), touchOcclusionMode=(\\S+)\\s*$");
+ private static final Pattern INPUT_REGION=Pattern.compile("\\[(-?\\d+),(-?\\d+)\\]\\[(-?\\d+),(-?\\d+)\\]");
+ private final class NativeInputWindow {
+  final String name,config,raw;final int id,uid,index;final Rect frame;final boolean token;final List<Rect> regions=new ArrayList<>();
+  NativeInputWindow(Matcher match,String line)throws Exception {
+   index=Integer.parseInt(match.group(1));name=match.group(2);id=Integer.parseInt(match.group(3));config=match.group(5);uid=Integer.parseInt(match.group(16));token=Boolean.parseBoolean(match.group(18));raw=line.trim();
+   frame=new Rect(Integer.parseInt(match.group(7)),Integer.parseInt(match.group(8)),Integer.parseInt(match.group(9)),Integer.parseInt(match.group(10)));
+   // ftl::Flags prints names joined by " | ", or 0x0. Unknown numeric bits
+   // cannot silently become touchable under this pinned API33 parser.
+   for(String flag:config.split(" \\| "))assertTrue("Unknown native input flag: "+config,"0x0".equals(flag)||flag.matches("[A-Z_]+"));
+   String region=match.group(14);if(!"<empty>".equals(region)){
+    Matcher rectangles=INPUT_REGION.matcher(region);StringBuilder reconstructed=new StringBuilder();
+    while(rectangles.find()){
+     if(reconstructed.length()>0)reconstructed.append('|');reconstructed.append(rectangles.group());
+     Rect rect=new Rect(Integer.parseInt(rectangles.group(1)),Integer.parseInt(rectangles.group(2)),Integer.parseInt(rectangles.group(3)),Integer.parseInt(rectangles.group(4)));
+     assertTrue("Invalid native touch region "+region,!rect.isEmpty());regions.add(rect);
+    }
+    assertEquals("Unrecognized native touch region",region,reconstructed.toString());
+   }
+  }
+  boolean flag(String flag){for(String value:config.split(" \\| "))if(flag.equals(value))return true;return false;}
+  boolean accepts(int x,int y){if(flag("NOT_VISIBLE")||flag("NOT_TOUCHABLE")||flag("SPY"))return false;for(Rect rect:regions)if(rect.contains(x,y))return true;return false;}
+  JSONObject json()throws Exception {return new JSONObject().put("index",index).put("id",id).put("name",name).put("uid",uid).put("input_config",config).put("frame",frame.toShortString()).put("raw",raw);}
+ }
+ private List<NativeInputWindow> inputWindows(String raw)throws Exception {
+  assertTrue("Native routing proof requires the actual API33 dispatcher dump",android.os.Build.VERSION.SDK_INT==33&&raw.contains("Input Dispatcher State:"));
+  String dispatcher=raw.substring(raw.indexOf("Input Dispatcher State:"));int old=dispatcher.indexOf("Input Dispatcher State at time of last ANR:");if(old>=0)dispatcher=dispatcher.substring(0,old);
+  assertTrue("Native input must be enabled and unfrozen",dispatcher.contains("DispatchEnabled: true")&&dispatcher.contains("DispatchFrozen: false"));
+  assertTrue("Native input display must match the actual portrait capture",dispatcher.contains("logicalSize=480x854"));
+  ArrayList<NativeInputWindow> windows=new ArrayList<>();int display=-1;
+  for(String line:dispatcher.split("\\n")){
+   Matcher header=Pattern.compile("^\\s*Display: (-?\\d+)\\s*$").matcher(line);if(header.matches()){display=Integer.parseInt(header.group(1));continue;}
+   if(display!=0||!line.contains("inputConfig="))continue;
+   Matcher match=INPUT_WINDOW.matcher(line);assertTrue("Unknown API33 input window record: "+line,match.matches());assertEquals(0,Integer.parseInt(match.group(4)));
+   NativeInputWindow window=new NativeInputWindow(match,line);assertEquals("Native input windows must retain front-to-back order",windows.size(),window.index);windows.add(window);
+  }
+  assertFalse("No actual display0 input windows",windows.isEmpty());return windows;
+ }
+ private NativeInputWindow firstInputTarget(List<NativeInputWindow> windows,int x,int y){for(NativeInputWindow window:windows)if(window.accepts(x,y))return window;return null;}
+ private boolean ownsIslandInput(NativeInputWindow window){return window!=null&&window.uid==target.getApplicationInfo().uid&&window.token&&window.name.endsWith("DA CALLER call island")&&!window.flag("NO_INPUT_CHANNEL")&&!window.flag("PAUSE_DISPATCHING")&&!window.flag("DROP_INPUT")&&!window.flag("DROP_INPUT_IF_OBSCURED");}
+ private int nativeStatusBottom(List<NativeInputWindow> windows){
+  int bottom=-1;for(NativeInputWindow window:windows)if(!window.flag("NOT_VISIBLE")&&(window.name.equals("StatusBar")||window.name.endsWith(" StatusBar"))&&window.frame.top==0&&window.frame.height()>0&&window.frame.height()<854/3)bottom=Math.max(bottom,window.frame.bottom);
+  return bottom;
+ }
+ private Rect awaitUnoccludedIslandInput(View view,JSONObject evidence)throws Exception {
+  Call owned=PhoneSessionService.current;CallIslandState call=PhoneSessionService.islandSnapshot();assertNotNull(owned);assertNotNull(call);String token=call.token;
+  evidence.put("owned_call_token",token);long deadline=SystemClock.uptimeMillis()+20000;String previous="";Rect accepted=null;
+  do{
+   assertSame("Waiting for native input must preserve the actual call",owned,PhoneSessionService.current);assertNotNull(PhoneSessionService.islandSnapshot());assertEquals(token,PhoneSessionService.islandSnapshot().token);
+   Rect rect=bounds(view);int x=rect.centerX(),y=rect.centerY();String raw=shell("dumpsys input");
+   int section=raw.indexOf("Input Dispatcher State:");String recorded=section<0?raw:raw.substring(section);
+   evidence.put("last_raw_input",recorded.length()<=180000?recorded:recorded.substring(0,180000)).put("source_reference",INPUT_REFERENCE).put("point_x",x).put("point_y",y).put("target_bounds",rect.toShortString());
+   List<NativeInputWindow> windows=inputWindows(raw);NativeInputWindow first=firstInputTarget(windows,x,y);int status=nativeStatusBottom(windows);
+   JSONArray sampled=new JSONArray();for(NativeInputWindow window:windows)sampled.put(window.json());evidence.put("windows",sampled).put("first_target",first==null?JSONObject.NULL:first.json()).put("native_status_bar_bottom",status);
+   boolean ready=ownsIslandInput(first)&&status>0&&y>=status&&!systemUiFocused();String current=ready?first.id+"/"+first.name+"/"+rect.toShortString():"";
+   if(ready&&current.equals(previous)){accepted=rect;break;}previous=current;Thread.sleep(60);
+  }while(SystemClock.uptimeMillis()<deadline);
+  assertNotNull("One native island drag requires its unobscured InputDispatcher target, not only Home focus: "+evidence,accepted);return accepted;
+ }
+ private JSONObject actualDragTarget(String raw)throws Exception {
+  assertTrue("No native dispatcher after drag start",raw.contains("Input Dispatcher State:"));String dispatcher=raw.substring(raw.indexOf("Input Dispatcher State:"));int historical=dispatcher.indexOf("Input Dispatcher State at time of last ANR:");if(historical>=0)dispatcher=dispatcher.substring(0,historical);
+  int start=dispatcher.indexOf("TouchStatesByDisplay:");assertTrue("No actual touch stream after first native MOVE",start>=0);String touched=dispatcher.substring(start);int end=touched.indexOf("\n  Display:");if(end>=0)touched=touched.substring(0,end);
+  boolean display0=false;JSONObject actual=null;
+  for(String line:touched.split("\\n")){
+   Matcher display=Pattern.compile("^\\s*(-?\\d+): down=(true|false), split=.*$").matcher(line);if(display.matches()){display0="0".equals(display.group(1))&&"true".equals(display.group(2));continue;}
+   if(!display0)continue;Matcher window=Pattern.compile("^\\s*\\d+: name='(.*)', pointerIds=0x([0-9a-fA-F]+), targetFlags=0x([0-9a-fA-F]+)\\s*$").matcher(line);
+   if(window.matches()&&(Long.parseLong(window.group(3),16)&1)!=0){assertNull("A single pointer must have one native foreground target",actual);actual=new JSONObject().put("name",window.group(1)).put("pointer_ids",window.group(2)).put("target_flags",window.group(3)).put("raw",line.trim());}
+  }
+  assertNotNull("Missing native foreground target for the actual pointer stream",actual);assertTrue("Native drag stream was routed to a different window: "+actual,actual.getString("name").endsWith("DA CALLER call island"));return actual;
+ }
  private void drag(View view,int dx,int dy,boolean cancel)throws Exception {
-  Rect rect=bounds(view);long now=SystemClock.uptimeMillis();int x=rect.centerX(),y=rect.centerY();
-  int status=target.getSystemService(WindowManager.class).getCurrentWindowMetrics().getWindowInsets().getInsetsIgnoringVisibility(WindowInsets.Type.statusBars()).top;
+  JSONObject evidence=new JSONObject().put("target_tag",String.valueOf(view==null?null:view.getTag())).put("dx",dx).put("dy",dy).put("cancelled",cancel);nativeDragRouting.put(evidence);
+  boolean down=false,finished=false;long now=0;int x=0,y=0;
+  try{
+  Rect rect=awaitUnoccludedIslandInput(view,evidence);now=SystemClock.uptimeMillis();x=rect.centerX();y=rect.centerY();int status=evidence.getInt("native_status_bar_bottom");
   assertTrue("Drag must begin inside a laid-out app target below protected SystemUI",rect.contains(x,y)&&y>=status);
   assertTrue("Drag must remain inside the native display",new Rect(0,status,480,854).contains(x+dx,y+dy));
-  pointer(now,MotionEvent.ACTION_DOWN,x,y);
-  for(int n=1;n<=8;n++){Thread.sleep(25);pointer(now,MotionEvent.ACTION_MOVE,x+dx*n/8f,y+dy*n/8f);}
-  pointer(now,cancel?MotionEvent.ACTION_CANCEL:MotionEvent.ACTION_UP,x+dx,y+dy);settle();
+  pointer(now,MotionEvent.ACTION_DOWN,x,y);down=true;boolean routed=false;int slop=android.view.ViewConfiguration.get(view.getContext()).getScaledTouchSlop();evidence.put("touch_slop",slop).put("down_uptime_millis",now);
+  for(int n=1;n<=8;n++){
+   Thread.sleep(25);pointer(now,MotionEvent.ACTION_MOVE,x+dx*n/8f,y+dy*n/8f);
+   // Cross touch slop before reading the server stream so a diagnostic shell
+   // round-trip cannot turn the DOWN into the child's long-press action.
+   float mx=dx*n/8f,my=dy*n/8f;
+   if(!routed&&mx*mx+my*my>slop*slop){String stream=shell("dumpsys input");int section=stream.indexOf("Input Dispatcher State:");String recorded=section<0?stream:stream.substring(section);evidence.put("actual_first_move_input",recorded.length()<=180000?recorded:recorded.substring(0,180000)).put("actual_foreground_target",actualDragTarget(stream)).put("verified_after_move",n);routed=true;}
+  }
+  assertTrue("A native drag must cross real touch slop and confirm its foreground target",routed);
+  pointer(now,cancel?MotionEvent.ACTION_CANCEL:MotionEvent.ACTION_UP,x+dx,y+dy);finished=true;settle();evidence.put("native_stream_completed",true);
+  }finally{
+   if(down&&!finished)try{pointer(now,MotionEvent.ACTION_CANCEL,x,y);}catch(Throwable ignored){}
+   write(DIRECTORY,"modern-drag-input-routing.json",new JSONObject().put("api",33).put("source_reference",INPUT_REFERENCE).put("gestures",nativeDragRouting).toString(2));
+  }
  }
  private void key(int code)throws Exception {
   long now=SystemClock.uptimeMillis();assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(new KeyEvent(now,now,KeyEvent.ACTION_DOWN,code,0),true));

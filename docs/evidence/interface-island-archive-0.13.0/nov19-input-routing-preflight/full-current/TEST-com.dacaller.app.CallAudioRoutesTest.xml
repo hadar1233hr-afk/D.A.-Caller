@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.CallAudioRoutesTest" tests="17" skipped="0" failures="0" errors="0" timestamp="2026-11-19T02:45:23" hostname="3ebae333e153" time="1.746">
+  <properties/>
+  <testcase name="deniedDeviceAndGenericCommandsReturnFailureWithoutChangingSelection" classname="com.dacaller.app.CallAudioRoutesTest" time="1.151"/>
+  <testcase name="deniedBluetoothNamePermissionKeepsGenericRealRouteLabel" classname="com.dacaller.app.CallAudioRoutesTest" time="0.034"/>
+  <testcase name="disconnectedDisplayedHeadsetCannotRedirectTapToAnotherHeadset" classname="com.dacaller.app.CallAudioRoutesTest" time="0.054"/>
+  <testcase name="stateProviderFailureIsSafe" classname="com.dacaller.app.CallAudioRoutesTest" time="0.023"/>
+  <testcase name="activeBluetoothSelectionTargetsTheDeviceWhoseNameIsShown" classname="com.dacaller.app.CallAudioRoutesTest" time="0.04"/>
+  <testcase name="deniedDeviceNameDoesNotPreventSelectingThatExactEndpoint" classname="com.dacaller.app.CallAudioRoutesTest" time="0.052"/>
+  <testcase name="bluetoothIsHiddenWhenTelecomDoesNotSupportItEvenWithStaleDevice" classname="com.dacaller.app.CallAudioRoutesTest" time="0.036"/>
+  <testcase name="arbitraryMasksCannotBeSubmittedAsARoute" classname="com.dacaller.app.CallAudioRoutesTest" time="0.054"/>
+  <testcase name="endpointFailureOtherThanPermissionDoesNotRedirectToAnotherDevice" classname="com.dacaller.app.CallAudioRoutesTest" time="0.03"/>
+  <testcase name="supportedSelectionWaitsForTelecomAcknowledgementBeforeChangingUiState" classname="com.dacaller.app.CallAudioRoutesTest" time="0.026"/>
+  <testcase name="availableBluetoothLabelUsesSupportedDeviceWhenSpeakerIsActive" classname="com.dacaller.app.CallAudioRoutesTest" time="0.046"/>
+  <testcase name="bluetoothLabelUsesTheActualActiveDevice" classname="com.dacaller.app.CallAudioRoutesTest" time="0.029"/>
+  <testcase name="deviceRequestPermissionDenialFallsBackToTheSupportedGenericRoute" classname="com.dacaller.app.CallAudioRoutesTest" time="0.03"/>
+  <testcase name="genericBluetoothRouteRemainsUsableWithoutEndpointDetails" classname="com.dacaller.app.CallAudioRoutesTest" time="0.037"/>
+  <testcase name="unboundServiceNeverOffersOrSelectsPhantomRoutes" classname="com.dacaller.app.CallAudioRoutesTest" time="0.028"/>
+  <testcase name="displayedBluetoothTargetSurvivesSupportedDeviceReordering" classname="com.dacaller.app.CallAudioRoutesTest" time="0.03"/>
+  <testcase name="rejectedRouteCommandDoesNotCrashOrInventSelection" classname="com.dacaller.app.CallAudioRoutesTest" time="0.037"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

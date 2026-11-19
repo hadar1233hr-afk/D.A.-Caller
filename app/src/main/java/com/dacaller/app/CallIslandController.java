@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.Outline;
 import android.view.WindowInsets;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import android.os.Looper;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 import android.view.ViewTreeObserver;
 import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
@@ -231,7 +233,25 @@ final class CallIslandController implements CallIslandView.Listener {
   capsuleHeight=Math.min(view.getMeasuredHeight(),availableHeight);
   boolean needsScroll=view.getMeasuredHeight()>capsuleHeight;
   if(needsScroll){
-   if(overflow==null){overflow=new ScrollView(host);overflow.setTag("island-in-app-window");overflow.setVerticalScrollBarEnabled(false);overflow.setFillViewport(false);overflow.setClipToPadding(false);}
+   if(overflow==null){
+    overflow=new ScrollView(host);overflow.setTag("island-in-app-window");overflow.setFillViewport(false);overflow.setClipToPadding(false);
+    // Clip the viewport itself, without painting another capsule behind the
+    // child's adjustable background. Fading and a thin scrollbar reveal that
+    // the remaining call controls can be reached by scrolling.
+    overflow.setOutlineProvider(new ViewOutlineProvider(){
+     @Override public void getOutline(View target,Outline outline){outline.setRoundRect(0,0,target.getWidth(),target.getHeight(),dp(31));}
+    });
+    overflow.setClipToOutline(true);overflow.addOnLayoutChangeListener((target,left,top,right,edgeBottom,oldLeft,oldTop,oldRight,oldBottom)->{
+     if(right-left!=oldRight-oldLeft||edgeBottom-top!=oldBottom-oldTop)target.invalidateOutline();
+    });
+    overflow.setVerticalFadingEdgeEnabled(true);overflow.setFadingEdgeLength(dp(12));
+    overflow.setVerticalScrollBarEnabled(true);overflow.setScrollbarFadingEnabled(false);
+    overflow.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);overflow.setScrollBarSize(dp(2));
+    if(android.os.Build.VERSION.SDK_INT>=29){
+     android.graphics.drawable.GradientDrawable thumb=new android.graphics.drawable.GradientDrawable();
+     thumb.setColor(0x88CBD1CD);thumb.setCornerRadius(dp(2));overflow.setVerticalScrollbarThumbDrawable(thumb);
+    }
+   }
    if(view.getParent()!=overflow){if(view.getParent() instanceof ViewGroup)((ViewGroup)view.getParent()).removeView(view);overflow.addView(view,new ScrollView.LayoutParams(-1,-2));}
    floating=overflow;
   }else{

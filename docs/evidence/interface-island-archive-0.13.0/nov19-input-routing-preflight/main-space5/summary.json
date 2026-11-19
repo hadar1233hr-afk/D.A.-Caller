@@ -1,0 +1,5 @@
+{
+  "status": "COMPILE_FAILED_ZERO_TESTS",
+  "reason": "New decoration lambda bottom parameter shadowed existing local; renamed edgeBottom before actual5PASS",
+  "tests_executed": 0
+}

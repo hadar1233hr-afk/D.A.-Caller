@@ -1,5 +1,43 @@
 # DA CALLER continuation state
 
+## Native input-window guard and overflow polish verified locally — 2026-11-19 UTC
+
+Latest completed CI44442075483/source77b4374/appTreea58c9e6821c65a5e97bbe8bbbc40dc8716e998cd
+passed457uniqueunits and39/40native,0errors/skips. All40 completed; the only
+failure is genuine external-island drag not saving normalized position.
+All245originalframes+13/24modern+2diagnostics=260actualPNGs, not269approval.
+Exact official UI ZIP15689557bytes/SHA6217622417e5844dcb550f922ec4a2dfd9b1eb6f073d49317dc82e79076cc25d;
+failure ZIP1330594bytes/SHA20327c51fb42dce889e475b5a41312232bc6c21cf6cb075afa1045ebc67f4191.
+SHA/GitHubdigest/allCRC verified; raw/failures/JUnit/source review retained in
+fourth-native-ci and /workspace/work/native-013-ci-44442075483.
+
+Actual failure PNG shows expanded SystemUI Quick Settings/notification shade.
+Logcat HUN-region changes preceded the gesture. No pre-DOWN input routing was
+recorded, so HUN occlusion remains a hypothesis; no production drag defect is
+proved. Independent production audit found token/raw-coordinate/save/cancel
+paths coherent. New test-only guard reads actual API33 InputDispatcher windows
+in dispatch order with flags/touch regions; two stable samples must identify
+owned-island input target. After actual slop crossing it records the real
+foreground touch target before remaining moves. One gesture; wrong routing
+CANCEL/fail, no blind retry or OS-notification suppression. Format/rules checked
+against pinned AOSP-derived source by two reviewers. Native execution is still
+required to establish actual parsing and drag success.24/40profiles unchanged.
+
+Root also viewed expanded Main contacts/recents captures: the bounded viewport
+hard-cut Open/button/frame. Small Controller-only polish adds transparent31dp
+round clipping,12dp fading and a thin scrollbar; no background paint/padding/
+margin/geometry/gesture/call-command change. Five existing space tests PASS.
+A lambda-name compile error before that fix ran zero tests and is preserved.
+Final current full preflight **457methods/44classesPASS**,0failure/error/skip,
+debug+AndroidtestAPKs/lintPASS0errors16warnings; all app source hashes unchanged.
+Local APK37cd0fc5... is not the native binary. Exact proof and audits in
+nov19-input-routing-preflight. Next: freshCI457/40/269/fullactualvisual review.
+
+No new quota error in this scheduled run. Frozen business DB/manifest/reader,
+old7gates, signing and CI unchanged.0.12alreadydeliveredimmutable/noresend,
+0.13code22unreleased, owner-controlled private key backup/repo-secrets/applicable
+approval still unresolved; existingautomationactive.
+
 ## Normal scheduled continuation: coordinate fixes compiled — 2026-11-19 02:02 UTC
 
 Resumed normally after startup and root-only/no active build/CI overlap checks.
