@@ -1,0 +1,71 @@
+{
+  "status": "PASS_EXACT_SOURCE_NAME_DERIVATIVE_SQL_AND_SOURCE_AUDIT_ONLY",
+  "observed_at_utc": "2026-11-11T22:11:20.661207+00:00",
+  "parent_database_sha256": "4eee8e84a3ccab3f291cb58be1e384a0dc16351612511cfe884e14519af3fd0e",
+  "candidate_database_sha256": "36a7c0a07fad679249c44c975cba7c8d4fb00171d593d19f4ff0c6413a0f115a",
+  "candidate_database_bytes": 6643712,
+  "candidate_manifest_sha256": "de06f2770c48e4da65966c1dda7a8fd4e1af8596698f3537652259827bcdebe5",
+  "candidate_envelope_sha256": "ecea7fe5eab66f9ab4007784092c08a8cd7cbe50772d7737d95e5b493ed72d72",
+  "source_name_event_ledger_sha256": "9e731705145540e0ff03d9fba508a7542002d8ed065347d676df5ed0b53868cb",
+  "source_text_report_sha256": "e04848419c58d79e9d3e5eeab9c3e778cfa3f223554966f374625d4bd3a299fc",
+  "reviewed_builder_sha256": "d42079e7bca50fed41eca0ab8cf0dddd9be5f8f1af1c204ce54d83c70590e6b1",
+  "reviewed_policy_sha256": "db6f63a207ed4a47e92e3e3e12a5a06c07661a4c496f0167a059d6a7f00c49da",
+  "audit_script_sha256": "3e850aa6732fbf6ff447d7fd4433c1f3c8335efbd059a8c5ec6eac9e4d07a1a9",
+  "measured_counts": {
+    "raw_source_rows": 2728,
+    "historical_decisions": 2728,
+    "candidate_rows": 2717,
+    "unchanged_parent_rows": 2715,
+    "source_name_selections": 2,
+    "source_objects": 2657,
+    "normalized_phones": 2614,
+    "effective_source_text_withheld": 1,
+    "effective_phone_format_withheld": 10
+  },
+  "actual_sql_queries": {
+    "\"\u062f\u0627\u0631*\" \"\u0643\u0646\u0627*\"": {
+      "rows": 1,
+      "selected_exact_name_found": true
+    },
+    "\"Gallery*\"": {
+      "rows": 8,
+      "selected_exact_name_found": true
+    },
+    "\"R*\" \"Gallery*\"": {
+      "rows": 2,
+      "selected_exact_name_found": true
+    },
+    "all_pages": {
+      "pages": 55,
+      "rows": 2717,
+      "lookahead": 51
+    }
+  },
+  "negative_memory_checks": [
+    "old-business-change",
+    "selected-business-change",
+    "selected-fts-missing",
+    "historical-decision-change",
+    "selected-app-admission-check",
+    "selected-tag-check"
+  ],
+  "original_strict_production_rejections": {
+    "Country membership not explicitly sourced": 2716,
+    "Invalid app dial identity": 10,
+    "Invalid source text length/control character": 2
+  },
+  "all_original_49_parent_bindings_rechecked": true,
+  "parent_raw_and_decision_history_unchanged": true,
+  "old_2715_rows_and_fts_unchanged": true,
+  "original_pbf_objects_reread": false,
+  "app_records_added": 0,
+  "production_admission": false,
+  "native_integration": "NOT_TESTED",
+  "publication_approval": false,
+  "limits": [
+    "The new derivative producer/projector was not imported; every row and selection event was independently reconstructed.",
+    "Existing native-compatible phone/text/FTS normalizers are shared disclosed references.",
+    "These are retained-source and desktop SQLite checks, not new Android/emulator/Telecom/UI/native integration tests.",
+    "No live business/phone ownership/currentness, legal-country or nationwide coverage guarantee."
+  ]
+}

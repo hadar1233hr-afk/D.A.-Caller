@@ -1,0 +1,65 @@
+{
+  "status": "RESEARCH_SOURCE_AND_SPATIAL_DATA_RETAINED_NOT_APP_ACCEPTED",
+  "observed_at_utc": "2026-11-05T22:18:49.012373+00:00",
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "archive_sha256": "529d5b1786dc1b06c3caf98c1b715f6839c8a5fa4de71c76a1dae6b0d90310bb",
+  "archive_bytes": 18443,
+  "archive_members_sha256": {
+    "research-extra-category-nodes.ndjson": "8f9fbe7d47041e47b38aec62f1f5b4f7b199c2671ac4b199cf4f27ec2a5a8fe8",
+    "node-report.json": "fbc642fb5653178f552468b3f6c4f1cfd89ae2c873c0b94904294b2276d01044",
+    "node-independent-audit.json": "3a565df79d5c04412fba4a4e2cece2387d9059719a6542b53fea038c570a0ea5",
+    "research-way-businesses.ndjson": "dd35def488f06705a128986681a4d775970ad3357b55a74fecb00e63585f5df1",
+    "way-report.json": "496adeee2ed819f44b23d71c445ec546b75edfb3b8729b92030348a370d0b36b",
+    "way-independent-audit.json": "872e3d363a58de3365db726398953942af5824f6efd8d6990a66321d2cf4b18d",
+    "combined-quality.json": "1bbac75f4bd4b7f4580fcd82cb8ed5f538692de2f45910cf60876e9c333e86fd",
+    "policy-checks.txt": "49bb2a6c50da77f25b7493f29e5ccc2b3c25848b7d255ac06a4730316bf37e3c",
+    "LICENSE-NOTICE.txt": "5efa49ea1fff1eb84249ef40ac735e946748eeff890e498817d2e4c4917d195d"
+  },
+  "script_sha256": {
+    "extended_business_category.py": "b9ff71844e21a2605d26452920edae8fa62026383a4008581191a40e78d7c060",
+    "check_extended_business_category.py": "40ede8b7a11241e29af6b92a5ed8435e3fd9d949c76f77e4b7b898d03fe13eec",
+    "research_extra_category_nodes.py": "1b9d358cbeee8b807c4033be32ac22a1a7d6c998c8d6ffdbda3557e654c45c1d",
+    "audit_extra_category_nodes.py": "87596823f3bfe1aa0ca341a662d3b903a14ba28b625b5e9918e273abb04a3d37",
+    "research_way_geography.py": "78b943a603b16bd4763cc45cc1546438967427a8b3a009fb252c481196802787",
+    "audit_way_geography.py": "d179364bf7034c108371fae3b11e32f9de64f8d880ab262dc4d7cae83e9e450b"
+  },
+  "extra_node_rows": 29,
+  "extra_way_rows": 3,
+  "extra_unique_phones": 32,
+  "prior_source_or_phone_overlap": 0,
+  "aggregate_rows": 2728,
+  "aggregate_source_objects": 2668,
+  "aggregate_unique_phones": 2623,
+  "synthetic_policy_unittest_methods": {
+    "executed": 15,
+    "passed": 15,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "independently_rerun": true
+  },
+  "gap_inventory_synthetic_privacy_cases": {
+    "executed": 18,
+    "passed": 18,
+    "not_android_tests": true
+  },
+  "independent_actual_source_spatial_audits": {
+    "nodes": 29,
+    "ways": 3,
+    "way_referenced_nodes": 15,
+    "status": "PASS"
+  },
+  "review_correction": "Nonboolean lifecycle values and nonoperating buildings now held;3regressions added. No actual whitelist candidate had those cases; finalv2 rebuilt afterfreeze.",
+  "raw_source_repairs": 0,
+  "country_tags_inferred": 0,
+  "app_records_added": 0,
+  "production_admission": false,
+  "publication_approval": false,
+  "prior_research_sqlite_rows_unchanged": 2696,
+  "limits": [
+    "Source-spatial/category research does not confirm current ownership, public access, activity or nationwide coverage.",
+    "Existing corecategory/phone parser and retained source-geometry/provenance are disclosed reference contracts.",
+    "New research rows still fail existing production country admission; no scope/country renaming.",
+    "No app/productionpackager/signing/CI/release gate edits or new native run."
+  ]
+}

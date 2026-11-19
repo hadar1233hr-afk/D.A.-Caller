@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.BusinessDirectoryViewTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:13:49" hostname="3ebae333e153" time="3.91">
+  <properties/>
+  <testcase name="pageAndSearchStateSurviveRecreationWithoutLoadingEarlierPages" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.294"/>
+  <testcase name="detachDisarmsDialogCallUntilDirectoryIsVisibleAgain" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.207"/>
+  <testcase name="taxonomyLabelsAreDisplayOnlyAndPreserveRawSourceIdentity" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.23"/>
+  <testcase name="unavailableDatasetShowsHonestStateAndPersonalTabStillWorks" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.156"/>
+  <testcase name="detachedRowsCannotDialAndDetachedSearchCannotChangeSavedQuery" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.193"/>
+  <testcase name="changingQueryDisarmsOldRowBeforeDebouncedResultsArrive" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.237"/>
+  <testcase name="obsoleteSearchViewCannotOverwriteRecreatedDirectoryState" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.265"/>
+  <testcase name="recycledRowCallsOnlyItsBoundVisibleBusiness" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.143"/>
+  <testcase name="loaderFailureNeverDisplaysAnExceptionOrFabricatedBusinesses" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.156"/>
+  <testcase name="nonemptyHeaderActuallyCollapsesAndReturnsForEmptySearchWithoutCalling" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.79"/>
+  <testcase name="noContactsPermissionNeededAndTypingNeverDials" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.136"/>
+  <testcase name="showingRecordDetailsDoesNotDialOrOpenSourceUntilExplicitAction" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.276"/>
+  <testcase name="closingDirectoryRejectsQueuedUiResult" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.115"/>
+  <testcase name="fullSourceAttributionFitsTwoLinesAndTopTargetOpensFullDetailsInBothLanguages" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.581"/>
+  <testcase name="staleBackgroundResultsCannotReplaceNewQuery" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.121"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Exception in thread "ResizeFrame" java.lang.NullPointerException: Cannot invoke "android.view.DisplayInfo.getRefreshRate()" because "di" is null
+	at android.view.Choreographer.getRefreshRate(Choreographer.java:293)
+	at android.view.Choreographer.__constructor__(Choreographer.java:280)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at org.robolectric.shadows.ShadowChoreographer$ChoreographerReflector$$Reflector33.__constructor__(Unknown Source)
+	at org.robolectric.shadows.ShadowPausedChoreographer.__constructor__(ShadowPausedChoreographer.java:57)
+	at android.view.Choreographer.<init>(Choreographer.java:272)
+	at android.view.Choreographer$1.initialValue(Choreographer.java:116)
+	at android.view.Choreographer$1.initialValue(Choreographer.java:109)
+	at java.base/java.lang.ThreadLocal.setInitialValue(ThreadLocal.java:195)
+	at java.base/java.lang.ThreadLocal.get(ThreadLocal.java:172)
+	at android.view.Choreographer.getInstance(Choreographer.java:304)
+	at org.robolectric.shadows.ShadowBackdropFrameRenderer.run(ShadowBackdropFrameRenderer.java:52)
+	at com.android.internal.policy.BackdropFrameRenderer.run(BackdropFrameRenderer.java)
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

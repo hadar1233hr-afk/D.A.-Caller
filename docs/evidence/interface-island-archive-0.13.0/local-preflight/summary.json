@@ -1,0 +1,39 @@
+{
+  "status": "LOCAL_PREFLIGHT_PASS_NOT_NATIVE_OR_PUBLICATION_APPROVAL",
+  "unit": {
+    "tests": 451,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0
+  },
+  "unit_classes": 43,
+  "lint": {
+    "Error": 0,
+    "Fatal": 0,
+    "Warning": 16
+  },
+  "gradle_tasks": [
+    "testDebugUnitTest",
+    "assembleDebug",
+    "lintDebug",
+    "assembleDebugAndroidTest"
+  ],
+  "app_source_unchanged_during_run": true,
+  "sha256": {
+    "app/build/outputs/apk/debug/app-debug.apk": "61b1bb6e4aa159a0b860dea9354ecf895820dea5bd75f69c881e3e95966610b5",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "da54a64f1454a845de0880f2d76b4c46d27f5b687a78f4119148342acef88e12",
+    "app/src/main/assets/business-directory/israel-businesses.sqlite": "cbc7dc7b41c3fa9335cbf37907243681820fe23107e40541efb306dc1b566af3",
+    "app/src/main/assets/business-directory/manifest.json": "fec348522615f62d36fa62ee65ff317340ea4806a85f15c457daa30378805cfa",
+    "app/src/main/java/com/dacaller/app/BusinessDirectory.java": "5d8c3d01e4aab6f5dd198b4c2fe588e301c7298003192c21ec97332e279efa52"
+  },
+  "python_tool_methods_pass": 95,
+  "new_native_methods_written": 40,
+  "new_native_executed": false,
+  "new_real_pngs_planned": 269,
+  "future_signing_defaults_unchanged": true,
+  "publication_allowed": false,
+  "prior_full_attempts": {
+    "first": "448PASS before scheduler/contrast followup",
+    "second": "449PASS/1FAIL; newMain alarm test consumed ShadowAlarmManager.getNextScheduledAlarm; fixed to non-consumingpeek, nativebehaviorassertions retained"
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "source": "402da24a939113fa08655e704633d86a0375d959",
+  "app_tree": "1ce289c4ba733312821173549d2efd99f19f9bfc",
+  "run": 41803113785,
+  "review_status": "FAIL",
+  "publication_approved": false,
+  "functional_png_reviewed": 237,
+  "expected_functional_png": 241,
+  "diagnostic_png_reviewed": 2,
+  "groups": {
+    "call": {
+      "reviewed": 101,
+      "rendering_pass": 101,
+      "rendering_fail": 0
+    },
+    "island": {
+      "reviewed": 44,
+      "rendering_pass": 43,
+      "rendering_fail": 1
+    },
+    "other": {
+      "reviewed": 92,
+      "rendering_pass": 92,
+      "rendering_fail": 0
+    }
+  },
+  "findings": [
+    {
+      "file": "island-apple-light-he-compact.png",
+      "issue": "Native status/navigation icons white on near-white in first DEBUG fixture frame; capture did not verify compositor contrast",
+      "status": "FAIL; fresh generic stable-bar capture/native revalidation required"
+    },
+    {
+      "files": "Four English large-font Contacts captures",
+      "issue": "Businesses chip wraps inside the word at1.3font",
+      "status": "Minor UI fix required before fresh screenshots"
+    }
+  ],
+  "root_review": {
+    "actually_viewed_new_reminder_png": [
+      {
+        "name": "callback-list-dark.png",
+        "sha256": "41a2f7c6e226412fd7a5f001f1393c04fbc7bfb04ee26cfef94d20b8f9a46028",
+        "observed_rendering": "PASS"
+      },
+      {
+        "name": "callback-list-light.png",
+        "sha256": "760691c9a86cdcb9abd2926f4fbc6020cd0e5915d7962dc97883ffa30afa1e74",
+        "observed_rendering": "PASS"
+      },
+      {
+        "name": "callback-settings-dark.png",
+        "sha256": "c2246b1b9d5ca023de8e13421f992bf01bdc3dfb712c1408dce4fb6675b89b5f",
+        "observed_rendering": "PASS"
+      },
+      {
+        "name": "callback-settings-light.png",
+        "sha256": "37f5ef16c543fcea23818b446e097d9631697951ec5bc611052f7d8050d02528",
+        "observed_rendering": "PASS"
+      }
+    ],
+    "diagnostics": "Both actual diagnostic originals viewed; launcher shown before missing-dataset gate reaches business UI. They are not business rendering proof."
+  },
+  "missing_business_functional_png": [
+    "business-tab-light.png",
+    "business-tab-dark.png",
+    "business-search.png",
+    "business-detail.png"
+  ],
+  "blockers": [
+    "No nonempty licensed production business asset",
+    "Original beta9 private key unavailable",
+    "One fixture visual bar-contrast failure and small chip layout issue require fresh capture/source"
+  ],
+  "hardware_checks": "NOT TESTED",
+  "raw_export_commit": "3477355fca1c5b646a3c0701a1d979c208f9a44c"
+}

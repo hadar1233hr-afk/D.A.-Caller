@@ -1,0 +1,62 @@
+{
+  "scope": "HOST_ROBOLECTRIC_API33_NATIVE_GRAPHICS_NOT_EMULATOR",
+  "status": "PASS",
+  "tests": 11,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "suites": [
+    {
+      "name": "com.dacaller.app.AppAppearanceTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-11-12T22:07:53",
+      "methods": [
+        "nativeWineSwitchKeeps48dpTargetSemanticsRtlThumbContainmentAndActualDrag",
+        "themeAndDialogsUseRoundedFontAndBothWeightsFitLargerHebrewAndEnglish",
+        "bundledFontContainsHebrewAndLatinWithoutSystemFallbackAndHasRetainedLicense",
+        "dialogFontsAlsoReachLazyNativeChoiceRowsInBothPalettes",
+        "sharedChevronsHaveRoundedStrokesAndBackArrowMirrorsSelectedLanguage",
+        "brightGoldKeepsOrdinaryTextContrastOnLightDarkAndAmoledSurfaces"
+      ]
+    },
+    {
+      "name": "com.dacaller.app.SettingsScreenTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestamp": "2026-11-12T22:08:03",
+      "methods": [
+        "narrowRtlHeaderAndPermissionCardKeepTouchTargets",
+        "returningFromPermissionUiRefreshesStatusWithoutReplacingOrScrollingCard",
+        "callsHeaderHasNoTelephoneAndLastSectionRepeatedlyOpensAndCloses",
+        "grantedPermissionAndPermanentlyDeniedPermissionHaveUsefulSettingsAction",
+        "defaultRoleAndNotificationPermissionUseActualAndroidState"
+      ]
+    }
+  ],
+  "proof": {
+    "log": "gradle.log",
+    "junit": "junit",
+    "report": "report"
+  },
+  "files_sha256": {
+    "app/src/main/java/com/dacaller/app/AppAppearance.java": "d4875acabf2b795a0f0be051dd5d6f14865f1b794d2b31a8de188208c5a2c4f1",
+    "app/src/main/java/com/dacaller/app/SettingsScreen.java": "b5a73f9f16ca1c41a5d460a48416c29522abf44b9ea3a888ce35b25da2fad7ff",
+    "app/src/main/res/values/styles.xml": "c8ceb8c1d9aabfc5df321e5057844ff22572988f82fbf13a4121f302402e723a",
+    "app/src/main/res/values/appearance_ids.xml": "4fceeab48d26e079198712fd334af2ac354df41bc0fba18a4c3a82463b8a1eab",
+    "app/src/main/res/font/app_round.xml": "288ef5c561c2d6267383c6231077e57a8af3307c5c1ce1b119f6f1324038be21",
+    "app/src/main/res/font/rubik_round.ttf": "1b3a7437ba2af80e465e773ed60c5036d1ba6ace492d89046dbcf18fb31e4e88",
+    "app/src/main/assets/licenses/Rubik-OFL.txt": "472cbe7c25441df63e9c7864b43eb3c0f4b3df950c66a76224e6cfe1eae843fb",
+    "app/src/test/java/com/dacaller/app/AppAppearanceTest.java": "47f63be25980355dc578df551a84e45deff09cf668d92acd65134967149b8c53",
+    "app/src/test/java/com/dacaller/app/SettingsScreenTest.java": "2b1c703debe673a67a4446f0762a288dff12e79a512761c1b7e482b385d85f23",
+    "docs/third-party-fonts/Rubik.json": "21327d726782440706c27737b5af2aaf96b94ef1e99be45c0fe240692578669d",
+    "docs/third-party-fonts/Rubik-METADATA.pb": "2e81cc9a038e89bcf9a14cd4e2d4513c1b5959e8b9189b835d4ecf4af11968a6"
+  },
+  "finding": "Native Switch retains 48dp target, accessibility, disabled checked state and actual LTR/RTL drag in both palettes; thumb stays inside unchanged-size track. Bundled Hebrew/Latin cmap+font/license, normal500/strong650 shaping, inherited themed TextView, dialog body/buttons/title/lazy choices and caller OnDismissListener, gold contrast and mirrored arrows pass. Existing five Settings regression methods pass.",
+  "emulator_verified": false,
+  "visual_release_approval": false
+}

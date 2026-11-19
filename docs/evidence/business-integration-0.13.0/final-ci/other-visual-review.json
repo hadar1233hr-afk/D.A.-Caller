@@ -1,0 +1,607 @@
+{
+  "schema": "da-caller-visual-review-v1",
+  "reviewed_at_utc": "2026-11-12T10:59:29.517746+00:00",
+  "reviewer_scope": "Independent OTHER-group visual reviewer; application/code/data/signing/CI/label/release files not edited by this reviewer.",
+  "source_sha": "3f6702b92aba8feaa329fbb92c5a6f23b24e194d",
+  "run_id": 43202338930,
+  "source_export_commit": "669b47dd34bb3018c472dcab5e72247eb6497be2",
+  "junit_sha256_context": "b3a81347ff6550d6f2a785321a46eef2e5558a203b0e652509f3f915743474fc",
+  "manifest_path": "/workspace/work/business-013-reviewed-43202338930/manifest.json",
+  "manifest_sha256": "f106106ad75d235ccdb3b752cc34139f7cb16ad609d96442a01ca716e18f1242",
+  "raw_png_directory": "/workspace/work/business-013-ci-43202338930/ui/ui-snapshots/DA-CALLER-snapshots",
+  "sheet_directory": "/workspace/work/business-013-reviewed-43202338930",
+  "scope": {
+    "group": "other",
+    "actually_viewed_sheets": 25,
+    "actually_viewed_raw_png_filenames": 100,
+    "unique_raw_png_filenames": 100,
+    "raw_png_sha256_checked_count": 100,
+    "sheet_sha256_checked_count": 25,
+    "exact_unscaled_tile_pixel_comparisons": 100,
+    "raw_png_dimensions": [
+      480,
+      854
+    ],
+    "additional_individual_originals_viewed": [
+      "business-tab-dark.png",
+      "business-tab-light.png"
+    ],
+    "excluded_groups": [
+      "call",
+      "island"
+    ]
+  },
+  "overall_visual_status": "FAIL",
+  "technical_visual_decision": "NO_GO_BUSINESS_LAYOUT_REQUIRES_FRESH_NATIVE_CAPTURE",
+  "per_frame_summary": {
+    "PASS": 96,
+    "FAIL": 4,
+    "unreviewed_in_assigned_scope": 0
+  },
+  "test_success_is_visual_evidence": false,
+  "findings": [
+    {
+      "id": "BUSINESS-HEADER-GAP",
+      "status": "FAIL",
+      "severity": "blocking_visual",
+      "files": [
+        "business-tab-dark.png",
+        "business-tab-light.png",
+        "business-search.png"
+      ],
+      "observation": "A conspicuous blank list region remains between the source banner around y204 and the first result around y359 in the 480x854 tab captures. Only two complete results and part of a third fit above the bottom navigation. The search result also starts after a large blank header region.",
+      "required_followup": "Remove unnecessary retained empty-header height, then capture and visually review the new native output."
+    },
+    {
+      "id": "BUSINESS-SOURCE-SUMMARY",
+      "status": "FAIL",
+      "severity": "blocking_visual",
+      "files": [
+        "business-tab-dark.png",
+        "business-tab-light.png",
+        "business-search.png"
+      ],
+      "observation": "The single source-banner line visibly ends in OpenStreetMap contri…; it does not visibly present the complete contributor attribution or measured row coverage. The detail dialog does visibly show source URL, ODbL-1.0 and source date.",
+      "required_followup": "Provide a compact readable list attribution/coverage summary without losing the full record provenance and data-information access."
+    },
+    {
+      "id": "BUSINESS-RAW-CATEGORY",
+      "status": "FAIL",
+      "severity": "blocking_visual",
+      "files": [
+        "business-detail.png",
+        "business-search.png",
+        "business-tab-dark.png",
+        "business-tab-light.png"
+      ],
+      "observation": "User-facing category text exposes source-schema labels: shop:mobile_phone_accessories in detail, shop:mobile_phone_… in rows and tourism:hostel in the tab listing.",
+      "required_followup": "Use friendly display categories while retaining original source tags/provenance in the data and appropriate detail context."
+    },
+    {
+      "id": "OTHER-96-READABILITY",
+      "status": "PASS",
+      "severity": "visual_scope_only",
+      "files_count": 96,
+      "observation": "The remaining 96 actually viewed images show readable primary text/phone digits, distinguishable actions and coherent dark/light, RTL/LTR, standard/large-font layouts. Bounded ellipses and scroll-boundary partial rows are documented separately; no additional blocking visual defect was identified."
+    }
+  ],
+  "bounded_ellipsis_and_scroll_observations": [
+    "Long contact names, favorite-cell labels, secondary Recents dates and 1x1 widget labels use bounded ellipsis. Primary app contact/Recents phone digits remain readable in reviewed frames.",
+    "System notification shade truncates some header, identity, phone and Hebrew speaker-action labels; visible call-state text and distinct action icons remain discernible. This review does not expand the native OS text allocation.",
+    "Favorites 2x2 large-font widget truncates the branding string to DA C… within its header; four displayed contact names remain visible.",
+    "Some native scroll captures begin/end with partial items at the viewport boundary, including Settings/changelog and scrolled icon choosers.",
+    "The floating dialpad overlaps part of a lower scrollable Contacts/Recents row in several variants. This was observed explicitly; static images cannot establish all row hit-target access after scrolling.",
+    "The business source-banner ellipsis is recorded as a FAIL above because it hides attribution/coverage in the newly added business flow; it is not treated as an acceptable generic ellipsis."
+  ],
+  "limits": [
+    "This is a visual inspection of retained emulator screenshots; native test success was not used to infer visual PASS.",
+    "Static resting/dragging incoming frames cannot prove tap rejection, cancelled/incomplete swipe rejection, completed gesture dispatch, current Telecom call ownership or actual audio-route behavior. Root reviews the separate genuine Telecom/native proofs.",
+    "Backup/restore captures show UI and confirmation text only; a real user Storage Access Framework/provider round trip is NOT TESTED by this review.",
+    "Physical hardware/Jelly Star usability, physical audio and matching-key in-place upgrade are NOT TESTED.",
+    "Future 0.13.0 publication remains BLOCKED by default signing requirements. A technical visual decision never authorizes publication or reuses the 0.12.0 exception.",
+    "0.12.0 was already delivered and is unchanged; no APK link is repeated or new release authorized here.",
+    "Any production-view change after source 3f6702b92aba8feaa329fbb92c5a6f23b24e194d requires fresh applicable native captures and visual review. This report remains a truthful FAIL for the exact retained run."
+  ],
+  "sheets": [
+    {
+      "sheet": "other-01.png",
+      "files": [
+        "business-detail.png",
+        "business-search.png",
+        "business-tab-dark.png",
+        "business-tab-light.png"
+      ],
+      "raw_png_sha256": {
+        "business-detail.png": "6ca964ec23ea483674aba71911bd45078247b420c04ee21dc2a551316a01872d",
+        "business-search.png": "0497973f4aa9cd440ea767c61e6ef5ad17831f68e2cd3a5a70d36e6ea9406e9e",
+        "business-tab-dark.png": "3efb9e2681900a11c7c524fc8490af52cee62b73116ca8f6d9cf921c413632a7",
+        "business-tab-light.png": "b16bc967c4f09c67acb4b6388790a82c87e5d735b4631b996a098ef50df7893e"
+      },
+      "sheet_sha256": "c2ad6514a899466cf6e1dee0f0804e0afdfefadfe37eb80ffbe96451f09dafff",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "FAIL",
+      "notes": "Business detail, number search and dark/light directory originals actually viewed. FAIL for excessive blank list header space, source-banner truncation and visible raw taxonomy; names, phone digits and detail dialog actions remain readable."
+    },
+    {
+      "sheet": "other-02.png",
+      "files": [
+        "call-integration-notification-active-private-en.png",
+        "call-integration-notification-active-private-he.png",
+        "call-integration-notification-active-speaker-en.png",
+        "call-integration-notification-active-speaker-he.png"
+      ],
+      "raw_png_sha256": {
+        "call-integration-notification-active-private-en.png": "438cce77441c2ec8900dc1a7b61a94b2ce70355f314bd75d8484364ebd8ee2dd",
+        "call-integration-notification-active-private-he.png": "6134feddb7efac192e69be3d4318755d288bffacd4a26cac55a8b895e5f5677b",
+        "call-integration-notification-active-speaker-en.png": "e43658d7222ccecb7ee7ba3de28cfaeb9a339be019feecaa23632622a8db543d",
+        "call-integration-notification-active-speaker-he.png": "8c0ba249a2c7ac1b05626caaf99ac3ad69927ac5197b9c1f43258bb720b785cf"
+      },
+      "sheet_sha256": "f85a74cf2654f13bdf39d1880c4a9160abf6a6af112432218066132328ba76d6",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "English/Hebrew active-call notification identities and red end-call, speaker and return controls are distinct. Native shade truncates some Hebrew speaker/header text with bounded ellipsis; this is not a behavioral or audio-route verification."
+    },
+    {
+      "sheet": "other-03.png",
+      "files": [
+        "call-integration-notification-incoming-he.png",
+        "call-integration-notification-outgoing-he.png",
+        "call-integration-return-contacts.png",
+        "call-integration-return-settings.png"
+      ],
+      "raw_png_sha256": {
+        "call-integration-notification-incoming-he.png": "b8e80e7e526f47a7b8a01a46f6d1c51e906d6aa1deb2a5230c9bd1acfeadda86",
+        "call-integration-notification-outgoing-he.png": "600da42da62fa0afcffd54c33659253962a45da5ce18ca95565f7e4a77121661",
+        "call-integration-return-contacts.png": "7c116dc7f5cbb3dd414d3a19de206b4c8d6000578004f579099ef44ea6c83b74",
+        "call-integration-return-settings.png": "eae9d5639fb532ae8845858874ae7b6f0ef977ce29c81b34480e4f43e9019141"
+      },
+      "sheet_sha256": "b8bb7619f8f1da5c2d5fc7d24f7bac4ce2970b6e38ba285ed4a8aa6d0d275a86",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Incoming/outgoing notification state and actions are distinct; return-to-Contacts and return-to-Settings frames are legible. Long contact names ellipsize within their row; Settings starts at a preserved scroll position."
+    },
+    {
+      "sheet": "other-04.png",
+      "files": [
+        "callback-list-dark.png",
+        "callback-list-light.png",
+        "callback-settings-dark.png",
+        "callback-settings-light.png"
+      ],
+      "raw_png_sha256": {
+        "callback-list-dark.png": "1476c0b6a959aeb31bf7b899db8b25ba88c5297ce8886b1871b14432f20297c5",
+        "callback-list-light.png": "610b6bad6eb27bb4ee0e67a4ad0166eed6222319a1a74ba32e6debd3eca2bd31",
+        "callback-settings-dark.png": "e76502a3e163065854e7243a6280e40b09a24fc3db55547398d4b287215e4582",
+        "callback-settings-light.png": "3a98534f6fdcb87ec826d50286dfbc022b6263fb1cd9a5bf197cf11cd69cb20e"
+      },
+      "sheet_sha256": "6b1d286ff1266d8c96dd015a9799492ad7b98663d2733630ccfc8f02d05bd546",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Dark/light reminder lists show one identity, two missed calls, the exact phone number and callback action. Explanatory text wraps legibly. Expanded opt-in reminder setting remains readable above app navigation."
+    },
+    {
+      "sheet": "other-05.png",
+      "files": [
+        "changelog-dark-bottom.png",
+        "changelog-dark.png",
+        "changelog-light-bottom.png",
+        "changelog-light.png"
+      ],
+      "raw_png_sha256": {
+        "changelog-dark-bottom.png": "7ec6ea129e43a32c727e44aa80d31f02f1e4ad41a9014900dba74a7814a0c46e",
+        "changelog-dark.png": "71fd61e1d37f1f4e00136084c73c79cd2dce46a242af55dbed47d6bba9293476",
+        "changelog-light-bottom.png": "59b7643004e93d06f3572cd726ca7940af7dfbbe078f50f3c6f0c8824da47408",
+        "changelog-light.png": "85e009a9517da329378f4fa216abfc03df978c8bf42fe7848f201aa114d4bfe3"
+      },
+      "sheet_sha256": "7508589a4952592a70924d05ed72cc3e093e76b485f4b4f36f22742775ed63ba",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Dark/light changelog top shows installed 0.13.0, selected 0.13.0 business entry and readable opening content. Bottom shows retained 0.2.0 and expanded 0.1.0 plus offline-history text; clipped partial items are at the scroll viewport boundaries."
+    },
+    {
+      "sheet": "other-06.png",
+      "files": [
+        "incoming-swipe-dragging.png",
+        "incoming-swipe-resting.png",
+        "missed-multiple-he.png",
+        "missed-single-he.png"
+      ],
+      "raw_png_sha256": {
+        "incoming-swipe-dragging.png": "2804173c22645d1278fe7d3ddc266aa493c80af9b67af46af479bc2ac8e7d4f1",
+        "incoming-swipe-resting.png": "69d70e7228ac1d35102f84f2829c4b6e6d7bb9087356ab67fe28c83dbbdef336",
+        "missed-multiple-he.png": "37d60da556a37c2e5b3b0178115864ed7aeb403b0c8778d62ac19b454504c4f8",
+        "missed-single-he.png": "51d2c4627d747f20e2ab33de63acb5eca8254aa823ab86d67d9c9fb44cb5a5cc"
+      },
+      "sheet_sha256": "ef5efcc4e21deceb87f3585d26f61d3dedd178286d2f46af3603076375dc33c4",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Resting/dragging incoming frames show readable caller number, bounded long-name ellipsis, rightward swipe instruction and separate red reject target. Single/multiple missed-call notifications show distinct counts; native shade bounds long identity/phone text. Static frames do not prove tap, cancelled-swipe or answer dispatch behavior."
+    },
+    {
+      "sheet": "other-07.png",
+      "files": [
+        "personalization-archive-dark.png",
+        "personalization-archive-light.png",
+        "personalization-backup-restore-confirmation.png",
+        "personalization-backup-saved-dark.png"
+      ],
+      "raw_png_sha256": {
+        "personalization-archive-dark.png": "3621a4a63a1992b021e276e25ad5f84a2cc4c6c5ef39ffdd5dffc433d18bb35e",
+        "personalization-archive-light.png": "267d300152ca694133a343afd5ce13e3d2f7db4445bb046b5c13ec6042424142",
+        "personalization-backup-restore-confirmation.png": "97a0b86074a5ea58ebb1727e163d815da01aa9ca4b605740eaf9e70149037b9b",
+        "personalization-backup-saved-dark.png": "c7a278445c59b770668de9862a9373bbf4572c8e5c9b7e4bf68e3716c93f2ec3"
+      },
+      "sheet_sha256": "5ca0d21767155b95cb8835254a0c30292de2c0cc1926b3405edfd6e9ec094799",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Dark/light archive identity, phone, direction, timestamp and duration are distinct. Restore confirmation and saved-backup page text/actions fit; shown success text does not verify a real user SAF/provider round trip."
+    },
+    {
+      "sheet": "other-08.png",
+      "files": [
+        "personalization-backup-saved-light.png",
+        "personalization-chooser-dark-avatar_shapes-bottom.png",
+        "personalization-chooser-dark-avatar_shapes.png",
+        "personalization-chooser-dark-icons-bottom.png"
+      ],
+      "raw_png_sha256": {
+        "personalization-backup-saved-light.png": "3a0e1a0439a0da93c3d0e45a2a63c5a4bdb60148999399bd6e66f1a2e26a1fa2",
+        "personalization-chooser-dark-avatar_shapes-bottom.png": "d045da61c0e3f36bbc9a90c76482b93c329cf0976fa28e90022b635edfdcef43",
+        "personalization-chooser-dark-avatar_shapes.png": "d045da61c0e3f36bbc9a90c76482b93c329cf0976fa28e90022b635edfdcef43",
+        "personalization-chooser-dark-icons-bottom.png": "00fb0f6ba8b7019794d7cf7c2438c38228522defc9f616b2c29a491747040ef4"
+      },
+      "sheet_sha256": "18d92af851b06e28a344a33fe5e2d8ee25be2fa17167a2ab0d93488bb8d3e1d5",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Light backup page is readable. Dark photo-shape chooser shows four distinct shapes and selection states. Scrolled icon chooser keeps bottom choices and cancel visible; the top item is partially outside the scroll viewport."
+    },
+    {
+      "sheet": "other-09.png",
+      "files": [
+        "personalization-chooser-dark-icons.png",
+        "personalization-chooser-light-avatar_shapes-bottom.png",
+        "personalization-chooser-light-avatar_shapes.png",
+        "personalization-chooser-light-icons-bottom.png"
+      ],
+      "raw_png_sha256": {
+        "personalization-chooser-dark-icons.png": "017f541972b733373dd3248db2894db1257b06847900133b987b24bf5f320176",
+        "personalization-chooser-light-avatar_shapes-bottom.png": "97654a79bbd3d1ef4a80de16787a10db7638f8179e3f757e1e7839a3265ff737",
+        "personalization-chooser-light-avatar_shapes.png": "97654a79bbd3d1ef4a80de16787a10db7638f8179e3f757e1e7839a3265ff737",
+        "personalization-chooser-light-icons-bottom.png": "bfe7673733cda6b7764130b0a5d05d6e172236938bcccc705274771284669687"
+      },
+      "sheet_sha256": "35a0d53669aec7e6b44d417da34c4314315ce52419388678c3f2bbc27cf11301",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Dark/light icon and shape choosers show distinct icon/shape previews with separated labels/radio states. Scrolled icon top item is partially above the viewport; bottom choice and cancel remain visible."
+    },
+    {
+      "sheet": "other-10.png",
+      "files": [
+        "personalization-chooser-light-icons.png",
+        "personalization-contacts-dark-en-largefont-collapsed.png",
+        "personalization-contacts-dark-en-largefont-expanded.png",
+        "personalization-contacts-dark-en-standard-collapsed.png"
+      ],
+      "raw_png_sha256": {
+        "personalization-chooser-light-icons.png": "ddc5f034a48d8b9f5027c51b896068845a70ec6a28a354cf45dcbae30b412c54",
+        "personalization-contacts-dark-en-largefont-collapsed.png": "b97e9c5b32f3cd2a9ae736df896b724cbaa6e1658e522ba8f4364dc7ed69419e",
+        "personalization-contacts-dark-en-largefont-expanded.png": "f87267853cbf5f83e1ed4acae064bef2e776acfc7cbd9a7ffec1962b47a145f1",
+        "personalization-contacts-dark-en-standard-collapsed.png": "78f7e4181d847bbe9b05bded1bf99d9e83643d99d5fab691e79f77c518c84fa1"
+      },
+      "sheet_sha256": "2ee19c7d2cea6dac5175a865dd53bb0c761fc8c9f9f6e2ed0612fe994a349c66",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Light icon chooser is readable. Dark English Contacts standard/large-font and collapsed/expanded favorites retain distinct search, add, Businesses, refresh, identity, star, call and navigation controls. Long labels ellipsize in bounded areas."
+    },
+    {
+      "sheet": "other-11.png",
+      "files": [
+        "personalization-contacts-dark-en-standard-expanded.png",
+        "personalization-contacts-dark-he-largefont-collapsed.png",
+        "personalization-contacts-dark-he-largefont-expanded.png",
+        "personalization-contacts-dark-he-standard-collapsed.png"
+      ],
+      "raw_png_sha256": {
+        "personalization-contacts-dark-en-standard-expanded.png": "55a9d9872ddc53fe28fcc2d1e31902e8ad028d1aa780e070a08582ff0e6efac1",
+        "personalization-contacts-dark-he-largefont-collapsed.png": "fd5899f90d4ad6f1560e9ab12109c82aea24eb36d134fd13d4afaeab2c93477f",
+        "personalization-contacts-dark-he-largefont-expanded.png": "7af58d5d84432b48b23ea80745aaabf201ec087932de62d3f5c68b6399adaaf6",
+        "personalization-contacts-dark-he-standard-collapsed.png": "dc40703bb0c5305a5882257fa72da084fc6a4479a3ac67019d85f3aba9b1f6e8"
+      },
+      "sheet_sha256": "0c10f3262c6ca87799c7b99f23ca878f2cb539e9dc3f5dce2563562e7bb50362",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Dark Contacts English/Hebrew standard/large-font variants retain mirrored row ordering, readable numbers, clear favorite states and stable navigation; large-font favorites labels wrap within their strip."
+    },
+    {
+      "sheet": "other-12.png",
+      "files": [
+        "personalization-contacts-dark-he-standard-expanded.png",
+        "personalization-contacts-light-en-largefont-collapsed.png",
+        "personalization-contacts-light-en-largefont-expanded.png",
+        "personalization-contacts-light-en-standard-collapsed.png"
+      ],
+      "raw_png_sha256": {
+        "personalization-contacts-dark-he-standard-expanded.png": "684d7341223779e76c4e3b7927e36dd831587b14426072a1e551ae6ef12039b6",
+        "personalization-contacts-light-en-largefont-collapsed.png": "316ffa7fe2eb65dd88480e8551693bc9eae41af4e59f07d43f0b4ef5a921cedf",
+        "personalization-contacts-light-en-largefont-expanded.png": "56aa2a87b48df4a997f6d296de46be779c874cc34518715dd427d2c5141b5b0e",
+        "personalization-contacts-light-en-standard-collapsed.png": "9229101580c3a2cf9e00f8d7244e625a16b41177815a71ac792a04198b018d67"
+      },
+      "sheet_sha256": "12dd53e90147b36f80d407779bf6e6688b47869c0755da4bc1d24e011f70669f",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Dark Hebrew expanded favorites and light English Contacts variants retain readable numbers and separate action columns; long names use bounded ellipsis. Floating dialpad overlays part of a lower scrollable row."
+    },
+    {
+      "sheet": "other-13.png",
+      "files": [
+        "personalization-contacts-light-en-standard-expanded.png",
+        "personalization-contacts-light-he-largefont-collapsed.png",
+        "personalization-contacts-light-he-largefont-expanded.png",
+        "personalization-contacts-light-he-standard-collapsed.png"
+      ],
+      "raw_png_sha256": {
+        "personalization-contacts-light-en-standard-expanded.png": "502e6a6d9bed0d11fd5d34774e9aa1ab16a2ae07c08919a360bb1a771ad42a87",
+        "personalization-contacts-light-he-largefont-collapsed.png": "80be963afe3ce96548e1e2d5c498788f404f9fecfbbc0ada7f8ca45a390cf921",
+        "personalization-contacts-light-he-largefont-expanded.png": "b4c7f93d57ac5bf09e70a598ceb156c5c3661f4c0d56fc42e133ec9d28c4ad9a",
+        "personalization-contacts-light-he-standard-collapsed.png": "a0d0671158c3777d301a678fa5c171851fdc693c72ed94bf62091a367bfa8073"
+      },
+      "sheet_sha256": "ecad6f29dae14b412ac19b14c2565020b5626c844973d55015bf66fd25169d46",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Light Contacts English/Hebrew standard/large-font variants preserve row and favorites alignment, call/favorite separation and navigation legibility. Floating dialpad overlays part of a lower scrollable row."
+    },
+    {
+      "sheet": "other-14.png",
+      "files": [
+        "personalization-contacts-light-he-standard-expanded.png",
+        "personalization-contacts-shape-circle.png",
+        "personalization-contacts-shape-hexagon.png",
+        "personalization-contacts-shape-rounded_square.png"
+      ],
+      "raw_png_sha256": {
+        "personalization-contacts-light-he-standard-expanded.png": "fbcc5d785ccdf919c851e6cb6e62a829b90944bd0256d221e37f70c56bbec2df",
+        "personalization-contacts-shape-circle.png": "e5d3599d66f8ba2271fa230248a45524a5896d8154cafc16db50a9ad9153abf9",
+        "personalization-contacts-shape-hexagon.png": "ba88fefa00ff01975905abb0f1997e42969836d4a7f1032f7c9eaa4fa5e3ed32",
+        "personalization-contacts-shape-rounded_square.png": "c08d84fd2103adefa59c90f50be31edfdfa858cf2d178513549502129cf562ed"
+      },
+      "sheet_sha256": "3419e0c364472e6e31cdf9c6e95a14748a958243764f707d76f0d257899be340",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Light Hebrew Contacts and dark circle/hexagon/rounded-square photo variants preserve row action placement and readable identities/numbers; shapes are visibly distinct."
+    },
+    {
+      "sheet": "other-15.png",
+      "files": [
+        "personalization-contacts-shape-square.png",
+        "personalization-recents-dark-en-largefont-compact.png",
+        "personalization-recents-dark-en-largefont-expanded.png",
+        "personalization-recents-dark-en-standard-compact.png"
+      ],
+      "raw_png_sha256": {
+        "personalization-contacts-shape-square.png": "5c98d59d4eac07461dd55202ae6ff65a09704dc403810821111e66d5fbdad20f",
+        "personalization-recents-dark-en-largefont-compact.png": "296124a56e36eb9bbae2d989741c49b579888b56495c346095be0f7462a31418",
+        "personalization-recents-dark-en-largefont-expanded.png": "55141aacd96c9ff153487a43c7c2952ff97769a8433364de734113798de305cd",
+        "personalization-recents-dark-en-standard-compact.png": "fc89395d83349448c192aa7e242219728b19aa2653450401a1fee54900d1f112"
+      },
+      "sheet_sha256": "b146de1ae653c60444ed33d11bc794d44caaf9e67aacb456a40b41168cf8826e",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Square contact photos remain distinct. Dark English Recents standard/large-font compact/expanded summaries show totals, outgoing/incoming/missed counts and legible call numbers; secondary timestamps ellipsize within rows."
+    },
+    {
+      "sheet": "other-16.png",
+      "files": [
+        "personalization-recents-dark-en-standard-expanded.png",
+        "personalization-recents-dark-he-largefont-compact.png",
+        "personalization-recents-dark-he-largefont-expanded.png",
+        "personalization-recents-dark-he-standard-compact.png"
+      ],
+      "raw_png_sha256": {
+        "personalization-recents-dark-en-standard-expanded.png": "176a29c2ec3b99694604e7be50b38172bf8e79ad73d78d5bbb7addf0c12370fc",
+        "personalization-recents-dark-he-largefont-compact.png": "7be81ffb585f35a880d1238f84c4571a7a826e65c3a74c6fa7962334add9a04a",
+        "personalization-recents-dark-he-largefont-expanded.png": "8473372247a5b7151af07fd6a2a4d21bb874421ea9ad16c6957a206f89a392ee",
+        "personalization-recents-dark-he-standard-compact.png": "418769eb66e0aaf7d5f0056c51de6a0173292aaeb8151ff35f58c5c09bf2a8fa"
+      },
+      "sheet_sha256": "a6e3d30b5fe9d5f4a125cf037b9a38bc060caf36ffab6f572cbebba431e22cb7",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Dark English/Hebrew Recents standard/large-font summaries keep counts, summary controls, call directions, phone digits and navigation distinct. Secondary dates ellipsize; floating dialpad overlaps part of a lower row."
+    },
+    {
+      "sheet": "other-17.png",
+      "files": [
+        "personalization-recents-dark-he-standard-expanded.png",
+        "personalization-recents-light-en-largefont-compact.png",
+        "personalization-recents-light-en-largefont-expanded.png",
+        "personalization-recents-light-en-standard-compact.png"
+      ],
+      "raw_png_sha256": {
+        "personalization-recents-dark-he-standard-expanded.png": "b208b3bce164f3f283db07e5819292906e402be2f96f4f3e2e975d68017d95a3",
+        "personalization-recents-light-en-largefont-compact.png": "754d330632fa623ceb0456b8406bc14a9765bced93e21cce43e5d3bfe077d3ca",
+        "personalization-recents-light-en-largefont-expanded.png": "a5462e54af4cc6d4923f3a6a0a6c926f9c609f846dec592002d6a248f7b8e06c",
+        "personalization-recents-light-en-standard-compact.png": "9c8e6eeb1e1ead76535aed53520277e11c81cdf81a61cb1b844a9180ea0d4030"
+      },
+      "sheet_sha256": "98d615d529b7b7a4e5b0230df9625f81c2ba68f5b087a3b1a9f7cb133ea70192",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Dark Hebrew and light English Recents compact/expanded summaries are legible and bounded. Full phone digits remain visible while secondary date text ellipsizes."
+    },
+    {
+      "sheet": "other-18.png",
+      "files": [
+        "personalization-recents-light-en-standard-expanded.png",
+        "personalization-recents-light-he-largefont-compact.png",
+        "personalization-recents-light-he-largefont-expanded.png",
+        "personalization-recents-light-he-standard-compact.png"
+      ],
+      "raw_png_sha256": {
+        "personalization-recents-light-en-standard-expanded.png": "8a03786337646153f925898847d9f3e6a58b3abd16d9923cf1c31d60470abdaf",
+        "personalization-recents-light-he-largefont-compact.png": "562f12fed79ac933898067404e00638e6b6cbcb7b8edac3552f6ab7494397f40",
+        "personalization-recents-light-he-largefont-expanded.png": "c868abec7e1deea4cc36192188b7ee2babf02adff5be6485a4655c1ebabd7f6b",
+        "personalization-recents-light-he-standard-compact.png": "d37c03f28c432ae3f069bceb53f53b0f480e3b703ff911d4fab3d63803d14439"
+      },
+      "sheet_sha256": "eabb22c3771e3a2b0eb54ba666a84068319f86f26eb65fa9524173a921c6a67c",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Light English/Hebrew Recents standard/large-font compact/expanded variants retain readable totals, direction/count badges, phone digits and navigation. Secondary timestamps are bounded and may ellipsize."
+    },
+    {
+      "sheet": "other-19.png",
+      "files": [
+        "personalization-recents-light-he-standard-expanded.png",
+        "personalization-widgets-shape-circle.png",
+        "personalization-widgets-shape-hexagon.png",
+        "personalization-widgets-shape-rounded_square.png"
+      ],
+      "raw_png_sha256": {
+        "personalization-recents-light-he-standard-expanded.png": "ff2ff54b9ea9b4b2db10e17ceafb30bfdf088c493021a5d1038c4d603faff186",
+        "personalization-widgets-shape-circle.png": "ae2a8cd2765d76e03df4db8c5a522cfea39d01be4b3adaddc02dc29fc29e6d12",
+        "personalization-widgets-shape-hexagon.png": "5a4cedbff556498e97d30c28f632a8ceebf06d9ae1734e9b7d8cae632dc17f27",
+        "personalization-widgets-shape-rounded_square.png": "5e036b17ed7812e6f1ae65436bf0cad00a2f85fd2ae9c58c2ca2bd07676847b8"
+      },
+      "sheet_sha256": "697c3e0d105019fb3e57a627cd13f50941c79bcc406c1cc43da038670650c8bc",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Light Hebrew Recents expanded summary is legible. Circle/hexagon/rounded-square favorites widgets show matching distinct shapes and separated labels; long first-contact label ellipsizes within its cell."
+    },
+    {
+      "sheet": "other-20.png",
+      "files": [
+        "personalization-widgets-shape-square.png",
+        "recents-new-contact-editor.png",
+        "recents-unknown-number-actions.png",
+        "settings-dark-bottom.png"
+      ],
+      "raw_png_sha256": {
+        "personalization-widgets-shape-square.png": "d09ad28934d59347b0f4c0cdacd676f497a1da0603d7a525aa6b7582cbc006a2",
+        "recents-new-contact-editor.png": "fcf65a55f5872543bc65555b596561c92d5570c4d5b388a831093aa046c27867",
+        "recents-unknown-number-actions.png": "f3e204b6ee7167f0ae8e0f0fded869ff340f320d9b991798ad59e65403a55883",
+        "settings-dark-bottom.png": "a3d517452f7a0c27d3298bfe8317f5edd9b74232fe10e10e31b29e3cbb45d7d4"
+      },
+      "sheet_sha256": "13f86ed86f6585d9dcbc0e044aeb998931166159eba17a18d31f70dc85cbe90e",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Square widget shape is distinct. Unknown-number actions visibly offer create-new-contact separately from calling; editor visibly prefills exactly 0500099971, with empty name fields and a distinct save button. Dark Settings bottom shows reminder, changelog and v0.13.0."
+    },
+    {
+      "sheet": "other-21.png",
+      "files": [
+        "settings-dark.png",
+        "settings-light-bottom.png",
+        "settings-light.png",
+        "widget-dark-contact-2x1.png"
+      ],
+      "raw_png_sha256": {
+        "settings-dark.png": "83f438db522e59c585924051e3875958991583da4c8d42114d3951a97b82ab1f",
+        "settings-light-bottom.png": "e3fd743e020610e662a9f3b6368bcb88f1fed22317aebef62303ae66ca5cc4b2",
+        "settings-light.png": "2d97eec802b62334268a53be8e5b21e4adb6e73e8876f7a322cf81520a670da9",
+        "widget-dark-contact-2x1.png": "eaeb955c85e835754da04aaa66ff88b8d3584f088ec8d109b7f3811e620c22f8"
+      },
+      "sheet_sha256": "1648a724c6903ad2560f22334dd16230e91b2db873d207a37182b00ab34be8d8",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Dark/light Settings permission/status rows, reminder section, changelog entry and 0.13.0 footer are readable. Dark 2x1 contact widget shows identity/number legibly."
+    },
+    {
+      "sheet": "other-22.png",
+      "files": [
+        "widget-dark-empty.png",
+        "widget-dark-favorites-2x2-largefont.png",
+        "widget-dark-favorites-2x2.png",
+        "widget-dark-favorites-4x2.png"
+      ],
+      "raw_png_sha256": {
+        "widget-dark-empty.png": "dfe93590c21c8a77f3aa965057b0635352b4d8e8819fa67f2213c1a5a88e9f55",
+        "widget-dark-favorites-2x2-largefont.png": "f1cc80258b9a0169d4d40477ad7a343ec80527f04f0e00caa1b0151442738f17",
+        "widget-dark-favorites-2x2.png": "5c52f9ca53cac7974b2eb93ea8e29247e0923bbef51683ce4cad481304ebd564",
+        "widget-dark-favorites-4x2.png": "684b6e22fec4b32ad34144624ca566672acfc852cc29f3b63310af6cc749b20d"
+      },
+      "sheet_sha256": "1c7a2a13a5ebc4bf1e19b75a670a245091278113408012bb0f511b52cbb95eab",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Dark widgets show empty-state guidance and distinct standard/large-font 2x2 and 4x2 favorites. Large-font 2x2 branding ellipsizes inside header while four contact labels remain readable."
+    },
+    {
+      "sheet": "other-23.png",
+      "files": [
+        "widget-dark-permission.png",
+        "widget-dark-quick-1x1.png",
+        "widget-dark-two-favorites.png",
+        "widget-light-contact-2x1.png"
+      ],
+      "raw_png_sha256": {
+        "widget-dark-permission.png": "73661a4a655d5a0c6d22b0f34853ac9f1d3eaa4980cd0026532c87268ab20332",
+        "widget-dark-quick-1x1.png": "6ed9e9c67a6580656cc80ad8aca1fff4714ea7de5294627a9e374b53858ca5dc",
+        "widget-dark-two-favorites.png": "c055bcfac3313844c5220f1e269d18f0ffb3e22088ada5ae63897438bd68cbcf",
+        "widget-light-contact-2x1.png": "a44ab20f3b115270c63ec5ac5ea1e89ba69926ae4924ff90897a217a879e55bd"
+      },
+      "sheet_sha256": "a8b4a092ea94df6bcfa6bd482f38538277fd398b67bec557126f8e093df3647a",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Dark permission guidance, 1x1 quick-dial and two-favorites widgets are bounded and legible. Long quick-dial name ellipsizes within its small cell. Light 2x1 contact identity/number are readable."
+    },
+    {
+      "sheet": "other-24.png",
+      "files": [
+        "widget-light-empty.png",
+        "widget-light-favorites-2x2-largefont.png",
+        "widget-light-favorites-2x2.png",
+        "widget-light-favorites-4x2.png"
+      ],
+      "raw_png_sha256": {
+        "widget-light-empty.png": "d87d4aaf46a74dd3a259b3c8a844344e1246f6285d0fd3c1b4395397d01d1a21",
+        "widget-light-favorites-2x2-largefont.png": "f012f3e2fed5c1f801491baa0a6d941b56ebba6a3e849eed41b33b0b1eebc78b",
+        "widget-light-favorites-2x2.png": "5f2d859cbdc2a55f911ab13b9e7a339b26f88026f743f8157cea6a9a9db939c1",
+        "widget-light-favorites-4x2.png": "6f95f4014043323029322e6f61af3035a1749efb2b2186cf9a3ffcc602feb613"
+      },
+      "sheet_sha256": "93cf3b88aa4f6ec9470ff5997e386846eef5ecf70e2ab04eaa0b7f7e17169605",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Light empty, standard/large-font 2x2 and 4x2 favorites widgets retain readable guidance/labels and sufficient contrast. Large-font 2x2 branding uses bounded header ellipsis."
+    },
+    {
+      "sheet": "other-25.png",
+      "files": [
+        "widget-light-permission.png",
+        "widget-light-quick-1x1.png",
+        "widget-light-two-favorites.png",
+        "widget-reconfigured.png"
+      ],
+      "raw_png_sha256": {
+        "widget-light-permission.png": "11e53b1383490954837b0a49bcc97f64748e3a840017cafa42627e109c93d6bb",
+        "widget-light-quick-1x1.png": "7ac7e18bfaa2fbb9312a51f04d5a678c041246bc8865975f2dcd0071f00d7472",
+        "widget-light-two-favorites.png": "f96ab87c8c404d1f6a17fb496c475237aa1ea97fc3097002fe6d6d524a27b3ae",
+        "widget-reconfigured.png": "bbe71fc5cb717e55534b39c59146b1fc69c378c4397d6e87bf265facdce5e9b1"
+      },
+      "sheet_sha256": "77c57abeb7668afa3e850716a0c432b44daea3e3d85a7481f2da12d91fad67b1",
+      "actually_viewed": true,
+      "viewing_method": "tools.view_image followed by image display; all four original-size tiles visually inspected",
+      "visual_status": "PASS",
+      "notes": "Light permission, 1x1 quick-dial and two-favorites widgets plus dark reconfigured-contact widget are bounded. Short replacement name is visible; long 1x1 name ellipsizes within its cell."
+    }
+  ]
+}

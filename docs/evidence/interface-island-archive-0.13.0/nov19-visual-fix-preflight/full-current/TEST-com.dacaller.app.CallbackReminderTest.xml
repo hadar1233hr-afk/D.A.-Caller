@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.CallbackReminderTest" tests="28" skipped="0" failures="0" errors="0" timestamp="2026-11-19T06:50:02" hostname="3ebae333e153" time="1.236">
+  <properties/>
+  <testcase name="staleWrongZoneOrFutureAlarmCannotPostOrReadHistory" classname="com.dacaller.app.CallbackReminderTest" time="0.077"/>
+  <testcase name="contactPermissionRevocationFallsBackToNumberWithoutQueryingContacts" classname="com.dacaller.app.CallbackReminderTest" time="0.039"/>
+  <testcase name="nonDefaultDialerNeverReadsTheLogOrPosts" classname="com.dacaller.app.CallbackReminderTest" time="0.061"/>
+  <testcase name="notificationChannelOptOutIsRespected" classname="com.dacaller.app.CallbackReminderTest" time="0.038"/>
+  <testcase name="ringingDurationDoesNotResolveButActualConnectTimeDoes" classname="com.dacaller.app.CallbackReminderTest" time="0.073"/>
+  <testcase name="automaticCancellationAfterOpeningAlsoDoesNotRepost" classname="com.dacaller.app.CallbackReminderTest" time="0.025"/>
+  <testcase name="pendingRecoveryCannotScheduleOrPostFromAnUncommittedOptIn" classname="com.dacaller.app.CallbackReminderTest" time="0.07"/>
+  <testcase name="disablingCancelsOnlyOurReminderAndPreservesAllSettingsAndRows" classname="com.dacaller.app.CallbackReminderTest" time="0.033"/>
+  <testcase name="pendingRecoveryRetainsExistingAlarmAndSummaryUntilDurablePreferencesReturn" classname="com.dacaller.app.CallbackReminderTest" time="0.085"/>
+  <testcase name="activeOrHeldConversationIsNotHiddenByAnotherWaitingCaller" classname="com.dacaller.app.CallbackReminderTest" time="0.151"/>
+  <testcase name="pendingRecoveryStillCancelsOnlyOurSummaryOnActualPrivacyRevocation" classname="com.dacaller.app.CallbackReminderTest" time="0.062"/>
+  <testcase name="futureCutoffWithoutAnEarlierSummaryDoesNotPostOrReadCalls" classname="com.dacaller.app.CallbackReminderTest" time="0.021"/>
+  <testcase name="notificationPermissionLossPreventsQueriesAndPosting" classname="com.dacaller.app.CallbackReminderTest" time="0.048"/>
+  <testcase name="scheduleUsesUserLocalCutoffAndImmutableExplicitPrivateAlarm" classname="com.dacaller.app.CallbackReminderTest" time="0.044"/>
+  <testcase name="openingTheSummaryDuringProviderRefreshCannotRepostIt" classname="com.dacaller.app.CallbackReminderTest" time="0.048"/>
+  <testcase name="localContactNameAndMissedTotalsAreGroupedWithoutAnyProviderMutation" classname="com.dacaller.app.CallbackReminderTest" time="0.024"/>
+  <testcase name="successfulCallbacksSilentlyShrinkAndThenCancelTheVisibleSummary" classname="com.dacaller.app.CallbackReminderTest" time="0.024"/>
+  <testcase name="timeZoneChangeDuringQueryCannotPostTheOldLocalDay" classname="com.dacaller.app.CallbackReminderTest" time="0.051"/>
+  <testcase name="reminderListIsReadOnlyAndDoesNotStartACallOnOpen" classname="com.dacaller.app.CallbackReminderTest" time="0.054"/>
+  <testcase name="hiddenLegacyNumberIsNotLookedUpOrDialed" classname="com.dacaller.app.CallbackReminderTest" time="0.018"/>
+  <testcase name="callLogPermissionLossCancelsExistingSummaryWithoutChangingRows" classname="com.dacaller.app.CallbackReminderTest" time="0.032"/>
+  <testcase name="queryCrossingMidnightCannotPostYesterdayReminder" classname="com.dacaller.app.CallbackReminderTest" time="0.019"/>
+  <testcase name="unavailableProviderIsNotAnEmptySuccessfulResult" classname="com.dacaller.app.CallbackReminderTest" time="0.017"/>
+  <testcase name="lateMissReportsDayTotalSeparatelyFromUnreturnedMisses" classname="com.dacaller.app.CallbackReminderTest" time="0.019"/>
+  <testcase name="publicLockscreenVersionHidesCallerIdentityAndOpeningCannotDial" classname="com.dacaller.app.CallbackReminderTest" time="0.035"/>
+  <testcase name="movingCutoffLaterStillRefreshesAndResolvesTheExistingSummary" classname="com.dacaller.app.CallbackReminderTest" time="0.019"/>
+  <testcase name="openingOrDismissingCannotRepeatedlyAlertThatDay" classname="com.dacaller.app.CallbackReminderTest" time="0.023"/>
+  <testcase name="remindersAreOffByDefaultAndDoNotQueryPrivateProviders" classname="com.dacaller.app.CallbackReminderTest" time="0.022"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

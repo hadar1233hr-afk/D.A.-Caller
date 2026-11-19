@@ -1,0 +1,8 @@
+[
+  {
+    "classname": "com.dacaller.app.ModernFeaturesIntegrationTest",
+    "method": "testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency",
+    "trace": "junit.framework.AssertionFailedError: Native drag did not save normalized position\nat com.dacaller.app.ModernFeaturesIntegrationTest.await(ModernFeaturesIntegrationTest.java:135)\nat com.dacaller.app.ModernFeaturesIntegrationTest.testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency(ModernFeaturesIntegrationTest.java:448)\nat android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)\nat android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)\nat com.dacaller.app.ModernFeaturesIntegrationTest.runTest(ModernFeaturesIntegrationTest.java:88)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)\nat android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)\nat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)\n",
+    "message": null
+  }
+]

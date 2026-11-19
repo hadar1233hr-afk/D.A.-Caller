@@ -1,0 +1,10 @@
+{
+  "scope": "Three backup screenshots; compositor capture and independent pixel/hash verification",
+  "android_test_java_compile": "PASS",
+  "lint": "PASS (no errors)",
+  "log": "backup-bar-producer-compile.log",
+  "native_execution": "PENDING",
+  "visual_review": "NOT TESTED",
+  "document_flow": "ActivityMonitor-intercepted SAF; isolated provider; real DocumentsUI NOT TESTED",
+  "publication_approved": false
+}

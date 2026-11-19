@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 /** Private, offline call metadata snapshots. Retention starts at first observed disappearance. */
 final class CallArchive extends SQLiteOpenHelper {
@@ -76,6 +79,126 @@ final class CallArchive extends SQLiteOpenHelper {
  static SharedPreferences settings(Context c){return c.getSharedPreferences("da_caller",Context.MODE_PRIVATE);}
  static long version(){return version;}
  static int knownMissing(){return count;}
+ /** Exact stored metadata, including current rows and retention/generation state. No provider access. */
+ static final class BackupRow {
+  final String key,number;final long callId,atMs,seconds,lastSeenMs,missingSinceMs,seenGeneration;final int kind;
+  BackupRow(String key,long callId,String number,long atMs,long seconds,int kind,long lastSeenMs,long missingSinceMs,long seenGeneration){
+   this.key=key;this.callId=callId;this.number=number;this.atMs=atMs;this.seconds=seconds;this.kind=kind;
+   this.lastSeenMs=lastSeenMs;this.missingSinceMs=missingSinceMs;this.seenGeneration=seenGeneration;
+  }
+  boolean same(BackupRow other){return key.equals(other.key)&&number.equals(other.number)&&callId==other.callId&&atMs==other.atMs&&
+    seconds==other.seconds&&kind==other.kind&&lastSeenMs==other.lastSeenMs&&missingSinceMs==other.missingSinceMs&&seenGeneration==other.seenGeneration;}
+ }
+ static final class Backup {
+  static final int MAX_ROWS=50000;
+  final long capturedAtMs;final List<BackupRow> rows;
+  Backup(long capturedAtMs,List<BackupRow> rows){this.capturedAtMs=capturedAtMs;this.rows=Collections.unmodifiableList(new ArrayList<>(rows));}
+ }
+ private static final String BACKUP_COLUMNS="key,call_id,number,at_ms,seconds,kind,last_seen_ms,missing_since_ms,seen_generation";
+ private static BackupRow backupRow(Cursor row){return new BackupRow(row.getString(0),row.getLong(1),row.getString(2),row.getLong(3),
+   row.getLong(4),row.getInt(5),row.getLong(6),row.getLong(7),row.getLong(8));}
+ static void validateBackup(Backup backup)throws IOException {
+  if(backup==null||backup.capturedAtMs<0||backup.rows.size()>Backup.MAX_ROWS)throw new SettingsBackup.InvalidBackup();
+  Set<String> keys=new HashSet<>();
+  for(BackupRow row:backup.rows){
+   if(row==null||row.callId<0||row.atMs<0||row.seconds<0||row.kind<1||row.kind>7||row.lastSeenMs<0||row.missingSinceMs<0||
+     row.seenGeneration<0||row.seenGeneration>Long.MAX_VALUE/2||!SettingsBackup.validText(row.number,4096)||
+     !SettingsBackup.validText(row.key,4200)||!row.key.equals(row.callId+"|"+row.atMs+"|"+row.kind+"|"+row.number)||!keys.add(row.key))
+    throw new SettingsBackup.InvalidBackup();
+  }
+ }
+ /** Reads every stored row without pruning, changing retention or consulting ARCHIVE.OFF. */
+ static Backup captureBackup(Context c)throws IOException {
+  synchronized(LOCK){
+   if(!c.getDatabasePath(DB_NAME).exists())return new Backup(System.currentTimeMillis(),Collections.emptyList());
+   try(SQLiteDatabase db=SQLiteDatabase.openDatabase(c.getDatabasePath(DB_NAME).getAbsolutePath(),null,SQLiteDatabase.OPEN_READONLY)){
+    // Export must not invoke SQLiteOpenHelper migrations or otherwise rewrite an old database.
+    if(db.getVersion()!=VERSION)throw new SettingsBackup.InvalidBackup();
+    ArrayList<BackupRow> rows=new ArrayList<>();long captured=System.currentTimeMillis();
+    try(Cursor cursor=db.rawQuery("SELECT "+BACKUP_COLUMNS+" FROM saved ORDER BY key",null)){
+     while(cursor.moveToNext()){
+      if(rows.size()>=Backup.MAX_ROWS)throw new SettingsBackup.InvalidBackup();
+      for(int i=0;i<9;i++)if(cursor.getType(i)!=(i==0||i==2?Cursor.FIELD_TYPE_STRING:Cursor.FIELD_TYPE_INTEGER))throw new SettingsBackup.InvalidBackup();
+      if(cursor.getLong(5)<1||cursor.getLong(5)>7)throw new SettingsBackup.InvalidBackup();
+      rows.add(backupRow(cursor));
+     }
+    }
+    Backup backup=new Backup(captured,rows);validateBackup(backup);return backup;
+   }catch(RuntimeException failure){failed(failure);throw new IOException("Cannot read private archive",failure);}
+  }
+ }
+ static final class MergeResult {
+  final int added,duplicates,conflicts;
+  MergeResult(int added,int duplicates,int conflicts){this.added=added;this.duplicates=duplicates;this.conflicts=conflicts;}
+ }
+ interface RestoreAction {boolean apply();}
+ /** Insert-only merge. Existing exact keys win, including conflicting metadata; never prune. */
+ static MergeResult mergeBackup(Context c,Backup backup,String token,RestoreAction action)throws IOException {
+  validateBackup(backup);
+  synchronized(LOCK){
+   boolean applied=false;
+   try(CallArchive helper=new CallArchive(c)){
+    SQLiteDatabase db=helper.getWritableDatabase();
+    db.execSQL("CREATE TABLE IF NOT EXISTS backup_restore_state (id INTEGER PRIMARY KEY CHECK(id=1), token TEXT NOT NULL)");
+    int added=0,duplicates=0,conflicts=0,nextCount=0;db.beginTransaction();
+    try{
+     try(SQLiteStatement insert=db.compileStatement("INSERT INTO saved("+BACKUP_COLUMNS+") VALUES(?,?,?,?,?,?,?,?,?)")){
+      for(BackupRow row:backup.rows){
+       try(Cursor existing=db.rawQuery("SELECT "+BACKUP_COLUMNS+" FROM saved WHERE key=?",new String[]{row.key})){
+        if(existing.moveToFirst()){if(row.same(backupRow(existing)))duplicates++;else conflicts++;continue;}
+       }
+       insert.clearBindings();insert.bindString(1,row.key);insert.bindLong(2,row.callId);insert.bindString(3,row.number);
+       insert.bindLong(4,row.atMs);insert.bindLong(5,row.seconds);insert.bindLong(6,row.kind);insert.bindLong(7,row.lastSeenMs);
+       insert.bindLong(8,row.missingSinceMs);insert.bindLong(9,row.seenGeneration);insert.executeInsert();added++;
+      }
+     }
+     applied=action.apply();if(applied){
+      db.execSQL("INSERT OR REPLACE INTO backup_restore_state(id,token) VALUES(1,?)",new Object[]{token});
+      nextCount=enabled(c)?readCount(db):0;db.setTransactionSuccessful();
+     }
+    }finally{db.endTransaction();}
+    if(!applied)return null;
+    count=nextCount;version++;lastOperationFailed=false;
+    return new MergeResult(added,duplicates,conflicts);
+   }catch(RuntimeException failure){failed(failure);throw new IOException("Cannot merge private archive",failure);}
+   // The caller's durable journal checks the commit token before compensating
+   // settings. Never undo here: a failed COMMIT acknowledgement may be ambiguous.
+  }
+ }
+ interface RecoveryComplete {void finish()throws IOException;}
+ /** A token is committed atomically with all inserted rows. Recovery never loads/prunes history. */
+ static void recoverBackup(Context c,String token,RestoreAction undo,RecoveryComplete complete)throws IOException {
+  synchronized(LOCK){
+   boolean committed=false;int storedMissing=0;
+   if(c.getDatabasePath(DB_NAME).exists()){
+    try(CallArchive helper=new CallArchive(c)){
+     SQLiteDatabase db=helper.getReadableDatabase();
+     storedMissing=readCount(db);
+     if(DatabaseUtils.longForQuery(db,"SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='backup_restore_state'",null)>0)
+      try(Cursor state=db.rawQuery("SELECT token FROM backup_restore_state WHERE id=1",null)){committed=state.moveToFirst()&&token.equals(state.getString(0));}
+    }catch(RuntimeException failure){failed(failure);throw new IOException("Cannot recover private backup transaction",failure);}
+   }
+   if(!committed&&!undo.apply())throw new IOException("Cannot recover previous settings");
+   // Delete the durable journal only after the archive commit or durable undo is established.
+   try{complete.finish();}
+   catch(IOException cleanupFailure){
+    if(!committed){
+     // A failed AtomicFile deletion must not make a later launch replay this undo
+     // over subsequent user edits. Reuse the token as a durable resolved marker.
+     try(CallArchive helper=new CallArchive(c)){
+      SQLiteDatabase db=helper.getWritableDatabase();db.beginTransaction();
+      try{
+       db.execSQL("CREATE TABLE IF NOT EXISTS backup_restore_state (id INTEGER PRIMARY KEY CHECK(id=1), token TEXT NOT NULL)");
+       db.execSQL("INSERT OR REPLACE INTO backup_restore_state(id,token) VALUES(1,?)",new Object[]{token});
+       db.setTransactionSuccessful();
+      }finally{db.endTransaction();}
+     }catch(RuntimeException failure){failed(failure);cleanupFailure.addSuppressed(failure);}
+    }
+    throw cleanupFailure;
+   }
+   count=enabled(c)?storedMissing:0;version++;lastOperationFailed=false;
+  }
+ }
  static String key(CallHistory.Entry e){return e.id+"|"+e.date+"|"+e.type+"|"+e.number;}
  static long cutoff(String policy,long removedAt){
   if(FOREVER.equals(policy))return Long.MAX_VALUE;
@@ -87,6 +210,7 @@ final class CallArchive extends SQLiteOpenHelper {
  static void sync(Context c,List<CallHistory.Entry> all){syncAt(c,all,System.currentTimeMillis());}
  static void syncAt(Context c,List<CallHistory.Entry> all,long now){
   synchronized(LOCK){
+   if(pendingRestore(c))return;
    if(!enabled(c)){count=0;return;}
    if(c.checkSelfPermission(Manifest.permission.READ_CALL_LOG)!=PackageManager.PERMISSION_GRANTED)return;
    try(CallArchive helper=new CallArchive(c)){
@@ -119,6 +243,10 @@ final class CallArchive extends SQLiteOpenHelper {
   // Do not log numbers or SQL contents from the private archive.
   Log.w("DA_CALLER_ARCHIVE","Archive operation failed: "+ex.getClass().getSimpleName());
  }
+ private static boolean pendingRestore(Context c){
+  if(!SettingsBackup.hasPendingRestore(c))return false;
+  lastOperationFailed=true;return true;
+ }
  private static void pruneInTransaction(SQLiteDatabase db,String policy,long now){
   if(FOREVER.equals(policy)||OFF.equals(policy))return;
   // Forward calendar arithmetic is essential: Jan 31 + 1 month expires Feb 28,
@@ -140,12 +268,12 @@ final class CallArchive extends SQLiteOpenHelper {
    if(!enabled(c)){count=0;lastOperationFailed=false;return Collections.emptyList();}
    ArrayList<CallHistory.Entry> saved=new ArrayList<>();
    try(CallArchive helper=new CallArchive(c)){
-    SQLiteDatabase db=helper.getWritableDatabase();pruneInTransaction(db,policy(c),now);
+    SQLiteDatabase db=helper.getWritableDatabase();if(!pendingRestore(c))pruneInTransaction(db,policy(c),now);
     try(Cursor rows=db.rawQuery(
       "SELECT call_id,number,at_ms,seconds,kind FROM saved WHERE missing_since_ms>0 ORDER BY at_ms DESC,call_id DESC",null)){
      while(rows.moveToNext())saved.add(new CallHistory.Entry(rows.getLong(0),rows.getString(1),rows.getLong(2),rows.getLong(3),rows.getInt(4)));
     }
-    count=saved.size();lastOperationFailed=false;
+    count=saved.size();lastOperationFailed=SettingsBackup.hasPendingRestore(c);
    }catch(RuntimeException ex){failed(ex);}
    return saved;
   }
@@ -154,13 +282,14 @@ final class CallArchive extends SQLiteOpenHelper {
   synchronized(LOCK){
    if(!enabled(c)){count=0;return 0;}
    try(CallArchive helper=new CallArchive(c)){
-    SQLiteDatabase db=helper.getWritableDatabase();pruneInTransaction(db,policy(c),System.currentTimeMillis());
-    count=readCount(db);lastOperationFailed=false;return count;
+    SQLiteDatabase db=helper.getWritableDatabase();if(!pendingRestore(c))pruneInTransaction(db,policy(c),System.currentTimeMillis());
+    count=readCount(db);lastOperationFailed=SettingsBackup.hasPendingRestore(c);return count;
    }catch(RuntimeException ex){failed(ex);return count;}
   }
  }
  static void pruneNow(Context c){
   synchronized(LOCK){
+   if(pendingRestore(c))return;
    try(CallArchive helper=new CallArchive(c)){
     SQLiteDatabase db=helper.getWritableDatabase();db.beginTransaction();
     try{pruneInTransaction(db,policy(c),System.currentTimeMillis());db.setTransactionSuccessful();}
@@ -171,6 +300,7 @@ final class CallArchive extends SQLiteOpenHelper {
  }
  static void erase(Context c){
   synchronized(LOCK){
+   if(pendingRestore(c))return;
    try(CallArchive helper=new CallArchive(c)){
     helper.getWritableDatabase().delete("saved",null,null);count=0;version++;lastOperationFailed=false;
    }catch(RuntimeException ex){failed(ex);}
@@ -180,6 +310,7 @@ final class CallArchive extends SQLiteOpenHelper {
   try{
    JobScheduler scheduler=(JobScheduler)c.getSystemService(Context.JOB_SCHEDULER_SERVICE);
    if(scheduler==null)return;
+   if(pendingRestore(c)){scheduler.cancel(JOB_ID);return;}
    if(!enabled(c)){scheduler.cancel(JOB_ID);return;}
    JobInfo job=new JobInfo.Builder(JOB_ID,new ComponentName(c,ArchiveSyncJob.class))
     .setPeriodic(12*60*60*1000L).setPersisted(true).setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE).build();

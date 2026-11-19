@@ -1,0 +1,17 @@
+{
+  "gradle_exit": 1,
+  "source_unchanged": true,
+  "tests": 0,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "classes": [],
+  "status": "ABORTED_HUNG_NEW_CONTROLLER_TRAVERSAL_NO_COMPLETED_JUNIT",
+  "own_test_worker_terminated": true,
+  "worker_exit": 143,
+  "completed_new_tests": 0,
+  "diagnostic_attach": "jcmd path corrected; attach failed but actual JVM thread dumps appeared in gradle.log",
+  "cause_status": "Repeated SDK33 Main Thread ViewRootImpl traversal in new safe-lane test; live preferred-to-lane measurement oscillation under correction",
+  "native_approval": false,
+  "publication_allowed": false
+}

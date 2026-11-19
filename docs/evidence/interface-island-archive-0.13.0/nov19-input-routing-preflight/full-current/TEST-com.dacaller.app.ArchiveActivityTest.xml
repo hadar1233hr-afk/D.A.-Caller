@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.ArchiveActivityTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-19T02:45:03" hostname="3ebae333e153" time="8.788">
+  <properties/>
+  <testcase name="normalizedNumberSearchAndRestorationKeepCorrectArchiveSubset" classname="com.dacaller.app.ArchiveActivityTest" time="4.465"/>
+  <testcase name="nameSearchNeverConvertsLettersIntoUnrelatedT9Number" classname="com.dacaller.app.ArchiveActivityTest" time="0.716"/>
+  <testcase name="permissionRevocationRemovesNamesAndNameBasedSearchWithoutLosingArchive" classname="com.dacaller.app.ArchiveActivityTest" time="0.57"/>
+  <testcase name="namesAndOriginalNumbersAppearAndNameSearchCoversEntireArchive" classname="com.dacaller.app.ArchiveActivityTest" time="0.442"/>
+  <testcase name="privateAndUnavailableArchiveEntriesNeverOfferDialOrContactActions" classname="com.dacaller.app.ArchiveActivityTest" time="1.213"/>
+  <testcase name="englishArchiveUsesLtrAndRecycledRowDialogDialsItsBoundNumber" classname="com.dacaller.app.ArchiveActivityTest" time="0.406"/>
+  <testcase name="delayedPhotoForRecycledContactCannotReplaceNewBoundPhoto" classname="com.dacaller.app.ArchiveActivityTest" time="0.455"/>
+  <testcase name="contactCardActionUsesBoundIdentityAndContactEditsRefreshOnReturn" classname="com.dacaller.app.ArchiveActivityTest" time="0.52"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

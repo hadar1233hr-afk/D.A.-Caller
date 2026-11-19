@@ -1,0 +1,3513 @@
+{
+  "source_sha": "53a678fac4764dc0210cad4e6b11a9d431287241",
+  "app_tree": "c3cdd0ea05b5e094087cb86efe148224787e393e",
+  "workflow_run_id": "44470286600",
+  "api": 33,
+  "size": "480x854",
+  "density_dpi": 240,
+  "font_scale": 1.3,
+  "window_insets": {
+    "api": 33,
+    "density_dpi": 240,
+    "status_bar_top_px": 36,
+    "navigation_bar_bottom_px": 72,
+    "navigation_bar_visible": true
+  },
+  "required_real_png_files": 36,
+  "style_theme_language_presentation_screenshots": 24,
+  "additional_state_screenshots": 4,
+  "settings_screenshots": 4,
+  "actual_app_layout_screenshots": 4,
+  "sha256": {
+    "island-app-contacts-compact.png": "da2d0376aed67d96eaab8aba7458fde0ea6efef4a257765871a14c6e65b45214",
+    "island-app-contacts-expanded.png": "278ff393745985c269074094bdf95b3c54ae1762713d045ce7464e5a581fc1d5",
+    "island-app-recents-compact.png": "fd23db42ac3f302353fdb4faa631a85dd0ddddeff2e88c661d2207131764f1b8",
+    "island-app-recents-expanded.png": "45a9d5a7efa9b36ba48eb1732424c180b431a7cf06ed7e9e5e2e357c7c61fac2",
+    "island-apple-dark-en-compact.png": "a2e13c9b6dc7bd735b29cb8c6c02809cff355f5a73d47132db8353526c2eda7e",
+    "island-apple-dark-en-expanded.png": "3bc4e4025247a0ec4ad02db192f86e21ff632217ec64f1370e22f1fe6b36fe15",
+    "island-apple-dark-he-compact.png": "9cf0cc13cd1000e4eb75e0836771d4b803053df7697efb6ba9be9dac775df373",
+    "island-apple-dark-he-expanded.png": "e55fa17e5711e8f8c70a6ab0e035c3c3f0fc45182604891d577ef32284492cb2",
+    "island-apple-light-en-compact.png": "45f43eb20f2972d2eda79317ec2737d60a4e50e176f5a4e6741296c8ab26a6c8",
+    "island-apple-light-en-expanded.png": "6ea2c002e1c100a04b8aedac308b7a42adb49f87055cf0d786e0acb9cea617b9",
+    "island-apple-light-he-compact.png": "ba6e72d86d8e0220ee29ff7d0b4f902181c3a3c1cff7e0f5069ff36046c145a3",
+    "island-apple-light-he-expanded.png": "829c878256bbee14b058d6e351d33249f7e562def6b92c720187531bd8ba95c8",
+    "island-emerald-dark-en-compact.png": "90d8d2f2eb88efdd8a0c58405c19139e00a84cbe5dff881361357bda2660e0ee",
+    "island-emerald-dark-en-expanded.png": "ff390f49ce73055718b47f65e399ad6bd62080e7fb3f8afbf4f6d87028712fc0",
+    "island-emerald-dark-he-compact.png": "000207f374e298381b593fd9241709c854b45be0c5d60263f6b7cc4a09d9a068",
+    "island-emerald-dark-he-expanded.png": "66fe52f06574d9efeb0d7668f1a068996d71759ba243a91029f93752b1929278",
+    "island-emerald-light-en-compact.png": "2c96939cd15f2d66d27a1f4a48eae11eb6252828dad712322c58fd5ece878ae1",
+    "island-emerald-light-en-expanded.png": "6821e238899354f46976508740f57154a7b7a6cad58a3185f0fb47b381643324",
+    "island-emerald-light-he-compact.png": "8364a801520811554348831e4fbb3c18deb4b7abef924d6e7f5186742ce1ede4",
+    "island-emerald-light-he-expanded.png": "8f22a8a5dbb4839a11857cc996db6a49e41c866d48d004523b8e2ec906022f64",
+    "island-glass-dark-en-compact.png": "2c9fdd48fcab4b6c49f0af7c9b571c797a2c6946073c4850229c27ab69243609",
+    "island-glass-dark-en-expanded.png": "1a677a5a1b208d740f8d5a551120ac1091e47e5e450ae810165c6a6043870e6c",
+    "island-glass-dark-he-compact.png": "7788e437ae7b4e7c7966ceacd5eb73f2ace658622d56daf88467cacbed011e9b",
+    "island-glass-dark-he-expanded.png": "e44b682e3c5a8798a2f29ae6aceabf553767e5d095dc65061a467d68429dc281",
+    "island-glass-light-en-compact.png": "4f032439a8fedf700476d38aa206e7f6231282bbe30be6af4f53aa4535d5df09",
+    "island-glass-light-en-expanded.png": "28831d2f4f9ffd750fcf734f4bb35e92b1fd5bddafd64bdb1f64cdda4929813a",
+    "island-glass-light-he-compact.png": "514b7c8f24ee4c9ac0f58e1a8c166416394b9204f67f4c94b5c103d40e0216f4",
+    "island-glass-light-he-expanded.png": "4e9ccc40e97a9fd2a9191410ce22705123819cb76fe0ad770c3a6f977531fc23",
+    "island-settings-dark-bottom.png": "d3f10352884fa36be873a73b4c130de32730a417777724dd21e94a650866ded9",
+    "island-settings-dark.png": "d5b7570fe1e1a0dc2177316230a6a6de50eb5e93cbaef6a57ddacfa649bb67f4",
+    "island-settings-light-bottom.png": "fbaeed7e3ea15f508d978a722c03c8d1538a1a306da16f09bd45cb2178c00ede",
+    "island-settings-light.png": "5f3d7abd8a77c624b70e437b3c13d2425cbfaad5305d766fdec5ff5c5fbd1aab",
+    "island-state-held.png": "cf35983d792614a473ec1e85a7c58ac8a6ecef39d56deace773b5564cf936ccc",
+    "island-state-incoming.png": "3171ac592ae24c84af9e99f2e2bc52f9135f11c0d80cebdc379b1e2064b47a5b",
+    "island-state-noaudio.png": "cf821581096f6112f8af3e1b4a700287f54030b1c52fa4023efebf0af90ca394",
+    "island-state-outgoing.png": "e7802333c3b4da63a76434ac5ec490720af7ee0744638a5324f84101d8c4df13"
+  },
+  "native_assertions": {
+    "api": 33,
+    "real_renderer_and_controller": true,
+    "matrix_native_layout_assertions": true,
+    "app_main_integration": true,
+    "app_main_screens": "Actual MainActivity/FastPages contacts and recents, compact/expanded, favorites/summary/navigation, synthetic rows, no call commands",
+    "app_main_scroll_access": [
+      {
+        "page": "contacts",
+        "viewport_bounds": "[18,48][462,298]",
+        "input_method": "native-pointer-body-scroll",
+        "targets": [
+          {
+            "tag": "island-action-MUTE_ON",
+            "bounds": "[339,150][438,255]",
+            "scroll_y": 0
+          },
+          {
+            "tag": "island-action-SPEAKER_ON",
+            "bounds": "[240,150][339,255]",
+            "scroll_y": 0
+          },
+          {
+            "tag": "island-action-HOLD",
+            "bounds": "[141,150][240,255]",
+            "scroll_y": 0
+          },
+          {
+            "tag": "island-action-END",
+            "bounds": "[42,150][141,255]",
+            "scroll_y": 0
+          },
+          {
+            "tag": "island-open",
+            "bounds": "[41,190][439,262]",
+            "scroll_y": 74
+          },
+          {
+            "tag": "island-hide",
+            "bounds": "[41,225][439,297]",
+            "scroll_y": 111
+          }
+        ],
+        "returned_scroll_y": 0,
+        "collapse_bounds": "[41,64][113,136]",
+        "list_anchor_preserved": true,
+        "normalized_position_preserved": true
+      },
+      {
+        "page": "recents",
+        "viewport_bounds": "[18,48][462,291]",
+        "input_method": "native-pointer-body-scroll",
+        "targets": [
+          {
+            "tag": "island-action-MUTE_ON",
+            "bounds": "[339,150][438,255]",
+            "scroll_y": 0
+          },
+          {
+            "tag": "island-action-SPEAKER_ON",
+            "bounds": "[240,150][339,255]",
+            "scroll_y": 0
+          },
+          {
+            "tag": "island-action-HOLD",
+            "bounds": "[141,150][240,255]",
+            "scroll_y": 0
+          },
+          {
+            "tag": "island-action-END",
+            "bounds": "[42,150][141,255]",
+            "scroll_y": 0
+          },
+          {
+            "tag": "island-open",
+            "bounds": "[41,188][439,260]",
+            "scroll_y": 76
+          },
+          {
+            "tag": "island-hide",
+            "bounds": "[41,204][439,276]",
+            "scroll_y": 132
+          }
+        ],
+        "returned_scroll_y": 0,
+        "collapse_bounds": "[41,64][113,136]",
+        "list_anchor_preserved": true,
+        "normalized_position_preserved": true
+      }
+    ],
+    "native_action_dispatch_and_acknowledgement": true,
+    "confirmed_end_cancel_and_accept": true,
+    "disabled_ui_preserves_session": true,
+    "content_margin_and_list_anchor_restored": true,
+    "pause_stops_surface_and_resume_restores": true,
+    "activity_recreation_preserves_fixture_session_and_query": true,
+    "customization_preview_and_bottom_controls": true,
+    "animations_lifecycle": true,
+    "native_preference_persistence": true,
+    "native_settings_bar_contrast": true,
+    "nativeBarCaptures": [
+      {
+        "filename": "island-apple-light-he-compact.png",
+        "dark": false,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 222129,
+            "elapsed_ms": 12,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 222256,
+            "elapsed_ms": 139,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 222379,
+            "elapsed_ms": 262,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "ba6e72d86d8e0220ee29ff7d0b4f902181c3a3c1cff7e0f5069ff36046c145a3"
+      },
+      {
+        "filename": "island-apple-light-he-expanded.png",
+        "dark": false,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 223076,
+            "elapsed_ms": 11,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 223194,
+            "elapsed_ms": 129,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 223319,
+            "elapsed_ms": 254,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "829c878256bbee14b058d6e351d33249f7e562def6b92c720187531bd8ba95c8"
+      },
+      {
+        "filename": "island-glass-light-he-compact.png",
+        "dark": false,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 224466,
+            "elapsed_ms": 12,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 224583,
+            "elapsed_ms": 129,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 224701,
+            "elapsed_ms": 247,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "514b7c8f24ee4c9ac0f58e1a8c166416394b9204f67f4c94b5c103d40e0216f4"
+      },
+      {
+        "filename": "island-glass-light-he-expanded.png",
+        "dark": false,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 225402,
+            "elapsed_ms": 11,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 225521,
+            "elapsed_ms": 130,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 225638,
+            "elapsed_ms": 247,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "4e9ccc40e97a9fd2a9191410ce22705123819cb76fe0ad770c3a6f977531fc23"
+      },
+      {
+        "filename": "island-emerald-light-he-compact.png",
+        "dark": false,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 226674,
+            "elapsed_ms": 10,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 226791,
+            "elapsed_ms": 127,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 226908,
+            "elapsed_ms": 244,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "8364a801520811554348831e4fbb3c18deb4b7abef924d6e7f5186742ce1ede4"
+      },
+      {
+        "filename": "island-emerald-light-he-expanded.png",
+        "dark": false,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 227603,
+            "elapsed_ms": 10,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 227720,
+            "elapsed_ms": 127,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 227842,
+            "elapsed_ms": 249,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "8f22a8a5dbb4839a11857cc996db6a49e41c866d48d004523b8e2ec906022f64"
+      },
+      {
+        "filename": "island-apple-light-en-compact.png",
+        "dark": false,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 229008,
+            "elapsed_ms": 12,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 229125,
+            "elapsed_ms": 129,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 229246,
+            "elapsed_ms": 250,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "45f43eb20f2972d2eda79317ec2737d60a4e50e176f5a4e6741296c8ab26a6c8"
+      },
+      {
+        "filename": "island-apple-light-en-expanded.png",
+        "dark": false,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 229940,
+            "elapsed_ms": 11,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 230057,
+            "elapsed_ms": 128,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 230174,
+            "elapsed_ms": 245,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "6ea2c002e1c100a04b8aedac308b7a42adb49f87055cf0d786e0acb9cea617b9"
+      },
+      {
+        "filename": "island-glass-light-en-compact.png",
+        "dark": false,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 231191,
+            "elapsed_ms": 11,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 231309,
+            "elapsed_ms": 129,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 231438,
+            "elapsed_ms": 258,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "4f032439a8fedf700476d38aa206e7f6231282bbe30be6af4f53aa4535d5df09"
+      },
+      {
+        "filename": "island-glass-light-en-expanded.png",
+        "dark": false,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 232162,
+            "elapsed_ms": 13,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 232285,
+            "elapsed_ms": 136,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 232406,
+            "elapsed_ms": 257,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "28831d2f4f9ffd750fcf734f4bb35e92b1fd5bddafd64bdb1f64cdda4929813a"
+      },
+      {
+        "filename": "island-emerald-light-en-compact.png",
+        "dark": false,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 233524,
+            "elapsed_ms": 15,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 233643,
+            "elapsed_ms": 134,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 233762,
+            "elapsed_ms": 253,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "2c96939cd15f2d66d27a1f4a48eae11eb6252828dad712322c58fd5ece878ae1"
+      },
+      {
+        "filename": "island-emerald-light-en-expanded.png",
+        "dark": false,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 234487,
+            "elapsed_ms": 12,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 234607,
+            "elapsed_ms": 132,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 234727,
+            "elapsed_ms": 252,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 358,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "6821e238899354f46976508740f57154a7b7a6cad58a3185f0fb47b381643324"
+      },
+      {
+        "filename": "island-apple-dark-he-compact.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 235778,
+            "elapsed_ms": 13,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 235895,
+            "elapsed_ms": 130,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 236012,
+            "elapsed_ms": 247,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "9cf0cc13cd1000e4eb75e0836771d4b803053df7697efb6ba9be9dac775df373"
+      },
+      {
+        "filename": "island-apple-dark-he-expanded.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 236692,
+            "elapsed_ms": 10,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 236809,
+            "elapsed_ms": 127,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 236926,
+            "elapsed_ms": 244,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "e55fa17e5711e8f8c70a6ab0e035c3c3f0fc45182604891d577ef32284492cb2"
+      },
+      {
+        "filename": "island-glass-dark-he-compact.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 237939,
+            "elapsed_ms": 12,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 238056,
+            "elapsed_ms": 129,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 238173,
+            "elapsed_ms": 246,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "7788e437ae7b4e7c7966ceacd5eb73f2ace658622d56daf88467cacbed011e9b"
+      },
+      {
+        "filename": "island-glass-dark-he-expanded.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 238872,
+            "elapsed_ms": 14,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 238989,
+            "elapsed_ms": 131,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 239105,
+            "elapsed_ms": 247,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "e44b682e3c5a8798a2f29ae6aceabf553767e5d095dc65061a467d68429dc281"
+      },
+      {
+        "filename": "island-emerald-dark-he-compact.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 240127,
+            "elapsed_ms": 11,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 240245,
+            "elapsed_ms": 129,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 240362,
+            "elapsed_ms": 246,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "000207f374e298381b593fd9241709c854b45be0c5d60263f6b7cc4a09d9a068"
+      },
+      {
+        "filename": "island-emerald-dark-he-expanded.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 241038,
+            "elapsed_ms": 11,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 241156,
+            "elapsed_ms": 129,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 241277,
+            "elapsed_ms": 250,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 422,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "66fe52f06574d9efeb0d7668f1a068996d71759ba243a91029f93752b1929278"
+      },
+      {
+        "filename": "island-apple-dark-en-compact.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 242275,
+            "elapsed_ms": 13,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 242394,
+            "elapsed_ms": 132,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 242512,
+            "elapsed_ms": 250,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "a2e13c9b6dc7bd735b29cb8c6c02809cff355f5a73d47132db8353526c2eda7e"
+      },
+      {
+        "filename": "island-apple-dark-en-expanded.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 243207,
+            "elapsed_ms": 10,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 243323,
+            "elapsed_ms": 126,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 243442,
+            "elapsed_ms": 245,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "3bc4e4025247a0ec4ad02db192f86e21ff632217ec64f1370e22f1fe6b36fe15"
+      },
+      {
+        "filename": "island-glass-dark-en-compact.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 244471,
+            "elapsed_ms": 11,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 244588,
+            "elapsed_ms": 128,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 244707,
+            "elapsed_ms": 247,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "2c9fdd48fcab4b6c49f0af7c9b571c797a2c6946073c4850229c27ab69243609"
+      },
+      {
+        "filename": "island-glass-dark-en-expanded.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 245389,
+            "elapsed_ms": 13,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 245507,
+            "elapsed_ms": 131,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 245624,
+            "elapsed_ms": 248,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "1a677a5a1b208d740f8d5a551120ac1091e47e5e450ae810165c6a6043870e6c"
+      },
+      {
+        "filename": "island-emerald-dark-en-compact.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 246637,
+            "elapsed_ms": 11,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 246754,
+            "elapsed_ms": 128,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 246873,
+            "elapsed_ms": 247,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "90d8d2f2eb88efdd8a0c58405c19139e00a84cbe5dff881361357bda2660e0ee"
+      },
+      {
+        "filename": "island-emerald-dark-en-expanded.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 247562,
+            "elapsed_ms": 11,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 247679,
+            "elapsed_ms": 128,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 247798,
+            "elapsed_ms": 247,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "ff390f49ce73055718b47f65e399ad6bd62080e7fb3f8afbf4f6d87028712fc0"
+      },
+      {
+        "filename": "island-state-incoming.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 249318,
+            "elapsed_ms": 27,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 249437,
+            "elapsed_ms": 146,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 249554,
+            "elapsed_ms": 263,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "3171ac592ae24c84af9e99f2e2bc52f9135f11c0d80cebdc379b1e2064b47a5b"
+      },
+      {
+        "filename": "island-state-outgoing.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 250735,
+            "elapsed_ms": 11,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 250856,
+            "elapsed_ms": 132,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 250973,
+            "elapsed_ms": 249,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "e7802333c3b4da63a76434ac5ec490720af7ee0744638a5324f84101d8c4df13"
+      },
+      {
+        "filename": "island-state-held.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 252305,
+            "elapsed_ms": 12,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 252422,
+            "elapsed_ms": 129,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 252540,
+            "elapsed_ms": 247,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "cf35983d792614a473ec1e85a7c58ac8a6ecef39d56deace773b5564cf936ccc"
+      },
+      {
+        "filename": "island-state-noaudio.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 253860,
+            "elapsed_ms": 18,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 253985,
+            "elapsed_ms": 143,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 254113,
+            "elapsed_ms": 271,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "cf821581096f6112f8af3e1b4a700287f54030b1c52fa4023efebf0af90ca394"
+      },
+      {
+        "filename": "island-app-contacts-compact.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 257593,
+            "elapsed_ms": 11,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 257710,
+            "elapsed_ms": 128,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 257829,
+            "elapsed_ms": 247,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "da2d0376aed67d96eaab8aba7458fde0ea6efef4a257765871a14c6e65b45214"
+      },
+      {
+        "filename": "island-app-contacts-expanded.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 262505,
+            "elapsed_ms": 10,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 262622,
+            "elapsed_ms": 127,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 262744,
+            "elapsed_ms": 249,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "278ff393745985c269074094bdf95b3c54ae1762713d045ce7464e5a581fc1d5"
+      },
+      {
+        "filename": "island-app-recents-compact.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 264025,
+            "elapsed_ms": 13,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 264156,
+            "elapsed_ms": 144,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 264274,
+            "elapsed_ms": 262,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "fd23db42ac3f302353fdb4faa631a85dd0ddddeff2e88c661d2207131764f1b8"
+      },
+      {
+        "filename": "island-app-recents-expanded.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 269172,
+            "elapsed_ms": 11,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 269289,
+            "elapsed_ms": 128,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 269409,
+            "elapsed_ms": 248,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "45a9d5a7efa9b36ba48eb1732424c180b431a7cf06ed7e9e5e2e357c7c61fac2"
+      },
+      {
+        "filename": "island-settings-light.png",
+        "dark": false,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 284051,
+            "elapsed_ms": 11,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 317,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 284167,
+            "elapsed_ms": 127,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 317,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 284285,
+            "elapsed_ms": 245,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 317,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "5f3d7abd8a77c624b70e437b3c13d2425cbfaad5305d766fdec5ff5c5fbd1aab"
+      },
+      {
+        "filename": "island-settings-light-bottom.png",
+        "dark": false,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 285028,
+            "elapsed_ms": 14,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 317,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 285146,
+            "elapsed_ms": 132,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 317,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 285283,
+            "elapsed_ms": 269,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 24
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 317,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "fbaeed7e3ea15f508d978a722c03c8d1538a1a306da16f09bd45cb2178c00ede"
+      },
+      {
+        "filename": "island-settings-dark.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 287107,
+            "elapsed_ms": 13,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 287225,
+            "elapsed_ms": 131,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 287342,
+            "elapsed_ms": 248,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "d5b7570fe1e1a0dc2177316230a6a6de50eb5e93cbaef6a57ddacfa649bb67f4"
+      },
+      {
+        "filename": "island-settings-dark-bottom.png",
+        "dark": true,
+        "validated": true,
+        "capture_method": "UiAutomation.takeScreenshot",
+        "status_sample_left_px": 0,
+        "status_sample_right_px": 240,
+        "required_navigation_px": 72,
+        "required_contrasting_pixels_per_bar": 40,
+        "required_consecutive_valid_samples": 3,
+        "deadline_ms": 5000,
+        "sample_interval_ms": 100,
+        "max_samples": 50,
+        "sample_count": 3,
+        "samples": [
+          {
+            "uptime_ms": 288042,
+            "elapsed_ms": 12,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 1
+          },
+          {
+            "uptime_ms": 288159,
+            "elapsed_ms": 129,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 2
+          },
+          {
+            "uptime_ms": 288314,
+            "elapsed_ms": 284,
+            "window_before": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "window_after": {
+              "focused": true,
+              "status_top_px": 36,
+              "navigation_bottom_px": 72,
+              "navigation_visible": true,
+              "status_visible": true,
+              "requested_system_bars_appearance": 0
+            },
+            "width_px": 480,
+            "height_px": 854,
+            "contrasting_status_pixels": 380,
+            "contrasting_navigation_pixels": 1276,
+            "consecutive_valid_samples": 3
+          }
+        ],
+        "sha256": "d3f10352884fa36be873a73b4c130de32730a417777724dd21e94a650866ded9"
+      }
+    ],
+    "session_source": "Non-exported DEBUG fixture. Fictional contacts and state; real production renderer/controller. No Telecom call or physical audio route is created.",
+    "full_call_navigation": "Real CallScreenActivity in explicit DEBUG preview; system Back returns to same native host and preserved list."
+  },
+  "limits": "Real production in-app island renderer/controller and native windows. A non-exported DEBUG fixture supplies fictional call state and acknowledgements; real Telecom actions are separately unit-tested. No physical SIM, audio, Bluetooth or Jelly Star verification."
+}

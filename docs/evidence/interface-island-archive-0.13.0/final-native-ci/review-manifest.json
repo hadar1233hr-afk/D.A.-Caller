@@ -1,0 +1,1097 @@
+{
+  "source_sha": "7e039daaf2b43716ed2a2b3db1df0b04a8647fcd",
+  "run_id": 44521985299,
+  "review_status": "ACTUAL_VIEW_REQUIRED_NO_APPROVAL",
+  "groups": {
+    "call": [
+      {
+        "sheet": "call-01.png",
+        "files": [
+          "call-emerald-dark-audio-largefont.png",
+          "call-emerald-dark-audio-longname-en.png",
+          "call-emerald-dark-audio-longname-he.png",
+          "call-emerald-dark-audio-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-emerald-dark-audio-largefont.png": "204f8152a8280eb2e4d235c62ca51d7762246f8600baddd518c3b54a04551b7b",
+          "call-emerald-dark-audio-longname-en.png": "75bb57c2d18075b09ef7e4d9467f143dfb25e4cbc922e7834df4822d69715d15",
+          "call-emerald-dark-audio-longname-he.png": "1006f265cc47a1f9239bee79f7c41035fb8a7bb474bfcbfb6ff9d8196a954d74",
+          "call-emerald-dark-audio-standard.png": "cb4fd1a267479816c87beb7ccbc3f486590f36e75ca81237ff40c5ac2e16d323"
+        },
+        "sheet_sha256": "e722c8e0025e50919de349bbabecf9eef43f4ace7069aab62b55965c011cd5d2"
+      },
+      {
+        "sheet": "call-02.png",
+        "files": [
+          "call-emerald-dark-keypad-largefont.png",
+          "call-emerald-dark-keypad-standard.png",
+          "call-emerald-dark-more-largefont.png",
+          "call-emerald-dark-more-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-emerald-dark-keypad-largefont.png": "d86a9a6da23654058186c1a59fcc4d4e0ec4f15b78acd41e072d39186fe63681",
+          "call-emerald-dark-keypad-standard.png": "febebb87c0cc80d2a290251fd8ed2e1ea9728d83fdb7e35d3c36c1340c2fb7b6",
+          "call-emerald-dark-more-largefont.png": "c9e7a68a32cc6b246a8b7f7bbbb9e2168522bba78cb7115f1fe9d1be565cb0b8",
+          "call-emerald-dark-more-standard.png": "9eebad5446a28ec608e078014d35deca3fad6fa440b7c41286b43cb1c71f361e"
+        },
+        "sheet_sha256": "88f712db9bf6aecc1e406caf2098e92f6f505dd591a0a5bbe08da5b77938856c"
+      },
+      {
+        "sheet": "call-03.png",
+        "files": [
+          "call-emerald-dark-normal-largefont.png",
+          "call-emerald-dark-normal-longname-en.png",
+          "call-emerald-dark-normal-longname-he.png",
+          "call-emerald-dark-normal-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-emerald-dark-normal-largefont.png": "911152bb6cbbc0423c374959e8a9a33aaebd02ee65cf0596a56b37d3e9eeb9d9",
+          "call-emerald-dark-normal-longname-en.png": "d51dde4e29b53eecba2b1d231c0b0524e948f294f444374add3cfc8ddad5a755",
+          "call-emerald-dark-normal-longname-he.png": "2f86460e09290735ece6edd196c112bac107e1d9a92cbc810fd44c1457fcb278",
+          "call-emerald-dark-normal-standard.png": "56cfc5e21a41e9d2de5b5154364b236cd8ebb512048d673a36dd581decace265"
+        },
+        "sheet_sha256": "36a65079b905b8b1276a3b0973fab648dccfab18f43c63a756021c86d19a7649"
+      },
+      {
+        "sheet": "call-04.png",
+        "files": [
+          "call-emerald-light-audio-largefont.png",
+          "call-emerald-light-audio-standard.png",
+          "call-emerald-light-keypad-largefont.png",
+          "call-emerald-light-keypad-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-emerald-light-audio-largefont.png": "28b122d90cbf22dde314e59c2ceaaffb48eef39a8354ec0547c0b23e6e9604f0",
+          "call-emerald-light-audio-standard.png": "69e60c2a11e009da30f459add702df357479832cd25ea89a459dbe6b04b7fc6f",
+          "call-emerald-light-keypad-largefont.png": "5f7df9e93d5f886454c787497988046ae31e6de0700accf301451548ab2e363d",
+          "call-emerald-light-keypad-standard.png": "13294daa810013d8f8c3802b3dcdd928503b01bf372567b85566442c55735422"
+        },
+        "sheet_sha256": "04a61fc00228f98b41e6f51b60eec5fd8892586dbfb4116a1195d4bba1930100"
+      },
+      {
+        "sheet": "call-05.png",
+        "files": [
+          "call-emerald-light-more-largefont.png",
+          "call-emerald-light-more-standard.png",
+          "call-emerald-light-normal-largefont.png",
+          "call-emerald-light-normal-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-emerald-light-more-largefont.png": "e24e70ceaa363737b3929f8f9d0c54410dd431483475316198f5eda3094798a1",
+          "call-emerald-light-more-standard.png": "e4fb2178754f5d773f31cd6cf22336b345712941d84a73b54cf23157ef2e70ce",
+          "call-emerald-light-normal-largefont.png": "770ec38a7a653c94838e296b5ccb0147264d25739707b7509237245f027d9df3",
+          "call-emerald-light-normal-standard.png": "67f80a2dc3288d7c54b89a163751dd0e62929d4c990612379fd0178ab0d05755"
+        },
+        "sheet_sha256": "6cbbea3aed25366fabaf4d12d9305adee2653f9015c4130d6c6cfd618b20d8de"
+      },
+      {
+        "sheet": "call-06.png",
+        "files": [
+          "call-frost-dark-audio-largefont.png",
+          "call-frost-dark-audio-longname-en.png",
+          "call-frost-dark-audio-longname-he.png",
+          "call-frost-dark-audio-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-frost-dark-audio-largefont.png": "1193183692dd42dbe189426748d490e114761467e9b80daf464f0cd0ea3f4f3d",
+          "call-frost-dark-audio-longname-en.png": "a6137d1ec5f39ef44741318b6b4fb4dfda752813fd61de54d25bc59f6f340afd",
+          "call-frost-dark-audio-longname-he.png": "392a267e9374f5e778beebb3f4cb0fbb7fd6a323f6575130de181f95e65e439c",
+          "call-frost-dark-audio-standard.png": "381275a1c3755031026900fb06088ae6c6a96b0b7813cd85b5febc035ce84456"
+        },
+        "sheet_sha256": "a77b71444034db90bea7a80481ecf338212f7ae83a0677ca29880dfca003462f"
+      },
+      {
+        "sheet": "call-07.png",
+        "files": [
+          "call-frost-dark-keypad-largefont.png",
+          "call-frost-dark-keypad-standard.png",
+          "call-frost-dark-more-largefont.png",
+          "call-frost-dark-more-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-frost-dark-keypad-largefont.png": "5d6aedbce2175a2f19f6b05d6254c087fd35023f5b6a72bdaa50d0ba209f888a",
+          "call-frost-dark-keypad-standard.png": "5c0deb268d7a2482db877a12a427f204101b7ffeb2ad0a97230500fe096350e2",
+          "call-frost-dark-more-largefont.png": "a70c979b4ba1a326ee83a774c61bba28c6e39d3e44a1dfd7f62545c0631ffabb",
+          "call-frost-dark-more-standard.png": "492c9ca6fc5a2c09e4ce439fd341af8e10fff446884b50fbc2676176b7e5d6c9"
+        },
+        "sheet_sha256": "1482e36580cecf2175668fd6450d307718099f2d38f8fb190a20344ad4272943"
+      },
+      {
+        "sheet": "call-08.png",
+        "files": [
+          "call-frost-dark-normal-largefont.png",
+          "call-frost-dark-normal-longname-en.png",
+          "call-frost-dark-normal-longname-he.png",
+          "call-frost-dark-normal-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-frost-dark-normal-largefont.png": "176d8ffa47b58d9c796f2f1d13539f69c37374f6d5c9b30ee5132dd12482e313",
+          "call-frost-dark-normal-longname-en.png": "e61614fa8a8c65f4317c9a317dbf0556dd3f0c4f3e231845fa5484a849e11769",
+          "call-frost-dark-normal-longname-he.png": "5c30461952f4b263de16366426d7cfe74a05a34fab1f497a0e80ca951248def7",
+          "call-frost-dark-normal-standard.png": "649fac0673a6e993f0c238e24de5b1318556da6a122f5bdc35ce976a30424a77"
+        },
+        "sheet_sha256": "2c7a1879214b73c8aa9342426cf3be5365f1cdb7dc875b3320b00ad3be4629f3"
+      },
+      {
+        "sheet": "call-09.png",
+        "files": [
+          "call-frost-light-audio-largefont.png",
+          "call-frost-light-audio-standard.png",
+          "call-frost-light-keypad-largefont.png",
+          "call-frost-light-keypad-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-frost-light-audio-largefont.png": "2b7280c349293fdf40a3aa2fb2213014ca95f1ca79e088e84268d835442d8189",
+          "call-frost-light-audio-standard.png": "1e85d4977d8bb9119d130de14eab6432103615c3888aeeb092a4b5307d37075f",
+          "call-frost-light-keypad-largefont.png": "d0c1e20241967ca647e2677f3eb696eddc73ce1ea06b6730bee9b5b2a6cc0df9",
+          "call-frost-light-keypad-standard.png": "438df5225fa0a3e878421c3ea5ec63cc2156fc77fb00ee92b38197201d938dba"
+        },
+        "sheet_sha256": "66b11f2ff1a1b169edb3ec4380cc09402dd8f7945bb55fd26ff0c459c58e62a0"
+      },
+      {
+        "sheet": "call-10.png",
+        "files": [
+          "call-frost-light-more-largefont.png",
+          "call-frost-light-more-standard.png",
+          "call-frost-light-normal-largefont.png",
+          "call-frost-light-normal-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-frost-light-more-largefont.png": "e3407f2ba02e37440b989323d25db498249e3152b19112dc0a112f0b1f2f9986",
+          "call-frost-light-more-standard.png": "e3e2b71a986b282ccf052cba8376bfcd69f6d089c720174108784ef8aaf397e0",
+          "call-frost-light-normal-largefont.png": "a53f412f06c58bb71eabd82fadef952adcc82a093f2968eed7556aa38bd7b4a9",
+          "call-frost-light-normal-standard.png": "36762eeb9faa26084e9f3f7ed7817ade9f91cb343260f1f3fb51bdf9e01c0451"
+        },
+        "sheet_sha256": "e96f5f8fd30d917e190ebeadb3de9ce81c894daf9417dce353dbe63fba870bf7"
+      },
+      {
+        "sheet": "call-11.png",
+        "files": [
+          "call-graphite-dark-audio-largefont.png",
+          "call-graphite-dark-audio-longname-en.png",
+          "call-graphite-dark-audio-longname-he.png",
+          "call-graphite-dark-audio-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-graphite-dark-audio-largefont.png": "9a26348278be972c85904852c72df6d5b28e48bbc306e8d3d6e9bfa51f94568b",
+          "call-graphite-dark-audio-longname-en.png": "533f1e394276951e3ee65f819c88c9f245da134aae8d6fc860b8368153835b2e",
+          "call-graphite-dark-audio-longname-he.png": "4d4ba5e28efd30b7540215aec5a95c7334520b493cb2011b0e073df4068f06b8",
+          "call-graphite-dark-audio-standard.png": "67b47610fb8d06ea92a91b5a22c129b28c09b3c8bc9a7f4b5afb8029abc91642"
+        },
+        "sheet_sha256": "211e72cb8822cd4d2c8c326a87ea18eccd2c1df372fab06f3a69b3622ced2f9a"
+      },
+      {
+        "sheet": "call-12.png",
+        "files": [
+          "call-graphite-dark-keypad-largefont.png",
+          "call-graphite-dark-keypad-standard.png",
+          "call-graphite-dark-more-largefont.png",
+          "call-graphite-dark-more-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-graphite-dark-keypad-largefont.png": "238c19b75d60120526da1bd3dd4a9d732cb3f3264bbac7b3d4a4829e77f95dfd",
+          "call-graphite-dark-keypad-standard.png": "192a898fefe006af5349c12ced35c058203431e6deffd1c2f779db3c5e380b29",
+          "call-graphite-dark-more-largefont.png": "1acbe746fdff1698c1b5b4e50ee7f08cbcac23945a3a29c44766b73e6ab9012b",
+          "call-graphite-dark-more-standard.png": "fe3a1a40701d3d9c24dadb8659486718e2a1c552e9727d7ed5f394dd2f7b281d"
+        },
+        "sheet_sha256": "cbc1c3fb2f0c0bea1e3cf5559f8cba824123e12c604115e974dcbc9b17208d12"
+      },
+      {
+        "sheet": "call-13.png",
+        "files": [
+          "call-graphite-dark-normal-largefont.png",
+          "call-graphite-dark-normal-longname-en.png",
+          "call-graphite-dark-normal-longname-he.png",
+          "call-graphite-dark-normal-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-graphite-dark-normal-largefont.png": "2af453cded443b20f213a5a008624e6df9a832e848d2f0c52c483194f12ff8ff",
+          "call-graphite-dark-normal-longname-en.png": "c800487e9ade8f7373095fe3ac4cec3836237c425d3bf0189e650b1073921107",
+          "call-graphite-dark-normal-longname-he.png": "36973e79a5b0e8150b30f78cf156a943043e76229e484594d09bcbe3e3c8f036",
+          "call-graphite-dark-normal-standard.png": "cf845c6be86c58489e03e0f1c29be19201b00060ecba7033f91b9b6a3e2d7ceb"
+        },
+        "sheet_sha256": "1ffdf5c36c6c1712ee4ed428ff6c6d4e5bf5986ee48a1ea69d40d221e2dcc518"
+      },
+      {
+        "sheet": "call-14.png",
+        "files": [
+          "call-graphite-light-audio-largefont.png",
+          "call-graphite-light-audio-standard.png",
+          "call-graphite-light-keypad-largefont.png",
+          "call-graphite-light-keypad-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-graphite-light-audio-largefont.png": "a58258a230f8a300a7d27f05306ac0165a504ffec34ec7707f4e1e2b92f06b05",
+          "call-graphite-light-audio-standard.png": "00bac6e295fd834260adbe8f20da11abf991d0da418e23351e585a25c0c4e4b7",
+          "call-graphite-light-keypad-largefont.png": "daca14f1f820ed971c901d785713cc963bb90befa0211926b38ed4135d2420c0",
+          "call-graphite-light-keypad-standard.png": "1070b2eb53dab512f61732b6d5e7ffa37b2375a99ef38657af67721082fb823a"
+        },
+        "sheet_sha256": "2656a123e54663da503f133b0b1616e4be65c92b70d68a7a01f8d2da07ff53a9"
+      },
+      {
+        "sheet": "call-15.png",
+        "files": [
+          "call-graphite-light-more-largefont.png",
+          "call-graphite-light-more-standard.png",
+          "call-graphite-light-normal-largefont.png",
+          "call-graphite-light-normal-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-graphite-light-more-largefont.png": "e0b99c0c1fd35d656c4c1e434c74adbc95238e86a6726f72ed70c4b4358d99b0",
+          "call-graphite-light-more-standard.png": "5de440cf57963c3db266d62fd4d22585ecb0c67a2a6059a62f84df46466ffe10",
+          "call-graphite-light-normal-largefont.png": "748c81e43bb60dfe4c9c81c5598c0b1e72e4b03cd66ef7e7a87aaef093c3786d",
+          "call-graphite-light-normal-standard.png": "6c0eb06d37a424486d7bb9e803b4bd2727ea3e8509733384f8864f969f726433"
+        },
+        "sheet_sha256": "349880360eb97691e6c299c8c3ecb93d95e5f199333d1bffe02e4acc86964520"
+      },
+      {
+        "sheet": "call-16.png",
+        "files": [
+          "call-ivory-dark-audio-largefont.png",
+          "call-ivory-dark-audio-longname-en.png",
+          "call-ivory-dark-audio-longname-he.png",
+          "call-ivory-dark-audio-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-ivory-dark-audio-largefont.png": "bf80c9833209438a150668b43e909f8ed63ec9bcb85ce04009da4e3d6e6a822a",
+          "call-ivory-dark-audio-longname-en.png": "7022fe9568a9e0b215925b2eafa07103e18d598ac037bc0d98a39050ed0d08ca",
+          "call-ivory-dark-audio-longname-he.png": "13e06e019de55551f004cc63dd2d64e6a8d5d9a50823e5162127a08d0d715f2b",
+          "call-ivory-dark-audio-standard.png": "53eaf1726a0911c8b75d49e48478df95e5528480871e794118afd4f33a403bc0"
+        },
+        "sheet_sha256": "572b5679a2390bd4b60f698fc07b900d8adb73a8699486d8dddda98d6c4bcfb4"
+      },
+      {
+        "sheet": "call-17.png",
+        "files": [
+          "call-ivory-dark-keypad-largefont.png",
+          "call-ivory-dark-keypad-standard.png",
+          "call-ivory-dark-more-largefont.png",
+          "call-ivory-dark-more-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-ivory-dark-keypad-largefont.png": "d351f5e0d2a562541bed1c4a3406fd4192e8bbab377ec71dc40e1895886b9a0f",
+          "call-ivory-dark-keypad-standard.png": "72826dd9e1c131c4bc2e61dfb51e0d8adeaa8c46db7e332ef1322c3e9e36f0a8",
+          "call-ivory-dark-more-largefont.png": "442bd931dddfd7ed2d4f98e375cd4ba1c40cec84df55bcd1cc726954d2948fb6",
+          "call-ivory-dark-more-standard.png": "86790df8458b7fcd9462c1f3fe15a8cc369f561fe868a79dcddd12c92a27dbd7"
+        },
+        "sheet_sha256": "bd919fac5c3d932157768b50acb6dcfae7f7e574e873d62a2e358b344c358fc3"
+      },
+      {
+        "sheet": "call-18.png",
+        "files": [
+          "call-ivory-dark-normal-largefont.png",
+          "call-ivory-dark-normal-longname-en.png",
+          "call-ivory-dark-normal-longname-he.png",
+          "call-ivory-dark-normal-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-ivory-dark-normal-largefont.png": "bc989c4e04aa7b0e984887e0d5c6a80541bf1d34b85d9859c0e37db5a6a6e0b7",
+          "call-ivory-dark-normal-longname-en.png": "a555a036a66a251c48a2d5d095fe3d7b6c544306f160fcf2032f1c9d0ab37819",
+          "call-ivory-dark-normal-longname-he.png": "a4b102e3fa28b4bf4986b8ce12a1b6b02e914b437a8e333799d6691987759de5",
+          "call-ivory-dark-normal-standard.png": "02077d65cf713f2fdbbfac8e4a973c392e4b6bf3d3192289206c06ddf935497f"
+        },
+        "sheet_sha256": "4001b5ca71ff915eee0579722573d7260904bd75c13f2a612e4bd066e44efc71"
+      },
+      {
+        "sheet": "call-19.png",
+        "files": [
+          "call-ivory-light-audio-largefont.png",
+          "call-ivory-light-audio-standard.png",
+          "call-ivory-light-keypad-largefont.png",
+          "call-ivory-light-keypad-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-ivory-light-audio-largefont.png": "78c8be0b25ea56c0607144a00f9f698e0453720906b4966b63384634e79d51c3",
+          "call-ivory-light-audio-standard.png": "86e99c590984223743c05b0ae3f21dd1826a509b30be5f01594c7493eb18d30a",
+          "call-ivory-light-keypad-largefont.png": "525021fda23b5051d0f3ab3397e4822a861bde0212f96a955e0675cd569b5a91",
+          "call-ivory-light-keypad-standard.png": "38d017dd402373f26fd521f99d0b16f502b9ba9ad9a02b54f47e16514f11787d"
+        },
+        "sheet_sha256": "167ac5303fc8a554b680975913071b18ef36f8a4a049e1631a600bd620467fe9"
+      },
+      {
+        "sheet": "call-20.png",
+        "files": [
+          "call-ivory-light-more-largefont.png",
+          "call-ivory-light-more-standard.png",
+          "call-ivory-light-normal-largefont.png",
+          "call-ivory-light-normal-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-ivory-light-more-largefont.png": "340032dfa6b51e0ed0305453fa51246d8acc4e7bb43eafdbc6bfd79a6b5a029e",
+          "call-ivory-light-more-standard.png": "32c29a08f63430bc144602327e86e6cbe2b72ed4d1a2d039dcd2b13824e1567f",
+          "call-ivory-light-normal-largefont.png": "57ee120c9112f6d01f644798e99fc5a62974fe9ee1d36ef1767efcb755f882d4",
+          "call-ivory-light-normal-standard.png": "6f68e0d33ad2c4aa2b49f7fa606a94a9d8eb93dabc1d4b00fa253f4e19462930"
+        },
+        "sheet_sha256": "ae499d01a9657cf1a1ead8f022bd5e7576e6450c7493ca5b1ad6292fb627adc6"
+      },
+      {
+        "sheet": "call-21.png",
+        "files": [
+          "call-pixel-dark-audio-largefont.png",
+          "call-pixel-dark-audio-longname-en.png",
+          "call-pixel-dark-audio-longname-he.png",
+          "call-pixel-dark-audio-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-pixel-dark-audio-largefont.png": "d2ce19b3391aafe15688aaa5f70481310d1d710747a385791134533f3a203225",
+          "call-pixel-dark-audio-longname-en.png": "3ecdfea829e61a7e7942a89ee9c29e362560e0fca0cc81e5dad2033396c810f1",
+          "call-pixel-dark-audio-longname-he.png": "ec561bdabd992ca7bc7f0dceb0a0295e1c310e9f1e096a47f07ea4ab8389f80c",
+          "call-pixel-dark-audio-standard.png": "58de41fe65fb0804b52903fc68da9c91ef9adc4bbcf6940413e176764d71f15d"
+        },
+        "sheet_sha256": "da8c71c993cef897d7b8524e16a54b980f966ab74627949418b2b11e3593974d"
+      },
+      {
+        "sheet": "call-22.png",
+        "files": [
+          "call-pixel-dark-keypad-largefont.png",
+          "call-pixel-dark-keypad-standard.png",
+          "call-pixel-dark-more-largefont.png",
+          "call-pixel-dark-more-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-pixel-dark-keypad-largefont.png": "5e3dd393b7823831bc2ec6839f3e67272add12eb686285a5b9ff554e526f7e90",
+          "call-pixel-dark-keypad-standard.png": "7a67262acfe55b112a8673e2673a16874fac63d9ca2beabe2d49beaf1b2854be",
+          "call-pixel-dark-more-largefont.png": "0066c8a22774fab5215b9a8b92e154d42a0223bf7381f45f5debacdb624c144e",
+          "call-pixel-dark-more-standard.png": "f21dd51b2165550871390f4225fbd02ee9b3d8a1a5df1a956e07f300cb63555b"
+        },
+        "sheet_sha256": "96bd57f182d7047518817f97116328550ccccb0a76529a60dcb4a07fecc2e180"
+      },
+      {
+        "sheet": "call-23.png",
+        "files": [
+          "call-pixel-dark-normal-largefont.png",
+          "call-pixel-dark-normal-longname-en.png",
+          "call-pixel-dark-normal-longname-he.png",
+          "call-pixel-dark-normal-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-pixel-dark-normal-largefont.png": "9b6cbab85d1bb2d4246f70a15892de395fed45db1e678cbea36a622fae8d7963",
+          "call-pixel-dark-normal-longname-en.png": "e7922f9c79479b495c4e02f783182d5004bae2de6e7879d9b38eb68139fdfa79",
+          "call-pixel-dark-normal-longname-he.png": "2ad1ad31458b763044320c0ec0bc6384eb89b0e8bbe675b1b3a40c7dca331f4f",
+          "call-pixel-dark-normal-standard.png": "3d9c7533abf8a914868737f773b758221d37dd1b842ffbdc19cdd382c04bd504"
+        },
+        "sheet_sha256": "689fd7b244501fb76e3cde797e96dc1275e470c0bd58767fda78940b99ae6eee"
+      },
+      {
+        "sheet": "call-24.png",
+        "files": [
+          "call-pixel-light-audio-english-no-bluetooth.png",
+          "call-pixel-light-audio-largefont.png",
+          "call-pixel-light-audio-standard.png",
+          "call-pixel-light-keypad-largefont.png"
+        ],
+        "raw_png_sha256": {
+          "call-pixel-light-audio-english-no-bluetooth.png": "30336e63f4d57764615f2fe1f7ced5c66f04603aee7f7d22dbab3276a6fa0aba",
+          "call-pixel-light-audio-largefont.png": "dbc398f67c79c7a6d36f418b8f99e565d6dff51bb58c077053ca8eed03d82f81",
+          "call-pixel-light-audio-standard.png": "c5a544045a8826829bc6fa32fa056feb20dc2d218f05010524d99d694b82054d",
+          "call-pixel-light-keypad-largefont.png": "f3d9161636f7f7ec4cd9797ded3be79f47351fd812234f3e56a01b8c74f89e56"
+        },
+        "sheet_sha256": "8aac6d96919c56d40a775acab1dee51b011ed828e2587130aca28fe56f3af7ae"
+      },
+      {
+        "sheet": "call-25.png",
+        "files": [
+          "call-pixel-light-keypad-standard.png",
+          "call-pixel-light-more-largefont.png",
+          "call-pixel-light-more-standard.png",
+          "call-pixel-light-normal-largefont.png"
+        ],
+        "raw_png_sha256": {
+          "call-pixel-light-keypad-standard.png": "6a7e6b588fcae5675e12eb49a84a8ce42f213302bef8bddde56f2310fd068dfa",
+          "call-pixel-light-more-largefont.png": "939feccc20f3a0a2cfc29e810bc9d120918a41896fb1f43d8464d801208eafd7",
+          "call-pixel-light-more-standard.png": "65333c2bb4750161380396a9a00d557da69d4a93a419da84ea88f47bfa663578",
+          "call-pixel-light-normal-largefont.png": "93ac4ec58dc46f4db7f1234aa9cf0106936da92d367769ea90f6232b4c1e3fd0"
+        },
+        "sheet_sha256": "cc7f7c48a86f7040d654efe0e161fb3293199cdc6455318eab652e954b732eb5"
+      },
+      {
+        "sheet": "call-26.png",
+        "files": [
+          "call-pixel-light-normal-standard.png"
+        ],
+        "raw_png_sha256": {
+          "call-pixel-light-normal-standard.png": "fced8215bb2fe6e83e16ca32f8b4c1f42981caf8ab5bf5b6a8726f816bd5439c"
+        },
+        "sheet_sha256": "1b3827ba332f9139c609208486989a66c2800c7cd4306313853755720c997c97"
+      }
+    ],
+    "island": [
+      {
+        "sheet": "island-01.png",
+        "files": [
+          "external-end-confirmation.png",
+          "external-ended-launcher.png",
+          "external-inapp-return.png",
+          "external-launcher-active-compact.png"
+        ],
+        "raw_png_sha256": {
+          "external-end-confirmation.png": "c52c08d63f134892b4575f98959ea090ef83d6a948071b54b6ebb9448dbb0835",
+          "external-ended-launcher.png": "175c024a9133e7d6febaff42eece58468dd49226e9ac96a176f3db071f8b1568",
+          "external-inapp-return.png": "c6596fed8769fdb609a7b6d126db97a169b394b58a3be933da80b8abc0182597",
+          "external-launcher-active-compact.png": "8e50f051cb60453dbcf4062b1130c510fe8b3e4b96df2c886be51a5b2adc2bcc"
+        },
+        "sheet_sha256": "59f1ad93bf2016a1ba27623c9888e3890a0e875fa2b6f385eeffab3d300c3e3a"
+      },
+      {
+        "sheet": "island-02.png",
+        "files": [
+          "external-launcher-active-expanded.png",
+          "external-launcher-native-incoming.png",
+          "external-other-app-active-expanded.png",
+          "external-permission-denied-launcher.png"
+        ],
+        "raw_png_sha256": {
+          "external-launcher-active-expanded.png": "a571efb7cf5c97089ae07348152361847c2c1bf0aaf4bccaf99548cb089750f3",
+          "external-launcher-native-incoming.png": "75b9679eb5c0aa7469d7fc2575dbf753103ed924ceb5cfaa1f9cfc8a068c16f6",
+          "external-other-app-active-expanded.png": "13c457440f4df3393359ddb82de8ab2d2022e1a27363166bab64e5f8bb73d52d",
+          "external-permission-denied-launcher.png": "75b9679eb5c0aa7469d7fc2575dbf753103ed924ceb5cfaa1f9cfc8a068c16f6"
+        },
+        "sheet_sha256": "88e29b2527cee20d2d48ab8b5f8e7e6ea3fc7564550dc5ad40e5e28893769a6e"
+      },
+      {
+        "sheet": "island-03.png",
+        "files": [
+          "island-app-contacts-compact.png",
+          "island-app-contacts-expanded.png",
+          "island-app-recents-compact.png",
+          "island-app-recents-expanded.png"
+        ],
+        "raw_png_sha256": {
+          "island-app-contacts-compact.png": "da88f1234ffed75247da45eff79489cf9bc26ed4f0d28210eabc441539e636ad",
+          "island-app-contacts-expanded.png": "a2a13b76fe00175232b65f6d1a37b3a544c39ea723b3052e8e5060621cf543ae",
+          "island-app-recents-compact.png": "900a6896b2a084c6d9ece506e7d0fe3fdfc4d613bdf8e0b4eba68b663a1ee485",
+          "island-app-recents-expanded.png": "2611d45c06acb7045397196fa8c0ee4d684c48c08028c0ad08c414e5831d1d42"
+        },
+        "sheet_sha256": "0a44c620b6832f54941feb13e4eca56cf0578af3f8d6e72a08c4c8d2a53f8ef0"
+      },
+      {
+        "sheet": "island-04.png",
+        "files": [
+          "island-apple-dark-en-compact.png",
+          "island-apple-dark-en-expanded.png",
+          "island-apple-dark-he-compact.png",
+          "island-apple-dark-he-expanded.png"
+        ],
+        "raw_png_sha256": {
+          "island-apple-dark-en-compact.png": "5ae144c5818c5683ef5552a7e5126fd9f7240df942b059002617e455d34efa48",
+          "island-apple-dark-en-expanded.png": "ce9f74a2ff20c06d991a6a9179197efda6f5707d2be8ad1da92bd45935b2e735",
+          "island-apple-dark-he-compact.png": "b192163359541be7fc2e1c1fb3bb2e7cfd7b705e6cf9718b7c98f0c32ce38262",
+          "island-apple-dark-he-expanded.png": "8d5ce38b7258ad58166b1e455edb66294e72a5cdfa4516d4633dac98325e8391"
+        },
+        "sheet_sha256": "3dfe428aa962331694f246a888ba5282d4d6e9b4b5c340fa14211f245a7ca5ea"
+      },
+      {
+        "sheet": "island-05.png",
+        "files": [
+          "island-apple-light-en-compact.png",
+          "island-apple-light-en-expanded.png",
+          "island-apple-light-he-compact.png",
+          "island-apple-light-he-expanded.png"
+        ],
+        "raw_png_sha256": {
+          "island-apple-light-en-compact.png": "c6e6c53b14630776d54d30b33b48e6f42516df92967befd868c47160cee8fa17",
+          "island-apple-light-en-expanded.png": "b69a94a139ba9f19fcefee04d1da0031352b39b4e8bd449e2b8d3311fad64174",
+          "island-apple-light-he-compact.png": "b580e2b92d159b99811e90c434e63249d8e3fc35bb0f90a1b5a793039ab725ca",
+          "island-apple-light-he-expanded.png": "cb6e2b988923bf18f0cb3e37a9acee4f747a4c40b362a1de2528606c030031df"
+        },
+        "sheet_sha256": "d8cad7414a15972bed8b25cdbdf5c53c052207d7158c09e8cb5fec9227d505e6"
+      },
+      {
+        "sheet": "island-06.png",
+        "files": [
+          "island-emerald-dark-en-compact.png",
+          "island-emerald-dark-en-expanded.png",
+          "island-emerald-dark-he-compact.png",
+          "island-emerald-dark-he-expanded.png"
+        ],
+        "raw_png_sha256": {
+          "island-emerald-dark-en-compact.png": "7590d2b156602c4d2c63bf466e21f7439eb4592aa26327e49c5cfada61480bd1",
+          "island-emerald-dark-en-expanded.png": "ef10fcdda8747542b076136158510a669a55bda06383591c44b8887fb399cff8",
+          "island-emerald-dark-he-compact.png": "289aa86d5640adedba902b3f0e50318d3af6aad3e13646e0450dfcfb6c272fdd",
+          "island-emerald-dark-he-expanded.png": "baf5c32cb57b1b9fc388bc8a8619ba49076c70787f4845be411e200bdf33b65a"
+        },
+        "sheet_sha256": "a6070578309bbe1829d16b00051643803fce99578718657b0fc98526047b60ce"
+      },
+      {
+        "sheet": "island-07.png",
+        "files": [
+          "island-emerald-light-en-compact.png",
+          "island-emerald-light-en-expanded.png",
+          "island-emerald-light-he-compact.png",
+          "island-emerald-light-he-expanded.png"
+        ],
+        "raw_png_sha256": {
+          "island-emerald-light-en-compact.png": "867358b2880fa49b5b9fec81601488f58315b9f73b75e1edaa95174f800c04d0",
+          "island-emerald-light-en-expanded.png": "04bbc5b78ed1b97831b4ff4b0b7fd4ead6e049c27c535148249af01c990d7f3d",
+          "island-emerald-light-he-compact.png": "dc3a046495b731040bb6518e70f8419a8bf6fcc4cd5bb604504d85d0c3a0d6eb",
+          "island-emerald-light-he-expanded.png": "5c3a05d3cee0b1d845093d9f3f9f614927894b7cb22d900dc3b0610dab61f440"
+        },
+        "sheet_sha256": "d6c310b203b7da99e778dbae544a3d574f2c4385f070f212794d4fb1f1c68518"
+      },
+      {
+        "sheet": "island-08.png",
+        "files": [
+          "island-glass-dark-en-compact.png",
+          "island-glass-dark-en-expanded.png",
+          "island-glass-dark-he-compact.png",
+          "island-glass-dark-he-expanded.png"
+        ],
+        "raw_png_sha256": {
+          "island-glass-dark-en-compact.png": "34fdf9e567fb90e84bef4875343b7999e651b04d640bb5df89d3f953c6cdab04",
+          "island-glass-dark-en-expanded.png": "fc8d19e365121cea8dec291050fd86200cb0f044c837c17d7e7443ea1c1230bc",
+          "island-glass-dark-he-compact.png": "92112267d16deef815c0c67a1a432bbb43c94ffd7a916fc08ef63fd48f7b2d9c",
+          "island-glass-dark-he-expanded.png": "58524f3c8182e8ed344fc9485eb727c50e0805eca45d60fb06874c666edbdef1"
+        },
+        "sheet_sha256": "d177fc3f0927abd0f4599128e2bccd53747f117bd80bd1303fd20a6f9bd7b1bf"
+      },
+      {
+        "sheet": "island-09.png",
+        "files": [
+          "island-glass-light-en-compact.png",
+          "island-glass-light-en-expanded.png",
+          "island-glass-light-he-compact.png",
+          "island-glass-light-he-expanded.png"
+        ],
+        "raw_png_sha256": {
+          "island-glass-light-en-compact.png": "a7a16e03e6ac4fd58c38a29a93ec6123798e75bcd0eb9a57fc7e3528e4ef2721",
+          "island-glass-light-en-expanded.png": "6cb51bc410129d5abf6d2a959c01876972bd2ac9a1c3421b7af6e14b35579d69",
+          "island-glass-light-he-compact.png": "04e37792376fd3015a9ad964cdea6b9909a7d5128eb23eaf93235d2e043557e2",
+          "island-glass-light-he-expanded.png": "f072202770603e702708b55837a909af060774bb463f3e2a688dab2b1d69e155"
+        },
+        "sheet_sha256": "f811cfde4895132d29806b89bbf2aa9aaee72e857ef605f3042859d2045e0027"
+      },
+      {
+        "sheet": "island-10.png",
+        "files": [
+          "island-settings-dark-bottom.png",
+          "island-settings-dark.png",
+          "island-settings-light-bottom.png",
+          "island-settings-light.png"
+        ],
+        "raw_png_sha256": {
+          "island-settings-dark-bottom.png": "af0535005cb3e7f3f333d6068f7d526bfebf0ecb355c72f7a7a1e9663fb840c1",
+          "island-settings-dark.png": "16db50b18a2a1c40d07d55177b2a9e48d522aed804238d8fd75a16b259b5eb56",
+          "island-settings-light-bottom.png": "4495a51754e6d12ed2248df331197fad8bf20681182a1e283bc07a49dacc739b",
+          "island-settings-light.png": "64fe954212b82f5918122c0b8b612f003038f670b96bb6f0bec2c92fadf94b20"
+        },
+        "sheet_sha256": "8ce46fac1ce48529e6b5283a026838f4a6dd657b93f60e4d85b9d9619e0eea23"
+      },
+      {
+        "sheet": "island-11.png",
+        "files": [
+          "island-state-held.png",
+          "island-state-incoming.png",
+          "island-state-noaudio.png",
+          "island-state-outgoing.png"
+        ],
+        "raw_png_sha256": {
+          "island-state-held.png": "b2bdff366b2a5a963a2449ad098b048a7e6830affed8c02f83c8809327082271",
+          "island-state-incoming.png": "c27119ac2b3c3191a91558526b8225599210a001efcf1a769b1a306f7403da3c",
+          "island-state-noaudio.png": "91f2fd872ad82e00f6837f0edfcbfa5a87cd6744bc99e4c6777ed554f2a2840e",
+          "island-state-outgoing.png": "526a5ecad2f47a00feb4b5db714daf238103d932fc0d0ee7bb6877c5b818e1b0"
+        },
+        "sheet_sha256": "210726e113cd2aec902e49412959afb8e297e1e597b7126a5582d9f21d70764f"
+      }
+    ],
+    "other": [
+      {
+        "sheet": "other-01.png",
+        "files": [
+          "business-detail.png",
+          "business-search.png",
+          "business-tab-dark.png",
+          "business-tab-light.png"
+        ],
+        "raw_png_sha256": {
+          "business-detail.png": "2637803e33538edc232beb3e72b299d9d996f683518298eb40702f916daf4c5a",
+          "business-search.png": "d93dfbfe7ab6a6d8fe87663ebac51cdd7d95593ffd6cf26548ebd11c09434bbb",
+          "business-tab-dark.png": "5319f7b5eaabffaa135bc65333ea426020caddcc5bdd9c0b84e7cae997d5cee5",
+          "business-tab-light.png": "9ae881ce69e117f1230b08a5a152ca6179907ac2e170038389a324213e11b7bb"
+        },
+        "sheet_sha256": "19f3f94a89b8f731f9ea35e5cf2dbfd71021d5b737bd9221693a0671a5ac27b7"
+      },
+      {
+        "sheet": "other-02.png",
+        "files": [
+          "call-integration-notification-active-private-en.png",
+          "call-integration-notification-active-private-he.png",
+          "call-integration-notification-active-speaker-en.png",
+          "call-integration-notification-active-speaker-he.png"
+        ],
+        "raw_png_sha256": {
+          "call-integration-notification-active-private-en.png": "9df9758d8e553d29eb12be7f0e611748cd72d7fac1a5533a47e7b80d5b040abc",
+          "call-integration-notification-active-private-he.png": "997dc57af2abbdafff639b945cd941cd9e03f398cf5d708787b9d96c987a6ada",
+          "call-integration-notification-active-speaker-en.png": "4c4f3e41b6a2dbe97764a706345cb8125e0c6eae9646d8a5a75e9c297df09250",
+          "call-integration-notification-active-speaker-he.png": "934371ebb1f59f4fe89885f5d7ac56714e4e32ca3d01e6958351d82820dfe85d"
+        },
+        "sheet_sha256": "ab91086238c63ae7b2d1198ce9ea03dfd0d3eecc3d1cfb217d0f0ae5fbd1f215"
+      },
+      {
+        "sheet": "other-03.png",
+        "files": [
+          "call-integration-notification-incoming-he.png",
+          "call-integration-notification-outgoing-he.png",
+          "call-integration-return-contacts.png",
+          "call-integration-return-settings.png"
+        ],
+        "raw_png_sha256": {
+          "call-integration-notification-incoming-he.png": "e742578217babd8cb204dc39cb1fef7fb730a1e790dc652c747debf1a9c780ca",
+          "call-integration-notification-outgoing-he.png": "035f24a9ce4938c1693713e6dc4600b1e5cb7510a578ae6fc40822d59fc2db60",
+          "call-integration-return-contacts.png": "70acaf090d9a2a771ce91a35d65e3654e36d9e11d22dbac34c2acb9dc82c6982",
+          "call-integration-return-settings.png": "b50a9ea4db59929e5f7dd93be613a189f12a263610ea5730f7516398959ef4fb"
+        },
+        "sheet_sha256": "ad165f2caed807cff3bdf0901cdbcc864a79ed8c765b8552f39ca2d8786cca29"
+      },
+      {
+        "sheet": "other-04.png",
+        "files": [
+          "callback-list-dark.png",
+          "callback-list-light.png",
+          "callback-settings-dark.png",
+          "callback-settings-light.png"
+        ],
+        "raw_png_sha256": {
+          "callback-list-dark.png": "de15fb2fd1eb6d1a9f8d50cd8182fa30bdba424c1ecf0d346393e7bde547ba88",
+          "callback-list-light.png": "779627f66da843d17d91d8be9af3a7792c56d654340cfa4c061b08e164d97fd5",
+          "callback-settings-dark.png": "47136f5a318a77164f84090d99882df978d7299b16a43b2d246792a66d1b4bd0",
+          "callback-settings-light.png": "3febbc0cd8f14269dfa59d9d3b9e73a6c928816d5c0efaad1ea44168f9a5413e"
+        },
+        "sheet_sha256": "edc2d55e208756c841fc3c33a91e946ac2d0a09ef90cc1ed32c9e21dd5621b6a"
+      },
+      {
+        "sheet": "other-05.png",
+        "files": [
+          "changelog-dark-bottom.png",
+          "changelog-dark.png",
+          "changelog-light-bottom.png",
+          "changelog-light.png"
+        ],
+        "raw_png_sha256": {
+          "changelog-dark-bottom.png": "3a13a9d42085af5042fa44b3a4a313b5ac710dfd81f5eb67f6f286bf2c4c1c9e",
+          "changelog-dark.png": "324edfc83e22830644664f0fdca43db49a2bcce92724715da998ab2886ae6ea5",
+          "changelog-light-bottom.png": "6a6d5eeb888f03e47d534d3f00a451cb463b3ad3d5b11028630e3d315a207d2a",
+          "changelog-light.png": "7cf15a8fa0dbad6851e7e6912c34b48677320726e68ec0ee8ffb00f742b626d2"
+        },
+        "sheet_sha256": "40408166ab3c0b58b9c61c815e97fe5d31adf87f0521c6d2a6fc782497f7cd99"
+      },
+      {
+        "sheet": "other-06.png",
+        "files": [
+          "incoming-swipe-dragging.png",
+          "incoming-swipe-resting.png",
+          "missed-multiple-he.png",
+          "missed-single-he.png"
+        ],
+        "raw_png_sha256": {
+          "incoming-swipe-dragging.png": "0423bef8361c880158f363bcf59341dc6d7fc9d2d7021aca2bc3ee3e411e2fe2",
+          "incoming-swipe-resting.png": "91e8960edcbeae48e9ab773fab77b71abcc6c603ea78b0642ec77c2738ff461e",
+          "missed-multiple-he.png": "6813076ed7f59bc9d7faba0a7307fb887130bc01430dd86bdb34c516a9ae5e8e",
+          "missed-single-he.png": "ed33431b59bca3f913b989f469bccd52b170eeb99abb01086e562aaffcfb1549"
+        },
+        "sheet_sha256": "cacdba47b367310e0d2878482b783588af53be101228c0fcc953238bf8c035ff"
+      },
+      {
+        "sheet": "other-07.png",
+        "files": [
+          "personalization-archive-dark.png",
+          "personalization-archive-light.png",
+          "personalization-backup-restore-confirmation.png",
+          "personalization-backup-saved-dark.png"
+        ],
+        "raw_png_sha256": {
+          "personalization-archive-dark.png": "47d381885a74b101ae64043424c0ed8d277eca78e986ae2384a90edab5327b59",
+          "personalization-archive-light.png": "2cc583bba432936c211d6cc6328338b24485cb1b4ae04927f94f85ed35d80446",
+          "personalization-backup-restore-confirmation.png": "214803e10a498dce298c9accbba823be1515ca939713a1388c7ed2e2c5b380dd",
+          "personalization-backup-saved-dark.png": "5ca5c090a00f669485fa9d18e1a10caef5388c2131fc525e0a9dc123c587ff85"
+        },
+        "sheet_sha256": "17aa2f7389ff17e833d28197907eb968353042f945b4b13531fbb922659d700f"
+      },
+      {
+        "sheet": "other-08.png",
+        "files": [
+          "personalization-backup-saved-light.png",
+          "personalization-chooser-dark-avatar_shapes-bottom.png",
+          "personalization-chooser-dark-avatar_shapes.png",
+          "personalization-chooser-dark-icons-bottom.png"
+        ],
+        "raw_png_sha256": {
+          "personalization-backup-saved-light.png": "c725a72d4f5630e90049eb14782a8754a3a67c2d3e204026878050b88d03a738",
+          "personalization-chooser-dark-avatar_shapes-bottom.png": "dbf15b8a65266e1b73ba0004b1265e043207bfd571b5b41f1700ae6a1031dd37",
+          "personalization-chooser-dark-avatar_shapes.png": "dbf15b8a65266e1b73ba0004b1265e043207bfd571b5b41f1700ae6a1031dd37",
+          "personalization-chooser-dark-icons-bottom.png": "b3614f387c6d57ba3f7f0b22cc7bbc0c70f8c5b8a708364fa9658989170b67e1"
+        },
+        "sheet_sha256": "f3b7b40b68872f9296317672bdcc7d4baf0d8bb1cb225094c1956152e592f041"
+      },
+      {
+        "sheet": "other-09.png",
+        "files": [
+          "personalization-chooser-dark-icons.png",
+          "personalization-chooser-light-avatar_shapes-bottom.png",
+          "personalization-chooser-light-avatar_shapes.png",
+          "personalization-chooser-light-icons-bottom.png"
+        ],
+        "raw_png_sha256": {
+          "personalization-chooser-dark-icons.png": "65c55310d588d3e9a7fab1e2704b00f5be24b8e0a62bbc5a8d872169834f1dfc",
+          "personalization-chooser-light-avatar_shapes-bottom.png": "bb21764a8ec3b63a0999c6730ad48b407573c0776e14b331296daf969458f213",
+          "personalization-chooser-light-avatar_shapes.png": "bb21764a8ec3b63a0999c6730ad48b407573c0776e14b331296daf969458f213",
+          "personalization-chooser-light-icons-bottom.png": "e199b20571468d043e136bd745b31bf9b718df33f4b6d69296aa4625c76c58f5"
+        },
+        "sheet_sha256": "e2514630bff734f55107d9c5145f41550af06bf44d4a957d5e3cf46c51be9f7e"
+      },
+      {
+        "sheet": "other-10.png",
+        "files": [
+          "personalization-chooser-light-icons.png",
+          "personalization-contacts-dark-en-largefont-collapsed.png",
+          "personalization-contacts-dark-en-largefont-expanded.png",
+          "personalization-contacts-dark-en-standard-collapsed.png"
+        ],
+        "raw_png_sha256": {
+          "personalization-chooser-light-icons.png": "5f613def138c710b63886d48d4d23d513dd4d305be6c8c705d433de78e15c721",
+          "personalization-contacts-dark-en-largefont-collapsed.png": "f497cec457bd8a224c71dbdae2ed505f81b7cf411ad5b9e7e735553708b0fe76",
+          "personalization-contacts-dark-en-largefont-expanded.png": "3996905ffe0fdbe5090bbf7f2bcfe8827c9247226042e93e0fa92792f01bef1c",
+          "personalization-contacts-dark-en-standard-collapsed.png": "93bd1ef8dfe42c98f83c3532d7748a52980e0eb3adc61ae937141981b10091f8"
+        },
+        "sheet_sha256": "d721d32540a516a71f1515e2157b578f785fbdbce45bdef0ee55b5b766606433"
+      },
+      {
+        "sheet": "other-11.png",
+        "files": [
+          "personalization-contacts-dark-en-standard-expanded.png",
+          "personalization-contacts-dark-he-largefont-collapsed.png",
+          "personalization-contacts-dark-he-largefont-expanded.png",
+          "personalization-contacts-dark-he-standard-collapsed.png"
+        ],
+        "raw_png_sha256": {
+          "personalization-contacts-dark-en-standard-expanded.png": "2a1475ed8440361bf7500578612123c80eb49f484dfa6fdf0334049a979c8c44",
+          "personalization-contacts-dark-he-largefont-collapsed.png": "a0f283096b5996a8ec39dc778fdfbf4ff257d22a984662b291ddb783647a1d42",
+          "personalization-contacts-dark-he-largefont-expanded.png": "ea2be6505667abb5efdee248d385a091a5a3e6aa47933baf1805007986a7f6c1",
+          "personalization-contacts-dark-he-standard-collapsed.png": "dfbffcc32dd441026fc99236a72ea5c46aae116da2dda25c6536df3fa9b064de"
+        },
+        "sheet_sha256": "e91089d9bfc96ef45c56a5ebc49a3e62985d25775fa50bf33a4b6b53cb10305a"
+      },
+      {
+        "sheet": "other-12.png",
+        "files": [
+          "personalization-contacts-dark-he-standard-expanded.png",
+          "personalization-contacts-light-en-largefont-collapsed.png",
+          "personalization-contacts-light-en-largefont-expanded.png",
+          "personalization-contacts-light-en-standard-collapsed.png"
+        ],
+        "raw_png_sha256": {
+          "personalization-contacts-dark-he-standard-expanded.png": "aa0ab4da3114f7506fc4b1730d1aced119158db20e888c4121c2df93768f00f8",
+          "personalization-contacts-light-en-largefont-collapsed.png": "262b7dd2d6245ffe45488b164263dbe35db63e5e85de29544c387aea00aa0545",
+          "personalization-contacts-light-en-largefont-expanded.png": "81b09eb1f62db62b3331f3066047e8b78b291a660293e31a57b6fd1720129687",
+          "personalization-contacts-light-en-standard-collapsed.png": "86fcd99cc48a0f25605a211a04e5f17631d5b698578c47697fac48692a76c87b"
+        },
+        "sheet_sha256": "c0f9c1f1ad7000bf005685de318e29c120602eb9bce322c3cb0fbed21ca7a6ad"
+      },
+      {
+        "sheet": "other-13.png",
+        "files": [
+          "personalization-contacts-light-en-standard-expanded.png",
+          "personalization-contacts-light-he-largefont-collapsed.png",
+          "personalization-contacts-light-he-largefont-expanded.png",
+          "personalization-contacts-light-he-standard-collapsed.png"
+        ],
+        "raw_png_sha256": {
+          "personalization-contacts-light-en-standard-expanded.png": "1b6233754281bf273268c5f1d60e2518847f8279c8b82dc18fa9cdd36de2e437",
+          "personalization-contacts-light-he-largefont-collapsed.png": "4cfb5a0c08c8f68df12916aee9d04e8c6f953b21da0989408116eea5ec11aac9",
+          "personalization-contacts-light-he-largefont-expanded.png": "abf3c5ddb200a51678d13962e55f9e767b4e3c72e4d2e4532c837a99a5d11588",
+          "personalization-contacts-light-he-standard-collapsed.png": "8f6850c87d6687be9611094f63d33c1579a532f3fe9e0eeb65cda23534331a97"
+        },
+        "sheet_sha256": "483d6373e01a816624f18b5f619f74f6cf9cbc907d0420ae597c21eab00e8613"
+      },
+      {
+        "sheet": "other-14.png",
+        "files": [
+          "personalization-contacts-light-he-standard-expanded.png",
+          "personalization-contacts-shape-circle.png",
+          "personalization-contacts-shape-hexagon.png",
+          "personalization-contacts-shape-rounded_square.png"
+        ],
+        "raw_png_sha256": {
+          "personalization-contacts-light-he-standard-expanded.png": "1dc7c739ae6781e96de4027e074b8c03c31ced30a43c39a0e77b6e94e67fec85",
+          "personalization-contacts-shape-circle.png": "effa9753a445cff03edf646af18b92a430c2345c855e8308e4a016a0c5d64406",
+          "personalization-contacts-shape-hexagon.png": "8c5127c8593c51c661816cb80eddacc4d0a21eb83bea5db59d910f83c78499d8",
+          "personalization-contacts-shape-rounded_square.png": "3d98a59fad7567915497fc3b9d943230539912611dd30a5ced87889a5f1a8ae7"
+        },
+        "sheet_sha256": "48a52c24ab653337e03cd51126ec480dfab205189cb25ee1f35a41a5453922b2"
+      },
+      {
+        "sheet": "other-15.png",
+        "files": [
+          "personalization-contacts-shape-square.png",
+          "personalization-recents-dark-en-largefont-compact.png",
+          "personalization-recents-dark-en-largefont-expanded.png",
+          "personalization-recents-dark-en-standard-compact.png"
+        ],
+        "raw_png_sha256": {
+          "personalization-contacts-shape-square.png": "f15dfae7a5f9e8d167a419a3318390a0b4de77662d9af7aaf78d884af43ae517",
+          "personalization-recents-dark-en-largefont-compact.png": "18a104d1876d1d9fb5127e815d7e64eb18136c62af263423e9d1634e0d4d30b1",
+          "personalization-recents-dark-en-largefont-expanded.png": "a0d9c972bbcbc25cfbb4500f886d1f78634a5508544e3dfabf116d2f60332c3a",
+          "personalization-recents-dark-en-standard-compact.png": "b7e89b90758dd6bb2bb6814c85a7b9b67abc111f33a07ab1cf5084a150b26792"
+        },
+        "sheet_sha256": "7152c78c381b67fbcbd9f5fe3c1bedfec523a7d366422619dca5937da88598ce"
+      },
+      {
+        "sheet": "other-16.png",
+        "files": [
+          "personalization-recents-dark-en-standard-expanded.png",
+          "personalization-recents-dark-he-largefont-compact.png",
+          "personalization-recents-dark-he-largefont-expanded.png",
+          "personalization-recents-dark-he-standard-compact.png"
+        ],
+        "raw_png_sha256": {
+          "personalization-recents-dark-en-standard-expanded.png": "841f2713961de283826de874bdc4cd6aea4d246e57027f3d0ed8f45d0659a935",
+          "personalization-recents-dark-he-largefont-compact.png": "fbb43b484fac635627e3aa3541eb819e7e64d9e3d9b7c3a45f92ad1ab61d6575",
+          "personalization-recents-dark-he-largefont-expanded.png": "1640cafb3316a72dee7df8ab6b95d62f30d1826bc8ee077bc3f7d69bf5ba98e5",
+          "personalization-recents-dark-he-standard-compact.png": "cc10d927dd0f6817724f125c687c0740c5b3ade5f2ba948bb4d839140b20b966"
+        },
+        "sheet_sha256": "024e9cd3128d599b79297b0ba4ea3dbe59cc480e55e4f13d0b40af67d0285781"
+      },
+      {
+        "sheet": "other-17.png",
+        "files": [
+          "personalization-recents-dark-he-standard-expanded.png",
+          "personalization-recents-light-en-largefont-compact.png",
+          "personalization-recents-light-en-largefont-expanded.png",
+          "personalization-recents-light-en-standard-compact.png"
+        ],
+        "raw_png_sha256": {
+          "personalization-recents-dark-he-standard-expanded.png": "e96c66eda942ca0bd1d706866fce1c74585efa154952151fbb0ff89a5156a54b",
+          "personalization-recents-light-en-largefont-compact.png": "d82b2a1a6fb27ce5fe969b2bc387b6ab68b4b9ae647cd37d9936b712293bc7a5",
+          "personalization-recents-light-en-largefont-expanded.png": "c1ff0566d40f68ce8ee6eaf960825ef8b5b619f1beea35d9933056b99e70cfeb",
+          "personalization-recents-light-en-standard-compact.png": "2a262170d3bd108bcc8d0a5b4dfdb92a4a5ac24cb3b6eec0d4df97538bb3724d"
+        },
+        "sheet_sha256": "207e9e01327cead80cf506d9930d70ad9cf2d03a97c2881ebde22fe628a2cc7e"
+      },
+      {
+        "sheet": "other-18.png",
+        "files": [
+          "personalization-recents-light-en-standard-expanded.png",
+          "personalization-recents-light-he-largefont-compact.png",
+          "personalization-recents-light-he-largefont-expanded.png",
+          "personalization-recents-light-he-standard-compact.png"
+        ],
+        "raw_png_sha256": {
+          "personalization-recents-light-en-standard-expanded.png": "7a3f0358cf00b5ddfd706b6cae7ac1c907b87c700050d5bafd9aa5db833276ef",
+          "personalization-recents-light-he-largefont-compact.png": "0c5b929732d7fd36accdc89929a8ac79394032a6f7d6905ed62acd3b543bd43f",
+          "personalization-recents-light-he-largefont-expanded.png": "f7009f1fb4db03202dc493eacd283de801b3ceacc81cae0ce49727af4e30883d",
+          "personalization-recents-light-he-standard-compact.png": "0cc4e57fc557e060fe58660af1674cbc6849a69bddfd7dc66d94831022cfc3bf"
+        },
+        "sheet_sha256": "4378793594d61acbc8de5e515304e378cbcf148a501fc434abc9a34f503ebc88"
+      },
+      {
+        "sheet": "other-19.png",
+        "files": [
+          "personalization-recents-light-he-standard-expanded.png",
+          "personalization-widgets-shape-circle.png",
+          "personalization-widgets-shape-hexagon.png",
+          "personalization-widgets-shape-rounded_square.png"
+        ],
+        "raw_png_sha256": {
+          "personalization-recents-light-he-standard-expanded.png": "a4e2dc82877a2269e15b43bfd95b944d3f207accb8e450883cae6c3fe4277d8b",
+          "personalization-widgets-shape-circle.png": "387a9772fd89d4c0bf02748449116939e1a4c3d99a6c6ca1437a58481f25e29a",
+          "personalization-widgets-shape-hexagon.png": "eba3a99c54fefc5d2d9dc72d6295d5582c6903307d59a9c5e510cebad5176068",
+          "personalization-widgets-shape-rounded_square.png": "b93aba0e497fb79c61b8b96df1cd1bd8800d64d8084afe98623155296f08b1f0"
+        },
+        "sheet_sha256": "d71889ed9222e3981d460c6c67f65ee5a1ae780a08bf8fac35eb81222a17f045"
+      },
+      {
+        "sheet": "other-20.png",
+        "files": [
+          "personalization-widgets-shape-square.png",
+          "recents-new-contact-editor.png",
+          "recents-unknown-number-actions.png",
+          "settings-dark-bottom.png"
+        ],
+        "raw_png_sha256": {
+          "personalization-widgets-shape-square.png": "d065c5201f6d2eeb2dd4605d02599aa63c238effbfaec664d0c5d99bb851567c",
+          "recents-new-contact-editor.png": "51c6d1aacf9e9196e9a10f79bba9b24cbdf7f69eb42f3b24cc428c0059c77dd2",
+          "recents-unknown-number-actions.png": "0045e9d16d6834b0a896b577b0edeab3b4cd88a7f61f8584ba9abf4853becded",
+          "settings-dark-bottom.png": "69790a783b65ecdc6afa61853e1fa84bd4c8423bf6b965074e2421961962bfc6"
+        },
+        "sheet_sha256": "12bfdb7d1fd422e1b490d150d3f09e785ba35e16743966f2c8aabc482e0996f0"
+      },
+      {
+        "sheet": "other-21.png",
+        "files": [
+          "settings-dark.png",
+          "settings-light-bottom.png",
+          "settings-light.png",
+          "widget-dark-contact-2x1.png"
+        ],
+        "raw_png_sha256": {
+          "settings-dark.png": "aead3276b56a86e8f5359fd53404db7d6202a4ca8bca2fde702a99defe650c40",
+          "settings-light-bottom.png": "514c7b9f523082265bf29285791c6d70eb7cbb9368cff6f7e25209fe2caa1564",
+          "settings-light.png": "c42315387772062a729298fb8f1af768dae5baffbb135d9f3ac846edc46a879d",
+          "widget-dark-contact-2x1.png": "13526b3895160a625a9190b3b0aaf8f90785c4006e27e849c225205cc3467878"
+        },
+        "sheet_sha256": "f38a21ffe49cbd2c6b3f5ebcb1c3b625810b8ff7a07f09fc998e0eb197ee419a"
+      },
+      {
+        "sheet": "other-22.png",
+        "files": [
+          "widget-dark-empty.png",
+          "widget-dark-favorites-2x2-largefont.png",
+          "widget-dark-favorites-2x2.png",
+          "widget-dark-favorites-4x2.png"
+        ],
+        "raw_png_sha256": {
+          "widget-dark-empty.png": "38a995fbf84b31fa1598fd0135c077ee7c43cfb0afb8f2370de120cc7ef7726c",
+          "widget-dark-favorites-2x2-largefont.png": "dc74faea2193e513cdb56a39e24642fa1c8be854e24284d114cd93f8a14a4fdd",
+          "widget-dark-favorites-2x2.png": "86a150cf2a32156e4735c72ae6c49955649d1fc3ffde1758dd60bea154d4e17b",
+          "widget-dark-favorites-4x2.png": "9e5fc28752642b65420024e5be2380ce4731fa4b8427358b85cc79f461a93337"
+        },
+        "sheet_sha256": "b5ea33d04654c6dd494c0f38b86e4c1a1ee826f2e31a4238a91a90a36335ec17"
+      },
+      {
+        "sheet": "other-23.png",
+        "files": [
+          "widget-dark-permission.png",
+          "widget-dark-quick-1x1.png",
+          "widget-dark-two-favorites.png",
+          "widget-light-contact-2x1.png"
+        ],
+        "raw_png_sha256": {
+          "widget-dark-permission.png": "77bcee02a717d60b06fa668b5482202d9f616b5a20b93a9b7b1839dadddcbad3",
+          "widget-dark-quick-1x1.png": "8166bbb70cbfd816f7e1c45c95ce815626d29999416524fea3c1f7ac66332c89",
+          "widget-dark-two-favorites.png": "46d9aafc09884f871d2e2c1ad29538dbdc11a0c92b14949ecdf1161372f38a0a",
+          "widget-light-contact-2x1.png": "b874127d35bf1d43fe34c0c4210351df14f6bc5bb905a63d6163ebe6fbe8038b"
+        },
+        "sheet_sha256": "084295f8f9eae0fd531644a5c9957f0b06814fd4261b7171ac615c9ab4143812"
+      },
+      {
+        "sheet": "other-24.png",
+        "files": [
+          "widget-light-empty.png",
+          "widget-light-favorites-2x2-largefont.png",
+          "widget-light-favorites-2x2.png",
+          "widget-light-favorites-4x2.png"
+        ],
+        "raw_png_sha256": {
+          "widget-light-empty.png": "643a9f58d4a69be68e45f545254c3d87ed02c6a64c7c26845ca3b9237f143672",
+          "widget-light-favorites-2x2-largefont.png": "5cac43aeaed9df527a73e49bab48d847becd870684792c381d524cbeba88b257",
+          "widget-light-favorites-2x2.png": "a823f341123e5c03a9ee4f639004f9a3f804a3a3e1b575d1322bf7b30d5a4571",
+          "widget-light-favorites-4x2.png": "1fc64f233cad7caca1c3c09e1e739cfc6f36ea2071d80c89de53df626b9c10a8"
+        },
+        "sheet_sha256": "66bd3d7af99e933045a596d2a3536518397dd6c042a989b02af0b151308783ad"
+      },
+      {
+        "sheet": "other-25.png",
+        "files": [
+          "widget-light-permission.png",
+          "widget-light-quick-1x1.png",
+          "widget-light-two-favorites.png",
+          "widget-reconfigured.png"
+        ],
+        "raw_png_sha256": {
+          "widget-light-permission.png": "d62f5ecd732e2f43b8463589393acd65114e1b543c65f8655d41d38637612e9a",
+          "widget-light-quick-1x1.png": "9f21ede9e9811f0d5154ea675c86629333d952b99b843e646158774f8d52b4d2",
+          "widget-light-two-favorites.png": "d68e125b49354ec9ecae5f014508c129b7951215eafd4ebd4a9168115c09d779",
+          "widget-reconfigured.png": "9fdbbab2675ad4b4230ca4152f702e53a18de3909f9d8639a098101816fb4b81"
+        },
+        "sheet_sha256": "e592d06d71abe466101750310cf92dd8b387223de9f62a6ed1074de6d3d5f5a9"
+      }
+    ],
+    "modern": [
+      {
+        "sheet": "modern-01.png",
+        "files": [
+          "modern-archive-merged.png",
+          "modern-archive-restore-off.png",
+          "modern-archive-restore-on.png",
+          "modern-backup-options-off.png"
+        ],
+        "raw_png_sha256": {
+          "modern-archive-merged.png": "512ae0d094a584765997f5a19774cb3816820337c28a4a1f60de6182e353d4ae",
+          "modern-archive-restore-off.png": "2a9825aadae9727ae76e74c821cb92abc83783bb2a916b8c55aef1bb56b9a66b",
+          "modern-archive-restore-on.png": "3a005c2bc5d48d04748832cf8d6c40afe40dc5ec40839987dd6950039420f76e",
+          "modern-backup-options-off.png": "cb327c9856f416fe0a66cdfacb90626586bf2c6de6ba0985b7c77619ea6871f7"
+        },
+        "sheet_sha256": "bbc6540170e235662af02eaf6f39ccc329197ba6e03793110e5ae6fb379c45ca"
+      },
+      {
+        "sheet": "modern-02.png",
+        "files": [
+          "modern-backup-options-on.png",
+          "modern-bottom-dialpad-dark-he.png",
+          "modern-bottom-dialpad-light-en.png",
+          "modern-icons-all-nine-dark-he.png"
+        ],
+        "raw_png_sha256": {
+          "modern-backup-options-on.png": "1d4ea95a5cd327532426b1bf060340b2b325b7dc3c5821c5855924cd8cb4dcdb",
+          "modern-bottom-dialpad-dark-he.png": "f6f46c4298cb6da7d94bec63f7ed704d347622f2456df5a3df64e2ad9f232d07",
+          "modern-bottom-dialpad-light-en.png": "0ba6a392d9b2dd26dbf2f88b6dbecc747614f135b898bb040332feb176b7e616",
+          "modern-icons-all-nine-dark-he.png": "136eedb951c880371d5023ada4389ad82e75ef47efdb29f35bcc1fecc1bd6ed5"
+        },
+        "sheet_sha256": "3ba1ee5a7bf0d6874ab015cea186e9ac2cf482bccf2b7afcab3fd91e7dae2753"
+      },
+      {
+        "sheet": "modern-03.png",
+        "files": [
+          "modern-icons-all-nine-light-en.png",
+          "modern-island-below-inapp.png",
+          "modern-island-composition-background.png",
+          "modern-island-dragged.png"
+        ],
+        "raw_png_sha256": {
+          "modern-icons-all-nine-light-en.png": "55dc227617ce9d36108f0006871bf065df03c37e6ab7b5c0006a5853af469589",
+          "modern-island-below-inapp.png": "aa3c975dbaa4a6e9b181a8d2c940913842451a5dee531334981f6baea6ca4b69",
+          "modern-island-composition-background.png": "61745fc171475fbfbfe8a16dffc1faaf7b2bf358bb45bb4a102cc8d938bbf2f1",
+          "modern-island-dragged.png": "211142aa9f8619bb5022a15e8518648fe748aa508db7e89f70be52ca1916ba05"
+        },
+        "sheet_sha256": "4bbe7ae5c3ba9ef12e467cc8b9db2087a48930fde98f09917f009604be160846"
+      },
+      {
+        "sheet": "modern-04.png",
+        "files": [
+          "modern-island-hide-home.png",
+          "modern-island-new-call-shown.png",
+          "modern-island-opacity-0.png",
+          "modern-island-opacity-100.png"
+        ],
+        "raw_png_sha256": {
+          "modern-island-hide-home.png": "42244c5be60256a107c9af1773ee2bfd70e85242724ffe5c40b8d11516c8a581",
+          "modern-island-new-call-shown.png": "5994a1f9b5062ab90f825075c429053801e39f3e8b2da030659b7bbf766448b0",
+          "modern-island-opacity-0.png": "8486618033d833712ef6025e34c94f0628d39845365ecefbd0ee868d8fe18373",
+          "modern-island-opacity-100.png": "3b34c194ec919e93a7b1b56a63e98bb4d022ed0e8baadaaeffe5361c84ffc6e0"
+        },
+        "sheet_sha256": "f9eeb1049eaa82c55ecb1d8e8e2360b13175cc862ac8f00fddd7b070c70744bd"
+      },
+      {
+        "sheet": "modern-05.png",
+        "files": [
+          "modern-island-opacity-35.png",
+          "modern-island-restore-home.png",
+          "modern-island-status-external.png",
+          "modern-island-status-inapp.png"
+        ],
+        "raw_png_sha256": {
+          "modern-island-opacity-35.png": "7c14ed7497a591dc9366f05fb1fa4c76269d3fe8c172cdf8ceb828fc0a4259c0",
+          "modern-island-restore-home.png": "4b7e077a16ac31d02406df7d2c9420e952712c41fd731d1f3e5ab39010b06837",
+          "modern-island-status-external.png": "e19c013ad7b52b87b56635e3808467a9ed83ce94dc6ac64de1be70a2dddd8c13",
+          "modern-island-status-inapp.png": "db1b4a60394888e2b5f779feab0058abc9f6f97efadc6ee027d03fd73ab70b7f"
+        },
+        "sheet_sha256": "85c3bbf2a53f1df626710306bbbe5d406f5dcc4f426163c5da9db08923617e4e"
+      },
+      {
+        "sheet": "modern-06.png",
+        "files": [
+          "modern-recents-inline-dark-he.png",
+          "modern-recents-inline-light-en.png",
+          "modern-wine-controls-dark-he.png",
+          "modern-wine-controls-light-en.png"
+        ],
+        "raw_png_sha256": {
+          "modern-recents-inline-dark-he.png": "d5c1d0770191364eb19fc44bd7a05ddc4ad3d6d124cbee1d47f636a3a491bd9e",
+          "modern-recents-inline-light-en.png": "55c58e55c7937f332d9f57eed067bc6ebae9f8811cf377bd1ec5d368d121ad6d",
+          "modern-wine-controls-dark-he.png": "4ae137b267d255be02e550d63b6aa1961ae66739207632f35a52bdb16134bd2d",
+          "modern-wine-controls-light-en.png": "7c0fc962c65d578282302d9ffbbf48374c0e1b004f48b2a14203b554a9284ee8"
+        },
+        "sheet_sha256": "661669d84fb1b2f060bf34bc091c20f216550fbf69883ede56ec279b04d8093f"
+      }
+    ]
+  }
+}

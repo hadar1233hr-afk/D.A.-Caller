@@ -1,0 +1,135 @@
+{
+  "review_status": "BOUNDED_DOC_GO_PROPOSED_NOT_APPROVED",
+  "reviewed_utc": "2026-11-19T12:43:39.538550+00:00",
+  "reviewer": "status_proof_review_noon",
+  "scope": "Read-only documentation and authorization-boundary review. No publication implementation, test, build, signature command, policy mutation or release execution.",
+  "reviewed_document_sha256": {
+    "docs/releases/0.13.0-publication-approval.md": "b846e18874c3f82c01a7c3a86fae9dcf5fb2a8fa02d23f4b2758f8527c3f20e5",
+    "docs/releases/0.13.0-publication-proposal.json": "355611efc52f6c7ec4c668de2a110d7cc580280a719032c71b82bdcbbd46c9c1",
+    "docs/releases/0.12.0-publication-approval.md": "56b903ac43ebf77f46603870cc896eeaa01baeccc26e31012b439e9e501bfa2a",
+    "docs/DA_CALLER_SIGNING_NEXT_STEPS.md": "be4050f14d1eec2b79a32b8aefb0066d02eed988f1c7908d6648193b96861fc7",
+    "docs/DA_CALLER_OWNER_REQUESTS_2026-11-12.md": "e9b51e564a4ff0cb51bcb88d6c77f00c513418aa82dc1aec7151400ca2013e74",
+    "docs/DA_CALLER_SIGNING_POLICY.json": "4e18e09fcc41697590508e42e337f50bb3246c3928aaca190a6cf54204ee7b47",
+    "docs/evidence/interface-island-archive-0.13.0/final-native-ci/summary.json": "70f688f8967a9b0c10b86cc7750080b2a660e5168215f41e83bf0cb36806f1ac",
+    "docs/evidence/interface-island-archive-0.13.0/final-native-ci/binary-summary.json": "24cf7c4cf20b5082d8f9ef2f711126bb3eb87c99f31d34d455660a83a330a916",
+    "docs/evidence/interface-island-archive-0.13.0/final-native-ci/visual-summary.json": "c31fb98ba97c69ce88d51e41e0a98d6e2d5a6706ff3d931660db396365e404e9",
+    "docs/evidence/interface-island-archive-0.13.0/final-native-ci/debug-signing-policy.json": "8462f3482d655332b291a6142e8f36abeac69c8dd15a55d87471ae882c045ccd",
+    "docs/evidence/interface-island-archive-0.13.0/final-native-ci/binary-signature.txt": "811ec7ee5e546818e91cc3ba918b39c1e1a06328aa1989d0b6e15ab942758c85",
+    "docs/evidence/interface-island-archive-0.13.0/final-native-ci/binary-metadata.txt": "6fe72408544857cde24c6bab53aaae1c2c7417534ee69a1a22224e43287a516f",
+    "docs/evidence/interface-island-archive-0.13.0/final-native-ci/PUBLICATION-BLOCKED.txt": "473b1341b415e4676affc6876f939c089ad8f2d4522858f5dc9cf77e6dd34e4e",
+    "docs/evidence/interface-island-archive-0.13.0/final-native-ci/matrix-verification.json": "4b35de63c2c097f15174c8d1bd09bbe4251f31cda8b7daa63a06bcbac66d78dd",
+    "docs/evidence/interface-island-archive-0.13.0/final-native-ci/personalization-verification.json": "63057779a094bff2d74891250d61b6e705016a567a3cc388a2474a54f8c49828",
+    "docs/evidence/interface-island-archive-0.13.0/final-native-ci/call-integration-verification.json": "4b9870362ef4a3a5228577dfc5bc3df56a809cb02d1384b7e89eeff3fc1a9ad8",
+    "docs/evidence/interface-island-archive-0.13.0/final-native-ci/island-verification.json": "74903162c55c000d3d14dea6a8e5149bbcada55710e8998d107802d3cdf6ee89",
+    "docs/evidence/interface-island-archive-0.13.0/final-native-ci/external-island-verification.json": "cc39e59d2000c675759f279429d292657d373fd7dc6ad21c481f2c6ff7702883",
+    "docs/evidence/interface-island-archive-0.13.0/final-native-ci/followup-verification.json": "b33e92df69a14498b631478da6516931edd9f253fe0298d352f4068f2f240fce",
+    "docs/evidence/interface-island-archive-0.13.0/final-native-ci/callback-business-verification.json": "b9c58717e8e48077f808abe8fc34dcf0af45e46d9403eeedcee2e155a612894e",
+    "docs/evidence/interface-island-archive-0.13.0/final-native-ci/modern-features-verification.json": "49b903d40cc68d59460a0f510f99d8412e38e75feb13e6af4b8acd5ece5aaaec"
+  },
+  "candidate_pins_verified": {
+    "native_source_sha": "7e039daaf2b43716ed2a2b3db1df0b04a8647fcd",
+    "app_tree": "96aa47e9152edc931e4830dd3dbe65e3a09418df",
+    "native_workflow_run_id": 44521985299,
+    "native_apk_artifact_id": 14528288719,
+    "native_ui_artifact_id": 14528238780,
+    "native_checks_artifact_id": 14528790986,
+    "apk_bytes": 1357445,
+    "apk_sha256": "e29b4c6beeb97ccb4ab1b306c83438bbd30eead7d169fda95e722ab84d5ae5f9",
+    "certificate_sha256": "c42aa0e8e318e965444ec99adc4cc6645e677d13b2b8ce2d4e67b54b1e933376",
+    "application_id": "com.dacaller.app",
+    "version_name": "0.13.0",
+    "version_code": 22,
+    "unit_pass": 460,
+    "unit_classes": 44,
+    "native_pass": 40,
+    "actual_pngs": 269,
+    "actually_reviewed_pass": 269
+  },
+  "actual_retained_apk_readonly_check": {
+    "path": "/workspace/work/native-013-ci-44521985299/tested-apk/outputs/apk/debug/app-debug.apk",
+    "bytes": 1357445,
+    "sha256": "e29b4c6beeb97ccb4ab1b306c83438bbd30eead7d169fda95e722ab84d5ae5f9",
+    "signature_package_version": "Cross-checked retained root apksigner/aapt evidence; not re-executed by this reviewer."
+  },
+  "checks": [
+    {
+      "status": "PASS",
+      "check": "Proposal remains nonauthorizing",
+      "detail": "JSON statusPROPOSED_NOT_APPROVED, owner approvalfalse/evidencenull, signing/CI mechanism executionfalse, publication startedfalse and public-download verificationfalse. Markdown explicitly says no0.13 owner approval and no mechanism/release execution."
+    },
+    {
+      "status": "PASS",
+      "check": "Exact one retained APK only",
+      "detail": "Application/version/code,1357445bytes,e29b4c6b…5ae5f9,c42aa0e8…933376,source7e039da/app96aa/CI44521985299 and native/UI/checks artifact IDs match final evidence and actual retained APK bytes. No general allow-debug/incompatible bypass; no rebuild/re-sign; changed application/native producer requires fresh proof."
+    },
+    {
+      "status": "PASS",
+      "check": "0.12 fifth constraint preserved",
+      "detail": "0.12 approval applies only to its immutable delivered binary. Future signing defaults and required beta.9 update pin remain unchanged; proposal cannot borrow the old approval, overwrite old release or resend old link."
+    },
+    {
+      "status": "PASS",
+      "check": "Original and additive verification preserved",
+      "detail": "Seven original gates plus additive245+24=269 gate retain identical final source/run bindings.460uniquehost/44classes,40native and269uniqueactual-reviewedPASS records agree. A docs-only publication commit must prove pinned app-tree equality."
+    },
+    {
+      "status": "PASS",
+      "check": "Independent future implementation review and public equality required",
+      "detail": "Explicit exact-boundary owner approval must be stored before execution; the proposal alone cannot authorize. Bounded implementation and meaningful rejection contracts require independent review. Every promised public APK/UI/source/proof asset must be anonymously downloaded and compared by actual bytes/hash/signature, archive members/CRC/source/gates before delivery."
+    },
+    {
+      "status": "PASS",
+      "check": "Licensed business source and limits retained",
+      "detail": "Proposal retains ODbL/©OpenStreetMap attribution, snapshotdate2026-11-03 and bounded2720records/2660sourceobjects/2616phoneidentities/partialcoverage/unknowncurrentownership. Exact corresponding-source ZIP3169035bytes/SHA5d6358c7…71a5224 verified. Private contacts/archive backups and keys are excluded."
+    },
+    {
+      "status": "PASS",
+      "check": "Hardware, wide-native and signature limits remain honest",
+      "detail": "Physical/carrier/audio/BT/proximity/Doze/fullTalkBack and matching-key upgrades are not claimed. Wide native/hardware status-lane placement staysNOT_TESTED; fixed320dp/font1.3 readable fallback is documented. Signer differs from both beta.9 and0.12, no in-place update claim or uninstall advice. Owner Nov12 request explicitly retains physical-testing waiver as prerequisite only."
+    },
+    {
+      "status": "PASS",
+      "check": "No durable-key waiver or scope creep",
+      "detail": "Stable owner-controlled private identity, independent private backup and authorized repository-secret provisioning remain unresolved separate work. Exact-candidate approval would neither establish durability nor silently cancel that task. No key/password publication or chat disclosure is authorized."
+    },
+    {
+      "status": "PASS",
+      "check": "Current guards unchanged",
+      "detail": "Read-only git comparison found no app/scripts/.github/signing-policy/0.12-approval diff. Policy still has permanent_certificate_sha256:null, original beta.9 required-update pin and only approved_preview_012; retained native policy sayspublication_allowed:false."
+    }
+  ],
+  "concrete_issues": [],
+  "not_authorized_by_review": [
+    "No current0.13 owner approval is inferred.",
+    "No signing/CI guard implementation or release execution is approved by this review.",
+    "No public download equality has been performed or claimed for0.13.",
+    "No hardware/update/wide-native verification or durable-key completion is established."
+  ],
+  "source_or_guard_edits_by_reviewer": false,
+  "publication_execution_by_reviewer": false,
+  "owner_approval_received": false,
+  "publication_allowed": false,
+  "supplemental_read_check": {
+    "checked_utc": "2026-11-19T12:48:12.682425+00:00",
+    "reason": "Root identified two top-note additions made while the initial audit was in progress. Both current documents were then independently reread in full and their exact HEAD diff inspected before the docs commit.",
+    "previous_reviewed_sha256": {
+      "docs/DA_CALLER_SIGNING_NEXT_STEPS.md": "ee451d4ed7ef6720c7191f249e7c9636f1b8ccfd3ec0570d83e1ff5b4e3ebe64",
+      "docs/DA_CALLER_OWNER_REQUESTS_2026-11-12.md": "ecdfa6ff7bf642706a9046456dbc56c473181d25b147932fbc46f0c048e5d224"
+    },
+    "current_reread_sha256": {
+      "docs/DA_CALLER_SIGNING_NEXT_STEPS.md": "be4050f14d1eec2b79a32b8aefb0066d02eed988f1c7908d6648193b96861fc7",
+      "docs/DA_CALLER_OWNER_REQUESTS_2026-11-12.md": "e9b51e564a4ff0cb51bcb88d6c77f00c513418aa82dc1aec7151400ca2013e74"
+    },
+    "status": "BOUNDED_DOC_GO_NO_BOUNDARY_CONTRADICTION",
+    "findings": [
+      "Signing handoff adds the completed460host/40native/269software result and exact-candidate shorthand while explicitly retaining ephemeral/publication_allowed:false, NOT_APPROVED, unchanged safeguards, unresolved permanent key/private backup/repository-secret setup, and no reuse of0.12 approval.",
+      "Owner-request document adds current software completion and exact source/app/run context, clearly labels earlier implementation/native/visual checkpoints historical, and explicitly leaves new signing/publication authorization, durable owner key/backup/secret setup and public-byte-verified delivery unresolved.",
+      "The additions do not change the eleven owner requests, scope of supported status placement, hardware/update NOT_TESTED limits, physical prerequisite waiver,0.12 immutability or future default signing constraints. They do not supply owner approval or execute a safeguard change.",
+      "Every other hash in the original reviewed-document/evidence set, including proposed approval Markdown/JSON, remains identical. Read-only comparison still shows no app/scripts/.github/signing-policy/0.12-approval changes."
+    ],
+    "source_or_guard_edits_by_reviewer": false,
+    "tests_or_publication_execution": false,
+    "owner_approval_received": false,
+    "publication_allowed": false
+  }
+}

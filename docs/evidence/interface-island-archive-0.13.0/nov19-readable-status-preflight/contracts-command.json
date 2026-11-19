@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/tests",
+    "-p",
+    "test_da_caller_modern_native.py",
+    "-v"
+  ],
+  "cwd": "/workspace/D.A.-Caller",
+  "started_utc": "2026-11-19T12:10:09.917745+00:00",
+  "source_sha256": {
+    "scripts/verify-modern-features-native.py": "a615b533729f61484cca04fefc07d43f26efd87c29a33fdc5e186343c3482b57",
+    "scripts/tests/test_da_caller_modern_native.py": "82ca0484a350f6972739f4209d5b785d6793b98dfc4aeed911d79f6ca03b3560",
+    "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java": "1b82532fe55bc7a3b5865a4743b398be88137e86f31e7742d25dce9aa8d6ba47"
+  },
+  "evidence_scope": "Offline synthetic verifier contracts only; not Android/native/visual evidence."
+}

@@ -1,0 +1,183 @@
+{
+  "run_id": 44470286600,
+  "source_sha": "53a678fac4764dc0210cad4e6b11a9d431287241",
+  "app_tree": "c3cdd0ea05b5e094087cb86efe148224787e393e",
+  "unit": {
+    "run_id": 44470286600,
+    "source_sha": "53a678fac4764dc0210cad4e6b11a9d431287241",
+    "artifact_id": 14504670080,
+    "bytes": 163354,
+    "sha256": "d638cd1bf2c0f2d0c409920f6d25bf15dfb5e0b1a5c93cbbc3f89fd64408aa3e",
+    "all_crc_pass": true,
+    "unique_tests": 457,
+    "classes": 44,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native": {
+    "tests": 40,
+    "pass": 40,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "raw_pngs": 269,
+  "verified_artifacts": [
+    {
+      "name": "ui",
+      "artifact_id": 14505305380,
+      "bytes": 17079724,
+      "sha256": "0912c4e04e9c262d06ea20b88822f75e94d68d2df83f9a2a7025df94b096c880",
+      "all_crc_pass": true
+    },
+    {
+      "name": "tested-apk",
+      "artifact_id": 14504686951,
+      "bytes": 1331144,
+      "sha256": "2fa00f30a06b4f410c3478c68a0c8f4a4d701b58a7ce91223231704e8b69e245",
+      "all_crc_pass": true
+    }
+  ],
+  "gate_reports": [
+    {
+      "name": "modern-features-verification.json",
+      "keys": [
+        "source_sha",
+        "app_tree",
+        "workflow_run_id",
+        "api",
+        "size",
+        "density_dpi",
+        "font_scale",
+        "version_name"
+      ],
+      "status": null,
+      "source": "53a678fac4764dc0210cad4e6b11a9d431287241",
+      "sha256": "fbe45285e80cb60be850cba82c5ee8d3a216434ab6a24171912b808ce9feb2ff"
+    },
+    {
+      "name": "call-integration-verification.json",
+      "keys": [
+        "source_sha",
+        "app_tree",
+        "workflow_run_id",
+        "required_real_png_files",
+        "sha256",
+        "native_assertions",
+        "limits"
+      ],
+      "status": null,
+      "source": "53a678fac4764dc0210cad4e6b11a9d431287241",
+      "sha256": "e0ab62a0c7751bf287403d155ce56ee86dae08c1b46df24933e8ea403b5fb1f6"
+    },
+    {
+      "name": "island-verification.json",
+      "keys": [
+        "source_sha",
+        "app_tree",
+        "workflow_run_id",
+        "api",
+        "size",
+        "density_dpi",
+        "font_scale",
+        "window_insets"
+      ],
+      "status": null,
+      "source": "53a678fac4764dc0210cad4e6b11a9d431287241",
+      "sha256": "5c10ba4514b04a63c02b33662ebbe758aa82ae2b6bd462a90e5d4dc243f31a14"
+    },
+    {
+      "name": "external-island-verification.json",
+      "keys": [
+        "source_sha",
+        "app_tree",
+        "workflow_run_id",
+        "api",
+        "size",
+        "density_dpi",
+        "font_scale",
+        "required_real_png_files"
+      ],
+      "status": null,
+      "source": "53a678fac4764dc0210cad4e6b11a9d431287241",
+      "sha256": "efb76c75efd6dbb8c776f32a44692b2a06dbeb972ad9f639620fe1f519ae462e"
+    },
+    {
+      "name": "matrix-verification.json",
+      "keys": [
+        "window_insets",
+        "source_sha",
+        "app_tree",
+        "workflow_run_id",
+        "api",
+        "size",
+        "density_dpi",
+        "styles"
+      ],
+      "status": null,
+      "source": "53a678fac4764dc0210cad4e6b11a9d431287241",
+      "sha256": "8a4c637313675108ccd13b23ec91121a6eeafa6b526e71cdde968b7f2a6aba6f"
+    },
+    {
+      "name": "followup-verification.json",
+      "keys": [
+        "source_sha",
+        "app_tree",
+        "workflow_run_id",
+        "api",
+        "size",
+        "density_dpi",
+        "font_scale",
+        "required_real_png_files"
+      ],
+      "status": null,
+      "source": "53a678fac4764dc0210cad4e6b11a9d431287241",
+      "sha256": "6318b79f57ac8646460f230756499965bb84b529f5b5ebbcc3178e0c50fdd87d"
+    },
+    {
+      "name": "callback-business-verification.json",
+      "keys": [
+        "source_sha",
+        "app_tree",
+        "workflow_run_id",
+        "api",
+        "size",
+        "density_dpi",
+        "font_scale",
+        "required_real_png_files"
+      ],
+      "status": null,
+      "source": "53a678fac4764dc0210cad4e6b11a9d431287241",
+      "sha256": "488b813e2acb87469f48331d4b0d8da64613571a15cbfe7941e570befd48d68f"
+    },
+    {
+      "name": "personalization-verification.json",
+      "keys": [
+        "source_sha",
+        "app_tree",
+        "workflow_run_id",
+        "api",
+        "size",
+        "density_dpi",
+        "window_insets",
+        "required_real_png_files"
+      ],
+      "status": null,
+      "source": "53a678fac4764dc0210cad4e6b11a9d431287241",
+      "sha256": "4adb32200e31ab19bbc84a01f04513fd57a9b285c17b9eb9a7135db46f14ef1b"
+    }
+  ],
+  "apk_policy": {
+    "apk_sha256": "4a0251b7855c3f6c7c7be78283f2fab568c2e1fbc6d33d0df728dbc7b394bf5b",
+    "certificate_sha256": "850bb1092393ba96565a391670a37b6c973370bb7ddc42b2bb07d787c04ade42",
+    "mode": "ephemeral-test-only",
+    "publication_allowed": false,
+    "required_update_certificate_matches": false,
+    "required_update_version": "0.11.0-beta.9",
+    "schema_version": 1
+  },
+  "apk_bytes": 1356041,
+  "whole_visual_review": "PENDING",
+  "publication_allowed": false
+}

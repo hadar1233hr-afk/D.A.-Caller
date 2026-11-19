@@ -1,0 +1,5 @@
+{
+  "status": "FAILED_BEFORE_TESTS",
+  "actual_tests_executed": 0,
+  "reason": "new Main ViewGroup import missing; fixed; staleJUnit copies removed"
+}

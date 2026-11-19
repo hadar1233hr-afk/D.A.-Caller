@@ -1,0 +1,139 @@
+{
+  "status": "SOURCE_FIELD_SEMANTIC_CAUTION_NOT_LOCATION_ERROR",
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "observations": [
+    {
+      "source_id": "osm:node:445978117",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "IN"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED",
+      "source_category": "office:diplomatic",
+      "source_name": "Embassy of the Republic of India",
+      "interpretation": "office:diplomatic country can identify represented/sending state; addr:country is IL. Not evidence that the office is physically outside Israel. No conflicting addr/is_in geographic country field observed."
+    },
+    {
+      "source_id": "osm:node:446695003",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "NG"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED",
+      "source_category": "office:diplomatic",
+      "source_name": "שגרירות ניגריה",
+      "interpretation": "office:diplomatic country can identify represented/sending state; addr:country is IL. Not evidence that the office is physically outside Israel. No conflicting addr/is_in geographic country field observed."
+    },
+    {
+      "source_id": "osm:node:1928123076",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "CA"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED",
+      "source_category": "office:diplomatic",
+      "source_name": "שגרירות קנדה",
+      "interpretation": "office:diplomatic country can identify represented/sending state; addr:country is IL. Not evidence that the office is physically outside Israel. No conflicting addr/is_in geographic country field observed."
+    },
+    {
+      "source_id": "osm:node:2622539698",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "VA"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED",
+      "source_category": "office:diplomatic",
+      "source_name": "Embassy of the Holy See (Vatican)",
+      "interpretation": "office:diplomatic country can identify represented/sending state; addr:country is IL. Not evidence that the office is physically outside Israel. No conflicting addr/is_in geographic country field observed."
+    },
+    {
+      "source_id": "osm:node:2789809523",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "DE"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED",
+      "source_category": "office:diplomatic",
+      "source_name": "שגרירות של הרפובליקה הפדרלית של גרמניה",
+      "interpretation": "office:diplomatic country can identify represented/sending state; addr:country is IL. Not evidence that the office is physically outside Israel. No conflicting addr/is_in geographic country field observed."
+    },
+    {
+      "source_id": "osm:node:5621700951",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "TR"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED",
+      "source_category": "office:diplomatic",
+      "source_name": "שגרירות טורקיה",
+      "interpretation": "office:diplomatic country can identify represented/sending state; addr:country is IL. Not evidence that the office is physically outside Israel. No conflicting addr/is_in geographic country field observed."
+    },
+    {
+      "source_id": "osm:node:9750191429",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "ER"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED",
+      "source_category": "office:diplomatic",
+      "source_name": "שגרירות אריתריאה",
+      "interpretation": "office:diplomatic country can identify represented/sending state; addr:country is IL. Not evidence that the office is physically outside Israel. No conflicting addr/is_in geographic country field observed."
+    },
+    {
+      "source_id": "osm:node:9761408356",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "VN"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED",
+      "source_category": "office:diplomatic",
+      "source_name": "שגרירות וייטנאם",
+      "interpretation": "office:diplomatic country can identify represented/sending state; addr:country is IL. Not evidence that the office is physically outside Israel. No conflicting addr/is_in geographic country field observed."
+    },
+    {
+      "source_id": "osm:node:12248092834",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "EU"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED",
+      "source_category": "office:diplomatic",
+      "source_name": "مكتب ممثل الاتحاد الأوروبي",
+      "interpretation": "office:diplomatic country can identify represented/sending state; addr:country is IL. Not evidence that the office is physically outside Israel. No conflicting addr/is_in geographic country field observed."
+    }
+  ],
+  "measured_total": 9,
+  "all_office_diplomatic": true,
+  "no_conflicting_addr_or_is_in_geographic_fields_in_these9": true,
+  "v2_policy_limit": "Conservative rejection of any secondary country string rejects represented-state labels too; v2 may have diplomatic false negatives. Do not infer that primary24 are outside Israel or mislocated from these fields.",
+  "primary24_unchanged": true,
+  "app_bundled_rows": 0,
+  "source_node_audit_sha256": "3da31677ac4a8897ecf2c3be77e51ab714f857c2dd8bf38e815c5adfc40b821f"
+}

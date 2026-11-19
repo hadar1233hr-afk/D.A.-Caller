@@ -1,0 +1,40 @@
+{
+  "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED",
+  "node_rows": 2448,
+  "way_rows": 247,
+  "aggregate_rows": 2695,
+  "distinct_source_objects": 2635,
+  "distinct_base_phones": 2590,
+  "phones_shared_between_node_and_way_corpora": 5,
+  "source_versions_unchanged": true,
+  "app_rows_added": 0,
+  "way_corpus_sha256": "cdbac300bf164e252e606d990f648c040e7193444b525786b16aba9049a692d6",
+  "node_corpus_sha256": "37ce40b735e144cc38eee1e72ce75c785424f0213d05c9c35feb766c1b2704df",
+  "way_first_failure_packager_results": {
+    "Country membership not explicitly sourced": 244,
+    "Invalid app dial identity": 3
+  },
+  "way_text_blocker_rows_all_fields": 0,
+  "way_country_tags": {
+    "<missing>": 245,
+    "IL": 2
+  },
+  "way_source_years": {
+    "2014": 2,
+    "2017": 10,
+    "2018": 6,
+    "2019": 8,
+    "2020": 7,
+    "2021": 5,
+    "2022": 13,
+    "2023": 39,
+    "2024": 34,
+    "2025": 22,
+    "2026": 101
+  },
+  "limits": [
+    "Distinct source objects and raw phone rows are not verified distinct physical businesses.",
+    "A number shared across node/way records is not automatically merged.",
+    "Existing production packaging still rejects research rows; no country tags or source identities changed."
+  ]
+}

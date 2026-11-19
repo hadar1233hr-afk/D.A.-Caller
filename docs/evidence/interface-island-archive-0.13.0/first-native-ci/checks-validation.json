@@ -1,0 +1,15 @@
+{
+  "artifact_id": 14014413987,
+  "run_id": 43377691773,
+  "source_sha": "a6eaf11affb08bb54bf2e150fbf24e9900edd3f2",
+  "zip_sha256": "ac5119e74869681ce58bb0baa1e09f171b652d47c865e5656214eadc181ad5af",
+  "bytes": 159816,
+  "crc": "PASS",
+  "actual_unit": {
+    "tests": 451,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0
+  },
+  "download_method": "connectedGitHub artifactdownload +Sedimentdownload_file exactbytes"
+}

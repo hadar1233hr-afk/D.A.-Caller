@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.FastPagesTouchTest" tests="17" skipped="0" failures="0" errors="0" timestamp="2026-11-12T22:23:08" hostname="3ebae333e153" time="6.01">
+  <properties/>
+  <testcase name="contactSearchSurvivesPageRebuild" classname="com.dacaller.app.FastPagesTouchTest" time="0.658"/>
+  <testcase name="contactDetailsAndFavoriteStarNeverPlaceCalls" classname="com.dacaller.app.FastPagesTouchTest" time="0.33"/>
+  <testcase name="horizontalSwipeCallsCorrectRowOnce" classname="com.dacaller.app.FastPagesTouchTest" time="0.293"/>
+  <testcase name="recentAvatarDetailsAndCallHaveIndependentActions" classname="com.dacaller.app.FastPagesTouchTest" time="0.389"/>
+  <testcase name="contactCallButtonDispatchesExactlyOneNumberWithoutMovingList" classname="com.dacaller.app.FastPagesTouchTest" time="0.387"/>
+  <testcase name="asynchronousRecentSnapshotReplacementCannotChangeBoundRowNumber" classname="com.dacaller.app.FastPagesTouchTest" time="0.319"/>
+  <testcase name="stalePostedRestoreCannotJumpAfterTouchStarts" classname="com.dacaller.app.FastPagesTouchTest" time="0.463"/>
+  <testcase name="delayedPhotoForOldContactNeverAppearsInRecycledRow" classname="com.dacaller.app.FastPagesTouchTest" time="0.258"/>
+  <testcase name="filteredAndRecycledRowsCallDisplayedPerson" classname="com.dacaller.app.FastPagesTouchTest" time="0.282"/>
+  <testcase name="recentCallButtonDispatchesExactlyOneNumberWithoutMovingList" classname="com.dacaller.app.FastPagesTouchTest" time="0.361"/>
+  <testcase name="configuredLeftSwipeCallsAndWrongDirectionDoesNot" classname="com.dacaller.app.FastPagesTouchTest" time="0.229"/>
+  <testcase name="disabledSwipeDoesNotCall" classname="com.dacaller.app.FastPagesTouchTest" time="0.211"/>
+  <testcase name="topMiddleAndEndContactsUseDisplayedNumbersAndKeepPosition" classname="com.dacaller.app.FastPagesTouchTest" time="0.351"/>
+  <testcase name="swipeBeginningOnDedicatedCallControlDoesNotCall" classname="com.dacaller.app.FastPagesTouchTest" time="0.249"/>
+  <testcase name="archiveIsOnlyAnOptionalFinalFooterOutsideCurrentRows" classname="com.dacaller.app.FastPagesTouchTest" time="0.458"/>
+  <testcase name="verticalFlickStartingAtDialControlNeverCalls" classname="com.dacaller.app.FastPagesTouchTest" time="0.558"/>
+  <testcase name="verticalGestureCannotTurnIntoAccidentalDiagonalCall" classname="com.dacaller.app.FastPagesTouchTest" time="0.211"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

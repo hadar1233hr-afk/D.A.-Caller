@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.CallNotificationsTest" tests="17" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:14:17" hostname="3ebae333e153" time="3.999">
+  <properties/>
+  <testcase name="unsupportedOrChangedStateSpeakerActionsHaveNoEffect" classname="com.dacaller.app.CallNotificationsTest" time="0.595"/>
+  <testcase name="lateContactLookupForRemovedCallCannotRenameNewCall" classname="com.dacaller.app.CallNotificationsTest" time="0.698"/>
+  <testcase name="globallyBlockedIncomingNotificationsOpenOwnCallScreenOnlyOnce" classname="com.dacaller.app.CallNotificationsTest" time="0.07"/>
+  <testcase name="serviceDestroyRemovesForegroundCallNotificationWithoutStoppingTelecomItself" classname="com.dacaller.app.CallNotificationsTest" time="0.031"/>
+  <testcase name="enabledIncomingNotificationUsesFullscreenWithoutAnExtraActivityLaunch" classname="com.dacaller.app.CallNotificationsTest" time="0.026"/>
+  <testcase name="deniedForegroundStartKeepsCallOwnershipAndOnlyRingingUsesFullscreenFallback" classname="com.dacaller.app.CallNotificationsTest" time="0.058"/>
+  <testcase name="android26HasNativeFallbackAndAllOngoingActions" classname="com.dacaller.app.CallNotificationsTest" time="0.551"/>
+  <testcase name="localContactNameIsResolvedOffThreadAndRevocationDropsIt" classname="com.dacaller.app.CallNotificationsTest" time="0.279"/>
+  <testcase name="outgoingAndIncomingAreDistinctAndBackgroundRingingKeepsAnswerDecline" classname="com.dacaller.app.CallNotificationsTest" time="0.056"/>
+  <testcase name="speakerActionsUseActualRouteAndRefreshOnlyAfterAudioCallback" classname="com.dacaller.app.CallNotificationsTest" time="0.423"/>
+  <testcase name="phoneCallForegroundLifecycleKeepsTheRemainingCallAndStopsAfterTheLast" classname="com.dacaller.app.CallNotificationsTest" time="0.03"/>
+  <testcase name="android26StartsForegroundWithoutANewerApiTypeAndCleansUp" classname="com.dacaller.app.CallNotificationsTest" time="0.081"/>
+  <testcase name="speakerOffUsesWiredRouteAndStaleOffCannotReplaceLaterBluetooth" classname="com.dacaller.app.CallNotificationsTest" time="0.366"/>
+  <testcase name="ongoingNotificationNamesCallerAndOffersThreeRealActions" classname="com.dacaller.app.CallNotificationsTest" time="0.351"/>
+  <testcase name="endedCallActionsCannotRouteOrDisconnectItsSuccessor" classname="com.dacaller.app.CallNotificationsTest" time="0.299"/>
+  <testcase name="blockedIncomingChannelFallsBackWithoutRequestingADialerRole" classname="com.dacaller.app.CallNotificationsTest" time="0.059"/>
+  <testcase name="privatePresentationNeverRevealsNumberOrContactName" classname="com.dacaller.app.CallNotificationsTest" time="0.022"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Intent = Intent { act=com.dacaller.app.CALL_SPEAKER_ON dat=dacaller-call: cmp=com.dacaller.app/.CallCommandReceiver (has extras) }; Matching wrappers: [Wrapper[receiver=[com.dacaller.app.CallCommandReceiver@3cd6cbc7], context=[android.app.ContextImpl@7446be04], intentFilter=[android.content.IntentFilter@43a1b99e]]]
+Intent = Intent { act=com.dacaller.app.CALL_SPEAKER_ON dat=dacaller-call: cmp=com.dacaller.app/.CallCommandReceiver (has extras) }; Matching wrappers: [Wrapper[receiver=[com.dacaller.app.CallCommandReceiver@3cd6cbc7], context=[android.app.ContextImpl@7446be04], intentFilter=[android.content.IntentFilter@43a1b99e]]]
+Intent = Intent { act=com.dacaller.app.CALL_SPEAKER_ON dat=dacaller-call: cmp=com.dacaller.app/.CallCommandReceiver (has extras) }; Matching wrappers: [Wrapper[receiver=[com.dacaller.app.CallCommandReceiver@c2ea298], context=[android.app.ContextImpl@5cb765c6], intentFilter=[android.content.IntentFilter@3a882010]]]
+Intent = Intent { act=com.dacaller.app.CALL_SPEAKER_ON dat=dacaller-call: cmp=com.dacaller.app/.CallCommandReceiver (has extras) }; Matching wrappers: [Wrapper[receiver=[com.dacaller.app.CallCommandReceiver@c2ea298], context=[android.app.ContextImpl@5cb765c6], intentFilter=[android.content.IntentFilter@3a882010]]]
+Intent = Intent { act=com.dacaller.app.CALL_SPEAKER_OFF dat=dacaller-call: cmp=com.dacaller.app/.CallCommandReceiver (has extras) }; Matching wrappers: [Wrapper[receiver=[com.dacaller.app.CallCommandReceiver@c2ea298], context=[android.app.ContextImpl@5cb765c6], intentFilter=[android.content.IntentFilter@3a882010]]]
+Intent = Intent { act=com.dacaller.app.CALL_SPEAKER_OFF dat=dacaller-call: cmp=com.dacaller.app/.CallCommandReceiver (has extras) }; Matching wrappers: [Wrapper[receiver=[com.dacaller.app.CallCommandReceiver@6b2ea65f], context=[android.app.ContextImpl@7689af47], intentFilter=[android.content.IntentFilter@7a41de7]]]
+Intent = Intent { act=com.dacaller.app.CALL_SPEAKER_OFF dat=dacaller-call: cmp=com.dacaller.app/.CallCommandReceiver (has extras) }; Matching wrappers: [Wrapper[receiver=[com.dacaller.app.CallCommandReceiver@6b2ea65f], context=[android.app.ContextImpl@7689af47], intentFilter=[android.content.IntentFilter@7a41de7]]]
+Intent = Intent { act=com.dacaller.app.CALL_HANGUP dat=dacaller-call: cmp=com.dacaller.app/.CallCommandReceiver (has extras) }; Matching wrappers: [Wrapper[receiver=[com.dacaller.app.CallCommandReceiver@56d7c45c], context=[android.app.ContextImpl@12bf4e4f], intentFilter=[android.content.IntentFilter@e462a20]]]
+Intent = Intent { act=com.dacaller.app.CALL_HANGUP dat=dacaller-call: cmp=com.dacaller.app/.CallCommandReceiver (has extras) }; Matching wrappers: [Wrapper[receiver=[com.dacaller.app.CallCommandReceiver@542a2631], context=[android.app.ContextImpl@4ec5375a], intentFilter=[android.content.IntentFilter@1420274b]]]
+Intent = Intent { act=com.dacaller.app.CALL_SPEAKER_ON dat=dacaller-call: cmp=com.dacaller.app/.CallCommandReceiver (has extras) }; Matching wrappers: [Wrapper[receiver=[com.dacaller.app.CallCommandReceiver@542a2631], context=[android.app.ContextImpl@4ec5375a], intentFilter=[android.content.IntentFilter@1420274b]]]
+]]></system-err>
+</testsuite>

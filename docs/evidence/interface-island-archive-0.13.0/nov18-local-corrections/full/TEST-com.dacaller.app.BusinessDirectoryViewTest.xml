@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.BusinessDirectoryViewTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-11-18T12:20:12" hostname="3ebae333e153" time="4.814">
+  <properties/>
+  <testcase name="pageAndSearchStateSurviveRecreationWithoutLoadingEarlierPages" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.493"/>
+  <testcase name="detachDisarmsDialogCallUntilDirectoryIsVisibleAgain" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.303"/>
+  <testcase name="taxonomyLabelsAreDisplayOnlyAndPreserveRawSourceIdentity" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.298"/>
+  <testcase name="unavailableDatasetShowsHonestStateAndPersonalTabStillWorks" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.194"/>
+  <testcase name="detachedRowsCannotDialAndDetachedSearchCannotChangeSavedQuery" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.221"/>
+  <testcase name="changingQueryDisarmsOldRowBeforeDebouncedResultsArrive" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.208"/>
+  <testcase name="obsoleteSearchViewCannotOverwriteRecreatedDirectoryState" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.358"/>
+  <testcase name="recycledRowCallsOnlyItsBoundVisibleBusiness" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.225"/>
+  <testcase name="loaderFailureNeverDisplaysAnExceptionOrFabricatedBusinesses" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.195"/>
+  <testcase name="nonemptyHeaderActuallyCollapsesAndReturnsForEmptySearchWithoutCalling" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.717"/>
+  <testcase name="noContactsPermissionNeededAndTypingNeverDials" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.223"/>
+  <testcase name="showingRecordDetailsDoesNotDialOrOpenSourceUntilExplicitAction" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.365"/>
+  <testcase name="closingDirectoryRejectsQueuedUiResult" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.131"/>
+  <testcase name="fullSourceAttributionFitsTwoLinesAndTopTargetOpensFullDetailsInBothLanguages" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.702"/>
+  <testcase name="staleBackgroundResultsCannotReplaceNewQuery" classname="com.dacaller.app.BusinessDirectoryViewTest" time="0.175"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

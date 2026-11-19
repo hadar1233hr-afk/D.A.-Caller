@@ -1,0 +1,17 @@
+{
+  "apk_sha256": "e29b4c6beeb97ccb4ab1b306c83438bbd30eead7d169fda95e722ab84d5ae5f9",
+  "apk_bytes": 1357445,
+  "certificate_sha256": "c42aa0e8e318e965444ec99adc4cc6645e677d13b2b8ce2d4e67b54b1e933376",
+  "package": "com.dacaller.app",
+  "version_name": "0.13.0",
+  "version_code": 22,
+  "signature_verifies": true,
+  "no_internet_permission": true,
+  "frozen_assets_match": {
+    "assets/business-directory/israel-businesses.sqlite": "cbc7dc7b41c3fa9335cbf37907243681820fe23107e40541efb306dc1b566af3",
+    "assets/business-directory/manifest.json": "fec348522615f62d36fa62ee65ff317340ea4806a85f15c457daa30378805cfa"
+  },
+  "native_artifact": 14528288719,
+  "rebuilt_or_resigned": false,
+  "publication_allowed": false
+}

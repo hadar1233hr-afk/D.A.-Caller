@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.ContactDataTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-18T12:21:10" hostname="3ebae333e153" time="0.178">
+  <properties/>
+  <testcase name="contactsWithoutPhonesHaveDistinctFavoriteKeys" classname="com.dacaller.app.ContactDataTest" time="0.021"/>
+  <testcase name="updateKeepsExactNumberAndStoredType" classname="com.dacaller.app.ContactDataTest" time="0.024"/>
+  <testcase name="organizationAndPostalUseTheirActualProviderColumns" classname="com.dacaller.app.ContactDataTest" time="0.015"/>
+  <testcase name="clearingExistingNumberDeletesOnlyItsDataRow" classname="com.dacaller.app.ContactDataTest" time="0.023"/>
+  <testcase name="highResolutionPhotoIsSampledBeforeDecoding" classname="com.dacaller.app.ContactDataTest" time="0.012"/>
+  <testcase name="customPhoneAndEmailTypesAndRowIdentitiesSurviveLoading" classname="com.dacaller.app.ContactDataTest" time="0.013"/>
+  <testcase name="serviceNumberLookupAndSearchKeysDoNotAliasOrdinaryNumbers" classname="com.dacaller.app.ContactDataTest" time="0.014"/>
+  <testcase name="serviceNumbersDoNotShareFavoriteKeysWithOrdinaryNumbers" classname="com.dacaller.app.ContactDataTest" time="0.041"/>
+  <testcase name="emptyPhoneEmailAndEventDoNotInsertTypeOnlyRows" classname="com.dacaller.app.ContactDataTest" time="0.014"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

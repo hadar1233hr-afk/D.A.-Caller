@@ -101,6 +101,54 @@ public class CallReturnNavigationTest {
    assertFalse(app.getSharedPreferences("da_caller",Context.MODE_PRIVATE).getBoolean("role_prompted",false));
   }
  }
+ @Test public void businessReturnPreservesOnlyTypedSearchAndAnchorsWithoutReplayingDial(){
+  Bundle state=new Bundle();state.putString("page","contacts");state.putBoolean("contacts_business_mode",true);
+  state.putString("business_query","בית קפה");state.putInt("business_offset",100);state.putInt("business_position",12);
+  state.putInt("business_top",-9);state.putLong("business_id",9000000001L);state.putString("place_call","0501112233");
+  CallReturnNavigation.saveMain(app,state);Bundle restored=CallReturnNavigation.mainState(app);
+  assertTrue(restored.getBoolean("contacts_business_mode"));assertEquals("בית קפה",restored.getString("business_query"));
+  assertEquals(100,restored.getInt("business_offset"));assertEquals(12,restored.getInt("business_position"));
+  assertEquals(-9,restored.getInt("business_top"));assertEquals(9000000001L,restored.getLong("business_id"));
+  assertFalse(restored.containsKey("place_call"));
+  runtime.edit().putString("business_offset","bad").putString("contacts_business_mode","true").putInt("business_query",42).commit();
+  Bundle corrupt=CallReturnNavigation.mainState(app);assertEquals(0,corrupt.getInt("business_offset"));
+  assertFalse(corrupt.getBoolean("contacts_business_mode"));assertEquals("",corrupt.getString("business_query"));
+ }
+ @Test public void coldReturnRetainsExactExpandedIdentityAndSettingsOriginWithoutCallExtras(){
+  Bundle state=new Bundle();state.putString("page","settings");state.putString("settings_return_page","contacts");
+  state.putLong("recent_expanded_id",42);state.putLong("recent_expanded_date",1731101234567L);state.putString("recent_expanded_number","+972 50-123-4567");
+  state.putInt("recent_position",7);state.putInt("recent_offset",-19);state.putString("contact_query","דנה");
+  state.putString("requested_call","0501112222");state.putString("pending_role_call","0501112222");state.putString("dialpad","0501112222");
+  CallReturnNavigation.saveMain(app,state);Bundle actual=CallReturnNavigation.mainState(app);
+  assertEquals(42,actual.getLong("recent_expanded_id"));assertEquals(1731101234567L,actual.getLong("recent_expanded_date"));
+  assertEquals("+972 50-123-4567",actual.getString("recent_expanded_number"));assertEquals("contacts",actual.getString("settings_return_page"));
+  assertEquals(7,actual.getInt("recent_position"));assertEquals(-19,actual.getInt("recent_offset"));assertEquals("דנה",actual.getString("contact_query"));
+  assertFalse(actual.containsKey("requested_call"));assertFalse(actual.containsKey("pending_role_call"));assertFalse(actual.containsKey("dialpad"));
+  try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class,CallReturnNavigation.intent(app)).setup()){
+   controller.get().onBackPressed();Bundle saved=new Bundle();controller.get().onSaveInstanceState(saved);
+   assertEquals("contacts",saved.getString("page"));assertNull(Shadows.shadowOf(controller.get()).getNextStartedActivity());
+  }
+ }
+ @Test public void malformedRuntimeExpansionAndSettingsOriginCollapseSafely(){
+  runtime.edit().putString("recent_expanded_id","wrong type").putInt("recent_expanded_date",12).putBoolean("recent_expanded_number",true)
+   .putString("settings_return_page","place_call").commit();Bundle state=CallReturnNavigation.mainState(app);
+  assertEquals(Long.MIN_VALUE,state.getLong("recent_expanded_id"));assertEquals(0,state.getLong("recent_expanded_date"));
+  assertEquals("",state.getString("recent_expanded_number"));assertEquals("recents",state.getString("settings_return_page"));
+ }
+ @Test public void bottomDialpadAndTopLeftSettingsPreserveContactDestinationAndDoNotDial(){
+  try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup()){
+   MainActivity activity=controller.get();activity.openContactsTab();View content=activity.findViewById(android.R.id.content);
+   assertNull(content.findViewWithTag("floating_dial"));assertNull(content.findViewWithTag("main_nav_settings"));
+   View keypad=content.findViewWithTag("main_nav_keypad");assertNotNull(keypad);keypad.performClick();
+   android.app.Dialog dialog=org.robolectric.shadows.ShadowDialog.getLatestDialog();assertNotNull(dialog);assertTrue(dialog.isShowing());
+   assertNull(Shadows.shadowOf(activity).getNextStartedActivity());assertNull(PhoneSessionService.current);dialog.dismiss();
+   View settings=content.findViewWithTag("main_settings_button");assertNotNull(settings);assertTrue(settings.getLayoutParams().width>=48*activity.getResources().getDisplayMetrics().density);
+   settings.performClick();Bundle state=new Bundle();activity.onSaveInstanceState(state);assertEquals("settings",state.getString("page"));
+   controller.pause().stop();assertEquals("contacts",CallReturnNavigation.mainState(app).getString("settings_return_page"));
+   activity.onBackPressed();state.clear();activity.onSaveInstanceState(state);assertEquals("contacts",state.getString("page"));
+   assertFalse(activity.isFinishing());assertNull(Shadows.shadowOf(activity).getNextStartedActivity());
+  }
+ }
  @Test public void liveMainReturnKeepsItsActualPageAndIgnoresInjectedDialExtras(){
   try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup()){
    MainActivity activity=controller.get();activity.openContactsTab();
@@ -117,6 +165,21 @@ public class CallReturnNavigationTest {
   app.getSharedPreferences("da_caller",Context.MODE_PRIVATE).edit().putString("start_page","settings").commit();
   try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup()){
    Bundle state=new Bundle();controller.get().onSaveInstanceState(state);assertEquals("settings",state.getString("page"));
+  }
+ }
+ @Test public void businessColdReturnRestoresSeparateTabAndRecentShortcutNeverDials(){
+  Bundle state=new Bundle();state.putString("page","contacts");state.putBoolean("contacts_business_mode",true);
+  state.putString("business_query","קפה");state.putInt("business_offset",50);CallReturnNavigation.saveMain(app,state);
+  try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class,CallReturnNavigation.intent(app)).setup()){
+   MainActivity activity=controller.get();View content=activity.findViewById(android.R.id.content);
+   if(BuildConfig.BUSINESS_DIRECTORY_ENABLED)assertNotNull(content.findViewWithTag("business_directory_root"));
+   else {assertNull(content.findViewWithTag("business_directory_root"));assertNull(content.findViewWithTag("contacts_directory_tab"));}
+   Bundle restored=new Bundle();activity.onSaveInstanceState(restored);
+   assertEquals(BuildConfig.BUSINESS_DIRECTORY_ENABLED,restored.getBoolean("contacts_business_mode"));assertEquals("קפה",restored.getString("business_query"));
+   assertEquals(50,restored.getInt("business_offset"));
+   activity.onNewIntent(new Intent(activity,MainActivity.class).putExtra("show_recents",true));
+   Bundle recents=new Bundle();activity.onSaveInstanceState(recents);assertEquals("recents",recents.getString("page"));
+   assertNull("Navigation must never enqueue a call",Shadows.shadowOf(activity).getNextStartedActivity());
   }
  }
  @Test public void coldReadOnlyDestinationsAreExplicitAndPermissionScoped(){
@@ -144,4 +207,35 @@ public class CallReturnNavigationTest {
    assertNull("Android already restores its saved Activity stack",Shadows.shadowOf(controller.get()).getNextStartedActivity());
   }
  }
+ @Test public void incomingTouchRequiresCompletedSwipeAndCancelledDragCannotAnswer(){
+  Call call=mock(Call.class);when(call.getState()).thenReturn(Call.STATE_RINGING);PhoneSessionService.current=call;
+  try(ActivityController<CallScreenActivity> controller=Robolectric.buildActivity(CallScreenActivity.class).setup()){
+   View prompt=controller.get().findViewById(android.R.id.content).findViewWithTag("incoming-swipe-answer");assertNotNull(prompt);
+   float distance=100*controller.get().getResources().getDisplayMetrics().density;
+   gestureEvent(prompt,android.view.MotionEvent.ACTION_DOWN,0);gestureEvent(prompt,android.view.MotionEvent.ACTION_UP,0);
+   gestureEvent(prompt,android.view.MotionEvent.ACTION_DOWN,0);gestureEvent(prompt,android.view.MotionEvent.ACTION_UP,distance/4);
+   gestureEvent(prompt,android.view.MotionEvent.ACTION_DOWN,0);gestureEvent(prompt,android.view.MotionEvent.ACTION_MOVE,distance);
+   assertTrue("The swipe must visibly follow the finger",prompt.getTranslationX()>0);
+   gestureEvent(prompt,android.view.MotionEvent.ACTION_CANCEL,distance);gestureEvent(prompt,android.view.MotionEvent.ACTION_UP,distance);
+   verify(call,never()).answer(anyInt());assertEquals(0f,prompt.getTranslationX(),0f);
+   gestureEvent(prompt,android.view.MotionEvent.ACTION_DOWN,0);gestureEvent(prompt,android.view.MotionEvent.ACTION_MOVE,distance);
+   gestureEvent(prompt,android.view.MotionEvent.ACTION_UP,distance);verify(call,times(1)).answer(android.telecom.VideoProfile.STATE_AUDIO_ONLY);
+  }
+ }
+ @Test public void incomingAccessibilityCanAnswerButOldCallSwipeCannotAffectItsReplacement(){
+  Call call=mock(Call.class);when(call.getState()).thenReturn(Call.STATE_RINGING);PhoneSessionService.current=call;
+  try(ActivityController<CallScreenActivity> controller=Robolectric.buildActivity(CallScreenActivity.class).setup()){
+   View prompt=controller.get().findViewById(android.R.id.content).findViewWithTag("incoming-swipe-answer");assertNotNull(prompt);
+   assertTrue(prompt.performAccessibilityAction(android.view.accessibility.AccessibilityNodeInfo.ACTION_CLICK,null));
+   verify(call).answer(android.telecom.VideoProfile.STATE_AUDIO_ONLY);
+   Call replacement=mock(Call.class);when(replacement.getState()).thenReturn(Call.STATE_RINGING);PhoneSessionService.current=replacement;
+   gestureEvent(prompt,android.view.MotionEvent.ACTION_DOWN,0);gestureEvent(prompt,android.view.MotionEvent.ACTION_UP,500);
+   verify(call,times(1)).answer(anyInt());verify(replacement,never()).answer(anyInt());
+  }
+ }
+ private static void gestureEvent(View target,int action,float x){
+  long at=android.os.SystemClock.uptimeMillis();android.view.MotionEvent event=android.view.MotionEvent.obtain(at,at,action,x,0,0);
+  try{target.dispatchTouchEvent(event);}finally{event.recycle();}
+ }
+
 }

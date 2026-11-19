@@ -1,0 +1,53 @@
+{
+  "review_status": "FAIL",
+  "source_sha": "def76d1261d18e31ddf1e08dbb943d6d431c5944",
+  "app_tree": "619346e03833bab4be27bf734d782593d535771f",
+  "workflow_run_id": 41336631898,
+  "workflow_conclusion": "cancelled",
+  "unit_tests": {
+    "tests": 278,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "origin": "actual checks artifact TEST XML"
+  },
+  "native_tests": {
+    "started": 32,
+    "completed_progress": 15,
+    "reported_failures_before_cancellation": 0,
+    "reported_skips_before_cancellation": 0,
+    "passed_suite": false,
+    "junit_totals_available": false
+  },
+  "native_png_count": 0,
+  "publication_approved": false,
+  "raw_evidence_commit": "6e59291",
+  "raw_evidence_path": "native-review-export/41336631898",
+  "artifacts": {
+    "ui": {
+      "id": 13096144262,
+      "bytes": 723967,
+      "sha256": "80c33cb259a37410846afd5612493b5a236941c1ed8e76a58ec797ce36db4d00"
+    },
+    "checks": {
+      "id": 13095393802,
+      "bytes": 110319,
+      "sha256": "e7f1efcaa53b29f1a3b2d5ccd5e7197684f932a6738282097f0e2f6a5502ae3e"
+    }
+  },
+  "diagnosis": {
+    "started_test_number": 16,
+    "test": "FollowupIntegrationTest.testChangelogNativeSettingsHistoryAndBack",
+    "observed_logcat": [
+      "18:36:38.231 test started",
+      "18:36:38.983 MainActivity displayed",
+      "18:36:40.354 ChangelogActivity displayed",
+      "18:36:43.466 native KEYCODE_BACK",
+      "18:36:43.582 ChangelogActivity window disposed"
+    ],
+    "defect": "The next palette called startActivitySync with NEW_TASK|CLEAR_TOP for singleTop MainActivity. Android reuses the Activity through onNewIntent, while instrumentation waits indefinitely for creation. The readiness deadline starts only after that blocking call.",
+    "correction": "Create a fresh disposable-emulator Main task with NEW_TASK|CLEAR_TASK for each palette. Preserve all native Back and UI assertions. Bound host instrumentation to15min and retain emulator diagnostics on failure.",
+    "new_run_required": true
+  },
+  "limits": "No complete32-test native suite,233-PNG review, tested-APK publication or physical-device check passed in this run."
+}

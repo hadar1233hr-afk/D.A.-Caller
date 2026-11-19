@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.SettingsBackupTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2026-11-18T12:21:49" hostname="3ebae333e153" time="0.861">
+  <properties/>
+  <testcase name="boundedReaderRejectsLargeFilesMalformedUtf8AndOversizedNotes" classname="com.dacaller.app.SettingsBackupTest" time="0.125"/>
+  <testcase name="commitFailureRollsBackInMemoryPreferencesAndLauncher" classname="com.dacaller.app.SettingsBackupTest" time="0.065"/>
+  <testcase name="iconFailureLeavesAllSettingsUntouched" classname="com.dacaller.app.SettingsBackupTest" time="0.038"/>
+  <testcase name="exportNeverIncludesPermissionsRuntimeFlagsOrLauncherInstanceBindings" classname="com.dacaller.app.SettingsBackupTest" time="0.062"/>
+  <testcase name="reminderBackupRestoresExplicitOptInAndTimeWithoutResettingUnrelatedData" classname="com.dacaller.app.SettingsBackupTest" time="0.057"/>
+  <testcase name="roundTripIncludesEffectiveDefaultsFavoritesUnicodeNotesAndNewPresentationPrefs" classname="com.dacaller.app.SettingsBackupTest" time="0.082"/>
+  <testcase name="malformedInMemorySettingsAreRejectedBeforeExport" classname="com.dacaller.app.SettingsBackupTest" time="0.091"/>
+  <testcase name="successfulRestoreReplacesOnlyValuesInFileAndPreservesUnrelatedData" classname="com.dacaller.app.SettingsBackupTest" time="0.071"/>
+  <testcase name="snapshotIsDetachedAndImmutableEvenForFavorites" classname="com.dacaller.app.SettingsBackupTest" time="0.03"/>
+  <testcase name="exportingAndRestoringRetentionDoesNotReadDeleteOrRewriteArchiveDatabase" classname="com.dacaller.app.SettingsBackupTest" time="0.031"/>
+  <testcase name="positionedTransparentIslandBackupUsesInclusiveBoundsAndExcludesTransientHiddenCallToken" classname="com.dacaller.app.SettingsBackupTest" time="0.063"/>
+  <testcase name="invalidFilesNeverMutatePreferencesOrReachIconSwitch" classname="com.dacaller.app.SettingsBackupTest" time="0.03"/>
+  <testcase name="rejectsUnsupportedVersionsOtherProductsDuplicateMetadataAndTrailingData" classname="com.dacaller.app.SettingsBackupTest" time="0.07"/>
+  <testcase name="islandPreferencesRoundTripAndLegacyBackupLeavesIslandChoicesUntouched" classname="com.dacaller.app.SettingsBackupTest" time="0.038"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

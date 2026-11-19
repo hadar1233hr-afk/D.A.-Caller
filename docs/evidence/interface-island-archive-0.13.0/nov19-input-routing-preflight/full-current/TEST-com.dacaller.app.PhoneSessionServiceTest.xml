@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.PhoneSessionServiceTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-19T02:46:38" hostname="3ebae333e153" time="0.233">
+  <properties/>
+  <testcase name="telecomAddCallAvailabilityNotifiesVisibleControlsWithoutStateChange" classname="com.dacaller.app.PhoneSessionServiceTest" time="0.024"/>
+  <testcase name="delayedNotificationAnswerCannotAnswerAnotherCall" classname="com.dacaller.app.PhoneSessionServiceTest" time="0.032"/>
+  <testcase name="removingSecondCallRestoresFirstAndKeepsNotification" classname="com.dacaller.app.PhoneSessionServiceTest" time="0.053"/>
+  <testcase name="proximityOnlyProtectsEarpieceCalls" classname="com.dacaller.app.PhoneSessionServiceTest" time="0.014"/>
+  <testcase name="providerFailureCannotCrashInCallBindingOrForceSystemFallback" classname="com.dacaller.app.PhoneSessionServiceTest" time="0.024"/>
+  <testcase name="speakerOffRespectsWiredHeadset" classname="com.dacaller.app.PhoneSessionServiceTest" time="0.02"/>
+  <testcase name="proximityLockReleasesOnSpeakerCallEndAndServiceDestroy" classname="com.dacaller.app.PhoneSessionServiceTest" time="0.022"/>
+  <testcase name="visibleIncomingScreenUsesQuietNotificationWithoutFullscreen" classname="com.dacaller.app.PhoneSessionServiceTest" time="0.026"/>
+  <testcase name="outgoingNotificationIsAlwaysQuiet" classname="com.dacaller.app.PhoneSessionServiceTest" time="0.018"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

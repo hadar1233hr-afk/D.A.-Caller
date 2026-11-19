@@ -1,0 +1,97 @@
+{
+  "saved_at_utc": "2026-11-19T06:10:06.434846+00:00",
+  "status": "READ_ONLY_SOURCE_CODEGO_WITH_RAW_DUMP_REPLAY_NOT_NATIVE_PASS",
+  "reviewed_file": "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java",
+  "reviewed_sha256": "fd158b3a73afdcfa5e5fac117d8397ca1c89b1cdbfaf50a2b6bea172c3fc6a8f",
+  "base_source": "71dd0f409552628b2fe255285e6c7b3c7b497413",
+  "reference_commit": "e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624",
+  "source_citations": [
+    {
+      "path": "services/inputflinger/dispatcher/InputDispatcher.cpp",
+      "lines": "4491–4512",
+      "fact": "Injection uses displayInfo.transform.inverse() * injectedTransform; logical injection coordinates become display/server coordinates.",
+      "url": "https://github.com/LineageOS/android_frameworks_native/blob/e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624/services/inputflinger/dispatcher/InputDispatcher.cpp"
+    },
+    {
+      "path": "services/inputflinger/dispatcher/InputDispatcher.cpp",
+      "lines": "2069–2083",
+      "fact": "Transformed touchscreen pointer coordinates convert to int32_t before region hit lookup; truncation is toward zero.",
+      "url": "https://github.com/LineageOS/android_frameworks_native/blob/e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624/services/inputflinger/dispatcher/InputDispatcher.cpp"
+    },
+    {
+      "path": "services/inputflinger/dispatcher/InputDispatcher.cpp",
+      "lines": "464–482;1062–1081",
+      "fact": "Current display, visible, touchable region and front-to-back non-SPY selection determine first touch candidate.",
+      "url": "https://github.com/LineageOS/android_frameworks_native/blob/e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624/services/inputflinger/dispatcher/InputDispatcher.cpp"
+    },
+    {
+      "path": "services/inputflinger/dispatcher/InputDispatcher.cpp",
+      "lines": "5302–5340",
+      "fact": "DisplayInfo transform is dumped before Windows; each later window has a separate local transform.",
+      "url": "https://github.com/LineageOS/android_frameworks_native/blob/e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624/services/inputflinger/dispatcher/InputDispatcher.cpp"
+    },
+    {
+      "path": "libs/ui/Transform.cpp",
+      "lines": "229–234;373–417;527–529",
+      "fact": "Native float inverse/multiply-add operation order; four-decimal printed coefficients require boundary margin.",
+      "url": "https://github.com/LineageOS/android_frameworks_native/blob/e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624/libs/ui/Transform.cpp"
+    },
+    {
+      "path": "libs/ui/Region.cpp",
+      "lines": "251–259",
+      "fact": "Touchable region right/bottom are exclusive.",
+      "url": "https://github.com/LineageOS/android_frameworks_native/blob/e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624/libs/ui/Region.cpp"
+    }
+  ],
+  "actual_replay": {
+    "ci_run": 44447145702,
+    "logical_point": [
+      240,
+      90
+    ],
+    "server_real_point": [
+      160.0,
+      94.96355520021321
+    ],
+    "server_integer_point": [
+      160,
+      94
+    ],
+    "status_logical_frame": [
+      0,
+      0.0007,
+      480,
+      36.0223
+    ],
+    "conservative_status_bottom": 37,
+    "island_logical_frame": [
+      45,
+      48.0295,
+      435,
+      132.0799
+    ],
+    "same_owned_window_for_all_nine_integer_neighbors": true,
+    "independent_adversarial_cases": 29,
+    "printed_native_float_integer_axis_checks": 1334
+  },
+  "review_findings": [
+    "Root inverse point conversion has correct direction; window local transforms/density/screenshot ratios are not used.",
+    "Explicit current Display0 six-line ROT_0 positive diagonal matrix parse fails closed on absent/malformed/nonfinite/rotated/sheared/perspective input.",
+    "Inverse uncertainty formula e*(abs(q)+1)/(s-e), e=0.00005, correctly bounds four-decimal axis coefficient rounding; <0.25 serverpixel plus all-nine first-target identity agreement provides safe interior margin for this fixture.",
+    "Current initial point and all nine neighbors resolve to same owned island UID/token/title with required input channel and no dropped/paused/obscured target flags.",
+    "Forward StatusBar frame conversion correctly recognizes top≈0/fullwidth480 and conservative ceil bottom37.",
+    "Two stable samples retain exact current window record, target rect, display matrix, input point and status result.",
+    "All source bytes from actualDragTarget onward unchanged, including one actual gesture/no retry/post-slop foreground ownership/CANCEL and all native test bodies.",
+    "No production, signing, CI, legacy verifier or profile changes in the source diff."
+  ],
+  "limitations": [
+    "Offline replay and source audit do not establish native gesture success; fresh full 457/40/269 actual CI and visual review remain required.",
+    "Pinned Transform.cpp does not dump matrix rows for IDENTITY; explicit six-row fixture parser conservatively rejects that format. Current raw dump is SCALE TRANSLATE and accepted.",
+    "39/40 result and older shade screenshot do not establish historical DOWN-routing cause."
+  ],
+  "material_issue_found": false,
+  "repository_source_edits": false,
+  "gradle_executed": false,
+  "native_injected": false,
+  "publication_allowed": false
+}

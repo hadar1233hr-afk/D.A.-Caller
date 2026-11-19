@@ -1,0 +1,222 @@
+{
+  "status": "INDEPENDENT_OFFLINE_REPLAY_PASS_NOT_NATIVE_EXECUTION",
+  "ci_run": 44447145702,
+  "source": "71dd0f409552628b2fe255285e6c7b3c7b497413",
+  "raw_json": "/workspace/work/native-013-ci-44447145702/ui/ui-modern-snapshots/DA-CALLER-next-snapshots/modern-drag-input-routing.json",
+  "raw_sha256": "9fc2805976002c5c21e87ea9a6ea498dcc6fc1e58bcc2e96e2f8e004b1759b87",
+  "pinned_reference_commit": "e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624",
+  "reference_sha256": "de32e26736c1ee07cdbc61818fecc5a319a88b560fd366c771d1d79cfb7cf5ac",
+  "cases": [
+    {
+      "name": "actual_center_owned_island",
+      "status": "PASS",
+      "evidence": {
+        "logical": [
+          240,
+          90
+        ],
+        "inverse": [
+          160.0,
+          94.96355520021321
+        ],
+        "truncated": [
+          160,
+          94
+        ],
+        "target": "ba2f7a2 DA CALLER call island"
+      }
+    },
+    {
+      "name": "actual_center_all_nine_neighbor_points_same_owned_window",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "status_is_full_width_top_after_display_transform",
+      "status": "PASS",
+      "evidence": {
+        "server": [
+          0,
+          35,
+          320,
+          59
+        ],
+        "logical": [
+          0.0,
+          0.0006999999999948159,
+          480.0,
+          36.0223
+        ],
+        "conservative_bottom": 37
+      }
+    },
+    {
+      "name": "status_outward_ceil_is_37",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "island_forward_rect_matches_actual_capture",
+      "status": "PASS",
+      "evidence": {
+        "server": [
+          30,
+          67,
+          290,
+          123
+        ],
+        "logical": [
+          45.0,
+          48.0295,
+          435.0,
+          132.07989999999998
+        ]
+      }
+    },
+    {
+      "name": "exclusive_island_left_edge_45_owned",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "one_left_of_island_44_not_owned",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "exclusive_island_right_edge_435_not_owned",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "last_full_right_pixel_434_owned",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "pixel_y48_not_owned",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "pixel_y49_owned",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "pixel_y132_server_edge_rounding_owned",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "pixel_y133_not_owned",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "status_y36_target_status",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "status_y37_no_status",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "one_pixel_edge_neighborhood_rejected",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "front_blocker_0x0",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "front_blocker_NOT_VISIBLE",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "front_blocker_NOT_TOUCHABLE",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "front_blocker_SPY",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "same_title_wrong_uid_rejected",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "owned_window_NO_INPUT_CHANNEL_fails_closed",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "owned_window_PAUSE_DISPATCHING_fails_closed",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "owned_window_DROP_INPUT_fails_closed",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "owned_window_DROP_INPUT_IF_OBSCURED_fails_closed",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "rounded_matrix_uncertainty_small_at_actual_point",
+      "status": "PASS",
+      "evidence": {
+        "inverse_intervals": [
+          [
+            159.99463351221627,
+            160.00536684556153
+          ],
+          [
+            94.9603584396549,
+            94.9667521737682
+          ]
+        ],
+        "native_casts": [
+          [
+            159,
+            160
+          ],
+          [
+            94
+          ]
+        ]
+      }
+    },
+    {
+      "name": "negative_fractional_cast_toward_zero",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "wrong_forward_direction_loses_island",
+      "status": "PASS",
+      "evidence": null
+    },
+    {
+      "name": "wrong_local_window_inverse_loses_island",
+      "status": "PASS",
+      "evidence": null
+    }
+  ],
+  "case_count": 29,
+  "no_gradle": true,
+  "no_android_execution": true,
+  "no_app_source_edits": true,
+  "publication_allowed": false
+}

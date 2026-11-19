@@ -1,0 +1,190 @@
+{
+  "source_sha": "53a678fac4764dc0210cad4e6b11a9d431287241",
+  "app_tree": "c3cdd0ea05b5e094087cb86efe148224787e393e",
+  "run_id": 44470286600,
+  "review_scope": "ONLY island-01.png through island-06.png; 24 embedded native 480x854 raw frames",
+  "bounded_visual_result": "PASS",
+  "actually_viewed_sheet_count": 6,
+  "actually_viewed_raw_frame_count": 24,
+  "direct_raw_files_opened": [],
+  "hash_verification": "All 6 sheet SHA256 and 24 local raw PNG SHA256 independently matched manifest.json; no missing or mismatching files.",
+  "views": [
+    {
+      "sheet": "island-01.png",
+      "sheet_sha256": "afc76b4884d7741db27251cc9e75d1451f589d196b215c0b683b43e9e9be87d2",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "External end-confirmation dialog: complete readable identity/question/buttons over dimmed expanded island; ended launcher has no retained island. In-app return and launcher active compact cards show bounded identity ellipsis, legible timer/status and intact native bars.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "external-end-confirmation.png",
+          "sha256": "927c458af48fde545da22f6ca4de1e1bc62ab956f4c224f5ffcfb6018f56191b"
+        },
+        {
+          "filename": "external-ended-launcher.png",
+          "sha256": "2d813c9309ed2c39df8ddc5cdc3af43b11f19326e1447a72491ced6c93b691f4"
+        },
+        {
+          "filename": "external-inapp-return.png",
+          "sha256": "3f2e528c543f8881e1bf8acf63ae8f6457061e93394deec0f0914fa7bf29420b"
+        },
+        {
+          "filename": "external-launcher-active-compact.png",
+          "sha256": "cbf45ad92498bb5bb5390757a0088a669c7a209767726206bfd91b8221913742"
+        }
+      ]
+    },
+    {
+      "sheet": "island-02.png",
+      "sheet_sha256": "163e5c6ecda1ce2e552f9a9480de70913414bf4adcd66c57d527afc6e7cc88c2",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "External expanded launcher/other-app cards: complete identity, timer, four/three controls as captured, open-call row and hide label with clear spacing; native incoming and permission-denied fallback notification cards show complete visible action buttons. Android-owned DA CALLER notification attribution is present.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "external-launcher-active-expanded.png",
+          "sha256": "f3d35ac79e4c3f24f132145f03ac4c55562ecba870cfd75ac57ddad6bc8f10ca"
+        },
+        {
+          "filename": "external-launcher-native-incoming.png",
+          "sha256": "75b9679eb5c0aa7469d7fc2575dbf753103ed924ceb5cfaa1f9cfc8a068c16f6"
+        },
+        {
+          "filename": "external-other-app-active-expanded.png",
+          "sha256": "1b34e066b75eed8b36a316aff1ad10f52b3d26409c5575cb23eaf7edacffb396"
+        },
+        {
+          "filename": "external-permission-denied-launcher.png",
+          "sha256": "75b9679eb5c0aa7469d7fc2575dbf753103ed924ceb5cfaa1f9cfc8a068c16f6"
+        }
+      ]
+    },
+    {
+      "sheet": "island-03.png",
+      "sheet_sha256": "765fd7a9385800e2f3c36b3b5b08e2dfd6f17d49c6dd9c561df8a30ccdb562a1",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "Real Main Contacts/Recents compact/expanded: island header/timer and first four controls remain legible; expanded island has intentional rounded/faded capped viewport with thin scrollbar and partial lower open-call row. Favorites, search/summary, at least first list row and bottom navigation retain visible space without header/control collisions.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "island-app-contacts-compact.png",
+          "sha256": "da2d0376aed67d96eaab8aba7458fde0ea6efef4a257765871a14c6e65b45214"
+        },
+        {
+          "filename": "island-app-contacts-expanded.png",
+          "sha256": "278ff393745985c269074094bdf95b3c54ae1762713d045ce7464e5a581fc1d5"
+        },
+        {
+          "filename": "island-app-recents-compact.png",
+          "sha256": "fd23db42ac3f302353fdb4faa631a85dd0ddddeff2e88c661d2207131764f1b8"
+        },
+        {
+          "filename": "island-app-recents-expanded.png",
+          "sha256": "45a9d5a7efa9b36ba48eb1732424c180b431a7cf06ed7e9e5e2e357c7c61fac2"
+        }
+      ]
+    },
+    {
+      "sheet": "island-04.png",
+      "sheet_sha256": "6b6df7f4f2cef9f4e1ed544ebd4a888e60e4161cc3b49b03eaf1022138ea6928",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "Apple dark English/Hebrew compact/expanded fixtures: readable white identity/status with green timer; expanded four controls, open-call and hide row fit completely; underlying contact heading/search/list move below island, with readable first items and native bars.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "island-apple-dark-en-compact.png",
+          "sha256": "a2e13c9b6dc7bd735b29cb8c6c02809cff355f5a73d47132db8353526c2eda7e"
+        },
+        {
+          "filename": "island-apple-dark-en-expanded.png",
+          "sha256": "3bc4e4025247a0ec4ad02db192f86e21ff632217ec64f1370e22f1fe6b36fe15"
+        },
+        {
+          "filename": "island-apple-dark-he-compact.png",
+          "sha256": "9cf0cc13cd1000e4eb75e0836771d4b803053df7697efb6ba9be9dac775df373"
+        },
+        {
+          "filename": "island-apple-dark-he-expanded.png",
+          "sha256": "e55fa17e5711e8f8c70a6ab0e035c3c3f0fc45182604891d577ef32284492cb2"
+        }
+      ]
+    },
+    {
+      "sheet": "island-05.png",
+      "sheet_sha256": "6fb6492d8b8bad658f26ad51e2e4c372af0224d1965d6d23ea70ef68315164ce",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "Apple light English/Hebrew fixtures: intentional dark island remains readable against pale page; compact ellipsis is bounded; expanded controls/open/hide rows complete; underlying dark-on-light page text and native bars remain clear.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "island-apple-light-en-compact.png",
+          "sha256": "45f43eb20f2972d2eda79317ec2737d60a4e50e176f5a4e6741296c8ab26a6c8"
+        },
+        {
+          "filename": "island-apple-light-en-expanded.png",
+          "sha256": "6ea2c002e1c100a04b8aedac308b7a42adb49f87055cf0d786e0acb9cea617b9"
+        },
+        {
+          "filename": "island-apple-light-he-compact.png",
+          "sha256": "ba6e72d86d8e0220ee29ff7d0b4f902181c3a3c1cff7e0f5069ff36046c145a3"
+        },
+        {
+          "filename": "island-apple-light-he-expanded.png",
+          "sha256": "829c878256bbee14b058d6e351d33249f7e562def6b92c720187531bd8ba95c8"
+        }
+      ]
+    },
+    {
+      "sheet": "island-06.png",
+      "sheet_sha256": "f102077b2b1ff8380e4a2319690095c733f88dcb8c2094201b1f7447ea379fc7",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "Emerald dark English/Hebrew fixtures: green/gold style preserved; identity/status, gold duration and four expanded controls plus open/hide rows fully legible; underlying headings/search/list remain below card and native bars intact.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "island-emerald-dark-en-compact.png",
+          "sha256": "90d8d2f2eb88efdd8a0c58405c19139e00a84cbe5dff881361357bda2660e0ee"
+        },
+        {
+          "filename": "island-emerald-dark-en-expanded.png",
+          "sha256": "ff390f49ce73055718b47f65e399ad6bd62080e7fb3f8afbf4f6d87028712fc0"
+        },
+        {
+          "filename": "island-emerald-dark-he-compact.png",
+          "sha256": "000207f374e298381b593fd9241709c854b45be0c5d60263f6b7cc4a09d9a068"
+        },
+        {
+          "filename": "island-emerald-dark-he-expanded.png",
+          "sha256": "66fe52f06574d9efeb0d7668f1a068996d71759ba243a91029f93752b1929278"
+        }
+      ]
+    }
+  ],
+  "bounded_findings": [
+    {
+      "result": "PASS",
+      "scope": "24 reviewed island frames",
+      "finding": "Identity/timer/status, expanded controls, visible dialogs and Android notification buttons are readable with intact native bars. English/Hebrew arrangement and Apple/Emerald style variations remain distinct."
+    },
+    {
+      "result": "PASS",
+      "scope": "island-app-contacts-expanded.png and island-app-recents-expanded.png",
+      "finding": "Expanded Main island uses a rounded/faded bounded scrolling viewport: lower open-call row is intentionally partially visible. Header and four controls are intact; favorites and at least the first underlying contact/recent row remain visible. Screenshot review alone does not establish scrolling/reachability; parent-provided genuine interaction results remain separate evidence."
+    }
+  ],
+  "visual_failures": [],
+  "not_in_scope": [
+    "Remaining 20 island frames and other native PNG groups",
+    "Physical hardware, audio or interaction execution",
+    "Whole-269 visual approval or publication authority"
+  ],
+  "overall_269_approval": false,
+  "publication_authority": false,
+  "application_or_test_source_modified": false
+}

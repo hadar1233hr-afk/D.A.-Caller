@@ -1,0 +1,194 @@
+{
+  "source": "c9d1eca7385c1b1711f5004185f292ca923c36bb",
+  "run": 41363043464,
+  "unit": {
+    "totals": {
+      "tests": 278,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "actual_unique_testcases": 278,
+    "xml": [
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.AppIconsTest.xml",
+        "sha256": "9bf18c71e5362b6e0614c972c06273f67a0e6b4633a19104a66ef161b0152c31",
+        "actual_testcases": 9
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.ArchiveActivityTest.xml",
+        "sha256": "0fa557a4ce2da761dbded46a900fb419dfd9e37f6c6386f33b087d07cdc5756e",
+        "actual_testcases": 8
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.ArchiveContactsTest.xml",
+        "sha256": "86c8d11817880de29659ff9de33be608e5b9cdadc6ca0f32b38b772dee94d745",
+        "actual_testcases": 6
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.AvatarShapesTest.xml",
+        "sha256": "c8c87683e68b78f8a93b060aaa5b8920fd9b14b0747d56d02ccbbe3353416a80",
+        "actual_testcases": 4
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallArchiveTest.xml",
+        "sha256": "2bddb3073bbad13cc6a090b8fba42ffbc3d5dfefc84e05dc6d11a8ca75f5cb0f",
+        "actual_testcases": 10
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallAudioRoutesTest.xml",
+        "sha256": "5431c82f8059afdcd0e3a2ec846d5fd94a2b41f66fa65ee1d71673789233ac97",
+        "actual_testcases": 17
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallHistoryTest.xml",
+        "sha256": "b335ab627b7c068ec095e0fabe42896553cc8338d3f016005332e8a6bd52d5fd",
+        "actual_testcases": 6
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallIslandControllerTest.xml",
+        "sha256": "cd4848d590686b41c58bdcf52c2354a4995100a45e166ed8700bf385bed78d52",
+        "actual_testcases": 8
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallIslandOverlayTest.xml",
+        "sha256": "eb59117bbd111c99011d975af1781fd8fbcc2431443495cfc90e3d60f18a879f",
+        "actual_testcases": 11
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallIslandSessionTest.xml",
+        "sha256": "e0bb64ebfb2a7cc3a0d54aae0373f872de312c52f9d1465cb402e6adaa429ae6",
+        "actual_testcases": 14
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallIslandSettingsActivityTest.xml",
+        "sha256": "61975ac3d6e53452f6ab62fcee74ab888b02e8f1d76546dc679fbf0b7ce6635e",
+        "actual_testcases": 6
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallIslandViewTest.xml",
+        "sha256": "9d5545a35587b18b7d51385bb80062dc4e2850edc48fd208583aa13bb27d3f01",
+        "actual_testcases": 7
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallLauncherTest.xml",
+        "sha256": "5bf1db5d015ccf6c69c0e4babd5342b4e4155915a560b0c74199a60a3cace2f5",
+        "actual_testcases": 4
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallLayoutsTest.xml",
+        "sha256": "01e2b1a3ff90dd66d352b68345a180c335443f9c232b29ccad84b36d9efbb0dc",
+        "actual_testcases": 4
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallNotificationsTest.xml",
+        "sha256": "641c580093f3ebea0e4a90580e0cadde49426c21c4e57ed02d94bfbf5b5b42b1",
+        "actual_testcases": 17
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallReturnNavigationTest.xml",
+        "sha256": "f06a33e4b4e7c1afd428c1ac0a80301e6e6adb93e24fa4b169f80f8fc34ea4ab",
+        "actual_testcases": 9
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallScreenActivityTest.xml",
+        "sha256": "8c9ededb36a0daf63b1f4a8bf7e2035e1d1212dbb5a2b5389aad62304591783d",
+        "actual_testcases": 18
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallThemesContrastTest.xml",
+        "sha256": "2bc6ba3503898038155f4ba9468dbb0b76126719268131a70da1755f02706251",
+        "actual_testcases": 1
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.ContactDataTest.xml",
+        "sha256": "872ae3f34c1093dc8dd0ecaa2eecf0481f9be55d3637bea55523be00b15ba4e6",
+        "actual_testcases": 9
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.ContactPhotosTest.xml",
+        "sha256": "f22773293e867a3445a35f89564520d0d0430d8fbc73449c7cdb1c05b1916ed9",
+        "actual_testcases": 4
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.ContactScrollRestoreTest.xml",
+        "sha256": "90c9f3b4f563bb9282c686d52f560cd2a44a54c74c74a584cd5617a73cc09f8d",
+        "actual_testcases": 6
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.FastPagesTouchTest.xml",
+        "sha256": "d8363b9176568e88899fd1c4492a6550a83fee4963c30f028e63f4bafb908b02",
+        "actual_testcases": 17
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.FavoritesPresentationTest.xml",
+        "sha256": "da93cf96b43e2deb3ab424fda72a24e25c11b9d00b7448e638d3b4c552e054f7",
+        "actual_testcases": 9
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.IncomingGestureTest.xml",
+        "sha256": "561673b6db9f62b13d28cb98ed21913d1e7494bbc9003740b4aa10bd69f62098",
+        "actual_testcases": 3
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.MainActivityRegressionTest.xml",
+        "sha256": "f51b30f3421639e97c690511f2339ee66ecde7783aac12017f8565a4975cc0a4",
+        "actual_testcases": 8
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.MissedCallNotificationsTest.xml",
+        "sha256": "8f57d886c65e80e6b03136092cbdda34f98cb6055829fd6786e9f3746b6b93e9",
+        "actual_testcases": 21
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.NativeContactsTest.xml",
+        "sha256": "9b15ee2fb4c70e817f4f043edfa7b22e08202926e994ce264cc2dcf651817e7d",
+        "actual_testcases": 3
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.PhoneSessionServiceTest.xml",
+        "sha256": "1e9fd638c59326631469a7430c4a40e0594178545735742da0a8cba4cdf1213c",
+        "actual_testcases": 9
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.SettingsBackupActivityTest.xml",
+        "sha256": "fe79545ca00862eb7e8d77e9df544a7a96009266165e77789e4bad5fb8637570",
+        "actual_testcases": 3
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.SettingsBackupTest.xml",
+        "sha256": "cf6a453a1eeb9964629edec7255a8bac9d17c59399564edc45de0d99ab1323fb",
+        "actual_testcases": 12
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.SettingsScreenTest.xml",
+        "sha256": "fbcbab4129238f3db943cc9866d78e6f4826a36dce155eddac2d8d705f77ccd1",
+        "actual_testcases": 5
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.WidgetSupportTest.xml",
+        "sha256": "a3d83703b3de60466c2faa206a716e52f9f47f014463a477eca1e95b1658aa97",
+        "actual_testcases": 10
+      }
+    ]
+  },
+  "native": {
+    "totals": {
+      "tests": 32,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "actual_unique_testcases": 32,
+    "xml": [
+      {
+        "path": "outputs/androidTest-results/connected/debug/TEST-emulator-5554 - 13-_app-.xml",
+        "sha256": "eae8bb89212e914f543bcfa4b7848a0e49347472b26808c486484d8ebb7902da",
+        "actual_testcases": 32
+      }
+    ]
+  },
+  "native_png_count": 233,
+  "unique_native_png_filenames": 233,
+  "png_dimensions": "480x854"
+}

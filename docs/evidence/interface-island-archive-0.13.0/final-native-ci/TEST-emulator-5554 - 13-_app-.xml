@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.dacaller.app.CallIntegrationSnapshotTest" tests="40" failures="0" errors="0" skipped="0" time="582.606" timestamp="2026-11-19T12:30:48" hostname="localhost">
+  <properties>
+    <property name="device" value="emulator-5554 - 13" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="testNativeNotificationStatesActionsAndDirectReturn" classname="com.dacaller.app.CallIntegrationSnapshotTest" time="63.957" />
+  <testcase name="testSystemBackReturnsToLastContactQueryAnchorAndSettingsScroll" classname="com.dacaller.app.CallIntegrationSnapshotTest" time="20.538" />
+  <testcase name="testActualTelecomExternalIslandOnLauncherAndOtherApps" classname="com.dacaller.app.CallIslandExternalIntegrationTest" time="29.52" />
+  <testcase name="testAllStylesLanguagesThemesAndCallStatesAtLargeFont" classname="com.dacaller.app.CallIslandSnapshotTest" time="49.749" />
+  <testcase name="testCommandsConfirmationPauseReturnRecreationAndContentRestore" classname="com.dacaller.app.CallIslandSnapshotTest" time="11.86" />
+  <testcase name="testCustomizationPreviewBothThemesAndBottomControlsAtLargeFont" classname="com.dacaller.app.CallIslandSnapshotTest" time="7.192" />
+  <testcase name="testAudioSelectionAndMuteRemainSynchronizedInEveryDesign" classname="com.dacaller.app.CallLayoutSnapshotTest" time="15.245" />
+  <testcase name="testFiveDesignsBothThemesFourPanelsAndLargeFonts" classname="com.dacaller.app.CallLayoutSnapshotTest" time="75.065" />
+  <testcase name="testLongCallerNamesInBothLanguagesAtLargeFont" classname="com.dacaller.app.CallLayoutSnapshotTest" time="18.652" />
+  <testcase name="testNoBluetoothRouteWithoutConnectedDeviceAndEnglishLayout" classname="com.dacaller.app.CallLayoutSnapshotTest" time="1.181" />
+  <testcase name="testSequentialPanelsCloseAndNeverOverlap" classname="com.dacaller.app.CallLayoutSnapshotTest" time="24.621" />
+  <testcase name="testBundledBusinessDirectoryNativeIsolationSearchAndProvenance" classname="com.dacaller.app.CallbackBusinessIntegrationTest" time="16.102" />
+  <testcase name="testBundledBusinessManualNativeCallUsesExactSourceIdentity" classname="com.dacaller.app.CallbackBusinessIntegrationTest" time="9.511" />
+  <testcase name="testCallbackReminderFromActualTelecomAndPrivateOsAlarm" classname="com.dacaller.app.CallbackBusinessIntegrationTest" time="35.583" />
+  <testcase name="testUnknownActualRecentCallerOpensNewEditorWithoutDialOrWrite" classname="com.dacaller.app.CallbackBusinessIntegrationTest" time="8.311" />
+  <testcase name="testContactReturnPreservesStableIdentityOffsetAndQueryAfterReorder" classname="com.dacaller.app.ContactScrollDispatchTest" time="0.938" />
+  <testcase name="testNewTouchCancelsQueuedReturnRestore" classname="com.dacaller.app.ContactScrollDispatchTest" time="0.537" />
+  <testcase name="testRepeatedRebuildBeforeSelectionLayoutDoesNotLoseAnchor" classname="com.dacaller.app.ContactScrollDispatchTest" time="0.886" />
+  <testcase name="testSearchFilterSurvivesDetailReturnWithoutReset" classname="com.dacaller.app.ContactScrollDispatchTest" time="0.676" />
+  <testcase name="testChangelogNativeSettingsHistoryAndBack" classname="com.dacaller.app.FollowupIntegrationTest" time="20.978" />
+  <testcase name="testMissedCallsFromActualTelecomAndNativeNotificationActions" classname="com.dacaller.app.FollowupIntegrationTest" time="17.316" />
+  <testcase name="testConfiguredHorizontalSwipeCallsCorrectContactOnce" classname="com.dacaller.app.ListDialDispatchTest" time="0.909" />
+  <testcase name="testContactRowAndStarHaveIndependentActionsWithoutCalling" classname="com.dacaller.app.ListDialDispatchTest" time="0.653" />
+  <testcase name="testContactsTopMiddleEndDialExactDisplayedNumberWithoutJump" classname="com.dacaller.app.ListDialDispatchTest" time="0.885" />
+  <testcase name="testRecentDialExactNumberAndIndependentDetailsRegion" classname="com.dacaller.app.ListDialDispatchTest" time="1.084" />
+  <testcase name="testRecentInlineOwnershipSurvivesRecreationAndBackWithoutMovingAnchor" classname="com.dacaller.app.ListDialDispatchTest" time="1.441" />
+  <testcase name="testVerticalFlickStartingAtCallIconNeverCalls" classname="com.dacaller.app.ListDialDispatchTest" time="0.604" />
+  <testcase name="testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency" classname="com.dacaller.app.ModernFeaturesIntegrationTest" time="20.885" />
+  <testcase name="testModernInlineNavigationNineIconsAndWineSwitchPointer" classname="com.dacaller.app.ModernFeaturesIntegrationTest" time="20.264" />
+  <testcase name="testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns" classname="com.dacaller.app.ModernFeaturesIntegrationTest" time="10.0" />
+  <testcase name="testAllAvatarShapesClipActualContactPhotoAndWidgetInitials" classname="com.dacaller.app.PersonalizationSnapshotTest" time="7.086" />
+  <testcase name="testArchiveResolvesRealProviderNamePhotoAndSearchesNames" classname="com.dacaller.app.PersonalizationSnapshotTest" time="3.154" />
+  <testcase name="testContactsAndRecentsCompactPresentationInBothLanguagesThemesAndFontSizes" classname="com.dacaller.app.PersonalizationSnapshotTest" time="31.805" />
+  <testcase name="testDocumentBackupRestoreRequiresConfirmationAndCancelKeepsPreferences" classname="com.dacaller.app.PersonalizationSnapshotTest" time="7.439" />
+  <testcase name="testEveryRealLauncherAliasRemainsUniqueAndDialIntentStillResolves" classname="com.dacaller.app.PersonalizationSnapshotTest" time="1.813" />
+  <testcase name="testHorizontalFavoritesReachAllContactsWithoutDialingAndRememberSharedCollapse" classname="com.dacaller.app.PersonalizationSnapshotTest" time="7.814" />
+  <testcase name="testSettingsIconAndAvatarChoosersAtLargeFontInBothThemes" classname="com.dacaller.app.PersonalizationSnapshotTest" time="14.968" />
+  <testcase name="testLastSettingsCategoryStaysInteractiveAndCallsCategoryHasNoPhoneSymbol" classname="com.dacaller.app.SettingsInteractionTest" time="7.586" />
+  <testcase name="testNarrowFavoritesFitAtLargeSystemFont" classname="com.dacaller.app.WidgetSnapshotTest" time="3.271" />
+  <testcase name="testRealHostAdditionResizeThemeEmptyAndRemoval" classname="com.dacaller.app.WidgetSnapshotTest" time="11.521" />
+</testsuite>

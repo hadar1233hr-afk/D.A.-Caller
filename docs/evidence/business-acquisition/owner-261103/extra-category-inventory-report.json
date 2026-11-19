@@ -1,0 +1,67 @@
+{
+  "app_rows_added": 0,
+  "attribution": "\u00a9 OpenStreetMap contributors",
+  "category_counts": {
+    "leisure:fitness_centre": 3
+  },
+  "category_whitelist": {
+    "amenity": [
+      "driving_school",
+      "internet_cafe",
+      "nightclub"
+    ],
+    "leisure": [
+      "amusement_arcade",
+      "bowling_alley",
+      "escape_game",
+      "fitness_centre",
+      "trampoline_park"
+    ]
+  },
+  "counts": {
+    "named_phone_ways": 3,
+    "prefiltered_relations": 223,
+    "prefiltered_ways": 66979,
+    "reviewed_category_ways": 47
+  },
+  "extended_category_policy_sha256": "b9ff71844e21a2605d26452920edae8fa62026383a4008581191a40e78d7c060",
+  "files_sha256": {
+    "geometry-nodes.json": "e244a09fd8b709dce95e6af9ee3d637f94e92b97a5f79928cc649f2412d07856",
+    "relation-member-ways.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "source-objects.ndjson": "0f76a5e50070cb6f448fb85a83066780f803b9ea9f5624ba0a1934d669275679"
+  },
+  "geographically_admitted_records": 0,
+  "geometry_node_ids_missing": [],
+  "geometry_node_ids_requested": 15,
+  "geometry_nodes_found": 15,
+  "license_id": "ODbL-1.0",
+  "limits": [
+    "Reviewed extra-category source inventory only; no geographic admission or app integration.",
+    "Actual PBF references/coordinates establish dependency availability, not complete polygon topology.",
+    "Source categories/access/privacy holds do not confirm current business operation or phone ownership.",
+    "No missing country tags, geometry or source values were invented; unresolved dependencies stay explicit.",
+    "Original core/research/signing/CI/publication contracts remain unchanged."
+  ],
+  "observed_at_utc": "2026-11-05T22:15:22.546451+00:00",
+  "owner_upload_receipt_sha256": "8ac1da66a8771f289b73a01cf15ca0351b13795ac5cb552fcb0a5fbc4c6532c2",
+  "relation_member_way_ids_missing": [],
+  "relations_with_numbering_valid_phone_candidate": 0,
+  "research_helper_sha256": "3b0516894a36d41d78dbd9d18857a53659ef5eb70073574dd845ca645a61b9fc",
+  "shared_country_policy_sha256": "a5a01b32666bf4c22585de39b79801aedbadc0d1e2bf0d5074e20bc4a2518d0f",
+  "shared_inventory_functions_sha256": "5b3a85e1a4784b93b1539d0de7992ae17a04c214417b8c20752267ef4f7f4bd5",
+  "source_object_years": {
+    "2022": 1,
+    "2023": 1,
+    "2025": 1
+  },
+  "source_objects": 3,
+  "source_pbf_bytes": 121050024,
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "source_relations": 0,
+  "source_ways": 3,
+  "status": "RESEARCH_EXTRACATEGORY_INVENTORYONLY",
+  "unchanged_core_extractor_sha256": "3b770ebf3af5322e77421d4e2458b360a7488985b8d4e36e69a42e0ad55577d8",
+  "way_missing_or_invalid_coordinate_dependency": 0,
+  "way_structural_rings_with_complete_coordinates": 3,
+  "ways_with_numbering_valid_phone_candidate": 3
+}

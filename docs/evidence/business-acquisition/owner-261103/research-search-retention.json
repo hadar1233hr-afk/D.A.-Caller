@@ -1,0 +1,56 @@
+{
+  "status": "RESEARCH_ONLY_SQLITE_RETAINED_NOT_APP_OR_PRODUCTION_ACCEPTED",
+  "observed_at_utc": "2026-11-05T20:12:34.366781+00:00",
+  "database_sha256": "b8d5f5209ea87969a1b42d3907e73f99466f869f7df2afcd8d7bb4eeb4dda274",
+  "database_bytes": 6844416,
+  "archive_sha256": "8d651d59ebb5d99ef0a92b01e638fa0ee965db473c8759a7422f017231bcdd2b",
+  "archive_bytes": 1581985,
+  "archive_member_sha256": {
+    "research-search.sqlite": "b8d5f5209ea87969a1b42d3907e73f99466f869f7df2afcd8d7bb4eeb4dda274",
+    "manifest.json": "bb5c549084e1b02c8134270798f9747def8988ab9c008f608804109621632301",
+    "independent-audit.json": "874e4bfc28e350860ca44d302ddeb2d22eb7f736bc647ed7a85c9d192cb8ed6a",
+    "checks.txt": "afac1deb83b00d52c2d7b52d0237173d458aa043aa7cabf065681648728468a5",
+    "LICENSE-NOTICE.txt": "ceaca37dccfb1fcf20b9a28eaec971ae24ccd07a94667d8438ff071a0b32c12b"
+  },
+  "script_sha256": {
+    "stage_research_sqlite.py": "5d4d264c8f88dccd9ed5dc1ae432bac767446105b8be9779f3dcf83714f82743",
+    "check_research_sqlite.py": "9112729630a00de5c352d42024340b73ab37bfa2cd18209d95ced5f6fd61b684",
+    "audit_research_sqlite.py": "2ae29a54d8983b9cb35b196f76030ae75f78dafe246770c8757ea19d9bb0adb1"
+  },
+  "synthetic_contracts": {
+    "executed": 25,
+    "passed": 25,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "independently_rerun": true
+  },
+  "actual_database_audit": {
+    "raw_rows_checked": 2696,
+    "exact_fts_projections": 2693,
+    "default_searchable": 2683,
+    "phone_review_proposals": 10,
+    "source_text_withheld": 3,
+    "country_null_values_preserved": 2680,
+    "pagination_pages": 33,
+    "pagination_shop_results": 1217,
+    "repeats_or_omissions": 0,
+    "status": "PASS"
+  },
+  "initial_check_correction": "Synthetic sample +972501234567 correctly failed numbering metadata; changed positive sample to library example +972502345678 and added invalid-source withholding regression. No real source phone changed.",
+  "cross_review_corrections": [
+    "Require explicit boolean opt-in instead of truthy strings/numbers",
+    "Use stable INTEGERPRIMARYKEY search identity and verify sparse-VACUUM FTS binding",
+    "Bind code/dependency/library/lock and source/audit snapshots before validation and recheck after build"
+  ],
+  "initial_v1": "Private historical artifact only; final frozen-source v2 was rebuilt and independently audited.",
+  "app_records_added": 0,
+  "production_admission": false,
+  "publication_approval": false,
+  "limits": [
+    "Research schema intentionally differs from app businesses schema; cannot masquerade as production dataset.",
+    "Actual desktop SQLite and FTS checks are not Android UI, hardware or million-record performance tests.",
+    "Query plan uses FTS virtual index+INTEGERPK lookup and temporary sorting B-tree, disclosed in audit.",
+    "Raw source/current phone ownership or complete national coverage are not guaranteed by staging."
+  ]
+}

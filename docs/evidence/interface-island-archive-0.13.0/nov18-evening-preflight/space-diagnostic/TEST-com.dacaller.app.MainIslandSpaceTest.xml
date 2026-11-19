@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.MainIslandSpaceTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2026-11-18T20:04:13" hostname="3ebae333e153" time="11.906">
+  <properties/>
+  <testcase name="nativeSizedViewportKeepsFavoritesAndSummaryVisibleWhileExpandedControlsRemainReachable" classname="com.dacaller.app.MainIslandSpaceTest" time="11.906">
+    <failure message="java.lang.AssertionError: Native-size personal list remains usable: page=192 readFailed=false [favorites_strip:LinearLayout h=82 measured=82 visibility=8] [null:LinearLayout h=48 measured=48 visibility=0] [call-island-secondary:LinearLayout h=48 measured=48 visibility=8] [call-island-page-list:SwipeListView h=1 measured=1 visibility=0] [null:TextView h=0 measured=0 visibility=8]" type="java.lang.AssertionError">java.lang.AssertionError: Native-size personal list remains usable: page=192 readFailed=false [favorites_strip:LinearLayout h=82 measured=82 visibility=8] [null:LinearLayout h=48 measured=48 visibility=0] [call-island-secondary:LinearLayout h=48 measured=48 visibility=8] [call-island-page-list:SwipeListView h=1 measured=1 visibility=0] [null:TextView h=0 measured=0 visibility=8]
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at com.dacaller.app.MainIslandSpaceTest.nativeSizedViewportKeepsFavoritesAndSummaryVisibleWhileExpandedControlsRemainReachable(MainIslandSpaceTest.java:160)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.robolectric.RobolectricTestRunner$HelperTestRunner$1.evaluate(RobolectricTestRunner.java:502)
+	at org.robolectric.internal.SandboxTestRunner$2.lambda$evaluate$2(SandboxTestRunner.java:285)
+	at org.robolectric.internal.bytecode.Sandbox.lambda$runOnMainThread$0(Sandbox.java:104)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+</failure>
+  </testcase>
+  <system-out><![CDATA[SPACE_WINDOW before-idle target=569 content=700/700 root=700/700 margin=0 workspace=480 minimum=0 island=none
+SPACE_WINDOW after-idle target=569 content=700/700 root=700/700 margin=0 workspace=480 minimum=0 island=none
+SPACE_WINDOW after-manual target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=0 island=none
+SPACE_WINDOW before-idle target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=0 island=none
+SPACE_WINDOW after-idle target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=0 island=none
+SPACE_WINDOW after-manual target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=0 island=none
+SPACE_WINDOW before-idle target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=0 island=none
+SPACE_WINDOW after-idle target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=0 island=none
+SPACE_WINDOW after-manual target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=0 island=none
+SPACE_WINDOW before-idle target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=0 island=none
+SPACE_WINDOW after-idle target=569 content=700/700 root=700/700 margin=0 workspace=588 minimum=0 island=none
+SPACE_WINDOW after-manual target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=0 island=none
+SPACE_WINDOW before-idle target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=0 island=none
+SPACE_WINDOW after-idle target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=0 island=none
+SPACE_WINDOW after-manual target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=0 island=none
+SPACE_WINDOW before-idle target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=0 island=none
+SPACE_WINDOW after-idle target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=0 island=none
+SPACE_WINDOW after-manual target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=0 island=none
+SPACE_WINDOW before-idle target=569 content=569/569 root=569/569 margin=72 workspace=457 minimum=0 island=0/56
+SPACE_WINDOW after-idle target=569 content=700/700 root=628/628 margin=72 workspace=516 minimum=0 island=56/56
+SPACE_WINDOW after-manual target=569 content=569/569 root=497/497 margin=72 workspace=385 minimum=0 island=56/56
+SPACE_WINDOW before-idle target=569 content=569/569 root=497/497 margin=72 workspace=385 minimum=0 island=56/56
+SPACE_WINDOW after-idle target=569 content=569/569 root=497/497 margin=72 workspace=385 minimum=0 island=56/56
+SPACE_WINDOW after-manual target=569 content=569/569 root=497/497 margin=72 workspace=385 minimum=0 island=56/56
+SPACE_WINDOW before-idle target=569 content=569/569 root=497/497 margin=72 workspace=385 minimum=0 island=56/56
+SPACE_WINDOW after-idle target=569 content=569/569 root=497/497 margin=72 workspace=385 minimum=0 island=56/56
+SPACE_WINDOW after-manual target=569 content=569/569 root=497/497 margin=72 workspace=385 minimum=0 island=56/56
+SPACE_WINDOW before-idle target=569 content=569/569 root=497/497 margin=72 workspace=385 minimum=0 island=56/56
+SPACE_WINDOW after-idle target=569 content=700/700 root=435/435 margin=265 workspace=323 minimum=315 island=249/249
+SPACE_WINDOW after-manual target=569 content=569/569 root=304/304 margin=254 workspace=192 minimum=315 island=238/238
+SPACE_WINDOW before-idle target=569 content=569/569 root=304/304 margin=254 workspace=192 minimum=315 island=238/238
+SPACE_WINDOW after-idle target=569 content=700/700 root=435/435 margin=265 workspace=323 minimum=315 island=249/249
+SPACE_WINDOW after-manual target=569 content=569/569 root=304/304 margin=254 workspace=192 minimum=315 island=238/238
+SPACE_WINDOW before-idle target=569 content=569/569 root=304/304 margin=254 workspace=192 minimum=315 island=238/238
+SPACE_WINDOW after-idle target=569 content=700/700 root=435/435 margin=265 workspace=323 minimum=315 island=249/249
+SPACE_WINDOW after-manual target=569 content=569/569 root=304/304 margin=254 workspace=192 minimum=315 island=238/238
+SPACE_WINDOW before-idle target=569 content=569/569 root=304/304 margin=0 workspace=192 minimum=315 island=none
+SPACE_WINDOW after-idle target=569 content=700/700 root=700/700 margin=0 workspace=588 minimum=315 island=none
+SPACE_WINDOW after-manual target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=315 island=none
+SPACE_WINDOW before-idle target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=315 island=none
+SPACE_WINDOW after-idle target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=315 island=none
+SPACE_WINDOW after-manual target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=315 island=none
+SPACE_WINDOW before-idle target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=315 island=none
+SPACE_WINDOW after-idle target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=315 island=none
+SPACE_WINDOW after-manual target=569 content=569/569 root=569/569 margin=0 workspace=457 minimum=315 island=none
+]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

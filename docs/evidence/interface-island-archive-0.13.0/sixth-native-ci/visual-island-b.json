@@ -1,0 +1,190 @@
+{
+  "source_sha": "53a678fac4764dc0210cad4e6b11a9d431287241",
+  "app_tree_sha": "c3cdd0ea05b5e094087cb86efe148224787e393e",
+  "run_id": 44470286600,
+  "scope": "Only island-07.png through island-11.png, 20 native 480x854 frames. This report does not approve all269 frames or publication.",
+  "actual_view_method": "Each listed sheet was individually opened through tools.view_image and emitted with image() in a separate functions.exec; all five complete sheets were actually viewed. No truncated or unseen image counted.",
+  "actually_viewed_sheets": [
+    {
+      "filename": "island-07.png",
+      "sha256": "b8693e08c7fa2631d1aa89a981183cb4e8c33e315a52058c10ab9b1793832be6",
+      "frame_count": 4
+    },
+    {
+      "filename": "island-08.png",
+      "sha256": "3933ebaf8d0c80b25c5023bd60d2dd069bbbd3b111c89f169b8041d5fa5bd84b",
+      "frame_count": 4
+    },
+    {
+      "filename": "island-09.png",
+      "sha256": "51a3c7231e400ca023392ac5fba99ae25f77d365ad900e85460696a5515b467d",
+      "frame_count": 4
+    },
+    {
+      "filename": "island-10.png",
+      "sha256": "b7190d9ed11666f90eecd204a37e8faf0ff639efabba9b24f656b69c0730bcdf",
+      "frame_count": 4
+    },
+    {
+      "filename": "island-11.png",
+      "sha256": "7e786a93085093832ae845d82a689d3f2c81f5b02ff655be424e41a8c721a5c1",
+      "frame_count": 4
+    }
+  ],
+  "exact_viewed_raw_frames": [
+    {
+      "filename": "island-emerald-light-en-compact.png",
+      "sha256": "2c96939cd15f2d66d27a1f4a48eae11eb6252828dad712322c58fd5ece878ae1",
+      "viewed_via_sheet": "island-07.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-emerald-light-en-expanded.png",
+      "sha256": "6821e238899354f46976508740f57154a7b7a6cad58a3185f0fb47b381643324",
+      "viewed_via_sheet": "island-07.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-emerald-light-he-compact.png",
+      "sha256": "8364a801520811554348831e4fbb3c18deb4b7abef924d6e7f5186742ce1ede4",
+      "viewed_via_sheet": "island-07.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-emerald-light-he-expanded.png",
+      "sha256": "8f22a8a5dbb4839a11857cc996db6a49e41c866d48d004523b8e2ec906022f64",
+      "viewed_via_sheet": "island-07.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-glass-dark-en-compact.png",
+      "sha256": "2c9fdd48fcab4b6c49f0af7c9b571c797a2c6946073c4850229c27ab69243609",
+      "viewed_via_sheet": "island-08.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-glass-dark-en-expanded.png",
+      "sha256": "1a677a5a1b208d740f8d5a551120ac1091e47e5e450ae810165c6a6043870e6c",
+      "viewed_via_sheet": "island-08.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-glass-dark-he-compact.png",
+      "sha256": "7788e437ae7b4e7c7966ceacd5eb73f2ace658622d56daf88467cacbed011e9b",
+      "viewed_via_sheet": "island-08.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-glass-dark-he-expanded.png",
+      "sha256": "e44b682e3c5a8798a2f29ae6aceabf553767e5d095dc65061a467d68429dc281",
+      "viewed_via_sheet": "island-08.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-glass-light-en-compact.png",
+      "sha256": "4f032439a8fedf700476d38aa206e7f6231282bbe30be6af4f53aa4535d5df09",
+      "viewed_via_sheet": "island-09.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-glass-light-en-expanded.png",
+      "sha256": "28831d2f4f9ffd750fcf734f4bb35e92b1fd5bddafd64bdb1f64cdda4929813a",
+      "viewed_via_sheet": "island-09.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-glass-light-he-compact.png",
+      "sha256": "514b7c8f24ee4c9ac0f58e1a8c166416394b9204f67f4c94b5c103d40e0216f4",
+      "viewed_via_sheet": "island-09.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-glass-light-he-expanded.png",
+      "sha256": "4e9ccc40e97a9fd2a9191410ce22705123819cb76fe0ad770c3a6f977531fc23",
+      "viewed_via_sheet": "island-09.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-settings-dark-bottom.png",
+      "sha256": "d3f10352884fa36be873a73b4c130de32730a417777724dd21e94a650866ded9",
+      "viewed_via_sheet": "island-10.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-settings-dark.png",
+      "sha256": "d5b7570fe1e1a0dc2177316230a6a6de50eb5e93cbaef6a57ddacfa649bb67f4",
+      "viewed_via_sheet": "island-10.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-settings-light-bottom.png",
+      "sha256": "fbaeed7e3ea15f508d978a722c03c8d1538a1a306da16f09bd45cb2178c00ede",
+      "viewed_via_sheet": "island-10.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-settings-light.png",
+      "sha256": "5f3d7abd8a77c624b70e437b3c13d2425cbfaad5305d766fdec5ff5c5fbd1aab",
+      "viewed_via_sheet": "island-10.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-state-held.png",
+      "sha256": "cf35983d792614a473ec1e85a7c58ac8a6ecef39d56deace773b5564cf936ccc",
+      "viewed_via_sheet": "island-11.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-state-incoming.png",
+      "sha256": "3171ac592ae24c84af9e99f2e2bc52f9135f11c0d80cebdc379b1e2064b47a5b",
+      "viewed_via_sheet": "island-11.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-state-noaudio.png",
+      "sha256": "cf821581096f6112f8af3e1b4a700287f54030b1c52fa4023efebf0af90ca394",
+      "viewed_via_sheet": "island-11.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "island-state-outgoing.png",
+      "sha256": "e7802333c3b4da63a76434ac5ec490720af7ee0744638a5324f84101d8c4df13",
+      "viewed_via_sheet": "island-11.png",
+      "visual_status": "PASS"
+    }
+  ],
+  "additionally_directly_viewed_raw_originals": [],
+  "counts": {
+    "sheets_actually_viewed": 5,
+    "unique_raw_frames_actually_viewed": 20,
+    "PASS": 20,
+    "FAIL": 0
+  },
+  "findings": [
+    {
+      "status": "PASS",
+      "id": "compact-expanded-islands",
+      "frames": "island-emerald-light, island-glass-dark/light: English/Hebrew compact/expanded captures (12 frames)",
+      "observation": "Names, phase and timer use legible heavier text; compact names have intentional bounded ellipsis. Expanded control labels, end action, open-call action and hide action fit. Hebrew RTL order is appropriate. Emerald/gold and Glass/mint colors preserve contrast. Island remains below status icons with visible separation. Underlying contact headings/search/list remain visible below reserved island space. Partial last list row is normal viewport continuation, not a clipped island control."
+    },
+    {
+      "status": "PASS",
+      "id": "island-settings",
+      "frames": "island-settings-dark/light and dark-bottom/light-bottom (4 frames)",
+      "observation": "Rounded heavier Hebrew text, capsule switches and explanatory text fit without overlap or text clipping. The main settings card continues in its scroll viewport; bottom-settings captures show complete final control labels and explanatory text. Native top/bottom system bars remain visible."
+    },
+    {
+      "status": "PASS",
+      "id": "island-call-states",
+      "frames": "island-state-held/incoming/noaudio/outgoing (4 frames)",
+      "observation": "State-specific labels/icons, timer where applicable, answer/reject or active controls, open-call and hide actions are readable and fit. Island/card separation and underlying list budget remain clear; status and native bottom navigation bars are unobscured."
+    }
+  ],
+  "limitations": [
+    "Static screenshot visual review only; no hardware/audio/functionality or matching-key upgrade claim.",
+    "This subset does not include Home/other-app/status-area fallback, modern transparency or actual favorites/summary captures; no conclusion on those unseen frames.",
+    "Only the 20 listed frames were reviewed by this worker; whole269-frame review and publication require separate evidence.",
+    "No source edits, Gradle execution, CI trigger, publication or APK resend performed."
+  ],
+  "no_source_edits_or_gradle_ci": true
+}

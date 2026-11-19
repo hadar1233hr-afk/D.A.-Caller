@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.ContactPhotosTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-19T02:46:15" hostname="3ebae333e153" time="0.104">
+  <properties/>
+  <testcase name="invalidationAndPermissionRevocationPreventQueuedCachedPhotoDelivery" classname="com.dacaller.app.ContactPhotosTest" time="0.026"/>
+  <testcase name="simultaneousRequestsForSameContactReadProviderOnce" classname="com.dacaller.app.ContactPhotosTest" time="0.017"/>
+  <testcase name="deniedPermissionNeverQueriesProviderAndReturnsNull" classname="com.dacaller.app.ContactPhotosTest" time="0.042"/>
+  <testcase name="cacheInvalidationDuringProviderReadRetriesBeforeDelivering" classname="com.dacaller.app.ContactPhotosTest" time="0.019"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

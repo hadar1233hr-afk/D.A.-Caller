@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.CallIslandViewTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:00:26" hostname="3ebae333e153" time="2.319">
+  <properties/>
+  <testcase name="transparentBackgroundCompositesActualPixelsWhileTextAndControlsRemainOpaque" classname="com.dacaller.app.CallIslandViewTest" time="0.314"/>
+  <testcase name="actualPointerDragCancelsTouchedCallControlBeforeUpAndKeepsTapBehavior" classname="com.dacaller.app.CallIslandViewTest" time="0.19"/>
+  <testcase name="compactExpansionCollapseAndOpenHaveSeparateCallbacks" classname="com.dacaller.app.CallIslandViewTest" time="0.191"/>
+  <testcase name="sizesStylesAndTimerChoiceKeepAUsableCompactCapsule" classname="com.dacaller.app.CallIslandViewTest" time="0.205"/>
+  <testcase name="removedCallControlsCannotDispatchAgainstTheirSuccessor" classname="com.dacaller.app.CallIslandViewTest" time="0.157"/>
+  <testcase name="largeFontControlsRemainTouchableAt320And240dpWithoutOverlapping" classname="com.dacaller.app.CallIslandViewTest" time="0.26"/>
+  <testcase name="cancelReplacementAndSecondPointerCannotDispatchOrCompleteAnOldGesture" classname="com.dacaller.app.CallIslandViewTest" time="0.196"/>
+  <testcase name="elapsedTicksDoNotReplaceControlsOrTheirFocus" classname="com.dacaller.app.CallIslandViewTest" time="0.161"/>
+  <testcase name="unavailableAndUserHiddenControlsStayOutOfTheActionSurface" classname="com.dacaller.app.CallIslandViewTest" time="0.201"/>
+  <testcase name="actionIsExplicitAndSelectionWaitsForAcknowledgedSnapshot" classname="com.dacaller.app.CallIslandViewTest" time="0.227"/>
+  <testcase name="overflowingControlsScrollWithoutDraggingOrCallingWhileTheHeaderStillDrags" classname="com.dacaller.app.CallIslandViewTest" time="0.178"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

@@ -1,0 +1,9 @@
+{
+  "apk_sha256": "4a0251b7855c3f6c7c7be78283f2fab568c2e1fbc6d33d0df728dbc7b394bf5b",
+  "certificate_sha256": "850bb1092393ba96565a391670a37b6c973370bb7ddc42b2bb07d787c04ade42",
+  "mode": "ephemeral-test-only",
+  "publication_allowed": false,
+  "required_update_certificate_matches": false,
+  "required_update_version": "0.11.0-beta.9",
+  "schema_version": 1
+}

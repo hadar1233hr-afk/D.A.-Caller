@@ -1,0 +1,65 @@
+{
+  "run_id": 44475349766,
+  "source_sha": "545824f0071366ba2f8c432acb520719371aa570",
+  "app_tree": "bedfdbbb3b828af796fade822497458c13a42b08",
+  "verified_artifacts": [
+    {
+      "name": "ui",
+      "artifact_id": 14507305945,
+      "bytes": 17038836,
+      "sha256": "45ee93d812e1222bde9bb0b4f5ab5b0caf3873259f4ec0dff25813c7e96f9cbd",
+      "all_crc_pass": true
+    },
+    {
+      "name": "native-failure",
+      "artifact_id": 14507505419,
+      "bytes": 1332586,
+      "sha256": "7489d87531046f932da2fb1f7f35fd4b65548a5cc27ff63ef64192b00ff122d5",
+      "all_crc_pass": true
+    }
+  ],
+  "native_tests": 40,
+  "raw_pngs": 264,
+  "publication_allowed": false,
+  "native": {
+    "tests": 40,
+    "pass": 39,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0
+  },
+  "apk_policy": {
+    "apk_sha256": "f41e323a2678961e6e31908acf9a747037f910af0e05083240730eeee6caeb62",
+    "certificate_sha256": "7668295469862328f5911c90417137928bf3e877d33b77715cc5f9b1bb3e1110",
+    "mode": "ephemeral-test-only",
+    "publication_allowed": false,
+    "required_update_certificate_matches": false,
+    "required_update_version": "0.11.0-beta.9",
+    "schema_version": 1
+  },
+  "whole_visual_review": false,
+  "original_present": 245,
+  "missing_original": [],
+  "modern_present": 17,
+  "diagnostic_pngs": [
+    "host-failed.png",
+    "modern-failed-testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency.png"
+  ],
+  "root_actually_viewed": [
+    {
+      "filename": "modern-bottom-dialpad-light-en.png",
+      "sha256": "b64292e04c51c7cc255e2d22e3799c887e74fee40949aac92135d4cbc78ddab5",
+      "finding": "Corrected hint fully readable, large numeric keys retained."
+    },
+    {
+      "filename": "modern-bottom-dialpad-dark-he.png",
+      "sha256": "623c55b50d3a682ff6c55b250a6da22ec374c78bfed3b9de56420dd78cb6011c",
+      "finding": "Corrected Hebrew hint fully readable, no top clipping."
+    },
+    {
+      "filename": "modern-failed-testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency.png",
+      "sha256": "2e96e3af8d15192cd3e79c9b0e0f69e99176d7d1f81d5d8a635cc603cc608ad5",
+      "finding": "Actual readable compact island correctly below native statusbar on narrow viewport; failure is hardcoded supported-lane expectation, no new production defect identified."
+    }
+  ]
+}

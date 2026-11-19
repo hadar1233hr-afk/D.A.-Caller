@@ -1,0 +1,41 @@
+{
+  "status": "FAIL_NOT_APPROVED",
+  "observed_at_utc": "2026-11-12T10:37:41.190440+00:00",
+  "run_id": 43199541915,
+  "source_sha": "21150b40896ba4ead7bf90d1bb9fc518bee6a5f7",
+  "raw_export_commit": "9bdd1ce",
+  "unit": {
+    "tests": 361,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native": {
+    "tests": 36,
+    "failures": 2,
+    "errors": 0,
+    "skipped": 0
+  },
+  "failed_native": [
+    {
+      "name": "testBundledBusinessDirectoryNativeIsolationSearchAndProvenance",
+      "trace": "junit.framework.AssertionFailedError\nat com.dacaller.app.CallbackBusinessIntegrationTest.tapPoint(CallbackBusinessIntegrationTest.java:202)\nat com.dacaller.app.CallbackBusinessIntegrationTest.tapView(CallbackBusinessIntegrationTest.java:292)\nat com.dacaller.app.CallbackBusinessIntegrationTest.businessScenario(CallbackBusinessIntegrationTest.java:691)\nat com.dacaller.app.CallbackBusinessIntegrationTest.testBundledBusinessDirectoryNativeIsolationSearchAndProvenance(CallbackBusinessIntegrationTest.java:543)\nat android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)\nat android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)\nat android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)\nat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)\n"
+    },
+    {
+      "name": "testBundledBusinessManualNativeCallUsesExactSourceIdentity",
+      "trace": "junit.framework.AssertionFailedError\nat com.dacaller.app.CallbackBusinessIntegrationTest.tapPoint(CallbackBusinessIntegrationTest.java:202)\nat com.dacaller.app.CallbackBusinessIntegrationTest.tapView(CallbackBusinessIntegrationTest.java:292)\nat com.dacaller.app.CallbackBusinessIntegrationTest.businessManualDialScenario(CallbackBusinessIntegrationTest.java:628)\nat com.dacaller.app.CallbackBusinessIntegrationTest.testBundledBusinessManualNativeCallUsesExactSourceIdentity(CallbackBusinessIntegrationTest.java:546)\nat android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)\nat android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)\nat android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)\nat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)\n"
+    }
+  ],
+  "pngs": 243,
+  "diagnostic_pngs": [
+    "callback-business-failed-testBundledBusinessDirectoryNativeIsolationSearchAndProvenance.png",
+    "host-failed.png"
+  ],
+  "functional_pngs": 241,
+  "business_numbers_dialed": 0,
+  "business_native_dial_verified": false,
+  "new_business_frames": 0,
+  "actual_failure": "Harness used TextView local visible coordinates including huge single-line scrollX; injected off-display point. Real business tab is drawn normally at91..233px but recorded524315..524459px. Both cases failed before business entry or dispatch.",
+  "fresh_visual_approval": false,
+  "signing_and_245_guards_unchanged": true
+}

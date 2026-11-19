@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.RecentInlinePresentationTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-11-18T12:21:40" hostname="3ebae333e153" time="5.828">
+  <properties/>
+  <testcase name="knownContactUsesItsExistingCardInsteadOfCreatingAnother" classname="com.dacaller.app.RecentInlinePresentationTest" time="0.602"/>
+  <testcase name="englishAndHebrewLargeFontActionsHaveNativeVisibleTextAnd48dpTargets" classname="com.dacaller.app.RecentInlinePresentationTest" time="0.497"/>
+  <testcase name="explicitActionsKeepTheUnmodifiedSelectedNumberAndDetailsIdentity" classname="com.dacaller.app.RecentInlinePresentationTest" time="0.342"/>
+  <testcase name="emptyColdStartSnapshotRetainsSavedExpansionUntilActualRowsLoad" classname="com.dacaller.app.RecentInlinePresentationTest" time="0.527"/>
+  <testcase name="touchExpandsOneRowAndBackCollapsesWithoutDialOrDialog" classname="com.dacaller.app.RecentInlinePresentationTest" time="0.224"/>
+  <testcase name="sameFrameRebuildAndNewTouchCannotReplayAnOlderExpansionAnchor" classname="com.dacaller.app.RecentInlinePresentationTest" time="0.678"/>
+  <testcase name="expansionAndCollapseKeepTheCurrentListAnchor" classname="com.dacaller.app.RecentInlinePresentationTest" time="0.747"/>
+  <testcase name="recycledRowsCannotRetainAnotherCallsExpandedActions" classname="com.dacaller.app.RecentInlinePresentationTest" time="0.313"/>
+  <testcase name="gesturesStartingOnInlineControlsNeverBecomeSwipeCalls" classname="com.dacaller.app.RecentInlinePresentationTest" time="0.628"/>
+  <testcase name="hiddenCallerKeepsDetailsButDisablesCallMessageAndCreate" classname="com.dacaller.app.RecentInlinePresentationTest" time="0.26"/>
+  <testcase name="contactsArrivingAfterRowBindingCannotOfferADuplicateCard" classname="com.dacaller.app.RecentInlinePresentationTest" time="0.324"/>
+  <testcase name="expandedOwnershipSurvivesSaveAndPrependButNotReusedIdentity" classname="com.dacaller.app.RecentInlinePresentationTest" time="0.675"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

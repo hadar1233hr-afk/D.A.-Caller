@@ -1,0 +1,41 @@
+{
+  "native-failure-candidate": {
+    "path": "/workspace/work/callback-business-first-native-failure-candidate/app-debug.apk",
+    "sha256": "042927cd87db321fa3d7eb5d39b3e48f88d9867efafc3431acf5db7063be6af4",
+    "bytes": 338663,
+    "certificate_sha256": "9a146e4e34fe47291d458ab6a528e3894c0765cdc5b743f3723ff2f62128a68f",
+    "signature_verified_from_actual_apk": true,
+    "metadata_and_recorded_signature_exact": true,
+    "signing_policy": {
+      "apk_sha256": "042927cd87db321fa3d7eb5d39b3e48f88d9867efafc3431acf5db7063be6af4",
+      "certificate_sha256": "9a146e4e34fe47291d458ab6a528e3894c0765cdc5b743f3723ff2f62128a68f",
+      "mode": "ephemeral-test-only",
+      "publication_allowed": false,
+      "required_update_certificate_matches": false,
+      "required_update_version": "0.11.0-beta.9",
+      "schema_version": 1
+    }
+  },
+  "validate-apk": {
+    "path": "/workspace/work/callback-business-first-validate-apk/outputs/apk/debug/app-debug.apk",
+    "sha256": "e15a7bc1f3029a4c41b24cd7240c0d087bc1bf954824a79dbbc2e9cc53b09edd",
+    "bytes": 338663,
+    "certificate_sha256": "93322d0a21e7f13e09f35345929fa2fdcdaeeae8861fda9782326a027c174037",
+    "signature_verified_from_actual_apk": true,
+    "metadata_and_recorded_signature_exact": true,
+    "signing_policy": {
+      "apk_sha256": "e15a7bc1f3029a4c41b24cd7240c0d087bc1bf954824a79dbbc2e9cc53b09edd",
+      "certificate_sha256": "93322d0a21e7f13e09f35345929fa2fdcdaeeae8861fda9782326a027c174037",
+      "mode": "ephemeral-test-only",
+      "publication_allowed": false,
+      "required_update_certificate_matches": false,
+      "required_update_version": "0.11.0-beta.9",
+      "schema_version": 1
+    }
+  },
+  "lint_counts": {
+    "Error": 0,
+    "Fatal": 0,
+    "Warning": 6
+  }
+}

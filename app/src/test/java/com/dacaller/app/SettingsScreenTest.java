@@ -116,6 +116,36 @@ public final class SettingsScreenTest {
    assertEquals(View.LAYOUT_DIRECTION_RTL,call.getLayoutDirection());
   }
  }
+ @Test @org.robolectric.annotation.SQLiteMode(org.robolectric.annotation.SQLiteMode.Mode.NATIVE)
+ public void interruptedRestoreBlocksAnAlreadyOpenChoiceAndRevertsToggleUntilRecoveryCompletes()throws Exception{
+  Context app=RuntimeEnvironment.getApplication();prefs.edit().putBoolean("dark",false).putBoolean("amoled",false).putBoolean("show_stats",true).commit();
+  SettingsBackup.PendingRestore pending=null;
+  try(ActivityController<MainActivity> ctl=Robolectric.buildActivity(MainActivity.class).setup()){
+   MainActivity host=ctl.get();View root=host.findViewById(android.R.id.content);
+   permissionRow(root,"מצב תצוגה").performClick();android.app.AlertDialog choice=org.robolectric.shadows.ShadowAlertDialog.getLatestAlertDialog();
+   assertNotNull(choice);assertTrue(choice.isShowing());
+   java.util.Map<String,Object> prior=new java.util.LinkedHashMap<>();prior.put("dark",false);
+   pending=new SettingsBackup.PendingRestore(app,java.util.UUID.randomUUID().toString(),"crest",new SettingsBackup.Snapshot(prior),java.util.Collections.emptySet());
+   pending.write();prefs.edit().putBoolean("dark",true).commit();
+   choice.getListView().performItemClick(null,2,2);
+   assertTrue("An already displayed choice must recheck the recovery gate",choice.isShowing());
+   assertFalse(prefs.getBoolean("amoled",false));
+   android.widget.Switch showStats=findSwitch(permissionRow(root,"הצגת סיכום פעילות"));assertNotNull(showStats);assertTrue(showStats.isChecked());
+   showStats.setChecked(false);assertTrue("Blocked switch must reflect saved value",showStats.isChecked());assertTrue(prefs.getBoolean("show_stats",false));
+   assertNotNull(host.findViewById(android.R.id.content).findViewWithTag("main_nav_keypad"));assertNull(PhoneSessionService.current);
+   SettingsBackup.recoverPendingRestore(app,id->true);assertFalse(SettingsBackup.hasPendingRestore(app));assertFalse(prefs.getBoolean("dark",true));
+   choice.getListView().performItemClick(null,1,1);
+   assertTrue("Choice becomes writable after undo is durably resolved",prefs.getBoolean("dark",false));assertFalse(prefs.getBoolean("amoled",true));
+   showStats.setChecked(false);assertFalse(prefs.getBoolean("show_stats",true));
+  }finally{if(pending!=null)pending.clear();}
+ }
+ private android.widget.Switch findSwitch(View view){
+  if(view instanceof android.widget.Switch)return (android.widget.Switch)view;
+  if(view instanceof ViewGroup)for(int i=0;i<((ViewGroup)view).getChildCount();i++){
+   android.widget.Switch found=findSwitch(((ViewGroup)view).getChildAt(i));if(found!=null)return found;
+  }
+  return null;
+ }
  private View permissionRow(View root,String label){return (View)findText(root,label).getParent().getParent();}
  private TextView findText(View view,String text){
   if(view instanceof TextView&&text.contentEquals(((TextView)view).getText()))return (TextView)view;

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.SettingsArchiveBackupTest" tests="17" skipped="0" failures="0" errors="0" timestamp="2026-11-19T06:50:30" hostname="3ebae333e153" time="0.716">
+  <properties/>
+  <testcase name="boundedRowsAndInvalidInMemoryIdentityFailBeforeDatabaseCreation" classname="com.dacaller.app.SettingsArchiveBackupTest" time="0.024"/>
+  <testcase name="reopenedCommittedRestoreKeepsDurablePreferencesAndImportedRows" classname="com.dacaller.app.SettingsArchiveBackupTest" time="0.039"/>
+  <testcase name="reopenedUncommittedRestoreUndoesPreferencesAndKeepsArchiveWithoutPruning" classname="com.dacaller.app.SettingsArchiveBackupTest" time="0.032"/>
+  <testcase name="restoreUpgradesV1WithoutPruningOrReplacingItsExistingIdentity" classname="com.dacaller.app.SettingsArchiveBackupTest" time="0.06"/>
+  <testcase name="failureAfterDurablePreferenceWriteRecoversBothStoresAndLauncher" classname="com.dacaller.app.SettingsArchiveBackupTest" time="0.03"/>
+  <testcase name="failedJournalCleanupCannotReplayCompletedUndoOverLaterUserEdits" classname="com.dacaller.app.SettingsArchiveBackupTest" time="0.048"/>
+  <testcase name="iconFailureCannotLeaveStagedArchiveOrPreferenceChanges" classname="com.dacaller.app.SettingsArchiveBackupTest" time="0.037"/>
+  <testcase name="failedIconRollbackKeepsJournalAndArchivePausedUntilRecoverySucceeds" classname="com.dacaller.app.SettingsArchiveBackupTest" time="0.028"/>
+  <testcase name="captureNeverPrunesExpiredRowsAndLegacyOptOutNeverOpensArchive" classname="com.dacaller.app.SettingsArchiveBackupTest" time="0.021"/>
+  <testcase name="archiveExportRejectsUnsupportedStoredSchemaWithoutRunningMigration" classname="com.dacaller.app.SettingsArchiveBackupTest" time="0.022"/>
+  <testcase name="sqlFailureAfterEarlierInsertRollsBackAllRowsAndNeverAppliesSettings" classname="com.dacaller.app.SettingsArchiveBackupTest" time="0.033"/>
+  <testcase name="preferenceCommitFailureRollsBackStagedArchiveAndExistingSettings" classname="com.dacaller.app.SettingsArchiveBackupTest" time="0.049"/>
+  <testcase name="corruptArchiveIsRejectedEntirelyBeforeSettingsOrArchiveWritesEvenWhenOptedOut" classname="com.dacaller.app.SettingsArchiveBackupTest" time="0.09"/>
+  <testcase name="optionalRoundTripPreservesEveryStoredRowAndRetentionMetadataWhileOff" classname="com.dacaller.app.SettingsArchiveBackupTest" time="0.059"/>
+  <testcase name="mergeDeduplicatesOnlyExactIdentityAndPreservesExistingConflicts" classname="com.dacaller.app.SettingsArchiveBackupTest" time="0.065"/>
+  <testcase name="failedJournalPublicationOrRemovalIsReportedBeforeAnyRestoreMutation" classname="com.dacaller.app.SettingsArchiveBackupTest" time="0.023"/>
+  <testcase name="pendingOrCorruptJournalPreventsEveryDestructiveArchivePath" classname="com.dacaller.app.SettingsArchiveBackupTest" time="0.048"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,75 @@
+{
+  "provenance_verified_against_connector_digests": true,
+  "source": "3a00126420512aa01ecbcaa77ce54db14576b5ff",
+  "run": 40773695840,
+  "conclusion": "failure",
+  "artifacts": {
+    "validate-apk": {
+      "artifact_id": 12854770268,
+      "artifact_name": "DA-CALLER-0.11.0-beta.9-debug-a400a78d111b91d34d83e8785920aa17f7e3762e",
+      "sha256": "22bd26d810556dce3df7c44fecbd1342f96a9034297e42dd71b54a7a2e3f40d2",
+      "bytes": 264312,
+      "path": "/workspace/work/external-island-sixth-validate-apk",
+      "zip": "/workspace/da-caller-native-evidence/native-review-export/40773695840/validate-apk.zip"
+    },
+    "ui": {
+      "artifact_id": 12853978136,
+      "artifact_name": "DA-CALLER-Android13-UI-a400a78d111b91d34d83e8785920aa17f7e3762e",
+      "sha256": "1c1ffd86065907c0b85f2ddfa7c4a67adbd2f777f55c6d6ac80f1cf713b9fb93",
+      "bytes": 12581750,
+      "path": "/workspace/work/external-island-sixth-ui",
+      "zip": "/workspace/da-caller-native-evidence/native-review-export/40773695840/ui.zip"
+    },
+    "checks": {
+      "artifact_id": 12852579473,
+      "artifact_name": "DA-CALLER-checks-a400a78d111b91d34d83e8785920aa17f7e3762e",
+      "sha256": "c4bd37e1f7782112d3501247165c7a1eb20d4a08b9c0adab69417686a33071c7",
+      "bytes": 106233,
+      "path": "/workspace/work/external-island-sixth-checks",
+      "zip": "/workspace/da-caller-native-evidence/native-review-export/40773695840/checks.zip"
+    }
+  },
+  "export_commit": "63eea12207b6c6d4da5679dd9263a36150c1ce64",
+  "native_png_count": 217,
+  "unit": {
+    "tests": 257,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native": {
+    "tests": 30,
+    "failures": 2,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_failures": [
+    {
+      "test": {
+        "name": "testNativeNotificationStatesActionsAndDirectReturn",
+        "classname": "com.dacaller.app.CallIntegrationSnapshotTest",
+        "time": "13.797"
+      },
+      "message": {},
+      "text": "junit.framework.AssertionFailedError: Initial FGS start must happen while MainActivity is in the foreground\nat com.dacaller.app.CallIntegrationSnapshotTest.testNativeNotificationStatesActionsAndDirectReturn(CallIntegrationSnapshotTest.java:293)\nat android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)\nat android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)\nat android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)\nat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)\n"
+    },
+    {
+      "test": {
+        "name": "testActualTelecomExternalIslandOnLauncherAndOtherApps",
+        "classname": "com.dacaller.app.CallIslandExternalIntegrationTest",
+        "time": "17.437"
+      },
+      "message": {},
+      "text": "junit.framework.AssertionFailedError: Actual native external surface must be visible and usable over com.google.android.apps.nexuslauncher: first-active\nat com.dacaller.app.CallIslandExternalIntegrationTest.awaitNativeSurface(CallIslandExternalIntegrationTest.java:342)\nat com.dacaller.app.CallIslandExternalIntegrationTest.scenario(CallIslandExternalIntegrationTest.java:530)\nat com.dacaller.app.CallIslandExternalIntegrationTest.testActualTelecomExternalIslandOnLauncherAndOtherApps(CallIslandExternalIntegrationTest.java:514)\nat android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)\nat android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)\nat android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)\nat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)\n"
+    }
+  ],
+  "status": "FAIL",
+  "source_app_tree": "2c98c222c65cbf0539bbac8ded581196f221c262",
+  "native_artifacts_published_as_apk_release": false,
+  "failure_context": "Two harness failures: initial FGS assertion sampled Main focus immediately after dialer role transition; external surface assertion exhausted AX polling after native SystemUI answer. Actual failure PNG/WM/AX show the active island visible over Launcher at [45,48][435,132], and the raw system log includes AccessibilityManagerService wait for adding window timeout: 6.",
+  "changes_for_next_run": [
+    "Keep strict legal initial FGS foreground assertion; wait boundedly for actual Main topResumed, attached/shown/focused decor and active native application window after role transition.",
+    "Resolve exact foreground before and after the surface stability phase, reuse one native AX window list per sample, identify the production overlay title before querying roots, retain all native caller/state/bounds/banner conditions and the eight-second surface budget.",
+    "Record bounded per-predicate timing and bounds samples so any remaining native failure can be diagnosed directly. No production call/overlay code changed."
+  ]
+}

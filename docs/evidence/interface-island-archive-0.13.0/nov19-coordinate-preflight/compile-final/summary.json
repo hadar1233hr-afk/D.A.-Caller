@@ -1,0 +1,18 @@
+{
+  "status": "ANDROID_TEST_BUILD_AND_LINT_PASS_NOT_NATIVE_APPROVAL",
+  "gradle_return_marker": 0,
+  "unified_tool_wrapper_reported_exit": 1,
+  "wrapper_note": "Both raw logs report BUILD SUCCESSFUL; final script recorded Gradle exit0. Tool wrapper reported1; retained transparently. Fresh independent CI remains required.",
+  "app_source_unchanged_during_final_build": true,
+  "production_and_unit_sources_unchanged_from457PASS": true,
+  "local_unit_tests_rerun": false,
+  "lint": {
+    "Error": 0,
+    "Fatal": 0,
+    "Warning": 16
+  },
+  "android_test_apk_sha256": "0542a9ca89f93a7bc82292d25655878b00c08f636c8b61dce91c361981c7fbde",
+  "reviewer": "native_hotfix_review_nov19 bounded CODEGO after completing Personalization window-origin conversion",
+  "native_executed_after_hotfixes": false,
+  "publication_allowed": false
+}

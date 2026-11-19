@@ -1,0 +1,53 @@
+{
+  "run_id": 44442075483,
+  "source_sha": "77b43740f95965a0a7c17f13c2cb78b8bdf5065b",
+  "app_tree": "a58c9e6821c65a5e97bbe8bbbc40dc8716e998cd",
+  "status": "NATIVE_FAIL_NO_APPROVAL",
+  "unit_pass": 457,
+  "native": {
+    "tests": 40,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0
+  },
+  "pass_count": 39,
+  "raw_pngs": 260,
+  "verified_artifacts": [
+    {
+      "name": "ui",
+      "artifact_id": 14491614255,
+      "bytes": 15689557,
+      "sha256": "6217622417e5844dcb550f922ec4a2dfd9b1eb6f073d49317dc82e79076cc25d",
+      "all_crc_pass": true
+    },
+    {
+      "name": "native-failure",
+      "artifact_id": 14491853754,
+      "bytes": 1330594,
+      "sha256": "20327c51fb42dce889e475b5a41312232bc6c21cf6cb075afa1045ebc67f4191",
+      "all_crc_pass": true
+    }
+  ],
+  "publication_allowed": false,
+  "original_present": 245,
+  "modern_present": 13,
+  "diagnostic_pngs": [
+    "host-failed.png",
+    "modern-failed-testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency.png"
+  ],
+  "missing_original": [],
+  "missing_modern": [
+    "modern-island-below-inapp.png",
+    "modern-island-composition-background.png",
+    "modern-island-dragged.png",
+    "modern-island-hide-home.png",
+    "modern-island-new-call-shown.png",
+    "modern-island-opacity-0.png",
+    "modern-island-opacity-100.png",
+    "modern-island-opacity-35.png",
+    "modern-island-restore-home.png",
+    "modern-island-status-external.png",
+    "modern-island-status-inapp.png"
+  ],
+  "whole_matrix_visual_approval": false
+}

@@ -1,0 +1,354 @@
+{
+  "transparency": {
+    "sample_region": "[45,431][435,515]",
+    "background_is_real_app_compositor": true,
+    "view_alpha": 1,
+    "caller_alpha": 1,
+    "background_alpha_35": 89,
+    "rgb_tolerance": 3,
+    "samples": [
+      {
+        "x": 237,
+        "y": 436,
+        "background": -1,
+        "opacity0": -1,
+        "opacity35": -5394769,
+        "opacity100": -15460837
+      },
+      {
+        "x": 240,
+        "y": 436,
+        "background": -1,
+        "opacity0": -1,
+        "opacity35": -5394769,
+        "opacity100": -15460837
+      },
+      {
+        "x": 243,
+        "y": 436,
+        "background": -1,
+        "opacity0": -1,
+        "opacity35": -5394769,
+        "opacity100": -15460837
+      },
+      {
+        "x": 246,
+        "y": 436,
+        "background": -1,
+        "opacity0": -1,
+        "opacity35": -5394769,
+        "opacity100": -15460837
+      },
+      {
+        "x": 249,
+        "y": 436,
+        "background": -1,
+        "opacity0": -1,
+        "opacity35": -5394769,
+        "opacity100": -15460838
+      }
+    ],
+    "sample_selection": "baseline-only uniform light background in central top padding",
+    "baseline_uniform_guard_pixels": 1,
+    "baseline_min_rgb": 200
+  },
+  "role_held": true,
+  "default_dialer": "com.dacaller.app",
+  "data_origin": "Emulator GSM modem -> Android Telecom -> production PhoneSessionService; no injected Call\/session",
+  "launcher_package": "com.google.android.apps.nexuslauncher",
+  "foreground_evidence": [
+    {
+      "stage": "active-home",
+      "foreground_package": "com.google.android.apps.nexuslauncher",
+      "top_resumed": true,
+      "native_application_window_visible": true
+    },
+    {
+      "stage": "hide-home",
+      "foreground_package": "com.google.android.apps.nexuslauncher",
+      "top_resumed": true,
+      "native_application_window_visible": true
+    },
+    {
+      "stage": "restore-home",
+      "foreground_package": "com.google.android.apps.nexuslauncher",
+      "top_resumed": true,
+      "native_application_window_visible": true
+    },
+    {
+      "stage": "status-external",
+      "foreground_package": "com.google.android.apps.nexuslauncher",
+      "top_resumed": true,
+      "native_application_window_visible": true
+    },
+    {
+      "stage": "new-call-home",
+      "foreground_package": "com.google.android.apps.nexuslauncher",
+      "top_resumed": true,
+      "native_application_window_visible": true
+    }
+  ],
+  "answers": [
+    {
+      "token": "52b0d506-1043-466f-8fca-402a7c8dad2b",
+      "number": "0500099971",
+      "window_id": 7,
+      "bounds": "[278,226][368,298]",
+      "stable_millis": 832,
+      "configured_touch_acceptance_delay_millis": 700,
+      "input_method": "native-pointer",
+      "native_caller_row": true
+    },
+    {
+      "token": "8d1b1a0e-9153-44f7-b63d-1cdd57b4c5a3",
+      "number": "0500099971",
+      "window_id": 7,
+      "bounds": "[278,226][368,298]",
+      "stable_millis": 816,
+      "configured_touch_acceptance_delay_millis": 700,
+      "input_method": "native-pointer",
+      "native_caller_row": true
+    }
+  ],
+  "first_token": "52b0d506-1043-466f-8fca-402a7c8dad2b",
+  "second_token": "8d1b1a0e-9153-44f7-b63d-1cdd57b4c5a3",
+  "modem_commands": [
+    {
+      "id": "17950913011940",
+      "operation": "call",
+      "number": "0500099971",
+      "serial": "emulator-5554",
+      "returncode": 0,
+      "stdout": "OK",
+      "stderr": ""
+    },
+    {
+      "id": "17950913158971",
+      "operation": "cancel",
+      "number": "0500099971",
+      "serial": "emulator-5554",
+      "returncode": 0,
+      "stdout": "OK",
+      "stderr": ""
+    },
+    {
+      "id": "17950913165442",
+      "operation": "call",
+      "number": "0500099971",
+      "serial": "emulator-5554",
+      "returncode": 0,
+      "stdout": "OK",
+      "stderr": ""
+    },
+    {
+      "id": "17950913189213",
+      "operation": "cancel",
+      "number": "0500099971",
+      "serial": "emulator-5554",
+      "returncode": 0,
+      "stdout": "OK",
+      "stderr": ""
+    }
+  ],
+  "gestures": [
+    {
+      "kind": "completed_external_drag",
+      "before": "[45,48][435,132]",
+      "after": "[45,206][435,290]",
+      "x": 5000,
+      "y": 2476,
+      "call_state": 4
+    },
+    {
+      "kind": "cancelled_external_drag",
+      "normalized_position_preserved": true,
+      "geometry_restored": true,
+      "call_state": 4
+    },
+    {
+      "kind": "drag_started_on_end_control",
+      "call_state": 4,
+      "end_confirmation_opened": false,
+      "before": "[18,134][462,509]",
+      "after": "[18,209][462,584]",
+      "position_before": 2476,
+      "position_after": 4640,
+      "body_scrolling_required": false
+    }
+  ],
+  "surfaces": [
+    {
+      "stage": "external-protected-status-fallback",
+      "bounds": "[45,48][435,132]",
+      "token": "52b0d506-1043-466f-8fca-402a7c8dad2b",
+      "call_state": 4,
+      "external_overlay_count": 1
+    },
+    {
+      "stage": "inapp-protected-readable-status-fallback",
+      "bounds": "[45,48][435,132]",
+      "token": "52b0d506-1043-466f-8fca-402a7c8dad2b",
+      "call_state": 4,
+      "external_overlay_count": 0,
+      "display_width": 480,
+      "display_height": 854,
+      "density_dpi": 240,
+      "font_scale": 1.2999999523162842,
+      "status_inset": 36,
+      "safe_lane_width": 264,
+      "minimum_readable_width": 363,
+      "capsule_minimum_width": 276,
+      "caller_line_count": 1,
+      "caller_ellipsize": "END",
+      "caller_full_text": "0500099971",
+      "caller_code_points": 10,
+      "caller_visible_prefix": "0500099",
+      "caller_visible_code_points": 7,
+      "caller_ellipsis_start_utf16": 7,
+      "caller_ellipsis_count_utf16": 3,
+      "caller_minimum_text": "050009…",
+      "caller_minimum_text_width": 125,
+      "caller_padding_horizontal": 6,
+      "position_mode": "status_area",
+      "custom_position_set": false,
+      "capsule_geometry": {
+        "bounds": "[45,48][435,132]",
+        "native_ax_bounds": "[45,48][435,132]",
+        "window_id": 465,
+        "stable_samples": 2,
+        "view_window_focus": true,
+        "native_window_focus": true
+      },
+      "caller_geometry": {
+        "bounds": "[126,58][284,91]",
+        "native_ax_bounds": "[126,58][284,91]",
+        "window_id": 465,
+        "stable_samples": 2,
+        "view_window_focus": true,
+        "native_window_focus": true
+      },
+      "status_bar_protection": {
+        "system_ui_package": "com.android.systemui",
+        "system_ui_package_record": "package:com.android.systemui uid:10157",
+        "system_ui_uid": 10157,
+        "native_window": {
+          "index": 2,
+          "id": 85,
+          "name": "cf7c742 StatusBar",
+          "uid": 10157,
+          "input_config": "NOT_FOCUSABLE | TRUSTED_OVERLAY",
+          "frame": "[0,35][320,59]",
+          "raw": "2: name='cf7c742 StatusBar', id=85, displayId=0, inputConfig=NOT_FOCUSABLE | TRUSTED_OVERLAY, alpha=1.00, frame=[0,35][320,59], globalScale=1.000000, applicationInfo.name=, applicationInfo.token=<null>, touchableRegion=[0,35][320,59], ownerPid=766, ownerUid=10157, dispatchingTimeout=5000ms, hasToken=true, touchOcclusionMode=BLOCK_UNTRUSTED"
+        },
+        "window_has_input_token": true,
+        "window_visible": true,
+        "mapped_status_bounds": "[0,0][480,37]",
+        "display_transform": {
+          "scale_x": 1.5,
+          "scale_y": 1.5009,
+          "translate_x": 0,
+          "translate_y": -52.5308,
+          "raw": "\n  Display: 0\n    logicalSize=480x854\n        transform (ROT_0) (SCALE TRANSLATE)\n            1.5000  -0.0000  0.0000\n            -0.0000  1.5009  -52.5308\n            0.0000  0.0000  1.0000"
+        },
+        "root_status_inset": 36,
+        "root_status_bars_visible": true,
+        "clock_lane_bounds": "[0,0][90,37]",
+        "right_icon_lane_bounds": "[390,0][480,37]",
+        "clock_lane_clear": true,
+        "right_icon_lane_clear": true,
+        "stable_samples": 2,
+        "proof_scope": "Native SystemUI StatusBar window, root WindowInsets and protected geometric lanes; icon visual presence is reviewed in the real capture"
+      }
+    },
+    {
+      "stage": "inapp-default-below-restored",
+      "bounds": "[45,48][435,132]",
+      "token": "52b0d506-1043-466f-8fca-402a7c8dad2b",
+      "call_state": 4,
+      "external_overlay_count": 0
+    }
+  ],
+  "compatible_wide_native_lane": "NOT_TESTED_FIXED_480PX_VIEWPORT",
+  "hide_preserves_call_and_notification": true,
+  "settings_restore_on_home": true,
+  "new_call_ignores_previous_hidden_token": true,
+  "single_owned_surface": true,
+  "protected_status_icons_remain_visible": true,
+  "modem_end_removes_island": true,
+  "api": 33,
+  "density_dpi": 240,
+  "font_scale": 1.3,
+  "captures": {
+    "modern-island-dragged.png": {
+      "sha256": "211142aa9f8619bb5022a15e8518648fe748aa508db7e89f70be52ca1916ba05",
+      "width": 480,
+      "height": 854,
+      "method": "UiAutomation.takeScreenshot"
+    },
+    "modern-island-hide-home.png": {
+      "sha256": "42244c5be60256a107c9af1773ee2bfd70e85242724ffe5c40b8d11516c8a581",
+      "width": 480,
+      "height": 854,
+      "method": "UiAutomation.takeScreenshot"
+    },
+    "modern-island-restore-home.png": {
+      "sha256": "4b7e077a16ac31d02406df7d2c9420e952712c41fd731d1f3e5ab39010b06837",
+      "width": 480,
+      "height": 854,
+      "method": "UiAutomation.takeScreenshot"
+    },
+    "modern-island-status-external.png": {
+      "sha256": "e19c013ad7b52b87b56635e3808467a9ed83ce94dc6ac64de1be70a2dddd8c13",
+      "width": 480,
+      "height": 854,
+      "method": "UiAutomation.takeScreenshot"
+    },
+    "modern-island-status-inapp.png": {
+      "sha256": "db1b4a60394888e2b5f779feab0058abc9f6f97efadc6ee027d03fd73ab70b7f",
+      "width": 480,
+      "height": 854,
+      "method": "UiAutomation.takeScreenshot"
+    },
+    "modern-island-below-inapp.png": {
+      "sha256": "aa3c975dbaa4a6e9b181a8d2c940913842451a5dee531334981f6baea6ca4b69",
+      "width": 480,
+      "height": 854,
+      "method": "UiAutomation.takeScreenshot"
+    },
+    "modern-island-composition-background.png": {
+      "sha256": "61745fc171475fbfbfe8a16dffc1faaf7b2bf358bb45bb4a102cc8d938bbf2f1",
+      "width": 480,
+      "height": 854,
+      "method": "UiAutomation.takeScreenshot"
+    },
+    "modern-island-opacity-0.png": {
+      "sha256": "8486618033d833712ef6025e34c94f0628d39845365ecefbd0ee868d8fe18373",
+      "width": 480,
+      "height": 854,
+      "method": "UiAutomation.takeScreenshot"
+    },
+    "modern-island-opacity-35.png": {
+      "sha256": "7c14ed7497a591dc9366f05fb1fa4c76269d3fe8c172cdf8ceb828fc0a4259c0",
+      "width": 480,
+      "height": 854,
+      "method": "UiAutomation.takeScreenshot"
+    },
+    "modern-island-opacity-100.png": {
+      "sha256": "3b34c194ec919e93a7b1b56a63e98bb4d022ed0e8baadaaeffe5361c84ffc6e0",
+      "width": 480,
+      "height": 854,
+      "method": "UiAutomation.takeScreenshot"
+    },
+    "modern-island-new-call-shown.png": {
+      "sha256": "5994a1f9b5062ab90f825075c429053801e39f3e8b2da030659b7bbf766448b0",
+      "width": 480,
+      "height": 854,
+      "method": "UiAutomation.takeScreenshot"
+    }
+  },
+  "package": "com.dacaller.app",
+  "version_name": "0.13.0",
+  "version_code": 22,
+  "physical_carrier_audio_verified": false,
+  "matching_key_upgrade_verified": false
+}

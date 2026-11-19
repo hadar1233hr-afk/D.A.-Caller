@@ -57,11 +57,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 /** Real API33 rendering and integration, using fictional contacts and isolated document bytes. */
 @SuppressWarnings({"deprecation","unchecked"})
 public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
  private static final String DIRECTORY="/sdcard/Download/DA-CALLER-snapshots";
+ private static final int BAR_CAPTURE_DEADLINE_MS=5000,BAR_CAPTURE_MAX_SAMPLES=50;
+ private static final int BAR_CAPTURE_INTERVAL_MS=100,BAR_CAPTURE_STABLE_SAMPLES=3,BAR_CAPTURE_MIN_PIXELS=40;
+ private final Map<String,JSONObject> backupBarCaptures=new java.util.LinkedHashMap<>();
  private Context target;
  private SharedPreferences settings;
  private Map<String,?> originalSettings;
@@ -70,6 +74,7 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
  private final List<Activity> launched=new ArrayList<>();
  private List<CallHistory.Entry> originalCalls;
  private CallHistory.Summary originalSummary;
+ private int originalAccessibilityFlags;
 
  @Override protected void setUp()throws Exception{
   super.setUp();target=getInstrumentation().getTargetContext();
@@ -77,7 +82,13 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
   originalSettings=settings.getAll();originalIcon=AppIcons.selected(target);
   originalFontScale=shell("settings get system font_scale").trim();
   originalCalls=CallHistory.entries;originalSummary=CallHistory.summary;
+  android.accessibilityservice.AccessibilityServiceInfo service=getInstrumentation().getUiAutomation().getServiceInfo();
+  originalAccessibilityFlags=service.flags;
+  service.flags|=android.accessibilityservice.AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
+    |android.accessibilityservice.AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS;
+  getInstrumentation().getUiAutomation().setServiceInfo(service);
   shell("mkdir -p "+DIRECTORY);
+  dismissNativeEducation();
  }
  @Override protected void tearDown()throws Exception{
   try{
@@ -87,7 +98,19 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
    CallHistory.entries=originalCalls;CallHistory.summary=originalSummary;
    target.getContentResolver().delete(BackupDocumentProvider.DOCUMENT,null,null);
    shell("settings put system font_scale "+(originalFontScale.matches("[0-9.]+")?originalFontScale:"1.0"));
-  }finally{super.tearDown();}
+  }finally{
+   try{dismissNativeEducation();}
+   finally{
+    try{android.accessibilityservice.AccessibilityServiceInfo service=getInstrumentation().getUiAutomation().getServiceInfo();
+     service.flags=originalAccessibilityFlags;getInstrumentation().getUiAutomation().setServiceInfo(service);}
+    finally{
+     // JUnit keeps the test instances until the suite ends. Finished Activity
+     // references would otherwise keep every earlier window/view tree alive.
+     launched.clear();host=null;originalCalls=null;originalSummary=null;originalSettings=null;
+     super.tearDown();
+    }
+   }
+  }
  }
  private void ui(Runnable action)throws Exception{
   AtomicReference<Throwable> error=new AtomicReference<>();
@@ -167,27 +190,219 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
   if(view instanceof ViewGroup)for(int i=0;i<((ViewGroup)view).getChildCount();i++)textFits(((ViewGroup)view).getChildAt(i));
  }
  private void tap(View view)throws Exception{
-  final int[] location=new int[2];ui(()->{fullyVisible(view);view.getLocationOnScreen(location);location[0]+=view.getWidth()/2;location[1]+=view.getHeight()/2;});
-  tap(location[0],location[1]);settle();
+  Rect bounds=stableNativeBounds(view);tap(bounds.centerX(),bounds.centerY());settle();
  }
- private void tap(int x,int y){
+ private void tap(int x,int y)throws Exception{
+  awaitNativeApplicationWindow();
   long now=SystemClock.uptimeMillis();MotionEvent down=MotionEvent.obtain(now,now,MotionEvent.ACTION_DOWN,x,y,0),up=MotionEvent.obtain(now,now+50,MotionEvent.ACTION_UP,x,y,0);
-  getInstrumentation().sendPointerSync(down);getInstrumentation().sendPointerSync(up);down.recycle();up.recycle();
+  try{getInstrumentation().sendPointerSync(down);Thread.sleep(50);getInstrumentation().sendPointerSync(up);}finally{down.recycle();up.recycle();}
+ }
+ private Rect stableNativeBounds(View view)throws Exception{
+  assertNotNull("Missing actual native target",view);
+  awaitNativeApplicationWindow();
+  long deadline=SystemClock.uptimeMillis()+7000,stableSince=-1;Rect previous=null;String state="not sampled";
+  while(SystemClock.uptimeMillis()<deadline){
+   getInstrumentation().waitForIdleSync();Rect bounds=new Rect(),rawBounds=new Rect(),nativeBounds=new Rect();int[] window={-1},rootScreen=new int[2],rootWindow=new int[2];boolean[] ready={false};
+   ui(()->{
+    View root=view.getRootView();
+    ready[0]=view.isAttachedToWindow()&&view.isShown()&&view.isLaidOut()&&!view.isLayoutRequested()&&!root.isLayoutRequested()
+      &&root.hasWindowFocus()&&view.getWidth()>0&&view.getHeight()>0&&view.getGlobalVisibleRect(bounds)
+      &&bounds.width()==view.getWidth()&&bounds.height()==view.getHeight();
+    rawBounds.set(bounds);
+    if(ready[0]){
+     // Global visibility is root/window-relative; native AX and pointer input
+     // use screen coordinates, including a dialog's nonzero window origin.
+     root.getLocationOnScreen(rootScreen);root.getLocationInWindow(rootWindow);
+     bounds.offset(rootScreen[0]-rootWindow[0],rootScreen[1]-rootWindow[1]);
+     AccessibilityNodeInfo node=view.createAccessibilityNodeInfo();
+     try{node.getBoundsInScreen(nativeBounds);window[0]=node.getWindowId();}finally{node.recycle();}
+     ready[0]=nativeBounds.equals(bounds);
+    }
+   });
+   boolean focused=false;
+   for(android.view.accessibility.AccessibilityWindowInfo item:getInstrumentation().getUiAutomation().getWindows())
+    if(item.getId()==window[0]&&item.isFocused()){focused=true;break;}
+   state="rawVisible="+rawBounds+", rootScreen="+rootScreen[0]+","+rootScreen[1]+", rootWindow="+rootWindow[0]+","+rootWindow[1]
+     +", screenVisible="+bounds+", native="+nativeBounds+", window="+window[0]+", focused="+focused+", ready="+ready[0];
+   long now=SystemClock.uptimeMillis();
+   if(ready[0]&&focused){if(!bounds.equals(previous)){previous=new Rect(bounds);stableSince=now;}if(now-stableSince>=80)return bounds;}
+   else{previous=null;stableSince=-1;}
+   Thread.sleep(20);
+  }
+  fail("Pointer requires stable full native bounds in its focused window: "+state);return null;
+ }
+ private void awaitNativeApplicationWindow()throws Exception{
+  dismissNativeEducation();long deadline=SystemClock.uptimeMillis()+7000;
+  do{
+   AccessibilityNodeInfo root=getInstrumentation().getUiAutomation().getRootInActiveWindow();
+   if(root!=null)try{if(target.getPackageName().contentEquals(String.valueOf(root.getPackageName())))return;}finally{root.recycle();}
+   getInstrumentation().waitForIdleSync();Thread.sleep(30);
+  }while(SystemClock.uptimeMillis()<deadline);
+  fail("DA CALLER must own the active native window before input or capture");
+ }
+ private boolean nativeText(AccessibilityNodeInfo root,String text){
+  List<AccessibilityNodeInfo> nodes=root.findAccessibilityNodeInfosByText(text);boolean found=!nodes.isEmpty();
+  for(AccessibilityNodeInfo node:nodes)node.recycle();return found;
+ }
+ private void dismissNativeEducation()throws Exception{
+  // The retained failure showed Android's first-use immersive education surface,
+  // not the backup Activity. Dismiss only that genuine native prompt, using its
+  // own AX button and UiAutomation input; never change the app's bar flags or
+  // weaken the compositor contrast/inset checks below.
+  shell("cmd statusbar collapse");getInstrumentation().waitForIdleSync();
+  AccessibilityNodeInfo root=getInstrumentation().getUiAutomation().getRootInActiveWindow();if(root==null)return;
+  Rect button=new Rect();int owner=-1;
+  try{
+   String pkg=String.valueOf(root.getPackageName());
+   if(!("android".equals(pkg)||"com.android.systemui".equals(pkg))||!nativeText(root,"Viewing full")||!nativeText(root,"To exit"))return;
+   List<AccessibilityNodeInfo> nodes=root.findAccessibilityNodeInfosByText("Got it");
+   try{for(AccessibilityNodeInfo node:nodes)if(node.isVisibleToUser()&&node.isClickable()){
+    node.getBoundsInScreen(button);owner=node.getWindowId();break;
+   }}finally{for(AccessibilityNodeInfo node:nodes)node.recycle();}
+  }finally{root.recycle();}
+  assertFalse("Native immersive education must expose its own visible confirmation",button.isEmpty());
+  boolean focused=false;for(android.view.accessibility.AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows())
+   if(window.getId()==owner&&window.isFocused()){focused=true;break;}
+  assertTrue("Native education button must belong to its focused native window",focused);
+  long now=SystemClock.uptimeMillis();MotionEvent down=MotionEvent.obtain(now,now,MotionEvent.ACTION_DOWN,button.centerX(),button.centerY(),0);
+  MotionEvent up=null;
+  try{assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(down,true));Thread.sleep(50);
+   up=MotionEvent.obtain(now,SystemClock.uptimeMillis(),MotionEvent.ACTION_UP,button.centerX(),button.centerY(),0);
+   assertTrue(getInstrumentation().getUiAutomation().injectInputEvent(up,true));
+  }finally{down.recycle();if(up!=null)up.recycle();}
+  settle();
  }
  private void screenshot(String name)throws Exception{
-  settle();String path=DIRECTORY+"/personalization-"+name+".png";shell("screencap -p "+path);
+  awaitNativeApplicationWindow();settle();String path=DIRECTORY+"/personalization-"+name+".png";shell("screencap -p "+path);
   assertEquals("regular file",shell("stat -c %F "+path).trim());assertTrue(Long.parseLong(shell("stat -c %s "+path).trim())>1000);
+ }
+ private int contrastingBarPixels(Bitmap capture,int left,int right,int top,int bottom,boolean dark){
+  int count=0;
+  for(int y=Math.max(0,top);y<Math.min(capture.getHeight(),bottom);y++)for(int x=Math.max(0,left);x<Math.min(capture.getWidth(),right);x++){
+   int pixel=capture.getPixel(x,y),brightness=Color.red(pixel)+Color.green(pixel)+Color.blue(pixel);
+   if(dark?brightness>600:brightness<384)count++;
+  }return count;
+ }
+ private int[] nativeBarState(Activity activity,boolean confirmation)throws Exception{
+  int[] bars=new int[7];
+  ui(()->{
+   bars[3]=activity.hasWindowFocus()?1:0;
+   bars[6]=!activity.isFinishing()&&!activity.isDestroyed()?1:0;
+   if(confirmation){
+    bars[3]=0;
+    for(View window:android.view.inspector.WindowInspector.getGlobalWindowViews())
+     if(window.hasWindowFocus()&&containsText(window,"Restore settings")){bars[3]=1;break;}
+   }
+   android.view.WindowInsets insets=activity.getWindow().getDecorView().getRootWindowInsets();
+   if(insets!=null){
+    bars[0]=insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.statusBars()).top;
+    bars[1]=insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.navigationBars()).bottom;
+    bars[2]=insets.isVisible(android.view.WindowInsets.Type.navigationBars())?1:0;
+    bars[4]=insets.isVisible(android.view.WindowInsets.Type.statusBars())?1:0;
+   }
+   android.view.WindowInsetsController controller=activity.getWindow().getInsetsController();
+   bars[5]=controller==null?-1:controller.getSystemBarsAppearance();
+  });return bars;
+ }
+ private JSONObject nativeBarStateJson(int[] bars,Activity activity,boolean confirmation)throws Exception{
+  JSONObject state=new JSONObject();state.put("focused",bars[3]==1);state.put("status_top_px",bars[0]);
+  state.put("navigation_bottom_px",bars[1]);state.put("navigation_visible",bars[2]==1);
+  state.put("status_visible",bars[4]==1);state.put("requested_system_bars_appearance",bars[5]);state.put("owner_class",activity.getClass().getName());state.put("owner_active",bars[6]==1);state.put("window_kind",confirmation?"restore-confirmation":"activity");return state;
+ }
+ private void backupSnapshot(Activity activity,boolean dark,boolean confirmation,String name)throws Exception{
+  // Capture the actual compositor, including native status/navigation icons.
+  // Requested appearance flags alone do not prove the rendered icon contrast
+  // while Android transfers bar ownership between Activity windows.
+  awaitNativeApplicationWindow();long started=SystemClock.uptimeMillis(),deadline=started+BAR_CAPTURE_DEADLINE_MS;
+  int stable=0,statusPixels=0,navigationPixels=0;int[] bars=new int[7];
+  Bitmap capture=null;boolean passed=false;JSONArray samples=new JSONArray();String filename="personalization-"+name+".png";
+  try{
+   do{
+    bars=nativeBarState(activity,confirmation);
+    if(bars[3]==0){dismissNativeEducation();bars=nativeBarState(activity,confirmation);}
+    if(capture!=null)capture.recycle();capture=getInstrumentation().getUiAutomation().takeScreenshot();
+    int[] after=nativeBarState(activity,confirmation);long sampled=SystemClock.uptimeMillis();
+    // The left half includes the clock and excludes Android's right-side
+    // microphone privacy chip, which can otherwise hide white-on-light icons.
+    statusPixels=capture==null?0:contrastingBarPixels(capture,0,capture.getWidth()/2,0,bars[0],dark);
+    navigationPixels=capture==null?0:contrastingBarPixels(capture,0,capture.getWidth(),capture.getHeight()-bars[1],capture.getHeight(),dark);
+    boolean unchanged=bars[6]==after[6];for(int i=0;i<5;i++)unchanged&=bars[i]==after[i];
+    boolean good=sampled<=deadline&&unchanged&&bars[6]==1&&bars[3]==1&&bars[0]>0&&bars[1]>=dp(48)&&bars[2]==1&&bars[4]==1
+     &&statusPixels>=BAR_CAPTURE_MIN_PIXELS&&navigationPixels>=BAR_CAPTURE_MIN_PIXELS;
+    stable=good?stable+1:0;
+    JSONObject sample=new JSONObject();sample.put("uptime_ms",sampled);sample.put("elapsed_ms",sampled-started);
+    sample.put("window_before",nativeBarStateJson(bars,activity,confirmation));sample.put("window_after",nativeBarStateJson(after,activity,confirmation));
+    sample.put("width_px",capture==null?0:capture.getWidth());sample.put("height_px",capture==null?0:capture.getHeight());
+    sample.put("contrasting_status_pixels",statusPixels);sample.put("contrasting_navigation_pixels",navigationPixels);
+    sample.put("consecutive_valid_samples",stable);samples.put(sample);
+    if(stable>=BAR_CAPTURE_STABLE_SAMPLES){passed=true;break;}
+    long remaining=deadline-SystemClock.uptimeMillis();if(remaining<=0)break;
+    Thread.sleep(Math.min(BAR_CAPTURE_INTERVAL_MS,remaining));
+   }while(SystemClock.uptimeMillis()<deadline&&samples.length()<BAR_CAPTURE_MAX_SAMPLES);
+   // Save precisely the Bitmap whose native bar pixels were checked, on both
+   // success and failure; no editing or separately timed shell capture.
+   JSONObject record=new JSONObject();record.put("filename",filename);record.put("dark",dark);record.put("validated",passed);
+   record.put("focused_window",confirmation?"restore-confirmation":"activity");record.put("capture_method","UiAutomation.takeScreenshot");record.put("status_sample_left_px",0);
+   record.put("status_sample_right_px",capture==null?0:capture.getWidth()/2);
+   record.put("required_navigation_px",dp(48));record.put("required_contrasting_pixels_per_bar",BAR_CAPTURE_MIN_PIXELS);
+   record.put("required_consecutive_valid_samples",BAR_CAPTURE_STABLE_SAMPLES);record.put("deadline_ms",BAR_CAPTURE_DEADLINE_MS);
+   record.put("sample_interval_ms",BAR_CAPTURE_INTERVAL_MS);record.put("max_samples",BAR_CAPTURE_MAX_SAMPLES);
+   record.put("sample_count",samples.length());record.put("samples",samples);
+   if(capture!=null){
+    File file=new File(target.getExternalFilesDir(null),filename);
+    java.security.MessageDigest digest=java.security.MessageDigest.getInstance("SHA-256");
+    try(java.security.DigestOutputStream out=new java.security.DigestOutputStream(new FileOutputStream(file),digest)){assertTrue(capture.compress(Bitmap.CompressFormat.PNG,100,out));}
+    StringBuilder hash=new StringBuilder();for(byte value:digest.digest())hash.append(String.format(java.util.Locale.ROOT,"%02x",value&255));
+    record.put("sha256",hash.toString());
+    shell("cp "+file.getAbsolutePath()+" "+DIRECTORY+"/"+filename);
+   }
+   backupBarCaptures.put(filename,record);writeBackupBarEvidence();
+   if(!passed)writeBackupFile("personalization-"+name+"-bars-failed.json",record.toString(2));
+   assertNotNull("Native backup compositor screenshot missing",capture);
+   assertTrue("Backup native status/navigation bars must have stable rendered contrast: "+name
+    +" status="+statusPixels+" navigation="+navigationPixels+" navInset="+bars[1],passed);
+  }finally{if(capture!=null)capture.recycle();}
+ }
+ private void writeBackupFile(String name,String value)throws Exception{
+  File file=new File(target.getExternalFilesDir(null),name);
+  try(FileOutputStream out=new FileOutputStream(file)){out.write(value.getBytes(java.nio.charset.StandardCharsets.UTF_8));}
+  shell("cp "+file.getAbsolutePath()+" "+DIRECTORY+"/"+name);
+ }
+ private void writeBackupBarEvidence()throws Exception{
+  JSONObject proof=new JSONObject();proof.put("api",android.os.Build.VERSION.SDK_INT);
+  proof.put("document_flow","SAF intercepted by ActivityMonitor with isolated test provider; real DocumentsUI not exercised");
+  proof.put("nativeBarCaptures",new org.json.JSONArray(backupBarCaptures.values()));
+  writeBackupFile("personalization-backup-native.json",proof.toString(2));
  }
  private void archiveScreenshot(ArchiveActivity archive,boolean dark)throws Exception{
   await(archive::hasWindowFocus,"Archive must own the focused window before capturing native bars");settle();
   final int[] heights={0,0};
-  ui(()->{
-   android.view.WindowInsets insets=archive.getWindow().getDecorView().getRootWindowInsets();assertNotNull(insets);
-   heights[0]=insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.statusBars()).top;
-   heights[1]=insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.navigationBars()).bottom;
-  });
+  final boolean[] navigationVisible={false};int stableSamples=0;
+  long barsDeadline=SystemClock.uptimeMillis()+5000;
+  // Changing font scale can recreate SystemUI after the Activity gains focus.
+  // Require the real three-button bar to settle; never synthesize a bar or
+  // accept the transient zero bottom inset observed in the source3 CI logs.
+  do{
+   ui(()->{
+    android.view.WindowInsets insets=archive.getWindow().getDecorView().getRootWindowInsets();
+    heights[0]=insets==null?0:insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.statusBars()).top;
+    heights[1]=insets==null?0:insets.getInsetsIgnoringVisibility(android.view.WindowInsets.Type.navigationBars()).bottom;
+    navigationVisible[0]=insets!=null&&insets.isVisible(android.view.WindowInsets.Type.navigationBars());
+   });
+   stableSamples=heights[0]>0&&heights[1]>=dp(48)&&navigationVisible[0]&&archive.hasWindowFocus()?stableSamples+1:0;
+   if(stableSamples>=3)break;Thread.sleep(100);
+  }while(SystemClock.uptimeMillis()<barsDeadline);
+  if(stableSamples<3){
+   String prefix="personalization-archive-failed-native-bars-"+(dark?"dark":"light");
+   shell("screencap -p "+DIRECTORY+"/"+prefix+".png");
+   JSONObject evidence=new JSONObject();evidence.put("status_top_px",heights[0]);evidence.put("navigation_bottom_px",heights[1]);
+   evidence.put("navigation_visible",navigationVisible[0]);evidence.put("stable_samples",stableSamples);evidence.put("window_focus",archive.hasWindowFocus());
+   File diagnostic=new File(target.getExternalFilesDir(null),prefix+".json");
+   try(FileOutputStream out=new FileOutputStream(diagnostic)){out.write(evidence.toString(2).getBytes(java.nio.charset.StandardCharsets.UTF_8));}
+   shell("cp "+diagnostic.getAbsolutePath()+" "+DIRECTORY+"/"+prefix+".json");
+  }
   assertTrue("Native status bar must be present",heights[0]>0);
-  assertTrue("Native three-button navigation must be present",heights[1]>0);
+  assertTrue("Native three-button navigation must be present and stable",heights[1]>=dp(48)&&navigationVisible[0]&&stableSamples>=3);
   Bitmap capture=null;int statusPixels=0,navigationPixels=0;long deadline=SystemClock.uptimeMillis()+3000;
   do{
    if(capture!=null)capture.recycle();capture=getInstrumentation().getUiAutomation().takeScreenshot();assertNotNull(capture);
@@ -234,9 +449,11 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
     fullyVisible(summary);textFits(summary);
     String average="en".equals(language)?"Average call length":"משך שיחה ממוצע";
     assertTrue("Expanded summary must retain its average-duration label in "+language,containsText(summary,average));
-    assertNotNull("Outgoing count must remain visible after expansion",exactText(summary,"↗ 4"));
-    assertNotNull("Incoming count must remain visible after expansion",exactText(summary,"↙ 5"));
-    assertNotNull("Missed count must remain visible after expansion",exactText(summary,"× 3"));
+    for(String metric:new String[]{"outgoing","incoming","missed"}){
+     View card=summary.findViewWithTag("stats_metric_"+metric);assertNotNull("Missing metric card "+metric,card);fullyVisible(card);
+     TextView count=(TextView)summary.findViewWithTag("stats_"+metric+"_count");assertNotNull(count);fullyVisible(count);textFits(count);
+     assertEquals("outgoing".equals(metric)?"4":"incoming".equals(metric)?"5":"3",count.getText().toString());
+    }
     assertTrue(host.requestedNumbers.isEmpty());
    });screenshot("recents-"+suffix+"-expanded");
   }
@@ -386,7 +603,7 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
     TextView result=exactText(export.getWindow().getDecorView(),"Backup saved to the file you selected.");
     assertNotNull("Export outcome must be present",result);fullyVisible(result);textFits(result);
    });
-   screenshot("backup-saved-"+(dark?"dark":"light"));
+   backupSnapshot(export,dark,false,"backup-saved-"+(dark?"dark":"light"));
    final TextView[] close={null};
    ui(()->{
     close[0]=exactText(export.getWindow().getDecorView(),"Close");assertNotNull("Export must provide Close",close[0]);
@@ -399,9 +616,9 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
   assertTrue(canceled.isFinishing()||canceled.isDestroyed());assertEquals(before,settings.getAll());
   Activity importCanceled=backup(false,Activity.RESULT_OK);awaitAccessible("Restore settings");
   assertEquals("Nothing may change before confirmation",before,settings.getAll());clickAccessible("Cancel");settle();assertEquals(before,settings.getAll());
-  Activity importing=backup(false,Activity.RESULT_OK);awaitAccessible("Restore settings");screenshot("backup-restore-confirmation");
+  Activity importing=backup(false,Activity.RESULT_OK);awaitAccessible("Restore settings");backupSnapshot(importing,true,true,"backup-restore-confirmation");
   assertEquals(before,settings.getAll());clickAccessible("Restore");
-  await(()->containsText(importing.getWindow().getDecorView(),"Settings restored. Contacts and the archive were preserved."),"Restore did not complete");
+  await(()->containsText(importing.getWindow().getDecorView(),"Settings restored. Existing calls and contacts were preserved."),"Restore did not complete");
   assertEquals("hexagon",settings.getString("avatar_shape",""));assertTrue(settings.getBoolean("stats_expanded",false));assertTrue(settings.getBoolean("dark",false));
   assertEquals(new HashSet<>(Arrays.asList("0500099011","0500099000")),settings.getStringSet("favorites",Collections.emptySet()));
   assertEquals("Synthetic test note",settings.getString("note_0500099011",""));
@@ -412,6 +629,10 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
   Instrumentation.ActivityMonitor monitor=getInstrumentation().addMonitor(filter,new Instrumentation.ActivityResult(result,data),true);
   try{
    Activity activity=getInstrumentation().startActivitySync(SettingsBackupActivity.intent(target,export).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));launched.add(activity);settle();
+   if(export){
+    android.widget.CheckBox archive=find(activity.getWindow().getDecorView(),android.widget.CheckBox.class);assertNotNull(archive);assertFalse("Legacy settings backup must default to no archive",archive.isChecked());
+    TextView choose=exactText(activity.getWindow().getDecorView(),"Choose file and save backup");assertNotNull("Export requires an explicit file choice",choose);tap(choose);
+   }
    assertEquals("Production SAF action was not launched",1,monitor.getHits());return activity;
   }finally{getInstrumentation().removeMonitor(monitor);}
  }
@@ -451,25 +672,45 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
   }
  }
  private void revealChoiceRow(String tag)throws Exception{
-  final View[] row={null};
+  awaitNativeApplicationWindow();final View[] row={null};
   ui(()->{
    // A label may already be visible while its taller sibling icon is clipped.
-   // Inspect this process's real dialog window, then reveal the entire row.
+   // Nine icons make the legacy fifth choice a middle row. Revealing the
+   // entire list bottom can scroll past that row instead of exposing it.
    for(View window:android.view.inspector.WindowInspector.getGlobalWindowViews()){
+    if(!window.hasWindowFocus())continue;
     View candidate=window.findViewWithTag(tag);
     if(candidate==null||!candidate.isShown())continue;
     row[0]=candidate;
     android.view.ViewParent parent=candidate.getParent();
     while(parent!=null&&!(parent instanceof ScrollView))parent=parent.getParent();
     assertNotNull("Picker choices need a scroll viewport",parent);
-    ScrollView viewport=(ScrollView)parent;viewport.scrollTo(0,viewport.getChildAt(0).getHeight());break;
+    break;
    }
    assertNotNull("Missing native dialog choice row "+tag,row[0]);
-  });settle();
+  });
+  final boolean[] revealed={false};
+  for(int attempt=0;attempt<4&&!revealed[0];attempt++){
+   ui(()->{
+    Rect target=new Rect();row[0].getDrawingRect(target);
+    // View translates this exact local drawing rectangle through all parents,
+    // including the ScrollView's current offset and dialog content padding.
+    row[0].requestRectangleOnScreen(target,true);
+   });settle();
+   ui(()->{
+    Rect visible=new Rect();ImageView preview=find(row[0],ImageView.class);
+    revealed[0]=row[0].isShown()&&row[0].getGlobalVisibleRect(visible)
+      &&visible.width()>=row[0].getWidth()-1&&visible.height()>=row[0].getHeight()-1;
+    if(preview==null)revealed[0]=false;
+    else revealed[0]&=preview.getGlobalVisibleRect(visible)&&visible.width()>=preview.getWidth()-1&&visible.height()>=preview.getHeight()-1;
+   });
+  }
   ui(()->{
    fullyVisible(row[0]);ImageView preview=find(row[0],ImageView.class);
    assertNotNull("Choice preview must be present",preview);fullyVisible(preview);
+   assertTrue("Native choice row must retain a 48dp pointer target",row[0].getHeight()>=dp(48)&&row[0].getWidth()>=dp(48));
   });
+  stableNativeBounds(row[0]);
  }
  private boolean scrollAccessible(AccessibilityNodeInfo node){
   if(node==null)return false;if(node.isScrollable()&&node.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD))return true;

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.CallHistoryTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:13:55" hostname="3ebae333e153" time="0.258">
+  <properties/>
+  <testcase name="completeLogIsNotTruncatedAndHiddenNumberRemainsUndialable" classname="com.dacaller.app.CallHistoryTest" time="0.096"/>
+  <testcase name="revokedPermissionDuringReadCannotRepublishSensitiveHistory" classname="com.dacaller.app.CallHistoryTest" time="0.025"/>
+  <testcase name="nullOrPartialCursorCannotArchiveEveryCurrentCall" classname="com.dacaller.app.CallHistoryTest" time="0.054"/>
+  <testcase name="forcedRefreshWhileReadingIsNotLost" classname="com.dacaller.app.CallHistoryTest" time="0.023"/>
+  <testcase name="legacyPrivateNumberSentinelsCannotBecomeDialableNumbers" classname="com.dacaller.app.CallHistoryTest" time="0.018"/>
+  <testcase name="permissionRevocationClearsSensitiveCachedHistoryAndCallsCallback" classname="com.dacaller.app.CallHistoryTest" time="0.041"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

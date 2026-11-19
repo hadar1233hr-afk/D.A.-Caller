@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.graphics.Insets;
+import android.graphics.Paint;
 import android.view.WindowInsets;
 import android.os.ParcelFileDescriptor;
 import android.test.InstrumentationTestCase;
@@ -221,6 +222,8 @@ public final class CallLayoutSnapshotTest extends InstrumentationTestCase {
  }
 
  private void assertCoreControlsVisible(Activity activity,String panel){
+  assertFalse("Redundant app branding remains on call screen",hasText(tagged(activity,"call-root"),"DA CALLER"));
+  assertFalse("Redundant Nothing app branding remains",hasText(tagged(activity,"call-root"),"DA / 01"));
   View end=tagged(activity,"call-end");assertFullyVisible(end);
   assertNotNull("Hangup must have a TalkBack label",end.getContentDescription());
   float density=activity.getResources().getDisplayMetrics().density;
@@ -238,8 +241,23 @@ public final class CallLayoutSnapshotTest extends InstrumentationTestCase {
   if("keypad".equals(panel))for(char digit:"123456789*0#".toCharArray()){
    View key=tagged(activity,"dtmf-"+digit);
    assertFullyVisible(key);assertTextTreeFits(key,true);
+   TextView number=(TextView)tagged(activity,"dtmf-digit-"+digit);
+   assertTrue("Call digit is too small",number.getTextSize()/activity.getResources().getDisplayMetrics().scaledDensity>=21.9f);
+   if("pixel".equals(settings.getString("call_theme",""))){
+    assertEquals("Google call digits lost their requested weight","'wght' 650",number.getFontVariationSettings());
+    Paint expected=new Paint(number.getPaint());expected.setTypeface(activity.getResources().getFont(R.font.nunito_round));expected.setFontVariationSettings("'wght' 650");
+    assertEquals("Google call digits lost the bundled round font's glyph widths",expected.measureText("0123456789*#"),number.getPaint().measureText("0123456789*#"),0.01f);
+    assertEquals("Google call digits lost the bundled round font's glyph height",expected.getFontMetrics().ascent,number.getPaint().getFontMetrics().ascent,0.01f);
+   }
   }
   assertHeroTextOutsideSheet(activity,panel);
+  if("normal".equals(panel)&&"ivory".equals(settings.getString("call_theme",""))){
+   Rect root=new Rect();assertTrue(tagged(activity,"call-root").getGlobalVisibleRect(root));
+   for(String tag:new String[]{"call-caller","call-identity","call-portrait","call-phase","call-timer"}){
+    View view=tagged(activity,tag);assertFullyVisible(view);Rect rect=new Rect();assertTrue(view.getGlobalVisibleRect(rect));
+    assertEquals("Nothing caller stack is not centered: "+tag,root.exactCenterX(),rect.exactCenterX(),2f);
+   }
+  }
  }
 
  private void assertTextTreeFits(View view,boolean requireFullyVisible){

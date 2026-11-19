@@ -16,13 +16,30 @@ import java.util.concurrent.atomic.AtomicReference;
 @SuppressWarnings("deprecation")
 public final class SettingsInteractionTest extends InstrumentationTestCase {
  private ListDispatchHostActivity host;
+ private int originalAccessibilityFlags;
  @Override protected void setUp()throws Exception{
   super.setUp();
+  android.accessibilityservice.AccessibilityServiceInfo service=getInstrumentation().getUiAutomation().getServiceInfo();
+  originalAccessibilityFlags=service.flags;
+  service.flags|=android.accessibilityservice.AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
+    |android.accessibilityservice.AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS;
+  getInstrumentation().getUiAutomation().setServiceInfo(service);
   Intent intent=new Intent(getInstrumentation().getTargetContext(),ListDispatchHostActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
   host=(ListDispatchHostActivity)getInstrumentation().startActivitySync(intent);getInstrumentation().waitForIdleSync();
+  // The fixture mounts SettingsScreen directly below. Keep MainActivity's
+  // logical page consistent so a pending recents/provider callback cannot
+  // replace that screen while this test still holds the detached viewport.
+  java.lang.reflect.Field page=MainActivity.class.getDeclaredField("page");page.setAccessible(true);
+  ui(()->{try{page.set(host,"settings");}catch(IllegalAccessException failure){throw new AssertionError(failure);}});
  }
  @Override protected void tearDown()throws Exception{
-  ui(()->host.finish());getInstrumentation().waitForIdleSync();super.tearDown();
+  try{if(host!=null)ui(()->host.finish());getInstrumentation().waitForIdleSync();}
+  finally{
+   host=null;
+   try{android.accessibilityservice.AccessibilityServiceInfo service=getInstrumentation().getUiAutomation().getServiceInfo();
+    service.flags=originalAccessibilityFlags;getInstrumentation().getUiAutomation().setServiceInfo(service);}
+   finally{super.tearDown();}
+  }
  }
  private void ui(Runnable action)throws Exception{
   AtomicReference<Throwable> error=new AtomicReference<>();
@@ -47,12 +64,13 @@ public final class SettingsInteractionTest extends InstrumentationTestCase {
     header[0]=(View)find(viewport[0],"הרשאות וחיבור למערכת").getParent();
     ViewGroup parent=(ViewGroup)header[0].getParent();content[0]=parent.getChildAt(parent.indexOfChild(header[0])+1);
    });
-   getInstrumentation().waitForIdleSync();
+   awaitCurrentViewport(viewport[0],"settings-"+(dark?"dark":"light"));
+   ui(()->assertCurrentViewport(viewport[0]));
    for(int n=0;n<6;n++){
     reveal(viewport[0],header[0]);tap(header[0]);
-    ui(()->assertEquals(View.VISIBLE,content[0].getVisibility()));
+    awaitVisibility(viewport[0],content[0],View.VISIBLE);
     reveal(viewport[0],header[0]);tap(header[0]);
-    ui(()->assertEquals(View.GONE,content[0].getVisibility()));
+    awaitVisibility(viewport[0],content[0],View.GONE);
    }
    reveal(viewport[0],header[0]);tap(header[0]);
    ui(()->{
@@ -60,13 +78,59 @@ public final class SettingsInteractionTest extends InstrumentationTestCase {
     SettingsScreen.refreshAttached(host);assertEquals(View.VISIBLE,content[0].getVisibility());
    });
    reveal(viewport[0],header[0]);Thread.sleep(220);getInstrumentation().waitForIdleSync();
+   ui(()->assertCurrentViewport(viewport[0]));
    snapshot("settings-"+(dark?"dark":"light"));
+   ui(()->assertCurrentViewport(viewport[0]));
    // fullScroll delegates to smoothScrollBy on Android 13. An idle message
    // queue does not mean its future Choreographer animation frames have run.
    ui(()->viewport[0].fullScroll(View.FOCUS_DOWN));
    awaitBottomAndDiagnostic(viewport[0],"settings-"+(dark?"dark":"light"));
+   ui(()->assertCurrentViewport(viewport[0]));
    snapshot("settings-"+(dark?"dark":"light")+"-bottom");
+   ui(()->assertCurrentViewport(viewport[0]));
   }
+ }
+ private void awaitCurrentViewport(ScrollView viewport,String screenshotPrefix)throws Exception{
+  // startActivitySync and setContentView finish before Android necessarily
+  // grants window focus. Wait for that real state instead of sampling it once.
+  long start=SystemClock.uptimeMillis(),stableSince=-1;
+  final boolean[] ready=new boolean[1];final String[] state=new String[1];
+  java.util.ArrayDeque<String> samples=new java.util.ArrayDeque<>();
+  while(SystemClock.uptimeMillis()-start<7000){
+   getInstrumentation().waitForIdleSync();
+   ui(()->{
+    View decor=host.getWindow().getDecorView();
+    boolean current=inCurrentContent(viewport),shown=viewport.isShown();
+    boolean focused=host.hasWindowFocus()&&decor.hasWindowFocus();
+    ready[0]=!host.isFinishing()&&!host.isDestroyed()&&current&&shown&&focused
+      &&decor.isAttachedToWindow()&&decor.isShown()&&decor.getWindowVisibility()==View.VISIBLE;
+    state[0]="current_content="+current+", viewport_attached="+viewport.isAttachedToWindow()
+      +", viewport_shown="+shown+", activity_focus="+host.hasWindowFocus()
+      +", decor_focus="+decor.hasWindowFocus()+", decor_attached="+decor.isAttachedToWindow()
+      +", decor_shown="+decor.isShown()+", decor_visibility="+decor.getWindowVisibility()
+      +", finishing="+host.isFinishing()+", destroyed="+host.isDestroyed();
+   });
+   long now=SystemClock.uptimeMillis();
+   if(samples.size()==24)samples.removeFirst();
+   samples.addLast((now-start)+"ms: "+state[0]);
+   if(ready[0]){
+    if(stableSince<0)stableSince=now;
+    if(now-stableSince>=350)return;
+   }else stableSince=-1;
+   Thread.sleep(40);
+  }
+  StringBuilder report=new StringBuilder("Settings viewport did not become stably visible/focused.\n");
+  for(String sample:samples)report.append(sample).append('\n');
+  report.append("\nACTIVITIES\n").append(shell("dumpsys activity activities"));
+  report.append("\nWINDOWS\n").append(shell("dumpsys window windows"));
+  java.io.File evidence=new java.io.File(host.getExternalFilesDir(null),screenshotPrefix+"-not-ready.txt");
+  try(java.io.FileOutputStream output=new java.io.FileOutputStream(evidence)){
+   output.write(report.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+  }
+  shell("mkdir -p /sdcard/Download/DA-CALLER-snapshots");
+  shell("cp "+evidence.getAbsolutePath()+" /sdcard/Download/DA-CALLER-snapshots/"+evidence.getName());
+  snapshot(screenshotPrefix+"-not-ready");
+  fail("Settings viewport must be stably attached, shown and focused before interaction: "+state[0]);
  }
  private void awaitBottomAndDiagnostic(ScrollView viewport,String screenshotPrefix)throws Exception{
   final boolean[] reached=new boolean[1];
@@ -80,10 +144,11 @@ public final class SettingsInteractionTest extends InstrumentationTestCase {
       +viewport.getPaddingTop()+viewport.getPaddingBottom());
     android.graphics.Rect visible=new android.graphics.Rect();
     boolean shown=diagnostic.getGlobalVisibleRect(visible);
-    reached[0]=viewport.getScrollY()==maximum&&shown&&visible.height()==diagnostic.getHeight()
+    boolean current=inCurrentContent(viewport)&&host.hasWindowFocus()&&viewport.isShown();
+    reached[0]=current&&viewport.getScrollY()==maximum&&shown&&visible.height()==diagnostic.getHeight()
       &&diagnostic.getHeight()>0&&diagnostic.isClickable();
     geometry[0]="scroll="+viewport.getScrollY()+"/"+maximum+", diagnostic visible="+visible.height()
-      +"/"+diagnostic.getHeight()+", viewport="+viewport.getHeight();
+      +"/"+diagnostic.getHeight()+", viewport="+viewport.getHeight()+", current attached viewport="+current;
    });
    if(reached[0])return;
    Thread.sleep(20);
@@ -91,20 +156,77 @@ public final class SettingsInteractionTest extends InstrumentationTestCase {
   snapshot(screenshotPrefix+"-unreachable");
   fail("Diagnostic action must be fully reachable after the scroll animation settles: "+geometry[0]);
  }
+ private boolean inCurrentContent(View view){
+  if(!view.isAttachedToWindow())return false;
+  View content=host.findViewById(android.R.id.content);
+  for(View ancestor=view;ancestor!=null;){
+   if(ancestor==content)return true;
+   android.view.ViewParent parent=ancestor.getParent();ancestor=parent instanceof View?(View)parent:null;
+  }
+  return false;
+ }
+ private void assertCurrentViewport(ScrollView viewport){
+  assertTrue("Settings viewport must be attached to the actual current content",inCurrentContent(viewport));
+  assertTrue("Settings viewport must be shown in the focused Activity",host.hasWindowFocus()&&viewport.isShown());
+ }
  private void reveal(ScrollView viewport,View target)throws Exception{
   ui(()->{
+   assertCurrentViewport(viewport);
+   assertTrue("Settings header must belong to the current content before scrolling",inCurrentContent(target));
    // Section headers are direct children of the scroll content column.
    viewport.scrollTo(0,target.getTop());
   });getInstrumentation().waitForIdleSync();
  }
  private void tap(View target)throws Exception{
-  final int[] point=new int[2];
-  ui(()->{target.getLocationOnScreen(point);point[0]+=target.getWidth()/2;point[1]+=target.getHeight()/2;});
+  android.graphics.Rect bounds=stableNativeBounds(target);
   long at=SystemClock.uptimeMillis();
-  MotionEvent down=MotionEvent.obtain(at,at,MotionEvent.ACTION_DOWN,point[0],point[1],0);
-  MotionEvent up=MotionEvent.obtain(at,at+40,MotionEvent.ACTION_UP,point[0],point[1],0);
-  getInstrumentation().sendPointerSync(down);getInstrumentation().sendPointerSync(up);down.recycle();up.recycle();
+  MotionEvent down=MotionEvent.obtain(at,at,MotionEvent.ACTION_DOWN,bounds.centerX(),bounds.centerY(),0);
+  getInstrumentation().sendPointerSync(down);down.recycle();Thread.sleep(40);
+  MotionEvent up=MotionEvent.obtain(at,SystemClock.uptimeMillis(),MotionEvent.ACTION_UP,bounds.centerX(),bounds.centerY(),0);
+  try{getInstrumentation().sendPointerSync(up);}finally{up.recycle();}
   getInstrumentation().waitForIdleSync();
+ }
+ private android.graphics.Rect stableNativeBounds(View target)throws Exception{
+  long deadline=SystemClock.uptimeMillis()+7000,stableSince=-1;
+  android.graphics.Rect previous=null;String state="not sampled";
+  while(SystemClock.uptimeMillis()<deadline){
+   getInstrumentation().waitForIdleSync();
+   final android.graphics.Rect bounds=new android.graphics.Rect(),nativeBounds=new android.graphics.Rect();
+   final int[] window={-1};final boolean[] ready={false};
+   ui(()->{
+    View decor=host.getWindow().getDecorView();
+    int minimum=Math.round(48*host.getResources().getDisplayMetrics().density);
+    ready[0]=inCurrentContent(target)&&target.isShown()&&target.isLaidOut()&&!target.isLayoutRequested()
+      &&host.hasWindowFocus()&&decor.hasWindowFocus()&&target.getWidth()>=minimum&&target.getHeight()>=minimum
+      &&target.getGlobalVisibleRect(bounds)&&bounds.width()==target.getWidth()&&bounds.height()==target.getHeight();
+    if(ready[0]){
+     android.view.accessibility.AccessibilityNodeInfo node=target.createAccessibilityNodeInfo();
+     try{node.getBoundsInScreen(nativeBounds);window[0]=node.getWindowId();}finally{node.recycle();}
+     ready[0]=nativeBounds.equals(bounds);
+    }
+   });
+   boolean focused=false;
+   for(android.view.accessibility.AccessibilityWindowInfo item:getInstrumentation().getUiAutomation().getWindows())
+    if(item.getId()==window[0]&&item.isFocused()){focused=true;break;}
+   state="visible="+bounds+", native="+nativeBounds+", window="+window[0]+", focused="+focused+", ready="+ready[0];
+   long now=SystemClock.uptimeMillis();
+   if(ready[0]&&focused){
+    if(!bounds.equals(previous)){previous=new android.graphics.Rect(bounds);stableSince=now;}
+    if(now-stableSince>=80)return bounds;
+   }else{previous=null;stableSince=-1;}
+   Thread.sleep(20);
+  }
+  fail("Settings pointer must target stable complete native bounds in its focused window: "+state);return null;
+ }
+ private void awaitVisibility(ScrollView viewport,View content,int expected)throws Exception{
+  long deadline=SystemClock.uptimeMillis()+2000;final int[] visibility={-1};
+  do{
+   getInstrumentation().waitForIdleSync();
+   ui(()->{assertCurrentViewport(viewport);visibility[0]=content.getVisibility();});
+   if(visibility[0]==expected)return;
+   Thread.sleep(20);
+  }while(SystemClock.uptimeMillis()<deadline);
+  assertEquals("One actual header pointer must change the category visibility",expected,visibility[0]);
  }
  private void snapshot(String name)throws Exception{
   String directory="/sdcard/Download/DA-CALLER-snapshots";

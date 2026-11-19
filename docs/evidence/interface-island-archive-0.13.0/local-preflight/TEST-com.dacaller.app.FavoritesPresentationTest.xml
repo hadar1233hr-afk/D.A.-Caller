@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.FavoritesPresentationTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:14:44" hostname="3ebae333e153" time="2.509">
+  <properties/>
+  <testcase name="favoriteScrollSurvivesRecreationAndEmptyFavoritesRemainUseful" classname="com.dacaller.app.FavoritesPresentationTest" time="0.506"/>
+  <testcase name="legacyFavoriteStartAndWidgetIntentOpenContactsWithoutLosingSavedPreference" classname="com.dacaller.app.FavoritesPresentationTest" time="0.136"/>
+  <testcase name="pendingRestoreRejectsSummaryFavoriteAndLegacyPreferenceEditsUntilResolved" classname="com.dacaller.app.FavoritesPresentationTest" time="0.214"/>
+  <testcase name="horizontalBrowsingDoesNotPlaceACall" classname="com.dacaller.app.FavoritesPresentationTest" time="0.197"/>
+  <testcase name="thousandFavoritesAreReachableWithoutThousandInflatedTiles" classname="com.dacaller.app.FavoritesPresentationTest" time="0.215"/>
+  <testcase name="contactsSharingOneStarredNumberRemainIndividuallyVisibleAndCallable" classname="com.dacaller.app.FavoritesPresentationTest" time="0.124"/>
+  <testcase name="defaultSummaryIsSingleRowAndDedicatedExpandRestoresAllMetrics" classname="com.dacaller.app.FavoritesPresentationTest" time="0.139"/>
+  <testcase name="expandedHebrewSummaryFitsNativeLineHeightsAtLargeFont" classname="com.dacaller.app.FavoritesPresentationTest" time="0.224"/>
+  <testcase name="sameFavoriteBandAppearsAboveBothListsAndRemembersCollapse" classname="com.dacaller.app.FavoritesPresentationTest" time="0.363"/>
+  <testcase name="rtlStartsAtLogicalFirstAndCanReachLogicalLast" classname="com.dacaller.app.FavoritesPresentationTest" time="0.39"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

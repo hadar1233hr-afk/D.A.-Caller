@@ -1,0 +1,9 @@
+{
+  "baseline": "545824f0071366ba2f8c432acb520719371aa570",
+  "changed_app_files": [
+    "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java"
+  ],
+  "baseline_actual_host_pass": 460,
+  "baseline_host_classes": 44,
+  "new_host_execution": false
+}

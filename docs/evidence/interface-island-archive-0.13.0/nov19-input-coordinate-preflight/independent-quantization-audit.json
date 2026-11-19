@@ -1,0 +1,90 @@
+{
+  "status": "READ_ONLY_PINNED_SOURCE_AND_OFFLINE_ARITHMETIC_AUDIT_NOT_NATIVE_EXECUTION",
+  "pinned_commit": "e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624",
+  "injection_mapping": "serverPoint=displayTransform.inverse()*injectedTransform*injectedLogicalPoint",
+  "source_precision": "float inverse coefficient multiplication and translation addition; dump emits 4 fractional digits",
+  "query_integer_semantics": "C++ int32_t(float) truncates toward zero for finite in-range coordinates; Java cast does too",
+  "printed_matrix": [
+    [
+      1.5,
+      0,
+      0
+    ],
+    [
+      0,
+      1.5009,
+      -52.5308
+    ],
+    [
+      0,
+      0,
+      1
+    ]
+  ],
+  "float_inverse_diagonal_translation": [
+    0.6666666865348816,
+    0.666266918182373,
+    34.999534606933594
+  ],
+  "integer_logical_coordinate_replay": {
+    "x_count": 480,
+    "y_count": 854,
+    "x_differences": [],
+    "y_differences": []
+  },
+  "current_point": {
+    "logical": [
+      240,
+      90
+    ],
+    "server_double": [
+      160.0,
+      94.96355520021321
+    ],
+    "server_int": [
+      160,
+      94
+    ],
+    "island_region": [
+      30,
+      67,
+      290,
+      123
+    ]
+  },
+  "actual_edges": {
+    "x44": "outside",
+    "x45": "inside",
+    "x434": "inside",
+    "x435": "outside",
+    "y48": "outside",
+    "y49": "inside",
+    "y132": "inside",
+    "y133": "outside",
+    "status_y36": "inside status region",
+    "status_y37": "outside status region"
+  },
+  "caveats": [
+    "Algebraic Java double inverse division is not bit-identical to native float coefficient inverse and affine multiply/add. Current printed-matrix integer grid has no resulting int-coordinate discrepancies.",
+    "Actual native coefficients are rounded to four fractional digits in dump; arbitrary edge cases need conservative margin or interval checks for an exact general hit proof. Current center is well inside the island and far from every competing target region boundary.",
+    "Do not replace C++ truncation with floor/round; negative server coordinates between -1 and 0 become 0.",
+    "Use display transform, not per-window transform, to relate injected logical and dispatcher server coordinates."
+  ],
+  "source_files": {
+    "WindowInfo.cpp": {
+      "sha256": "73d110aa8065c4a92a34d4826d576bb626a88ae0907f5d9cdac213c79aa52443"
+    },
+    "Input.cpp": {
+      "sha256": "10d2b8099e3f07e68922eabc93ec90fd24eb35c83ec4e566f2c19e0a799e5850"
+    },
+    "Region.cpp": {
+      "sha256": "7b29b098048f711e6082ffa93027ad696beca96ac0e64d3d5d0d63e7bf72a8fe"
+    },
+    "Transform.cpp": {
+      "sha256": "39634062661b0d940ae6a389e1de3c455fc5bbd69ab5020451cc710b40300395"
+    }
+  },
+  "repository_code_edits": false,
+  "gradle_executed": false,
+  "native_executed": false
+}

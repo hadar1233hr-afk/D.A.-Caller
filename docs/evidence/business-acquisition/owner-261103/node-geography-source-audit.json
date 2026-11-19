@@ -1,0 +1,193 @@
+{
+  "status": "INDEPENDENT_ACTUAL_SOURCE_NODE_AUDIT_PASS_RESEARCH_ONLY",
+  "audited_at_utc": "2026-11-05T10:10:04.479360+00:00",
+  "v2_rows": 2448,
+  "v2_unique_nodes": 2393,
+  "v2_unique_phones": 2353,
+  "all_v2_node_ids_names_categories_phone_values_country_fields_coordinates_timestamps_matched_actual_PBF": true,
+  "input_rows_and_hashes_matched": true,
+  "v1_provisional_rows": 2456,
+  "v1_to_v2_removed_rows": 8,
+  "v1_to_v2_removed_source_nodes": 8,
+  "removed_audit": [
+    {
+      "source_id": "osm:node:445978117",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "IN"
+      },
+      "present_in_primary24": true,
+      "reason": "Explicit non-IL field/conflict rejected in v2"
+    },
+    {
+      "source_id": "osm:node:446695003",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "NG"
+      },
+      "present_in_primary24": true,
+      "reason": "Explicit non-IL field/conflict rejected in v2"
+    },
+    {
+      "source_id": "osm:node:1928123076",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "CA"
+      },
+      "present_in_primary24": true,
+      "reason": "Explicit non-IL field/conflict rejected in v2"
+    },
+    {
+      "source_id": "osm:node:2622539698",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "VA"
+      },
+      "present_in_primary24": true,
+      "reason": "Explicit non-IL field/conflict rejected in v2"
+    },
+    {
+      "source_id": "osm:node:2789809523",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "DE"
+      },
+      "present_in_primary24": true,
+      "reason": "Explicit non-IL field/conflict rejected in v2"
+    },
+    {
+      "source_id": "osm:node:5621700951",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "TR"
+      },
+      "present_in_primary24": true,
+      "reason": "Explicit non-IL field/conflict rejected in v2"
+    },
+    {
+      "source_id": "osm:node:9750191429",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "ER"
+      },
+      "present_in_primary24": true,
+      "reason": "Explicit non-IL field/conflict rejected in v2"
+    },
+    {
+      "source_id": "osm:node:9761408356",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "VN"
+      },
+      "present_in_primary24": true,
+      "reason": "Explicit non-IL field/conflict rejected in v2"
+    }
+  ],
+  "primary24_node_country_conflicts_requiring_review": [
+    {
+      "source_id": "osm:node:445978117",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "IN"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED"
+    },
+    {
+      "source_id": "osm:node:446695003",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "NG"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED"
+    },
+    {
+      "source_id": "osm:node:1928123076",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "CA"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED"
+    },
+    {
+      "source_id": "osm:node:2622539698",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "VA"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED"
+    },
+    {
+      "source_id": "osm:node:2789809523",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "DE"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED"
+    },
+    {
+      "source_id": "osm:node:5621700951",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "TR"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED"
+    },
+    {
+      "source_id": "osm:node:9750191429",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "ER"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED"
+    },
+    {
+      "source_id": "osm:node:9761408356",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "VN"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED"
+    },
+    {
+      "source_id": "osm:node:12248092834",
+      "source_country_fields": {
+        "addr:country": "IL",
+        "country": "EU"
+      },
+      "conflicting_fields": [
+        "country"
+      ],
+      "status": "REQUIRES_COUNTRY_REVIEW_NOT_PUBLICATION_APPROVED"
+    }
+  ],
+  "overlap_source_nodes_with_primary24": 13,
+  "new_app_bundled_rows": 0,
+  "ndjson_sha256": "37ce40b735e144cc38eee1e72ce75c785424f0213d05c9c35feb766c1b2704df",
+  "research_script_sha256": "a5a01b32666bf4c22585de39b79801aedbadc0d1e2bf0d5074e20bc4a2518d0f",
+  "audit_script_sha256": "56a0aae27269fa6e322df0f1b7b166418d55f8192642d4748b17193631dcd96d",
+  "limits": "Research-only source geometry/country aliases, not official legal membership, no national completeness or current phone ownership claim. Primary24 output unchanged but country conflicts identified for review."
+}

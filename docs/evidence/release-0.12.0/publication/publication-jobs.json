@@ -1,0 +1,177 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "id": 130967114846,
+      "run_id": 43153233564,
+      "workflow_name": "Publish owner-approved DA CALLER 0.12.0",
+      "head_branch": "codex/da-caller-dynamic-island-20261027",
+      "run_url": "https://api.github.com/repos/hadar1233hr-afk/D.A.-Caller/actions/runs/43153233564",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVTq7Q88AAAAefj-UXg",
+      "head_sha": "2199b6f655b63907b48b69f6fa918ba9c3e8b138",
+      "url": "https://api.github.com/repos/hadar1233hr-afk/D.A.-Caller/actions/jobs/130967114846",
+      "html_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/actions/runs/43153233564/job/130967114846",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-12T04:12:15Z",
+      "started_at": "2026-11-12T04:12:18Z",
+      "completed_at": "2026-11-12T04:12:56Z",
+      "name": "publish-exact-012",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-12T04:12:19Z",
+          "completed_at": "2026-11-12T04:12:21Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-12T04:12:21Z",
+          "completed_at": "2026-11-12T04:12:27Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-12T04:12:27Z",
+          "completed_at": "2026-11-12T04:12:27Z"
+        },
+        {
+          "name": "Run actions/setup-java@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-12T04:12:27Z",
+          "completed_at": "2026-11-12T04:12:27Z"
+        },
+        {
+          "name": "Run android-actions/setup-android@v3",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-12T04:12:27Z",
+          "completed_at": "2026-11-12T04:12:39Z"
+        },
+        {
+          "name": "Install verification tools only; never build or sign",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-12T04:12:39Z",
+          "completed_at": "2026-11-12T04:12:40Z"
+        },
+        {
+          "name": "Check signing and bounded-release negative contracts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-12T04:12:40Z",
+          "completed_at": "2026-11-12T04:12:41Z"
+        },
+        {
+          "name": "Retain original authenticated native artifacts and check unchanged source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-12T04:12:41Z",
+          "completed_at": "2026-11-12T04:12:41Z"
+        },
+        {
+          "name": "Revalidate actual native cases, all functional proofs and 243 reviewed PNGs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-12T04:12:41Z",
+          "completed_at": "2026-11-12T04:12:43Z"
+        },
+        {
+          "name": "Verify actual embedded identity and exact approved native signer and bytes",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-12T04:12:43Z",
+          "completed_at": "2026-11-12T04:12:44Z"
+        },
+        {
+          "name": "Package only the exact retained tested binary and verified evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-12T04:12:44Z",
+          "completed_at": "2026-11-12T04:12:44Z"
+        },
+        {
+          "name": "Publish new immutable 0.12.0 release",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-12T04:12:44Z",
+          "completed_at": "2026-11-12T04:12:49Z"
+        },
+        {
+          "name": "Compare every anonymous public download with the reviewed release bytes",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-12T04:12:49Z",
+          "completed_at": "2026-11-12T04:12:52Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-11-12T04:12:52Z",
+          "completed_at": "2026-11-12T04:12:53Z"
+        },
+        {
+          "name": "Post Run actions/setup-java@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26,
+          "started_at": "2026-11-12T04:12:53Z",
+          "completed_at": "2026-11-12T04:12:54Z"
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-11-12T04:12:54Z",
+          "completed_at": "2026-11-12T04:12:54Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 28,
+          "started_at": "2026-11-12T04:12:54Z",
+          "completed_at": "2026-11-12T04:12:54Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29,
+          "started_at": "2026-11-12T04:12:54Z",
+          "completed_at": "2026-11-12T04:12:54Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/hadar1233hr-afk/D.A.-Caller/check-runs/130967114846",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000298,
+      "runner_name": "GitHub Actions 1000000298",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

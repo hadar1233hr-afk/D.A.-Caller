@@ -21,6 +21,41 @@ import org.robolectric.annotation.LooperMode;
 
 @RunWith(RobolectricTestRunner.class) @Config(sdk=33) @LooperMode(LooperMode.Mode.PAUSED)
 public class MainActivityRegressionTest {
+ @Test @Config(qualifiers="w320dp-h569dp")
+ @org.robolectric.annotation.GraphicsMode(org.robolectric.annotation.GraphicsMode.Mode.NATIVE)
+ public void largeFontDialpadKeepsHintAndEnteredNumberInsideItsTextViewport()throws Exception{
+  float oldScale=RuntimeEnvironment.getApplication().getResources().getConfiguration().fontScale;
+  try{
+   for(String language:new String[]{"he","en"}){
+    RuntimeEnvironment.setFontScale(1.3f);
+    RuntimeEnvironment.getApplication().getSharedPreferences("da_caller",Context.MODE_PRIVATE).edit().putString("language",language).commit();
+    try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup().visible()){
+     MainActivity activity=controller.get();java.lang.reflect.Method show=MainActivity.class.getDeclaredMethod("showKeypad",String.class);show.setAccessible(true);show.invoke(activity,(Object)null);
+     java.lang.reflect.Field dialogField=MainActivity.class.getDeclaredField("keypadDialog");dialogField.setAccessible(true);android.app.Dialog dialog=(android.app.Dialog)dialogField.get(activity);
+     java.lang.reflect.Field inputField=MainActivity.class.getDeclaredField("keypadInput");inputField.setAccessible(true);android.widget.EditText input=(android.widget.EditText)inputField.get(activity);
+     View decor=dialog.getWindow().getDecorView();float density=activity.getResources().getDisplayMetrics().density;
+     for(String number:new String[]{"","+972500099971"}){
+      input.setText(number);Shadows.shadowOf(android.os.Looper.getMainLooper()).idle();
+      decor.measure(View.MeasureSpec.makeMeasureSpec(Math.round(320*density),View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(Math.round(521*density),View.MeasureSpec.AT_MOST));decor.layout(0,0,decor.getMeasuredWidth(),decor.getMeasuredHeight());
+      assertNotNull(input.getLayout());assertTrue(input.getWidth()>0);assertTrue(input.getHeight()>0);
+      assertEquals(number,input.getText().toString());
+      assertTrue("Dialed digits retain their requested large size",input.getTextSize()>=29*activity.getResources().getDisplayMetrics().scaledDensity-1);
+      assertTrue("Text layout must fit vertically",input.getLayout().getHeight()<=input.getHeight()-input.getCompoundPaddingTop()-input.getCompoundPaddingBottom());
+      if(number.isEmpty()){
+       android.text.Layout hintLayout=new android.text.StaticLayout(input.getHint(),input.getPaint(),input.getWidth()-input.getCompoundPaddingLeft()-input.getCompoundPaddingRight(),android.text.Layout.Alignment.ALIGN_NORMAL,1,0,true);
+       assertEquals("Both localized hints must fit one line",1,hintLayout.getLineCount());
+      }else{
+       android.graphics.Paint.FontMetricsInt fm=input.getPaint().getFontMetricsInt();
+       assertTrue("Numeral top must not be clipped",input.getBaseline()+fm.top>=input.getPaddingTop());
+       assertTrue("Numeral bottom must not be clipped",input.getBaseline()+fm.bottom<=input.getHeight()-input.getPaddingBottom());
+      }
+      assertNull("Opening/editing the dialpad must never dial",Shadows.shadowOf(activity).getNextStartedActivity());
+     }
+     dialog.dismiss();assertNull(Shadows.shadowOf(activity).getNextStartedActivity());
+    }
+   }
+  }finally{RuntimeEnvironment.setFontScale(oldScale);}
+ }
  @Before public void setup(){
   Context ctx=RuntimeEnvironment.getApplication();
   ctx.getSharedPreferences("da_caller",Context.MODE_PRIVATE).edit().clear().putBoolean("role_prompted",true).apply();
@@ -146,4 +181,53 @@ public class MainActivityRegressionTest {
   if(view instanceof ViewGroup)for(int i=0;i<((ViewGroup)view).getChildCount();i++)if(hasText(((ViewGroup)view).getChildAt(i),expected))return true;
   return false;
  }
+ @Test public void unknownNumberOffersExplicitNewContactWithExactNumberAndNeverDials()throws Exception{
+  try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup()){
+   MainActivity activity=controller.get();String number="+972 50-009-9971";
+   java.lang.reflect.Method method=MainActivity.class.getDeclaredMethod("showNumberOnly",String.class);method.setAccessible(true);method.invoke(activity,number);
+   android.app.AlertDialog dialog=org.robolectric.shadows.ShadowAlertDialog.getLatestAlertDialog();
+   assertNotNull(dialog.getButton(android.content.DialogInterface.BUTTON_NEUTRAL));
+   assertNull(Shadows.shadowOf(activity).getNextStartedActivity());
+   dialog.getButton(android.content.DialogInterface.BUTTON_NEUTRAL).performClick();Shadows.shadowOf(android.os.Looper.getMainLooper()).idle();
+   Intent next=Shadows.shadowOf(activity).getNextStartedActivity();assertNotNull(next);
+   assertEquals(ContactEditorActivity.class.getName(),next.getComponent().getClassName());
+   assertEquals(number,next.getStringExtra("incoming_number"));assertNotEquals(Intent.ACTION_CALL,next.getAction());
+  }
+ }
+ @Test public void hiddenAndUnavailableNumbersNeverOfferCreateContact()throws Exception{
+  try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup()){
+   java.lang.reflect.Method method=MainActivity.class.getDeclaredMethod("showNumberOnly",String.class);method.setAccessible(true);
+   for(String number:new String[]{"","-1","-2","-3"}){
+    method.invoke(controller.get(),number);android.app.AlertDialog dialog=org.robolectric.shadows.ShadowAlertDialog.getLatestAlertDialog();
+    assertEquals(View.GONE,dialog.getButton(android.content.DialogInterface.BUTTON_NEUTRAL).getVisibility());dialog.dismiss();
+   }
+   assertNull(Shadows.shadowOf(controller.get()).getNextStartedActivity());
+  }
+ }
+
+ @Test @org.robolectric.annotation.SQLiteMode(org.robolectric.annotation.SQLiteMode.Mode.NATIVE)
+ public void pendingRecoveryDefersFavoriteEditsAndRefreshesVisibleMainAfterDurableUndo()throws Exception{
+  Context app=RuntimeEnvironment.getApplication();android.content.SharedPreferences prefs=SettingsBackup.preferences(app);
+  java.util.Map<String,Object> prior=new java.util.LinkedHashMap<>();prior.put("dark",true);prior.put(CallArchive.PREF,CallArchive.FOREVER);prior.put(CallbackReminder.PREF_ENABLED,true);prior.put(CallbackReminder.PREF_MINUTE,1260);
+  prefs.edit().putString(CallArchive.PREF,CallArchive.FOREVER).putBoolean(CallbackReminder.PREF_ENABLED,true).putInt(CallbackReminder.PREF_MINUTE,1260).commit();
+  CallArchive.schedule(app);CallbackReminder.schedule(app);
+  android.app.job.JobScheduler jobs=app.getSystemService(android.app.job.JobScheduler.class);assertNotNull(jobs.getPendingJob(CallArchive.JOB_ID));
+  org.robolectric.shadows.ShadowAlarmManager alarms=Shadows.shadowOf(app.getSystemService(android.app.AlarmManager.class));assertNotNull(alarms.peekNextScheduledAlarm());
+  SettingsBackup.PendingRestore pending=new SettingsBackup.PendingRestore(app,java.util.UUID.randomUUID().toString(),"crest",new SettingsBackup.Snapshot(prior),java.util.Collections.emptySet());
+  pending.write();prefs.edit().putBoolean("dark",false).putString(CallArchive.PREF,CallArchive.OFF).putBoolean(CallbackReminder.PREF_ENABLED,false).commit();Contacts.Person person=new Contacts.Person("Synthetic recovery","0500099971",8123);
+  try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup()){
+   MainActivity activity=controller.get();activity.favoriteFromList(person);
+   assertTrue(SettingsBackup.hasPendingRestore(app));assertTrue(prefs.getStringSet("favorites",java.util.Collections.emptySet()).isEmpty());
+   assertFalse(activity.isFinishing());assertNull(Shadows.shadowOf(activity).getNextStartedActivity());
+   assertNull(jobs.getPendingJob(CallArchive.JOB_ID));assertNotNull("Pending recovery preserves the valid callback alarm",alarms.peekNextScheduledAlarm());
+   SettingsBackup.recoverPendingRestore(app,id->true);assertFalse(SettingsBackup.hasPendingRestore(app));
+   Shadows.shadowOf(android.os.Looper.getMainLooper()).idleFor(java.time.Duration.ofMillis(550));
+   java.lang.reflect.Field field=MainActivity.class.getDeclaredField("root");field.setAccessible(true);
+   assertNotNull("Recovered archive scheduling must resume",jobs.getPendingJob(CallArchive.JOB_ID));assertNotNull("Recovered reminder scheduling must resume",alarms.peekNextScheduledAlarm());
+   View root=(View)field.get(activity);assertEquals(0xFF131313,((android.graphics.drawable.ColorDrawable)root.getBackground()).getColor());
+   activity.favoriteFromList(person);assertTrue(prefs.getStringSet("favorites",java.util.Collections.emptySet()).contains(person.key));
+   assertNull(Shadows.shadowOf(activity).getNextStartedActivity());
+  }finally{new android.util.AtomicFile(new java.io.File(app.getFilesDir(),"settings_archive_restore.pending")).delete();}
+ }
+
 }

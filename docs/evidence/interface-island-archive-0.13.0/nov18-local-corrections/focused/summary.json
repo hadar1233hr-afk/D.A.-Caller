@@ -1,0 +1,23 @@
+[
+  {
+    "name": "com.dacaller.app.CallIslandControllerTest",
+    "tests": "16",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "com.dacaller.app.MainActivityRegressionTest",
+    "tests": "11",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0"
+  },
+  {
+    "name": "com.dacaller.app.MainIslandSpaceTest",
+    "tests": "3",
+    "failures": "2",
+    "errors": "0",
+    "skipped": "0"
+  }
+]

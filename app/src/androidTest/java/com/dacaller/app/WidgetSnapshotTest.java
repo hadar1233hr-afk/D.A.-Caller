@@ -35,6 +35,10 @@ public final class WidgetSnapshotTest extends InstrumentationTestCase {
   getInstrumentation().getUiAutomation().adoptShellPermissionIdentity("android.permission.BIND_APPWIDGET");
   Intent intent=new Intent(getInstrumentation().getTargetContext(),ListDispatchHostActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
   activity=(ListDispatchHostActivity)getInstrumentation().startActivitySync(intent);
+  // This host displays widgets directly. A delayed Main recents/provider refresh
+  // must not replace that custom surface while the test retains its host view.
+  java.lang.reflect.Field page=MainActivity.class.getDeclaredField("page");page.setAccessible(true);
+  ui(()->{try{page.set(activity,"settings");}catch(IllegalAccessException failure){throw new AssertionError(failure);}});
   manager=AppWidgetManager.getInstance(activity);
   ui(()->{host=new AppWidgetHost(activity,4106);host.startListening();});
  }
@@ -43,9 +47,14 @@ public final class WidgetSnapshotTest extends InstrumentationTestCase {
    ui(()->{for(int id:allocated)host.deleteAppWidgetId(id);host.stopListening();activity.finish();});
    for(int id:allocated)assertNull("Widget id survived removal",manager.getAppWidgetInfo(id));
   }finally{
-   getInstrumentation().getUiAutomation().dropShellPermissionIdentity();
-   shell("settings put system font_scale "+(originalFontScale!=null&&originalFontScale.matches("[0-9.]+")?originalFontScale:"1.0"));
-   super.tearDown();
+   try{
+    getInstrumentation().getUiAutomation().dropShellPermissionIdentity();
+    shell("settings put system font_scale "+(originalFontScale!=null&&originalFontScale.matches("[0-9.]+")?originalFontScale:"1.0"));
+   }finally{
+    // Android's suite retains test instances; do not retain finished window trees.
+    allocated.clear();host=null;manager=null;activity=null;originalFontScale=null;
+    super.tearDown();
+   }
   }
  }
  private void ui(Runnable r)throws Exception{

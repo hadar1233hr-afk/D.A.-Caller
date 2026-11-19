@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.CallArchiveTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-18T12:20:17" hostname="3ebae333e153" time="0.61">
+  <properties/>
+  <testcase name="offStopsObservationWithoutErasingExistingPrivateArchive" classname="com.dacaller.app.CallArchiveTest" time="0.073"/>
+  <testcase name="disappearanceDuringSameMillisecondIsDetected" classname="com.dacaller.app.CallArchiveTest" time="0.083"/>
+  <testcase name="migrationMergesOnlyAliasesAndKeepsEarliestArchivedRetention" classname="com.dacaller.app.CallArchiveTest" time="0.052"/>
+  <testcase name="reappearingSystemRowLeavesArchiveAndCanDisappearAgain" classname="com.dacaller.app.CallArchiveTest" time="0.072"/>
+  <testcase name="migrationFromV1PreservesSnapshotAndMissingTimestamp" classname="com.dacaller.app.CallArchiveTest" time="0.037"/>
+  <testcase name="permissionDenialCannotMarkSystemRowsMissing" classname="com.dacaller.app.CallArchiveTest" time="0.061"/>
+  <testcase name="repeatedMissingSyncDoesNotRestartRetentionAndCurrentRowsNeverExpire" classname="com.dacaller.app.CallArchiveTest" time="0.074"/>
+  <testcase name="allPoliciesUseCalendarMonthsAndForeverIsUnbounded" classname="com.dacaller.app.CallArchiveTest" time="0.029"/>
+  <testcase name="migrationCanonicalizesHiddenCurrentRowsWithoutCreatingFalseArchive" classname="com.dacaller.app.CallArchiveTest" time="0.07"/>
+  <testcase name="monthEndExpiresAtForwardCalendarBoundary" classname="com.dacaller.app.CallArchiveTest" time="0.053"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

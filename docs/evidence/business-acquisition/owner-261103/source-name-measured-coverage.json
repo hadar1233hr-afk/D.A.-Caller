@@ -1,0 +1,35 @@
+{
+  "candidate_rows": 2717,
+  "distinct_sources": 2657,
+  "distinct_normalized_phones": 2614,
+  "candidate_null_countries": 2701,
+  "missing_city_rows": 1508,
+  "missing_address_rows": 820,
+  "source_date_range": [
+    "2010-11-25T22:02:54+00:00",
+    "2026-11-03T16:22:29+00:00"
+  ],
+  "exact_source_name_selections": [
+    [
+      "osm:node:12543641901",
+      "name",
+      "R. Gallery Ltd",
+      0
+    ],
+    [
+      "osm:node:5801536067",
+      "name",
+      "\u062f\u0627\u0631 \u0643\u0646\u0627 \u0627\u0644\u0636\u064a\u0627\u0641\u0629",
+      0
+    ]
+  ],
+  "historical_raw_and_decisions_unchanged": true,
+  "prior_2715_businesses_unchanged": true,
+  "candidate_database_sha256": "36a7c0a07fad679249c44c975cba7c8d4fb00171d593d19f4ff0c6413a0f115a",
+  "national_coverage_percentage": null,
+  "live_ownership_verified": false,
+  "app_records_added": 0,
+  "production_admission": false,
+  "native_integration": "NOT_TESTED",
+  "publication_approval": false
+}

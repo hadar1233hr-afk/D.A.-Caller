@@ -1,0 +1,691 @@
+{
+  "source_sha": "7e039daaf2b43716ed2a2b3db1df0b04a8647fcd",
+  "app_tree": "96aa47e9152edc931e4830dd3dbe65e3a09418df",
+  "run_id": 44521985299,
+  "reviewed_utc": "2026-11-19T12:37:03.801394+00:00",
+  "reviewer": "status_proof_review_noon",
+  "review_scope": "Current-run44 island/external-island raw frames represented by all11 assigned island sheets, with two original Main expanded captures additionally opened.",
+  "manifest_path": "/workspace/work/native-013-review-44521985299/manifest.json",
+  "manifest_sha256": "4c22f75395d8429a0c82a5b1e9f35f82c10717adef67ca0a693b2ab79a0fc2cc",
+  "review_status": "BOUNDED_ISLAND44_VISUAL_PASS",
+  "summary": {
+    "assigned_sheets": 11,
+    "actually_viewed_sheets": 11,
+    "raw_frames": 44,
+    "unique_raw_frames": 44,
+    "pass": 44,
+    "fail": 0,
+    "unreviewed": 0
+  },
+  "viewed_sheets": [
+    {
+      "sheet": "island-01.png",
+      "path": "/workspace/work/native-013-review-44521985299/island-01.png",
+      "sha256": "59f1ad93bf2016a1ba27623c9888e3890a0e875fa2b6f385eeffab3d300c3e3a",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(); one sheet per exec",
+      "raw_files": [
+        "external-end-confirmation.png",
+        "external-ended-launcher.png",
+        "external-inapp-return.png",
+        "external-launcher-active-compact.png"
+      ],
+      "result": "PASS",
+      "finding": "External confirmation dialog fits with readable native action labels; ended Home removes island. Returned in-app compact identity/timer and Home compact overlay remain readable below native status bar."
+    },
+    {
+      "sheet": "island-02.png",
+      "path": "/workspace/work/native-013-review-44521985299/island-02.png",
+      "sha256": "88e29b2527cee20d2d48ab8b5f8e7e6ea3fc7564550dc5ad40e5e28893769a6e",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(); one sheet per exec",
+      "raw_files": [
+        "external-launcher-active-expanded.png",
+        "external-launcher-native-incoming.png",
+        "external-other-app-active-expanded.png",
+        "external-permission-denied-launcher.png"
+      ],
+      "result": "PASS",
+      "finding": "Expanded external Home/Clock capsules have readable caller, timer, complete End/Hold/Mute/Open/Hide controls. Native incoming/permission-denied CallStyle fallback remains distinct and unobscured; native status/navigation bars remain visible."
+    },
+    {
+      "sheet": "island-03.png",
+      "path": "/workspace/work/native-013-review-44521985299/island-03.png",
+      "sha256": "0a44c620b6832f54941feb13e4eca56cf0578af3f8d6e72a08c4c8d2a53f8ef0",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(); one sheet per exec",
+      "raw_files": [
+        "island-app-contacts-compact.png",
+        "island-app-contacts-expanded.png",
+        "island-app-recents-compact.png",
+        "island-app-recents-expanded.png"
+      ],
+      "result": "PASS",
+      "finding": "Compact and expanded production Main Contacts/Recents retain favorites and useful list space; Recents summary remains readable. Expanded capsule uses a rounded scroll viewport with bottom fade and narrow scrollbar; partial lower Open control is intentional scrolling, not an unreachable/cropped control failure."
+    },
+    {
+      "sheet": "island-04.png",
+      "path": "/workspace/work/native-013-review-44521985299/island-04.png",
+      "sha256": "3dfe428aa962331694f246a888ba5282d4d6e9b4b5c340fa14211f245a7ca5ea",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(); one sheet per exec",
+      "raw_files": [
+        "island-apple-dark-en-compact.png",
+        "island-apple-dark-en-expanded.png",
+        "island-apple-dark-he-compact.png",
+        "island-apple-dark-he-expanded.png"
+      ],
+      "result": "PASS",
+      "finding": "Apple dark English/Hebrew compact and expanded capsules retain bold caller identity, timer, contrast, complete controls and correct mirrored RTL/LTR ordering. Demonstration search/list stays separate below."
+    },
+    {
+      "sheet": "island-05.png",
+      "path": "/workspace/work/native-013-review-44521985299/island-05.png",
+      "sha256": "d8cad7414a15972bed8b25cdbdf5c53c052207d7158c09e8cb5fec9227d505e6",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(); one sheet per exec",
+      "raw_files": [
+        "island-apple-light-en-compact.png",
+        "island-apple-light-en-expanded.png",
+        "island-apple-light-he-compact.png",
+        "island-apple-light-he-expanded.png"
+      ],
+      "result": "PASS",
+      "finding": "Apple light English/Hebrew preserves chosen black capsule style with readable white/gray/green text and controls, rounded border/shadow and visible native bars; no text collision."
+    },
+    {
+      "sheet": "island-06.png",
+      "path": "/workspace/work/native-013-review-44521985299/island-06.png",
+      "sha256": "a6070578309bbe1829d16b00051643803fce99578718657b0fc98526047b60ce",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(); one sheet per exec",
+      "raw_files": [
+        "island-emerald-dark-en-compact.png",
+        "island-emerald-dark-en-expanded.png",
+        "island-emerald-dark-he-compact.png",
+        "island-emerald-dark-he-expanded.png"
+      ],
+      "result": "PASS",
+      "finding": "Emerald dark English/Hebrew compact/expanded green capsule and gold accent remain distinct and readable; all expanded control labels, caller/timer and underlying search/list fit."
+    },
+    {
+      "sheet": "island-07.png",
+      "path": "/workspace/work/native-013-review-44521985299/island-07.png",
+      "sha256": "d6c310b203b7da99e778dbae544a3d574f2c4385f070f212794d4fb1f1c68518",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(); one sheet per exec",
+      "raw_files": [
+        "island-emerald-light-en-compact.png",
+        "island-emerald-light-en-expanded.png",
+        "island-emerald-light-he-compact.png",
+        "island-emerald-light-he-expanded.png"
+      ],
+      "result": "PASS",
+      "finding": "Emerald light English/Hebrew retains green/gold style with strong caller/body/control contrast and clean boundaries; underlying content and native bars are preserved."
+    },
+    {
+      "sheet": "island-08.png",
+      "path": "/workspace/work/native-013-review-44521985299/island-08.png",
+      "sha256": "d177fc3f0927abd0f4599128e2bccd53747f117bd80bd1303fd20a6f9bd7b1bf",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(); one sheet per exec",
+      "raw_files": [
+        "island-glass-dark-en-compact.png",
+        "island-glass-dark-en-expanded.png",
+        "island-glass-dark-he-compact.png",
+        "island-glass-dark-he-expanded.png"
+      ],
+      "result": "PASS",
+      "finding": "Glass dark English/Hebrew compact/expanded gray capsule has readable caller/status/timer/control labels and separate rounded action surfaces, with correct mirrored layout."
+    },
+    {
+      "sheet": "island-09.png",
+      "path": "/workspace/work/native-013-review-44521985299/island-09.png",
+      "sha256": "f811cfde4895132d29806b89bbf2aa9aaee72e857ef605f3042859d2045e0027",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(); one sheet per exec",
+      "raw_files": [
+        "island-glass-light-en-compact.png",
+        "island-glass-light-en-expanded.png",
+        "island-glass-light-he-compact.png",
+        "island-glass-light-he-expanded.png"
+      ],
+      "result": "PASS",
+      "finding": "Glass light English/Hebrew retains dark gray chosen style and readable high-contrast caller/actions; expansion reserves content space without overlap or capsule clipping."
+    },
+    {
+      "sheet": "island-10.png",
+      "path": "/workspace/work/native-013-review-44521985299/island-10.png",
+      "sha256": "8ce46fac1ce48529e6b5283a026838f4a6dd657b93f60e4d85b9d9619e0eea23",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(); one sheet per exec",
+      "raw_files": [
+        "island-settings-dark-bottom.png",
+        "island-settings-dark.png",
+        "island-settings-light-bottom.png",
+        "island-settings-light.png"
+      ],
+      "result": "PASS",
+      "finding": "Dark/light island settings top and bottom scroll positions show readable Hebrew headings, explanations and wine switches. Native status/navigation bars remain clear; card continuation at viewport edge is normal scrolling."
+    },
+    {
+      "sheet": "island-11.png",
+      "path": "/workspace/work/native-013-review-44521985299/island-11.png",
+      "sha256": "210726e113cd2aec902e49412959afb8e297e1e597b7126a5582d9f21d70764f",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(); one sheet per exec",
+      "raw_files": [
+        "island-state-held.png",
+        "island-state-incoming.png",
+        "island-state-noaudio.png",
+        "island-state-outgoing.png"
+      ],
+      "result": "PASS",
+      "finding": "Held, incoming, no-audio and outgoing capsules use clear state-specific labels/icons. Resume/answer/reject and hidden unsupported audio controls are visually distinct; Open/Hide and underlying content remain readable."
+    }
+  ],
+  "reviewed_files": [
+    {
+      "name": "external-end-confirmation.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/external-end-confirmation.png",
+      "sha256": "c52c08d63f134892b4575f98959ea090ef83d6a948071b54b6ebb9448dbb0835",
+      "viewed_in_sheet": "island-01.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "external-ended-launcher.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/external-ended-launcher.png",
+      "sha256": "175c024a9133e7d6febaff42eece58468dd49226e9ac96a176f3db071f8b1568",
+      "viewed_in_sheet": "island-01.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "external-inapp-return.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/external-inapp-return.png",
+      "sha256": "c6596fed8769fdb609a7b6d126db97a169b394b58a3be933da80b8abc0182597",
+      "viewed_in_sheet": "island-01.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "external-launcher-active-compact.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/external-launcher-active-compact.png",
+      "sha256": "8e50f051cb60453dbcf4062b1130c510fe8b3e4b96df2c886be51a5b2adc2bcc",
+      "viewed_in_sheet": "island-01.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "external-launcher-active-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/external-launcher-active-expanded.png",
+      "sha256": "a571efb7cf5c97089ae07348152361847c2c1bf0aaf4bccaf99548cb089750f3",
+      "viewed_in_sheet": "island-02.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "external-launcher-native-incoming.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/external-launcher-native-incoming.png",
+      "sha256": "75b9679eb5c0aa7469d7fc2575dbf753103ed924ceb5cfaa1f9cfc8a068c16f6",
+      "viewed_in_sheet": "island-02.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "external-other-app-active-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/external-other-app-active-expanded.png",
+      "sha256": "13c457440f4df3393359ddb82de8ab2d2022e1a27363166bab64e5f8bb73d52d",
+      "viewed_in_sheet": "island-02.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "external-permission-denied-launcher.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/external-permission-denied-launcher.png",
+      "sha256": "75b9679eb5c0aa7469d7fc2575dbf753103ed924ceb5cfaa1f9cfc8a068c16f6",
+      "viewed_in_sheet": "island-02.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-app-contacts-compact.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-app-contacts-compact.png",
+      "sha256": "da88f1234ffed75247da45eff79489cf9bc26ed4f0d28210eabc441539e636ad",
+      "viewed_in_sheet": "island-03.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-app-contacts-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-app-contacts-expanded.png",
+      "sha256": "a2a13b76fe00175232b65f6d1a37b3a544c39ea723b3052e8e5060621cf543ae",
+      "viewed_in_sheet": "island-03.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": true,
+      "result": "PASS"
+    },
+    {
+      "name": "island-app-recents-compact.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-app-recents-compact.png",
+      "sha256": "900a6896b2a084c6d9ece506e7d0fe3fdfc4d613bdf8e0b4eba68b663a1ee485",
+      "viewed_in_sheet": "island-03.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-app-recents-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-app-recents-expanded.png",
+      "sha256": "2611d45c06acb7045397196fa8c0ee4d684c48c08028c0ad08c414e5831d1d42",
+      "viewed_in_sheet": "island-03.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": true,
+      "result": "PASS"
+    },
+    {
+      "name": "island-apple-dark-en-compact.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-apple-dark-en-compact.png",
+      "sha256": "5ae144c5818c5683ef5552a7e5126fd9f7240df942b059002617e455d34efa48",
+      "viewed_in_sheet": "island-04.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-apple-dark-en-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-apple-dark-en-expanded.png",
+      "sha256": "ce9f74a2ff20c06d991a6a9179197efda6f5707d2be8ad1da92bd45935b2e735",
+      "viewed_in_sheet": "island-04.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-apple-dark-he-compact.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-apple-dark-he-compact.png",
+      "sha256": "b192163359541be7fc2e1c1fb3bb2e7cfd7b705e6cf9718b7c98f0c32ce38262",
+      "viewed_in_sheet": "island-04.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-apple-dark-he-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-apple-dark-he-expanded.png",
+      "sha256": "8d5ce38b7258ad58166b1e455edb66294e72a5cdfa4516d4633dac98325e8391",
+      "viewed_in_sheet": "island-04.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-apple-light-en-compact.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-apple-light-en-compact.png",
+      "sha256": "c6e6c53b14630776d54d30b33b48e6f42516df92967befd868c47160cee8fa17",
+      "viewed_in_sheet": "island-05.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-apple-light-en-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-apple-light-en-expanded.png",
+      "sha256": "b69a94a139ba9f19fcefee04d1da0031352b39b4e8bd449e2b8d3311fad64174",
+      "viewed_in_sheet": "island-05.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-apple-light-he-compact.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-apple-light-he-compact.png",
+      "sha256": "b580e2b92d159b99811e90c434e63249d8e3fc35bb0f90a1b5a793039ab725ca",
+      "viewed_in_sheet": "island-05.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-apple-light-he-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-apple-light-he-expanded.png",
+      "sha256": "cb6e2b988923bf18f0cb3e37a9acee4f747a4c40b362a1de2528606c030031df",
+      "viewed_in_sheet": "island-05.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-emerald-dark-en-compact.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-emerald-dark-en-compact.png",
+      "sha256": "7590d2b156602c4d2c63bf466e21f7439eb4592aa26327e49c5cfada61480bd1",
+      "viewed_in_sheet": "island-06.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-emerald-dark-en-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-emerald-dark-en-expanded.png",
+      "sha256": "ef10fcdda8747542b076136158510a669a55bda06383591c44b8887fb399cff8",
+      "viewed_in_sheet": "island-06.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-emerald-dark-he-compact.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-emerald-dark-he-compact.png",
+      "sha256": "289aa86d5640adedba902b3f0e50318d3af6aad3e13646e0450dfcfb6c272fdd",
+      "viewed_in_sheet": "island-06.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-emerald-dark-he-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-emerald-dark-he-expanded.png",
+      "sha256": "baf5c32cb57b1b9fc388bc8a8619ba49076c70787f4845be411e200bdf33b65a",
+      "viewed_in_sheet": "island-06.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-emerald-light-en-compact.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-emerald-light-en-compact.png",
+      "sha256": "867358b2880fa49b5b9fec81601488f58315b9f73b75e1edaa95174f800c04d0",
+      "viewed_in_sheet": "island-07.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-emerald-light-en-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-emerald-light-en-expanded.png",
+      "sha256": "04bbc5b78ed1b97831b4ff4b0b7fd4ead6e049c27c535148249af01c990d7f3d",
+      "viewed_in_sheet": "island-07.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-emerald-light-he-compact.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-emerald-light-he-compact.png",
+      "sha256": "dc3a046495b731040bb6518e70f8419a8bf6fcc4cd5bb604504d85d0c3a0d6eb",
+      "viewed_in_sheet": "island-07.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-emerald-light-he-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-emerald-light-he-expanded.png",
+      "sha256": "5c3a05d3cee0b1d845093d9f3f9f614927894b7cb22d900dc3b0610dab61f440",
+      "viewed_in_sheet": "island-07.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-glass-dark-en-compact.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-glass-dark-en-compact.png",
+      "sha256": "34fdf9e567fb90e84bef4875343b7999e651b04d640bb5df89d3f953c6cdab04",
+      "viewed_in_sheet": "island-08.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-glass-dark-en-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-glass-dark-en-expanded.png",
+      "sha256": "fc8d19e365121cea8dec291050fd86200cb0f044c837c17d7e7443ea1c1230bc",
+      "viewed_in_sheet": "island-08.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-glass-dark-he-compact.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-glass-dark-he-compact.png",
+      "sha256": "92112267d16deef815c0c67a1a432bbb43c94ffd7a916fc08ef63fd48f7b2d9c",
+      "viewed_in_sheet": "island-08.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-glass-dark-he-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-glass-dark-he-expanded.png",
+      "sha256": "58524f3c8182e8ed344fc9485eb727c50e0805eca45d60fb06874c666edbdef1",
+      "viewed_in_sheet": "island-08.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-glass-light-en-compact.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-glass-light-en-compact.png",
+      "sha256": "a7a16e03e6ac4fd58c38a29a93ec6123798e75bcd0eb9a57fc7e3528e4ef2721",
+      "viewed_in_sheet": "island-09.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-glass-light-en-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-glass-light-en-expanded.png",
+      "sha256": "6cb51bc410129d5abf6d2a959c01876972bd2ac9a1c3421b7af6e14b35579d69",
+      "viewed_in_sheet": "island-09.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-glass-light-he-compact.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-glass-light-he-compact.png",
+      "sha256": "04e37792376fd3015a9ad964cdea6b9909a7d5128eb23eaf93235d2e043557e2",
+      "viewed_in_sheet": "island-09.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-glass-light-he-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-glass-light-he-expanded.png",
+      "sha256": "f072202770603e702708b55837a909af060774bb463f3e2a688dab2b1d69e155",
+      "viewed_in_sheet": "island-09.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-settings-dark-bottom.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-settings-dark-bottom.png",
+      "sha256": "af0535005cb3e7f3f333d6068f7d526bfebf0ecb355c72f7a7a1e9663fb840c1",
+      "viewed_in_sheet": "island-10.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-settings-dark.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-settings-dark.png",
+      "sha256": "16db50b18a2a1c40d07d55177b2a9e48d522aed804238d8fd75a16b259b5eb56",
+      "viewed_in_sheet": "island-10.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-settings-light-bottom.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-settings-light-bottom.png",
+      "sha256": "4495a51754e6d12ed2248df331197fad8bf20681182a1e283bc07a49dacc739b",
+      "viewed_in_sheet": "island-10.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-settings-light.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-settings-light.png",
+      "sha256": "64fe954212b82f5918122c0b8b612f003038f670b96bb6f0bec2c92fadf94b20",
+      "viewed_in_sheet": "island-10.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-state-held.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-state-held.png",
+      "sha256": "b2bdff366b2a5a963a2449ad098b048a7e6830affed8c02f83c8809327082271",
+      "viewed_in_sheet": "island-11.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-state-incoming.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-state-incoming.png",
+      "sha256": "c27119ac2b3c3191a91558526b8225599210a001efcf1a769b1a306f7403da3c",
+      "viewed_in_sheet": "island-11.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-state-noaudio.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-state-noaudio.png",
+      "sha256": "91f2fd872ad82e00f6837f0edfcbfa5a87cd6744bc99e4c6777ed554f2a2840e",
+      "viewed_in_sheet": "island-11.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    },
+    {
+      "name": "island-state-outgoing.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-state-outgoing.png",
+      "sha256": "526a5ecad2f47a00feb4b5db714daf238103d932fc0d0ee7bb6877c5b818e1b0",
+      "viewed_in_sheet": "island-11.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": false,
+      "result": "PASS"
+    }
+  ],
+  "raw_png_files": [
+    "external-end-confirmation.png",
+    "external-ended-launcher.png",
+    "external-inapp-return.png",
+    "external-launcher-active-compact.png",
+    "external-launcher-active-expanded.png",
+    "external-launcher-native-incoming.png",
+    "external-other-app-active-expanded.png",
+    "external-permission-denied-launcher.png",
+    "island-app-contacts-compact.png",
+    "island-app-contacts-expanded.png",
+    "island-app-recents-compact.png",
+    "island-app-recents-expanded.png",
+    "island-apple-dark-en-compact.png",
+    "island-apple-dark-en-expanded.png",
+    "island-apple-dark-he-compact.png",
+    "island-apple-dark-he-expanded.png",
+    "island-apple-light-en-compact.png",
+    "island-apple-light-en-expanded.png",
+    "island-apple-light-he-compact.png",
+    "island-apple-light-he-expanded.png",
+    "island-emerald-dark-en-compact.png",
+    "island-emerald-dark-en-expanded.png",
+    "island-emerald-dark-he-compact.png",
+    "island-emerald-dark-he-expanded.png",
+    "island-emerald-light-en-compact.png",
+    "island-emerald-light-en-expanded.png",
+    "island-emerald-light-he-compact.png",
+    "island-emerald-light-he-expanded.png",
+    "island-glass-dark-en-compact.png",
+    "island-glass-dark-en-expanded.png",
+    "island-glass-dark-he-compact.png",
+    "island-glass-dark-he-expanded.png",
+    "island-glass-light-en-compact.png",
+    "island-glass-light-en-expanded.png",
+    "island-glass-light-he-compact.png",
+    "island-glass-light-he-expanded.png",
+    "island-settings-dark-bottom.png",
+    "island-settings-dark.png",
+    "island-settings-light-bottom.png",
+    "island-settings-light.png",
+    "island-state-held.png",
+    "island-state-incoming.png",
+    "island-state-noaudio.png",
+    "island-state-outgoing.png"
+  ],
+  "raw_originals_actually_opened": [
+    {
+      "name": "island-app-contacts-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-app-contacts-expanded.png",
+      "sha256": "a2a13b76fe00175232b65f6d1a37b3a544c39ea723b3052e8e5060621cf543ae",
+      "viewed_in_sheet": "island-03.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": true,
+      "result": "PASS"
+    },
+    {
+      "name": "island-app-recents-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/island-app-recents-expanded.png",
+      "sha256": "2611d45c06acb7045397196fa8c0ee4d684c48c08028c0ad08c414e5831d1d42",
+      "viewed_in_sheet": "island-03.png",
+      "actually_viewed": true,
+      "raw_original_also_opened": true,
+      "result": "PASS"
+    }
+  ],
+  "bounded_findings": [
+    {
+      "result": "PASS",
+      "scope": "Compact/expanded Apple, Emerald and Glass in dark/light English/Hebrew",
+      "finding": "Caller identity, elapsed time, state labels, control labels, contrasting action surfaces and mirrored RTL/LTR order are readable. Selected colors/style choices are preserved."
+    },
+    {
+      "result": "PASS",
+      "scope": "External Home/Clock, native incoming and permission-denied fallback",
+      "finding": "Call surfaces remain readable and native status/navigation bars remain visible; real native fallback is visually distinct. End confirmation fits. Ended Home has no retained call capsule."
+    },
+    {
+      "result": "PASS",
+      "scope": "Production Main Contacts/Recents compact/expanded",
+      "finding": "Favorites and summary/search plus a useful first list row remain readable. Rounded overflow viewport, bottom fade and thin scrollbar are visible. Native interaction reachability evidence is provided by the separately passed current-run functional gates; this visual review does not manufacture it."
+    },
+    {
+      "result": "PASS",
+      "scope": "Large visible typography and settings scroll positions",
+      "finding": "Bold caller/control/body text is readable across the assigned captures; Hebrew long explanations wrap without overlap. Normal list/card scrolling and deliberate ellipsization do not count as failures."
+    },
+    {
+      "result": "PASS",
+      "scope": "Held/incoming/no-audio/outgoing state surfaces",
+      "finding": "State text and appropriate Resume/Answer/Reject/Hold controls are distinct; unsupported audio controls are absent in the no-audio frame."
+    }
+  ],
+  "visual_failures": [],
+  "limitations": [
+    "This report covers only the44 assigned current-run island frames. It does not approve the remaining225 frames or establish overall269 visual completion.",
+    "Actual native interactions,40 native cases,460 host methods and eight functional gates are separate evidence supplied by current-run CI; no new test execution occurred in this visual review.",
+    "Viewport partial controls and list rows are normal scroll states where the separately passed native gates prove reachability; no invented redesign is requested.",
+    "No publication/signing, physical hardware, carrier/audio, full TalkBack or matching-key upgrade claim."
+  ],
+  "source_edits": false,
+  "gradle_executed": false,
+  "publication_allowed": false,
+  "overall_269_visual_approval": false,
+  "physical_hardware_verified": false,
+  "matching_key_upgrade_verified": false
+}

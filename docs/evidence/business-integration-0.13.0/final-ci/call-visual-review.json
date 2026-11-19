@@ -1,0 +1,1091 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-11-12T10:59:31.391578+00:00",
+  "reviewer": "/root/visual_calls_013",
+  "review_type": "Fresh actual-pixel read-only visual QA of assigned 101 call-screen PNGs",
+  "source_sha": "3f6702b92aba8feaa329fbb92c5a6f23b24e194d",
+  "ci_run_id": 43202338930,
+  "ci_run_attempt": 1,
+  "ci_run_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/actions/runs/43202338930",
+  "version": "0.13.0",
+  "version_code": 22,
+  "immutable_export_commit": "669b47dd34bb3018c472dcab5e72247eb6497be2",
+  "export_path": "/workspace/da-caller-native-evidence/native-review-export/43202338930",
+  "raw_png_directory": "/workspace/work/business-013-ci-43202338930/ui/ui-snapshots/DA-CALLER-snapshots",
+  "contact_sheet_directory": "/workspace/work/business-013-reviewed-43202338930",
+  "contact_sheet_manifest_sha256": "f106106ad75d235ccdb3b752cc34139f7cb16ad609d96442a01ca716e18f1242",
+  "ui_artifact": {
+    "artifact_id": 13936642210,
+    "artifact_name": "DA-CALLER-Android13-UI-66df1813d5eeb0eb0564400fb445bf7caf5f88d1",
+    "github_digest": "sha256:c931e55199bab839151ac3944052d8e90b6eae9e3a50b0046bd8fc7270a34972",
+    "sha256": "c931e55199bab839151ac3944052d8e90b6eae9e3a50b0046bd8fc7270a34972",
+    "bytes": 14468159,
+    "path": "ui.zip"
+  },
+  "junit_sha256_from_review_manifest": "b3a81347ff6550d6f2a785321a46eef2e5558a203b0e652509f3f915743474fc",
+  "provenance_checks": {
+    "local_all_101_raw_sha_match_manifest": true,
+    "local_all_26_sheet_sha_match_manifest": true,
+    "source_and_run_match_manifest_and_immutable_export_provenance": true,
+    "official_artifact_digest_size_crc_verification": "Previously completed by root; reviewer directly rechecked the local 101 raw PNG and 26 sheet SHA-256 values and read export provenance/source-run metadata.",
+    "remote_ci_or_zip_digest_reverification_by_this_visual_reviewer": false
+  },
+  "instructions_read": [
+    "AGENTS.md",
+    "docs/DA_CALLER_WORK_STATE.md (latest sections)"
+  ],
+  "observed_rendering_status": "PASS",
+  "status_scope": "Visible rendering of exactly the 101 listed call PNGs. No live behavior, other screenshot groups, release/signing or physical-device approval is implied.",
+  "coverage": {
+    "assigned_raw_png_count": 101,
+    "actually_reviewed_raw_png_count": 101,
+    "actually_reviewed_unique_raw_png_count": 101,
+    "actually_viewed_contact_sheet_count": 26,
+    "contact_sheet_native_tile_dimensions_px": [
+      480,
+      854
+    ],
+    "contact_sheet_tiles_resized": false,
+    "additional_full_original_views_count": 6,
+    "additional_in_memory_detail_views_count": 2,
+    "all_26_sheets_actually_viewed_before_this_report": true,
+    "all_101_current_frames_actually_seen_before_this_report": true,
+    "prior_visual_pass_carried_forward": false,
+    "styles": [
+      {
+        "id": "emerald",
+        "display_name": "iOS 26 · Glass",
+        "count": 20,
+        "result": "PASS"
+      },
+      {
+        "id": "frost",
+        "display_name": "Xiaomi · HyperOS",
+        "count": 20,
+        "result": "PASS"
+      },
+      {
+        "id": "graphite",
+        "display_name": "Samsung · One UI",
+        "count": 20,
+        "result": "PASS"
+      },
+      {
+        "id": "ivory",
+        "display_name": "Nothing OS",
+        "count": 20,
+        "result": "PASS"
+      },
+      {
+        "id": "pixel",
+        "display_name": "Google Phone",
+        "count": 21,
+        "result": "PASS"
+      }
+    ],
+    "captured_variants": [
+      "light",
+      "dark",
+      "standard font",
+      "large font",
+      "long English name (dark normal/audio)",
+      "long Hebrew name (dark normal/audio)",
+      "normal",
+      "audio route tray",
+      "keypad",
+      "more options",
+      "English audio without Bluetooth (Pixel light)"
+    ]
+  },
+  "findings": [
+    {
+      "check": "legibility_contrast_spacing",
+      "status": "PASS",
+      "detail": "All assigned frames were visually inspected. Name/phone/keypad/route and action text remains readable against the captured themes; no blocking clipping, overlap or off-screen action was observed."
+    },
+    {
+      "check": "all_five_layouts",
+      "status": "PASS",
+      "detail": "The five distinct arrangements remain organized in normal, audio, keypad and more states; Xiaomi horizontal identity/action cards and Nothing technical grid keep their elements separated."
+    },
+    {
+      "check": "phone_and_keypad_digits",
+      "status": "PASS",
+      "detail": "Visible phone headers preserve complete 050-123-4567 in the inspected normal/audio/more frames. All twelve keypad keys and letter hints remain legible in light/dark and both font variants."
+    },
+    {
+      "check": "google_font",
+      "status": "PASS",
+      "detail": "Google Phone keypad numerals visibly use a rounded, heavier sans face; confirmed directly in dark/light large-font originals. This review does not quantify a before/after size or weight increase."
+    },
+    {
+      "check": "rtl_english_and_long_names",
+      "status": "PASS",
+      "detail": "Hebrew and English long names remain bounded with visible ellipsis, and phone strings remain separate. Full long-name visibility is not claimed; Xiaomi English normal is shortened to Dana Exa... ."
+    },
+    {
+      "check": "large_font_compact_caption",
+      "status": "PASS",
+      "detail": "The iOS/Glass Hebrew new-call caption is ellipsized in the large-font normal layout; the action icon and surrounding controls remain visible and separate. Full caption visibility is not claimed."
+    },
+    {
+      "check": "pixel_light_keypad_icon_detail",
+      "status": "PASS",
+      "detail": "After apparent reduced-view ambiguity, direct in-memory crops of the exact hashed original confirm all nine keypad-icon dots and the Bluetooth check; no captured icon defect found."
+    },
+    {
+      "check": "blocking_visual_defects",
+      "status": "PASS",
+      "detail": "No blocking visual defect identified in the assigned 101 captured call frames."
+    }
+  ],
+  "additional_individual_original_views": [
+    {
+      "file": "call-pixel-dark-keypad-largefont.png",
+      "raw_png_sha256": "accaa315e318b2de0166f00fc984cc130553b0802971363c7cead2612ebc0eaf",
+      "actually_viewed": true,
+      "result": "PASS",
+      "observation": "Full original: rounded heavier Google keypad numerals, letter hints and actions are legible and contained."
+    },
+    {
+      "file": "call-pixel-light-keypad-largefont.png",
+      "raw_png_sha256": "58852c7fcde3ddd8c8e702ec5475a81f45adc7a61bdb859a1005a45ba60bd4a7",
+      "actually_viewed": true,
+      "result": "PASS",
+      "observation": "Full original and direct in-memory icon crops: rounded heavier numerals and complete three-by-three keypad dots plus Bluetooth check confirmed; initial full-image display ambiguity resolved."
+    },
+    {
+      "file": "call-frost-dark-normal-longname-en.png",
+      "raw_png_sha256": "4f2d5dfdc0d5db4c8b756f0249e9df696a1c8820e4f2f41e6e0dc52788df09ca",
+      "actually_viewed": true,
+      "result": "PASS",
+      "observation": "Full original: Dana Exa... fits left of avatar, complete 050-123-4567 remains readable; strong bounded ellipsis is recorded rather than claiming full name visibility."
+    },
+    {
+      "file": "call-emerald-light-normal-largefont.png",
+      "raw_png_sha256": "1424a0e5ec63ed98a24ed1759679ed585b32203e3d0ba59d60e2ccc53145b205",
+      "actually_viewed": true,
+      "result": "PASS",
+      "observation": "Full original: full phone digits and both action rows fit; Hebrew new-call caption visibly uses ellipsis within its control width."
+    },
+    {
+      "file": "call-ivory-dark-normal-longname-he.png",
+      "raw_png_sha256": "997f93abe08a93e96a14d13a75f281b4b68272f6f325faf16849e1adab77716d",
+      "actually_viewed": true,
+      "result": "PASS",
+      "observation": "Full original: Hebrew identity is ellipsized before the avatar, phone and duration intact; two-column controls/active-call label do not collide."
+    },
+    {
+      "file": "call-graphite-dark-more-largefont.png",
+      "raw_png_sha256": "cc2f5190d75cf88f77f60811a0ecce966116a302f10967abde4a8129a68324c9",
+      "actually_viewed": true,
+      "result": "PASS",
+      "observation": "Full original: more-options title and new-call/hold rows remain legible and contained, with clear lower actions/hang-up."
+    }
+  ],
+  "additional_detail_views": [
+    {
+      "file": "call-pixel-light-keypad-largefont.png",
+      "raw_png_sha256": "58852c7fcde3ddd8c8e702ec5475a81f45adc7a61bdb859a1005a45ba60bd4a7",
+      "crop_xyxy_px": [
+        360,
+        555,
+        445,
+        640
+      ],
+      "resized": false,
+      "actually_viewed": true,
+      "observation": "Complete nine-dot keypad icon visible; crop was kept in memory, no altered evidence image written."
+    },
+    {
+      "file": "call-pixel-light-keypad-largefont.png",
+      "raw_png_sha256": "58852c7fcde3ddd8c8e702ec5475a81f45adc7a61bdb859a1005a45ba60bd4a7",
+      "crop_xyxy_px": [
+        140,
+        555,
+        230,
+        640
+      ],
+      "resized": false,
+      "actually_viewed": true,
+      "observation": "Bluetooth check and icon visible; crop was kept in memory, no altered evidence image written."
+    }
+  ],
+  "contact_sheets": [
+    {
+      "sheet": "call-01.png",
+      "sheet_sha256": "037359a2bb45d24f7f4557c4c1c9b5b6943eb35e294a80f61caaecd2fa0134ad",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Emerald dark audio routes: readable names/phone, distinct selected Bluetooth row, clear route/actions/hang-up; Hebrew and English long names bounded by ellipsis.",
+      "files": [
+        {
+          "file": "call-emerald-dark-audio-largefont.png",
+          "raw_png_sha256": "ff800d4ccf7a5361c373d3431f66fdc88dcf808d21adf37b5a5a5d6b2fd443a1",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-01.png"
+        },
+        {
+          "file": "call-emerald-dark-audio-longname-en.png",
+          "raw_png_sha256": "a526d655f85ace67c310c12d00646dbe5e041d782d414b809647c478eba8457d",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-01.png"
+        },
+        {
+          "file": "call-emerald-dark-audio-longname-he.png",
+          "raw_png_sha256": "5e56b70a7517f2d6a25f3d694669062d2683bbfa9157bc9e0f1b9851fe000c5f",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-01.png"
+        },
+        {
+          "file": "call-emerald-dark-audio-standard.png",
+          "raw_png_sha256": "268465c365c4c2eb5a4efd8d65b410aa55e3b58c5a675e2919ccd6512c6e4e7e",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-01.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-02.png",
+      "sheet_sha256": "25852b20eee2a9152e00cdfb5f3b482a27e769108cc674c0e6834c76c4334c9d",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Emerald dark keypad/more: all twelve large digits/symbols, letter hints, close and hang-up visible; large-font labels remain separate.",
+      "files": [
+        {
+          "file": "call-emerald-dark-keypad-largefont.png",
+          "raw_png_sha256": "887b4583fc2e035397276208131a26414e482ecd44d8d4e05fc81549abf07b43",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-02.png"
+        },
+        {
+          "file": "call-emerald-dark-keypad-standard.png",
+          "raw_png_sha256": "b72d133fde96503a7e4c67d9eea86d1e4cfe378ad298bcf502174e88c6201de6",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-02.png"
+        },
+        {
+          "file": "call-emerald-dark-more-largefont.png",
+          "raw_png_sha256": "fbb4c92e7d7f43599ff4bf520a6a29f7b2820546bc44d1aee5fb3f09065e56a8",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-02.png"
+        },
+        {
+          "file": "call-emerald-dark-more-standard.png",
+          "raw_png_sha256": "c1b12c5f7f042d4b9471fa36cd8a2e9604e4daa098c34779032e56b13591d464",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-02.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-03.png",
+      "sheet_sha256": "00a8ea3d555299b32a00273bd025081d25b1318409330c3292f00536d067f80a",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Emerald dark normal: identity, complete phone number and two action rows separate; long names and large-font Hebrew new-call caption use bounded ellipsis.",
+      "files": [
+        {
+          "file": "call-emerald-dark-normal-largefont.png",
+          "raw_png_sha256": "4a7b278388442fc4c02795b22be77b434d6945b4f09df78f58e8577f92c50aee",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-03.png"
+        },
+        {
+          "file": "call-emerald-dark-normal-longname-en.png",
+          "raw_png_sha256": "17acc7125b559a46c95949fe8752fb8d441c974aa4991a49c211d6028467f607",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-03.png"
+        },
+        {
+          "file": "call-emerald-dark-normal-longname-he.png",
+          "raw_png_sha256": "cb39ae79cd07da9888bf9952fc99f5b5721abab33ec3844473afb6824cba25c1",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-03.png"
+        },
+        {
+          "file": "call-emerald-dark-normal-standard.png",
+          "raw_png_sha256": "7229446bc8fb8b9748f85e486e037bdeb2c3ae43eb82e0920b2c3dc0f3121489",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-03.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-04.png",
+      "sheet_sha256": "6bccaa928274cb8ead03b1d4491499cc9e851122a4eb7c17f4aac9a8ec28600d",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Emerald light audio/keypad: dark text and icons remain clear on pale surfaces; route selection and all twelve keys fit at standard/large font.",
+      "files": [
+        {
+          "file": "call-emerald-light-audio-largefont.png",
+          "raw_png_sha256": "63f30e5dadfc876cfb63d5bbfbe854f4eb801c557beaac82fbc249fd4fab3871",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-04.png"
+        },
+        {
+          "file": "call-emerald-light-audio-standard.png",
+          "raw_png_sha256": "2492f7edd169fa263a6334136b173d7aff2435dc3db9cdbb385f87ff20d2768e",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-04.png"
+        },
+        {
+          "file": "call-emerald-light-keypad-largefont.png",
+          "raw_png_sha256": "1d2ec7058dfeb5af89fd2d922756487f199105de93ae57c80cd10c89b2437f17",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-04.png"
+        },
+        {
+          "file": "call-emerald-light-keypad-standard.png",
+          "raw_png_sha256": "eb61b3e8b61f0246e5f6b6f8efc810f28b3c0acd72414504972f7b2afe63e0fc",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-04.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-05.png",
+      "sheet_sha256": "59906911f9d03cf73e1b886d420329240c8678757a34ffaf620a8216c5fbcf18",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Emerald light more/normal: lower action tray and hang-up fit above navigation; large-font new-call caption uses bounded ellipsis without overlap.",
+      "files": [
+        {
+          "file": "call-emerald-light-more-largefont.png",
+          "raw_png_sha256": "7a8e84e6eaae00ee111a16280096dbd179b3a58ebc8abd691dd1edd1eed8c753",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-05.png"
+        },
+        {
+          "file": "call-emerald-light-more-standard.png",
+          "raw_png_sha256": "8b344e3da4f86a180ec50bf63ba656fd03aa6654a94d48e4fffd185f1097ef11",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-05.png"
+        },
+        {
+          "file": "call-emerald-light-normal-largefont.png",
+          "raw_png_sha256": "1424a0e5ec63ed98a24ed1759679ed585b32203e3d0ba59d60e2ccc53145b205",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-05.png"
+        },
+        {
+          "file": "call-emerald-light-normal-standard.png",
+          "raw_png_sha256": "facf2c17ac6cbf80e5058c1a12489fd18dfeb15714621501dc134943460cb72d",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-05.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-06.png",
+      "sheet_sha256": "889ab4218c01599d53b37c875705466484540f9e761a45de897e34bc1621068d",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Frost dark audio: all three route rows, selected check, four actions and hang-up readable; Hebrew/English long names ellipsized within header.",
+      "files": [
+        {
+          "file": "call-frost-dark-audio-largefont.png",
+          "raw_png_sha256": "2c639030bf1497efc7681d777cadb23af2bb4cd43a73e7fcdcb8e957f9715113",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-06.png"
+        },
+        {
+          "file": "call-frost-dark-audio-longname-en.png",
+          "raw_png_sha256": "1bc86d83d6100ea900befdcd4855454eb56ab914020de4ec585c95776d7eff0b",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-06.png"
+        },
+        {
+          "file": "call-frost-dark-audio-longname-he.png",
+          "raw_png_sha256": "bf09e6440002b552b7e26c4febf5d03839d631cb1ba84da22ee00e121beda1e4",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-06.png"
+        },
+        {
+          "file": "call-frost-dark-audio-standard.png",
+          "raw_png_sha256": "fed0a7c5ba3a4ce01bceeff3cf3a24ee27dd6a169fa2e1f718f0b4126a31e695",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-06.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-07.png",
+      "sheet_sha256": "bf0b659b71120b7efcb35e9e3ad7e60f612d023039f1cebd388d404540f1c38b",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Frost dark keypad/more: rectangular key grid and more-options rows fit, no overlap with four actions or hang-up.",
+      "files": [
+        {
+          "file": "call-frost-dark-keypad-largefont.png",
+          "raw_png_sha256": "389db3bc1d22ffb3a91265e888eb8a92489b2d114c82a509791e8234d41c9638",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-07.png"
+        },
+        {
+          "file": "call-frost-dark-keypad-standard.png",
+          "raw_png_sha256": "3647fc31f38d456f4631bfacbf867780df3b6af2e15eac52ccd68ba8ba142b34",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-07.png"
+        },
+        {
+          "file": "call-frost-dark-more-largefont.png",
+          "raw_png_sha256": "c6904866ed5437d6039cf32655b6482be680445c31d8086c50f3df615d157ada",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-07.png"
+        },
+        {
+          "file": "call-frost-dark-more-standard.png",
+          "raw_png_sha256": "46812c3849d8b24d9e0591c9ea933b8fdc2eeb6147a4ec4df5c79628d12b1381",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-07.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-08.png",
+      "sheet_sha256": "b2ced2b23978728327eb81894c19854c7a8a33774a7067e46957c1f9804430e4",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Frost dark normal: horizontal avatar/name arrangement, phone, large duration and action cards remain separated; English name visibly shortened to Dana Exa... within allocated width.",
+      "files": [
+        {
+          "file": "call-frost-dark-normal-largefont.png",
+          "raw_png_sha256": "2dfebaca19d72645f61dbf4243533eb326f8b1b4f3e4c126188a936e2177b1f1",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-08.png"
+        },
+        {
+          "file": "call-frost-dark-normal-longname-en.png",
+          "raw_png_sha256": "4f2d5dfdc0d5db4c8b756f0249e9df696a1c8820e4f2f41e6e0dc52788df09ca",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-08.png"
+        },
+        {
+          "file": "call-frost-dark-normal-longname-he.png",
+          "raw_png_sha256": "772fc160f21f722923bafc682c29b477113dd622a297002ac75adfc60b3c017a",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-08.png"
+        },
+        {
+          "file": "call-frost-dark-normal-standard.png",
+          "raw_png_sha256": "727ad882d452825f4d55b1b57eddc4df3660c4496120d51b8d981afb96a956d9",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-08.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-09.png",
+      "sheet_sha256": "6f626e44ac7e9c3c03162ea5098ab7d033649bb34adfef8f82b7559fa2901113",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Frost light audio/keypad: route rows and twelve keypad glyphs legible; pale selected controls distinguishable; no clipped action captions.",
+      "files": [
+        {
+          "file": "call-frost-light-audio-largefont.png",
+          "raw_png_sha256": "6e375d420b98cc7cc5c2b09f971ded96ed5422b75529d941323eb1e48cec8817",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-09.png"
+        },
+        {
+          "file": "call-frost-light-audio-standard.png",
+          "raw_png_sha256": "d570191252f6a9e54bc22a988f9aa72e921bdca9706e492d57c5d7cf52298717",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-09.png"
+        },
+        {
+          "file": "call-frost-light-keypad-largefont.png",
+          "raw_png_sha256": "23454d087d5db182ae2d5ca201893ac8437c6bd8024422c275ea3af2b7d4d05f",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-09.png"
+        },
+        {
+          "file": "call-frost-light-keypad-standard.png",
+          "raw_png_sha256": "c4d4b5564d895a99ce97e99d65e7847ce081a1ba0e8b02fb2726f755206a52ac",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-09.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-10.png",
+      "sheet_sha256": "e8b47ffe3ff98b51b9e22d5126ac8742a7dc4b90096157edb86bb08b6c80fd74",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Frost light more/normal: aligned two-column action cards, name/phone and duration remain readable at large font.",
+      "files": [
+        {
+          "file": "call-frost-light-more-largefont.png",
+          "raw_png_sha256": "7f46f7bd1c1aebc3b1f26146a721a477e04621335fc03c0b9deec4a15e57616e",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-10.png"
+        },
+        {
+          "file": "call-frost-light-more-standard.png",
+          "raw_png_sha256": "2af27489ea313a11d2a0e91ee6392baf62cbd51de6935dd6651f76fec5723ecc",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-10.png"
+        },
+        {
+          "file": "call-frost-light-normal-largefont.png",
+          "raw_png_sha256": "4892c9597fbdfcf629f850c2808a847c849c6a1d1eb0f8402bae875740e8483c",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-10.png"
+        },
+        {
+          "file": "call-frost-light-normal-standard.png",
+          "raw_png_sha256": "579ba1494be064c655772cc7e50bf201842c9c4a3c1058159b315e5192b6d89b",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-10.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-11.png",
+      "sheet_sha256": "28dc477b710cad85f638c71cc222170beedf9bd87d0284d4fe4eb407da788b43",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Graphite dark audio: route sheet and action row remain distinct, selected Bluetooth check/route clear; long names bounded by ellipsis.",
+      "files": [
+        {
+          "file": "call-graphite-dark-audio-largefont.png",
+          "raw_png_sha256": "93e4d3bc30751d6f90b4bcf7f43804915f31c18bcd17bea5a11f08524f9886bf",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-11.png"
+        },
+        {
+          "file": "call-graphite-dark-audio-longname-en.png",
+          "raw_png_sha256": "08293d78545130c227963256d0569f33c76b393d6b9125e25941b9bc6bab4aa0",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-11.png"
+        },
+        {
+          "file": "call-graphite-dark-audio-longname-he.png",
+          "raw_png_sha256": "3266260b5c89c54b40327deab865e9978fadf64c712e83552f8b85aeac890b30",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-11.png"
+        },
+        {
+          "file": "call-graphite-dark-audio-standard.png",
+          "raw_png_sha256": "3adb678fff34fc5618c47dde82ed4607f2e830bbbb9ea60e30e62553a6ed4ab3",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-11.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-12.png",
+      "sheet_sha256": "d100d3159dd6584a9557ac834239de7c9a53ddf381dc69ea48f77c63bdb1a4b7",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Graphite dark keypad/more: twelve keys, letter hints, more-options heading/rows and round end action fit; heading remains legible at large font.",
+      "files": [
+        {
+          "file": "call-graphite-dark-keypad-largefont.png",
+          "raw_png_sha256": "a6514f5f8e74206b11c183c3c5ac65f0393b05b263faaf9cbf2634f8082356ab",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-12.png"
+        },
+        {
+          "file": "call-graphite-dark-keypad-standard.png",
+          "raw_png_sha256": "4b04290415d418d38af413ef9a135505c077c03c644407faf89725cfdbc544c2",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-12.png"
+        },
+        {
+          "file": "call-graphite-dark-more-largefont.png",
+          "raw_png_sha256": "cc2f5190d75cf88f77f60811a0ecce966116a302f10967abde4a8129a68324c9",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-12.png"
+        },
+        {
+          "file": "call-graphite-dark-more-standard.png",
+          "raw_png_sha256": "2cc934ca618857a72bac2128f5037b13a34c97c4aa84ba9d286d06fcfa02c880",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-12.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-13.png",
+      "sheet_sha256": "e29878d7b9291b344230142ab30916186d056ab830f0615174088ea7fe1df5fd",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Graphite dark normal: centered avatar/name/phone and six round controls fit; long names shortened with ellipsis without collision.",
+      "files": [
+        {
+          "file": "call-graphite-dark-normal-largefont.png",
+          "raw_png_sha256": "0bb41c2fd0e409aed2f452c2431b889411da5cce51f5228d4cedb829435a3c07",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-13.png"
+        },
+        {
+          "file": "call-graphite-dark-normal-longname-en.png",
+          "raw_png_sha256": "2104125f54020b4eaaf075b8da6cd310830c7f777cdd3b251450f50e72253c4d",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-13.png"
+        },
+        {
+          "file": "call-graphite-dark-normal-longname-he.png",
+          "raw_png_sha256": "f910291ead7b884b909f389155fb1e87df52c93eee86dbbea64cbf8a7f8eae14",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-13.png"
+        },
+        {
+          "file": "call-graphite-dark-normal-standard.png",
+          "raw_png_sha256": "04e3f3e2e9a49b4544b0bc1555e5e189206c0b74862501b2d7213c9edeec3579",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-13.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-14.png",
+      "sheet_sha256": "d2c92517a1b1a54955228973955206d2b3e4dd4e22bf35b8138748c6eaf70037",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Graphite light audio/keypad: contrast sufficient by visual inspection, all digit and route/action glyphs clear at both font sizes.",
+      "files": [
+        {
+          "file": "call-graphite-light-audio-largefont.png",
+          "raw_png_sha256": "101c9befae2addd2b23d5867ad0882d9a59832a01f1de377d57833fda69339f2",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-14.png"
+        },
+        {
+          "file": "call-graphite-light-audio-standard.png",
+          "raw_png_sha256": "3bd776a13b093ea04d64b1b6e03f5aca43a6c18ee92d23cd8c158bb496cc9f60",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-14.png"
+        },
+        {
+          "file": "call-graphite-light-keypad-largefont.png",
+          "raw_png_sha256": "a2cb77d670ab579ec412ac98a65ca083a5060df69fcf48033145449b22a91486",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-14.png"
+        },
+        {
+          "file": "call-graphite-light-keypad-standard.png",
+          "raw_png_sha256": "bbb000cc2db02c76869fb28223e56687338ab50084d1df7d4fef9d944887cad7",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-14.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-15.png",
+      "sheet_sha256": "e07a9e83e6053babb39a20578d3758434c7b43847879997fe5438cb410f55e83",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Graphite light more/normal: clear more-options rows and six controls, full phone number and end action; no caption collision.",
+      "files": [
+        {
+          "file": "call-graphite-light-more-largefont.png",
+          "raw_png_sha256": "52bd00331ebd79d8f549e3e5b808187744e433cf3d438169503f13413ba6740e",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-15.png"
+        },
+        {
+          "file": "call-graphite-light-more-standard.png",
+          "raw_png_sha256": "b2db362736114a6fcb0453a0bb88daa7fdb8028c0207ad30dd0b99772647dc53",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-15.png"
+        },
+        {
+          "file": "call-graphite-light-normal-largefont.png",
+          "raw_png_sha256": "0742354b21f1ebc7075856be1de101517c54106a2491f6e50d582a2e93c4f434",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-15.png"
+        },
+        {
+          "file": "call-graphite-light-normal-standard.png",
+          "raw_png_sha256": "ebd50d7190a617b167a241bd34c74cf10ab107bc77f96af0f1d26aad5e7ff7ca",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-15.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-16.png",
+      "sheet_sha256": "87b888d83bd2bd52109d772c821c3e505b49d379490a802b0bbc49d8bd7fb986",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Ivory dark audio: technical type and dotted background do not obscure identity/phone; route rows and four controls fit; long names ellipsized.",
+      "files": [
+        {
+          "file": "call-ivory-dark-audio-largefont.png",
+          "raw_png_sha256": "96be38393361085fd783dce96ee3c61eb475b7d9ac08fe1899407bce5b8ad3c0",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-16.png"
+        },
+        {
+          "file": "call-ivory-dark-audio-longname-en.png",
+          "raw_png_sha256": "7cb0699a44667a0adc93ddd92991ed45c83da8597f6c2282467b4f30f7e82916",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-16.png"
+        },
+        {
+          "file": "call-ivory-dark-audio-longname-he.png",
+          "raw_png_sha256": "ab0d8fc7152d5feb688b42bd27bbe1eddb4e5bfa55a37033acf8cf4cbd97c430",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-16.png"
+        },
+        {
+          "file": "call-ivory-dark-audio-standard.png",
+          "raw_png_sha256": "953430e7d781410a30d02a2a4c8decc852daeac305232951a5f6ccedc89ddad6",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-16.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-17.png",
+      "sheet_sha256": "df17c84f0a240d37dafb3b25a7afab51ed8947029a02d1cf9a3dfbb26263358e",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Ivory dark keypad/more: technical digits and alphabet hints readable, rectangular key/option layout organized and contained above navigation.",
+      "files": [
+        {
+          "file": "call-ivory-dark-keypad-largefont.png",
+          "raw_png_sha256": "64e389b63f7058592b6a024206f9ef589b0acefad54a55a411b15fae037744a5",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-17.png"
+        },
+        {
+          "file": "call-ivory-dark-keypad-standard.png",
+          "raw_png_sha256": "6d0cbfd785660b6286673e95cc5f8044ee3a2b3682efc61fa1e81f4d4d43a04b",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-17.png"
+        },
+        {
+          "file": "call-ivory-dark-more-largefont.png",
+          "raw_png_sha256": "92eaa7bbe6b658c26e14cd244fd9bb344d533042d71cfdb1994303796bfcb6b0",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-17.png"
+        },
+        {
+          "file": "call-ivory-dark-more-standard.png",
+          "raw_png_sha256": "f92a675aafa161ccb70a9f4f2f1fbbf35daff24c06b32eb2cbfe846efcec2334",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-17.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-18.png",
+      "sheet_sha256": "4e99100ffb420fb86a7a63141bf87bd605e495ed0af734b328321c7c4a77558f",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Ivory dark normal: horizontal avatar/name/phone, large duration and active-call subtitle do not overlap; long names ellipsized within identity area.",
+      "files": [
+        {
+          "file": "call-ivory-dark-normal-largefont.png",
+          "raw_png_sha256": "a98a1bc42df7c4052313310d4835fc1410df8bd3b3a09736d6865f0c5be36378",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-18.png"
+        },
+        {
+          "file": "call-ivory-dark-normal-longname-en.png",
+          "raw_png_sha256": "a429cd725e93a06af038f21a8104fca3de3e71da7c03222b55091eeb20a6988d",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-18.png"
+        },
+        {
+          "file": "call-ivory-dark-normal-longname-he.png",
+          "raw_png_sha256": "997f93abe08a93e96a14d13a75f281b4b68272f6f325faf16849e1adab77716d",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-18.png"
+        },
+        {
+          "file": "call-ivory-dark-normal-standard.png",
+          "raw_png_sha256": "ef70b0705e4341c7e4ef2c5cad74bf11160dae19519287083655ec6343fb89fa",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-18.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-19.png",
+      "sheet_sha256": "109348c368e5fe672d3b6d66019bdb6275e8b7ab9d0225ace691f7d0369b73fd",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Ivory light audio/keypad: dark glyphs readable on light technical surfaces; complete keypad and audio route rows remain separate at large font.",
+      "files": [
+        {
+          "file": "call-ivory-light-audio-largefont.png",
+          "raw_png_sha256": "965e0ebfb6173973f3a44f8a0f590782ba579385f13f96344795f718f5334423",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-19.png"
+        },
+        {
+          "file": "call-ivory-light-audio-standard.png",
+          "raw_png_sha256": "581062dba839404debb771b347673955cca55c4afc68d9124f4701ca9811ce24",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-19.png"
+        },
+        {
+          "file": "call-ivory-light-keypad-largefont.png",
+          "raw_png_sha256": "27f9e5cd0cc45f02d2efd3c44f42f2cae7b97bc1b14250c95044eab1a853ca2f",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-19.png"
+        },
+        {
+          "file": "call-ivory-light-keypad-standard.png",
+          "raw_png_sha256": "e2aa389f82ee0e7a305d9edbb2f6f9905214852835fbcca6b2a4d5267c041a0e",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-19.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-20.png",
+      "sheet_sha256": "8470f2929d10968ccdfa5588f6940c42081b3dd4050f171e8f2a178d8746c41d",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Ivory light more/normal: more-options heading/rows and organized two-column actions fit; name/phone/duration remain readable.",
+      "files": [
+        {
+          "file": "call-ivory-light-more-largefont.png",
+          "raw_png_sha256": "280a9b7def840f381a4e29a65686597a207c8316f338159be98d581c0007a502",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-20.png"
+        },
+        {
+          "file": "call-ivory-light-more-standard.png",
+          "raw_png_sha256": "19d4a5491743e686e02dca1ddcca340be3c2a9a0de2bf4b41bde4f3bc20d3cf6",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-20.png"
+        },
+        {
+          "file": "call-ivory-light-normal-largefont.png",
+          "raw_png_sha256": "647606a388a1bb3d7a2822a6ee9a2da02a333237ef837706ae78267e9e62281f",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-20.png"
+        },
+        {
+          "file": "call-ivory-light-normal-standard.png",
+          "raw_png_sha256": "362846126e5d86c4c950f93005b06e3a8373dc0f5ca400e6c0ac9ac4c80a7ade",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-20.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-21.png",
+      "sheet_sha256": "53cb821535e68582ef42a3cb7faaf8c79ceb70fe482c9159c0a336f9e0fb0b46",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Pixel dark audio: rounded route trays and four action controls readable; selected route/check distinguishable and long names bounded by ellipsis.",
+      "files": [
+        {
+          "file": "call-pixel-dark-audio-largefont.png",
+          "raw_png_sha256": "23df3fe038528f7bbd9c8067fe8d7977ca5acc920dedc30baf3808c06dcc9d02",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-21.png"
+        },
+        {
+          "file": "call-pixel-dark-audio-longname-en.png",
+          "raw_png_sha256": "0cc90742428ea34be82c5d085e76e114f37154a2f81c506bf2a205479fff25f6",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-21.png"
+        },
+        {
+          "file": "call-pixel-dark-audio-longname-he.png",
+          "raw_png_sha256": "62e689d71052a0d34c82e6b2d3feeaa1ada9864d6805d75812c65733989a3302",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-21.png"
+        },
+        {
+          "file": "call-pixel-dark-audio-standard.png",
+          "raw_png_sha256": "a54234d6d03868c1c9c294cb4f93cee8f1f8f60fe6f74272b75bf1842bbaa6fd",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-21.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-22.png",
+      "sheet_sha256": "23f7cfed173c3a6509e6808049c47452d153e4921291a305f413ce9f5b767ed3",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Pixel dark keypad/more: large rounded heavier keypad digits and letters visible in all twelve keys; more-options rows clear; action captions remain separated.",
+      "files": [
+        {
+          "file": "call-pixel-dark-keypad-largefont.png",
+          "raw_png_sha256": "accaa315e318b2de0166f00fc984cc130553b0802971363c7cead2612ebc0eaf",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-22.png"
+        },
+        {
+          "file": "call-pixel-dark-keypad-standard.png",
+          "raw_png_sha256": "d59a82dfd33a232af58e678e5528e62e0e92fe5320f8e655df7f124bd202c77c",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-22.png"
+        },
+        {
+          "file": "call-pixel-dark-more-largefont.png",
+          "raw_png_sha256": "06051798aa246a75f19760ba812053d8b9559f7bf0160d3e27d75bc424cf8cb7",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-22.png"
+        },
+        {
+          "file": "call-pixel-dark-more-standard.png",
+          "raw_png_sha256": "b3d03e88b4db8294d47681d59bbb94c472a745c276976aded000b0dc9d0c077f",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-22.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-23.png",
+      "sheet_sha256": "5da227bcd380532ceaa52a05410c31b6fdb6d0cb8eddeac2ba45b70853c4ccaf",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Pixel dark normal: complete phone string, avatar, action row and hang-up fit at large font and both long-name directions; names ellipsized.",
+      "files": [
+        {
+          "file": "call-pixel-dark-normal-largefont.png",
+          "raw_png_sha256": "e8b7be308eaffe6d2781aba0e85dd8b5fa4c0b0645f3e6500c95ac85460fa0e8",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-23.png"
+        },
+        {
+          "file": "call-pixel-dark-normal-longname-en.png",
+          "raw_png_sha256": "9a78b3015fb4c6ab57e363384aed6a0fd4d7e7b6b4c013693c7437caeb56d8e9",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-23.png"
+        },
+        {
+          "file": "call-pixel-dark-normal-longname-he.png",
+          "raw_png_sha256": "3cff359f074ecad0027b96accca2c75bffc973ec437ae1f23bcd5d52d2f0475a",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-23.png"
+        },
+        {
+          "file": "call-pixel-dark-normal-standard.png",
+          "raw_png_sha256": "a36d26c1373e5705e4e4356cf3f009d463626673517a67d27ae9a2ed7c633c13",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-23.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-24.png",
+      "sheet_sha256": "0eb02c9ee102cc9ceddb9f3dadb7cef6541e0124062ed75bf55e2efa934ddb4e",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Pixel light audio/keypad: English no-Bluetooth frame shows Speaker/Phone with Phone selected; standard/large Hebrew route frames clear; rounded keypad digits legible.",
+      "files": [
+        {
+          "file": "call-pixel-light-audio-english-no-bluetooth.png",
+          "raw_png_sha256": "1ba26a6f7980d0be9581e911bfcebcf178a1b5890bd33f98922cef55b309aaf8",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-24.png"
+        },
+        {
+          "file": "call-pixel-light-audio-largefont.png",
+          "raw_png_sha256": "7e48d2fc5506aca2de62ba04f2d4fde4d84690f5bf57bac96a5619da507aff0c",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-24.png"
+        },
+        {
+          "file": "call-pixel-light-audio-standard.png",
+          "raw_png_sha256": "f29c7d3a433c0816905dbcc6197ac7be066ea7c785ca8ee33c4d1670bf7eba62",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-24.png"
+        },
+        {
+          "file": "call-pixel-light-keypad-largefont.png",
+          "raw_png_sha256": "58852c7fcde3ddd8c8e702ec5475a81f45adc7a61bdb859a1005a45ba60bd4a7",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-24.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-25.png",
+      "sheet_sha256": "28db8bc6aaae45826e2e8786ae214eb3a1b79edb350d62dee963e74c3d42e8b4",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Pixel light keypad/more/normal: all keypad digits/symbols, more-options rows and lower actions contained; complete phone visible at large font.",
+      "files": [
+        {
+          "file": "call-pixel-light-keypad-standard.png",
+          "raw_png_sha256": "8e8732166c240b0dc45b2e734a17ec490b409a0211476f772782e3af9f7bbc39",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-25.png"
+        },
+        {
+          "file": "call-pixel-light-more-largefont.png",
+          "raw_png_sha256": "e1c5bfce1246c1747bf0283a73b46a569535153d45becfe00f87a6dcb2c21a23",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-25.png"
+        },
+        {
+          "file": "call-pixel-light-more-standard.png",
+          "raw_png_sha256": "4f8c3acaa305152ab71d353e28c9c1345bbe8ec0f6824c53d90cda66bda4966a",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-25.png"
+        },
+        {
+          "file": "call-pixel-light-normal-largefont.png",
+          "raw_png_sha256": "89c3183cf70a337eae219f5e7094e91f9292891140f8e6b94bdab10b8c59ef87",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-25.png"
+        }
+      ]
+    },
+    {
+      "sheet": "call-26.png",
+      "sheet_sha256": "5f141b66d6ba1d941583a05992477c9185fd1fa93b4481595b7c3e82f258df5c",
+      "actually_viewed": true,
+      "method": "tools.view_image result forwarded with image() and visually inspected",
+      "result": "PASS",
+      "observations": "Pixel light normal standard: centered identity/phone/avatar, four controls and end action fully visible; unused contact-sheet area is review padding, not app UI.",
+      "files": [
+        {
+          "file": "call-pixel-light-normal-standard.png",
+          "raw_png_sha256": "1612183456aa2b01ec5cb612964cc7a761c64be50372ddcb03e10e7f31fcf621",
+          "result": "PASS",
+          "viewed_in_contact_sheet": "call-26.png"
+        }
+      ]
+    }
+  ],
+  "not_tested_or_not_claimed": [
+    "Physical Unihertz Jelly Star/Helio G99 display, touch, modem, audio/Bluetooth quality, incoming cellular calls and manufacturer-specific behavior.",
+    "Actual call dispatch, DTMF transmission, route switching, swipe completion/cancellation and click semantics; still screenshots cannot prove these behaviors.",
+    "Hardware performance, arbitrary names/numbers/font scales outside these captures, or full text visibility beyond the explicitly bounded ellipsized labels.",
+    "Visual approval for the other 144 current UI frames (assigned to root and island reviewer).",
+    "Installation/in-place upgrade compatibility, matching beta.9 signing key, durable signing backup/CI secrets, release or publication."
+  ],
+  "permanent_signing_and_publication_defaults": "UNCHANGED; publication/durable signing remain outside this visual review and blocked where already documented.",
+  "mutations": "Only this requested evidence JSON was written; no app, code, data, signing, CI, release, labels or immutable 0.12.0 artifacts changed."
+}

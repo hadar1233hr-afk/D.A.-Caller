@@ -1,0 +1,248 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.dacaller.app.CallIntegrationSnapshotTest" tests="40" failures="10" errors="0" skipped="0" time="493.286" timestamp="2026-11-13T06:32:55" hostname="localhost">
+  <properties>
+    <property name="device" value="emulator-5554 - 13" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="testNativeNotificationStatesActionsAndDirectReturn" classname="com.dacaller.app.CallIntegrationSnapshotTest" time="44.79" />
+  <testcase name="testSystemBackReturnsToLastContactQueryAnchorAndSettingsScroll" classname="com.dacaller.app.CallIntegrationSnapshotTest" time="14.365" />
+  <testcase name="testActualTelecomExternalIslandOnLauncherAndOtherApps" classname="com.dacaller.app.CallIslandExternalIntegrationTest" time="26.986" />
+  <testcase name="testAllStylesLanguagesThemesAndCallStatesAtLargeFont" classname="com.dacaller.app.CallIslandSnapshotTest" time="38.551">
+    <failure>java.lang.AssertionError: junit.framework.AssertionFailedError: Expanded island must leave a usable real app list
+at com.dacaller.app.CallIslandSnapshotTest.ui(CallIslandSnapshotTest.java:98)
+at com.dacaller.app.CallIslandSnapshotTest.actualMainGeometry(CallIslandSnapshotTest.java:372)
+at com.dacaller.app.CallIslandSnapshotTest.actualMainScreens(CallIslandSnapshotTest.java:353)
+at com.dacaller.app.CallIslandSnapshotTest.matrixScenario(CallIslandSnapshotTest.java:216)
+at com.dacaller.app.CallIslandSnapshotTest.$r8$lambda$eZU0W-Kv54AMyM6uzd01f1Q_h5Q(Unknown Source:0)
+at com.dacaller.app.CallIslandSnapshotTest$$ExternalSyntheticLambda22.run(D8$$SyntheticClass:0)
+at com.dacaller.app.CallIslandSnapshotTest.checked(CallIslandSnapshotTest.java:573)
+at com.dacaller.app.CallIslandSnapshotTest.testAllStylesLanguagesThemesAndCallStatesAtLargeFont(CallIslandSnapshotTest.java:197)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+Caused by: junit.framework.AssertionFailedError: Expanded island must leave a usable real app list
+at com.dacaller.app.CallIslandSnapshotTest.lambda$actualMainGeometry$21(CallIslandSnapshotTest.java:379)
+at com.dacaller.app.CallIslandSnapshotTest.$r8$lambda$jfSPD6zeDBJ6W_y7A-eieIQc74E(Unknown Source:0)
+at com.dacaller.app.CallIslandSnapshotTest$$ExternalSyntheticLambda41.run(D8$$SyntheticClass:0)
+at com.dacaller.app.CallIslandSnapshotTest.lambda$ui$0(CallIslandSnapshotTest.java:97)
+at com.dacaller.app.CallIslandSnapshotTest$$ExternalSyntheticLambda43.run(D8$$SyntheticClass:0)
+at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2379)
+at android.os.Handler.handleCallback(Handler.java:942)
+at android.os.Handler.dispatchMessage(Handler.java:99)
+at android.os.Looper.loopOnce(Looper.java:201)
+at android.os.Looper.loop(Looper.java:288)
+at android.app.ActivityThread.main(ActivityThread.java:7924)
+at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:936)
+</failure>
+  </testcase>
+  <testcase name="testCommandsConfirmationPauseReturnRecreationAndContentRestore" classname="com.dacaller.app.CallIslandSnapshotTest" time="11.595" />
+  <testcase name="testCustomizationPreviewBothThemesAndBottomControlsAtLargeFont" classname="com.dacaller.app.CallIslandSnapshotTest" time="7.091" />
+  <testcase name="testAudioSelectionAndMuteRemainSynchronizedInEveryDesign" classname="com.dacaller.app.CallLayoutSnapshotTest" time="15.102" />
+  <testcase name="testFiveDesignsBothThemesFourPanelsAndLargeFonts" classname="com.dacaller.app.CallLayoutSnapshotTest" time="73.349" />
+  <testcase name="testLongCallerNamesInBothLanguagesAtLargeFont" classname="com.dacaller.app.CallLayoutSnapshotTest" time="18.938" />
+  <testcase name="testNoBluetoothRouteWithoutConnectedDeviceAndEnglishLayout" classname="com.dacaller.app.CallLayoutSnapshotTest" time="1.058" />
+  <testcase name="testSequentialPanelsCloseAndNeverOverlap" classname="com.dacaller.app.CallLayoutSnapshotTest" time="24.183" />
+  <testcase name="testBundledBusinessDirectoryNativeIsolationSearchAndProvenance" classname="com.dacaller.app.CallbackBusinessIntegrationTest" time="13.354" />
+  <testcase name="testBundledBusinessManualNativeCallUsesExactSourceIdentity" classname="com.dacaller.app.CallbackBusinessIntegrationTest" time="9.033" />
+  <testcase name="testCallbackReminderFromActualTelecomAndPrivateOsAlarm" classname="com.dacaller.app.CallbackBusinessIntegrationTest" time="37.367" />
+  <testcase name="testUnknownActualRecentCallerOpensNewEditorWithoutDialOrWrite" classname="com.dacaller.app.CallbackBusinessIntegrationTest" time="7.799" />
+  <testcase name="testContactReturnPreservesStableIdentityOffsetAndQueryAfterReorder" classname="com.dacaller.app.ContactScrollDispatchTest" time="1.293" />
+  <testcase name="testNewTouchCancelsQueuedReturnRestore" classname="com.dacaller.app.ContactScrollDispatchTest" time="0.684" />
+  <testcase name="testRepeatedRebuildBeforeSelectionLayoutDoesNotLoseAnchor" classname="com.dacaller.app.ContactScrollDispatchTest" time="0.909" />
+  <testcase name="testSearchFilterSurvivesDetailReturnWithoutReset" classname="com.dacaller.app.ContactScrollDispatchTest" time="0.784" />
+  <testcase name="testChangelogNativeSettingsHistoryAndBack" classname="com.dacaller.app.FollowupIntegrationTest" time="23.017" />
+  <testcase name="testMissedCallsFromActualTelecomAndNativeNotificationActions" classname="com.dacaller.app.FollowupIntegrationTest" time="15.881" />
+  <testcase name="testConfiguredHorizontalSwipeCallsCorrectContactOnce" classname="com.dacaller.app.ListDialDispatchTest" time="0.969" />
+  <testcase name="testContactRowAndStarHaveIndependentActionsWithoutCalling" classname="com.dacaller.app.ListDialDispatchTest" time="0.709" />
+  <testcase name="testContactsTopMiddleEndDialExactDisplayedNumberWithoutJump" classname="com.dacaller.app.ListDialDispatchTest" time="0.935" />
+  <testcase name="testRecentDialExactNumberAndIndependentDetailsRegion" classname="com.dacaller.app.ListDialDispatchTest" time="1.066" />
+  <testcase name="testRecentInlineOwnershipSurvivesRecreationAndBackWithoutMovingAnchor" classname="com.dacaller.app.ListDialDispatchTest" time="1.262" />
+  <testcase name="testVerticalFlickStartingAtCallIconNeverCalls" classname="com.dacaller.app.ListDialDispatchTest" time="0.552" />
+  <testcase name="testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency" classname="com.dacaller.app.ModernFeaturesIntegrationTest" time="22.319">
+    <failure>junit.framework.AssertionFailedError: Native drag did not save normalized position
+at com.dacaller.app.ModernFeaturesIntegrationTest.await(ModernFeaturesIntegrationTest.java:123)
+at com.dacaller.app.ModernFeaturesIntegrationTest.testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency(ModernFeaturesIntegrationTest.java:352)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+</failure>
+  </testcase>
+  <testcase name="testModernInlineNavigationNineIconsAndWineSwitchPointer" classname="com.dacaller.app.ModernFeaturesIntegrationTest" time="7.317">
+    <failure>java.lang.AssertionError: junit.framework.AssertionFailedError: Target must be shown
+at com.dacaller.app.ModernFeaturesIntegrationTest.ui(ModernFeaturesIntegrationTest.java:127)
+at com.dacaller.app.ModernFeaturesIntegrationTest.bounds(ModernFeaturesIntegrationTest.java:170)
+at com.dacaller.app.ModernFeaturesIntegrationTest.testModernInlineNavigationNineIconsAndWineSwitchPointer(ModernFeaturesIntegrationTest.java:216)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+Caused by: junit.framework.AssertionFailedError: Target must be shown
+at com.dacaller.app.ModernFeaturesIntegrationTest.lambda$bounds$1(ModernFeaturesIntegrationTest.java:174)
+at com.dacaller.app.ModernFeaturesIntegrationTest$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+at com.dacaller.app.ModernFeaturesIntegrationTest.lambda$ui$0(ModernFeaturesIntegrationTest.java:126)
+at com.dacaller.app.ModernFeaturesIntegrationTest$$ExternalSyntheticLambda21.run(D8$$SyntheticClass:0)
+at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2379)
+at android.os.Handler.handleCallback(Handler.java:942)
+at android.os.Handler.dispatchMessage(Handler.java:99)
+at android.os.Looper.loopOnce(Looper.java:201)
+at android.os.Looper.loop(Looper.java:288)
+at android.app.ActivityThread.main(ActivityThread.java:7924)
+at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:936)
+</failure>
+  </testcase>
+  <testcase name="testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns" classname="com.dacaller.app.ModernFeaturesIntegrationTest" time="2.895">
+    <failure>junit.framework.AssertionFailedError: expected:&lt;1&gt; but was:&lt;0&gt;
+at com.dacaller.app.ModernFeaturesIntegrationTest.exportBackup(ModernFeaturesIntegrationTest.java:312)
+at com.dacaller.app.ModernFeaturesIntegrationTest.testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns(ModernFeaturesIntegrationTest.java:257)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+</failure>
+  </testcase>
+  <testcase name="testAllAvatarShapesClipActualContactPhotoAndWidgetInitials" classname="com.dacaller.app.PersonalizationSnapshotTest" time="6.432" />
+  <testcase name="testArchiveResolvesRealProviderNamePhotoAndSearchesNames" classname="com.dacaller.app.PersonalizationSnapshotTest" time="8.155">
+    <failure>junit.framework.AssertionFailedError: Archive must own the focused window before capturing native bars
+at com.dacaller.app.PersonalizationSnapshotTest.await(PersonalizationSnapshotTest.java:548)
+at com.dacaller.app.PersonalizationSnapshotTest.archiveScreenshot(PersonalizationSnapshotTest.java:283)
+at com.dacaller.app.PersonalizationSnapshotTest.testArchiveResolvesRealProviderNamePhotoAndSearchesNames(PersonalizationSnapshotTest.java:488)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+</failure>
+  </testcase>
+  <testcase name="testContactsAndRecentsCompactPresentationInBothLanguagesThemesAndFontSizes" classname="com.dacaller.app.PersonalizationSnapshotTest" time="2.896">
+    <failure>java.lang.IllegalArgumentException: Targeted input event injection from pid 6210 was not directed at a window owned by uid 10174.
+at android.os.Parcel.createExceptionOrNull(Parcel.java:3015)
+at android.os.Parcel.createException(Parcel.java:2995)
+at android.os.Parcel.readException(Parcel.java:2978)
+at android.os.Parcel.readException(Parcel.java:2920)
+at android.hardware.input.IInputManager$Stub$Proxy.injectInputEventToTarget(IInputManager.java:1349)
+at android.hardware.input.InputManager.injectInputEvent(InputManager.java:1163)
+at android.app.Instrumentation.syncInputTransactionsAndInjectEventIntoSelf(Instrumentation.java:1194)
+at android.app.Instrumentation.sendPointerSync(Instrumentation.java:1179)
+at com.dacaller.app.PersonalizationSnapshotTest.tap(PersonalizationSnapshotTest.java:179)
+at com.dacaller.app.PersonalizationSnapshotTest.tap(PersonalizationSnapshotTest.java:175)
+at com.dacaller.app.PersonalizationSnapshotTest.testContactsAndRecentsCompactPresentationInBothLanguagesThemesAndFontSizes(PersonalizationSnapshotTest.java:342)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+Caused by: android.os.RemoteException: Remote stack trace:
+at com.android.server.input.InputManagerService.injectInputEventToTarget(InputManagerService.java:922)
+at android.hardware.input.IInputManager$Stub.onTransact(IInputManager.java:638)
+at android.os.Binder.execTransactInternal(Binder.java:1285)
+at android.os.Binder.execTransact(Binder.java:1244)
+
+</failure>
+  </testcase>
+  <testcase name="testDocumentBackupRestoreRequiresConfirmationAndCancelKeepsPreferences" classname="com.dacaller.app.PersonalizationSnapshotTest" time="1.969">
+    <failure>java.lang.IllegalArgumentException: Targeted input event injection from pid 6210 was not directed at a window owned by uid 10174.
+at android.os.Parcel.createExceptionOrNull(Parcel.java:3015)
+at android.os.Parcel.createException(Parcel.java:2995)
+at android.os.Parcel.readException(Parcel.java:2978)
+at android.os.Parcel.readException(Parcel.java:2920)
+at android.hardware.input.IInputManager$Stub$Proxy.injectInputEventToTarget(IInputManager.java:1349)
+at android.hardware.input.InputManager.injectInputEvent(InputManager.java:1163)
+at android.app.Instrumentation.syncInputTransactionsAndInjectEventIntoSelf(Instrumentation.java:1194)
+at android.app.Instrumentation.sendPointerSync(Instrumentation.java:1179)
+at com.dacaller.app.PersonalizationSnapshotTest.tap(PersonalizationSnapshotTest.java:179)
+at com.dacaller.app.PersonalizationSnapshotTest.tap(PersonalizationSnapshotTest.java:175)
+at com.dacaller.app.PersonalizationSnapshotTest.backup(PersonalizationSnapshotTest.java:539)
+at com.dacaller.app.PersonalizationSnapshotTest.testDocumentBackupRestoreRequiresConfirmationAndCancelKeepsPreferences(PersonalizationSnapshotTest.java:504)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+</failure>
+  </testcase>
+  <testcase name="testEveryRealLauncherAliasRemainsUniqueAndDialIntentStillResolves" classname="com.dacaller.app.PersonalizationSnapshotTest" time="2.041" />
+  <testcase name="testHorizontalFavoritesReachAllContactsWithoutDialingAndRememberSharedCollapse" classname="com.dacaller.app.PersonalizationSnapshotTest" time="8.151">
+    <failure>java.lang.IllegalArgumentException: Targeted input event injection from pid 6210 was not directed at a window owned by uid 10174.
+at android.os.Parcel.createExceptionOrNull(Parcel.java:3015)
+at android.os.Parcel.createException(Parcel.java:2995)
+at android.os.Parcel.readException(Parcel.java:2978)
+at android.os.Parcel.readException(Parcel.java:2920)
+at android.hardware.input.IInputManager$Stub$Proxy.injectInputEventToTarget(IInputManager.java:1349)
+at android.hardware.input.InputManager.injectInputEvent(InputManager.java:1163)
+at android.app.Instrumentation.syncInputTransactionsAndInjectEventIntoSelf(Instrumentation.java:1194)
+at android.app.Instrumentation.sendPointerSync(Instrumentation.java:1179)
+at com.dacaller.app.PersonalizationSnapshotTest.tap(PersonalizationSnapshotTest.java:179)
+at com.dacaller.app.PersonalizationSnapshotTest.tap(PersonalizationSnapshotTest.java:175)
+at com.dacaller.app.PersonalizationSnapshotTest.testHorizontalFavoritesReachAllContactsWithoutDialingAndRememberSharedCollapse(PersonalizationSnapshotTest.java:373)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+Caused by: android.os.RemoteException: Remote stack trace:
+at com.android.server.input.InputManagerService.injectInputEventToTarget(InputManagerService.java:922)
+at android.hardware.input.IInputManager$Stub.onTransact(IInputManager.java:638)
+at android.os.Binder.execTransactInternal(Binder.java:1285)
+at android.os.Binder.execTransact(Binder.java:1244)
+
+</failure>
+  </testcase>
+  <testcase name="testSettingsIconAndAvatarChoosersAtLargeFontInBothThemes" classname="com.dacaller.app.PersonalizationSnapshotTest" time="4.792">
+    <failure>java.lang.IllegalArgumentException: Targeted input event injection from pid 6210 was not directed at a window owned by uid 10174.
+at android.os.Parcel.createExceptionOrNull(Parcel.java:3015)
+at android.os.Parcel.createException(Parcel.java:2995)
+at android.os.Parcel.readException(Parcel.java:2978)
+at android.os.Parcel.readException(Parcel.java:2920)
+at android.hardware.input.IInputManager$Stub$Proxy.injectInputEventToTarget(IInputManager.java:1349)
+at android.hardware.input.InputManager.injectInputEvent(InputManager.java:1163)
+at android.app.Instrumentation.syncInputTransactionsAndInjectEventIntoSelf(Instrumentation.java:1194)
+at android.app.Instrumentation.sendPointerSync(Instrumentation.java:1179)
+at com.dacaller.app.PersonalizationSnapshotTest.tap(PersonalizationSnapshotTest.java:179)
+at com.dacaller.app.PersonalizationSnapshotTest.tap(PersonalizationSnapshotTest.java:175)
+at com.dacaller.app.PersonalizationSnapshotTest.testSettingsIconAndAvatarChoosersAtLargeFontInBothThemes(PersonalizationSnapshotTest.java:388)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+Caused by: android.os.RemoteException: Remote stack trace:
+at com.android.server.input.InputManagerService.injectInputEventToTarget(InputManagerService.java:922)
+at android.hardware.input.IInputManager$Stub.onTransact(IInputManager.java:638)
+at android.os.Binder.execTransactInternal(Binder.java:1285)
+at android.os.Binder.execTransact(Binder.java:1244)
+
+</failure>
+  </testcase>
+  <testcase name="testLastSettingsCategoryStaysInteractiveAndCallsCategoryHasNoPhoneSymbol" classname="com.dacaller.app.SettingsInteractionTest" time="14.686">
+    <failure>junit.framework.AssertionFailedError: Settings viewport must be stably attached, shown and focused before interaction: current_content=true, viewport_attached=true, viewport_shown=true, activity_focus=false, decor_focus=false, decor_attached=true, decor_shown=true, decor_visibility=0, finishing=false, destroyed=false
+at com.dacaller.app.SettingsInteractionTest.awaitCurrentViewport(SettingsInteractionTest.java:121)
+at com.dacaller.app.SettingsInteractionTest.testLastSettingsCategoryStaysInteractiveAndCallsCategoryHasNoPhoneSymbol(SettingsInteractionTest.java:55)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+</failure>
+  </testcase>
+  <testcase name="testNarrowFavoritesFitAtLargeSystemFont" classname="com.dacaller.app.WidgetSnapshotTest" time="5.111" />
+  <testcase name="testRealHostAdditionResizeThemeEmptyAndRemoval" classname="com.dacaller.app.WidgetSnapshotTest" time="13.421" />
+</testsuite>

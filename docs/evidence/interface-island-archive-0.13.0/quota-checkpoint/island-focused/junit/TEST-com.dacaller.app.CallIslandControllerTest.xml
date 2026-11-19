@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.CallIslandControllerTest" tests="16" skipped="0" failures="1" errors="0" timestamp="2026-11-12T22:20:13" hostname="3ebae333e153" time="20.448">
+  <properties/>
+  <testcase name="appearingAndExpandingReserveSpaceWithoutLosingQueryFocusOrListAnchor" classname="com.dacaller.app.CallIslandControllerTest" time="9.738"/>
+  <testcase name="seeThroughStyleCompositesTheActualHostPageAndKeepsItsControlsOpaque" classname="com.dacaller.app.CallIslandControllerTest" time="0.7"/>
+  <testcase name="topAreaSurvivesHostPaletteAndFocusRepaintAndRestoresTheLatestHostColor" classname="com.dacaller.app.CallIslandControllerTest" time="0.332"/>
+  <testcase name="disablingAndReenablingPreferenceNeverChangesTheLiveCall" classname="com.dacaller.app.CallIslandControllerTest" time="0.662"/>
+  <testcase name="realPointerDragPersistsAClampedPositionAndRestoresUnderneathWithoutCallCommands" classname="com.dacaller.app.CallIslandControllerTest" time="0.558"/>
+  <testcase name="repeatedStartAndStopDoNotLeakServiceListeners" classname="com.dacaller.app.CallIslandControllerTest" time="0.393"/>
+  <testcase name="pageReplacementReattachesIslandWithoutResettingTheNewPage" classname="com.dacaller.app.CallIslandControllerTest" time="0.571"/>
+  <testcase name="endCallRequiresConfirmationAndCancelKeepsItRunning" classname="com.dacaller.app.CallIslandControllerTest" time="1.044"/>
+  <testcase name="cancelledAndStaleDragsDoNotSaveOrControlAReplacementCall" classname="com.dacaller.app.CallIslandControllerTest" time="0.561"/>
+  <testcase name="resizedViewportImmediatelyReclampsWidthAndScrollsOverflowOnlyWhileNeeded" classname="com.dacaller.app.CallIslandControllerTest" time="0.517">
+    <failure message="java.lang.AssertionError" type="java.lang.AssertionError">java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:87)
+	at org.junit.Assert.assertTrue(Assert.java:42)
+	at org.junit.Assert.assertTrue(Assert.java:53)
+	at com.dacaller.app.CallIslandControllerTest.resizedViewportImmediatelyReclampsWidthAndScrollsOverflowOnlyWhileNeeded(CallIslandControllerTest.java:252)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.robolectric.RobolectricTestRunner$HelperTestRunner$1.evaluate(RobolectricTestRunner.java:502)
+	at org.robolectric.internal.SandboxTestRunner$2.lambda$evaluate$2(SandboxTestRunner.java:285)
+	at org.robolectric.internal.bytecode.Sandbox.lambda$runOnMainThread$0(Sandbox.java:104)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+</failure>
+  </testcase>
+  <testcase name="topAreaWorksOnTheMinimumApiWithoutCallingNewInsetsApis" classname="com.dacaller.app.CallIslandControllerTest" time="3.558"/>
+  <testcase name="hideIsScopedToThisCallAndRestorePreferenceIsReachableWithoutChangingCall" classname="com.dacaller.app.CallIslandControllerTest" time="0.457"/>
+  <testcase name="topAreaUsesOnlyNormalDecorAndRestoresStatusBarColorAndDefaultParent" classname="com.dacaller.app.CallIslandControllerTest" time="0.243"/>
+  <testcase name="delayedConfirmationForOldCallCannotEndItsReplacement" classname="com.dacaller.app.CallIslandControllerTest" time="0.518"/>
+  <testcase name="endedCallRemovesIslandAndRestoresOriginalAppMargins" classname="com.dacaller.app.CallIslandControllerTest" time="0.197"/>
+  <testcase name="stopAndRestartPreserveCallAndRestoreAppLayout" classname="com.dacaller.app.CallIslandControllerTest" time="0.397"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

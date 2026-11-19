@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.MissedCallNotificationsTest" tests="21" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:14:47" hostname="3ebae333e153" time="0.512">
+  <properties/>
+  <testcase name="underreportedPlatformCounterCannotHideActualUnacknowledgedMissedRows" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.082"/>
+  <testcase name="canonicalSingleMissedShowsLocalContactWithoutChangingCallData" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.03"/>
+  <testcase name="actionsAreImmutableAndOpeningUsesActivityWithoutAnyDialRequest" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.016"/>
+  <testcase name="openingAcknowledgesThroughTheSameValidatedNonceWithoutReplayingOtherIntentExtras" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.021"/>
+  <testcase name="providerFailureDoesNotDropTheCanonicalNotificationOrAlterData" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.017"/>
+  <testcase name="publicLockscreenVersionDoesNotDiscloseCallerNameOrNumber" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.025"/>
+  <testcase name="wrongActionNegativeCountAndMissingCountAreIgnored" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.017"/>
+  <testcase name="answeredRejectedAndOutgoingRowsAreNeverPresentedOrAcknowledgedAsMissed" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.015"/>
+  <testcase name="deniedWritePermissionAcknowledgesLocallyWithoutModifyingOrRepeatingOldRows" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.028"/>
+  <testcase name="zeroFromTelecomCancelsWithoutSilentlyMarkingAnythingRead" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.03"/>
+  <testcase name="deniedContactsPermissionFallsBackToNumberWithoutContactProviderAccess" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.018"/>
+  <testcase name="explicitClearMarksOnlyItsCapturedMissedRowsReadAndNeverDeletes" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.018"/>
+  <testcase name="canonicalCountIsAnAbsoluteCountAndDuplicatesDoNotAccumulateOrAlertTwice" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.029"/>
+  <testcase name="realBroadcastReceiverRunsAllProviderLookupsOffTheMainLooper" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.023"/>
+  <testcase name="deniedNotificationPermissionPreservesUnreadDataAndCanBeGrantedLater" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.016"/>
+  <testcase name="multipleMissedCallsUseOneNativeInboxAndRetainAllIdentities" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.018"/>
+  <testcase name="oldNotificationCannotAcknowledgeANewerGeneration" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.037"/>
+  <testcase name="newlyLoggedCallIsNotChangedByAnEarlierStillValidNotification" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.021"/>
+  <testcase name="restrictedNumbersNeverLeakStoredProviderNumberOrResolveAContact" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.017"/>
+  <testcase name="nonDefaultDialerDoesNotPostOrTouchAnotherCallsNotification" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.012"/>
+  <testcase name="deniedCallLogPermissionUsesTrustedCanonicalFallbackWithoutQueryingLogs" classname="com.dacaller.app.MissedCallNotificationsTest" time="0.018"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

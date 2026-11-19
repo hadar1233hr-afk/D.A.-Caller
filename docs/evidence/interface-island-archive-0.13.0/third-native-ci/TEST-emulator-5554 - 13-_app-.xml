@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.dacaller.app.CallIntegrationSnapshotTest" tests="40" failures="4" errors="0" skipped="0" time="543.734" timestamp="2026-11-18T20:31:26" hostname="localhost">
+  <properties>
+    <property name="device" value="emulator-5554 - 13" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="testNativeNotificationStatesActionsAndDirectReturn" classname="com.dacaller.app.CallIntegrationSnapshotTest" time="57.961" />
+  <testcase name="testSystemBackReturnsToLastContactQueryAnchorAndSettingsScroll" classname="com.dacaller.app.CallIntegrationSnapshotTest" time="15.002" />
+  <testcase name="testActualTelecomExternalIslandOnLauncherAndOtherApps" classname="com.dacaller.app.CallIslandExternalIntegrationTest" time="20.752" />
+  <testcase name="testAllStylesLanguagesThemesAndCallStatesAtLargeFont" classname="com.dacaller.app.CallIslandSnapshotTest" time="48.358" />
+  <testcase name="testCommandsConfirmationPauseReturnRecreationAndContentRestore" classname="com.dacaller.app.CallIslandSnapshotTest" time="10.881" />
+  <testcase name="testCustomizationPreviewBothThemesAndBottomControlsAtLargeFont" classname="com.dacaller.app.CallIslandSnapshotTest" time="7.435" />
+  <testcase name="testAudioSelectionAndMuteRemainSynchronizedInEveryDesign" classname="com.dacaller.app.CallLayoutSnapshotTest" time="14.785" />
+  <testcase name="testFiveDesignsBothThemesFourPanelsAndLargeFonts" classname="com.dacaller.app.CallLayoutSnapshotTest" time="72.305" />
+  <testcase name="testLongCallerNamesInBothLanguagesAtLargeFont" classname="com.dacaller.app.CallLayoutSnapshotTest" time="18.331" />
+  <testcase name="testNoBluetoothRouteWithoutConnectedDeviceAndEnglishLayout" classname="com.dacaller.app.CallLayoutSnapshotTest" time="0.932" />
+  <testcase name="testSequentialPanelsCloseAndNeverOverlap" classname="com.dacaller.app.CallLayoutSnapshotTest" time="24.265" />
+  <testcase name="testBundledBusinessDirectoryNativeIsolationSearchAndProvenance" classname="com.dacaller.app.CallbackBusinessIntegrationTest" time="13.058" />
+  <testcase name="testBundledBusinessManualNativeCallUsesExactSourceIdentity" classname="com.dacaller.app.CallbackBusinessIntegrationTest" time="8.669" />
+  <testcase name="testCallbackReminderFromActualTelecomAndPrivateOsAlarm" classname="com.dacaller.app.CallbackBusinessIntegrationTest" time="36.237" />
+  <testcase name="testUnknownActualRecentCallerOpensNewEditorWithoutDialOrWrite" classname="com.dacaller.app.CallbackBusinessIntegrationTest" time="8.693" />
+  <testcase name="testContactReturnPreservesStableIdentityOffsetAndQueryAfterReorder" classname="com.dacaller.app.ContactScrollDispatchTest" time="1.093" />
+  <testcase name="testNewTouchCancelsQueuedReturnRestore" classname="com.dacaller.app.ContactScrollDispatchTest" time="0.509" />
+  <testcase name="testRepeatedRebuildBeforeSelectionLayoutDoesNotLoseAnchor" classname="com.dacaller.app.ContactScrollDispatchTest" time="0.833" />
+  <testcase name="testSearchFilterSurvivesDetailReturnWithoutReset" classname="com.dacaller.app.ContactScrollDispatchTest" time="0.631" />
+  <testcase name="testChangelogNativeSettingsHistoryAndBack" classname="com.dacaller.app.FollowupIntegrationTest" time="20.667" />
+  <testcase name="testMissedCallsFromActualTelecomAndNativeNotificationActions" classname="com.dacaller.app.FollowupIntegrationTest" time="15.865" />
+  <testcase name="testConfiguredHorizontalSwipeCallsCorrectContactOnce" classname="com.dacaller.app.ListDialDispatchTest" time="0.777" />
+  <testcase name="testContactRowAndStarHaveIndependentActionsWithoutCalling" classname="com.dacaller.app.ListDialDispatchTest" time="0.659" />
+  <testcase name="testContactsTopMiddleEndDialExactDisplayedNumberWithoutJump" classname="com.dacaller.app.ListDialDispatchTest" time="0.787" />
+  <testcase name="testRecentDialExactNumberAndIndependentDetailsRegion" classname="com.dacaller.app.ListDialDispatchTest" time="1.005" />
+  <testcase name="testRecentInlineOwnershipSurvivesRecreationAndBackWithoutMovingAnchor" classname="com.dacaller.app.ListDialDispatchTest" time="1.09" />
+  <testcase name="testVerticalFlickStartingAtCallIconNeverCalls" classname="com.dacaller.app.ListDialDispatchTest" time="0.554" />
+  <testcase name="testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency" classname="com.dacaller.app.ModernFeaturesIntegrationTest" time="17.994">
+    <failure>junit.framework.AssertionFailedError: Target must be fully visible, stably laid out and focused in its actual native window: island-root
+at com.dacaller.app.ModernFeaturesIntegrationTest.await(ModernFeaturesIntegrationTest.java:135)
+at com.dacaller.app.ModernFeaturesIntegrationTest.bounds(ModernFeaturesIntegrationTest.java:227)
+at com.dacaller.app.ModernFeaturesIntegrationTest.testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency(ModernFeaturesIntegrationTest.java:433)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at com.dacaller.app.ModernFeaturesIntegrationTest.runTest(ModernFeaturesIntegrationTest.java:88)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+</failure>
+  </testcase>
+  <testcase name="testModernInlineNavigationNineIconsAndWineSwitchPointer" classname="com.dacaller.app.ModernFeaturesIntegrationTest" time="19.182">
+    <failure>junit.framework.AssertionFailedError: Target must be fully visible, stably laid out and focused in its actual native window: launcher-icon-signal
+at com.dacaller.app.ModernFeaturesIntegrationTest.await(ModernFeaturesIntegrationTest.java:135)
+at com.dacaller.app.ModernFeaturesIntegrationTest.bounds(ModernFeaturesIntegrationTest.java:227)
+at com.dacaller.app.ModernFeaturesIntegrationTest.testModernInlineNavigationNineIconsAndWineSwitchPointer(ModernFeaturesIntegrationTest.java:306)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at com.dacaller.app.ModernFeaturesIntegrationTest.runTest(ModernFeaturesIntegrationTest.java:88)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+</failure>
+  </testcase>
+  <testcase name="testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns" classname="com.dacaller.app.ModernFeaturesIntegrationTest" time="18.735">
+    <failure>junit.framework.AssertionFailedError: Target must be fully visible, stably laid out and focused in its actual native window: null
+at com.dacaller.app.ModernFeaturesIntegrationTest.await(ModernFeaturesIntegrationTest.java:135)
+at com.dacaller.app.ModernFeaturesIntegrationTest.bounds(ModernFeaturesIntegrationTest.java:227)
+at com.dacaller.app.ModernFeaturesIntegrationTest.tap(ModernFeaturesIntegrationTest.java:257)
+at com.dacaller.app.ModernFeaturesIntegrationTest.importBackup(ModernFeaturesIntegrationTest.java:405)
+at com.dacaller.app.ModernFeaturesIntegrationTest.testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns(ModernFeaturesIntegrationTest.java:348)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at com.dacaller.app.ModernFeaturesIntegrationTest.runTest(ModernFeaturesIntegrationTest.java:88)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+</failure>
+  </testcase>
+  <testcase name="testAllAvatarShapesClipActualContactPhotoAndWidgetInitials" classname="com.dacaller.app.PersonalizationSnapshotTest" time="6.477" />
+  <testcase name="testArchiveResolvesRealProviderNamePhotoAndSearchesNames" classname="com.dacaller.app.PersonalizationSnapshotTest" time="2.773" />
+  <testcase name="testContactsAndRecentsCompactPresentationInBothLanguagesThemesAndFontSizes" classname="com.dacaller.app.PersonalizationSnapshotTest" time="32.173" />
+  <testcase name="testDocumentBackupRestoreRequiresConfirmationAndCancelKeepsPreferences" classname="com.dacaller.app.PersonalizationSnapshotTest" time="7.565" />
+  <testcase name="testEveryRealLauncherAliasRemainsUniqueAndDialIntentStillResolves" classname="com.dacaller.app.PersonalizationSnapshotTest" time="1.784" />
+  <testcase name="testHorizontalFavoritesReachAllContactsWithoutDialingAndRememberSharedCollapse" classname="com.dacaller.app.PersonalizationSnapshotTest" time="7.816" />
+  <testcase name="testSettingsIconAndAvatarChoosersAtLargeFontInBothThemes" classname="com.dacaller.app.PersonalizationSnapshotTest" time="3.726">
+    <failure>java.lang.AssertionError: junit.framework.AssertionFailedError: Vertically clipped launcher-icon-wave 58/114
+at com.dacaller.app.PersonalizationSnapshotTest.ui(PersonalizationSnapshotTest.java:118)
+at com.dacaller.app.PersonalizationSnapshotTest.revealChoiceRow(PersonalizationSnapshotTest.java:683)
+at com.dacaller.app.PersonalizationSnapshotTest.testSettingsIconAndAvatarChoosersAtLargeFontInBothThemes(PersonalizationSnapshotTest.java:481)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+Caused by: junit.framework.AssertionFailedError: Vertically clipped launcher-icon-wave 58/114
+at com.dacaller.app.PersonalizationSnapshotTest.fullyVisible(PersonalizationSnapshotTest.java:180)
+at com.dacaller.app.PersonalizationSnapshotTest.lambda$revealChoiceRow$33(PersonalizationSnapshotTest.java:684)
+at com.dacaller.app.PersonalizationSnapshotTest.$r8$lambda$6vi-ChTXZI1Alkby0YY7iML5Ro0(Unknown Source:0)
+at com.dacaller.app.PersonalizationSnapshotTest$$ExternalSyntheticLambda25.run(D8$$SyntheticClass:0)
+at com.dacaller.app.PersonalizationSnapshotTest.lambda$ui$0(PersonalizationSnapshotTest.java:117)
+at com.dacaller.app.PersonalizationSnapshotTest$$ExternalSyntheticLambda18.run(D8$$SyntheticClass:0)
+at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2379)
+at android.os.Handler.handleCallback(Handler.java:942)
+at android.os.Handler.dispatchMessage(Handler.java:99)
+at android.os.Looper.loopOnce(Looper.java:201)
+at android.os.Looper.loop(Looper.java:288)
+at android.app.ActivityThread.main(ActivityThread.java:7924)
+at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:936)
+</failure>
+  </testcase>
+  <testcase name="testLastSettingsCategoryStaysInteractiveAndCallsCategoryHasNoPhoneSymbol" classname="com.dacaller.app.SettingsInteractionTest" time="7.659" />
+  <testcase name="testNarrowFavoritesFitAtLargeSystemFont" classname="com.dacaller.app.WidgetSnapshotTest" time="3.217" />
+  <testcase name="testRealHostAdditionResizeThemeEmptyAndRemoval" classname="com.dacaller.app.WidgetSnapshotTest" time="11.421" />
+</testsuite>

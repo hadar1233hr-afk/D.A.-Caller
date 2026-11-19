@@ -1,0 +1,115 @@
+{
+  "status": "PASS_OUTSIDE_APP_CANDIDATE_SOURCE_PROJECTION_AND_HOST_SQL_ONLY",
+  "observed_at_utc": "2026-11-11T10:16:33.800994+00:00",
+  "elapsed_seconds": 1.467,
+  "candidate_database_sha256": "4eee8e84a3ccab3f291cb58be1e384a0dc16351612511cfe884e14519af3fd0e",
+  "candidate_database_bytes": 6631424,
+  "candidate_manifest_sha256": "be9ce29231392c50920fdaaf53a9375a24a810a9b5bf65a3d6bf200f1179ee88",
+  "candidate_envelope_sha256": "764add4727a2598ec28277bac0dab10fb4b06039b225111098334d497d8d4439",
+  "candidate_ledger_sha256": "18303b1c9e46f49adddcb6ba3323f64e86ce0c8ec5f691f38c61d34ce72421de",
+  "reviewed_builder_sha256": "5b37e14930bf738d8a4073b0b7381e99a482c77fd56ca55113151fce1bce4814",
+  "audit_script_sha256": "eec8e2ed919a8e7a7558e76ba3d264a9d5cf25870641f596edbea731fa349ca5",
+  "reference_production_normalizer_sha256": "d0ffd2392ed43a356f6e84ee6b4a7526cf84a50dc555e5536d85975b3d0c123f",
+  "expanded_input_database_sha256": "1a015426c33835a247198120bd05be026f4f0c25aa874d6c506cc7f07e1ad255",
+  "retained_expanded_audit_sha256": "eb60bc3f97c039cf09ff4397127a70b484ab0af15f95f4d9d61a63b5ea8d1425",
+  "retained_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "original_pbf_objects_reread": false,
+  "checks_passed": {
+    "byte_exact_reconstructed_source_cohorts": 5,
+    "exact_original_raw_blob_line_hash_family_ordinal": 2728,
+    "exact_source_identity_display_dial_country_scope_provenance_ledger": 2728,
+    "in_memory_candidate_nonadmission_check_rejection": 1,
+    "in_memory_rejected_dataset_version": 1,
+    "in_memory_rejected_extra_fts": 1,
+    "in_memory_rejected_missing_fts": 1,
+    "in_memory_rejected_same_count_mapped_identity": 1,
+    "in_memory_rejected_schema_version": 1,
+    "independent_candidate_disposition": 2728,
+    "independent_exact_fts4_docid_and_search_values": 2715,
+    "independent_exact_twelve_column_projection_and_stable_identity": 2715,
+    "unchanged_strict_production_rejection": 2728
+  },
+  "measured_counts": {
+    "raw_source_rows": 2728,
+    "candidate_rows": 2715,
+    "candidate_source_objects": 2655,
+    "candidate_distinct_normalized_phones": 2612,
+    "candidate_null_countries": 2699,
+    "raw_null_countries": 2712,
+    "app_records_added": 0,
+    "source_mutations": 0,
+    "source_rows_merged": 0,
+    "PROJECTED_FOR_REVIEW_NOT_ADMITTED": 2715,
+    "WITHHELD_PHONE_FORMAT_REVIEW": 10,
+    "WITHHELD_SOURCE_TEXT": 3
+  },
+  "original_strict_production_rejection_counts": {
+    "Country membership not explicitly sourced": 2716,
+    "Invalid app dial identity": 10,
+    "Invalid source text length/control character": 2
+  },
+  "actual_queries": {
+    "all_rows_offset_pagination": {
+      "pages": 55,
+      "rows": 2715,
+      "repeated_or_omitted": 0,
+      "page_size": 50,
+      "actual_sql_lookahead": 51
+    },
+    "shop_offset_pagination": {
+      "pages": 25,
+      "rows": 1217,
+      "repeated_or_omitted": 0,
+      "page_size": 50,
+      "actual_sql_lookahead": 51
+    },
+    "fitness_offset_pagination": {
+      "pages": 1,
+      "rows": 19,
+      "repeated_or_omitted": 0,
+      "page_size": 50,
+      "actual_sql_lookahead": 51
+    },
+    "national_prefix": {
+      "query": "046262092",
+      "returned": 1,
+      "has_more": false,
+      "known_source_found": true
+    },
+    "e164_prefix": {
+      "query": "+97246262092",
+      "returned": 1,
+      "has_more": false,
+      "known_source_found": true
+    },
+    "hebrew_name": {
+      "query": "\u05d0\u05d2",
+      "returned": 6,
+      "known_source_found": true
+    },
+    "hebrew_with_niqqud": {
+      "query": "\u05d0\u05b6\u05d2",
+      "same_matches_as_unpointed": true
+    },
+    "english_name": {
+      "query": "Vert",
+      "returned": 2,
+      "known_source_found": true
+    },
+    "literal_punctuation_only": "PASS"
+  },
+  "shared_phone_groups_retained": 77,
+  "readonly_hashes_unchanged": true,
+  "app_records_added": 0,
+  "production_admission": false,
+  "native_integration": "NOT_TESTED",
+  "publication_approval": false,
+  "limits": [
+    "Independent source projection never calls candidate producer/selection methods.",
+    "The earlier independent text/phone audit, numbering metadata and unchanged production normalizer are shared reference contracts.",
+    "All original raw lines/cohort bytes and retained source-spatial audit references were checked; original PBF objects were not reread.",
+    "Actual desktop SQLite/FTS4 queries mimic native implicit-MATCH and50+1 offset forms; this is not Android/emulator/UI/dial verification.",
+    "Null countries/scopes and separate shared-phone source objects remain unchanged; no source ownership/currentness/national coverage guarantee.",
+    "This candidate remains outside-app, not production-admitted and not an approved APK/release dataset."
+  ]
+}

@@ -1,0 +1,316 @@
+{
+  "status": "RESEARCH_COMPLETE_NO_NEW_RECORDS_ACCEPTED",
+  "created_at_utc": "2026-11-05T09:26:18.676097+00:00",
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "accepted_explicit_IL_rows_unchanged": 24,
+  "unique_phones_unchanged": 23,
+  "untagged_phone_source_objects": 4565,
+  "new_spatially_accepted_or_app_bundled_records": 0,
+  "country_geometry": {
+    "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+    "method": "C++ EntityFilter+IdFilter for actual country member ways and referenced nodes; no full Python callback rescan",
+    "total_boundary_way_ids_requested": 534,
+    "boundary_ways_found": 534,
+    "missing_way_ids": [],
+    "node_ids_requested": 26927,
+    "valid_nodes_found": 26927,
+    "missing_node_ids": [],
+    "countries": {
+      "IL": {
+        "relation_id": 1473946,
+        "ISO3166-1": "IL",
+        "boundary": "administrative",
+        "admin_level": "2",
+        "disputed": null,
+        "member_way_count": 212,
+        "duplicate_way_refs": 0,
+        "missing_way_ids": [],
+        "endpoint_degrees_other_than_two": {},
+        "missing_referenced_nodes": [],
+        "ring_assembly_error": null,
+        "closed_outer_ring_count": 1,
+        "all_member_ways_used": true,
+        "member_roles": {
+          "outer": 212
+        },
+        "bounds_lon_lat": [
+          34.2674994,
+          29.4533796,
+          35.8950234,
+          33.3356317
+        ],
+        "geos_parse_success": true,
+        "geos_is_valid": true,
+        "geos_validity_reason": "Valid Geometry"
+      },
+      "PS": {
+        "relation_id": 1703814,
+        "ISO3166-1": "PS",
+        "boundary": "disputed",
+        "admin_level": null,
+        "disputed": "yes",
+        "member_way_count": 352,
+        "duplicate_way_refs": 0,
+        "missing_way_ids": [],
+        "endpoint_degrees_other_than_two": {},
+        "missing_referenced_nodes": [],
+        "ring_assembly_error": null,
+        "closed_outer_ring_count": 168,
+        "all_member_ways_used": true,
+        "member_roles": {
+          "outer": 352
+        },
+        "bounds_lon_lat": [
+          34.2158979,
+          31.2201289,
+          35.5402484,
+          32.5490241
+        ],
+        "geos_parse_success": true,
+        "geos_is_valid": true,
+        "geos_validity_reason": "Valid Geometry"
+      }
+    },
+    "limits": "Research-only source geometry. Source ISO tags/boundaries are not a legal/official determination. No untagged phone record imported or shipped."
+  },
+  "conservative_exclusion_geometry": {
+    "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+    "method": "C++ EntityFilter+IdFilter for actual country member ways and referenced nodes; no full Python callback rescan",
+    "total_boundary_way_ids_requested": 551,
+    "boundary_ways_found": 551,
+    "missing_way_ids": [],
+    "node_ids_requested": 30993,
+    "valid_nodes_found": 30993,
+    "missing_node_ids": [],
+    "countries": {
+      "source_IL": {
+        "relation_id": 1473946,
+        "ISO3166-1": "IL",
+        "name_en": "Israel",
+        "source_type": "boundary",
+        "all_source_roles": {
+          "outer": 212
+        },
+        "inner_holes_filled_for_conservative_exclusion": false,
+        "boundary": "administrative",
+        "admin_level": "2",
+        "disputed": null,
+        "member_way_count": 212,
+        "duplicate_way_refs": 0,
+        "missing_way_ids": [],
+        "endpoint_degrees_other_than_two": {},
+        "missing_referenced_nodes": [],
+        "ring_assembly_error": null,
+        "closed_outer_ring_count": 1,
+        "all_member_ways_used": true,
+        "member_roles": {
+          "outer": 212
+        },
+        "bounds_lon_lat": [
+          34.2674994,
+          29.4533796,
+          35.8950234,
+          33.3356317
+        ],
+        "geos_parse_success": true,
+        "geos_is_valid": true,
+        "geos_validity_reason": "Valid Geometry"
+      },
+      "source_PS_partial": {
+        "relation_id": 1703814,
+        "ISO3166-1": "PS",
+        "name_en": "Palestinian Territories",
+        "source_type": "boundary",
+        "all_source_roles": {
+          "outer": 352
+        },
+        "inner_holes_filled_for_conservative_exclusion": false,
+        "boundary": "disputed",
+        "admin_level": null,
+        "disputed": "yes",
+        "member_way_count": 352,
+        "duplicate_way_refs": 0,
+        "missing_way_ids": [],
+        "endpoint_degrees_other_than_two": {},
+        "missing_referenced_nodes": [],
+        "ring_assembly_error": null,
+        "closed_outer_ring_count": 168,
+        "all_member_ways_used": true,
+        "member_roles": {
+          "outer": 352
+        },
+        "bounds_lon_lat": [
+          34.2158979,
+          31.2201289,
+          35.5402484,
+          32.5490241
+        ],
+        "geos_parse_success": true,
+        "geos_is_valid": true,
+        "geos_validity_reason": "Valid Geometry"
+      },
+      "Gaza_admin4": {
+        "relation_id": 1473938,
+        "ISO3166-1": null,
+        "name_en": "Gaza Strip",
+        "source_type": "boundary",
+        "all_source_roles": {
+          "outer": 44
+        },
+        "inner_holes_filled_for_conservative_exclusion": false,
+        "boundary": "administrative",
+        "admin_level": "4",
+        "disputed": null,
+        "member_way_count": 44,
+        "duplicate_way_refs": 0,
+        "missing_way_ids": [],
+        "endpoint_degrees_other_than_two": {},
+        "missing_referenced_nodes": [],
+        "ring_assembly_error": null,
+        "closed_outer_ring_count": 1,
+        "all_member_ways_used": true,
+        "member_roles": {
+          "outer": 44
+        },
+        "bounds_lon_lat": [
+          34.2158979,
+          31.2201289,
+          34.5673243,
+          31.5968541
+        ],
+        "geos_parse_success": true,
+        "geos_is_valid": true,
+        "geos_validity_reason": "Valid Geometry"
+      },
+      "WestBank_admin4_patches": {
+        "relation_id": 1613659,
+        "ISO3166-1": null,
+        "name_en": "West Bank",
+        "source_type": "boundary",
+        "all_source_roles": {
+          "outer": 308
+        },
+        "inner_holes_filled_for_conservative_exclusion": false,
+        "boundary": "administrative",
+        "admin_level": "4",
+        "disputed": null,
+        "member_way_count": 308,
+        "duplicate_way_refs": 0,
+        "missing_way_ids": [],
+        "endpoint_degrees_other_than_two": {},
+        "missing_referenced_nodes": [],
+        "ring_assembly_error": null,
+        "closed_outer_ring_count": 167,
+        "all_member_ways_used": true,
+        "member_roles": {
+          "outer": 308
+        },
+        "bounds_lon_lat": [
+          34.9020503,
+          31.3663071,
+          35.5402484,
+          32.5490241
+        ],
+        "geos_parse_success": true,
+        "geos_is_valid": true,
+        "geos_validity_reason": "Valid Geometry"
+      },
+      "JudeaSamaria_admin4_outer_filled": {
+        "relation_id": 1803010,
+        "ISO3166-1": null,
+        "name_en": "Judea and Samaria",
+        "source_type": "boundary",
+        "all_source_roles": {
+          "outer": 103,
+          "inner": 308
+        },
+        "inner_holes_filled_for_conservative_exclusion": true,
+        "boundary": "administrative",
+        "admin_level": "4",
+        "disputed": null,
+        "member_way_count": 103,
+        "duplicate_way_refs": 0,
+        "missing_way_ids": [],
+        "endpoint_degrees_other_than_two": {},
+        "missing_referenced_nodes": [],
+        "ring_assembly_error": null,
+        "closed_outer_ring_count": 1,
+        "all_member_ways_used": true,
+        "member_roles": {
+          "outer": 103
+        },
+        "bounds_lon_lat": [
+          34.8800552,
+          31.3421068,
+          35.5739235,
+          32.5521479
+        ],
+        "geos_parse_success": true,
+        "geos_is_valid": true,
+        "geos_validity_reason": "Valid Geometry"
+      },
+      "WestBank_historic_outer_filled": {
+        "relation_id": 12331025,
+        "ISO3166-1": null,
+        "name_en": "West Bank",
+        "source_type": "boundary",
+        "all_source_roles": {
+          "outer": 93,
+          "inner": 1
+        },
+        "inner_holes_filled_for_conservative_exclusion": true,
+        "boundary": "historic",
+        "admin_level": null,
+        "disputed": null,
+        "member_way_count": 93,
+        "duplicate_way_refs": 0,
+        "missing_way_ids": [],
+        "endpoint_degrees_other_than_two": {},
+        "missing_referenced_nodes": [],
+        "ring_assembly_error": null,
+        "closed_outer_ring_count": 1,
+        "all_member_ways_used": true,
+        "member_roles": {
+          "outer": 93
+        },
+        "bounds_lon_lat": [
+          34.8800552,
+          31.3421068,
+          35.5739235,
+          32.5521479
+        ],
+        "geos_parse_success": true,
+        "geos_is_valid": true,
+        "geos_validity_reason": "Valid Geometry"
+      }
+    },
+    "purpose": "Conservative exclusion research, not territorial/country inclusion validation; all source outer rings filled and inner holes deliberately excluded from this research polygon assembly",
+    "limits": "Research-only source geometry. Source ISO tags/boundaries are not a legal/official determination. No untagged phone record imported or shipped."
+  },
+  "geos_coverage_checks": {
+    "filled_JudeaSamaria_outer_covers_all_WestBank_admin_patches": true,
+    "filled_historic_WestBank_outer_covers_all_WestBank_admin_patches": true,
+    "filled_historic_and_JudeaSamaria_outer_envelopes_geometrically_equal": false
+  },
+  "work_input_sha256": {
+    "country-relation-inventory.json": "cef27b1ec8c92b6a68d5bd57b0c65eb4ecd282ed949b75b767996069d3104125",
+    "country-boundary-rings.json": "86c04cec9e398d291b40b58496a583fd766ddf401e821ea59194c7e0c014b58d",
+    "disputed-region-relation-inventory.json": "b96552bfa717e01d9ad4d6275f45ee04ebe967a267e2a30c9a6cd42e5fc5d3f1",
+    "research-region-outer-rings.json": "04b9d0ed2ad8d28e2947bb9fde88cbe39dd7f37c666940ab48869fdb3939750f"
+  },
+  "assessment": [
+    "The source ISO3166-1=PS relation1703814 is168 polygon patches; it cannot by itself establish exclusion of the full West Bank. Its constituent admin4 WestBank relation1613659 is167 patches, plus Gaza relation1473938 isone polygon.",
+    "The source Judea/Samaria admin4 relation1803010 has103outer+308inner way members. For conservative EXCLUSION ONLY, filling every inner hole yields one fully resolved GEOS-valid source outer envelope. Actual coverage predicates are retained in geos_coverage_checks; do not claim full coverage when false.",
+    "The source historic WestBank relation12331025 outer envelope (93outer+1inner; hole filled for conservative exclusion) has the same coordinate bounds but exact geometry equivalence is not assumed; consult the actual GEOS predicate result. This is still source data, not independent official/legal verification.",
+    "A future conservative spatial mode can reject any object intersecting the union of those filled outer envelopes, full Gaza and all explicitly non-IL tags. It must require complete coordinates and strict geometry inclusion within the actual source IL polygon, rejecting borders/unresolved relations/conflicts. No country_tag should be fabricated from phone or geography.",
+    "Claims/control relations of type=linestring cannot be promoted to polygon boundaries based on names. Broader disputed-border handling needs explicit reviewed scope, never sovereign/legal claims or a complete-Israel guarantee."
+  ],
+  "next_required_work": [
+    "Retain source geometry relation IDs/timestamps/way-node completeness and exact hashes with every derived row.",
+    "Implement a separate source-spatial research/export scope; keep explicit-IL packaging contract unchanged until a distinct reviewed contract and tests exist.",
+    "Use standard geometry predicates for the entire feature, excluding border/dispute intersections and missing/invalid geometry; do not infer membership from centroid alone, phone prefix, city-name guess or filename.",
+    "Test known internal/external points, holes, boundary contact, crossing ways, incomplete relations and conflicting country tags before any app integration.",
+    "Keep country/territorial interpretation and phone-currentness limits visible. Old OSM object dates exist even in this2026extract.0.12.0 APK release remains independent of this work."
+  ],
+  "limits": "Research only. Source ISO names, admin/disputed/historic boundaries are not official sovereign/legal determinations or proof of full national coverage. No business number was called, no current phone ownership verified, no app/database/user-contact changes made."
+}

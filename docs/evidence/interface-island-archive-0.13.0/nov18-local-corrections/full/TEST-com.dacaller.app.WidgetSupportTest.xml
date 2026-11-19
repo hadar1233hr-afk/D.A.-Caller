@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.WidgetSupportTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-18T12:21:53" hostname="3ebae333e153" time="0.512">
+  <properties/>
+  <testcase name="quickAndContactCardPreserveConfiguredIdentityAndHaveDifferentLayouts" classname="com.dacaller.app.WidgetSupportTest" time="0.069"/>
+  <testcase name="pendingIntentIdentityIncludesWidgetSlotContactAndAction" classname="com.dacaller.app.WidgetSupportTest" time="0.021"/>
+  <testcase name="fewerFavoritesCannotLeaveAStaleCallableCell" classname="com.dacaller.app.WidgetSupportTest" time="0.058"/>
+  <testcase name="unconfiguredWidgetReopensItsOwnConfiguration" classname="com.dacaller.app.WidgetSupportTest" time="0.044"/>
+  <testcase name="noPermissionOrNoFavoritesProvidesAnExplicitSafeOpenAction" classname="com.dacaller.app.WidgetSupportTest" time="0.074"/>
+  <testcase name="permissionDenialNeverDispatchesACallFromWidgetTap" classname="com.dacaller.app.WidgetSupportTest" time="0.04"/>
+  <testcase name="resizeExposesFourFavoritesAtTwoCellsAndFiveAtFourCells" classname="com.dacaller.app.WidgetSupportTest" time="0.071"/>
+  <testcase name="deletionOnlyRemovesTheDeletedWidgetsConfiguration" classname="com.dacaller.app.WidgetSupportTest" time="0.026"/>
+  <testcase name="initialsSupportHebrewAndSurrogatePairsWithoutContactsPermission" classname="com.dacaller.app.WidgetSupportTest" time="0.049"/>
+  <testcase name="eachFavoriteSlotCarriesItsExactNumberAndContactId" classname="com.dacaller.app.WidgetSupportTest" time="0.057"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

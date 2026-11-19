@@ -7,7 +7,6 @@ import android.graphics.Outline;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.view.ViewOutlineProvider;
@@ -67,7 +66,7 @@ final class AvatarShapes {
  static Bitmap preview(Context context,String id,int size){
   Bitmap image=Bitmap.createBitmap(size,size,Bitmap.Config.ARGB_8888);Canvas canvas=new Canvas(image);
   Paint paint=new Paint(Paint.ANTI_ALIAS_FLAG);paint.setColor(0xFF123D30);canvas.drawPath(path(id,size,size),paint);
-  paint.setColor(0xFFE7C779);paint.setTypeface(Typeface.create("sans-serif-medium",Typeface.NORMAL));
+  paint.setColor(0xFFE7C779);AppAppearance.font(paint,context,true);
   paint.setTextAlign(Paint.Align.CENTER);paint.setTextSize(size*.34f);Paint.FontMetrics metrics=paint.getFontMetrics();
   canvas.drawText("DA",size/2f,size/2f-(metrics.ascent+metrics.descent)/2f,paint);return image;
  }

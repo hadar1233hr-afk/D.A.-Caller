@@ -1,0 +1,13 @@
+{
+  "gradle_exit": 0,
+  "source_unchanged": true,
+  "tests": 34,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "classes": [
+    "com.dacaller.app.CallIslandControllerTest",
+    "com.dacaller.app.CallScreenAppearanceTest",
+    "com.dacaller.app.MainActivityRegressionTest"
+  ]
+}

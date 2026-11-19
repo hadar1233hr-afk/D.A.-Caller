@@ -1,0 +1,37 @@
+{
+  "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED",
+  "generated_at": "2026-11-05T17:08:18.593843+00:00",
+  "test_command": "python scripts/business-directory/research/check_duplicate_identity_review.py",
+  "synthetic_contract_tests": {
+    "executed": 8,
+    "passed": 8,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "input_ndjson_sha256": "37ce40b735e144cc38eee1e72ce75c785424f0213d05c9c35feb766c1b2704df",
+  "files": [
+    {
+      "name": "duplicate_identity_review.py",
+      "sha256": "cfbdca6e02d00423c3c720940eacf2e1125059aabfa309271c695c855b7a2d7e",
+      "bytes": 5071
+    },
+    {
+      "name": "check_duplicate_identity_review.py",
+      "sha256": "40ddb60b82f8c6e5d275c529fd80301afd95d28fbefc2c587e0f69a2550d5f36",
+      "bytes": 2844
+    },
+    {
+      "name": "node-duplicate-identity-review.json",
+      "sha256": "b7b5dee8b23bd8100ae5f359e85a6eabd5515088d17e72be89225c034a71ae6a",
+      "bytes": 27118
+    }
+  ],
+  "rows_removed_or_merged": 0,
+  "app_rows_added": 0,
+  "limits": [
+    "Distance classes describe approximate source-coordinate separation, not observed business premises.",
+    "Synthetic checks validate review behavior, not real phone ownership or currentness.",
+    "Shared phones and repeated name/address pairs require review; neither proves duplicate physical businesses."
+  ]
+}

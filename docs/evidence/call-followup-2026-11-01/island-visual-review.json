@@ -1,0 +1,432 @@
+{
+  "review_status": "PASS_WITH_BOUNDED_FINDINGS",
+  "source_sha": "04e58247399aaa579b7de51c8439fa41653ab98c",
+  "app_tree": "7d00a6eca4d9f5005329d4790d6f8383b48e42a7",
+  "workflow_run_id": "41341757982",
+  "reviewed_png_count": 44,
+  "reviewed_at_utc": "2026-11-01T23:35:51.745075+00:00",
+  "review_method": "Root actually inspected all44 exact-source native images in all11 original-resolution2x2 island sheets during the previous active phase, before the usage pause; no source or images changed. On resume all44 source SHA256 values and all44 sheet-panel pixels were independently reverified against the original480x854 PNGs. The6 new missed/changelog originals were also inspected individually as an additional cross-check, without adding them to this44-image group.",
+  "sheets_inspected": [
+    "island-01.png",
+    "island-02.png",
+    "island-03.png",
+    "island-04.png",
+    "island-05.png",
+    "island-06.png",
+    "island-07.png",
+    "island-08.png",
+    "island-09.png",
+    "island-10.png",
+    "island-11.png"
+  ],
+  "files": [
+    {
+      "file": "external-end-confirmation.png",
+      "sha256": "8954470c1b1f02f1fd51b82f164576f9dc778b491fe0ee385ff77ed29f456eaf",
+      "status": "PASS",
+      "observations": [
+        "Real confirmation dialog over dimmed Clock/island; contact, End and Cancel remain legible without overlap."
+      ],
+      "sheet": "island-01.png"
+    },
+    {
+      "file": "external-ended-launcher.png",
+      "sha256": "a2e6d9a91af989526816aa8699454afc50459dc7ebdd9497a428f8626a6d9448",
+      "status": "PASS",
+      "observations": [
+        "Native launcher is clear after call end, with neither external capsule nor ongoing call pill."
+      ],
+      "sheet": "island-01.png"
+    },
+    {
+      "file": "external-inapp-return.png",
+      "sha256": "a98973d27e16e230693b29e13a46c021d103ea8358e35037854a1d434a7af109",
+      "status": "BOUNDED",
+      "observations": [
+        "Compact caller label ellipsizes; real active state/duration remain readable and app return preserves its pictured search/list state."
+      ],
+      "sheet": "island-01.png"
+    },
+    {
+      "file": "external-launcher-active-compact.png",
+      "sha256": "d4c31bb1589ae0d67aa258ed1755c397dbb936793577eaf2ade5a6d699643f53",
+      "status": "BOUNDED",
+      "observations": [
+        "Compact caller label ellipsizes; real active state/duration remain readable and app return preserves its pictured search/list state."
+      ],
+      "sheet": "island-01.png"
+    },
+    {
+      "file": "external-launcher-active-expanded.png",
+      "sha256": "e96da241f8fe17bdf9f99aabb763dceae5c066b46630c60ebf5b400997ebc0f1",
+      "status": "PASS",
+      "observations": [
+        "Real expanded call island over launcher/Clock: full two-line caller identity and available End/Hold/Mute/return controls remain within the safe screen. Unsupported speaker routes are not shown."
+      ],
+      "sheet": "island-02.png"
+    },
+    {
+      "file": "external-launcher-native-incoming.png",
+      "sha256": "22255dc44e366298e799891f941051aa327e3394b0bd04c49b83606bdb652998",
+      "status": "BOUNDED",
+      "observations": [
+        "Native incoming notification has a shortened small header but caller identity wraps below it; answer/decline/return are visible. No external island covers this incoming state."
+      ],
+      "sheet": "island-02.png"
+    },
+    {
+      "file": "external-other-app-active-expanded.png",
+      "sha256": "6b88e02ddaee605e5a5963a33f407285531c51386dcbe35d110b9296f5e2507a",
+      "status": "PASS",
+      "observations": [
+        "Real expanded call island over launcher/Clock: full two-line caller identity and available End/Hold/Mute/return controls remain within the safe screen. Unsupported speaker routes are not shown."
+      ],
+      "sheet": "island-02.png"
+    },
+    {
+      "file": "external-permission-denied-launcher.png",
+      "sha256": "22255dc44e366298e799891f941051aa327e3394b0bd04c49b83606bdb652998",
+      "status": "BOUNDED",
+      "observations": [
+        "Native incoming notification has a shortened small header but caller identity wraps below it; answer/decline/return are visible. No external island covers this incoming state."
+      ],
+      "sheet": "island-02.png"
+    },
+    {
+      "file": "island-app-contacts-compact.png",
+      "sha256": "c26547bf10672836367e77701be92ae19cfb5c179bd359418a919beb9c324ed2",
+      "status": "BOUNDED",
+      "observations": [
+        "Actual Main screen: island, search/favorites and bottom navigation remain separate. Long row labels/dates ellipsize. Expanded mode keeps one complete visible row and hides the floating dial button; compact mode can show its bounded overlap over a lower scrollable row."
+      ],
+      "sheet": "island-03.png"
+    },
+    {
+      "file": "island-app-contacts-expanded.png",
+      "sha256": "d60c6466651b921c6a4ad3e6de1e3daf70bc2815b238ab6b08ed8005eb908aa7",
+      "status": "BOUNDED",
+      "observations": [
+        "Actual Main screen: island, search/favorites and bottom navigation remain separate. Long row labels/dates ellipsize. Expanded mode keeps one complete visible row and hides the floating dial button; compact mode can show its bounded overlap over a lower scrollable row."
+      ],
+      "sheet": "island-03.png"
+    },
+    {
+      "file": "island-app-recents-compact.png",
+      "sha256": "121b796a82d091536bc5ecf5379f59792fa61ff8da87686f7f0a0f6aed9b4635",
+      "status": "BOUNDED",
+      "observations": [
+        "Actual Main screen: island, search/favorites and bottom navigation remain separate. Long row labels/dates ellipsize. Expanded mode keeps one complete visible row and hides the floating dial button; compact mode can show its bounded overlap over a lower scrollable row."
+      ],
+      "sheet": "island-03.png"
+    },
+    {
+      "file": "island-app-recents-expanded.png",
+      "sha256": "a1a8c10d5a85ef7d1bcbc623e543ca0c61d94dd20259e04446453c580459c1b1",
+      "status": "BOUNDED",
+      "observations": [
+        "Actual Main screen: island, search/favorites and bottom navigation remain separate. Long row labels/dates ellipsize. Expanded mode keeps one complete visible row and hides the floating dial button; compact mode can show its bounded overlap over a lower scrollable row."
+      ],
+      "sheet": "island-03.png"
+    },
+    {
+      "file": "island-apple-dark-en-compact.png",
+      "sha256": "f152f01af10a89e8786fd1f45a8ac9dbf3df3958cd2734612352a9cd3d70de69",
+      "status": "BOUNDED",
+      "observations": [
+        "Compact English caller name ellipsizes; state, avatar and duration remain readable. Expanded counterpart shows the full caller."
+      ],
+      "sheet": "island-04.png"
+    },
+    {
+      "file": "island-apple-dark-en-expanded.png",
+      "sha256": "c5e053a6fe251e35e01b4f75b1038420cda94747b03a457b72a005ef753322d3",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-04.png"
+    },
+    {
+      "file": "island-apple-dark-he-compact.png",
+      "sha256": "62c04e4764958472485f35c394cdff1d905ca07d1dcbf33ed80c148b6d4dd49d",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-04.png"
+    },
+    {
+      "file": "island-apple-dark-he-expanded.png",
+      "sha256": "36ff82d5decf9a89ca79f3b6f1284032a3e9cea0d87af53dda7852a6c1052b9b",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-04.png"
+    },
+    {
+      "file": "island-apple-light-en-compact.png",
+      "sha256": "5de33e79ef30740ec97ee0a5ccdae9298f9470693dd9ac0e58054b5f77c635ee",
+      "status": "BOUNDED",
+      "observations": [
+        "Compact English caller name ellipsizes; state, avatar and duration remain readable. Expanded counterpart shows the full caller."
+      ],
+      "sheet": "island-05.png"
+    },
+    {
+      "file": "island-apple-light-en-expanded.png",
+      "sha256": "610e9dc75c8d04c998ef49d9a7508f9ebb55d1a33291c2fadf5a514e4793636c",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-05.png"
+    },
+    {
+      "file": "island-apple-light-he-compact.png",
+      "sha256": "a67dd4453f3952ae37b3bec97c154e9f3c2c670a888408a4e2874aa92a0dcc3a",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-05.png"
+    },
+    {
+      "file": "island-apple-light-he-expanded.png",
+      "sha256": "342e755b8d0f40db1e2c1066182654c363024eea4020f46d0505a5070f3ac3e9",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-05.png"
+    },
+    {
+      "file": "island-emerald-dark-en-compact.png",
+      "sha256": "9f0984da8872812132cba7293ebd8587b15657b604a0123569c6ce59a66025f0",
+      "status": "BOUNDED",
+      "observations": [
+        "Compact English caller name ellipsizes; state, avatar and duration remain readable. Expanded counterpart shows the full caller."
+      ],
+      "sheet": "island-06.png"
+    },
+    {
+      "file": "island-emerald-dark-en-expanded.png",
+      "sha256": "7d069d036705371cfb7ec65d82d2a08831b875ba4b993c7e0f85e192cb082c74",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-06.png"
+    },
+    {
+      "file": "island-emerald-dark-he-compact.png",
+      "sha256": "58f7879615a2b4368af4e88886379f9b9c0e508696d51d0e97e1cd2bb9652632",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-06.png"
+    },
+    {
+      "file": "island-emerald-dark-he-expanded.png",
+      "sha256": "f8d255bb65d3d3127c1465a5ee98888e883e6652876a84039787cdd65c6f0d43",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-06.png"
+    },
+    {
+      "file": "island-emerald-light-en-compact.png",
+      "sha256": "cdf31488cbaa907686ad60d7c4d052db67906419a8db45c89451d8e7ec9ccae2",
+      "status": "BOUNDED",
+      "observations": [
+        "Compact English caller name ellipsizes; state, avatar and duration remain readable. Expanded counterpart shows the full caller."
+      ],
+      "sheet": "island-07.png"
+    },
+    {
+      "file": "island-emerald-light-en-expanded.png",
+      "sha256": "5b6750c0b691d5be155fb7f1ae522bb709af0f61a2a291080499ec375951d5fe",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-07.png"
+    },
+    {
+      "file": "island-emerald-light-he-compact.png",
+      "sha256": "a5768658673316cb9089328b44d5f6602094e5b4af34024044bc7183eefe1efd",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-07.png"
+    },
+    {
+      "file": "island-emerald-light-he-expanded.png",
+      "sha256": "c5df5597f8124890b409cfd5ef0a6c86ceb43cdd5c7e5d8042fb1a000e55a0d7",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-07.png"
+    },
+    {
+      "file": "island-glass-dark-en-compact.png",
+      "sha256": "e82116a5b82564c5832fb03e7c74c192bd489eef45e54fab41741075fa098389",
+      "status": "BOUNDED",
+      "observations": [
+        "Compact English caller name ellipsizes; state, avatar and duration remain readable. Expanded counterpart shows the full caller."
+      ],
+      "sheet": "island-08.png"
+    },
+    {
+      "file": "island-glass-dark-en-expanded.png",
+      "sha256": "ecc436a716275f7eab6348c295334cc023b2cad13a232ad8409c8d57028efd72",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-08.png"
+    },
+    {
+      "file": "island-glass-dark-he-compact.png",
+      "sha256": "3100203f1b3498cc68a58e25cd760c8ea828f457e1817470f2894097e2b5ab78",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-08.png"
+    },
+    {
+      "file": "island-glass-dark-he-expanded.png",
+      "sha256": "9d9ab863e8952d13e58b2867654d5c5f743e03a6aed2eeff65dc904b0d471eb1",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-08.png"
+    },
+    {
+      "file": "island-glass-light-en-compact.png",
+      "sha256": "ee6892582244e487f48433f3317d6cf496d87a2b0ca70ba9fa03b559d7090eb9",
+      "status": "BOUNDED",
+      "observations": [
+        "Compact English caller name ellipsizes; state, avatar and duration remain readable. Expanded counterpart shows the full caller."
+      ],
+      "sheet": "island-09.png"
+    },
+    {
+      "file": "island-glass-light-en-expanded.png",
+      "sha256": "83ed331b27efb73654ee67f7dd9ad9957f9a14ac819975e4359ecf474e83ea3e",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-09.png"
+    },
+    {
+      "file": "island-glass-light-he-compact.png",
+      "sha256": "52d8f0e8d29b1c68e0c0e3530a8360b659a5010cb78b3f4a0ab2e43739279a62",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-09.png"
+    },
+    {
+      "file": "island-glass-light-he-expanded.png",
+      "sha256": "7e6560a44235a55668a4c7733d5280e8c5401e208a84cbca4110f1ed49d828a5",
+      "status": "PASS",
+      "observations": [
+        "Style/theme/language fixture: avatar, caller, call state/duration and expanded controls are legible within native bars, with content laid out below the island."
+      ],
+      "sheet": "island-09.png"
+    },
+    {
+      "file": "island-settings-dark-bottom.png",
+      "sha256": "2ed257f9cffe0fe120c159fd3bfa08cf3fc8de513213f6e0939a8bb10223d804",
+      "status": "PASS",
+      "observations": [
+        "Readable Hebrew settings endpoint with visible native bars, switch labels and full descriptions; middle settings are outside this screenshot endpoint."
+      ],
+      "sheet": "island-10.png"
+    },
+    {
+      "file": "island-settings-dark.png",
+      "sha256": "4d54deb802c14311046f37e4caab8fe9876845e37686979e6766122da6b41672",
+      "status": "PASS",
+      "observations": [
+        "Readable Hebrew settings endpoint with visible native bars, switch labels and full descriptions; middle settings are outside this screenshot endpoint."
+      ],
+      "sheet": "island-10.png"
+    },
+    {
+      "file": "island-settings-light-bottom.png",
+      "sha256": "8178b5d47d97d9d6e6de326437ac7681029792aeae15e4a2665b7ce89bb1e29b",
+      "status": "PASS",
+      "observations": [
+        "Readable Hebrew settings endpoint with visible native bars, switch labels and full descriptions; middle settings are outside this screenshot endpoint."
+      ],
+      "sheet": "island-10.png"
+    },
+    {
+      "file": "island-settings-light.png",
+      "sha256": "25249e79725bb43528419d761ffabc4859a80fc284eb004dbbd9c414ca0d9257",
+      "status": "PASS",
+      "observations": [
+        "Readable Hebrew settings endpoint with visible native bars, switch labels and full descriptions; middle settings are outside this screenshot endpoint."
+      ],
+      "sheet": "island-10.png"
+    },
+    {
+      "file": "island-state-held.png",
+      "sha256": "9a47e71a42e29c6a9118d96bfdd1b6fc43376f8e8007ce7e6c5d5f55549d92a4",
+      "status": "PASS",
+      "observations": [
+        "Fixture call-state label and appropriate incoming/held/outgoing/no-audio controls are legible; return control and underlying content remain separated."
+      ],
+      "sheet": "island-11.png"
+    },
+    {
+      "file": "island-state-incoming.png",
+      "sha256": "841db605d10340f7742dd7bf9528b9eaf679a180bcfc35a711d0ca3a80cf5c32",
+      "status": "PASS",
+      "observations": [
+        "Fixture call-state label and appropriate incoming/held/outgoing/no-audio controls are legible; return control and underlying content remain separated."
+      ],
+      "sheet": "island-11.png"
+    },
+    {
+      "file": "island-state-noaudio.png",
+      "sha256": "1b2ab9375f9f03f71a36666a0e767fdbaf93c496a625e6b716b05e9a9f921744",
+      "status": "PASS",
+      "observations": [
+        "Fixture call-state label and appropriate incoming/held/outgoing/no-audio controls are legible; return control and underlying content remain separated."
+      ],
+      "sheet": "island-11.png"
+    },
+    {
+      "file": "island-state-outgoing.png",
+      "sha256": "1501121fa8c6f93a1338de7bf3d2de91603c06fc2706e2fa8796b515f1aa9477",
+      "status": "PASS",
+      "observations": [
+        "Fixture call-state label and appropriate incoming/held/outgoing/no-audio controls are legible; return control and underlying content remain separated."
+      ],
+      "sheet": "island-11.png"
+    }
+  ],
+  "blocking_findings": [],
+  "bounded_findings": [
+    "Compact English and real-call caller labels may ellipsize; expanded caller identity remains available.",
+    "Actual Main compact mode floating dial button can overlap part of a lower row, recoverable by scrolling; expanded mode hides it and retains at least one visible row. Long row names/dates ellipsize.",
+    "Native incoming notification short header ellipsizes while caller body and action buttons remain readable."
+  ],
+  "scope_limits": [
+    "36 island images use fictional call-state fixtures;8 external images use actual emulator-modem Telecom calls and production service/windows.",
+    "Settings top/bottom are pictured; middle controls are verified natively but not every middle viewport is pictured.",
+    "Actual emulator speaker routing is UNAVAILABLE on supported route8/mask8; fixture speaker controls do not prove audible/physical switching.",
+    "Physical SIM/carrier/audio/Bluetooth/JellyStar, lockscreen/proximity/OEM, complete TalkBack and matching-key in-place upgrade remain NOT TESTED."
+  ]
+}

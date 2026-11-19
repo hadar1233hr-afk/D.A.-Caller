@@ -1,0 +1,47 @@
+{
+  "status": "PASS_LOCAL_BUILD_AND_HOST_TESTS_ONLY",
+  "observed_at_utc": "2026-11-12T10:19:07.830546+00:00",
+  "version": "0.13.0",
+  "version_code": 22,
+  "unit": {
+    "tests": 361,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "external_host_cases_counted_in_main_units": 0,
+  "business_python_methods": 68,
+  "verified_data_projection_rows": 2720,
+  "independent_data_audit": "PASS",
+  "separate_actual_reader_host_methods": 9,
+  "separate_actual_reader_host_environment": "HOST_ROBOLECTRIC_API33_NATIVE_SQLITE",
+  "debug_build": "PASS",
+  "unsigned_release_build": "PASS",
+  "android_test_java_compile": "PASS_NOT_EXECUTION",
+  "apk_bytes": 1145157,
+  "apk_sha256": "6ac569fbca393b0b7797d2aa7c1918da3df6fc4f7016236ebcc0b337001b6aac",
+  "apk_clean_dataset_bytes_equal": true,
+  "offline_no_internet_permission": true,
+  "separate_products_absent": true,
+  "source_file_sha256": {
+    "app/build.gradle": "2350f9036a47ee491122b16d2e549c6d67983a6ee4f7667380a46d5d80b58422",
+    "app/src/main/java/com/dacaller/app/BusinessDirectory.java": "5d8c3d01e4aab6f5dd198b4c2fe588e301c7298003192c21ec97332e279efa52",
+    "app/src/main/java/com/dacaller/app/ChangelogCatalog.java": "ab4e45df12ee607e35696466c7bf3f55f2e04863e6a074758be31b9e3f483253",
+    "app/src/androidTest/java/com/dacaller/app/CallbackBusinessIntegrationTest.java": "dfc3e513448a752f6c214cb7cc4442ab5de4a720ed4b557e93068a7563b598fc",
+    "app/src/test/java/com/dacaller/app/BusinessDirectoryTest.java": "21afc1f227a55f5c49fccfa47c970e35097891d6c2f09c9a204f27725493a21e",
+    "app/src/main/assets/business-directory/israel-businesses.sqlite": "cbc7dc7b41c3fa9335cbf37907243681820fe23107e40541efb306dc1b566af3",
+    "app/src/main/assets/business-directory/manifest.json": "fec348522615f62d36fa62ee65ff317340ea4806a85f15c457daa30378805cfa"
+  },
+  "native_emulator_cases": "PENDING_EXPECTED_36",
+  "fresh_pngs": "PENDING_EXPECTED_245",
+  "fresh_visual_review": "PENDING",
+  "future_signing_and_publication": "BLOCKED_DEFAULT_GUARDS_NOT_CHANGED",
+  "physical_hardware_and_matching_key_upgrade": "NOT_TESTED",
+  "published_012_unchanged": true,
+  "verified_012_link_already_delivered": true,
+  "lint": {
+    "error": 0,
+    "fatal": 0,
+    "warning": 6
+  }
+}
