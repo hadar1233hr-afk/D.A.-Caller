@@ -1,5 +1,52 @@
 # DA CALLER continuation state
 
+## All native cases pass; complete visual review found three bounded defects — 2026-11-19 UTC
+
+Source53a678fac4764dc0210cad4e6b11a9d431287241/appTreec3cdd0ea05b5e094087cb86efe148224787e393e,
+CI44470286600 SUCCESS:457 unique host methods/44classes and40/40 native cases,
+0failures/errors/skips. All original seven gates and additive modern gate passed;
+269 actual native PNGs, all269 independently viewed in seven disjoint reports,
+with exact raw/sheet hashes checked and union269 unique. Visual result262PASS/
+7FAIL, three real issues: two large-font Main dialpad captures clip the number
+hint; one status-area in-app capture collapses caller identity; four Google/Pixel
+DTMF captures render extra-light numerals despite intended650. No whole visual
+GO or publication approval. Exact officialZIP SHA/size/GitHubdigest/allCRC,
+rawJUnit/gate reports/policy/metadata/fullvisual reports and three failed raw
+modern PNGs retained in sixth-native-ci. Source fixes are now in progress and
+will require full new current-source verification; do not reuse this as new GO.
+
+Exact retained native APK1356041bytes SHA4a0251b7855c3f6c7c7be78283f2fab568c2e1fbc6d33d0df728dbc7b394bf5b,
+cert850bb1092393ba96565a391670a37b6c973370bb7ddc42b2bb07d787c04ade42,
+is ephemeral-test-only/publication_allowed:false. Native drag now truly passed
+with actual InputDispatcher foreground ownership, normalized saved movement,
+CANCEL/end-control/hide/restore/status-area/transparency checks. The corrected
+fixture's native success does not retrospectively prove the old shade cause.
+
+Root owns Main dialpad metrics/hint fix; visual53_call_a owns readable compact
+status-area fallback in Controller; visual53_call_b owns actual Nunito font-cache
+weight fix in CallScreenActivity.
+Allthreefirstdraftscompiled. The first focused run then hung in the new readable
+status-lane case: repeated real ViewRootImpl traversals at layoutDecor.idle(),
+CPUactive, captured actual JVM stacks. Root terminated its own test worker after
+4m17s; Gradleexit1/worker143,0completedfreshJUnit, unchangedsourcefence. No test
+PASS claimed. Controller livepreferred260/final216measure oscillation is being
+replaced with pure actual padding/sibling/text intrinsic-width calculation;
+unchanged idle assertions gain a finite traversal guard. Main/font are frozen.
+Corrected pure-width source then actually PASSED34 focused host methods in
+Controller/MainRegression/CallScreenAppearance,0failures/errors/skips, source
+hashes unchanged. Original idle assertions remain; added traversal bound passed.
+Final current-source full preflight actually PASSED460 unique host methods/
+44classes,0failures/errors/skips, debug+Android-test APK builds and lint
+(0errors/16warnings), app-source hashes unchanged. Native producer APK is
+unchanged; localappAPK612256cc... is not a native-approved candidate. Exact
+all44JUnit/maps/log/lint/hash evidence in nov19-visual-fix-preflight/full-current.
+The three visual fixes still require fresh40native/all269actualvisual review.
+Exact firstfailure retained in nov19-visual-fix-preflight/first-focus-hung. Only root runs Gradle serially after source
+freeze. Business data/reader, old seven verifiers, signing and CI unchanged.
+0.12deliveredimmutable/noresend;0.13code22unreleased; existing automation active.
+No new actual quota error/account/model/route bypass. Future durable owner key
+backup/authorized repo-secret provisioning/applicable approval remain unresolved.
+
 ## Fresh native input evidence: 39/40 pass; coordinate guard stopped before DOWN — 2026-11-19 UTC
 
 CI44447145702, source71dd0f409552628b2fe255285e6c7b3c7b497413,

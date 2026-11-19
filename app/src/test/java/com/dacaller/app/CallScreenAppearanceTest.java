@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,14 +109,19 @@ public class CallScreenAppearanceTest {
   }
  }
  @Test public void allFiveKeypadsRetainLargeDigitsAndGoogleRetainsBundledNunito650(){
-  for(String style:CallThemes.IDS){
+  for(float scale:new float[]{1f,1.3f})for(boolean dark:new boolean[]{false,true})for(String style:CallThemes.IDS){
+   RuntimeEnvironment.setFontScale(scale);prefs.edit().putBoolean("dark",dark).commit();
    CallScreenActivity activity=open(style,"keypad","en","Dana Example");
    for(char digit:"123456789*0#".toCharArray()){
     targetFits(tag("dtmf-"+digit));TextView number=(TextView)tag("dtmf-digit-"+digit);
     assertTrue(style+" keypad digit shrank",number.getTextSize()/activity.getResources().getDisplayMetrics().scaledDensity>=21.9f);
     if(style.equals("pixel")){
      assertEquals("'wght' 650",number.getFontVariationSettings());
-     Paint expected=new Paint(number.getPaint());expected.setTypeface(activity.getResources().getFont(R.font.nunito_round));expected.setFontVariationSettings("'wght' 650");
+     assertEquals("Google digits retained Nunito's ExtraLight default",650,number.getTypeface().getWeight());
+     assertFalse("Google digits use synthetic bold",number.getPaint().isFakeBoldText());
+     // A fresh Paint avoids copying the stale axis cache that caused the native defect.
+     Paint expected=new Paint(number.getPaint().getFlags());expected.setTextSize(number.getTextSize());
+     expected.setTypeface(Typeface.create(activity.getResources().getFont(R.font.nunito_round),650,false));expected.setFontVariationSettings("'wght' 650");
      assertEquals("Google digits lost Nunito glyph metrics",expected.measureText("0123456789*#"),number.getPaint().measureText("0123456789*#"),0.01f);
      assertEquals(expected.getFontMetrics().ascent,number.getPaint().getFontMetrics().ascent,0.01f);
     }else assertEquals("'wght' 500",number.getFontVariationSettings());

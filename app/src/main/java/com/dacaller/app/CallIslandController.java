@@ -16,11 +16,14 @@ import android.os.Looper;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.ViewOutlineProvider;
 import android.view.ViewTreeObserver;
 import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.WeakHashMap;
@@ -193,12 +196,47 @@ final class CallIslandController implements CallIslandView.Listener {
  private void restoreStatusColor(){
   if(statusColorSaved){host.getWindow().setStatusBarColor(originalStatusColor);statusColorSaved=false;}
  }
+ private int readableCompactWidth(int preferredWidth){
+  View label=view.findViewWithTag("island-caller");
+  if(!(label instanceof TextView))return preferredWidth;
+  TextView caller=(TextView)label;String name=caller.getText().toString();
+  int count=name.codePointCount(0,name.length()),end=name.offsetByCodePoints(0,Math.min(6,count));
+  String readable=name.substring(0,end)+(end<name.length()?"\u2026":"");
+  int width=(int)Math.ceil(caller.getPaint().measureText(readable))+caller.getCompoundPaddingLeft()+caller.getCompoundPaddingRight();
+  // Read intrinsic fixed siblings without measuring the live weighted capsule
+  // at a second width. Alternating preferred/final measures during global
+  // layout makes TextView request another traversal indefinitely.
+  for(View child=caller;child!=view;){
+   ViewParent raw=child.getParent();if(!(raw instanceof ViewGroup))return preferredWidth;
+   ViewGroup parent=(ViewGroup)raw;
+   width+=horizontalMargins(child)+parent.getPaddingLeft()+parent.getPaddingRight();
+   if(parent instanceof LinearLayout&&((LinearLayout)parent).getOrientation()==LinearLayout.HORIZONTAL){
+    for(int i=0;i<parent.getChildCount();i++){
+     View sibling=parent.getChildAt(i);if(sibling==child||sibling.getVisibility()==View.GONE)continue;
+     ViewGroup.LayoutParams params=sibling.getLayoutParams();int fixed=params.width;
+     if(fixed<0&&sibling instanceof TextView){
+      TextView text=(TextView)sibling;
+      fixed=Math.max(text.getMinimumWidth(),(int)Math.ceil(text.getPaint().measureText(text.getText().toString()))+text.getCompoundPaddingLeft()+text.getCompoundPaddingRight());
+     }
+     if(fixed<0)return preferredWidth;
+     width+=fixed+horizontalMargins(sibling);
+    }
+   }
+   child=parent;
+  }
+  return Math.max(view.getMinimumWidth(),width);
+ }
+ private static int horizontalMargins(View child){
+  ViewGroup.LayoutParams params=child.getLayoutParams();
+  if(!(params instanceof ViewGroup.MarginLayoutParams))return 0;
+  ViewGroup.MarginLayoutParams margins=(ViewGroup.MarginLayoutParams)params;
+  return margins.getMarginStart()+margins.getMarginEnd();
+ }
  private void positionView(){
   if(layer==null||view==null)return;
   int parentWidth=layer.getWidth()>0?layer.getWidth():host.getResources().getDisplayMetrics().widthPixels;
   int parentHeight=layer.getHeight()>0?layer.getHeight():host.getResources().getDisplayMetrics().heightPixels;
   int maximum=dp(expanded?420:"comfortable".equals(prefs.getString("island_size","compact"))?300:260);
-  if(topAreaActive&&!expanded&&parentWidth-dp(144)>=dp(160))maximum=Math.min(maximum,parentWidth-dp(144));
   int width=Math.max(dp(48),Math.min(maximum,parentWidth-dp(24)));
   int[] origin=new int[2];layer.getLocationOnScreen(origin);
   Rect visible=new Rect();layer.getWindowVisibleDisplayFrame(visible);
@@ -216,7 +254,15 @@ final class CallIslandController implements CallIslandView.Listener {
     for(Rect rect:insets.getDisplayCutout().getBoundingRects())cutouts.add(new Rect(rect));
     positionArea.top=Math.max(positionArea.top,insets.getDisplayCutout().getSafeInsetTop()+dp(8));
    }
-   if(width>positionArea.width()-dp(120))positionArea.top=Math.max(positionArea.top,statusBottom+dp(8));
+   width=Math.min(width,Math.max(dp(48),positionArea.width()));
+   int iconLane=positionArea.width()-dp(120);
+   // A narrow status lane must not spend all available width on fixed chrome.
+   // Keep six caller characters (or the entire shorter identity) readable;
+   // otherwise retain the preferred capsule width below protected SystemUI.
+   if(!expanded){
+    if(iconLane>=readableCompactWidth(width))width=Math.min(width,iconLane);
+    else positionArea.top=Math.max(positionArea.top,statusBottom+dp(8));
+   }else if(width>iconLane)positionArea.top=Math.max(positionArea.top,statusBottom+dp(8));
   }
   desiredWidth=width=Math.min(width,Math.max(dp(48),positionArea.width()));
   view.measure(View.MeasureSpec.makeMeasureSpec(width,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED));

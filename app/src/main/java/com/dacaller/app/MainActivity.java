@@ -655,7 +655,6 @@ public class MainActivity extends Activity {
   TextView handle=center("━━━━",17,false,muted());
   sheet.addView(handle,lp(-1,23));
   LinearLayout entryBar=row();
-  sheet.addView(entryBar,lp(-1,56));
   final EditText input=new EditText(this);keypadInput=input;
   input.setSingleLine(true);
   input.setInputType(android.text.InputType.TYPE_CLASS_PHONE);
@@ -663,12 +662,21 @@ public class MainActivity extends Activity {
   input.setTextColor(text());input.setHintTextColor(muted());
   input.setTextSize(TypedValue.COMPLEX_UNIT_SP,29);
   AppAppearance.font(input,false);
+  input.setPadding(d(4),0,d(4),0);
+  input.setIncludeFontPadding(true);
   input.setGravity(Gravity.CENTER);
   input.setTextDirection(View.TEXT_DIRECTION_LTR);
   input.setBackgroundColor(Color.TRANSPARENT);
-  input.setHint(I18n.text(this,"מספר טלפון"));
+  // A descriptive hint is secondary to the large dialed digits. Keep both
+  // languages readable without letting the hint run under the close control.
+  android.text.SpannableString hint=new android.text.SpannableString(I18n.text(this,"מספר טלפון"));
+  hint.setSpan(new android.text.style.RelativeSizeSpan(16f/29f),0,hint.length(),android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+  input.setHint(hint);
   if(preset!=null)input.setText(preset);
-  entryBar.addView(input,new LinearLayout.LayoutParams(0,d(56),1));
+  android.graphics.Paint.FontMetricsInt numberMetrics=input.getPaint().getFontMetricsInt();
+  int entryHeight=Math.max(d(56),numberMetrics.bottom-numberMetrics.top+d(12));
+  sheet.addView(entryBar,new LinearLayout.LayoutParams(-1,entryHeight));
+  entryBar.addView(input,new LinearLayout.LayoutParams(0,-1,1));
   // Close belongs in the title row; the primary action row now has symmetrical utilities.
   ImageView closeIcon=icon(R.drawable.ic_control_close,muted(),20,20);
   FrameLayout dismiss=new FrameLayout(this);

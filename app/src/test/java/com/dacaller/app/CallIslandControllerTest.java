@@ -38,13 +38,26 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.annotation.Config;
 import org.robolectric.annotation.GraphicsMode;
+import org.robolectric.annotation.Implementation;
+import org.robolectric.annotation.Implements;
 import org.robolectric.annotation.LooperMode;
 import org.robolectric.shadows.ShadowAlertDialog;
+import org.robolectric.shadows.ShadowViewRootImpl;
 
 /** Overlay lifecycle must preserve the app underneath it and never end a replacement call. */
 @RunWith(RobolectricTestRunner.class) @Config(sdk=33) @LooperMode(LooperMode.Mode.PAUSED)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 public class CallIslandControllerTest {
+ @Implements(className="android.view.ViewRootImpl",isInAndroidSdk=false)
+ public static class VisibleSystemBars extends ShadowViewRootImpl {
+  @Implementation protected android.view.WindowInsets getWindowInsets(boolean forceConstruct){
+   float density=RuntimeEnvironment.getApplication().getResources().getDisplayMetrics().density;
+   android.graphics.Insets bars=android.graphics.Insets.of(0,Math.round(24*density),0,Math.round(48*density));
+   return new android.view.WindowInsets.Builder().setInsets(android.view.WindowInsets.Type.systemBars(),bars)
+     .setInsetsIgnoringVisibility(android.view.WindowInsets.Type.systemBars(),bars)
+     .setVisible(android.view.WindowInsets.Type.systemBars(),true).build();
+  }
+ }
  public static class Host extends Activity implements CallIslandController.ManualHost {
   LinearLayout page;
   EditText query;
@@ -89,7 +102,9 @@ public class CallIslandControllerTest {
  private FakeSession session;
  private CallIslandController island;
  private int viewportWidth=480,viewportHeight=854;
+ private float originalFontScale;
  @Before public void setUp(){
+  originalFontScale=RuntimeEnvironment.getApplication().getResources().getConfiguration().fontScale;
   prefs=RuntimeEnvironment.getApplication().getSharedPreferences("da_caller",Context.MODE_PRIVATE);
   prefs.edit().clear().putString("language","en").putBoolean("haptics",false)
     .putBoolean("island_enabled",true).putBoolean("island_animations",false)
@@ -100,7 +115,7 @@ public class CallIslandControllerTest {
  @After public void tearDown(){
   if(island!=null)island.stop();
   AlertDialog dialog=ShadowAlertDialog.getLatestAlertDialog();if(dialog!=null&&dialog.isShowing())dialog.dismiss();
-  if(activity!=null)activity.pause().stop().destroy();shadowOf(Looper.getMainLooper()).idle();
+  if(activity!=null)activity.pause().stop().destroy();shadowOf(Looper.getMainLooper()).idle();RuntimeEnvironment.setFontScale(originalFontScale);
  }
  private static CallIslandState active(String token,String name){
   return new CallIslandState(token,name,"0500099901",Call.STATE_ACTIVE,CallAudioState.ROUTE_EARPIECE,
@@ -132,6 +147,36 @@ public class CallIslandControllerTest {
  private void expand(){click("island-expand");assertTrue(island.isExpanded());}
  private long anchor(){return host.list.getAdapter().getItemId(host.list.getFirstVisiblePosition());}
  private int offset(){assertNotNull(host.list.getChildAt(0));return host.list.getChildAt(0).getTop();}
+ private int dp(float value){return Math.round(value*host.getResources().getDisplayMetrics().density);}
+ private void rebuildAtFontScale(float scale){
+  island.stop();activity.pause().stop().destroy();RuntimeEnvironment.setFontScale(scale);
+  activity=Robolectric.buildActivity(Host.class).create().start().resume().visible();host=activity.get();
+  session=new FakeSession();session.state=active("readable-call","Alexander readable caller");island=new CallIslandController(host,session);
+ }
+ private void layoutDecor(int widthDp,int heightDp){
+  View decor=host.getWindow().getDecorView();int width=dp(widthDp),height=dp(heightDp);
+  int[] traversals={0};android.view.ViewTreeObserver observer=content().getViewTreeObserver();
+  android.view.ViewTreeObserver.OnGlobalLayoutListener finite=()->{
+   assertTrue("A stable compact width must settle instead of scheduling endless traversals",++traversals[0]<=32);
+  };
+  observer.addOnGlobalLayoutListener(finite);
+  try{
+   for(int i=0;i<3;i++){
+    shadowOf(Looper.getMainLooper()).idle();
+    decor.measure(View.MeasureSpec.makeMeasureSpec(width,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(height,View.MeasureSpec.EXACTLY));
+    decor.layout(0,0,width,height);content().getViewTreeObserver().dispatchOnGlobalLayout();
+   }
+   decor.measure(View.MeasureSpec.makeMeasureSpec(width,View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(height,View.MeasureSpec.EXACTLY));
+   decor.layout(0,0,width,height);assertTrue(traversals[0]>0);
+  }finally{if(observer.isAlive())observer.removeOnGlobalLayoutListener(finite);}
+ }
+ private View decorIsland(){return host.getWindow().getDecorView().findViewWithTag("island-root");}
+ private void assertReadableIdentity(){
+  TextView caller=decorIsland().findViewWithTag("island-caller");assertNotNull(caller.getLayout());
+  assertEquals("Alexander readable caller",caller.getText().toString());
+  int omitted=caller.getLayout().getEllipsisCount(0),visible=omitted==0?caller.length():caller.getLayout().getEllipsisStart(0);
+  assertTrue("Caller must show at least six characters before its ellipsis, got "+visible+" at width "+caller.getWidth(),visible>=6);
+ }
 
  @Test public void appearingAndExpandingReserveSpaceWithoutLosingQueryFocusOrListAnchor(){
   host.query.requestFocus();host.list.setSelectionFromTop(22,-8);layout();long id=anchor();int top=offset();
@@ -241,6 +286,32 @@ public class CallIslandControllerTest {
   int hiddenPageColor=0xFF5B1327;host.getWindow().setStatusBarColor(hiddenPageColor);
   content().getViewTreeObserver().dispatchOnPreDraw();assertEquals(hiddenPageColor,host.getWindow().getStatusBarColor());
   assertTrue(session.executed.isEmpty());
+ }
+
+ @Test @Config(qualifiers="w320dp-h570dp-hdpi",shadows=VisibleSystemBars.class)
+ public void narrowStatusLaneKeepsPreferredWidthAndReadableIdentityBelowIconsWithoutChangingSavedPositions(){
+  rebuildAtFontScale(1.3f);prefs.edit().putString(CallIslandPosition.MODE,"status_area").commit();
+  java.util.Map<String,?> before=new java.util.HashMap<>(prefs.getAll());island.start();layoutDecor(320,570);
+  View capsule=decorIsland();assertSame(host.getWindow().getDecorView(),capsule.getParent());
+  assertEquals("A protected 176dp lane must not replace the preferred compact width",dp(260),capsule.getWidth());
+  assertTrue("The complete capsule must start below visible status icons",capsule.getTop()>=dp(24+8));assertReadableIdentity();
+  assertEquals(before,prefs.getAll());assertTrue(session.executed.isEmpty());
+  prefs.edit().putBoolean(CallIslandPosition.SET,true).putInt(CallIslandPosition.X,7000).putInt(CallIslandPosition.Y,6500).commit();
+  before=new java.util.HashMap<>(prefs.getAll());layoutDecor(320,570);
+  assertEquals(dp(260),decorIsland().getWidth());assertTrue(decorIsland().getTop()>=dp(24+8));assertReadableIdentity();
+  assertEquals("Clamping must preserve the owner's normalized position",before,prefs.getAll());assertOriginalMargins(11);
+  assertTrue(session.executed.isEmpty());
+ }
+
+ @Test @Config(qualifiers="w360dp-h640dp-hdpi",shadows=VisibleSystemBars.class)
+ public void aReadableStatusLaneRemainsAvailableButGrowingTextFallsBackAtItsPreferredWidth(){
+  rebuildAtFontScale(1f);prefs.edit().putString(CallIslandPosition.MODE,"status_area").commit();island.start();layoutDecor(360,640);
+  View capsule=decorIsland();assertEquals(dp(216),capsule.getWidth());assertTrue(capsule.getTop()<dp(24));
+  assertTrue(capsule.getLeft()>=dp(12+60));assertTrue(capsule.getRight()<=dp(360-12-60));assertReadableIdentity();
+  assertTrue(session.executed.isEmpty());
+  rebuildAtFontScale(1.6f);java.util.Map<String,?> before=new java.util.HashMap<>(prefs.getAll());island.start();layoutDecor(360,640);
+  assertEquals("Actual larger text must retain the preferred capsule width below the icons",dp(260),decorIsland().getWidth());
+  assertTrue(decorIsland().getTop()>=dp(24+8));assertReadableIdentity();assertEquals(before,prefs.getAll());assertTrue(session.executed.isEmpty());
  }
 
  @Test @Config(sdk=26) public void topAreaWorksOnTheMinimumApiWithoutCallingNewInsetsApis(){

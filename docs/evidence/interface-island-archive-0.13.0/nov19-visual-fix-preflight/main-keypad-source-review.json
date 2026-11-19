@@ -1,0 +1,47 @@
+{
+  "review_status": "CODEGO",
+  "review_type": "Independent read-only source audit; no edits or test execution",
+  "baseline_source_sha": "53a678fac4764dc0210cad4e6b11a9d431287241",
+  "baseline_run_id": 44470286600,
+  "exact_reviewed_file_sha256": {
+    "app/src/main/java/com/dacaller/app/MainActivity.java": "00e868fb4752b5ee18d8a485c9ab1859df1ae225ad4a7d25af1df091b6631341",
+    "app/src/test/java/com/dacaller/app/MainActivityRegressionTest.java": "627674323e17181cb9e1907ccad331a7e34e4b692a2d5015c4b7f1b85c1e7bd4"
+  },
+  "scope": "Only git diff for MainActivity.showKeypad and MainActivityRegressionTest.largeFontDialpadKeepsHintAndEnteredNumberInsideItsTextViewport, with necessary surrounding source read for layout/font/dialog behavior.",
+  "findings": [
+    {
+      "status": "PASS",
+      "item": "Production sizing",
+      "detail": "Actual styled 29sp EditText font metrics determine entry height with 56dp minimum and 12dp spare room. Input gets full row height and zero vertical padding, addressing baseline vertical clipping without reducing entered-number font size."
+    },
+    {
+      "status": "PASS",
+      "item": "Hint and close control",
+      "detail": "RelativeSizeSpan sets only localized descriptive hint to an effective 16sp. Weighted EditText remains a separate child from the 44dp dismiss control, so available text width excludes dismiss width. Shared row gravity centers the dismiss control vertically."
+    },
+    {
+      "status": "PASS",
+      "item": "Scope and behavior",
+      "detail": "Diff leaves Telecom, call validation, numeric entry, delete/add/close actions and dialog cleanup paths unchanged. Existing ScrollView retains overflow handling if metric row height grows."
+    },
+    {
+      "status": "PASS",
+      "item": "Regression relevance",
+      "detail": "Native graphics test uses both HE and EN at fontScale1.3 on 320x569dp qualifiers. It checks actual EditText layout height, glyph baseline extents for entered digits, one-line localized hint fit, retained 29sp size, exact input content and no started activity during opening/edit/dismiss. These checks target the identified clipping/width failure instead of copying layout constants."
+    }
+  ],
+  "nonblocking_limits": [
+    "No compile or tests executed by this reviewer. Test correctness is source-reviewed; root serial execution must establish actual result.",
+    "The started-activity assertion is a narrow no-navigation check; it does not independently prove all Telecom/permission behavior. No call path changed in this diff.",
+    "No new native screenshot viewed during this source audit and no corrected visual PASS asserted. Fresh full host/native40/269 and actual current visual review remain required."
+  ],
+  "blocking_issues": [],
+  "actions_performed": [
+    "Read-only git diff",
+    "Read-only surrounding source inspection",
+    "SHA256 of both exact reviewed files",
+    "Write this review JSON"
+  ],
+  "usage_error_encountered": false,
+  "publication_authority": false
+}

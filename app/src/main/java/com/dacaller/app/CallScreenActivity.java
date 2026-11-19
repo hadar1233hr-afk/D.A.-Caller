@@ -10,6 +10,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -494,7 +495,14 @@ public final class CallScreenActivity extends Activity {
     if(!available){key.setEnabled(false);key.setAlpha(0.4f);key.setContentDescription(digit+" · "+tr("לא זמין בשיחה זו"));}
     key.setBackground(rounded(theme.surface2,theme.style==4?8:theme.style==3?18:999));LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(0,dp(compact()?56:72),1);p.setMargins(dp(3),dp(2),dp(3),dp(2));line.addView(key,p);
     TextView number=text(digit,largeType()?(theme.style==1?22:24):compact()?32:getResources().getConfiguration().fontScale>1.15f?31:38,theme.ink,theme.style==1);
-    if(theme.style==1){number.setTypeface(getResources().getFont(R.font.nunito_round));number.setFontVariationSettings("'wght' 650");}
+    if(theme.style==1){
+     // text() already applied this axis to Rubik. Clear Paint's cached setting
+     // before changing family, or repeating 650 leaves Nunito at its default200.
+     number.setFontVariationSettings(null);
+     Typeface family=getResources().getFont(R.font.nunito_round);
+     number.setTypeface(Build.VERSION.SDK_INT>=28?Typeface.create(family,650,false):family);
+     number.setFontVariationSettings("'wght' 650");
+    }
     number.setTag("dtmf-digit-"+digit);add(key,number,-1,-2,0);
     if(!letters[i].isEmpty()){TextView caption=text(letters[i],largeType()?9:10,theme.muted,false);caption.setTag("dtmf-caption-"+digit);add(key,caption,-1,-2,0);}
     TouchFeedback.bind(key,prefs);key.setOnClickListener(v->playDigit(call,digit.charAt(0),key));

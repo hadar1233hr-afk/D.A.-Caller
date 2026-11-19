@@ -1,0 +1,51 @@
+{
+  "historical_review_source": "53a678fac4764dc0210cad4e6b11a9d431287241",
+  "historical_review_run": 44470286600,
+  "finding": "Pixel/Google in-call DTMF digits in the four standard/largefont light/dark snapshots use conspicuously thin strokes.",
+  "root_cause": "styledText applies Rubik with cached 'wght'650. addKeypad changed Typeface to bundled Nunito (default200) then repeated the same axis string. AOSP Paint returns early for the cached string; changing Typeface does not clear it. The previous host test cloned the stale Paint/cache and repeated this sequence.",
+  "font_audit": {
+    "path": "app/src/main/res/font/nunito_round.ttf",
+    "sha256": "bb55a5ca5c2042335b3991af27c4d0705d0ef41cac6164ac737fd8f2a1e85207",
+    "OS2_usWeightClass": 200,
+    "wght_axis": {
+      "min": 200,
+      "default": 200,
+      "max": 1000
+    }
+  },
+  "aosp_evidence": [
+    {
+      "url": "https://github.com/aosp-mirror/platform_frameworks_base/blob/android13-release/graphics/java/android/graphics/Paint.java",
+      "excerpt": "boolean setFontVariationSettings(String fontVariationSettings) {\n        final String settings = TextUtils.nullIfEmpty(fontVariationSettings);\n        if (settings == mFontVariationSettings\n                || (settings != null && settings.equals(mFontVariationSettings))) {\n            return true;\n        }\n\n        if (settings == null || settings.length() == 0) {\n            mFontVariationSettings = null;\n            setTypeface(Typeface.createFromTypefaceWithVariation(mTypeface,\n                      Collections.emptyList()));\n            return true;\n        }\n\n        // The null typeface is valid and it is equivalent to Typeface.DEFAULT.\n        // To call isSupportedAxes method, use Typeface.DEFAULT instance.\n        Typeface targetTypeface = mTypeface == null ? Typeface.DEFAULT : mTypeface;\n        FontVariationAxis[] axes = FontVariationAxis.fromFontVariationSettings(settings);\n        final ArrayList<FontVariationAxis> filteredAxes = new ArrayList<FontVariationAxis>();\n        for (final FontVariationAxis axis : axes) {\n            if (targetTypeface.isSupportedAxes(axis.getOpenTypeTagValue())) {\n                filteredAxes.add(axis);\n            }\n        }\n        if (filteredAxes.isEmpty()) {\n            return false;\n        }\n        mFontVariationSettings = settings;\n        setTypeface(Typeface.createFromTypefaceWithVariation(targetTypeface, filteredAxes));\n        return true;\n    }\n\n    /**\n     * Get the current value of start hyphen edit.\n     *\n     * The d"
+    },
+    {
+      "url": "https://github.com/aosp-mirror/platform_frameworks_base/blob/android13-release/libs/hwui/hwui/Typeface.cpp",
+      "excerpt": "Typeface* Typeface::createFromTypefaceWithVariation(\n        Typeface* src, const std::vector<minikin::FontVariation>& variations) {\n    const Typeface* resolvedFace = Typeface::resolveDefault(src);\n    Typeface* result = new Typeface();\n    if (result != nullptr) {\n        result->fFontCollection =\n                resolvedFace->fFontCollection->createCollectionWithVariation(variations);\n        if (result->fFontCollection == nullptr) {\n            // None of passed axes are supported by this collection.\n            // So we will reuse the same collection with incrementing reference count.\n            result->fFontCollection = resolvedFace->fFontCollection;\n        }\n        // Do not update styles.\n        // TODO: We may want to update base weight if the 'wght' is specified.\n        result->fBaseWeight = resolvedFace->fBaseWeight;\n        result->fAPIStyle = resolvedFace->fAPIStyle;\n        result->fStyle = resolvedFace->fStyle;\n    }\n    return result;\n}\n\nTypeface* Typeface::createWithDifferentBaseWeight(Typeface* src, int weight) {\n    const Typeface* resolvedFace = Typeface::res",
+      "implication": "Variation application deliberately preserves Typeface style/weight metadata. A bare getWeight650 assertion is insufficient unless the base style is explicitly set."
+    }
+  ],
+  "fix": {
+    "file": "app/src/main/java/com/dacaller/app/CallScreenActivity.java",
+    "sha256": "634344da896a131df5a3ac8386cd58062ed2b202105e1da191ce309552b6896a",
+    "change": "For Pixel DTMF only, clear inherited variation cache before selecting licensed Nunito. API28+ explicitly selects real Typeface weight650; API26–27 retain the font family then apply supported wght650. Reapply wght650 after selection. No fakebold, text scale, geometry, DTMF tag, caption, action or Telecom change."
+  },
+  "existing_host_regression": {
+    "file": "app/src/test/java/com/dacaller/app/CallScreenAppearanceTest.java",
+    "sha256": "8ceb74a5f4c743f6367edf7eaba99fd5360629f8c58b96d68e4956c9bac1f68c",
+    "change": "Existing allFiveKeypadsRetainLargeDigitsAndGoogleRetainsBundledNunito650 now covers standard/largefont and light/dark, asserts real base Typeface weight650 and no synthetic bold, and compares native font metrics with an independently constructed fresh Paint carrying genuine Nunito650."
+  },
+  "all_call_screen_font_switches_audit": "Read-only rg of all setTypeface/setFont/font() usage found exactly one family switch, in addKeypad. Caller, timer and initials use shared AppAppearance/Rubik without a secondary Nunito family switch. AppAppearance unchanged.",
+  "verification": {
+    "git_diff_check": "PASS for the two edited files",
+    "source_audit": "COMPLETE",
+    "compilation": "NOT EXECUTED by this worker",
+    "host_tests": "NOT EXECUTED by this worker",
+    "fresh_native269_and_visual_review": "PENDING; historical CI44470286600 images do not verify this edit"
+  },
+  "owned_files_frozen": true,
+  "limitations": [
+    "No Gradle/CI execution by this worker.",
+    "Root coordinates serial focused/full checks and any further execution.",
+    "No publication, hardware/audio/matching-key upgrade or APK resend claim."
+  ]
+}

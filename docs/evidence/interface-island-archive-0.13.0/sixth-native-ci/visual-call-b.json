@@ -1,0 +1,417 @@
+{
+  "source_sha": "53a678fac4764dc0210cad4e6b11a9d431287241",
+  "app_tree_sha": "c3cdd0ea05b5e094087cb86efe148224787e393e",
+  "run_id": 44470286600,
+  "scope": "Call sheets call-14.png through call-26.png only; native 480x854 frames. This report does not approve all 269 frames or publication.",
+  "actual_view_method": "Each listed sheet was individually opened through tools.view_image and emitted using image() in a separate functions.exec. Two raw originals were also directly viewed for detail. No truncated or unseen image was counted.",
+  "actually_viewed_sheets": [
+    {
+      "filename": "call-14.png",
+      "sha256": "4b4854382edc2c68e3fd26c2c8eec1f16514b3a6d49ac9947981d1a88ed230b5",
+      "frame_count": 4
+    },
+    {
+      "filename": "call-15.png",
+      "sha256": "2a9f4fd41b0f28925f3cacf549ac67728ac25b93804150f603ab03ac351468dd",
+      "frame_count": 4
+    },
+    {
+      "filename": "call-16.png",
+      "sha256": "c8edd2b21ca7465f571288f063863e560c895658c0b588522950eb0355bfbad9",
+      "frame_count": 4
+    },
+    {
+      "filename": "call-17.png",
+      "sha256": "3da278e79b4f2e7a3ccbc43327494914f751af9a3ac501c3fed690c382723b0a",
+      "frame_count": 4
+    },
+    {
+      "filename": "call-18.png",
+      "sha256": "c04e7fc750ceb769176f2fec65e80f6349869414f210f4c4f7a2f25a7a456a32",
+      "frame_count": 4
+    },
+    {
+      "filename": "call-19.png",
+      "sha256": "84f7b17c398ea15c90421ca3e395399eaa314701e3cf79a5e594f3acb1338e93",
+      "frame_count": 4
+    },
+    {
+      "filename": "call-20.png",
+      "sha256": "7d6d844f113a16cc9b107f34eb2efb36867ab36a66740ec3d957f7013cf6e650",
+      "frame_count": 4
+    },
+    {
+      "filename": "call-21.png",
+      "sha256": "1ddfba484497c8ed58997527d80217ce9c8a861c1fe4578fa0165fb8c7355649",
+      "frame_count": 4
+    },
+    {
+      "filename": "call-22.png",
+      "sha256": "e25708c6c36bc4d98b91e5dfce52081f2a31db57af1e8bdda1e6bd7d30afce34",
+      "frame_count": 4
+    },
+    {
+      "filename": "call-23.png",
+      "sha256": "87155cad38d0f1ba05824381079f15eb40df686eddfadd648adca98740543861",
+      "frame_count": 4
+    },
+    {
+      "filename": "call-24.png",
+      "sha256": "f70e6842bb00b4f3ebe266e9f659b4e18425bb09ddd015b7df0bbf4424eab0bd",
+      "frame_count": 4
+    },
+    {
+      "filename": "call-25.png",
+      "sha256": "1c761326153579255561d47b40091cd9400142f186df2ba14536392d04d6c6e4",
+      "frame_count": 4
+    },
+    {
+      "filename": "call-26.png",
+      "sha256": "9feb473f31333a005564949f0698d53f1157ce5be32e92a76776008dcb7711f8",
+      "frame_count": 1
+    }
+  ],
+  "exact_viewed_raw_frames": [
+    {
+      "filename": "call-graphite-light-audio-largefont.png",
+      "sha256": "fb214755b3f9af210716874b005b1010482cc2c46218c1688e9cc77050cdf8e4",
+      "viewed_via_sheet": "call-14.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-graphite-light-audio-standard.png",
+      "sha256": "a261cdc330b07a0518f92997fd5d0da62cc74ab3fe000d00d3f9fad600c03298",
+      "viewed_via_sheet": "call-14.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-graphite-light-keypad-largefont.png",
+      "sha256": "fbb104657d4023cdef357e2f45277a61d121cf9a996abbbc58f151e6bd823101",
+      "viewed_via_sheet": "call-14.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-graphite-light-keypad-standard.png",
+      "sha256": "b028690915d89b1e1fc24c1af637556a311c956d7b934a6f170de2eff868606f",
+      "viewed_via_sheet": "call-14.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-graphite-light-more-largefont.png",
+      "sha256": "456cdd07a9b03db465c5789d319144f19f7aca28bfdf00e1ff6e45037b12bfb1",
+      "viewed_via_sheet": "call-15.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-graphite-light-more-standard.png",
+      "sha256": "9574a6d6a0dbadcd30855f21916e58b92d3a8a06b98f9941e2c91f287622da14",
+      "viewed_via_sheet": "call-15.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-graphite-light-normal-largefont.png",
+      "sha256": "c32126303a1c935fdbf052619f8ae4ebd61d1ce07850b8253c22395fc025caff",
+      "viewed_via_sheet": "call-15.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-graphite-light-normal-standard.png",
+      "sha256": "70eb454a2c64a2acd480f56f65c6888eefebe48dfb01213159dc65376a1006ad",
+      "viewed_via_sheet": "call-15.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-dark-audio-largefont.png",
+      "sha256": "dae9627049492be1f2ed549bfc29ceb8f6b835ef74409014fb9fd4475318e99b",
+      "viewed_via_sheet": "call-16.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-dark-audio-longname-en.png",
+      "sha256": "54404666842fc5381ef0dd62f1dfae2416659b70f68aec1e52fa9c3e7ea7918a",
+      "viewed_via_sheet": "call-16.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-dark-audio-longname-he.png",
+      "sha256": "5f17d03fbd57e21f0bb4df64ef1efbe969c2ce4553e1debaea912f55dbff92ab",
+      "viewed_via_sheet": "call-16.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-dark-audio-standard.png",
+      "sha256": "ad7bb39b4cf8e9fbbcc3d4542e1d7ce379d167e0dce338c504dca58b7179f66a",
+      "viewed_via_sheet": "call-16.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-dark-keypad-largefont.png",
+      "sha256": "bdd684ba00b45e278ce384eb68357cc9edb435391ce9bca84020a310d1e3c3b8",
+      "viewed_via_sheet": "call-17.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-dark-keypad-standard.png",
+      "sha256": "65f2d31988c90adc3f6eaff971cd7411fc5edd6185a3d35c57a2e103d844cf9c",
+      "viewed_via_sheet": "call-17.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-dark-more-largefont.png",
+      "sha256": "0447bae33d3f522f983c3022f9141ea70b80ff9e0a983910a1af3a506f9726d6",
+      "viewed_via_sheet": "call-17.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-dark-more-standard.png",
+      "sha256": "d7fb977bbc596a9daa3c3556008693bdd03a6cc022c636b51cd727326bf3041d",
+      "viewed_via_sheet": "call-17.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-dark-normal-largefont.png",
+      "sha256": "e7373c6059679c7e3542d79f875d84a13db162a900a3364c2f76fdf17f2fb843",
+      "viewed_via_sheet": "call-18.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-dark-normal-longname-en.png",
+      "sha256": "2381a778f1bc991eae6a0a6ad1d231c85c7021503a03daba0d59ca4416c3c69c",
+      "viewed_via_sheet": "call-18.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-dark-normal-longname-he.png",
+      "sha256": "0404c7392004a898027d503af5c5861d72151ce4726191b6c99bda099ee2a5f8",
+      "viewed_via_sheet": "call-18.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-dark-normal-standard.png",
+      "sha256": "a6a5aa4be776a5f2c06a1e15fd53a1707c15191d9f73a28f47a13c2e69ba2c14",
+      "viewed_via_sheet": "call-18.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-light-audio-largefont.png",
+      "sha256": "2cd2842de74c26b66c14c67f0aecfe4c58c98b3b21938cd4503f7012ce662546",
+      "viewed_via_sheet": "call-19.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-light-audio-standard.png",
+      "sha256": "7452b7eba2958e831c147d20168d4da08ecf6c520ec240b644050c865520d1c3",
+      "viewed_via_sheet": "call-19.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-light-keypad-largefont.png",
+      "sha256": "7b60ddf2ae8ce791d1e9dcc22331db2aeed04dfe5ce1b24290d99f313d261e17",
+      "viewed_via_sheet": "call-19.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-light-keypad-standard.png",
+      "sha256": "52e3a8a8169628d3fb20c662de3cbb0bcb3e084d9f7bcd17891aec11de605371",
+      "viewed_via_sheet": "call-19.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-light-more-largefont.png",
+      "sha256": "bdc598472f5942df6ec323a03ccd0233c0add58fe25a5969ef63ca7685571fca",
+      "viewed_via_sheet": "call-20.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-light-more-standard.png",
+      "sha256": "f7d46d3ef95ff9bf054fd04134581d41221df17f0735b5331614c277267da2ba",
+      "viewed_via_sheet": "call-20.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-light-normal-largefont.png",
+      "sha256": "1d18b4eb20ee53a2715320498bee24b266d273431f51557c235fc0fbf0b812b7",
+      "viewed_via_sheet": "call-20.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-ivory-light-normal-standard.png",
+      "sha256": "22c69b0e4ddd4cdd61b6d5f03a977863445093ab3c4406e1005dddf978688116",
+      "viewed_via_sheet": "call-20.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-pixel-dark-audio-largefont.png",
+      "sha256": "4ce908eabc3ba54d892beaf164809fa1ffc7a434fff91c446436817855d5c698",
+      "viewed_via_sheet": "call-21.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-pixel-dark-audio-longname-en.png",
+      "sha256": "a0691b5ce604ff4215ffaa9b887cb5a124ddcab031bc1bd09732de34bf330b51",
+      "viewed_via_sheet": "call-21.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-pixel-dark-audio-longname-he.png",
+      "sha256": "1d8cd6211244663d8f8167417cbefba78bc2ae64432322e0ac4ce53f4d56cd99",
+      "viewed_via_sheet": "call-21.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-pixel-dark-audio-standard.png",
+      "sha256": "9165a40175649d50bf3159f4754c7b0db04047ad9c9fc3b96ebc45bb5b38669d",
+      "viewed_via_sheet": "call-21.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-pixel-dark-keypad-largefont.png",
+      "sha256": "485e5946e213ce2652d2d170ab99e345d1a04ea651ebdca0204238abbf672b34",
+      "viewed_via_sheet": "call-22.png",
+      "visual_status": "FAIL"
+    },
+    {
+      "filename": "call-pixel-dark-keypad-standard.png",
+      "sha256": "64f1417a58b43ec2bf6c30a02742fa91166d1de9473e92d11b4ffbf1c3acb152",
+      "viewed_via_sheet": "call-22.png",
+      "visual_status": "FAIL"
+    },
+    {
+      "filename": "call-pixel-dark-more-largefont.png",
+      "sha256": "708c9811cf7f0fe579f5c263cff1c19a24b818662f4e4bf619209c21c86337c0",
+      "viewed_via_sheet": "call-22.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-pixel-dark-more-standard.png",
+      "sha256": "93152de8aec504a87147d60e60a07bf81489711e51a1768de6e482a1b4a5de9a",
+      "viewed_via_sheet": "call-22.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-pixel-dark-normal-largefont.png",
+      "sha256": "1ac9202bfdc7af3523d2c67392279dec4334fe71105ef67d0d9f804c1b76d58c",
+      "viewed_via_sheet": "call-23.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-pixel-dark-normal-longname-en.png",
+      "sha256": "090347abc1d0d9ce502538ae6d87184ed5d67699cf8e5f5f0a606e44f5a51fb5",
+      "viewed_via_sheet": "call-23.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-pixel-dark-normal-longname-he.png",
+      "sha256": "20fa1f5d48b8bf1ee6c8a8e770953b3481509864aad8219253b726467a45a362",
+      "viewed_via_sheet": "call-23.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-pixel-dark-normal-standard.png",
+      "sha256": "48a7d21e3a9180d1fe943c0aefdfe0795565e0ee247bf739efa3e45e49399bb7",
+      "viewed_via_sheet": "call-23.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-pixel-light-audio-english-no-bluetooth.png",
+      "sha256": "7814c5bfc64cfb518f133c03c00b94d4579087dfa8eb6c84345029c3c862a657",
+      "viewed_via_sheet": "call-24.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-pixel-light-audio-largefont.png",
+      "sha256": "0fb0af4d9c5c4d17b54362ba5b064528bf9352ae89fcec3b4ad557c3d12f3f0c",
+      "viewed_via_sheet": "call-24.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-pixel-light-audio-standard.png",
+      "sha256": "c0207f2456e627d7e841216496276b087839fb4f2f74d192b49b4ff31deb9f6e",
+      "viewed_via_sheet": "call-24.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-pixel-light-keypad-largefont.png",
+      "sha256": "01a36f80060a0f05f82dd1fc394c41d7e8879f5fce6f47b318e4794905ea346d",
+      "viewed_via_sheet": "call-24.png",
+      "visual_status": "FAIL"
+    },
+    {
+      "filename": "call-pixel-light-keypad-standard.png",
+      "sha256": "3a3959f9f26fd6f5d15412f6deabdc326a00e1a456601e0b192c63b427d3e6a0",
+      "viewed_via_sheet": "call-25.png",
+      "visual_status": "FAIL"
+    },
+    {
+      "filename": "call-pixel-light-more-largefont.png",
+      "sha256": "f6d10a39d9008a6d58ab326a56d6ef8b9db4015fac8c4938a89b86c2b7668409",
+      "viewed_via_sheet": "call-25.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-pixel-light-more-standard.png",
+      "sha256": "6d8e375ad267d62e2c6e75a4e4f1966192ff12a684d71a4d3e6eb4b1be6da5be",
+      "viewed_via_sheet": "call-25.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-pixel-light-normal-largefont.png",
+      "sha256": "2c63b2a3fe68a73444d794a6e110660d30841b93069c11048ace33cba4367360",
+      "viewed_via_sheet": "call-25.png",
+      "visual_status": "PASS"
+    },
+    {
+      "filename": "call-pixel-light-normal-standard.png",
+      "sha256": "3bb1f1396632487d81dbd4f212ff87d3bb6d67a9d919a861939ae6f210362617",
+      "viewed_via_sheet": "call-26.png",
+      "visual_status": "PASS"
+    }
+  ],
+  "additionally_directly_viewed_raw_originals": [
+    {
+      "filename": "call-pixel-dark-keypad-largefont.png",
+      "sha256": "485e5946e213ce2652d2d170ab99e345d1a04ea651ebdca0204238abbf672b34"
+    },
+    {
+      "filename": "call-pixel-light-more-largefont.png",
+      "sha256": "f6d10a39d9008a6d58ab326a56d6ef8b9db4015fac8c4938a89b86c2b7668409"
+    }
+  ],
+  "counts": {
+    "sheets_actually_viewed": 13,
+    "unique_raw_frames_actually_viewed": 49,
+    "PASS": 45,
+    "FAIL": 4
+  },
+  "findings": [
+    {
+      "status": "FAIL",
+      "id": "pixel-dtmf-weight",
+      "frames": [
+        "call-pixel-dark-keypad-largefont.png",
+        "call-pixel-dark-keypad-standard.png",
+        "call-pixel-light-keypad-largefont.png",
+        "call-pixel-light-keypad-standard.png"
+      ],
+      "observation": "Pixel/Google in-call DTMF keypad numerals render with conspicuously thin strokes in light/dark and standard/largefont captures. The direct raw dark-largefont original confirms the thin appearance; letter captions and nearby controls are substantially heavier.",
+      "requirement_basis": "Owner 2026-11-04 explicitly requested rounder and bolder Google call-screen digits.",
+      "bounded_implication": "Visual bold-digit requirement is not satisfied for these four in-call DTMF keypad frames. Numerals remain readable; this finding does not claim a functional dialing defect.",
+      "source_context": "Read-only inspection of CallScreenActivity.java addKeypad lines496-497 confirms these digits are explicitly assigned nunito_round and font variation wght650; the screenshot is the actual appearance regardless of intended code."
+    },
+    {
+      "status": "PASS",
+      "id": "call-layout",
+      "frames": "All 49 reviewed frames, excluding separate DTMF weight requirement where applicable",
+      "observation": "No redundant DA CALLER call-screen branding is visible. Graphite, Ivory/Nothing and Pixel retain their intentional distinct controls and color palettes. Ivory/Nothing identity and timer are centered and organized. Caller names/numbers, timers, audio/more rows, primary controls and hang-up buttons have usable contrast and no material clipping. Hebrew/English and larger text remain legible. Long names use bounded ellipsis rather than overflowing; keypad panels intentionally reserve identity space for digits/timer. Native status and bottom navigation bars remain unobscured."
+    }
+  ],
+  "limitations": [
+    "Static screenshot review only; no hardware/audio/matching-key upgrade test or new functional test execution is claimed.",
+    "Only the 49 specified call frames were reviewed by this worker. Other call frames, other UI groups and the overall 269-frame matrix require their own review.",
+    "0.12 already delivered and immutable; no resend or publication action authorized."
+  ],
+  "errors": [
+    "Initial attempted raw path omitted nested ui-snapshots/DA-CALLER-snapshots and returned file-not-found; corrected path was then actually viewed. This was not a usage-limit error."
+  ],
+  "no_source_edits_or_gradle_ci": true
+}

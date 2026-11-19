@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.MainActivityRegressionTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-11-19T06:50:16" hostname="3ebae333e153" time="2.467">
+  <properties/>
+  <testcase name="repeatedTapWhilePermissionPendingKeepsFirstDestination" classname="com.dacaller.app.MainActivityRegressionTest" time="0.056"/>
+  <testcase name="tabAndPendingPermissionSurviveActivityRecreation" classname="com.dacaller.app.MainActivityRegressionTest" time="0.086"/>
+  <testcase name="providerRefreshDuringFingerDownDefersRebuildAndStillCallsCorrectNumber" classname="com.dacaller.app.MainActivityRegressionTest" time="0.226"/>
+  <testcase name="unknownNumberOffersExplicitNewContactWithExactNumberAndNeverDials" classname="com.dacaller.app.MainActivityRegressionTest" time="0.124"/>
+  <testcase name="pendingRecoveryDefersFavoriteEditsAndRefreshesVisibleMainAfterDurableUndo" classname="com.dacaller.app.MainActivityRegressionTest" time="0.215"/>
+  <testcase name="rerenderCannotConsumePendingPermissionDestination" classname="com.dacaller.app.MainActivityRegressionTest" time="0.132"/>
+  <testcase name="phoneRoleMustBeGrantedBeforeCallAndPreservesNumber" classname="com.dacaller.app.MainActivityRegressionTest" time="0.364"/>
+  <testcase name="secondDialIntentUpdatesAlreadyVisibleKeypad" classname="com.dacaller.app.MainActivityRegressionTest" time="0.27"/>
+  <testcase name="englishNavigationIsLeftToRightAndSettingsUsesActualVersion" classname="com.dacaller.app.MainActivityRegressionTest" time="0.248"/>
+  <testcase name="hiddenAndUnavailableNumbersNeverOfferCreateContact" classname="com.dacaller.app.MainActivityRegressionTest" time="0.152"/>
+  <testcase name="largeFontDialpadKeepsHintAndEnteredNumberInsideItsTextViewport" classname="com.dacaller.app.MainActivityRegressionTest" time="0.503"/>
+  <testcase name="rapidRepeatedGrantedTapsPlaceOnlyOneCall" classname="com.dacaller.app.MainActivityRegressionTest" time="0.088"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

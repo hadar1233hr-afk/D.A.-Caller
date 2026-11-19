@@ -1,0 +1,502 @@
+{
+  "source_sha": "53a678fac4764dc0210cad4e6b11a9d431287241",
+  "app_tree": "c3cdd0ea05b5e094087cb86efe148224787e393e",
+  "run_id": 44470286600,
+  "reviewer_task": "visual53_other_b",
+  "review_type": "VISUAL_ONLY_EXACT_ASSIGNED_FRAMES",
+  "bounded_visual_status": "PASS",
+  "assigned_sheet_range": "other-14.png through other-25.png inclusive",
+  "actually_viewed_sheet_count": 12,
+  "actually_viewed_unique_raw_frame_count": 48,
+  "sheet_and_raw_sha256_verified": true,
+  "actually_viewed_sheets": [
+    {
+      "sheet": "other-14.png",
+      "sheet_sha256": "6d5ffbf56800c9f26073cd8f610f5906e844fe81fd11e86fa554a53d1247c0bc",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "raw_frames": [
+        {
+          "filename": "personalization-contacts-light-he-standard-expanded.png",
+          "sha256": "8b38d12ead4f9c9234bafff1f6d4913dc4569fc8a79a123703e58fe29d1f3618",
+          "actually_viewed": true,
+          "viewed_via": "other-14.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-contacts-shape-circle.png",
+          "sha256": "9f8f7d5ecd139b9b35f05c8fb418e3f34af08075ad2b55eb2b34e9bbf3a2d9bd",
+          "actually_viewed": true,
+          "viewed_via": "other-14.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-contacts-shape-hexagon.png",
+          "sha256": "42d8e4b44ea2b8ab4ae99aebf3f01914486418f02c32bda819a1fb6a276e1372",
+          "actually_viewed": true,
+          "viewed_via": "other-14.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-contacts-shape-rounded_square.png",
+          "sha256": "fcefac9c561bfd39b460e7646b35023b5dbbf7b92c9d22fad117cc2bfd848de0",
+          "actually_viewed": true,
+          "viewed_via": "other-14.png",
+          "bounded_visual_status": "PASS"
+        }
+      ],
+      "bounded_visual_status": "PASS",
+      "observations": "Contacts: expanded light Hebrew favorites and dark circle/hexagon/rounded-square photo shapes; rounded heavy text, gold actions, top-left Settings and bottom navigation remain legible. Bounded long favorite-name ellipsis and bottom scroll-edge row are visible."
+    },
+    {
+      "sheet": "other-15.png",
+      "sheet_sha256": "ff5f9b953c702f05b29048a522e94e93b22e71afd6ead31937d593b6459aa304",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "raw_frames": [
+        {
+          "filename": "personalization-contacts-shape-square.png",
+          "sha256": "19bf910c99fae859c47ec7d04fd6bac1d389e101bdc7c340e769e6523faf232b",
+          "actually_viewed": true,
+          "viewed_via": "other-15.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-dark-en-largefont-compact.png",
+          "sha256": "5c25ab3b2a23a9a01b269c7c6500cdafcbfa2df7b84549cfbb5ebcc1bc497113",
+          "actually_viewed": true,
+          "viewed_via": "other-15.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-dark-en-largefont-expanded.png",
+          "sha256": "292b9c38dabb2bf0ec1794ae7c0a1959f5a4aa7d3e65528b4128ecbe9c58a3d0",
+          "actually_viewed": true,
+          "viewed_via": "other-15.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-dark-en-standard-compact.png",
+          "sha256": "12e3ef0f964ae054ef8876c84909a125930686728db7690a9a318602c5820d9f",
+          "actually_viewed": true,
+          "viewed_via": "other-15.png",
+          "bounded_visual_status": "PASS"
+        }
+      ],
+      "bounded_visual_status": "PASS",
+      "observations": "Square contact shapes and dark English recents at standard/large font, compact/expanded summary. Number identities and row actions remain visible; long metadata uses bounded ellipsis at large font."
+    },
+    {
+      "sheet": "other-16.png",
+      "sheet_sha256": "cb70bb5aa8f38a89acd2b4603e75a8ec983f3b5ccbf2c70f4f59f4ad9604b243",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "raw_frames": [
+        {
+          "filename": "personalization-recents-dark-en-standard-expanded.png",
+          "sha256": "6b562a6effde745efc702eeed0e5d4d1c858644cbe7e5c657a46c0bb2a444591",
+          "actually_viewed": true,
+          "viewed_via": "other-16.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-dark-he-largefont-compact.png",
+          "sha256": "25b4de8cb6c18918c566767bd4ef8a471d3f6297718ec72ae12ed61bccd205df",
+          "actually_viewed": true,
+          "viewed_via": "other-16.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-dark-he-largefont-expanded.png",
+          "sha256": "7b0b6de02eb861c06027e4658277d656e1d595f3d3d003d418ef33ad0913029c",
+          "actually_viewed": true,
+          "viewed_via": "other-16.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-dark-he-standard-compact.png",
+          "sha256": "91a1f2ce769fc7a91902f403c4e7c04c653cc3ce75f4f0d5f42ce1f0dff812a8",
+          "actually_viewed": true,
+          "viewed_via": "other-16.png",
+          "bounded_visual_status": "PASS"
+        }
+      ],
+      "bounded_visual_status": "PASS",
+      "observations": "Dark English and Hebrew recents compact/expanded variants. RTL summary order, arrows and bottom navigation render consistently; large-font metadata ellipses do not obscure number identities or controls."
+    },
+    {
+      "sheet": "other-17.png",
+      "sheet_sha256": "827711f37bafd284d9d9c7b0827826656b8ac4df460aeeb395fc02e9eae8fe0e",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "raw_frames": [
+        {
+          "filename": "personalization-recents-dark-he-standard-expanded.png",
+          "sha256": "1300ae78a7aaf5ac89613546ca8c27151c16bbc1789aca8761053a72ee2f0a2e",
+          "actually_viewed": true,
+          "viewed_via": "other-17.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-light-en-largefont-compact.png",
+          "sha256": "799d77ac0411e6dc15409283711a8c106ff481e3768b67830ac9594774ada3ec",
+          "actually_viewed": true,
+          "viewed_via": "other-17.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-light-en-largefont-expanded.png",
+          "sha256": "3dcf6eee948d8053a4ae8f60381fa76d449780deb80e09df943b6926efc2806e",
+          "actually_viewed": true,
+          "viewed_via": "other-17.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-light-en-standard-compact.png",
+          "sha256": "36b166634695cab19a4d9778a04c6d58c167d2d65be6f5e93445831003386a77",
+          "actually_viewed": true,
+          "viewed_via": "other-17.png",
+          "bounded_visual_status": "PASS"
+        }
+      ],
+      "bounded_visual_status": "PASS",
+      "observations": "Dark Hebrew standard expanded and light English recents variants. Summary totals/categories fit, gold controls contrast visually, fixed bottom navigation remains clear."
+    },
+    {
+      "sheet": "other-18.png",
+      "sheet_sha256": "429a9d453ffa096745bec21db3bec3d898ac27bfa3aa72091e35168ac6d2c56c",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "raw_frames": [
+        {
+          "filename": "personalization-recents-light-en-standard-expanded.png",
+          "sha256": "e887678c95139566d4d47758fffbd77d26df91fdb44d2ed8ef7ee4845c30581e",
+          "actually_viewed": true,
+          "viewed_via": "other-18.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-light-he-largefont-compact.png",
+          "sha256": "a19ecf4a3e4e7af4323e0ebf7518e4aaa0fba0b3b80504ac5fe0fdef2879a584",
+          "actually_viewed": true,
+          "viewed_via": "other-18.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-light-he-largefont-expanded.png",
+          "sha256": "17576074b546e5961317fd9dacbb7c91bd9d828c1e6bda897e241542b304f015",
+          "actually_viewed": true,
+          "viewed_via": "other-18.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-light-he-standard-compact.png",
+          "sha256": "f843d3b26a248099de7a3d20f16e3122d8385dc69f0d733db80252eb5aa80b12",
+          "actually_viewed": true,
+          "viewed_via": "other-18.png",
+          "bounded_visual_status": "PASS"
+        }
+      ],
+      "bounded_visual_status": "PASS",
+      "observations": "Light English/Hebrew compact and expanded recents at standard/large font. Heavy rounded text, summary arrows and mirrored navigation fit; metadata ellipsis remains bounded."
+    },
+    {
+      "sheet": "other-19.png",
+      "sheet_sha256": "422521a945dfb676293ef4d4d4b9b111c431074e0b5cc2d9bcd9692cacae4124",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "raw_frames": [
+        {
+          "filename": "personalization-recents-light-he-standard-expanded.png",
+          "sha256": "474aa18ca4a31986f6ec69271d4e12155702f7e1c89eb72a631e24cef1b5e44b",
+          "actually_viewed": true,
+          "viewed_via": "other-19.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-widgets-shape-circle.png",
+          "sha256": "f32a32a5608cf62102664b98aa8130b2b16a823fb76896940d401069e784eb9d",
+          "actually_viewed": true,
+          "viewed_via": "other-19.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-widgets-shape-hexagon.png",
+          "sha256": "7d623726798009b8e94f45bd9fba213bdb35d787a500c394a36de01afc35c3dd",
+          "actually_viewed": true,
+          "viewed_via": "other-19.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-widgets-shape-rounded_square.png",
+          "sha256": "b2688f14c5681feca5a0044e784600d1a2bbfee80b30bc4ead6d17b1b9bd482d",
+          "actually_viewed": true,
+          "viewed_via": "other-19.png",
+          "bounded_visual_status": "PASS"
+        }
+      ],
+      "bounded_visual_status": "PASS",
+      "observations": "Light Hebrew standard expanded recents and dark widgets with circle/hexagon/rounded-square photos. Shape silhouettes and all visible favorite targets fit; long widget identity is ellipsized inside its cell."
+    },
+    {
+      "sheet": "other-20.png",
+      "sheet_sha256": "fb14d6269c8b97d249d98f90215e5024e67aac119db68cc072386f8f38bce0ae",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "raw_frames": [
+        {
+          "filename": "personalization-widgets-shape-square.png",
+          "sha256": "7ac10588dfd3d7d314928bb2b3c6233ed6c06432aafcb96dd58e63f70ff34097",
+          "actually_viewed": true,
+          "viewed_via": "other-20.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "recents-new-contact-editor.png",
+          "sha256": "7e4804c76caa7cc5c198b9eb16f2da54ce7e94cfa0b9f75168ea75d6c409d349",
+          "actually_viewed": true,
+          "viewed_via": "other-20.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "recents-unknown-number-actions.png",
+          "sha256": "fe03a02182521280341b3f8de92e7535dc655d7e43fe054cc92aebbde6046c80",
+          "actually_viewed": true,
+          "viewed_via": "other-20.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "settings-dark-bottom.png",
+          "sha256": "7bcf9bbfeeb73976a76bd5fcbebc5557c35ee2e6281edc3e7434410b375d2097",
+          "actually_viewed": true,
+          "viewed_via": "other-20.png",
+          "bounded_visual_status": "PASS"
+        }
+      ],
+      "bounded_visual_status": "PASS",
+      "observations": "Square widget, actual unknown-number inline actions, contact editor and dark Settings bottom. Inline details/add/message/call actions are separately legible; wine Save control and exact prefilled phone fit. Photo hint at editor viewport top is a deliberate scroll edge after test reveal(phone), not whole-control clipping."
+    },
+    {
+      "sheet": "other-21.png",
+      "sheet_sha256": "279d1774a65013d9fd34cb385659a886dd95280336e5ebea63b8bbc555104735",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "raw_frames": [
+        {
+          "filename": "settings-dark.png",
+          "sha256": "ceaad6296ada581e875c47bf9b8c7e898e0bafbb2495314ce7a51169a056dd1a",
+          "actually_viewed": true,
+          "viewed_via": "other-21.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "settings-light-bottom.png",
+          "sha256": "8811a0e6ee997905b24f9c6c8f92ed30024382ca59390569803b8907ed82017f",
+          "actually_viewed": true,
+          "viewed_via": "other-21.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "settings-light.png",
+          "sha256": "33d8f6b76d4365727f603b27f7bf65dc711103b07bcff4b5c6e02a48d24e0219",
+          "actually_viewed": true,
+          "viewed_via": "other-21.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "widget-dark-contact-2x1.png",
+          "sha256": "3b51225c5cfb8291adc0fd90060e4322cdec101d757c6647ba7a04f771daad1e",
+          "actually_viewed": true,
+          "viewed_via": "other-21.png",
+          "bounded_visual_status": "PASS"
+        }
+      ],
+      "bounded_visual_status": "PASS",
+      "observations": "Dark/light Settings permission group and light Settings bottom plus dark 2x1 contact widget. Labels, authorization actions, diagnostics, reminder and changelog controls fit; partial items at scroll edges are expected."
+    },
+    {
+      "sheet": "other-22.png",
+      "sheet_sha256": "d4d4275863b782acdfbe810f22d028d2a7c86a97a1381b8ca68235cba8a12a2d",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "raw_frames": [
+        {
+          "filename": "widget-dark-empty.png",
+          "sha256": "6ebcb063e7a9e31ab274f6662a3ba4ddbc66dcea87fde7c78885e2c7efe60101",
+          "actually_viewed": true,
+          "viewed_via": "other-22.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "widget-dark-favorites-2x2-largefont.png",
+          "sha256": "04b0c737a07d95b3a8db260fe4f9c3b2158f341371ade11aae5e189fc9a49bbb",
+          "actually_viewed": true,
+          "viewed_via": "other-22.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "widget-dark-favorites-2x2.png",
+          "sha256": "896a720c0780ac952c2c088a4b60a0fa41cb4a1da9d97de07ded6c1af7b021a9",
+          "actually_viewed": true,
+          "viewed_via": "other-22.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "widget-dark-favorites-4x2.png",
+          "sha256": "0ee61eb37fcec5eb9902e112ecb303cde42b16d3c0fbec43857a404038a1e6ad",
+          "actually_viewed": true,
+          "viewed_via": "other-22.png",
+          "bounded_visual_status": "PASS"
+        }
+      ],
+      "bounded_visual_status": "PASS",
+      "observations": "Dark empty favorites, 2x2 standard/large-font favorites and 4x2 favorites. Empty-state guidance and all visible identities fit; compact 2x2 brand header uses bounded ellipsis."
+    },
+    {
+      "sheet": "other-23.png",
+      "sheet_sha256": "04f5dcfbfd7bfab6cc79f520dca27cc9400f0c1adfaa78cd4f61e37ab72b687a",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "raw_frames": [
+        {
+          "filename": "widget-dark-permission.png",
+          "sha256": "8c79859076e8250cc27c32af1a31c2c86bd1c8bc70324e28b8a99a55e8051693",
+          "actually_viewed": true,
+          "viewed_via": "other-23.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "widget-dark-quick-1x1.png",
+          "sha256": "db1a4be9ea780fed5095c06adc0ac7e1019a1d602c90237439bc4b6a9524498c",
+          "actually_viewed": true,
+          "viewed_via": "other-23.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "widget-dark-two-favorites.png",
+          "sha256": "4f6147954d0020b13ea78cde3c3738a60bca3e0ccf8156b3a5950ab017cd6806",
+          "actually_viewed": true,
+          "viewed_via": "other-23.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "widget-light-contact-2x1.png",
+          "sha256": "31066f8c5fffb88a8d7cb63432f91a0c12a0a6dc51448d6272573b0612a33510",
+          "actually_viewed": true,
+          "viewed_via": "other-23.png",
+          "bounded_visual_status": "PASS"
+        }
+      ],
+      "bounded_visual_status": "PASS",
+      "observations": "Dark permission guidance, quick 1x1, two-favorite state and light 2x1 contact widget. Guidance and targets are legible; long quick-dial identity is intentionally ellipsized in narrow widget."
+    },
+    {
+      "sheet": "other-24.png",
+      "sheet_sha256": "2cff3af9c897e6735e4e1276e61df399da6958a2c460c2476c9edcf830558027",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "raw_frames": [
+        {
+          "filename": "widget-light-empty.png",
+          "sha256": "49da3b9e3fd02117192dc8776a4280e0d5253175b3c818fde15828112d8b2b46",
+          "actually_viewed": true,
+          "viewed_via": "other-24.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "widget-light-favorites-2x2-largefont.png",
+          "sha256": "b46782b7c094af75c2e21afc35d965088b90788aad9db3ae37cf744d11e057a4",
+          "actually_viewed": true,
+          "viewed_via": "other-24.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "widget-light-favorites-2x2.png",
+          "sha256": "1b3611813bd0739fcf291da46f89afbcc5fb578ef96a2ff54399f585a2a9c0d8",
+          "actually_viewed": true,
+          "viewed_via": "other-24.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "widget-light-favorites-4x2.png",
+          "sha256": "c8d5c6ad7bcab795a934b939254de86fc7d67f5e237da38090de5c18cad2d770",
+          "actually_viewed": true,
+          "viewed_via": "other-24.png",
+          "bounded_visual_status": "PASS"
+        }
+      ],
+      "bounded_visual_status": "PASS",
+      "observations": "Light empty favorites, 2x2 standard/large-font favorites and 4x2 favorites. Visible names, avatars and guidance fit; compact 2x2 brand header uses bounded ellipsis."
+    },
+    {
+      "sheet": "other-25.png",
+      "sheet_sha256": "79b59d27c765ed3f605e21d8ee031ca393d42a13c90300bad0399c418b99c419",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "raw_frames": [
+        {
+          "filename": "widget-light-permission.png",
+          "sha256": "b7051c4656142f00a632b4efa1f73f03a58e22e56320c4ca5bf1ba0e6ed0fb42",
+          "actually_viewed": true,
+          "viewed_via": "other-25.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "widget-light-quick-1x1.png",
+          "sha256": "484013d1930bdda20604d1a106f4cdf22ad095b66496a61383374b775a18bf7a",
+          "actually_viewed": true,
+          "viewed_via": "other-25.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "widget-light-two-favorites.png",
+          "sha256": "7d680ea2421328f2748d1e1b7ee06420e571ecb4c4c99023769af392c88af8c7",
+          "actually_viewed": true,
+          "viewed_via": "other-25.png",
+          "bounded_visual_status": "PASS"
+        },
+        {
+          "filename": "widget-reconfigured.png",
+          "sha256": "3bc798552666c9625237e39b90197a2c631358c89099d53b15cceb1eb019a16a",
+          "actually_viewed": true,
+          "viewed_via": "other-25.png",
+          "bounded_visual_status": "PASS"
+        }
+      ],
+      "bounded_visual_status": "PASS",
+      "observations": "Light permission/quick/two-favorite widgets plus dark reconfigured quick widget. Synthetic/empty permission states appear intentional and text remains clear; configured identity change is visible."
+    }
+  ],
+  "additional_raw_inspections": [
+    {
+      "filename": "recents-new-contact-editor.png",
+      "sha256": "7e4804c76caa7cc5c198b9eb16f2da54ce7e94cfa0b9f75168ea75d6c409d349",
+      "path": "/workspace/work/native-013-ci-44470286600/ui/ui-snapshots/DA-CALLER-snapshots/recents-new-contact-editor.png",
+      "actually_viewed": true,
+      "purpose": "Inspect photo hint at top viewport edge without sheet scaling. Same already-counted frame."
+    }
+  ],
+  "findings": [
+    {
+      "status": "PASS",
+      "scope": "Assigned 48 frames only",
+      "detail": "No unintended visible clipping, overlap, missing visible control, malformed shape or unreadable identity identified in the actually viewed assigned frames."
+    },
+    {
+      "status": "PASS",
+      "scope": "Contact editor scrolled viewport",
+      "detail": "The raw editor frame shows a partially visible photo hint at the upper ScrollView boundary. CallbackBusinessIntegrationTest.java explicitly hides IME and calls reveal(phone) before this snapshot (lines 545-546); contact editor source puts photo and hint above phone in that ScrollView. This observation is consistent with intentional scrolling. Exact prefilled phone and fixed wine Save button are fully visible. No claim that offscreen photo controls were visually reviewed."
+    },
+    {
+      "status": "PASS",
+      "scope": "Intentional bounded overflow",
+      "detail": "Favorites names, large-font recents metadata and narrow-widget branding/identity use visible ellipses; scrollable list rows/settings items may end at the viewport edge. Essential visible identities and actions remain distinguishable."
+    }
+  ],
+  "limitations": [
+    "Static pixels establish only visible rendering in these 48 exact frames; interaction/reachability, accessibility trees and font-file/weight identity were not independently executed or measured.",
+    "Business/archive/backup frames outside this assigned sheet range were not reviewed by this task.",
+    "No assertion about the full 269-frame matrix, publication approval, real hardware, signing or physical-device behavior.",
+    "No app edits, Gradle runs, CI runs or publication performed."
+  ]
+}

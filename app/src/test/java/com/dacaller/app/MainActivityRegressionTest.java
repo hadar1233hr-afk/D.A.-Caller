@@ -21,6 +21,41 @@ import org.robolectric.annotation.LooperMode;
 
 @RunWith(RobolectricTestRunner.class) @Config(sdk=33) @LooperMode(LooperMode.Mode.PAUSED)
 public class MainActivityRegressionTest {
+ @Test @Config(qualifiers="w320dp-h569dp")
+ @org.robolectric.annotation.GraphicsMode(org.robolectric.annotation.GraphicsMode.Mode.NATIVE)
+ public void largeFontDialpadKeepsHintAndEnteredNumberInsideItsTextViewport()throws Exception{
+  float oldScale=RuntimeEnvironment.getApplication().getResources().getConfiguration().fontScale;
+  try{
+   for(String language:new String[]{"he","en"}){
+    RuntimeEnvironment.setFontScale(1.3f);
+    RuntimeEnvironment.getApplication().getSharedPreferences("da_caller",Context.MODE_PRIVATE).edit().putString("language",language).commit();
+    try(ActivityController<MainActivity> controller=Robolectric.buildActivity(MainActivity.class).setup().visible()){
+     MainActivity activity=controller.get();java.lang.reflect.Method show=MainActivity.class.getDeclaredMethod("showKeypad",String.class);show.setAccessible(true);show.invoke(activity,(Object)null);
+     java.lang.reflect.Field dialogField=MainActivity.class.getDeclaredField("keypadDialog");dialogField.setAccessible(true);android.app.Dialog dialog=(android.app.Dialog)dialogField.get(activity);
+     java.lang.reflect.Field inputField=MainActivity.class.getDeclaredField("keypadInput");inputField.setAccessible(true);android.widget.EditText input=(android.widget.EditText)inputField.get(activity);
+     View decor=dialog.getWindow().getDecorView();float density=activity.getResources().getDisplayMetrics().density;
+     for(String number:new String[]{"","+972500099971"}){
+      input.setText(number);Shadows.shadowOf(android.os.Looper.getMainLooper()).idle();
+      decor.measure(View.MeasureSpec.makeMeasureSpec(Math.round(320*density),View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(Math.round(521*density),View.MeasureSpec.AT_MOST));decor.layout(0,0,decor.getMeasuredWidth(),decor.getMeasuredHeight());
+      assertNotNull(input.getLayout());assertTrue(input.getWidth()>0);assertTrue(input.getHeight()>0);
+      assertEquals(number,input.getText().toString());
+      assertTrue("Dialed digits retain their requested large size",input.getTextSize()>=29*activity.getResources().getDisplayMetrics().scaledDensity-1);
+      assertTrue("Text layout must fit vertically",input.getLayout().getHeight()<=input.getHeight()-input.getCompoundPaddingTop()-input.getCompoundPaddingBottom());
+      if(number.isEmpty()){
+       android.text.Layout hintLayout=new android.text.StaticLayout(input.getHint(),input.getPaint(),input.getWidth()-input.getCompoundPaddingLeft()-input.getCompoundPaddingRight(),android.text.Layout.Alignment.ALIGN_NORMAL,1,0,true);
+       assertEquals("Both localized hints must fit one line",1,hintLayout.getLineCount());
+      }else{
+       android.graphics.Paint.FontMetricsInt fm=input.getPaint().getFontMetricsInt();
+       assertTrue("Numeral top must not be clipped",input.getBaseline()+fm.top>=input.getPaddingTop());
+       assertTrue("Numeral bottom must not be clipped",input.getBaseline()+fm.bottom<=input.getHeight()-input.getPaddingBottom());
+      }
+      assertNull("Opening/editing the dialpad must never dial",Shadows.shadowOf(activity).getNextStartedActivity());
+     }
+     dialog.dismiss();assertNull(Shadows.shadowOf(activity).getNextStartedActivity());
+    }
+   }
+  }finally{RuntimeEnvironment.setFontScale(oldScale);}
+ }
  @Before public void setup(){
   Context ctx=RuntimeEnvironment.getApplication();
   ctx.getSharedPreferences("da_caller",Context.MODE_PRIVATE).edit().clear().putBoolean("role_prompted",true).apply();
