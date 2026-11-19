@@ -1,0 +1,1 @@
+Software scope460host/40native/269actuallyreviewedPNG PASS. Exact native APK is ephemeral-test-only and publication_allowed:false; no0.13 signing/publication exception approved. No release/publicdownloadverification performed.0.12delivered immutable/noresend.

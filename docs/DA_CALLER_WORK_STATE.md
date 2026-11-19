@@ -1,5 +1,66 @@
 # DA CALLER continuation state
 
+## 0.13 software scope complete; exact candidate awaits separate publication approval — 2026-11-19 UTC
+
+No independent application/data/UI work remains in the currently requested scope.
+Application/native-producer source7e039daaf2b43716ed2a2b3db1df0b04a8647fcd,
+appTree96aa47e9152edc931e4830dd3dbe65e3a09418df, actualCI44521985299 SUCCESS:
+460uniquehost methods/44classes,40native cases,0failures/errors/skips. All seven
+original verifiers and the additive modern gate pass. All269 fresh actual PNGs
+were actually reviewed by five bounded reviewers plus root:269PASS/0FAIL/
+0unreviewed, disjoint union269, exact sheet/raw/source hashes checked. Full
+current evidence is final-native-ci; no old failed/native/visual claim was reused.
+
+Exact retained native APK1357445bytes SHA
+ e29b4c6beeb97ccb4ab1b306c83438bbd30eead7d169fda95e722ab84d5ae5f9,
+certificate c42aa0e8e318e965444ec99adc4cc6645e677d13b2b8ce2d4e67b54b1e933376.
+Artifact14528288719 is the native-tested APK, not the other validate-job APK.
+NativeUI artifact14528238780:17134697bytes SHA
+4ee0610b0b8fd57af1f72f7434fa7be3380546f86fabf8743ba63d8e41458eda.
+NativeAPKZIP1332503bytes SHA
+e44ee3214c43272bf65b6e07517b721d4d1047cbf6331ca5c2675ef22b11b58e.
+Checks artifact14528790986:163499bytes SHA
+afc4d05f503f7ef2d4193636a64074ec306521a5006e8659e833383b483e858c.
+All GitHubdigests/size/ZIPCRC/source bindings,269PNG hashes and all seven report
+canonical hashes verified. Root initially used compact JSON separators for that
+last local check; checked-in verifier uses default spacing/ensure_asciiFalse.
+Correct protocol passed; no gate/data change. This local diagnostic is retained.
+
+Android build-tools independently verify the exact retained signature/package
+com.dacaller.app/version0.13.0/code22, noINTERNET permission, exact frozen DBcbc7…/
+manifestfec348… asset hashes. No rebuild or re-sign. True Telecom drag/CANCEL/
+End-drag/hide/restore/status fallback/opacity/new-call proof passes. Current
+320dp/font1.3 status mode correctly retains readable protected below-bar width;
+compatible wide native placement remains NOT_TESTED (host360 evidence separate).
+No physicalJellyStar/carrier/audio/BT/proximity/overnightDoze/fullTalkBack/
+matching-key update claim. Hardware was waived as a publication prerequisite only.
+
+All eleven Nov12 UI/backup requests and original licensed offline Israeli snapshot
+are implemented and software-verified. Snapshot2026-11-03 remains2720records/
+2660objects/2616phones,2728raw/history preserved,8holds; partial coverage/current
+ownership/reachability unverified. Corresponding source3169035bytes SHA
+5d6358c7d8ebc7b3be51717c3829a1b3c56e0f1aacf90bbf54fa1a04f71a5224 retained.
+Separate products untouched; original seven/script signing/CI safeguards remain.
+
+PUBLICATION IS STILL BLOCKED. The native policy is ephemeral-test-only and
+publication_allowed:false; signer differs from beta9 and0.12.0. No matching-key
+update was performed. No owner approval for a0.13 signing/CI exception exists.
+Old “כמובן” approved0.12only; that APK was already DELIVERED/immutable/noresend.
+Prepared concrete NOT_APPROVED docs/releases/0.13.0-publication-approval.md and
+0.13.0-publication-proposal.json pin only this nativeAPK/source/cert/460/40/269,
+no rebuild/resign, independent mechanism review and public-byte equality before
+any link, future defaults preserved. No signing/workflow/release change executed.
+Durable owner-controlled private key/independent backup/authorized repo-secret
+setup remain separately unresolved; one-candidate approval cannot waive them.
+
+Next action is the one precise owner approval question in that proposal, after
+docs-only handoff is pushed. Until explicit owner response, do not implement or
+indirectly execute the rejected publication safeguard change. Do not invent new
+UI/data tasks, rebuild/repeat passing matrices, manufacture versions, repeat an
+old APK link or ask for0.12approval again. Existing automation remains enabled
+until all remaining signing/publication work and verified APK delivery are done;
+no duplicate timer. No new actual usage-limit error/account/model/route bypass.
+
 ## Readable status fallback requires truthful native proof — 2026-11-19 noon UTC
 
 Managed environment restored normally; no new actual usage-limit error. Root

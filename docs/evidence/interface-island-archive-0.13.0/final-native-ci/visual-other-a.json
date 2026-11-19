@@ -1,0 +1,662 @@
+{
+  "source_sha": "7e039daaf2b43716ed2a2b3db1df0b04a8647fcd",
+  "app_tree": "96aa47e9152edc931e4830dd3dbe65e3a09418df",
+  "workflow_run_id": 44521985299,
+  "reviewer": "status_verifier_nov19_noon",
+  "review_completed_utc": "2026-11-19T12:37:03.944211+00:00",
+  "scope": "Assigned other-01.png through other-13.png only; all 52 assigned current-source raw frames actually visually inspected on contact sheets, plus two original raw PNG detail views.",
+  "manifest_path": "/workspace/work/native-013-review-44521985299/manifest.json",
+  "manifest_sha256": "4c22f75395d8429a0c82a5b1e9f35f82c10717adef67ca0a693b2ab79a0fc2cc",
+  "assigned_sheets": 13,
+  "actually_viewed_sheets": 13,
+  "assigned_raw_frames": 52,
+  "unique_reviewed_raw_frames": 52,
+  "pass_frames": 52,
+  "fail_frames": 0,
+  "result": "PASS_WITHIN_ASSIGNED_52_FRAME_VISUAL_SCOPE",
+  "sheets": [
+    {
+      "sheet": "other-01.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-01.png",
+      "sha256": "19f3f94a89b8f731f9ea35e5cf2dbfd71021d5b737bd9221693a0671a5ac27b7",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image(), one sheet per exec; no truncated image output",
+      "result": "PASS",
+      "findings": "Business detail/search/dark/light list: count 2,720 and OpenStreetMap contributors attribution fit; detail shows source URL, ODbL-1.0, timestamp 2026-09-10T19:40:21+00:00, public-record caveat and Source/Close/Dial actions. Hebrew categories are friendly (for example mobile accessories and hostel), the compact header leaves useful list space, and no retained giant header gap is visible.",
+      "raw_names": [
+        "business-detail.png",
+        "business-search.png",
+        "business-tab-dark.png",
+        "business-tab-light.png"
+      ]
+    },
+    {
+      "sheet": "other-02.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-02.png",
+      "sha256": "ab91086238c63ae7b2d1198ce9ea03dfd0d3eecc3d1cfb217d0f0ae5fbd1f215",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image(), one sheet per exec; no truncated image output",
+      "result": "PASS",
+      "findings": "Native active-call notifications show caller identity/state and bounded End, audio-state and Return controls in English/Hebrew. Hebrew enable label and native quick-setting labels use small-screen ellipsization; icon/action alignment and native status/navigation contrast remain visible.",
+      "raw_names": [
+        "call-integration-notification-active-private-en.png",
+        "call-integration-notification-active-private-he.png",
+        "call-integration-notification-active-speaker-en.png",
+        "call-integration-notification-active-speaker-he.png"
+      ]
+    },
+    {
+      "sheet": "other-03.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-03.png",
+      "sha256": "ad165f2caed807cff3bdf0901cdbcc864a79ed8c765b8552f39ca2d8786cca29",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image(), one sheet per exec; no truncated image output",
+      "result": "PASS",
+      "findings": "Native Hebrew incoming/outgoing call cards remain readable with identifiable call actions. Returned Contacts retains search/query, caller rows, favorites and bottom navigation; returned Settings is at an ordinary retained scroll position, with readable controls and no overlay obstructing content.",
+      "raw_names": [
+        "call-integration-notification-incoming-he.png",
+        "call-integration-notification-outgoing-he.png",
+        "call-integration-return-contacts.png",
+        "call-integration-return-settings.png"
+      ]
+    },
+    {
+      "sheet": "other-04.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-04.png",
+      "sha256": "edc2d55e208756c841fc3c33a91e946ac2d0a09ef90cc1ed32c9e21dd5621b6a",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image(), one sheet per exec; no truncated image output",
+      "result": "PASS",
+      "findings": "Callback summary/date, two missed calls, explanatory copy, caller number and callback action fit in both themes. Reminder settings section/switch and wrapped explanation remain readable; content continues in its ordinary scroll area above bottom navigation.",
+      "raw_names": [
+        "callback-list-dark.png",
+        "callback-list-light.png",
+        "callback-settings-dark.png",
+        "callback-settings-light.png"
+      ]
+    },
+    {
+      "sheet": "other-05.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-05.png",
+      "sha256": "40408166ab3c0b58b9c61c815e97fe5d31adf87f0521c6d2a6fc782497f7cd99",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image(), one sheet per exec; no truncated image output",
+      "result": "PASS",
+      "findings": "Changelog title/current 0.13.0/version cards and Hebrew prose are readable in light/dark. Expanded entries continue below the scroll viewport; bottom captures show 0.2.0/0.1.0 and offline-availability footer without clipped fixed actions.",
+      "raw_names": [
+        "changelog-dark-bottom.png",
+        "changelog-dark.png",
+        "changelog-light-bottom.png",
+        "changelog-light.png"
+      ]
+    },
+    {
+      "sheet": "other-06.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-06.png",
+      "sha256": "cacdba47b367310e0d2878482b783588af53be101228c0fcc953238bf8c035ff",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image(), one sheet per exec; no truncated image output",
+      "result": "PASS",
+      "findings": "Incoming caller number, bounded long caller-name ellipsis, incoming-state label, right-swipe answer instruction and Reject control remain distinct in resting/dragging captures. Native missed single/multiple notifications retain readable count/name/Clear text; number truncation is bounded native notification ellipsization.",
+      "raw_names": [
+        "incoming-swipe-dragging.png",
+        "incoming-swipe-resting.png",
+        "missed-multiple-he.png",
+        "missed-single-he.png"
+      ]
+    },
+    {
+      "sheet": "other-07.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-07.png",
+      "sha256": "17aa2f7389ff17e833d28197907eb968353042f945b4b13531fbb922659d700f",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image(), one sheet per exec; no truncated image output",
+      "result": "PASS",
+      "findings": "Archive light/dark shows retained identity, number, direction/date/time/duration and count legibly. Large-font restore confirmation uses a bounded scroll body with both native Cancel/Restore buttons visible. Saved-backup screen shows title, success and Close action, with long explanation continuing below the viewport.",
+      "raw_names": [
+        "personalization-archive-dark.png",
+        "personalization-archive-light.png",
+        "personalization-backup-restore-confirmation.png",
+        "personalization-backup-saved-dark.png"
+      ]
+    },
+    {
+      "sheet": "other-08.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-08.png",
+      "sha256": "f3b7b40b68872f9296317672bdcc7d4baf0d8bb1cb225094c1956152e592f041",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image(), one sheet per exec; no truncated image output",
+      "result": "PASS",
+      "findings": "Light backup confirmation and dark avatar-shape dialogs have legible labels, selection dots, previews and Cancel action. Scrolled icon chooser keeps remaining icon rows and Cancel accessible; its partially shown first row is ordinary scroll continuation.",
+      "raw_names": [
+        "personalization-backup-saved-light.png",
+        "personalization-chooser-dark-avatar_shapes-bottom.png",
+        "personalization-chooser-dark-avatar_shapes.png",
+        "personalization-chooser-dark-icons-bottom.png"
+      ]
+    },
+    {
+      "sheet": "other-09.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-09.png",
+      "sha256": "e2514630bff734f55107d9c5145f41550af06bf44d4a957d5e3cf46c51be9f7e",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image(), one sheet per exec; no truncated image output",
+      "result": "PASS",
+      "findings": "Dark icon and light avatar/icon chooser labels, radio controls and gold/green previews are readable with bounded scroll continuation. Both original light avatar-shape PNGs were additionally viewed at full size and all four previews show DA initials clearly.",
+      "raw_names": [
+        "personalization-chooser-dark-icons.png",
+        "personalization-chooser-light-avatar_shapes-bottom.png",
+        "personalization-chooser-light-avatar_shapes.png",
+        "personalization-chooser-light-icons-bottom.png"
+      ]
+    },
+    {
+      "sheet": "other-10.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-10.png",
+      "sha256": "d721d32540a516a71f1515e2157b578f785fbdbce45bdef0ee55b5b766606433",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image(), one sheet per exec; no truncated image output",
+      "result": "PASS",
+      "findings": "Light icon chooser and dark English Contacts large/standard text retain visible chooser actions, favorites count/expand affordance, search hint, add/refresh/business controls and bottom navigation. Long names and large-font Businesses use bounded single-line ellipsization; list rows continue below the viewport.",
+      "raw_names": [
+        "personalization-chooser-light-icons.png",
+        "personalization-contacts-dark-en-largefont-collapsed.png",
+        "personalization-contacts-dark-en-largefont-expanded.png",
+        "personalization-contacts-dark-en-standard-collapsed.png"
+      ]
+    },
+    {
+      "sheet": "other-11.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-11.png",
+      "sha256": "e91089d9bfc96ef45c56a5ebc49a3e62985d25775fa50bf33a4b6b53cb10305a",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image(), one sheet per exec; no truncated image output",
+      "result": "PASS",
+      "findings": "Dark English/Hebrew Contacts standard/large-font collapsed/expanded states have readable identities, numbers, favorites, search, add/refresh and call controls. RTL placement is consistent and the favorites strip fits; ordinary list continuation meets bottom navigation.",
+      "raw_names": [
+        "personalization-contacts-dark-en-standard-expanded.png",
+        "personalization-contacts-dark-he-largefont-collapsed.png",
+        "personalization-contacts-dark-he-largefont-expanded.png",
+        "personalization-contacts-dark-he-standard-collapsed.png"
+      ]
+    },
+    {
+      "sheet": "other-12.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-12.png",
+      "sha256": "c0f9c1f1ad7000bf005685de318e29c120602eb9bce322c3cb0fbed21ca7a6ad",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image(), one sheet per exec; no truncated image output",
+      "result": "PASS",
+      "findings": "Dark Hebrew and light English Contacts standard/large-font states keep search/favorites and contact rows readable; gold actions and green call controls remain distinct on each surface. Last partially visible list rows indicate normal scroll continuation.",
+      "raw_names": [
+        "personalization-contacts-dark-he-standard-expanded.png",
+        "personalization-contacts-light-en-largefont-collapsed.png",
+        "personalization-contacts-light-en-largefont-expanded.png",
+        "personalization-contacts-light-en-standard-collapsed.png"
+      ]
+    },
+    {
+      "sheet": "other-13.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-13.png",
+      "sha256": "483d6373e01a816624f18b5f619f74f6cf9cbc907d0420ae597c21eab00e8613",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image(), one sheet per exec; no truncated image output",
+      "result": "PASS",
+      "findings": "Light English/Hebrew Contacts standard/large-font collapsed/expanded states preserve readable numbers, bounded long labels, RTL layout, favorites count/strip and bottom navigation, with unobstructed native system bars.",
+      "raw_names": [
+        "personalization-contacts-light-en-standard-expanded.png",
+        "personalization-contacts-light-he-largefont-collapsed.png",
+        "personalization-contacts-light-he-largefont-expanded.png",
+        "personalization-contacts-light-he-standard-collapsed.png"
+      ]
+    }
+  ],
+  "frames": [
+    {
+      "name": "business-detail.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/business-detail.png",
+      "sha256": "2637803e33538edc232beb3e72b299d9d996f683518298eb40702f916daf4c5a",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-01.png",
+      "finding": "Business detail/search/dark/light list: count 2,720 and OpenStreetMap contributors attribution fit; detail shows source URL, ODbL-1.0, timestamp 2026-09-10T19:40:21+00:00, public-record caveat and Source/Close/Dial actions. Hebrew categories are friendly (for example mobile accessories and hostel), the compact header leaves useful list space, and no retained giant header gap is visible."
+    },
+    {
+      "name": "business-search.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/business-search.png",
+      "sha256": "d93dfbfe7ab6a6d8fe87663ebac51cdd7d95593ffd6cf26548ebd11c09434bbb",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-01.png",
+      "finding": "Business detail/search/dark/light list: count 2,720 and OpenStreetMap contributors attribution fit; detail shows source URL, ODbL-1.0, timestamp 2026-09-10T19:40:21+00:00, public-record caveat and Source/Close/Dial actions. Hebrew categories are friendly (for example mobile accessories and hostel), the compact header leaves useful list space, and no retained giant header gap is visible."
+    },
+    {
+      "name": "business-tab-dark.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/business-tab-dark.png",
+      "sha256": "5319f7b5eaabffaa135bc65333ea426020caddcc5bdd9c0b84e7cae997d5cee5",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-01.png",
+      "finding": "Business detail/search/dark/light list: count 2,720 and OpenStreetMap contributors attribution fit; detail shows source URL, ODbL-1.0, timestamp 2026-09-10T19:40:21+00:00, public-record caveat and Source/Close/Dial actions. Hebrew categories are friendly (for example mobile accessories and hostel), the compact header leaves useful list space, and no retained giant header gap is visible."
+    },
+    {
+      "name": "business-tab-light.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/business-tab-light.png",
+      "sha256": "9ae881ce69e117f1230b08a5a152ca6179907ac2e170038389a324213e11b7bb",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-01.png",
+      "finding": "Business detail/search/dark/light list: count 2,720 and OpenStreetMap contributors attribution fit; detail shows source URL, ODbL-1.0, timestamp 2026-09-10T19:40:21+00:00, public-record caveat and Source/Close/Dial actions. Hebrew categories are friendly (for example mobile accessories and hostel), the compact header leaves useful list space, and no retained giant header gap is visible."
+    },
+    {
+      "name": "call-integration-notification-active-private-en.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/call-integration-notification-active-private-en.png",
+      "sha256": "9df9758d8e553d29eb12be7f0e611748cd72d7fac1a5533a47e7b80d5b040abc",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-02.png",
+      "finding": "Native active-call notifications show caller identity/state and bounded End, audio-state and Return controls in English/Hebrew. Hebrew enable label and native quick-setting labels use small-screen ellipsization; icon/action alignment and native status/navigation contrast remain visible."
+    },
+    {
+      "name": "call-integration-notification-active-private-he.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/call-integration-notification-active-private-he.png",
+      "sha256": "997dc57af2abbdafff639b945cd941cd9e03f398cf5d708787b9d96c987a6ada",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-02.png",
+      "finding": "Native active-call notifications show caller identity/state and bounded End, audio-state and Return controls in English/Hebrew. Hebrew enable label and native quick-setting labels use small-screen ellipsization; icon/action alignment and native status/navigation contrast remain visible."
+    },
+    {
+      "name": "call-integration-notification-active-speaker-en.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/call-integration-notification-active-speaker-en.png",
+      "sha256": "4c4f3e41b6a2dbe97764a706345cb8125e0c6eae9646d8a5a75e9c297df09250",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-02.png",
+      "finding": "Native active-call notifications show caller identity/state and bounded End, audio-state and Return controls in English/Hebrew. Hebrew enable label and native quick-setting labels use small-screen ellipsization; icon/action alignment and native status/navigation contrast remain visible."
+    },
+    {
+      "name": "call-integration-notification-active-speaker-he.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/call-integration-notification-active-speaker-he.png",
+      "sha256": "934371ebb1f59f4fe89885f5d7ac56714e4e32ca3d01e6958351d82820dfe85d",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-02.png",
+      "finding": "Native active-call notifications show caller identity/state and bounded End, audio-state and Return controls in English/Hebrew. Hebrew enable label and native quick-setting labels use small-screen ellipsization; icon/action alignment and native status/navigation contrast remain visible."
+    },
+    {
+      "name": "call-integration-notification-incoming-he.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/call-integration-notification-incoming-he.png",
+      "sha256": "e742578217babd8cb204dc39cb1fef7fb730a1e790dc652c747debf1a9c780ca",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-03.png",
+      "finding": "Native Hebrew incoming/outgoing call cards remain readable with identifiable call actions. Returned Contacts retains search/query, caller rows, favorites and bottom navigation; returned Settings is at an ordinary retained scroll position, with readable controls and no overlay obstructing content."
+    },
+    {
+      "name": "call-integration-notification-outgoing-he.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/call-integration-notification-outgoing-he.png",
+      "sha256": "035f24a9ce4938c1693713e6dc4600b1e5cb7510a578ae6fc40822d59fc2db60",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-03.png",
+      "finding": "Native Hebrew incoming/outgoing call cards remain readable with identifiable call actions. Returned Contacts retains search/query, caller rows, favorites and bottom navigation; returned Settings is at an ordinary retained scroll position, with readable controls and no overlay obstructing content."
+    },
+    {
+      "name": "call-integration-return-contacts.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/call-integration-return-contacts.png",
+      "sha256": "70acaf090d9a2a771ce91a35d65e3654e36d9e11d22dbac34c2acb9dc82c6982",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-03.png",
+      "finding": "Native Hebrew incoming/outgoing call cards remain readable with identifiable call actions. Returned Contacts retains search/query, caller rows, favorites and bottom navigation; returned Settings is at an ordinary retained scroll position, with readable controls and no overlay obstructing content."
+    },
+    {
+      "name": "call-integration-return-settings.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/call-integration-return-settings.png",
+      "sha256": "b50a9ea4db59929e5f7dd93be613a189f12a263610ea5730f7516398959ef4fb",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-03.png",
+      "finding": "Native Hebrew incoming/outgoing call cards remain readable with identifiable call actions. Returned Contacts retains search/query, caller rows, favorites and bottom navigation; returned Settings is at an ordinary retained scroll position, with readable controls and no overlay obstructing content."
+    },
+    {
+      "name": "callback-list-dark.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/callback-list-dark.png",
+      "sha256": "de15fb2fd1eb6d1a9f8d50cd8182fa30bdba424c1ecf0d346393e7bde547ba88",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-04.png",
+      "finding": "Callback summary/date, two missed calls, explanatory copy, caller number and callback action fit in both themes. Reminder settings section/switch and wrapped explanation remain readable; content continues in its ordinary scroll area above bottom navigation."
+    },
+    {
+      "name": "callback-list-light.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/callback-list-light.png",
+      "sha256": "779627f66da843d17d91d8be9af3a7792c56d654340cfa4c061b08e164d97fd5",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-04.png",
+      "finding": "Callback summary/date, two missed calls, explanatory copy, caller number and callback action fit in both themes. Reminder settings section/switch and wrapped explanation remain readable; content continues in its ordinary scroll area above bottom navigation."
+    },
+    {
+      "name": "callback-settings-dark.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/callback-settings-dark.png",
+      "sha256": "47136f5a318a77164f84090d99882df978d7299b16a43b2d246792a66d1b4bd0",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-04.png",
+      "finding": "Callback summary/date, two missed calls, explanatory copy, caller number and callback action fit in both themes. Reminder settings section/switch and wrapped explanation remain readable; content continues in its ordinary scroll area above bottom navigation."
+    },
+    {
+      "name": "callback-settings-light.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/callback-settings-light.png",
+      "sha256": "3febbc0cd8f14269dfa59d9d3b9e73a6c928816d5c0efaad1ea44168f9a5413e",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-04.png",
+      "finding": "Callback summary/date, two missed calls, explanatory copy, caller number and callback action fit in both themes. Reminder settings section/switch and wrapped explanation remain readable; content continues in its ordinary scroll area above bottom navigation."
+    },
+    {
+      "name": "changelog-dark-bottom.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/changelog-dark-bottom.png",
+      "sha256": "3a13a9d42085af5042fa44b3a4a313b5ac710dfd81f5eb67f6f286bf2c4c1c9e",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-05.png",
+      "finding": "Changelog title/current 0.13.0/version cards and Hebrew prose are readable in light/dark. Expanded entries continue below the scroll viewport; bottom captures show 0.2.0/0.1.0 and offline-availability footer without clipped fixed actions."
+    },
+    {
+      "name": "changelog-dark.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/changelog-dark.png",
+      "sha256": "324edfc83e22830644664f0fdca43db49a2bcce92724715da998ab2886ae6ea5",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-05.png",
+      "finding": "Changelog title/current 0.13.0/version cards and Hebrew prose are readable in light/dark. Expanded entries continue below the scroll viewport; bottom captures show 0.2.0/0.1.0 and offline-availability footer without clipped fixed actions."
+    },
+    {
+      "name": "changelog-light-bottom.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/changelog-light-bottom.png",
+      "sha256": "6a6d5eeb888f03e47d534d3f00a451cb463b3ad3d5b11028630e3d315a207d2a",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-05.png",
+      "finding": "Changelog title/current 0.13.0/version cards and Hebrew prose are readable in light/dark. Expanded entries continue below the scroll viewport; bottom captures show 0.2.0/0.1.0 and offline-availability footer without clipped fixed actions."
+    },
+    {
+      "name": "changelog-light.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/changelog-light.png",
+      "sha256": "7cf15a8fa0dbad6851e7e6912c34b48677320726e68ec0ee8ffb00f742b626d2",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-05.png",
+      "finding": "Changelog title/current 0.13.0/version cards and Hebrew prose are readable in light/dark. Expanded entries continue below the scroll viewport; bottom captures show 0.2.0/0.1.0 and offline-availability footer without clipped fixed actions."
+    },
+    {
+      "name": "incoming-swipe-dragging.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/incoming-swipe-dragging.png",
+      "sha256": "0423bef8361c880158f363bcf59341dc6d7fc9d2d7021aca2bc3ee3e411e2fe2",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-06.png",
+      "finding": "Incoming caller number, bounded long caller-name ellipsis, incoming-state label, right-swipe answer instruction and Reject control remain distinct in resting/dragging captures. Native missed single/multiple notifications retain readable count/name/Clear text; number truncation is bounded native notification ellipsization."
+    },
+    {
+      "name": "incoming-swipe-resting.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/incoming-swipe-resting.png",
+      "sha256": "91e8960edcbeae48e9ab773fab77b71abcc6c603ea78b0642ec77c2738ff461e",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-06.png",
+      "finding": "Incoming caller number, bounded long caller-name ellipsis, incoming-state label, right-swipe answer instruction and Reject control remain distinct in resting/dragging captures. Native missed single/multiple notifications retain readable count/name/Clear text; number truncation is bounded native notification ellipsization."
+    },
+    {
+      "name": "missed-multiple-he.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/missed-multiple-he.png",
+      "sha256": "6813076ed7f59bc9d7faba0a7307fb887130bc01430dd86bdb34c516a9ae5e8e",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-06.png",
+      "finding": "Incoming caller number, bounded long caller-name ellipsis, incoming-state label, right-swipe answer instruction and Reject control remain distinct in resting/dragging captures. Native missed single/multiple notifications retain readable count/name/Clear text; number truncation is bounded native notification ellipsization."
+    },
+    {
+      "name": "missed-single-he.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/missed-single-he.png",
+      "sha256": "ed33431b59bca3f913b989f469bccd52b170eeb99abb01086e562aaffcfb1549",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-06.png",
+      "finding": "Incoming caller number, bounded long caller-name ellipsis, incoming-state label, right-swipe answer instruction and Reject control remain distinct in resting/dragging captures. Native missed single/multiple notifications retain readable count/name/Clear text; number truncation is bounded native notification ellipsization."
+    },
+    {
+      "name": "personalization-archive-dark.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-archive-dark.png",
+      "sha256": "47d381885a74b101ae64043424c0ed8d277eca78e986ae2384a90edab5327b59",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-07.png",
+      "finding": "Archive light/dark shows retained identity, number, direction/date/time/duration and count legibly. Large-font restore confirmation uses a bounded scroll body with both native Cancel/Restore buttons visible. Saved-backup screen shows title, success and Close action, with long explanation continuing below the viewport."
+    },
+    {
+      "name": "personalization-archive-light.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-archive-light.png",
+      "sha256": "2cc583bba432936c211d6cc6328338b24485cb1b4ae04927f94f85ed35d80446",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-07.png",
+      "finding": "Archive light/dark shows retained identity, number, direction/date/time/duration and count legibly. Large-font restore confirmation uses a bounded scroll body with both native Cancel/Restore buttons visible. Saved-backup screen shows title, success and Close action, with long explanation continuing below the viewport."
+    },
+    {
+      "name": "personalization-backup-restore-confirmation.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-backup-restore-confirmation.png",
+      "sha256": "214803e10a498dce298c9accbba823be1515ca939713a1388c7ed2e2c5b380dd",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-07.png",
+      "finding": "Archive light/dark shows retained identity, number, direction/date/time/duration and count legibly. Large-font restore confirmation uses a bounded scroll body with both native Cancel/Restore buttons visible. Saved-backup screen shows title, success and Close action, with long explanation continuing below the viewport."
+    },
+    {
+      "name": "personalization-backup-saved-dark.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-backup-saved-dark.png",
+      "sha256": "5ca5c090a00f669485fa9d18e1a10caef5388c2131fc525e0a9dc123c587ff85",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-07.png",
+      "finding": "Archive light/dark shows retained identity, number, direction/date/time/duration and count legibly. Large-font restore confirmation uses a bounded scroll body with both native Cancel/Restore buttons visible. Saved-backup screen shows title, success and Close action, with long explanation continuing below the viewport."
+    },
+    {
+      "name": "personalization-backup-saved-light.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-backup-saved-light.png",
+      "sha256": "c725a72d4f5630e90049eb14782a8754a3a67c2d3e204026878050b88d03a738",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-08.png",
+      "finding": "Light backup confirmation and dark avatar-shape dialogs have legible labels, selection dots, previews and Cancel action. Scrolled icon chooser keeps remaining icon rows and Cancel accessible; its partially shown first row is ordinary scroll continuation."
+    },
+    {
+      "name": "personalization-chooser-dark-avatar_shapes-bottom.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-chooser-dark-avatar_shapes-bottom.png",
+      "sha256": "dbf15b8a65266e1b73ba0004b1265e043207bfd571b5b41f1700ae6a1031dd37",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-08.png",
+      "finding": "Light backup confirmation and dark avatar-shape dialogs have legible labels, selection dots, previews and Cancel action. Scrolled icon chooser keeps remaining icon rows and Cancel accessible; its partially shown first row is ordinary scroll continuation."
+    },
+    {
+      "name": "personalization-chooser-dark-avatar_shapes.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-chooser-dark-avatar_shapes.png",
+      "sha256": "dbf15b8a65266e1b73ba0004b1265e043207bfd571b5b41f1700ae6a1031dd37",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-08.png",
+      "finding": "Light backup confirmation and dark avatar-shape dialogs have legible labels, selection dots, previews and Cancel action. Scrolled icon chooser keeps remaining icon rows and Cancel accessible; its partially shown first row is ordinary scroll continuation."
+    },
+    {
+      "name": "personalization-chooser-dark-icons-bottom.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-chooser-dark-icons-bottom.png",
+      "sha256": "b3614f387c6d57ba3f7f0b22cc7bbc0c70f8c5b8a708364fa9658989170b67e1",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-08.png",
+      "finding": "Light backup confirmation and dark avatar-shape dialogs have legible labels, selection dots, previews and Cancel action. Scrolled icon chooser keeps remaining icon rows and Cancel accessible; its partially shown first row is ordinary scroll continuation."
+    },
+    {
+      "name": "personalization-chooser-dark-icons.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-chooser-dark-icons.png",
+      "sha256": "65c55310d588d3e9a7fab1e2704b00f5be24b8e0a62bbc5a8d872169834f1dfc",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-09.png",
+      "finding": "Dark icon and light avatar/icon chooser labels, radio controls and gold/green previews are readable with bounded scroll continuation. Both original light avatar-shape PNGs were additionally viewed at full size and all four previews show DA initials clearly."
+    },
+    {
+      "name": "personalization-chooser-light-avatar_shapes-bottom.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-chooser-light-avatar_shapes-bottom.png",
+      "sha256": "bb21764a8ec3b63a0999c6730ad48b407573c0776e14b331296daf969458f213",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-09.png",
+      "finding": "Dark icon and light avatar/icon chooser labels, radio controls and gold/green previews are readable with bounded scroll continuation. Both original light avatar-shape PNGs were additionally viewed at full size and all four previews show DA initials clearly."
+    },
+    {
+      "name": "personalization-chooser-light-avatar_shapes.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-chooser-light-avatar_shapes.png",
+      "sha256": "bb21764a8ec3b63a0999c6730ad48b407573c0776e14b331296daf969458f213",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-09.png",
+      "finding": "Dark icon and light avatar/icon chooser labels, radio controls and gold/green previews are readable with bounded scroll continuation. Both original light avatar-shape PNGs were additionally viewed at full size and all four previews show DA initials clearly."
+    },
+    {
+      "name": "personalization-chooser-light-icons-bottom.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-chooser-light-icons-bottom.png",
+      "sha256": "e199b20571468d043e136bd745b31bf9b718df33f4b6d69296aa4625c76c58f5",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-09.png",
+      "finding": "Dark icon and light avatar/icon chooser labels, radio controls and gold/green previews are readable with bounded scroll continuation. Both original light avatar-shape PNGs were additionally viewed at full size and all four previews show DA initials clearly."
+    },
+    {
+      "name": "personalization-chooser-light-icons.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-chooser-light-icons.png",
+      "sha256": "5f613def138c710b63886d48d4d23d513dd4d305be6c8c705d433de78e15c721",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-10.png",
+      "finding": "Light icon chooser and dark English Contacts large/standard text retain visible chooser actions, favorites count/expand affordance, search hint, add/refresh/business controls and bottom navigation. Long names and large-font Businesses use bounded single-line ellipsization; list rows continue below the viewport."
+    },
+    {
+      "name": "personalization-contacts-dark-en-largefont-collapsed.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-dark-en-largefont-collapsed.png",
+      "sha256": "f497cec457bd8a224c71dbdae2ed505f81b7cf411ad5b9e7e735553708b0fe76",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-10.png",
+      "finding": "Light icon chooser and dark English Contacts large/standard text retain visible chooser actions, favorites count/expand affordance, search hint, add/refresh/business controls and bottom navigation. Long names and large-font Businesses use bounded single-line ellipsization; list rows continue below the viewport."
+    },
+    {
+      "name": "personalization-contacts-dark-en-largefont-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-dark-en-largefont-expanded.png",
+      "sha256": "3996905ffe0fdbe5090bbf7f2bcfe8827c9247226042e93e0fa92792f01bef1c",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-10.png",
+      "finding": "Light icon chooser and dark English Contacts large/standard text retain visible chooser actions, favorites count/expand affordance, search hint, add/refresh/business controls and bottom navigation. Long names and large-font Businesses use bounded single-line ellipsization; list rows continue below the viewport."
+    },
+    {
+      "name": "personalization-contacts-dark-en-standard-collapsed.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-dark-en-standard-collapsed.png",
+      "sha256": "93bd1ef8dfe42c98f83c3532d7748a52980e0eb3adc61ae937141981b10091f8",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-10.png",
+      "finding": "Light icon chooser and dark English Contacts large/standard text retain visible chooser actions, favorites count/expand affordance, search hint, add/refresh/business controls and bottom navigation. Long names and large-font Businesses use bounded single-line ellipsization; list rows continue below the viewport."
+    },
+    {
+      "name": "personalization-contacts-dark-en-standard-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-dark-en-standard-expanded.png",
+      "sha256": "2a1475ed8440361bf7500578612123c80eb49f484dfa6fdf0334049a979c8c44",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-11.png",
+      "finding": "Dark English/Hebrew Contacts standard/large-font collapsed/expanded states have readable identities, numbers, favorites, search, add/refresh and call controls. RTL placement is consistent and the favorites strip fits; ordinary list continuation meets bottom navigation."
+    },
+    {
+      "name": "personalization-contacts-dark-he-largefont-collapsed.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-dark-he-largefont-collapsed.png",
+      "sha256": "a0f283096b5996a8ec39dc778fdfbf4ff257d22a984662b291ddb783647a1d42",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-11.png",
+      "finding": "Dark English/Hebrew Contacts standard/large-font collapsed/expanded states have readable identities, numbers, favorites, search, add/refresh and call controls. RTL placement is consistent and the favorites strip fits; ordinary list continuation meets bottom navigation."
+    },
+    {
+      "name": "personalization-contacts-dark-he-largefont-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-dark-he-largefont-expanded.png",
+      "sha256": "ea2be6505667abb5efdee248d385a091a5a3e6aa47933baf1805007986a7f6c1",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-11.png",
+      "finding": "Dark English/Hebrew Contacts standard/large-font collapsed/expanded states have readable identities, numbers, favorites, search, add/refresh and call controls. RTL placement is consistent and the favorites strip fits; ordinary list continuation meets bottom navigation."
+    },
+    {
+      "name": "personalization-contacts-dark-he-standard-collapsed.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-dark-he-standard-collapsed.png",
+      "sha256": "dfbffcc32dd441026fc99236a72ea5c46aae116da2dda25c6536df3fa9b064de",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-11.png",
+      "finding": "Dark English/Hebrew Contacts standard/large-font collapsed/expanded states have readable identities, numbers, favorites, search, add/refresh and call controls. RTL placement is consistent and the favorites strip fits; ordinary list continuation meets bottom navigation."
+    },
+    {
+      "name": "personalization-contacts-dark-he-standard-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-dark-he-standard-expanded.png",
+      "sha256": "aa0ab4da3114f7506fc4b1730d1aced119158db20e888c4121c2df93768f00f8",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-12.png",
+      "finding": "Dark Hebrew and light English Contacts standard/large-font states keep search/favorites and contact rows readable; gold actions and green call controls remain distinct on each surface. Last partially visible list rows indicate normal scroll continuation."
+    },
+    {
+      "name": "personalization-contacts-light-en-largefont-collapsed.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-light-en-largefont-collapsed.png",
+      "sha256": "262b7dd2d6245ffe45488b164263dbe35db63e5e85de29544c387aea00aa0545",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-12.png",
+      "finding": "Dark Hebrew and light English Contacts standard/large-font states keep search/favorites and contact rows readable; gold actions and green call controls remain distinct on each surface. Last partially visible list rows indicate normal scroll continuation."
+    },
+    {
+      "name": "personalization-contacts-light-en-largefont-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-light-en-largefont-expanded.png",
+      "sha256": "81b09eb1f62db62b3331f3066047e8b78b291a660293e31a57b6fd1720129687",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-12.png",
+      "finding": "Dark Hebrew and light English Contacts standard/large-font states keep search/favorites and contact rows readable; gold actions and green call controls remain distinct on each surface. Last partially visible list rows indicate normal scroll continuation."
+    },
+    {
+      "name": "personalization-contacts-light-en-standard-collapsed.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-light-en-standard-collapsed.png",
+      "sha256": "86fcd99cc48a0f25605a211a04e5f17631d5b698578c47697fac48692a76c87b",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-12.png",
+      "finding": "Dark Hebrew and light English Contacts standard/large-font states keep search/favorites and contact rows readable; gold actions and green call controls remain distinct on each surface. Last partially visible list rows indicate normal scroll continuation."
+    },
+    {
+      "name": "personalization-contacts-light-en-standard-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-light-en-standard-expanded.png",
+      "sha256": "1b6233754281bf273268c5f1d60e2518847f8279c8b82dc18fa9cdd36de2e437",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-13.png",
+      "finding": "Light English/Hebrew Contacts standard/large-font collapsed/expanded states preserve readable numbers, bounded long labels, RTL layout, favorites count/strip and bottom navigation, with unobstructed native system bars."
+    },
+    {
+      "name": "personalization-contacts-light-he-largefont-collapsed.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-light-he-largefont-collapsed.png",
+      "sha256": "4cfb5a0c08c8f68df12916aee9d04e8c6f953b21da0989408116eea5ec11aac9",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-13.png",
+      "finding": "Light English/Hebrew Contacts standard/large-font collapsed/expanded states preserve readable numbers, bounded long labels, RTL layout, favorites count/strip and bottom navigation, with unobstructed native system bars."
+    },
+    {
+      "name": "personalization-contacts-light-he-largefont-expanded.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-light-he-largefont-expanded.png",
+      "sha256": "abf3c5ddb200a51678d13962e55f9e767b4e3c72e4d2e4532c837a99a5d11588",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-13.png",
+      "finding": "Light English/Hebrew Contacts standard/large-font collapsed/expanded states preserve readable numbers, bounded long labels, RTL layout, favorites count/strip and bottom navigation, with unobstructed native system bars."
+    },
+    {
+      "name": "personalization-contacts-light-he-standard-collapsed.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-light-he-standard-collapsed.png",
+      "sha256": "8f6850c87d6687be9611094f63d33c1579a532f3fe9e0eeb65cda23534331a97",
+      "result": "PASS",
+      "actually_viewed_on_sheet": "other-13.png",
+      "finding": "Light English/Hebrew Contacts standard/large-font collapsed/expanded states preserve readable numbers, bounded long labels, RTL layout, favorites count/strip and bottom navigation, with unobstructed native system bars."
+    }
+  ],
+  "additional_original_png_views": [
+    {
+      "name": "personalization-chooser-light-avatar_shapes.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-chooser-light-avatar_shapes.png",
+      "sha256": "bb21764a8ec3b63a0999c6730ad48b407573c0776e14b331296daf969458f213",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image(), one raw PNG per exec",
+      "finding": "Original full-size image confirms all four gold DA preview initials are visible; shape labels/radio controls/Cancel remain legible."
+    },
+    {
+      "name": "personalization-chooser-light-avatar_shapes-bottom.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-chooser-light-avatar_shapes-bottom.png",
+      "sha256": "bb21764a8ec3b63a0999c6730ad48b407573c0776e14b331296daf969458f213",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image(), one raw PNG per exec",
+      "finding": "Original full-size image confirms all four gold DA preview initials are visible; shape labels/radio controls/Cancel remain legible."
+    }
+  ],
+  "blocking_findings": [],
+  "bounded_observations": [
+    "Native notification action/phone labels and long contact/favorites labels use bounded small-screen ellipsization.",
+    "Settings, changelog, icon chooser, backup explanation and contact lists show ordinary scroll continuation; partial viewport rows are not treated as clipping defects.",
+    "Native status/navigation bars remain visible with appropriate light/dark contrast in the assigned captures."
+  ],
+  "limits": [
+    "This is current-source visual review of only the assigned 52 frames; it does not establish whole269 visual approval.",
+    "Static capture review does not independently prove gestures, dialing, data mutation, accessibility focus or physical-device/audio/update behavior.",
+    "No publication authorization, signer/matching-key upgrade proof or physical Jelly Star testing is claimed.",
+    "0.12 remains immutable/already delivered with no resend; 0.13 remains unreleased."
+  ]
+}

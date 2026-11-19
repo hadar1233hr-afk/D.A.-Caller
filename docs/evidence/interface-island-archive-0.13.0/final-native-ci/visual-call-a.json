@@ -1,0 +1,667 @@
+{
+  "schema": "da-caller-bounded-actual-visual-review-v1",
+  "reviewer": "visual7e_call_a",
+  "completed_at_utc": "2026-11-19T12:36:31.738586+00:00",
+  "source_sha": "7e039daaf2b43716ed2a2b3db1df0b04a8647fcd",
+  "app_tree": "96aa47e9152edc931e4830dd3dbe65e3a09418df",
+  "run_id": 44521985299,
+  "scope": "call-01.png through call-13.png only; 52 constituent unaltered 480x854 native capture frames",
+  "manifest_path": "/workspace/work/native-013-review-44521985299/manifest.json",
+  "manifest_sha256": "4c22f75395d8429a0c82a5b1e9f35f82c10717adef67ca0a693b2ab79a0fc2cc",
+  "review_sheet_directory": "/workspace/work/native-013-review-44521985299",
+  "raw_png_directory": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots",
+  "actually_viewed_sheet_count": 13,
+  "actually_viewed_raw_frame_count": 52,
+  "standalone_original_count": 0,
+  "unseen_assigned_frame_count": 0,
+  "result": "PASS",
+  "pass_count": 52,
+  "fail_count": 0,
+  "findings": [
+    {
+      "status": "PASS",
+      "criterion": "Branding removal",
+      "observation": "No DA CALLER branding appears in these assigned frames."
+    },
+    {
+      "status": "PASS",
+      "criterion": "Digit and label readability",
+      "observation": "Visible phone numbers, timers and DTMF digits are readable; keypad digits are bold and alphabet hints are complete in the reviewed standard/large-font captures."
+    },
+    {
+      "status": "PASS",
+      "criterion": "Identity/control separation",
+      "observation": "Visible caller identity and phase/timer remain distinct from audio/more/normal controls; the intentional keypad overlay preserves a readable timer and complete controls."
+    },
+    {
+      "status": "PASS",
+      "criterion": "RTL/EN and long names",
+      "observation": "The assigned Hebrew and English variants have readable labels and bounded long-name ellipsis without controls collision."
+    },
+    {
+      "status": "PASS",
+      "criterion": "Light/dark and large font",
+      "observation": "Assigned Emerald and Frost light/dark captures and Graphite dark captures retain contrast, readable text and contained controls in standard and large-font states."
+    },
+    {
+      "status": "PASS",
+      "criterion": "Native bars",
+      "observation": "Native status clock/right icons and bottom navigation remain visible; no app-content overlap is visible in this assigned scope."
+    }
+  ],
+  "viewed_sheets": [
+    {
+      "filename": "call-01.png",
+      "sha256": "e722c8e0025e50919de349bbabecf9eef43f4ace7069aab62b55965c011cd5d2",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "image_output_complete": true,
+      "raw_frame_count": 4,
+      "status": "PASS",
+      "finding": "Four Emerald dark audio panels: identity, timer, route rows and bottom actions readable; long EN/HE caller names use bounded ellipsis; no branding or native-bar overlap."
+    },
+    {
+      "filename": "call-02.png",
+      "sha256": "88f712db9bf6aecc1e406caf2098e92f6f505dd591a0a5bbe08da5b77938856c",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "image_output_complete": true,
+      "raw_frame_count": 4,
+      "status": "PASS",
+      "finding": "Emerald dark keypad standard/large font has bold readable digits and complete alphabet hints; more panels keep caller/timer separate from readable additional actions and hang-up."
+    },
+    {
+      "filename": "call-03.png",
+      "sha256": "36a65079b905b8b1276a3b0973fab648dccfab18f43c63a756021c86d19a7649",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "image_output_complete": true,
+      "raw_frame_count": 4,
+      "status": "PASS",
+      "finding": "Emerald dark normal standard, large font and EN/HE long-name variants keep caller, number, timer and controls distinct; long names ellipsize within bounds."
+    },
+    {
+      "filename": "call-04.png",
+      "sha256": "04a61fc00228f98b41e6f51b60eec5fd8892586dbfb4116a1195d4bba1930100",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "image_output_complete": true,
+      "raw_frame_count": 4,
+      "status": "PASS",
+      "finding": "Emerald light audio/keypad standard and large-font variants have clear contrast, readable route labels/digits/hints, complete controls and intact system bars."
+    },
+    {
+      "filename": "call-05.png",
+      "sha256": "6cbbea3aed25366fabaf4d12d9305adee2653f9015c4130d6c6cfd618b20d8de",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "image_output_complete": true,
+      "raw_frame_count": 4,
+      "status": "PASS",
+      "finding": "Emerald light more/normal standard and large-font variants preserve readable identity and action labels with clear separation and no native-bar overlap."
+    },
+    {
+      "filename": "call-06.png",
+      "sha256": "a77b71444034db90bea7a80481ecf338212f7ae83a0677ca29880dfca003462f",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "image_output_complete": true,
+      "raw_frame_count": 4,
+      "status": "PASS",
+      "finding": "Frost dark audio standard, large font and EN/HE long-name variants have readable route rows, separate identity/timer, bounded name ellipsis and visible hang-up."
+    },
+    {
+      "filename": "call-07.png",
+      "sha256": "1482e36580cecf2175668fd6450d307718099f2d38f8fb190a20344ad4272943",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "image_output_complete": true,
+      "raw_frame_count": 4,
+      "status": "PASS",
+      "finding": "Frost dark keypad/more standard and large-font variants have bold readable keypad digits/full hints and distinct additional-action labels; controls fit above native navigation."
+    },
+    {
+      "filename": "call-08.png",
+      "sha256": "2c7a1879214b73c8aa9342426cf3be5365f1cdb7dc875b3320b00ad3be4629f3",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "image_output_complete": true,
+      "raw_frame_count": 4,
+      "status": "PASS",
+      "finding": "Frost dark normal standard, large-font and EN/HE long-name variants preserve the intended side-by-side avatar/identity layout, readable timer, clear controls and bounded long-name ellipsis."
+    },
+    {
+      "filename": "call-09.png",
+      "sha256": "66b11f2ff1a1b169edb3ec4380cc09402dd8f7945bb55fd26ff0c459c58e62a0",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "image_output_complete": true,
+      "raw_frame_count": 4,
+      "status": "PASS",
+      "finding": "Frost light audio/keypad standard and large-font variants have readable text/digits/hints and clear route/action state; native bars remain visible."
+    },
+    {
+      "filename": "call-10.png",
+      "sha256": "e96f5f8fd30d917e190ebeadb3de9ce81c894daf9417dce353dbe63fba870bf7",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "image_output_complete": true,
+      "raw_frame_count": 4,
+      "status": "PASS",
+      "finding": "Frost light more/normal standard and large-font variants have clear identity, timer and action labels, no branding and no overlap with native bars."
+    },
+    {
+      "filename": "call-11.png",
+      "sha256": "211e72cb8822cd4d2c8c326a87ea18eccd2c1df372fab06f3a69b3622ced2f9a",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "image_output_complete": true,
+      "raw_frame_count": 4,
+      "status": "PASS",
+      "finding": "Graphite dark audio standard, large-font and EN/HE long-name variants show readable caller/number/route rows, bounded long-name ellipsis, complete controls and native bars."
+    },
+    {
+      "filename": "call-12.png",
+      "sha256": "cbc1c3fb2f0c0bea1e3cf5559f8cba824123e12c604115e974dcbc9b17208d12",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "image_output_complete": true,
+      "raw_frame_count": 4,
+      "status": "PASS",
+      "finding": "Graphite dark keypad/more standard and large-font variants show large bold keypad digits/full alphabet hints and readable additional-action labels; hang-up remains clear."
+    },
+    {
+      "filename": "call-13.png",
+      "sha256": "1ffdf5c36c6c1712ee4ed428ff6c6d4e5bf5986ee48a1ea69d40d221e2dcc518",
+      "actually_viewed": true,
+      "view_method": "tools.view_image then image(), one sheet per exec",
+      "image_output_complete": true,
+      "raw_frame_count": 4,
+      "status": "PASS",
+      "finding": "Graphite dark normal standard, large-font and EN/HE long-name variants have centered separated identity, number/timer and control grid; long names ellipsize within bounds; native bars remain clear."
+    }
+  ],
+  "viewed_raw_pngs": [
+    {
+      "filename": "call-emerald-dark-audio-largefont.png",
+      "sha256": "204f8152a8280eb2e4d235c62ca51d7762246f8600baddd518c3b54a04551b7b",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-01.png",
+      "position_in_sheet": "top-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-dark-audio-longname-en.png",
+      "sha256": "75bb57c2d18075b09ef7e4d9467f143dfb25e4cbc922e7834df4822d69715d15",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-01.png",
+      "position_in_sheet": "top-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-dark-audio-longname-he.png",
+      "sha256": "1006f265cc47a1f9239bee79f7c41035fb8a7bb474bfcbfb6ff9d8196a954d74",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-01.png",
+      "position_in_sheet": "bottom-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-dark-audio-standard.png",
+      "sha256": "cb4fd1a267479816c87beb7ccbc3f486590f36e75ca81237ff40c5ac2e16d323",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-01.png",
+      "position_in_sheet": "bottom-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-dark-keypad-largefont.png",
+      "sha256": "d86a9a6da23654058186c1a59fcc4d4e0ec4f15b78acd41e072d39186fe63681",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-02.png",
+      "position_in_sheet": "top-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-dark-keypad-standard.png",
+      "sha256": "febebb87c0cc80d2a290251fd8ed2e1ea9728d83fdb7e35d3c36c1340c2fb7b6",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-02.png",
+      "position_in_sheet": "top-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-dark-more-largefont.png",
+      "sha256": "c9e7a68a32cc6b246a8b7f7bbbb9e2168522bba78cb7115f1fe9d1be565cb0b8",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-02.png",
+      "position_in_sheet": "bottom-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-dark-more-standard.png",
+      "sha256": "9eebad5446a28ec608e078014d35deca3fad6fa440b7c41286b43cb1c71f361e",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-02.png",
+      "position_in_sheet": "bottom-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-dark-normal-largefont.png",
+      "sha256": "911152bb6cbbc0423c374959e8a9a33aaebd02ee65cf0596a56b37d3e9eeb9d9",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-03.png",
+      "position_in_sheet": "top-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-dark-normal-longname-en.png",
+      "sha256": "d51dde4e29b53eecba2b1d231c0b0524e948f294f444374add3cfc8ddad5a755",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-03.png",
+      "position_in_sheet": "top-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-dark-normal-longname-he.png",
+      "sha256": "2f86460e09290735ece6edd196c112bac107e1d9a92cbc810fd44c1457fcb278",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-03.png",
+      "position_in_sheet": "bottom-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-dark-normal-standard.png",
+      "sha256": "56cfc5e21a41e9d2de5b5154364b236cd8ebb512048d673a36dd581decace265",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-03.png",
+      "position_in_sheet": "bottom-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-light-audio-largefont.png",
+      "sha256": "28b122d90cbf22dde314e59c2ceaaffb48eef39a8354ec0547c0b23e6e9604f0",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-04.png",
+      "position_in_sheet": "top-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-light-audio-standard.png",
+      "sha256": "69e60c2a11e009da30f459add702df357479832cd25ea89a459dbe6b04b7fc6f",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-04.png",
+      "position_in_sheet": "top-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-light-keypad-largefont.png",
+      "sha256": "5f7df9e93d5f886454c787497988046ae31e6de0700accf301451548ab2e363d",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-04.png",
+      "position_in_sheet": "bottom-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-light-keypad-standard.png",
+      "sha256": "13294daa810013d8f8c3802b3dcdd928503b01bf372567b85566442c55735422",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-04.png",
+      "position_in_sheet": "bottom-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-light-more-largefont.png",
+      "sha256": "e24e70ceaa363737b3929f8f9d0c54410dd431483475316198f5eda3094798a1",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-05.png",
+      "position_in_sheet": "top-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-light-more-standard.png",
+      "sha256": "e4fb2178754f5d773f31cd6cf22336b345712941d84a73b54cf23157ef2e70ce",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-05.png",
+      "position_in_sheet": "top-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-light-normal-largefont.png",
+      "sha256": "770ec38a7a653c94838e296b5ccb0147264d25739707b7509237245f027d9df3",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-05.png",
+      "position_in_sheet": "bottom-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-emerald-light-normal-standard.png",
+      "sha256": "67f80a2dc3288d7c54b89a163751dd0e62929d4c990612379fd0178ab0d05755",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-05.png",
+      "position_in_sheet": "bottom-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-dark-audio-largefont.png",
+      "sha256": "1193183692dd42dbe189426748d490e114761467e9b80daf464f0cd0ea3f4f3d",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-06.png",
+      "position_in_sheet": "top-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-dark-audio-longname-en.png",
+      "sha256": "a6137d1ec5f39ef44741318b6b4fb4dfda752813fd61de54d25bc59f6f340afd",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-06.png",
+      "position_in_sheet": "top-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-dark-audio-longname-he.png",
+      "sha256": "392a267e9374f5e778beebb3f4cb0fbb7fd6a323f6575130de181f95e65e439c",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-06.png",
+      "position_in_sheet": "bottom-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-dark-audio-standard.png",
+      "sha256": "381275a1c3755031026900fb06088ae6c6a96b0b7813cd85b5febc035ce84456",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-06.png",
+      "position_in_sheet": "bottom-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-dark-keypad-largefont.png",
+      "sha256": "5d6aedbce2175a2f19f6b05d6254c087fd35023f5b6a72bdaa50d0ba209f888a",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-07.png",
+      "position_in_sheet": "top-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-dark-keypad-standard.png",
+      "sha256": "5c0deb268d7a2482db877a12a427f204101b7ffeb2ad0a97230500fe096350e2",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-07.png",
+      "position_in_sheet": "top-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-dark-more-largefont.png",
+      "sha256": "a70c979b4ba1a326ee83a774c61bba28c6e39d3e44a1dfd7f62545c0631ffabb",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-07.png",
+      "position_in_sheet": "bottom-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-dark-more-standard.png",
+      "sha256": "492c9ca6fc5a2c09e4ce439fd341af8e10fff446884b50fbc2676176b7e5d6c9",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-07.png",
+      "position_in_sheet": "bottom-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-dark-normal-largefont.png",
+      "sha256": "176d8ffa47b58d9c796f2f1d13539f69c37374f6d5c9b30ee5132dd12482e313",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-08.png",
+      "position_in_sheet": "top-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-dark-normal-longname-en.png",
+      "sha256": "e61614fa8a8c65f4317c9a317dbf0556dd3f0c4f3e231845fa5484a849e11769",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-08.png",
+      "position_in_sheet": "top-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-dark-normal-longname-he.png",
+      "sha256": "5c30461952f4b263de16366426d7cfe74a05a34fab1f497a0e80ca951248def7",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-08.png",
+      "position_in_sheet": "bottom-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-dark-normal-standard.png",
+      "sha256": "649fac0673a6e993f0c238e24de5b1318556da6a122f5bdc35ce976a30424a77",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-08.png",
+      "position_in_sheet": "bottom-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-light-audio-largefont.png",
+      "sha256": "2b7280c349293fdf40a3aa2fb2213014ca95f1ca79e088e84268d835442d8189",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-09.png",
+      "position_in_sheet": "top-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-light-audio-standard.png",
+      "sha256": "1e85d4977d8bb9119d130de14eab6432103615c3888aeeb092a4b5307d37075f",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-09.png",
+      "position_in_sheet": "top-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-light-keypad-largefont.png",
+      "sha256": "d0c1e20241967ca647e2677f3eb696eddc73ce1ea06b6730bee9b5b2a6cc0df9",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-09.png",
+      "position_in_sheet": "bottom-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-light-keypad-standard.png",
+      "sha256": "438df5225fa0a3e878421c3ea5ec63cc2156fc77fb00ee92b38197201d938dba",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-09.png",
+      "position_in_sheet": "bottom-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-light-more-largefont.png",
+      "sha256": "e3407f2ba02e37440b989323d25db498249e3152b19112dc0a112f0b1f2f9986",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-10.png",
+      "position_in_sheet": "top-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-light-more-standard.png",
+      "sha256": "e3e2b71a986b282ccf052cba8376bfcd69f6d089c720174108784ef8aaf397e0",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-10.png",
+      "position_in_sheet": "top-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-light-normal-largefont.png",
+      "sha256": "a53f412f06c58bb71eabd82fadef952adcc82a093f2968eed7556aa38bd7b4a9",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-10.png",
+      "position_in_sheet": "bottom-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-frost-light-normal-standard.png",
+      "sha256": "36762eeb9faa26084e9f3f7ed7817ade9f91cb343260f1f3fb51bdf9e01c0451",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-10.png",
+      "position_in_sheet": "bottom-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-graphite-dark-audio-largefont.png",
+      "sha256": "9a26348278be972c85904852c72df6d5b28e48bbc306e8d3d6e9bfa51f94568b",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-11.png",
+      "position_in_sheet": "top-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-graphite-dark-audio-longname-en.png",
+      "sha256": "533f1e394276951e3ee65f819c88c9f245da134aae8d6fc860b8368153835b2e",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-11.png",
+      "position_in_sheet": "top-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-graphite-dark-audio-longname-he.png",
+      "sha256": "4d4ba5e28efd30b7540215aec5a95c7334520b493cb2011b0e073df4068f06b8",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-11.png",
+      "position_in_sheet": "bottom-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-graphite-dark-audio-standard.png",
+      "sha256": "67b47610fb8d06ea92a91b5a22c129b28c09b3c8bc9a7f4b5afb8029abc91642",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-11.png",
+      "position_in_sheet": "bottom-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-graphite-dark-keypad-largefont.png",
+      "sha256": "238c19b75d60120526da1bd3dd4a9d732cb3f3264bbac7b3d4a4829e77f95dfd",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-12.png",
+      "position_in_sheet": "top-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-graphite-dark-keypad-standard.png",
+      "sha256": "192a898fefe006af5349c12ced35c058203431e6deffd1c2f779db3c5e380b29",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-12.png",
+      "position_in_sheet": "top-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-graphite-dark-more-largefont.png",
+      "sha256": "1acbe746fdff1698c1b5b4e50ee7f08cbcac23945a3a29c44766b73e6ab9012b",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-12.png",
+      "position_in_sheet": "bottom-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-graphite-dark-more-standard.png",
+      "sha256": "fe3a1a40701d3d9c24dadb8659486718e2a1c552e9727d7ed5f394dd2f7b281d",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-12.png",
+      "position_in_sheet": "bottom-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-graphite-dark-normal-largefont.png",
+      "sha256": "2af453cded443b20f213a5a008624e6df9a832e848d2f0c52c483194f12ff8ff",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-13.png",
+      "position_in_sheet": "top-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-graphite-dark-normal-longname-en.png",
+      "sha256": "c800487e9ade8f7373095fe3ac4cec3836237c425d3bf0189e650b1073921107",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-13.png",
+      "position_in_sheet": "top-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-graphite-dark-normal-longname-he.png",
+      "sha256": "36973e79a5b0e8150b30f78cf156a943043e76229e484594d09bcbe3e3c8f036",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-13.png",
+      "position_in_sheet": "bottom-left",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    },
+    {
+      "filename": "call-graphite-dark-normal-standard.png",
+      "sha256": "cf845c6be86c58489e03e0f1c29be19201b00060ecba7033f91b9b6a3e2d7ceb",
+      "actually_viewed": true,
+      "viewed_in_sheet": "call-13.png",
+      "position_in_sheet": "bottom-right",
+      "standalone_original_opened": false,
+      "status": "PASS"
+    }
+  ],
+  "limitations": [
+    "This is a fresh bounded visual review of these 52 frames on source7e039da only; no historical review was reused.",
+    "No conclusion is made about any unassigned frame or the overall269-frame visual gate.",
+    "Visual evidence alone does not establish functional Telecom behavior, audio, physical hardware, matching-key update compatibility, signing approval or publication readiness.",
+    "0.12 stays delivered and immutable; 0.13 remains unreleased with signing/publication approval unresolved."
+  ],
+  "operations_performed": [
+    "Read repository instructions and current scope",
+    "Actually viewed each assigned sheet individually using tools.view_image then image()",
+    "Read and independently hash-checked assigned sheets and raw PNG files against manifest",
+    "Wrote this review evidence JSON only"
+  ],
+  "actual_usage_limit_error_encountered": false
+}

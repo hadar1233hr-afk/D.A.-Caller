@@ -1,5 +1,13 @@
 # Remaining signing work after 0.12.0 — 2026-11-12
 
+Latest2026-11-19:0.13software now passes460host/40native/full269visual review.
+The retained nativeAPK e29b4c6b…5ae5f9/certc42aa0e8…933376 is still ephemeral
+and publication_allowed:false. A separate, exact-candidate proposed exception in
+[0.13.0-publication-approval.md](releases/0.13.0-publication-approval.md) is
+NOT_APPROVED and has not changed any safeguard. It cannot silently waive the
+durable owner-controlled backup/repo-secret setup below. No permanent key or
+private backup was provisioned; old0.12approval does not apply to0.13.
+
 The verified 0.12.0 APK has already been delivered. Do not publish it again or
 repeat its download link. The owner's approval covered that one retained binary;
 it does not authorize a future incompatible release or a general signing bypass.

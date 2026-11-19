@@ -1,0 +1,233 @@
+{
+  "source_sha": "7e039daaf2b43716ed2a2b3db1df0b04a8647fcd",
+  "app_tree": "96aa47e9152edc931e4830dd3dbe65e3a09418df",
+  "run_id": 44521985299,
+  "reviewer": "root",
+  "reviewed_at_utc": "2026-11-19T12:38:48.124743+00:00",
+  "scope": "ALL24modern current native frames",
+  "viewed_sheets": [
+    {
+      "sheet": "modern-01.png",
+      "sha256": "bbc6540170e235662af02eaf6f39ccc329197ba6e03793110e5ae6fb379c45ca",
+      "actually_viewed": true,
+      "method": "One full tools.view_image+image output per sheet",
+      "result": "PASS",
+      "observation": "Archive opt-in and merge disclosures/buttons are readable; long body continues inside intentional scroll viewport."
+    },
+    {
+      "sheet": "modern-02.png",
+      "sha256": "3ba1ee5a7bf0d6874ab015cea186e9ac2cf482bccf2b7afcab3fd91e7dae2753",
+      "actually_viewed": true,
+      "method": "One full tools.view_image+image output per sheet",
+      "result": "PASS",
+      "observation": "Both localized dialpad hints fit fully above large keys, separate from Close; icon choices and wine checkbox remain clear."
+    },
+    {
+      "sheet": "modern-03.png",
+      "sha256": "4bbe7ae5c3ba9ef12e467cc8b9db2087a48930fde98f09917f009604be160846",
+      "actually_viewed": true,
+      "method": "One full tools.view_image+image output per sheet",
+      "result": "PASS",
+      "observation": "Readable below-bar island and real Home drag surface; full expanded controls and underlying Main spacing are clear."
+    },
+    {
+      "sheet": "modern-04.png",
+      "sha256": "f9eeb1049eaa82c55ecb1d8e8e2360b13175cc862ac8f00fddd7b070c70744bd",
+      "actually_viewed": true,
+      "method": "One full tools.view_image+image output per sheet",
+      "result": "PASS",
+      "observation": "Hide/new-call surfaces and zero/full-opacity styles remain clear; native OS call notification identity is intentional."
+    },
+    {
+      "sheet": "modern-05.png",
+      "sha256": "85c3bbf2a53f1df626710306bbbe5d406f5dcc4f426163c5da9db08923617e4e",
+      "actually_viewed": true,
+      "method": "One full tools.view_image+image output per sheet",
+      "result": "PASS",
+      "observation": "35% real background translucency and restored Home island are readable; narrow status mode uses a readable protected fallback, not a false supported-lane claim."
+    },
+    {
+      "sheet": "modern-06.png",
+      "sha256": "661669d84fb1b2f060bf34bc091c20f216550fbf69883ede56ec279b04d8093f",
+      "actually_viewed": true,
+      "method": "One full tools.view_image+image output per sheet",
+      "result": "PASS",
+      "observation": "Inline Recents actions/navigation and rounded wine native switches are legible in HE/EN and both themes."
+    }
+  ],
+  "frames": [
+    {
+      "filename": "modern-archive-merged.png",
+      "sha256": "512ae0d094a584765997f5a19774cb3816820337c28a4a1f60de6182e353d4ae",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-01.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-archive-restore-off.png",
+      "sha256": "2a9825aadae9727ae76e74c821cb92abc83783bb2a916b8c55aef1bb56b9a66b",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-01.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-archive-restore-on.png",
+      "sha256": "3a005c2bc5d48d04748832cf8d6c40afe40dc5ec40839987dd6950039420f76e",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-01.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-backup-options-off.png",
+      "sha256": "cb327c9856f416fe0a66cdfacb90626586bf2c6de6ba0985b7c77619ea6871f7",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-01.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-backup-options-on.png",
+      "sha256": "1d4ea95a5cd327532426b1bf060340b2b325b7dc3c5821c5855924cd8cb4dcdb",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-02.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-bottom-dialpad-dark-he.png",
+      "sha256": "f6f46c4298cb6da7d94bec63f7ed704d347622f2456df5a3df64e2ad9f232d07",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-02.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-bottom-dialpad-light-en.png",
+      "sha256": "0ba6a392d9b2dd26dbf2f88b6dbecc747614f135b898bb040332feb176b7e616",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-02.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-icons-all-nine-dark-he.png",
+      "sha256": "136eedb951c880371d5023ada4389ad82e75ef47efdb29f35bcc1fecc1bd6ed5",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-02.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-icons-all-nine-light-en.png",
+      "sha256": "55dc227617ce9d36108f0006871bf065df03c37e6ab7b5c0006a5853af469589",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-03.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-island-below-inapp.png",
+      "sha256": "aa3c975dbaa4a6e9b181a8d2c940913842451a5dee531334981f6baea6ca4b69",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-03.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-island-composition-background.png",
+      "sha256": "61745fc171475fbfbfe8a16dffc1faaf7b2bf358bb45bb4a102cc8d938bbf2f1",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-03.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-island-dragged.png",
+      "sha256": "211142aa9f8619bb5022a15e8518648fe748aa508db7e89f70be52ca1916ba05",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-03.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-island-hide-home.png",
+      "sha256": "42244c5be60256a107c9af1773ee2bfd70e85242724ffe5c40b8d11516c8a581",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-04.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-island-new-call-shown.png",
+      "sha256": "5994a1f9b5062ab90f825075c429053801e39f3e8b2da030659b7bbf766448b0",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-04.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-island-opacity-0.png",
+      "sha256": "8486618033d833712ef6025e34c94f0628d39845365ecefbd0ee868d8fe18373",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-04.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-island-opacity-100.png",
+      "sha256": "3b34c194ec919e93a7b1b56a63e98bb4d022ed0e8baadaaeffe5361c84ffc6e0",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-04.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-island-opacity-35.png",
+      "sha256": "7c14ed7497a591dc9366f05fb1fa4c76269d3fe8c172cdf8ceb828fc0a4259c0",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-05.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-island-restore-home.png",
+      "sha256": "4b7e077a16ac31d02406df7d2c9420e952712c41fd731d1f3e5ab39010b06837",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-05.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-island-status-external.png",
+      "sha256": "e19c013ad7b52b87b56635e3808467a9ed83ce94dc6ac64de1be70a2dddd8c13",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-05.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-island-status-inapp.png",
+      "sha256": "db1b4a60394888e2b5f779feab0058abc9f6f97efadc6ee027d03fd73ab70b7f",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-05.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-recents-inline-dark-he.png",
+      "sha256": "d5c1d0770191364eb19fc44bd7a05ddc4ad3d6d124cbee1d47f636a3a491bd9e",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-06.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-recents-inline-light-en.png",
+      "sha256": "55c58e55c7937f332d9f57eed067bc6ebae9f8811cf377bd1ec5d368d121ad6d",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-06.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-wine-controls-dark-he.png",
+      "sha256": "4ae137b267d255be02e550d63b6aa1961ae66739207632f35a52bdb16134bd2d",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-06.png",
+      "result": "PASS"
+    },
+    {
+      "filename": "modern-wine-controls-light-en.png",
+      "sha256": "7c0fc962c65d578282302d9ffbbf48374c0e1b004f48b2a14203b554a9284ee8",
+      "actually_viewed": true,
+      "viewed_in_sheet": "modern-06.png",
+      "result": "PASS"
+    }
+  ],
+  "pass_count": 24,
+  "fail_count": 0,
+  "result": "BOUNDED_VISUAL_PASS",
+  "publication_allowed": false,
+  "limitations": "Actual static image review; native interactions are separately established by the40-case report. No physical/wide-native-status/hardware/audio/matching-key upgrade approval."
+}

@@ -1,5 +1,14 @@
 # New direct owner requirements — 2026-11-12
 
+Latest software status2026-11-19: all eleven requests below are implemented in
+unreleased0.13.0/code22 and verified at source7e039da/app96aa47e/CI44521985299:
+460uniquehost/40native/269freshactualPNG, all269actuallyreviewedPASS. Exact
+candidate/proof and pending publication boundary are in DA_CALLER_WORK_STATE.md
+and releases/0.13.0-publication-approval.md. This is software approval only;
+new signing/publication authorization, durable owner key/backup/secret setup and
+public-byte-verified delivery remain unresolved. Earlier checkpoint paragraphs
+below are historical, not the current implementation status.
+
 Current implementation status: source checkpoint81ae791 now implements these
 requirements in unreleased0.13.0/code22. Component/current-source verification
 is still in progress; no new native/visual/publication approval. The initial
