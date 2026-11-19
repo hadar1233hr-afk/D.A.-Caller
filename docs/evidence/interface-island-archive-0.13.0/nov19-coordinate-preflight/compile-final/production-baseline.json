@@ -1,0 +1,8 @@
+{
+  "production_and_unit_sources_unchanged_from457PASS": true,
+  "changed_only": [
+    "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java",
+    "app/src/androidTest/java/com/dacaller/app/PersonalizationSnapshotTest.java"
+  ],
+  "local_unit_rerun": false
+}

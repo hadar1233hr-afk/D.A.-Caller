@@ -1,5 +1,28 @@
 # DA CALLER continuation state
 
+## Normal scheduled continuation: coordinate fixes compiled — 2026-11-19 02:02 UTC
+
+Resumed normally after startup and root-only/no active build/CI overlap checks.
+No new usage-limit error. Production and unit sources are byte-identical to
+3db5a5f, which passed457 methods locally and in CI. Only two native test files
+changed. Independent review caught another missing window-to-screen conversion
+in Personalization.stableNativeBounds; it is now corrected alongside Modern.
+Full-size/nativeAX/focus/stability/48dp assertions and all40/269 requirements stay.
+
+Final Android-test APK build and lint actually passed (0errors/16warnings), with
+all app source hashes unchanged. Gradle's explicit return marker is0 and raw log
+reports BUILD SUCCESSFUL. The unified tool wrapper reported1; that discrepancy
+is retained rather than silently labelled tool-exit0. No local unit rerun or
+nativePASS is claimed. Exact logs/maps/lint/APKhash/baseline and source-review
+scope in nov19-coordinate-preflight. Next step: new independent CI457/40/269 and
+full actual-image review. Latest completed native run remains44389278862,
+40cases/36PASS4FAIL; its source/PNG/APK remain NOTAPPROVED.
+
+Old7 verifier scripts, frozen business data/reader, signing and CI mechanisms
+are unchanged.0.12deliveredimmutable/noresend;0.13code22unreleased; future private
+key backup/repository-secrets/applicable approval remain unresolved. Existing
+automation stays enabled while requested work remains.
+
 ## Actual quota stop after40-case native run; two test-only hotfixes saved — 2026-11-19 UTC
 
 STOP/save-only: legacy_failures_evening hit a real usage-limit error (retry10:57PM,

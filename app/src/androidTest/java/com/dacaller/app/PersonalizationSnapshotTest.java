@@ -202,13 +202,19 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
   awaitNativeApplicationWindow();
   long deadline=SystemClock.uptimeMillis()+7000,stableSince=-1;Rect previous=null;String state="not sampled";
   while(SystemClock.uptimeMillis()<deadline){
-   getInstrumentation().waitForIdleSync();Rect bounds=new Rect(),nativeBounds=new Rect();int[] window={-1};boolean[] ready={false};
+   getInstrumentation().waitForIdleSync();Rect bounds=new Rect(),rawBounds=new Rect(),nativeBounds=new Rect();int[] window={-1},rootScreen=new int[2],rootWindow=new int[2];boolean[] ready={false};
    ui(()->{
     View root=view.getRootView();
     ready[0]=view.isAttachedToWindow()&&view.isShown()&&view.isLaidOut()&&!view.isLayoutRequested()&&!root.isLayoutRequested()
       &&root.hasWindowFocus()&&view.getWidth()>0&&view.getHeight()>0&&view.getGlobalVisibleRect(bounds)
       &&bounds.width()==view.getWidth()&&bounds.height()==view.getHeight();
-    if(ready[0]){AccessibilityNodeInfo node=view.createAccessibilityNodeInfo();
+    rawBounds.set(bounds);
+    if(ready[0]){
+     // Global visibility is root/window-relative; native AX and pointer input
+     // use screen coordinates, including a dialog's nonzero window origin.
+     root.getLocationOnScreen(rootScreen);root.getLocationInWindow(rootWindow);
+     bounds.offset(rootScreen[0]-rootWindow[0],rootScreen[1]-rootWindow[1]);
+     AccessibilityNodeInfo node=view.createAccessibilityNodeInfo();
      try{node.getBoundsInScreen(nativeBounds);window[0]=node.getWindowId();}finally{node.recycle();}
      ready[0]=nativeBounds.equals(bounds);
     }
@@ -216,7 +222,8 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
    boolean focused=false;
    for(android.view.accessibility.AccessibilityWindowInfo item:getInstrumentation().getUiAutomation().getWindows())
     if(item.getId()==window[0]&&item.isFocused()){focused=true;break;}
-   state="visible="+bounds+", native="+nativeBounds+", window="+window[0]+", focused="+focused+", ready="+ready[0];
+   state="rawVisible="+rawBounds+", rootScreen="+rootScreen[0]+","+rootScreen[1]+", rootWindow="+rootWindow[0]+","+rootWindow[1]
+     +", screenVisible="+bounds+", native="+nativeBounds+", window="+window[0]+", focused="+focused+", ready="+ready[0];
    long now=SystemClock.uptimeMillis();
    if(ready[0]&&focused){if(!bounds.equals(previous)){previous=new Rect(bounds);stableSince=now;}if(now-stableSince>=80)return bounds;}
    else{previous=null;stableSince=-1;}
