@@ -1,5 +1,52 @@
 # DA CALLER continuation state
 
+## Readable status fallback requires truthful native proof — 2026-11-19 noon UTC
+
+Managed environment restored normally; no new actual usage-limit error. Root
+verified local/PRHEAD545824f and no active competing worker/build (one stale Java
+zombie is not work). Production and unit sources remain byte-identical to the
+current460uniquehost/44class PASS baseline. Latest CI44475349766 actually passed
+460host, then40nativecases39PASS1FAIL,0errors/skips.264rawPNGs include all245
+original +17modern +2diagnostics; no269/native/wholevisual/publication GO.
+
+The single failure is the old hardcoded native assertion that status-mode must
+enter the bar. Current API33 viewport480x854/density240/font1.3 has protected lane
+264px, while the real capsule minimum184dp is276px before caller legibility.
+Corrected production therefore retains readable260dp width below SystemUI.
+Root viewed the actual failure PNG: caller0500099…/Active call and native clock/
+right icons are clear. Root also actually viewed both new Main dialpad PNGs;
+the localized hints now fit fully. These are bounded observations, not complete
+new visual review. Exact official SHA/size/GitHubdigest/allCRC/40JUnit/failure/
+APKpolicy/three raw observations retained in seventh-native-ci and workspace
+/workspace/work/native-013-ci-44475349766. Three native drags completed with actual
+owned InputDispatcher targets before this later assertion; remaining opacity/
+new-call proof/captures did not execute in this failed case.
+
+Only the additive0.13 functional native proof is being corrected: exact final
+caller Layout/Paint/codepoint/ellipsis/AX/focus metrics must reject collapsed
+identity; independent minimum-vs-protected-lane geometry selects supported or
+readable-fallback truthfully. Current fixed profile necessarily uses fallback;
+compatible wide native placement is explicitly NOT_TESTED (360dp host evidence
+is separate). Native SystemUI window/actual package UID/root insets/stable
+mapped strip and60dp geometric side lanes replace unestablished icon AX IDs;
+full real screenshot review supplies the actual icon-pixel judgment. All40cases,
+all24modern names/all269total, original seven verifiers, signing policy and CI
+workflows are unchanged. This does not alter publication/signing safeguards.
+
+Root owns ModernFeaturesIntegrationTest; status_verifier_nov19_noon owns the
+additive verifier/contracts; status_proof_review_noon independently audits.
+Final three-file source independently CODE_GO:32 synthetic contracts PASS and
+26 independent missing/contradiction cases rejected. Android-test APK build and
+lint PASS,0errors16warnings; all app/Python source hashes unchanged during run.
+No new host execution is claimed: production/unit remain the460PASS baseline.
+Exact command/log/source maps/result/audit and original-seven preservation in
+nov19-readable-status-preflight. Fresh CI460/40/269/fullactualvisual remain next.
+No production change since460 baseline, no new release/link.0.12immutable/
+alreadydelivered/noresend;0.13code22unreleased; existing automation stays enabled.
+Future durable private key/owner backup/authorized repo-secrets and applicable
+publication approval remain unresolved. PR discussion was empty; old0.12-only
+approval is not0.13 approval.
+
 ## All native cases pass; complete visual review found three bounded defects — 2026-11-19 UTC
 
 Source53a678fac4764dc0210cad4e6b11a9d431287241/appTreec3cdd0ea05b5e094087cb86efe148224787e393e,

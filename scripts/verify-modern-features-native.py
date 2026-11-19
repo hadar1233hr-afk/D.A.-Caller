@@ -9,6 +9,7 @@ pixel verification of the transparency proof. No diagnostics are filtered out.
 import collections
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -235,6 +236,215 @@ def argb(decoded, x, y):
     return (0xff << 24) | (pixel[0] << 16) | (pixel[1] << 8) | pixel[2]
 
 
+def finite_number(value):
+    return type(value) in (int, float) and -sys.float_info.max <= value <= sys.float_info.max and math.isfinite(value)
+
+
+def contained(outer, inner):
+    return outer[0] <= inner[0] < inner[2] <= outer[2] and outer[1] <= inner[1] < inner[3] <= outer[3]
+
+
+def native_geometry(value, expected):
+    require(type(value) is dict, "Actual native caller/capsule geometry missing")
+    bounds = rectangle(value.get("bounds"))
+    require(bounds == expected and rectangle(value.get("native_ax_bounds")) == expected,
+            "Actual native AX bounds must equal laid-out caller/capsule bounds")
+    require(integer(value.get("window_id")) and value["window_id"] >= 0
+            and integer(value.get("stable_samples")) and value["stable_samples"] >= 2,
+            "Actual native geometry needs a window and two stable samples")
+    flags(value, ("view_window_focus", "native_window_focus"))
+    return value["window_id"]
+
+
+def signed_rectangle(value):
+    match = re.fullmatch(r"\[(-?[0-9]+),(-?[0-9]+)\]\[(-?[0-9]+),(-?[0-9]+)\]", str(value))
+    require(match is not None, "Missing native server/mapped rectangle")
+    result = tuple(map(int, match.groups()))
+    require(result[0] < result[2] and result[1] < result[3] and all(abs(v) <= 10000 for v in result),
+            "Invalid native server/mapped rectangle")
+    return result
+
+
+def status_bar_protection(value, capsule, inset):
+    """Bind protected lanes to the actual API33 SystemUI input window/matrix.
+
+    This proves native window presence and geometry. Icon pixels still require
+    review of the complete real compositor capture; no AX icon IDs are guessed.
+    """
+    require(type(value) is dict, "Actual native SystemUI status-bar protection missing")
+    require(value.get("system_ui_package") == "com.android.systemui"
+            and integer(value.get("system_ui_uid")) and value["system_ui_uid"] > 0,
+            "Actual SystemUI package-manager UID missing")
+    record = value.get("system_ui_package_record")
+    match = re.fullmatch(r"package:com\.android\.systemui uid:(\d+)", record) if type(record) is str else None
+    require(match is not None and int(match[1]) == value["system_ui_uid"],
+            "Actual package-manager SystemUI record must match native UID")
+    flags(value, ("window_has_input_token", "window_visible", "root_status_bars_visible",
+                  "clock_lane_clear", "right_icon_lane_clear"))
+    require(integer(value.get("root_status_inset"), inset)
+            and integer(value.get("stable_samples")) and value["stable_samples"] >= 2,
+            "Native status bar must match actual root inset in two stable dumps")
+    window = value.get("native_window")
+    require(type(window) is dict and integer(window.get("index")) and window["index"] >= 0
+            and integer(window.get("id")) and window["id"] >= 0
+            and integer(window.get("uid"), value["system_ui_uid"]), "Native StatusBar window owner differs from SystemUI")
+    require(type(window.get("name")) is str and (window["name"] == "StatusBar" or window["name"].endswith(" StatusBar")),
+            "Native SystemUI window must be actual StatusBar")
+    config = window.get("input_config")
+    known = {"NO_INPUT_CHANNEL", "NOT_VISIBLE", "NOT_FOCUSABLE", "NOT_TOUCHABLE", "PREVENT_SPLITTING",
+             "DUPLICATE_TOUCH_TO_WALLPAPER", "IS_WALLPAPER", "PAUSE_DISPATCHING", "TRUSTED_OVERLAY",
+             "WATCH_OUTSIDE_TOUCH", "SLIPPERY", "DISABLE_USER_ACTIVITY", "DROP_INPUT", "DROP_INPUT_IF_OBSCURED",
+             "SPY", "INTERCEPTS_STYLUS"}
+    require(type(config) is str, "Native StatusBar input configuration missing")
+    entries = config.split(" | ")
+    require(config == "0x0" or len(set(entries)) == len(entries) and set(entries) <= known,
+            "Native StatusBar has unknown input configuration")
+    require("NOT_VISIBLE" not in entries and "NO_INPUT_CHANNEL" not in entries and "TRUSTED_OVERLAY" in entries,
+            "Native StatusBar window must be a visible trusted overlay with an input channel")
+    raw = window.get("raw")
+    pattern = (r"\s*(\d+): name='(.*)', id=(-?\d+), displayId=(-?\d+), inputConfig=(.*?), alpha=([0-9.]+), "
+               r"frame=(\[-?\d+,-?\d+\]\[-?\d+,-?\d+\]), globalScale=([0-9.]+), applicationInfo\.name=(.*?), "
+               r"applicationInfo\.token=(.*?), touchableRegion=(.*?), ownerPid=(-?\d+), ownerUid=(-?\d+), "
+               r"dispatchingTimeout=(-?\d+)ms, hasToken=(true|false), touchOcclusionMode=(\S+)\s*")
+    match = re.fullmatch(pattern, raw) if type(raw) is str else None
+    require(match is not None, "Actual API33 StatusBar input-window raw record missing")
+    require(int(match[1]) == window["index"] and match[2] == window["name"] and int(match[3]) == window["id"]
+            and int(match[4]) == 0 and match[5] == config and match[7] == window.get("frame")
+            and int(match[13]) == window["uid"] and match[15] == "true",
+            "Reported StatusBar window differs from actual native raw record")
+    alpha = float(match[6])
+    require(math.isfinite(alpha) and 0 < alpha <= 1, "Actual native StatusBar alpha must be visible")
+    frame = signed_rectangle(window.get("frame"))
+    transform = value.get("display_transform")
+    require(type(transform) is dict and type(transform.get("raw")) is str, "Actual native display transform missing")
+    lines = [line.strip() for line in transform["raw"].strip().splitlines()]
+    require(len(lines) == 6 and lines[0] == "Display: 0" and lines[1] == "logicalSize=480x854"
+            and re.fullmatch(r"transform \(ROT_0\) \((?:IDENTITY|SCALE|TRANSLATE|SCALE TRANSLATE)\)", lines[2]),
+            "Native StatusBar transform must use actual display0 fixed portrait geometry")
+    matrix = []
+    for line in lines[3:]:
+        cells = line.split()
+        require(len(cells) == 3 and all(re.fullmatch(r"-?\d+(?:\.\d+)?", cell) for cell in cells),
+                "Malformed native StatusBar transform matrix")
+        matrix.append([float(cell) for cell in cells])
+    require(all(math.isfinite(cell) for row in matrix for cell in row)
+            and matrix[0][1] == matrix[1][0] == matrix[2][0] == matrix[2][1] == 0 and matrix[2][2] == 1,
+            "Native StatusBar transform cannot rotate, shear or use perspective")
+    sx, sy, tx, ty = matrix[0][0], matrix[1][1], matrix[0][2], matrix[1][2]
+    require(0.00005 < sx <= 16 and 0.00005 < sy <= 16 and abs(tx) <= 10000 and abs(ty) <= 10000,
+            "Native StatusBar transform out of range")
+    require(all(finite_number(transform.get(key)) and transform[key] == expected
+                for key, expected in (("scale_x", sx), ("scale_y", sy), ("translate_x", tx), ("translate_y", ty))),
+            "Reported StatusBar transform differs from actual native raw matrix")
+    mapped = (sx * frame[0] + tx, sy * frame[1] + ty, sx * frame[2] + tx, sy * frame[3] + ty)
+    require(abs(mapped[0]) <= 1 and abs(mapped[1]) <= 1 and abs(mapped[2] - 480) <= 1,
+            "Actual native StatusBar must map to the full-width screen-top strip")
+    strip = (max(0, math.floor(mapped[0])), max(0, math.floor(mapped[1])),
+             min(480, math.ceil(mapped[2])), math.ceil(mapped[3]))
+    require(signed_rectangle(value.get("mapped_status_bounds")) == strip
+            and inset - 1 <= mapped[3] <= inset + 2 and inset - 1 <= strip[3] <= inset + 2,
+            "Mapped native StatusBar strip must match actual inset and recorded transform")
+    for key, expected in (("clock_lane_bounds", (0, 0, 90, strip[3])),
+                          ("right_icon_lane_bounds", (390, 0, 480, strip[3]))):
+        lane = signed_rectangle(value.get(key))
+        require(lane == expected, "Protected native clock/right-icon lanes must retain60dp")
+        require(not (capsule[0] < lane[2] and lane[0] < capsule[2] and capsule[1] < lane[3] and lane[1] < capsule[3]),
+                "Actual capsule overlaps protected native clock/right-icon lane")
+    require(value.get("proof_scope") == "Native SystemUI StatusBar window, root WindowInsets and protected geometric lanes; icon visual presence is reviewed in the real capture",
+            "Native status protection scope must retain actual-capture icon review limitation")
+
+
+def readable_status_surface(value):
+    """Derive status placement from native Layout/Paint metrics, never its label."""
+    require(type(value) is dict, "Readable status surface must be an object")
+    require(integer(value.get("display_width"), 480) and integer(value.get("display_height"), 854)
+            and integer(value.get("density_dpi"), 240) and large_font(value.get("font_scale")),
+            "Readable status proof must retain fixed480x854/240dpi/font1.3")
+    require(value.get("position_mode") == "status_area" and value.get("custom_position_set") is False,
+            "Readable status proof must use actual status_area mode without a custom position")
+    capsule = rectangle(value.get("bounds"))
+    capsule_geometry, caller_geometry = value.get("capsule_geometry"), value.get("caller_geometry")
+    capsule_window = native_geometry(capsule_geometry, capsule)
+    require(type(caller_geometry) is dict, "Actual native caller geometry missing")
+    caller = rectangle(caller_geometry.get("bounds"))
+    require(contained(capsule, caller), "Actual caller bounds must fit completely inside capsule")
+    require(native_geometry(caller_geometry, caller) == capsule_window,
+            "Actual caller and capsule must belong to the same focused native window")
+    require(integer(value.get("caller_line_count"), 1) and value.get("caller_ellipsize") == "END",
+            "Actual caller Layout must remain one line with END ellipsization")
+    full = value.get("caller_full_text")
+    require(type(full) is str and bool(full) and not any(0xd800 <= ord(char) <= 0xdfff for char in full),
+            "Actual caller identity must be nonempty Unicode text")
+    require(integer(value.get("caller_code_points"), len(full)), "Caller full-text code-point count differs")
+    required = min(6, len(full))
+    prefix = full[:required] + ("\u2026" if required < len(full) else "")
+    require(value.get("caller_minimum_text") == prefix,
+            "Minimum readable text must be the actual first six code points and required ellipsis")
+    start, omitted = value.get("caller_ellipsis_start_utf16"), value.get("caller_ellipsis_count_utf16")
+    units = len(full.encode("utf-16-le")) // 2
+    require(integer(start) and integer(omitted) and 0 <= start <= units and 0 <= omitted <= units,
+            "Caller UTF16 ellipsis metrics out of range")
+    if omitted:
+        require(start + omitted == units, "END ellipsis must omit exactly the actual UTF16 suffix")
+        try:
+            visible = full.encode("utf-16-le")[:start * 2].decode("utf-16-le")
+        except UnicodeDecodeError:
+            require(False, "Caller UTF16 ellipsis cannot split a code point")
+    else:
+        require(start == 0, "Unellipsized caller Layout must have zero ellipsis start")
+        visible = full
+    require(value.get("caller_visible_prefix") == visible
+            and integer(value.get("caller_visible_code_points"), len(visible)) and len(visible) >= required,
+            "Actual visible caller Layout must retain six code points or the whole shorter name")
+    paint, padding = value.get("caller_minimum_text_width"), value.get("caller_padding_horizontal")
+    require(finite_number(paint) and paint > 0 and integer(padding) and 0 <= padding < caller[2] - caller[0],
+            "Actual Paint width and caller padding must be finite, positive and bounded")
+    require(caller[2] - caller[0] >= math.ceil(paint) + padding,
+            "Actual caller viewport cannot contain its measured readable prefix")
+    # The production capsule's184dp minimum is276px at the unchanged native
+    # density. It alone exceeds this profile's176dp/264px protected lane.
+    require(integer(value.get("capsule_minimum_width"), 276), "Native capsule minimum must retain184dp/276px")
+    minimum = max(276, capsule[2] - capsule[0] - (caller[2] - caller[0]) + math.ceil(paint) + padding)
+    require(integer(value.get("minimum_readable_width"), minimum),
+            "Minimum readable width must be independently derived from actual native metrics")
+    lane = 480 - 216  #144dp of production protected horizontal space at240dpi.
+    require(integer(value.get("safe_lane_width"), lane), "Protected status lane width differs from the fixed native profile")
+    inset = value.get("status_inset")
+    require(integer(inset) and 0 < inset < 854 / 3, "Actual native status inset out of range")
+    if minimum <= lane:
+        require(value.get("stage") == "inapp-supported-central-status-area"
+                and capsule[2] - capsule[0] <= lane and capsule[1] < inset
+                and capsule[0] >= 90 and capsule[2] <= 390,
+                "Supported native status capsule must fit the readable protected lane and60dp icon gaps")
+    else:
+        require(value.get("stage") == "inapp-protected-readable-status-fallback"
+                and capsule[2] - capsule[0] >= minimum and capsule[1] >= inset + 12,
+                "Unreadable native status lane must use a complete readable fallback below the bar")
+    status_bar_protection(value.get("status_bar_protection"), capsule, inset)
+    return inset
+
+
+def status_surfaces(proof, token):
+    surfaces = proof.get("surfaces", [])
+    require(type(surfaces) is list and len(surfaces) == 3 and all(type(s) is dict for s in surfaces),
+            "Exactly three actual external/status/default surfaces required")
+    require(surfaces[0].get("stage") == "external-protected-status-fallback"
+            and surfaces[1].get("stage") in {"inapp-supported-central-status-area", "inapp-protected-readable-status-fallback"}
+            and surfaces[2].get("stage") == "inapp-default-below-restored",
+            "Protected external/status fallback and default restoration proof missing")
+    for value, overlays in zip(surfaces, (1, 0, 0)):
+        rectangle(value.get("bounds"))
+        require(value.get("token") == token and integer(value.get("call_state"), 4)
+                and integer(value.get("external_overlay_count"), overlays), "Wrong owned island surface")
+    inset = readable_status_surface(surfaces[1])
+    require(rectangle(surfaces[0]["bounds"])[1] >= inset + 12,
+            "External native fallback must clear protected status bar by8dp")
+    require(rectangle(surfaces[2]["bounds"])[1] >= inset,
+            "Default native below mode must restore placement below the status bar")
+    require(proof.get("compatible_wide_native_lane") == "NOT_TESTED_FIXED_480PX_VIEWPORT",
+            "Compatible wide native lane is not tested in this fixed480px viewport")
+
+
 def island(proof, images):
     flags(proof, ("role_held", "hide_preserves_call_and_notification", "settings_restore_on_home",
                   "new_call_ignores_previous_hidden_token", "single_owned_surface",
@@ -282,11 +492,7 @@ def island(proof, images):
     require(child_after[1] > child_before[1] + 38 and integer(before_position) and integer(after_position)
             and 0 <= before_position < after_position <= 10000 and child.get("body_scrolling_required") is False,
             "Drag beginning on End must actually move and save its non-overflowing owned window")
-    surfaces = proof.get("surfaces", [])
-    require([s.get("stage") for s in surfaces] == ["external-protected-status-fallback", "inapp-supported-central-status-area", "inapp-default-below-restored"], "Protected fallback/default restoration proof missing")
-    for value, overlays in zip(surfaces, (1, 0, 0)):
-        rectangle(value.get("bounds"))
-        require(value.get("token") == first and integer(value.get("call_state"), 4) and integer(value.get("external_overlay_count"), overlays), "Wrong owned island surface")
+    status_surfaces(proof, first)
     transparent = proof.get("transparency", {})
     flags(transparent, ("background_is_real_app_compositor",))
     require(type(transparent.get("view_alpha")) in (int, float) and transparent["view_alpha"] == 1

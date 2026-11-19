@@ -70,6 +70,184 @@ def native_identities():
     return result
 
 
+def status_protection_fixture():
+    """Synthetic API33-shaped records, never an actual emulator observation."""
+    raw = ("1: name='435d73f StatusBar', id=85, displayId=0, inputConfig=NOT_FOCUSABLE | TRUSTED_OVERLAY, "
+           "alpha=1.00, frame=[0,35][320,59], globalScale=1.000000, applicationInfo.name=, "
+           "applicationInfo.token=<null>, touchableRegion=[0,35][320,59], ownerPid=758, ownerUid=10157, "
+           "dispatchingTimeout=5000ms, hasToken=true, touchOcclusionMode=BLOCK_UNTRUSTED")
+    return dict(system_ui_package="com.android.systemui", system_ui_uid=10157,
+        system_ui_package_record="package:com.android.systemui uid:10157",
+        native_window=dict(index=1, id=85, name="435d73f StatusBar", uid=10157,
+            input_config="NOT_FOCUSABLE | TRUSTED_OVERLAY", frame="[0,35][320,59]", raw=raw),
+        window_has_input_token=True, window_visible=True, mapped_status_bounds="[0,0][480,37]",
+        display_transform=dict(scale_x=1.5, scale_y=1.5009, translate_x=0, translate_y=-52.5308,
+            raw="\n  Display: 0\n    logicalSize=480x854\n        transform (ROT_0) (SCALE TRANSLATE)\n"
+                "            1.5000  -0.0000  0.0000\n            -0.0000  1.5009  -52.5308\n"
+                "            0.0000  0.0000  1.0000"),
+        root_status_inset=36, root_status_bars_visible=True, clock_lane_bounds="[0,0][90,37]",
+        right_icon_lane_bounds="[390,0][480,37]", stable_samples=2, clock_lane_clear=True, right_icon_lane_clear=True,
+        proof_scope="Native SystemUI StatusBar window, root WindowInsets and protected geometric lanes; icon visual presence is reviewed in the real capture")
+
+
+def readable_status_fixture():
+    """A readable fallback is the only positive branch of the fixed profile."""
+    def geometry(bounds):
+        return dict(bounds=bounds, native_ax_bounds=bounds, window_id=11, stable_samples=2,
+                    view_window_focus=True, native_window_focus=True)
+    return dict(stage="inapp-protected-readable-status-fallback", bounds="[45,48][435,180]",
+        token="first-owned-token", call_state=4, external_overlay_count=0,
+        display_width=480, display_height=854, density_dpi=240, font_scale=1.3,
+        status_inset=36, safe_lane_width=264, minimum_readable_width=285, capsule_minimum_width=276,
+        caller_full_text="0500099971", caller_code_points=10, caller_visible_prefix="0500099971", caller_visible_code_points=10,
+        caller_ellipsis_start_utf16=0, caller_ellipsis_count_utf16=0, caller_line_count=1, caller_ellipsize="END",
+        caller_minimum_text="050009\u2026", caller_minimum_text_width=74.2, caller_padding_horizontal=0,
+        position_mode="status_area", custom_position_set=False,
+        capsule_geometry=geometry("[45,48][435,180]"), caller_geometry=geometry("[69,65][249,93]"),
+        status_bar_protection=status_protection_fixture())
+
+
+class ReadableStatusContracts(unittest.TestCase):
+    """Only offline corruption checks, never Android/native PASS claims."""
+    def test_fixed_profile_positive_fixture_is_readable_fallback(self):
+        value = readable_status_fixture()
+        self.assertEqual(36, gate.readable_status_surface(value))
+        self.assertGreater(value["capsule_minimum_width"], value["safe_lane_width"])
+
+    def test_actual_visible_prefix_cannot_be_less_than_six_code_points(self):
+        value = readable_status_fixture()
+        value.update(caller_visible_prefix="05000", caller_visible_code_points=5,
+                     caller_ellipsis_start_utf16=5, caller_ellipsis_count_utf16=5)
+        with self.assertRaisesRegex(AssertionError, "retain six"):
+            gate.readable_status_surface(value)
+
+    def test_whole_shorter_identity_and_supplementary_unicode_prefix_are_valid(self):
+        for full, visible, start, omitted in (("א😀ב", "א😀ב", 0, 0), ("😀אב12ג789", "😀אב12ג", 7, 3)):
+            with self.subTest(full=full):
+                value = readable_status_fixture()
+                value.update(caller_full_text=full, caller_code_points=len(full), caller_visible_prefix=visible,
+                    caller_visible_code_points=len(visible), caller_ellipsis_start_utf16=start,
+                    caller_ellipsis_count_utf16=omitted, caller_minimum_text=full[:6] + ("\u2026" if len(full) > 6 else ""))
+                self.assertEqual(36, gate.readable_status_surface(value))
+
+    def test_prefix_and_utf16_ellipsis_metrics_must_match_actual_full_text(self):
+        changes = (dict(caller_minimum_text="different\u2026"), dict(caller_code_points=9),
+                   dict(caller_visible_prefix="different"), dict(caller_visible_code_points=9),
+                   dict(caller_ellipsis_start_utf16=6, caller_ellipsis_count_utf16=3),
+                   dict(caller_ellipsis_start_utf16=1), dict(caller_ellipsis_start_utf16=-1),
+                   dict(caller_ellipsis_count_utf16=11), dict(caller_ellipsis_start_utf16=True))
+        for change in changes:
+            with self.subTest(change=change), self.assertRaises(AssertionError):
+                value = readable_status_fixture();value.update(change);gate.readable_status_surface(value)
+        value = readable_status_fixture()
+        value.update(caller_full_text="😀abcdefghi", caller_code_points=10, caller_minimum_text="😀abcde\u2026",
+                     caller_ellipsis_start_utf16=1, caller_ellipsis_count_utf16=10)
+        with self.assertRaisesRegex(AssertionError, "split a code point"):
+            gate.readable_status_surface(value)
+
+    def test_paint_and_padding_metrics_must_be_finite_typed_and_fit_actual_viewport(self):
+        for key, invalid in (("caller_minimum_text_width", (float("nan"), float("inf"), -1, 0, True, "74.2", 181)),
+                             ("caller_padding_horizontal", (-1, 180, True, "0"))):
+            for observed in invalid:
+                with self.subTest(key=key, observed=observed), self.assertRaises(AssertionError):
+                    value = readable_status_fixture();value[key] = observed;gate.readable_status_surface(value)
+
+    def test_reported_minimum_and_capsule_minimum_cannot_fabricate_a_supported_lane(self):
+        for change in (dict(minimum_readable_width=276), dict(capsule_minimum_width=264, minimum_readable_width=264),
+                       dict(safe_lane_width=390), dict(stage="inapp-supported-central-status-area")):
+            with self.subTest(change=change), self.assertRaises(AssertionError):
+                value = readable_status_fixture();value.update(change);gate.readable_status_surface(value)
+
+    def test_fallback_must_be_below_bar_and_wide_enough_for_independently_derived_minimum(self):
+        for bounds, caller in (("[45,47][435,179]", "[69,64][249,92]"), ("[45,48][319,180]", "[69,65][249,93]")):
+            with self.subTest(bounds=bounds), self.assertRaises(AssertionError):
+                value = readable_status_fixture();value["bounds"] = bounds
+                value["capsule_geometry"].update(bounds=bounds, native_ax_bounds=bounds)
+                value["caller_geometry"].update(bounds=caller, native_ax_bounds=caller)
+                value["minimum_readable_width"] = 285 if bounds.endswith("179]") else 276
+                gate.readable_status_surface(value)
+
+    def test_wrong_mode_or_custom_position_cannot_count_as_status_placement(self):
+        for change in (dict(position_mode="below"), dict(position_mode=None), dict(custom_position_set=True)):
+            with self.subTest(change=change), self.assertRaisesRegex(AssertionError, "actual status_area mode"):
+                value = readable_status_fixture();value.update(change);gate.readable_status_surface(value)
+
+    def test_actual_layout_remains_single_line_end_ellipsized(self):
+        for change in (dict(caller_line_count=2), dict(caller_line_count=True), dict(caller_ellipsize="START")):
+            with self.subTest(change=change), self.assertRaisesRegex(AssertionError, "one line"):
+                value = readable_status_fixture();value.update(change);gate.readable_status_surface(value)
+
+    def test_caller_geometry_must_be_inside_capsule_focused_stable_and_same_native_window(self):
+        changes = (dict(native_ax_bounds="[70,65][250,93]"), dict(stable_samples=1), dict(stable_samples=True),
+                   dict(window_id=12), dict(window_id=False), dict(view_window_focus=False), dict(native_window_focus=False),
+                   dict(bounds="[40,65][249,93]", native_ax_bounds="[40,65][249,93]"))
+        for change in changes:
+            with self.subTest(change=change), self.assertRaises(AssertionError):
+                value = readable_status_fixture();value["caller_geometry"].update(change);gate.readable_status_surface(value)
+
+    def test_fixed_native_display_density_font_and_status_inset_are_not_relaxed(self):
+        for key, invalid in (("display_width", 540), ("display_height", 960), ("density_dpi", 200),
+                             ("font_scale", 1.0), ("status_inset", 0), ("status_inset", 855)):
+            with self.subTest(key=key), self.assertRaises(AssertionError):
+                value = readable_status_fixture();value[key] = invalid;gate.readable_status_surface(value)
+
+    def test_native_bar_requires_actual_package_uid_visible_token_and_two_samples(self):
+        for change in (dict(system_ui_package="com.dacaller.app"), dict(system_ui_uid=0), dict(system_ui_uid=True),
+                       dict(system_ui_package_record="package:com.android.systemui uid:1000"),
+                       dict(system_ui_package_record="package:com.android.systemui.other uid:10157"),
+                       dict(window_visible=False), dict(window_has_input_token=False), dict(stable_samples=1),
+                       dict(root_status_bars_visible=False), dict(root_status_inset=35)):
+            with self.subTest(change=change), self.assertRaises(AssertionError):
+                value = readable_status_fixture();value["status_bar_protection"].update(change);gate.readable_status_surface(value)
+
+    def test_native_bar_raw_window_records_cannot_be_relabelled(self):
+        for change in (dict(name="NotificationShade"), dict(uid=1000), dict(id=True), dict(frame="[0,36][320,60]"),
+                       dict(raw="unrecorded"), dict(input_config="NOT_VISIBLE | TRUSTED_OVERLAY"),
+                       dict(input_config="NO_INPUT_CHANNEL | TRUSTED_OVERLAY"), dict(input_config="NOT_FOCUSABLE"),
+                       dict(input_config="TRUSTED_OVERLAY | UNKNOWN_FLAG")):
+            with self.subTest(change=change), self.assertRaises(AssertionError):
+                value = readable_status_fixture();value["status_bar_protection"]["native_window"].update(change)
+                gate.readable_status_surface(value)
+        for before, after in (("hasToken=true", "hasToken=false"), ("displayId=0", "displayId=1"), ("alpha=1.00", "alpha=0.00")):
+            with self.subTest(after=after), self.assertRaises(AssertionError):
+                value = readable_status_fixture();window = value["status_bar_protection"]["native_window"]
+                window["raw"] = window["raw"].replace(before, after);gate.readable_status_surface(value)
+
+    def test_native_display_transform_and_mapped_strip_are_independently_checked(self):
+        for key, invalid in (("scale_x", 1), ("scale_y", float("nan")), ("translate_y", -50), ("raw", "unrecorded")):
+            with self.subTest(key=key), self.assertRaises(AssertionError):
+                value = readable_status_fixture();value["status_bar_protection"]["display_transform"][key] = invalid
+                gate.readable_status_surface(value)
+        for key, invalid in (("mapped_status_bounds", "[0,0][480,36]"), ("clock_lane_bounds", "[0,0][89,37]"),
+                             ("right_icon_lane_bounds", "[391,0][480,37]"), ("clock_lane_clear", False), ("right_icon_lane_clear", False)):
+            with self.subTest(key=key), self.assertRaises(AssertionError):
+                value = readable_status_fixture();value["status_bar_protection"][key] = invalid
+                gate.readable_status_surface(value)
+
+    def test_capsule_overlap_cannot_be_hidden_by_native_icon_clear_flags(self):
+        for bounds in ((45, 0, 435, 120), (0, 0, 89, 36), (391, 0, 480, 36)):
+            with self.subTest(bounds=bounds), self.assertRaisesRegex(AssertionError, "overlaps protected"):
+                gate.status_bar_protection(status_protection_fixture(), bounds, 36)
+
+    def test_exact_three_surfaces_owned_overlay_counts_and_wide_native_limitation_are_preserved(self):
+        proof = dict(compatible_wide_native_lane="NOT_TESTED_FIXED_480PX_VIEWPORT", surfaces=[
+            dict(stage="external-protected-status-fallback", bounds="[45,48][435,180]", token="first-owned-token", call_state=4, external_overlay_count=1),
+            readable_status_fixture(),
+            dict(stage="inapp-default-below-restored", bounds="[45,48][435,180]", token="first-owned-token", call_state=4, external_overlay_count=0)])
+        gate.status_surfaces(proof, "first-owned-token")
+        for change in ("extra", "missing", "supported", "overlay", "external-top", "default-top", "wide"):
+            with self.subTest(change=change), self.assertRaises(AssertionError):
+                value = copy.deepcopy(proof)
+                if change == "extra": value["surfaces"].append(copy.deepcopy(value["surfaces"][0]))
+                if change == "missing": value["surfaces"].pop()
+                if change == "supported": value["surfaces"][1]["stage"] = "inapp-supported-central-status-area"
+                if change == "overlay": value["surfaces"][1]["external_overlay_count"] = 1
+                if change == "external-top": value["surfaces"][0]["bounds"] = "[45,47][435,179]"
+                if change == "default-top": value["surfaces"][2]["bounds"] = "[45,35][435,167]"
+                if change == "wide": value["compatible_wide_native_lane"] = "PASS"
+                gate.status_surfaces(value, "first-owned-token")
+
+
 class ModernNativeContracts(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -154,8 +332,9 @@ class ModernNativeContracts(unittest.TestCase):
                 dict(kind="cancelled_external_drag", normalized_position_preserved=True, geometry_restored=True, call_state=4),
                 dict(kind="drag_started_on_end_control", end_confirmation_opened=False, call_state=4, before="[100,200][360,285]", after="[100,260][360,345]",
                     position_before=4000, position_after=5000, body_scrolling_required=False)],
-            surfaces=[dict(stage=stage, bounds="[100,36][380,125]", token="first-owned-token", call_state=4, external_overlay_count=count)
-                for stage, count in (("external-protected-status-fallback", 1), ("inapp-supported-central-status-area", 0), ("inapp-default-below-restored", 0))],
+            compatible_wide_native_lane="NOT_TESTED_FIXED_480PX_VIEWPORT",
+            surfaces=[dict(stage="external-protected-status-fallback", bounds="[45,48][435,180]", token="first-owned-token", call_state=4, external_overlay_count=1),
+                readable_status_fixture(), dict(stage="inapp-default-below-restored", bounds="[45,48][435,180]", token="first-owned-token", call_state=4, external_overlay_count=0)],
             transparency=dict(background_is_real_app_compositor=True, view_alpha=1, caller_alpha=1, background_alpha_35=89, rgb_tolerance=3,
                 sample_region="[100,200][360,285]", samples=[dict(x=110 + n, y=250, background=signed((180, 120, 60)), opacity0=signed((180, 120, 60)),
                 opacity35=signed(tuple(int(fg * 89 / 255 + bg * 166 / 255 + 0.5) for bg, fg in zip((180, 120, 60), (20, 20, 20)))), opacity100=signed((20, 20, 20))) for n in range(5)]))

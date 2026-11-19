@@ -1,0 +1,12 @@
+[
+  {
+    "test": {
+      "name": "testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency",
+      "classname": "com.dacaller.app.ModernFeaturesIntegrationTest",
+      "time": "17.0"
+    },
+    "kind": "failure",
+    "message": {},
+    "text": "junit.framework.AssertionFailedError: Supported central lane must enter own status-bar area\nat com.dacaller.app.ModernFeaturesIntegrationTest.testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency(ModernFeaturesIntegrationTest.java:613)\nat android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)\nat android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)\nat com.dacaller.app.ModernFeaturesIntegrationTest.runTest(ModernFeaturesIntegrationTest.java:91)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)\nat android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)\nat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)\n"
+  }
+]

@@ -1,0 +1,294 @@
+{
+  "review_status": "SOURCE_CODE_GO_AND_OFFLINE_CORRUPTION_REPLAY_PASS_NATIVE_PENDING",
+  "reviewed_utc": "2026-11-19T12:11:50.511298+00:00",
+  "reviewer": "status_proof_review_noon independent read-only source audit",
+  "head": "545824f0071366ba2f8c432acb520719371aa570",
+  "source_sha256": {
+    "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java": "1b82532fe55bc7a3b5865a4743b398be88137e86f31e7742d25dce9aa8d6ba47",
+    "scripts/verify-modern-features-native.py": "a615b533729f61484cca04fefc07d43f26efd87c29a33fdc5e186343c3482b57",
+    "scripts/tests/test_da_caller_modern_native.py": "82ca0484a350f6972739f4209d5b785d6793b98dfc4aeed911d79f6ca03b3560"
+  },
+  "source_edited_by_reviewer": false,
+  "gradle_executed_by_reviewer": false,
+  "native_executed_by_reviewer": false,
+  "native_go": false,
+  "publication_allowed": false,
+  "scope": "Correct optional status-area functional proof to derive supported versus readable protected fallback from actual native Layout/Paint/geometry. No publication mechanism exception.",
+  "findings": [
+    "Final caller Layout is single-line END ellipsized and retains at least six Unicode code points or its complete shorter identity. UTF16 suffix metrics, visible prefix, finite Paint width and compound padding are independently checked.",
+    "Capsule and caller bounds come from actual stable View/native AX screen geometry in the same focused native window. Missing, clipped, shifted, unfocused or unstable geometry rejects.",
+    "Minimum readable width is independently recomputed from the actual final capsule/caller widths, Paint prefix width, padding and root minimum. At fixed 480x854/240dpi/font1.3 the production 184dp root minimum is276px and protected lane is264px, so readable fallback is the only possible current native branch.",
+    "The retained generic supported branch is not claimed as native-tested. compatible_wide_native_lane explicitly remains NOT_TESTED_FIXED_480PX_VIEWPORT; existing 360dp host cases are separate evidence.",
+    "SystemUI identity comes from a unique exact target row of read-only native package registry output, cross-bound to native InputDispatcher window owner UID. Native title, token, TRUSTED_OVERLAY, input-channel and visibility checks remain strict.",
+    "Two equal current native StatusBar window/display-matrix/inset samples establish native window presence and geometry. Full-width top mapping, actual root visible status inset and nonoverlap with protected60dp clock/right icon zones are checked.",
+    "No new Accessibility icon resource IDs or guessed native icon availability prerequisites remain. proof_scope explicitly leaves actual icon visual presence to review of full real compositor captures.",
+    "All40 native method identities, legacy245 profiles, modern24 required filenames, Telecom/drag/cancel/hide/restore/opacity assertions and seven original verifier bytes remain unchanged. Production sources, host-test sources and .github have no diff from reviewed HEAD."
+  ],
+  "input_source_audit": {
+    "pinned_commit": "e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624",
+    "input_dispatcher_local_path": "/workspace/D.A.-Caller/work/nov19-input-coordinate/reference/InputDispatcher.cpp",
+    "input_dispatcher_sha256": "de32e26736c1ee07cdbc61818fecc5a319a88b560fd366c771d1d79cfb7cf5ac",
+    "input_dispatcher_git_blob": "ba4c84166f798900713720c17449bd10451d4be5",
+    "input_dispatcher_format_lines": [
+      5299,
+      5339
+    ],
+    "injection_mapping_lines": [
+      4491,
+      4512
+    ],
+    "transform_cpp_git_blob": "42dd85e95981ecdc4159b25373e9b9c8a0d3afa1",
+    "transform_precision_lines": [
+      527,
+      529
+    ],
+    "semantics": "Input pipeline uses display/server space; injected logical coordinates use display inverse. Native StatusBar frames map to logical capture coordinates by forward display matrix. Per-window transform and density guesses are not substitutes.",
+    "precision": "Matrix dump prints four decimal digits. Floor/ceil encloses the printed rectangle; it is not a general exact reconstruction of hidden nativefloat coefficients at arbitrary integer edges. Actual status-bottom uncertainty remains strictly between36 and37 and fixed fallback is separated below inset by12px."
+  },
+  "actual_prior_ci_observation": {
+    "run_id": 44475349766,
+    "source": "545824f0071366ba2f8c432acb520719371aa570",
+    "native_tests": 40,
+    "native_pass": 39,
+    "native_failures": 1,
+    "raw_pngs": 264,
+    "new_source_native_result": "PENDING",
+    "raw_input_json_path": "/workspace/work/native-013-ci-44475349766/ui/ui-modern-snapshots/DA-CALLER-next-snapshots/modern-drag-input-routing.json",
+    "raw_input_json_sha256": "96cfb29d7a1cb8195e8e296556cfd65ebc843db7bbd2b99294df958eaa82ccba",
+    "status_window_raw": "1: name='435d73f StatusBar', id=85, displayId=0, inputConfig=NOT_FOCUSABLE | TRUSTED_OVERLAY, alpha=1.00, frame=[0,35][320,59], globalScale=1.000000, applicationInfo.name=, applicationInfo.token=<null>, touchableRegion=[0,35][320,59], ownerPid=758, ownerUid=10157, dispatchingTimeout=5000ms, hasToken=true, touchOcclusionMode=BLOCK_UNTRUSTED",
+    "native_frame": [
+      0,
+      35,
+      320,
+      59
+    ],
+    "scale_x": 1.5,
+    "scale_y": 1.5009,
+    "translate_x": 0,
+    "translate_y": -52.5308,
+    "mapped_printed_extent": [
+      0,
+      0.0007,
+      480,
+      36.0223
+    ],
+    "protected_strip": [
+      0,
+      0,
+      480,
+      37
+    ],
+    "status_bottom_four_decimal_uncertainty_interval": [
+      36.0193,
+      36.0253
+    ],
+    "actual_failure_png": "/workspace/work/native-013-ci-44475349766/ui/ui-modern-snapshots/DA-CALLER-next-snapshots/modern-failed-testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency.png",
+    "actual_failure_png_sha256": "2e96e3af8d15192cd3e79c9b0e0f69e99176d7d1f81d5d8a635cc603cc608ad5",
+    "actually_viewed_by_reviewer": true,
+    "visual_observation": "Readable phone identity0500099… and Active call below native bar; clock and right-side native status icons visible. Historical hardcoded supported-lane assertion failed after production correctly chose readable fallback. This image is not a current-source native PASS."
+  },
+  "preserved_gates": {
+    "legacy_verifier_sha256": {
+      "scripts/verify-ui-matrix.py": "e3fd18f544b028ffeddaddee272b2f4e7aefa2cc47f5d2d90fac5d9580c9dab2",
+      "scripts/verify-personalization-matrix.py": "0fa3106ef1832cd5fb7fd8df167c56e19c70b5a034ae1ffc20636659220d2825",
+      "scripts/verify-call-integration-matrix.py": "0dbe8072173a2417ce9bb46fb686c9ab8fc194255c38dabdb1e396d5e0b22e6f",
+      "scripts/verify-island-matrix.py": "a2f0b025aeb20536acadd574ec36a500141516a9cefe3f99e4b4478fa051be36",
+      "scripts/verify-external-island-matrix.py": "db313c16aea96a65b1d194de80a3562e9a73204efb845473c89cff4664844c65",
+      "scripts/verify-followup-matrix.py": "6f7c540bc7703f25957be11566789e021eb438208942fc9c0d73c94579c14fa8",
+      "scripts/verify-callback-business-matrix.py": "18c3f965bd85cb4ed68ace00f83e1384b8b9416dc07a4323c5f3bfec4c0c70f2"
+    },
+    "original_native_method_identities_equal": true,
+    "native_methods": 40,
+    "modern_native_methods": 3,
+    "legacy_profiles_equal": true,
+    "legacy_pngs": 245,
+    "modern_required_filenames_equal": true,
+    "modern_pngs": 24,
+    "total_required_pngs": 269,
+    "production_unit_workflows_unchanged_from_head": true,
+    "git_diff_check": "PASS"
+  },
+  "offline_contracts": {
+    "scope": "Synthetic corruption contracts only; no Android/native/visual claim",
+    "result": "PASS",
+    "methods": 32,
+    "existing_methods": 16,
+    "new_methods": 16,
+    "returncode": 0,
+    "seconds": 9.332,
+    "result_path": "/workspace/work/nov19-readable-status-proof/contracts-result.json",
+    "result_sha256": "c1f9818b57cd0734816d6c0042e72e49732e2308581cc8cb1ecaaeb572d9408a",
+    "log_sha256": "bb6569998248652a05011f5f07788ecdd3d46f79e4089f90389b3ac9cdf1139e",
+    "frozen_source_before_after_equal": true
+  },
+  "independent_corruption_replay": {
+    "scope": "Read-only in-memory synthetic fixture mutations; final exact verifier hash. Fixture raw StatusBar line independently equals retained actual CI record. Geometry/Paint data here are synthetic contract fixtures, not new emulator observations.",
+    "result": "PASS",
+    "positive_fallback_accepted": true,
+    "rejected_cases": 26,
+    "cases": [
+      {
+        "name": "missing_capsule_geometry",
+        "status": "PASS_REJECTED",
+        "message": "Actual native caller/capsule geometry missing"
+      },
+      {
+        "name": "missing_caller_geometry",
+        "status": "PASS_REJECTED",
+        "message": "Actual native caller geometry missing"
+      },
+      {
+        "name": "missing_caller_full_text",
+        "status": "PASS_REJECTED",
+        "message": "Actual caller identity must be nonempty Unicode text"
+      },
+      {
+        "name": "missing_caller_visible_prefix",
+        "status": "PASS_REJECTED",
+        "message": "Actual visible caller Layout must retain six code points or the whole shorter name"
+      },
+      {
+        "name": "missing_caller_minimum_text_width",
+        "status": "PASS_REJECTED",
+        "message": "Actual Paint width and caller padding must be finite, positive and bounded"
+      },
+      {
+        "name": "missing_caller_line_count",
+        "status": "PASS_REJECTED",
+        "message": "Actual caller Layout must remain one line with END ellipsization"
+      },
+      {
+        "name": "missing_status_bar_protection",
+        "status": "PASS_REJECTED",
+        "message": "Actual native SystemUI status-bar protection missing"
+      },
+      {
+        "name": "missing_minimum_readable_width",
+        "status": "PASS_REJECTED",
+        "message": "Minimum readable width must be independently derived from actual native metrics"
+      },
+      {
+        "name": "missing_capsule_minimum_width",
+        "status": "PASS_REJECTED",
+        "message": "Native capsule minimum must retain184dp/276px"
+      },
+      {
+        "name": "missing_safe_lane_width",
+        "status": "PASS_REJECTED",
+        "message": "Protected status lane width differs from the fixed native profile"
+      },
+      {
+        "name": "missing_caller_native_ax_bounds",
+        "status": "PASS_REJECTED",
+        "message": "Missing native rectangle: None"
+      },
+      {
+        "name": "missing_caller_window_id",
+        "status": "PASS_REJECTED",
+        "message": "Actual native geometry needs a window and two stable samples"
+      },
+      {
+        "name": "missing_caller_stable_samples",
+        "status": "PASS_REJECTED",
+        "message": "Actual native geometry needs a window and two stable samples"
+      },
+      {
+        "name": "missing_caller_view_window_focus",
+        "status": "PASS_REJECTED",
+        "message": "Missing native assertion: view_window_focus"
+      },
+      {
+        "name": "missing_caller_native_window_focus",
+        "status": "PASS_REJECTED",
+        "message": "Missing native assertion: native_window_focus"
+      },
+      {
+        "name": "missing_status_system_ui_package_record",
+        "status": "PASS_REJECTED",
+        "message": "Actual package-manager SystemUI record must match native UID"
+      },
+      {
+        "name": "missing_status_native_window",
+        "status": "PASS_REJECTED",
+        "message": "Native StatusBar window owner differs from SystemUI"
+      },
+      {
+        "name": "missing_status_display_transform",
+        "status": "PASS_REJECTED",
+        "message": "Actual native display transform missing"
+      },
+      {
+        "name": "missing_status_mapped_status_bounds",
+        "status": "PASS_REJECTED",
+        "message": "Missing native server/mapped rectangle"
+      },
+      {
+        "name": "missing_status_clock_lane_bounds",
+        "status": "PASS_REJECTED",
+        "message": "Missing native server/mapped rectangle"
+      },
+      {
+        "name": "missing_status_right_icon_lane_bounds",
+        "status": "PASS_REJECTED",
+        "message": "Missing native server/mapped rectangle"
+      },
+      {
+        "name": "fabricated_supported_label",
+        "status": "PASS_REJECTED",
+        "message": "Unreadable native status lane must use a complete readable fallback below the bar"
+      },
+      {
+        "name": "illegible_actual_five_codepoint_prefix",
+        "status": "PASS_REJECTED",
+        "message": "Actual visible caller Layout must retain six code points or the whole shorter name"
+      },
+      {
+        "name": "contradictory_registry_uid",
+        "status": "PASS_REJECTED",
+        "message": "Actual package-manager SystemUI record must match native UID"
+      },
+      {
+        "name": "capsule_ax_shift_one_pixel",
+        "status": "PASS_REJECTED",
+        "message": "Actual native AX bounds must equal laid-out caller/capsule bounds"
+      },
+      {
+        "name": "caller_viewport_cannot_hold_measured_prefix",
+        "status": "PASS_REJECTED",
+        "message": "Actual caller viewport cannot contain its measured readable prefix"
+      }
+    ]
+  },
+  "remaining_requirements": [
+    "Fresh actual current-source40-native/269-PNG run and full actual image review remain required.",
+    "460 host passes remain the unchanged production/unit baseline until fresh CI independently executes them.",
+    "No publication/signing approval is supplied by this review."
+  ],
+  "finalized_utc": "2026-11-19T12:12:07.412625+00:00",
+  "root_compile_lint": {
+    "scope": "Root-executed Android-test APK compilation and lint, independently read after completion; not reviewer Gradle or fresh host/native execution.",
+    "result": {
+      "gradle_exit": 0,
+      "app_source_unchanged": true,
+      "host_tests_newly_executed": 0,
+      "baseline_host_pass": 460,
+      "native_approval": false,
+      "publication_allowed": false,
+      "lint": {
+        "Error": 0,
+        "Fatal": 0,
+        "Warning": 16
+      },
+      "android_test_apk_sha256": "2d5cbc7426b3f79a20f51073507c7a620178892d6e9c2918bc2f8b6522907bca",
+      "status": "COMPILE_LINT_ONLY_PASS"
+    },
+    "evidence_sha256": {
+      "work/nov19-readable-status-proof/preflight/summary.json": "d439db634917be287404d93ffccbf2b8ecec29315281159772810e3501011f12",
+      "work/nov19-readable-status-proof/preflight/gradle.log": "5b2abeef12b574f2a288eb3a0c8019c67bcc26ed7b4bd0307b6eeb670ad14ca7",
+      "work/nov19-readable-status-proof/preflight/lint-results-debug.xml": "3750d108c8b1e1f85165493acfde32e2d343972de8c40eabc91bdaec98c74cef",
+      "work/nov19-readable-status-proof/preflight/app-source-before.json": "c44de13f92ffa32d5f4df230b3c861a6e358c35531963f42be310e5aacd3ee76",
+      "work/nov19-readable-status-proof/preflight/app-source-after.json": "c44de13f92ffa32d5f4df230b3c861a6e358c35531963f42be310e5aacd3ee76",
+      "work/nov19-readable-status-proof/preflight/change-scope.json": "fbe0a5658302aad39132fae96b49b5b6889ad1f9667e1e3e6b0ad11b698557b2"
+    }
+  }
+}

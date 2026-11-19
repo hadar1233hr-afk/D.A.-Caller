@@ -1,0 +1,15 @@
+{
+  "gradle_exit": 0,
+  "app_source_unchanged": true,
+  "host_tests_newly_executed": 0,
+  "baseline_host_pass": 460,
+  "native_approval": false,
+  "publication_allowed": false,
+  "lint": {
+    "Error": 0,
+    "Fatal": 0,
+    "Warning": 16
+  },
+  "android_test_apk_sha256": "2d5cbc7426b3f79a20f51073507c7a620178892d6e9c2918bc2f8b6522907bca",
+  "status": "COMPILE_LINT_ONLY_PASS"
+}

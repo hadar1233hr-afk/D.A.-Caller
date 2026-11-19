@@ -610,10 +610,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   ui(settings::finish);target.startActivity(new Intent(target,MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
   await(()->main.hasWindowFocus()&&main.getWindow().getDecorView().findViewWithTag("island-root")!=null&&external()==null,"Own app must use one in-app island only");
   View inapp=tag(main,"island-root");Rect inappTop=bounds(inapp);assertTrue(statusInset(main)>0);assertEquals(Color.TRANSPARENT,main.getWindow().getStatusBarColor());
-  assertTrue("Supported central lane must enter own status-bar area",inappTop.top<statusInset(main));
-  assertTrue("Leave native clock lane clear",inappTop.left>=dp(60));assertTrue("Leave native status icon lane clear",inappTop.right<=480-dp(60));
-  assertTrue(main.getWindow().getDecorView().getRootWindowInsets().isVisible(WindowInsets.Type.statusBars()));assertOwned(call,token);
-  surfaces.put(surface("inapp-supported-central-status-area",inappTop,token));screenshot("modern-island-status-inapp.png");
+  surfaces.put(statusModeSurface(main,inapp,inappTop,call,token));screenshot("modern-island-status-inapp.png");
   prefs.edit().putString(CallIslandPosition.MODE,"below").remove(CallIslandPosition.SET).commit();settle();
   Rect below=bounds(tag(main,"island-root"));assertTrue(below.top>=statusInset(main));assertTrue("Normal host status color restored",main.getWindow().getStatusBarColor()!=Color.TRANSPARENT);
   assertOwned(call,token);surfaces.put(surface("inapp-default-below-restored",below,token));screenshot("modern-island-below-inapp.png");
@@ -657,9 +654,104 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   proof.put("role_held",roles.isRoleHeld(RoleManager.ROLE_DIALER)).put("default_dialer",telecom.getDefaultDialerPackage()).put("data_origin","Emulator GSM modem -> Android Telecom -> production PhoneSessionService; no injected Call/session")
    .put("launcher_package",launcherPackage).put("foreground_evidence",foregroundEvidence).put("answers",nativeAnswers)
    .put("first_token",token).put("second_token",second).put("modem_commands",modemCommands).put("gestures",gestures).put("surfaces",surfaces)
+   .put("compatible_wide_native_lane","NOT_TESTED_FIXED_480PX_VIEWPORT")
    .put("hide_preserves_call_and_notification",true).put("settings_restore_on_home",true).put("new_call_ignores_previous_hidden_token",true)
    .put("single_owned_surface",true).put("protected_status_icons_remain_visible",true).put("modem_end_removes_island",true);
   proof("modern-island-native.json",proof);
+ }
+ private JSONObject statusModeSurface(Activity activity,View capsule,Rect capsuleBounds,Call call,String token)throws Exception {
+  assertOwned(call,token);awaitActivityForeground(activity);
+  TextView caller=(TextView)tag(activity,"island-caller");Rect callerBounds=bounds(caller);
+  JSONObject capsuleGeometry=nativeGeometry(capsule,capsuleBounds),callerGeometry=nativeGeometry(caller,callerBounds);
+  AtomicReference<JSONObject> metrics=new AtomicReference<>();
+  ui(()->{try{
+   android.util.DisplayMetrics display=new android.util.DisplayMetrics();activity.getDisplay().getRealMetrics(display);
+   assertEquals(480,display.widthPixels);assertEquals(854,display.heightPixels);assertEquals(240,display.densityDpi);
+   assertEquals(1.3f,activity.getResources().getConfiguration().fontScale,.0001f);
+   assertEquals(capsuleBounds.width(),capsule.getWidth());assertEquals(callerBounds.width(),caller.getWidth());
+   assertTrue(capsuleBounds.contains(callerBounds));assertNotNull(caller.getLayout());assertEquals(1,caller.getLayout().getLineCount());
+   assertEquals(android.text.TextUtils.TruncateAt.END,caller.getEllipsize());
+   String full=caller.getText().toString();int count=full.codePointCount(0,full.length());assertTrue(count>0);
+   int required=Math.min(6,count),prefixEnd=full.offsetByCodePoints(0,required);
+   String minimumText=full.substring(0,prefixEnd)+(prefixEnd<full.length()?"\u2026":"");
+   int omitted=caller.getLayout().getEllipsisCount(0),visibleEnd=omitted==0?full.length():caller.getLayout().getEllipsisStart(0);
+   assertTrue(visibleEnd>=0&&visibleEnd<=full.length());String visible=full.substring(0,visibleEnd);
+   int visibleCount=visible.codePointCount(0,visible.length());assertTrue("Actual caller layout must retain six code points or its whole shorter identity",visibleCount>=required);
+   int padding=caller.getCompoundPaddingLeft()+caller.getCompoundPaddingRight();double textWidth=caller.getPaint().measureText(minimumText);
+   int minimum=Math.max(capsule.getMinimumWidth(),capsule.getWidth()-caller.getWidth()+(int)Math.ceil(textWidth)+padding);
+   assertTrue("Final native caller viewport must contain the measured readable prefix",caller.getWidth()>=Math.ceil(textWidth)+padding);
+   int inset=statusInset(activity),lane=display.widthPixels-Math.round(144*display.density);assertTrue(inset>0&&lane>0);
+   boolean supported=minimum<=lane;
+   if(supported){
+    assertTrue("A readable compatible lane must enter the status area",capsuleBounds.top<inset);
+    assertTrue(capsuleBounds.width()<=lane);assertTrue(capsuleBounds.left>=Math.round(60*display.density));
+    assertTrue(capsuleBounds.right<=display.widthPixels-Math.round(60*display.density));
+   }else{
+    assertTrue("An unreadable status lane must retain the complete readable capsule",capsule.getWidth()>=minimum);
+    assertTrue("Readable fallback must clear the protected status bar",capsuleBounds.top>=inset+Math.round(8*display.density));
+   }
+   assertEquals("status_area",prefs.getString(CallIslandPosition.MODE,"below"));assertFalse(prefs.getBoolean(CallIslandPosition.SET,false));
+   assertTrue(activity.getWindow().getDecorView().getRootWindowInsets().isVisible(WindowInsets.Type.statusBars()));
+   metrics.set(new JSONObject().put("stage",supported?"inapp-supported-central-status-area":"inapp-protected-readable-status-fallback")
+    .put("display_width",display.widthPixels).put("display_height",display.heightPixels).put("density_dpi",display.densityDpi).put("font_scale",activity.getResources().getConfiguration().fontScale)
+    .put("status_inset",inset).put("safe_lane_width",lane).put("minimum_readable_width",minimum).put("capsule_minimum_width",capsule.getMinimumWidth())
+    .put("caller_line_count",caller.getLayout().getLineCount()).put("caller_ellipsize",caller.getEllipsize().name())
+    .put("caller_full_text",full).put("caller_code_points",count).put("caller_visible_prefix",visible).put("caller_visible_code_points",visibleCount)
+    .put("caller_ellipsis_start_utf16",caller.getLayout().getEllipsisStart(0)).put("caller_ellipsis_count_utf16",omitted)
+    .put("caller_minimum_text",minimumText).put("caller_minimum_text_width",textWidth).put("caller_padding_horizontal",padding)
+    .put("position_mode",prefs.getString(CallIslandPosition.MODE,"below")).put("custom_position_set",prefs.getBoolean(CallIslandPosition.SET,false)));
+  }catch(Exception failure){throw new RuntimeException(failure);}});
+  JSONObject result=surface(metrics.get().getString("stage"),capsuleBounds,token);
+  for(java.util.Iterator<String> keys=metrics.get().keys();keys.hasNext();){String key=keys.next();result.put(key,metrics.get().get(key));}
+  assertEquals(capsuleGeometry.getInt("window_id"),callerGeometry.getInt("window_id"));
+  return result.put("capsule_geometry",capsuleGeometry).put("caller_geometry",callerGeometry).put("status_bar_protection",protectedStatusBar(activity,capsuleBounds));
+ }
+ private JSONObject nativeGeometry(View view,Rect expected)throws Exception {
+  assertEquals(expected,bounds(view));AtomicReference<Integer> id=new AtomicReference<>();AtomicReference<Rect> actual=new AtomicReference<>();
+  ui(()->{AccessibilityNodeInfo node=view.createAccessibilityNodeInfo();try{
+   Rect rect=new Rect();node.getBoundsInScreen(rect);assertEquals(expected,rect);assertTrue(view.hasWindowFocus());id.set(node.getWindowId());actual.set(rect);
+  }finally{node.recycle();}});
+  assertTrue(nativeWindowFocused(id.get()));
+  return new JSONObject().put("bounds",expected.toShortString()).put("native_ax_bounds",actual.get().toShortString()).put("window_id",id.get())
+   .put("stable_samples",2).put("view_window_focus",true).put("native_window_focus",true);
+ }
+ private JSONObject protectedStatusBar(Activity activity,Rect capsule)throws Exception {
+  int inset=statusInset(activity);
+  String packageRows=shell("cmd package list packages -U --user 0 com.android.systemui");
+  Matcher packageUid=Pattern.compile("(?m)^package:com\\.android\\.systemui uid:([0-9]+)[ \\t]*$").matcher(packageRows);
+  assertTrue("Actual system package registry must identify SystemUI",packageUid.find());
+  String packageRecord=packageUid.group().trim();int systemUid=Integer.parseInt(packageUid.group(1));
+  assertTrue(systemUid>0);assertFalse("SystemUI package registry must identify one UID",packageUid.find());
+  AtomicReference<JSONObject> accepted=new AtomicReference<>();AtomicReference<String> previous=new AtomicReference<>("");
+  await(()->{
+   assertTrue(activity.getWindow().getDecorView().getRootWindowInsets().isVisible(WindowInsets.Type.statusBars()));
+   String dump=shell("dumpsys input");int dispatcher=dump.indexOf("Input Dispatcher State:");assertTrue(dispatcher>=0);
+   NativeInputDisplay display=new NativeInputDisplay(dump.substring(dispatcher));NativeInputWindow bar=null;
+   for(NativeInputWindow window:inputWindows(dump)){
+    if(window.uid==systemUid&&window.token&&!window.flag("NOT_VISIBLE")&&!window.flag("NO_INPUT_CHANNEL")&&window.flag("TRUSTED_OVERLAY")&&(window.name.equals("StatusBar")||window.name.endsWith(" StatusBar"))){
+     assertNull("There must be one current native SystemUI StatusBar window",bar);bar=window;
+    }
+   }
+   if(bar==null){previous.set("");return false;}
+   double left=display.logicalX(bar.frame.left),right=display.logicalX(bar.frame.right),top=display.logicalY(bar.frame.top),bottom=display.logicalY(bar.frame.bottom);
+   assertTrue("Native SystemUI strip must match the actual display top and width",Math.abs(left)<=1&&Math.abs(right-480)<=1&&Math.abs(top)<=1);
+   assertTrue("Native SystemUI strip must agree with actual root insets",bottom>=inset-1&&bottom<=inset+2);
+   // Display transforms are printed to four decimals; round its protected
+   // extent outward rather than declaring one edge pixel safe for app content.
+   Rect strip=new Rect(Math.max(0,(int)Math.floor(left)),Math.max(0,(int)Math.floor(top)),Math.min(480,(int)Math.ceil(right)),(int)Math.ceil(bottom));
+   Rect clock=new Rect(0,0,dp(60),strip.bottom),icons=new Rect(480-dp(60),0,480,strip.bottom);
+   assertFalse("App capsule must clear the protected native clock lane",Rect.intersects(capsule,clock));
+   assertFalse("App capsule must clear the protected native right icon lane",Rect.intersects(capsule,icons));
+   String key=bar.raw+"/"+display.raw+"/"+strip.toShortString()+"/"+inset;
+   if(!key.equals(previous.get())){previous.set(key);return false;}
+   accepted.set(new JSONObject().put("system_ui_package","com.android.systemui").put("system_ui_package_record",packageRecord).put("system_ui_uid",systemUid)
+    .put("native_window",bar.json()).put("window_has_input_token",bar.token).put("window_visible",!bar.flag("NOT_VISIBLE"))
+    .put("mapped_status_bounds",strip.toShortString()).put("display_transform",display.json()).put("root_status_inset",inset)
+    .put("root_status_bars_visible",true).put("clock_lane_bounds",clock.toShortString()).put("right_icon_lane_bounds",icons.toShortString())
+    .put("clock_lane_clear",true).put("right_icon_lane_clear",true).put("stable_samples",2)
+    .put("proof_scope","Native SystemUI StatusBar window, root WindowInsets and protected geometric lanes; icon visual presence is reviewed in the real capture"));
+   return true;
+  },"Actual native SystemUI status window and protected icon lanes must remain visible, stable and unobscured");return accepted.get();
  }
  private JSONObject surface(String stage,Rect bounds,String token)throws Exception {
   int overlays=0;for(View root:WindowInspector.getGlobalWindowViews())if(root.isAttachedToWindow()&&root.getLayoutParams() instanceof WindowManager.LayoutParams&&
