@@ -1,0 +1,42 @@
+{
+  "saved_at_utc": "2026-11-19T00:03:44.483808+00:00",
+  "status": "STOPPED_ACTUAL_USAGE_LIMIT_SAVE_ONLY",
+  "actual_error_agent": "legacy_failures_evening",
+  "reported_reset_text": "10:57 PM",
+  "reset_timezone_date_established": false,
+  "bypass_or_model_account_switch": false,
+  "source_last_native": "3db5a5f7af9b0bcebb5a34fe1e67802a62c61e7c",
+  "last_pushed_docs_head": "74348a1965cc142cb4c82ba126d94fab91d22ad4",
+  "native_run": 44389278862,
+  "unit_pass": 457,
+  "native": {
+    "tests": 40,
+    "failures": 4,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_pass": 36,
+  "raw_png_count": 247,
+  "new_source_hotfixes_unexecuted": true,
+  "production_and_unit_sources_unchanged_since457_PASS": true,
+  "hotfix_sha256": {
+    "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java": "7d87b4cbb85ee0779dc8c0560d602c7c7f7e656f085b5522a0e71483b9867e3d",
+    "app/src/androidTest/java/com/dacaller/app/PersonalizationSnapshotTest.java": "d6ae48910e9d3f5e17d21a2fa353f68b1dfe8d4f0f33def44cc8a8425377ab68"
+  },
+  "modern_direct_javac": "PASS at currenthash, auditretained; noGradle/native",
+  "personalization_direct_compile": "NOT_RUN after exact-row hotfix",
+  "next_step": "Inspect overlap/latesthandoff, review two test-only hotfixes; compile Android-testAPK/lint with unchanged production457baseline, then freshCI457/40/269/fullactualvisual. Do not weaken48dp/fullnativeAX/focus/assertions or old7verifiers.",
+  "latest_native_apk": {
+    "apk_sha256": "15426dfc4c31652ab871a29f8ee7abc313e4311612844981443905eb5aa8c6e7",
+    "certificate_sha256": "63980b28e1959bde762423677ed64283f8fabd0642f1f48ee9bd3d31a146f5b5",
+    "mode": "ephemeral-test-only",
+    "publication_allowed": false,
+    "required_update_certificate_matches": false,
+    "required_update_version": "0.11.0-beta.9",
+    "schema_version": 1
+  },
+  "publication_allowed": false,
+  "012_delivered_immutable_no_resend": true,
+  "013_unreleased": true,
+  "existing_automation_enabled": true
+}

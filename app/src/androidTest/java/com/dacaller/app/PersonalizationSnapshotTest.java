@@ -665,25 +665,45 @@ public final class PersonalizationSnapshotTest extends InstrumentationTestCase {
   }
  }
  private void revealChoiceRow(String tag)throws Exception{
-  final View[] row={null};
+  awaitNativeApplicationWindow();final View[] row={null};
   ui(()->{
    // A label may already be visible while its taller sibling icon is clipped.
-   // Inspect this process's real dialog window, then reveal the entire row.
+   // Nine icons make the legacy fifth choice a middle row. Revealing the
+   // entire list bottom can scroll past that row instead of exposing it.
    for(View window:android.view.inspector.WindowInspector.getGlobalWindowViews()){
+    if(!window.hasWindowFocus())continue;
     View candidate=window.findViewWithTag(tag);
     if(candidate==null||!candidate.isShown())continue;
     row[0]=candidate;
     android.view.ViewParent parent=candidate.getParent();
     while(parent!=null&&!(parent instanceof ScrollView))parent=parent.getParent();
     assertNotNull("Picker choices need a scroll viewport",parent);
-    ScrollView viewport=(ScrollView)parent;viewport.scrollTo(0,viewport.getChildAt(0).getHeight());break;
+    break;
    }
    assertNotNull("Missing native dialog choice row "+tag,row[0]);
-  });settle();
+  });
+  final boolean[] revealed={false};
+  for(int attempt=0;attempt<4&&!revealed[0];attempt++){
+   ui(()->{
+    Rect target=new Rect();row[0].getDrawingRect(target);
+    // View translates this exact local drawing rectangle through all parents,
+    // including the ScrollView's current offset and dialog content padding.
+    row[0].requestRectangleOnScreen(target,true);
+   });settle();
+   ui(()->{
+    Rect visible=new Rect();ImageView preview=find(row[0],ImageView.class);
+    revealed[0]=row[0].isShown()&&row[0].getGlobalVisibleRect(visible)
+      &&visible.width()>=row[0].getWidth()-1&&visible.height()>=row[0].getHeight()-1;
+    if(preview==null)revealed[0]=false;
+    else revealed[0]&=preview.getGlobalVisibleRect(visible)&&visible.width()>=preview.getWidth()-1&&visible.height()>=preview.getHeight()-1;
+   });
+  }
   ui(()->{
    fullyVisible(row[0]);ImageView preview=find(row[0],ImageView.class);
    assertNotNull("Choice preview must be present",preview);fullyVisible(preview);
+   assertTrue("Native choice row must retain a 48dp pointer target",row[0].getHeight()>=dp(48)&&row[0].getWidth()>=dp(48));
   });
+  stableNativeBounds(row[0]);
  }
  private boolean scrollAccessible(AccessibilityNodeInfo node){
   if(node==null)return false;if(node.isScrollable()&&node.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD))return true;

@@ -1,0 +1,33 @@
+{
+  "source_sha": "3db5a5f7af9b0bcebb5a34fe1e67802a62c61e7c",
+  "app_tree": "dbdf015c1af5ffe0b024814dd8ccd31e138babac",
+  "run_id": 44389278862,
+  "artifact_id": 14466249970,
+  "bytes": 162948,
+  "sha256": "224140c8c1560961dc83ecf7ecfe7499cb1e6c7004f549b683c4bb61882b8c44",
+  "all_crc_pass": true,
+  "unit": {
+    "tests": 457,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "classes": 44,
+  "unique_cases": 457,
+  "python_reports": [
+    {
+      "file": "tooling-checks/business-data-tests.txt",
+      "reported_counts": [
+        68
+      ]
+    },
+    {
+      "file": "tooling-checks/signing-tests.txt",
+      "reported_counts": [
+        76
+      ]
+    }
+  ],
+  "native_status": "RUNNING_NO_RESULT",
+  "publication_allowed": false
+}

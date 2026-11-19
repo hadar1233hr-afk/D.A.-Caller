@@ -1,5 +1,51 @@
 # DA CALLER continuation state
 
+## Actual quota stop after40-case native run; two test-only hotfixes saved — 2026-11-19 UTC
+
+STOP/save-only: legacy_failures_evening hit a real usage-limit error (retry10:57PM,
+timezone/date not established). No retry/account/model/route bypass. Source was
+saved before stopping; later automatic prompts steered the same active task and
+did not authorize bypassing the limit. No active agent/build remains; one stale
+Java PID43894 is defunct, not running work.
+
+Latest published-to-PR application source3db5a5f/appTreedbdf015c1af5ffe0b024814dd8ccd31e138babac
+passed457host/44classes, builds/lint0errors16warnings, sourcehashfence stable.
+Fresh actual CI44389278862 validate457uniqueunits/76Python signing-tool contracts/
+68business-data contractsPASS; Android JUnit **40tests,36PASS/4FAIL**,0errors/skips.
+All40 completed this time, including both Widget cases; no process-abort entry.
+This establishes completion in this run, not a proved production-memory repair.
+No native/visual/publication approval. Exact247rawPNGs/officialZIPs/CRC/source
+binding/counters/failures retained in third-native-ci and workspace
+/workspace/work/native-013-ci-44389278862.
+
+The four failures were strictgeometry/reveal checks: Modern external islandroot,
+lastlauncher-icon-signal, restore confirmation button; legacy launcher-icon-wave
+clipped58/114. Actual Modern captures showed full controls; getGlobalVisibleRect
+uses window/root coordinates while candidate/nativeAX use screen coordinates.
+Modern hotfix adds the actual root screen-minus-window origin before exact
+comparison, retaining fullwidth/height/display/nativeAX/focus/two stable captures;
+last geometry now retained on failure. Direct javacPASS at currenthash only.
+Legacy old revealChoiceRow always scrolled the entire9-iconlist to its bottom;
+formerlast5th wave is now middle. Exact-row drawingRect/requestRectangleOnScreen
+replaces bottom assumption, retaining fullrow/preview/48dp/nativefocus/AX checks.
+This Personalization hotfix is NOT COMPILED/NOT EXECUTED; Modern has not been
+Gradle/native-executed after its correction either. Two testfiles only changed;
+production, unit sources, old7 verifiers, signing/CI and frozen business data
+are unchanged since the457PASS source.
+
+Current source hashes/audits/exact oldframe reviews in nov19-usage-stop.
+Next available scheduled run: inspect overlap, review both hotfixes; Android-test
+APK compilation/lint, then fresh CI457units/40native/all269realPNGs and whole
+actualvisual review. Preserve strict geometry, Telecom/SAF/pointer/nativebar and
+all old gates. Do not label compilations/partial screenshots a nativePASS.
+
+Native diagnosticAPK15426dfc4c31652ab871a29f8ee7abc313e4311612844981443905eb5aa8c6e7,
+cert63980b28e1959bde762423677ed64283f8fabd0642f1f48ee9bd3d31a146f5b5,
+is ephemeral-test-only/publication_allowed:false. No new release/link.
+0.12.0 alreadydeliveredimmutable/noresend;0.13.0/code22unreleased, owner-controlled
+private signing backup/authorized repo-secrets/applicable approval unresolved.
+Existing automation remains enabled until all owner scope is complete.
+
 ## Normal scheduled resume; actual native failures corrected under verification — 2026-11-18 evening UTC
 
 Final current-source preflight actually completed457methods/44classesPASS,

@@ -224,21 +224,34 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
  private View windowTag(String value){for(View root:WindowInspector.getGlobalWindowViews()){View view=root.findViewWithTag(value);if(view!=null&&view.isShown())return view;}return null;}
  private Rect bounds(View view)throws Exception {
   assertNotNull("Missing actual touch target",view);AtomicReference<Rect> accepted=new AtomicReference<>(),previous=new AtomicReference<>();
-  await(()->{AtomicReference<Rect> candidate=new AtomicReference<>();AtomicReference<Boolean> outside=new AtomicReference<>(false);AtomicReference<Integer> windowId=new AtomicReference<>();ui(()->{
+  AtomicReference<String> lastGeometry=new AtomicReference<>("No native layout sample");
+  try{await(()->{AtomicReference<Rect> candidate=new AtomicReference<>();AtomicReference<Boolean> outside=new AtomicReference<>(false);AtomicReference<Integer> windowId=new AtomicReference<>();ui(()->{
    View root=view.getRootView();ViewGroup.LayoutParams raw=root.getLayoutParams();
    boolean overlay=raw instanceof WindowManager.LayoutParams&&((WindowManager.LayoutParams)raw).type==WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
    outside.set(overlay);
+   lastGeometry.set("attached="+view.isAttachedToWindow()+", shown="+view.isShown()+", laidOut="+view.isLaidOut()+
+    ", size="+view.getWidth()+"x"+view.getHeight()+", viewLayoutRequested="+view.isLayoutRequested()+", rootLayoutRequested="+root.isLayoutRequested());
    if(!view.isAttachedToWindow()||!view.isShown()||!view.isLaidOut()||view.getWidth()<=0||view.getHeight()<=0||
      view.isLayoutRequested()||root.isLayoutRequested())return;
    int[] location=new int[2];view.getLocationOnScreen(location);
    // Android TextView can include its own internal RTL scroll in this API.
    Rect result=new Rect();
    result.set(location[0]-view.getScrollX(),location[1]-view.getScrollY(),location[0]-view.getScrollX()+view.getWidth(),location[1]-view.getScrollY()+view.getHeight());
-   if(result.width()<=0||result.height()<=0||!new Rect(0,0,480,854).contains(result))return;
-   Rect visible=new Rect();if(!view.getGlobalVisibleRect(visible)||!visible.equals(result))return;
-   AccessibilityNodeInfo node=view.createAccessibilityNodeInfo();Rect nativeBounds=new Rect();node.getBoundsInScreen(nativeBounds);
-   if(!nativeBounds.equals(result))return;
-   windowId.set(node.getWindowId());candidate.set(result);
+   Rect visible=new Rect();boolean shown=view.getGlobalVisibleRect(visible);
+   // "Global" visibility is in the root/window coordinate space. Dialogs and
+   // TYPE_APPLICATION_OVERLAY windows have a nonzero screen origin, whereas
+   // getLocationOnScreen and native AX bounds already use screen coordinates.
+   int[] rootScreen=new int[2],rootWindow=new int[2];root.getLocationOnScreen(rootScreen);root.getLocationInWindow(rootWindow);
+   Rect visibleOnScreen=new Rect(visible);visibleOnScreen.offset(rootScreen[0]-rootWindow[0],rootScreen[1]-rootWindow[1]);
+   AccessibilityNodeInfo node=view.createAccessibilityNodeInfo();Rect nativeBounds=new Rect();
+   try{
+    node.getBoundsInScreen(nativeBounds);windowId.set(node.getWindowId());
+    lastGeometry.set("screen="+result+", rootVisible="+visible+", rootScreen="+rootScreen[0]+","+rootScreen[1]+
+     ", rootWindow="+rootWindow[0]+","+rootWindow[1]+", visibleOnScreen="+visibleOnScreen+", nativeAX="+nativeBounds+", window="+windowId.get());
+   }finally{node.recycle();}
+   if(result.width()<=0||result.height()<=0||!new Rect(0,0,480,854).contains(result)||!shown||
+     visible.width()!=view.getWidth()||visible.height()!=view.getHeight()||!visibleOnScreen.equals(result)||!nativeBounds.equals(result))return;
+   candidate.set(result);
   });
    Rect result=candidate.get();
    if(result==null||(outside.get()?systemUiFocused():!nativeWindowFocused(windowId.get()))){previous.set(null);return false;}
@@ -247,7 +260,8 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
    // old readiness check and geometry read could otherwise yield negative size.
    if(!result.equals(previous.get())){previous.set(new Rect(result));return false;}
    accepted.set(new Rect(result));return true;
-  },"Target must be fully visible, stably laid out and focused in its actual native window: "+view.getTag());
+  },"Target must be fully visible, stably laid out and focused in its actual native window: "+view.getTag());}
+  catch(AssertionError failure){throw new AssertionError(failure.getMessage()+"; last native geometry: "+lastGeometry.get(),failure);}
   return accepted.get();
  }
  private void pointer(long down,int action,float x,float y)throws Exception {

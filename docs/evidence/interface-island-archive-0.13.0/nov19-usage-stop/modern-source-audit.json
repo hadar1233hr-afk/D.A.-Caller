@@ -1,0 +1,43 @@
+{
+  "saved_at_utc": "2026-11-18T20:37:18.485101+00:00",
+  "source_sha256": "7d87b4cbb85ee0779dc8c0560d602c7c7f7e656f085b5522a0e71483b9867e3d",
+  "source": "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java",
+  "reviewed_native_run": 44389278862,
+  "all_three_actual_failure_pngs_viewed": true,
+  "actual_png_sha256": {
+    "modern-failed-testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency.png": "19edbfcbb824db38936b849446d1756101c5995e8140bcf7eea606d62fdc0ecf",
+    "modern-failed-testModernInlineNavigationNineIconsAndWineSwitchPointer.png": "1e769246bc597a372ec1fd2588044d9c4f4cf2e932af75eeb25884c14b2e5099",
+    "modern-failed-testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns.png": "5b10defc4eb957727d61fc7a791b29808be4aebd3c06ca4586399c4b271d0209"
+  },
+  "failure_classification": "Targets are present and fully shown in the three actual frames; the previous helper compared root/window-relative global-visible bounds directly to screen-relative location/AX bounds, so non-origin overlay/dialog windows cannot match.",
+  "mapping_fix": "Translate global-visible rectangle by root.getLocationOnScreen minus root.getLocationInWindow before exact screen/AX equality. Preserve raw full width/height, real display containment, native focused-window ownership and two identical settled bounds.",
+  "new_diagnostics": "Failure message includes last screen rectangle, raw root-visible rectangle, both root origins, converted visible rectangle, native AX and window id.",
+  "no_assertion_or_gate_relaxation": true,
+  "old_zero_pixel_and_partial_blend_assertions_retained": true,
+  "methods_preserved": [
+    "testModernInlineNavigationNineIconsAndWineSwitchPointer",
+    "testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns",
+    "testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency"
+  ],
+  "literal_captures_preserved": [
+    "modern-archive-merged.png",
+    "modern-archive-restore-off.png",
+    "modern-archive-restore-on.png",
+    "modern-backup-options-off.png",
+    "modern-backup-options-on.png",
+    "modern-island-below-inapp.png",
+    "modern-island-composition-background.png",
+    "modern-island-dragged.png",
+    "modern-island-hide-home.png",
+    "modern-island-new-call-shown.png",
+    "modern-island-restore-home.png",
+    "modern-island-status-external.png",
+    "modern-island-status-inapp.png"
+  ],
+  "normal_frame_profile": 24,
+  "native_execution_performed": false,
+  "gradle_executed_by_worker": false,
+  "direct_javac_exit": 0,
+  "production_source_modified": false,
+  "source_frozen": true
+}
