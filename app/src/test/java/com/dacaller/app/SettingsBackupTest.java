@@ -54,6 +54,14 @@ public final class SettingsBackupTest {
   assertFalse(prefs.getBoolean("island_enabled",true));
   assertTrue(prefs.getBoolean("island_outside_app",false));
  }
+ @Test public void nexIslandStyleRoundTripsWithoutResettingOtherIslandChoices()throws Exception{
+  prefs.edit().putString("island_style","nex").putInt("island_background_opacity",73).putString("island_size","comfortable").commit();
+  SettingsBackup.Snapshot saved=SettingsBackup.decode(SettingsBackup.encode(SettingsBackup.capture(prefs)));
+  assertEquals("nex",saved.values.get("island_style"));
+  prefs.edit().putString("island_style","apple").putInt("island_background_opacity",35).putString("island_size","compact").commit();
+  assertTrue(SettingsBackup.restore(prefs,saved,id->true));
+  assertEquals("nex",prefs.getString("island_style",null));assertEquals(73,prefs.getInt("island_background_opacity",-1));assertEquals("comfortable",prefs.getString("island_size",null));
+ }
  @Test public void positionedTransparentIslandBackupUsesInclusiveBoundsAndExcludesTransientHiddenCallToken()throws Exception{
   SettingsBackup.Snapshot defaults=SettingsBackup.capture(prefs);
   assertEquals(35,defaults.values.get("island_background_opacity"));assertEquals("below",defaults.values.get("island_position_mode"));
