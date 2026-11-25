@@ -1,5 +1,31 @@
 # DA CALLER continuation state
 
+## Verified 0.13.0 APK delivered; awaiting owner-controlled signing setup — 2026-11-25 14:03 UTC
+
+The verified NEW0.13.0 APK link was actually sent in the previous completion
+response. Delivery record is approved-publication/published/delivery-record.json;
+do not repeat the0.13 or0.12 download links. App/UI/data/publication work is
+complete. No new source/version/native build, repeated matrix, business import or
+release task is needed. PR remains open at e5d7a6f before this docs-only receipt;
+local tree was clean, root was the only active worker before a bounded read-only
+signing-capability audit. No new actual usage-limit error or overlap.
+
+Only the original separate durable-signing request remains. Existing CLI already
+implements private outside-Git init, pinned verification and stdin-only upload of
+the three repository secrets. Current connected tools cannot create an owner
+Vault/private independent backup or administer repository secrets; cloud changes
+can bind existing Vault references only. No fresh API denial was retried, no key
+was generated, no secret read/shared and no fallback account/route used. Zero
+cloud secret bindings is not evidence GitHub repository secrets are empty.
+
+Required next input: an owner-controlled private backup destination and supported
+authorized GitHub-secret setup route. Ask for that concrete setup information,
+not another APK approval, and never ask for private key/password/token in chat.
+Keep the original automation enabled while this requested setup remains unwaived
+and incomplete; do not create a timer or poll unchanged software/builds. Preserve
+all immutable public assets, actual hardware/update NOT_TESTED limits and global
+future signing guards. No uninstall advice.
+
 ## 0.13.0 published; all eight public assets verified — 2026-11-25 UTC
 
 The owner-approved exact retained APK is now public at tagv0.13.0, publication

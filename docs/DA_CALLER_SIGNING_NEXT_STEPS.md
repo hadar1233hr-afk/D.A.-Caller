@@ -1,5 +1,13 @@
 # Remaining signing work after 0.12.0 — 2026-11-12
 
+The verified0.13.0 APK link has now actually been delivered in the previous
+completion response (recorded2026-11-25 14:03UTC); never repeat it. The only
+remaining request is owner-controlled durable signing setup. A fresh bounded
+capability audit found no missing implementation: init/verify/upload-secrets
+already exist. Owner-controlled private backup destination and supported
+repository-secret administration are required next inputs. No keys, secrets or
+default pins were changed, no API denial retried, and no fresh native test claimed.
+
 0.13.0 was published on 2026-11-25 UTC under the exact approved exception.
 CI and root independently verified all eight anonymous public downloads and
 the exact retained APK/signature/source/tag. This completes APK publication;
