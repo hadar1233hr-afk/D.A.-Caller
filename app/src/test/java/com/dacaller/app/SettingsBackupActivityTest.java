@@ -154,7 +154,7 @@ public final class SettingsBackupActivityTest {
  }
  private static void assertWineAndRoundedFont(CheckBox checkBox,int wine){
   android.util.TypedValue activated=new android.util.TypedValue();assertTrue(checkBox.getContext().getTheme().resolveAttribute(android.R.attr.colorControlActivated,activated,true));
-  assertEquals(wine,activated.data);assertEquals(500,checkBox.getTypeface().getWeight());
+  assertEquals(wine,activated.data);assertEquals(600,checkBox.getTypeface().getWeight());
   assertTrue(checkBox.getMinHeight()>=Math.round(48*checkBox.getResources().getDisplayMetrics().density));
  }
  private static Button exportButton(View view){
