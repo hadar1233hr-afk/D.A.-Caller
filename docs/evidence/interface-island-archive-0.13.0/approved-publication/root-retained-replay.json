@@ -1,0 +1,70 @@
+{
+  "status": "PASS",
+  "fresh_native_run": false,
+  "gates": {
+    "verify-ui-matrix.py": {
+      "source_sha256": "e3fd18f544b028ffeddaddee272b2f4e7aefa2cc47f5d2d90fac5d9580c9dab2",
+      "report": "matrix-verification.json",
+      "retained_report_sha256": "4b35de63c2c097f15174c8d1bd09bbe4251f31cda8b7daa63a06bcbac66d78dd",
+      "canonical_report_sha256": "a82a086b092793d350adbf77515c8450831a38e2e30724764820093cf1ef4d73",
+      "stdout": "Verified 122 complete API33 PNG files: 80 call matrix + 20 long names + 1 English/no Bluetooth + 17 widgets + 4 settings",
+      "all_native_assertions_unchanged": true
+    },
+    "verify-personalization-matrix.py": {
+      "source_sha256": "0fa3106ef1832cd5fb7fd8df167c56e19c70b5a034ae1ffc20636659220d2825",
+      "report": "personalization-verification.json",
+      "retained_report_sha256": "63057779a094bff2d74891250d61b6e705016a567a3cc388a2474a54f8c49828",
+      "canonical_report_sha256": "715a0bde8a9d78ceea239805b08dbafd0a734ef168781080b801496bd1c1f323",
+      "stdout": "Verified 53 complete personalization PNG files (plus the existing call/widget/settings matrix)",
+      "all_native_assertions_unchanged": true
+    },
+    "verify-call-integration-matrix.py": {
+      "source_sha256": "0dbe8072173a2417ce9bb46fb686c9ab8fc194255c38dabdb1e396d5e0b22e6f",
+      "report": "call-integration-verification.json",
+      "retained_report_sha256": "4b9870362ef4a3a5228577dfc5bc3df56a809cb02d1384b7e89eeff3fc1a9ad8",
+      "canonical_report_sha256": "fc011a3d4a52a43cfd95e31240acee83439448d07debd8270937c877b727105f",
+      "stdout": "Verified 8 native notification/Back PNG files",
+      "all_native_assertions_unchanged": true
+    },
+    "verify-island-matrix.py": {
+      "source_sha256": "a2f0b025aeb20536acadd574ec36a500141516a9cefe3f99e4b4478fa051be36",
+      "report": "island-verification.json",
+      "retained_report_sha256": "74903162c55c000d3d14dea6a8e5149bbcada55710e8998d107802d3cdf6ee89",
+      "canonical_report_sha256": "fb62087ff8cf6718ccca2280ecfa19ffc5ed828ab8732871d8113fea18d53a8a",
+      "stdout": "Verified 36 native dynamic-island PNG files and interaction assertions",
+      "all_native_assertions_unchanged": true
+    },
+    "verify-external-island-matrix.py": {
+      "source_sha256": "db313c16aea96a65b1d194de80a3562e9a73204efb845473c89cff4664844c65",
+      "report": "external-island-verification.json",
+      "retained_report_sha256": "cc39e59d2000c675759f279429d292657d373fd7dc6ad21c481f2c6ff7702883",
+      "canonical_report_sha256": "4dab9526dab541a19b086b74b748ab9870970b4c84e581c999f689033db90c25",
+      "stdout": "Verified8 actual Telecom external-island PNGs and call/audio/lifecycle assertions; all245 required renders retained",
+      "all_native_assertions_unchanged": true
+    },
+    "verify-followup-matrix.py": {
+      "source_sha256": "6f7c540bc7703f25957be11566789e021eb438208942fc9c0d73c94579c14fa8",
+      "report": "followup-verification.json",
+      "retained_report_sha256": "b33e92df69a14498b631478da6516931edd9f253fe0298d352f4068f2f240fce",
+      "canonical_report_sha256": "95f1f5fa9221192b860b84d8ca4830032994f33064f387a65a7dfe3ee06e5f82",
+      "stdout": "Verified6 actual missed-call/changelog renders and native assertions; all245 required PNGs retained",
+      "all_native_assertions_unchanged": true
+    },
+    "verify-callback-business-matrix.py": {
+      "source_sha256": "18c3f965bd85cb4ed68ace00f83e1384b8b9416dc07a4323c5f3bfec4c0c70f2",
+      "report": "callback-business-verification.json",
+      "retained_report_sha256": "b9c58717e8e48077f808abe8fc34dcf0af45e46d9403eeedcee2e155a612894e",
+      "canonical_report_sha256": "ff04735598cbfc3aea0090169690c96422e59e1891e71b1d72edc47ddaec0ff0",
+      "stdout": "Verified12 real callback/business/swipe/contact captures and native proof; all245 required PNGs retained",
+      "all_native_assertions_unchanged": true
+    },
+    "verify-modern-features-native.py": {
+      "source_sha256": "a615b533729f61484cca04fefc07d43f26efd87c29a33fdc5e186343c3482b57",
+      "report": "modern-features-verification.json",
+      "retained_report_sha256": "49b903d40cc68d59460a0f510f99d8412e38e75feb13e6af4b8acd5ece5aaaec",
+      "canonical_report_sha256": "d8869b549bd8af94bf0b06b379c543694316c5eb096949e94685f163ba7ec6fe",
+      "stdout": "Verified40 authentic API33 native cases, original245frames and24additive real compositor frames (269total)",
+      "all_native_assertions_unchanged": true
+    }
+  }
+}

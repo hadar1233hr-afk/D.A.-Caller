@@ -1,0 +1,167 @@
+{
+  "schema": "da-caller-013-independent-mechanism-review-v1",
+  "status": "GO_EXACT_OWNER_APPROVED_013_MECHANISM",
+  "reviewed_at_utc": "2026-11-25T12:02:32.046198+00:00",
+  "publication_commit_observed_before_new_commit": "b38fb48a80ac47a3e7405f2ba96b40f3ae29979d",
+  "scope": "Read full new helper, new16 contracts, isolated workflow and exact receipt/auth; independently run16 contracts and bounded actual retained evidence/signature/source checks. No publication-time build/re-sign, no native test run or fresh visual judgement.",
+  "freeze_sha256": {
+    "scripts/prepare-approved-013-release.py": "a3fa92ca1cd767647012defdaaa901f66e6133a5495608ade06458fc56a56d15",
+    "scripts/tests/test_release_013_stage.py": "0883e6e2c8953e559ca262112daef64f6a623ec2f3929a7b8c65e728da36975a",
+    ".github/workflows/release-013-approved.yml": "426c662bcf876055086762616e282ca3052c88573080ee36c3573728afe6be2a",
+    "docs/releases/0.13.0-owner-approval-receipt.json": "a0119e54d8932fe371baa3ac311eb2a02e2864bc783518dbbfb231c172be8a40",
+    "docs/releases/0.13.0-publication-authorization.json": "3ce6f73aea8396015e167aad801f9fa9b676dfdd799ddf8b4469571d478f979a",
+    "docs/DA_CALLER_SIGNING_POLICY.json": "4e18e09fcc41697590508e42e337f50bb3246c3928aaca190a6cf54204ee7b47",
+    ".github/workflows/android.yml": "30d8ab3202dd66e26a4e806a738b511cf78d11306bc8de0346b95f372d480c72"
+  },
+  "new_contract_run": {
+    "tests": 16,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "result": "PASS",
+    "synthetic_fixtures_are_not_native_evidence": true
+  },
+  "checks": [
+    {
+      "check": "actual_owner_receipt_and_immutable_proposal",
+      "status": "PASS",
+      "detail": "Exact typed authorization, receipt hash and immutable b38 proposal verified without fixture substitution."
+    },
+    {
+      "check": "actual_protected_source_fence",
+      "status": "PASS",
+      "detail": "b38fb48a80ac47a3e7405f2ba96b40f3ae29979d"
+    },
+    {
+      "check": "actual_archive_tested-apk.zip",
+      "status": "PASS",
+      "detail": {
+        "bytes": 1332503,
+        "sha256": "e44ee3214c43272bf65b6e07517b721d4d1047cbf6331ca5c2675ef22b11b58e",
+        "members": 5,
+        "crc": "PASS"
+      }
+    },
+    {
+      "check": "actual_archive_ui.zip",
+      "status": "PASS",
+      "detail": {
+        "bytes": 17134697,
+        "sha256": "4ee0610b0b8fd57af1f72f7434fa7be3380546f86fabf8743ba63d8e41458eda",
+        "members": 369,
+        "crc": "PASS"
+      }
+    },
+    {
+      "check": "actual_archive_checks.zip",
+      "status": "PASS",
+      "detail": {
+        "bytes": 163499,
+        "sha256": "afc4d05f503f7ef2d4193636a64074ec306521a5006e8659e833383b483e858c",
+        "members": 101,
+        "crc": "PASS"
+      }
+    },
+    {
+      "check": "actual_retained_junit",
+      "status": "PASS",
+      "detail": {
+        "host": 460,
+        "host_classes": 44,
+        "native": 40
+      }
+    },
+    {
+      "check": "actual_historical_visual_union",
+      "status": "PASS",
+      "detail": {
+        "reviewed": 269,
+        "failed": 0,
+        "fresh_visual_review": false
+      }
+    },
+    {
+      "check": "actual_corresponding_source",
+      "status": "PASS",
+      "detail": {
+        "sha256": "5d6358c7d8ebc7b3be51717c3829a1b3c56e0f1aacf90bbf54fa1a04f71a5224",
+        "bytes": 3169035,
+        "members": 181
+      }
+    },
+    {
+      "check": "actual_apksigner_aapt_exact_identity",
+      "status": "PASS",
+      "detail": {
+        "application_id": "com.dacaller.app",
+        "version_name": "0.13.0",
+        "version_code": 22,
+        "apk_bytes": 1357445,
+        "apk_sha256": "e29b4c6beeb97ccb4ab1b306c83438bbd30eead7d169fda95e722ab84d5ae5f9",
+        "certificate_sha256": "c42aa0e8e318e965444ec99adc4cc6645e677d13b2b8ce2d4e67b54b1e933376",
+        "publication_allowed": true,
+        "publication_exception": "owner-approved-exact-0.13.0-preview",
+        "signing_gate_only": true,
+        "required_update_certificate_matches": false,
+        "durable_future_signing_verified": false,
+        "no_internet_permission": true,
+        "frozen_assets_match": {
+          "assets/business-directory/israel-businesses.sqlite": "cbc7dc7b41c3fa9335cbf37907243681820fe23107e40541efb306dc1b566af3",
+          "assets/business-directory/manifest.json": "fec348522615f62d36fa62ee65ff317340ea4806a85f15c457daa30378805cfa"
+        }
+      }
+    },
+    {
+      "check": "workflow_yaml_permissions_fixed_trigger_and_bash",
+      "status": "PASS",
+      "detail": {
+        "status": "PASS",
+        "negative_publish_simulations": [
+          {
+            "case": "remote_failure",
+            "exit_code": 23,
+            "release_create_reached": false
+          },
+          {
+            "case": "existing_tag",
+            "exit_code": 1,
+            "release_create_reached": false
+          },
+          {
+            "case": "existing_release",
+            "exit_code": 1,
+            "release_create_reached": false
+          }
+        ]
+      }
+    },
+    {
+      "check": "independent_additional_rejections",
+      "status": "PASS",
+      "detail": [
+        "owner_approved",
+        "apk_sha256",
+        "version_name",
+        "durable_signing_setup_waived",
+        "apk_bytes",
+        "rebuild_allowed",
+        "tag_ref_refs/tags/v0.12.0",
+        "tag_object_{'type': 'commit', 'sha': '0000000000000000000000000000000000000000'}",
+        "tag_object_{'type': 'tag', 'sha': 'b38fb48a80ac47a3e7405f2ba96b40f3ae29979d'}"
+      ]
+    }
+  ],
+  "blocking_findings": [],
+  "historical_retained_signing_policy_preserved": true,
+  "actual_full_authenticated_rest_stage": "NOT_RUN_LOCALLY: full authentic run REST metadata is unavailable locally. Workflow must successfully fetch, validate and replay it before any release mutation. No local invented metadata used.",
+  "publication_or_delivery_authorized_by_this_review_alone": false,
+  "owner_approval_receipt_bound": true,
+  "future_default_signing_unchanged": true,
+  "durable_signing_setup_complete": false,
+  "physical_or_matching_key_upgrade_verified": false,
+  "anonymous_public_downloads": "PENDING_POST_PUBLICATION; workflow uses real anonymous download mode; directory mode correctly reports separate provenance requirement.",
+  "limitations": [
+    "No fresh host/native matrix, actual fresh visual judgement, hardware, carrier, matching-key update, new build/sign/release/upload performed.",
+    "GO only for the frozen helper/tests/workflow and exact already-approved APK; stage and anonymous all-public-asset equality must actually pass before delivery."
+  ]
+}

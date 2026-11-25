@@ -1,5 +1,41 @@
 # DA CALLER continuation state
 
+## Approved exact 0.13.0 publication mechanism ready — 2026-11-25 UTC
+
+Owner approval remains the actual Nov24 direct reply, recorded in the receipt.
+New isolated helper/workflow and16adversarial publication contracts are complete.
+Final independent mechanism review GO:16contracts and9separate refusal probes
+PASS; actual retained ZIP/source/APK/JUnit/visual checks PASS; failed tag lookup,
+existing tag and existing release all stop before create. Root also replayed all
+eight unchanged gates on actual retained native evidence;92default-signing and
+19immutable0.12contracts PASS. Full review and frozen helper/test/workflow hashes
+are in approved-publication/independent-mechanism-review.json.
+
+No app/native-producer/default policy/separate-product change or build/re-sign.
+Normal CI must obtain authentic full REST metadata and pass real staging before
+any Release mutation; local direct API read was Forbidden, no alternate route
+or fabricated observed metadata used. Publication and anonymous public-byte/tag/
+signature verification are not yet claimed. Publish only the retained e29b4c6b
+APK after gates; keep0.12immutable/noresend. Durable owner key/backup/secrets
+remain separately unresolved and unwaived.
+
+## Direct owner approves exact 0.13.0 APK — 2026-11-24 Asia/Jerusalem
+
+The owner directly replied “אני מאשר את הAPK” to the previously delivered
+exact-candidate publication exception question. The receipt and authorization
+in docs/releases bind that reply to the immutable b38fb48 proposal and its six
+constraints. Do not ask again or treat it as a blanket signing waiver. Root is
+implementing only a new isolated publication helper/workflow with unchanged
+default signing policy, application tree, native producer and eight gates.
+No rebuild/re-sign; the exact retained e29b4c6b APK is the only candidate.
+
+Independent retained audit: 1,335 checks PASS, zero failures, exact ZIP/APK/source
+bytes, actual signature/metadata,460host/40native JUnit and historical269review
+union verified. This audit does not claim fresh native/visual/hardware execution.
+Publication mechanism review/rejection tests/public download equality are still
+pending. Durable owner-controlled key/independent backup/authorized secrets
+remain separately unresolved and unwaived; keep the existing automation active.
+
 ## 0.13 software scope complete; exact candidate awaits separate publication approval — 2026-11-19 UTC
 
 No independent application/data/UI work remains in the currently requested scope.

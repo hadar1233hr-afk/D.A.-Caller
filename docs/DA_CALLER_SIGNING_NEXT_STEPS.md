@@ -1,12 +1,12 @@
 # Remaining signing work after 0.12.0 — 2026-11-12
 
-Latest2026-11-19:0.13software now passes460host/40native/full269visual review.
-The retained nativeAPK e29b4c6b…5ae5f9/certc42aa0e8…933376 is still ephemeral
-and publication_allowed:false. A separate, exact-candidate proposed exception in
-[0.13.0-publication-approval.md](releases/0.13.0-publication-approval.md) is
-NOT_APPROVED and has not changed any safeguard. It cannot silently waive the
-durable owner-controlled backup/repo-secret setup below. No permanent key or
-private backup was provisioned; old0.12approval does not apply to0.13.
+Latest 2026-11-24 Asia/Jerusalem: the owner directly approved the exact retained
+0.13.0 APK (“אני מאשר את הAPK”) under the six constraints in
+[the publication exception](releases/0.13.0-publication-approval.md). The new
+isolated mechanism is being implemented/reviewed; no rebuild/re-sign or general
+policy change is authorized. The retained native policy remains historical and
+closed. This one-candidate approval does not waive the durable owner-controlled
+private key, independent backup and authorized repository-secret setup below.
 
 The verified 0.12.0 APK has already been delivered. Do not publish it again or
 repeat its download link. The owner's approval covered that one retained binary;
