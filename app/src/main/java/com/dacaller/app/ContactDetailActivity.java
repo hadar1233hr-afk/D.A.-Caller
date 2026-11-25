@@ -41,10 +41,10 @@ public final class ContactDetailActivity extends Activity {
  private int fetchGeneration;
  private int d(float n){return (int)(getResources().getDisplayMetrics().density*n+.5f);}
  private boolean dark(){return prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);}
- private int page(){return prefs.getBoolean("amoled",false)?Color.BLACK:dark()?0xFF141414:0xFFF8F8F7;}
- private int surface(){return dark()?0xFF242424:Color.WHITE;}
- private int ink(){return dark()?Color.WHITE:0xFF151515;}
- private int muted(){return dark()?0xFFAEAEAE:0xFF737373;}
+ private int page(){return NexPalette.background(dark(),prefs.getBoolean("amoled",false));}
+ private int surface(){return NexPalette.surface(dark(),prefs.getBoolean("amoled",false));}
+ private int ink(){return NexPalette.ink(dark());}
+ private int muted(){return NexPalette.muted(dark());}
  private int accent(){return "silver".equals(prefs.getString("accent","gold"))?(dark()?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark());}
  private String tr(String s){return I18n.text(this,s);}
  private GradientDrawable shape(int color,int radius){
@@ -137,7 +137,7 @@ public final class ContactDetailActivity extends Activity {
   LinearLayout hero=col();hero.setGravity(Gravity.CENTER);hero.setPadding(d(8),d(13),d(8),d(20));
   content.addView(hero,new LinearLayout.LayoutParams(-1,-2));
   FrameLayout avatar=AvatarShapes.frame(this);
-  avatar.setBackground(shape(dark()?0xFF343029:0xFFF1E8D8,70));
+  avatar.setBackground(shape(NexPalette.soft(dark()),70));
   hero.addView(avatar,new LinearLayout.LayoutParams(d(116),d(116)));
   initials=label(name.isEmpty()?"?":name.substring(0,name.offsetByCodePoints(0,1)).toUpperCase(I18n.locale(this)),45,true,accent());
   initials.setGravity(Gravity.CENTER);avatar.addView(initials,new FrameLayout.LayoutParams(-1,-1));
@@ -172,7 +172,7 @@ public final class ContactDetailActivity extends Activity {
    section("טלפון");
    for(String[] phone:phones){
     LinearLayout line=row();line.setPadding(d(13),d(10),d(13),d(10));
-    line.setBackground(shape(surface(),15));
+    line.setBackground(shape(surface(),24));
     LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,d(75));lp.bottomMargin=d(8);content.addView(line,lp);
     LinearLayout left=col();line.addView(left,new LinearLayout.LayoutParams(0,-2,1));
     TextView numberLabel=label("",17,true,ink());numberLabel.setText(phone[0]);numberLabel.setTextDirection(View.TEXT_DIRECTION_LTR);left.addView(numberLabel);
@@ -201,7 +201,7 @@ public final class ContactDetailActivity extends Activity {
    for(String[] pair:misc)info(pair[0]+" · "+pair[1],"◈");
   }
   TextView nativeEdit=label("פתיחה בעורך אנשי הקשר",14,true,accent());
-  nativeEdit.setGravity(Gravity.CENTER);nativeEdit.setBackground(shape(surface(),15));
+  nativeEdit.setGravity(Gravity.CENTER);nativeEdit.setBackground(shape(surface(),24));
   LinearLayout.LayoutParams nativeParams=new LinearLayout.LayoutParams(-1,d(52));nativeParams.topMargin=d(10);content.addView(nativeEdit,nativeParams);
   nativeEdit.setOnClickListener(v->NativeContacts.open(this,contactId,name,phones.isEmpty()?"":phones.get(0)[0]));
  }
@@ -211,7 +211,7 @@ public final class ContactDetailActivity extends Activity {
  }
  private void info(String line,String mark){
   TextView text=label(mark+"    "+line,14,false,ink());
-  text.setPadding(d(15),d(15),d(15),d(15));text.setBackground(shape(surface(),15));
+  text.setPadding(d(15),d(15),d(15),d(15));text.setBackground(shape(surface(),24));
   LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,-2);p.bottomMargin=d(7);
   content.addView(text,p);
  }
@@ -223,7 +223,7 @@ public final class ContactDetailActivity extends Activity {
   col.addView(desc,new LinearLayout.LayoutParams(-1,d(23)));
   LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(0,d(63),1);
   params.setMargins(d(6),0,d(6),0);group.addView(col,params);
-  col.setContentDescription(title);col.setBackground(shape(surface(),15));col.setOnClickListener(v->run.run());
+  col.setContentDescription(title);col.setBackground(shape(surface(),24));col.setOnClickListener(v->run.run());
  }
  private void editContact(){
   Intent edit=new Intent(this,ContactEditorActivity.class);
