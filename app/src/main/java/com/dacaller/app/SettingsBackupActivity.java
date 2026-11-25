@@ -44,8 +44,8 @@ public final class SettingsBackupActivity extends Activity {
   super.onCreate(state);setResult(RESULT_CANCELED);
   SharedPreferences prefs=SettingsBackup.preferences(this);boolean dark=prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);
   dialogTheme=dark?R.style.AppDialogDark:R.style.AppDialogLight;
-  int background=prefs.getBoolean("amoled",false)?Color.BLACK:dark?0xFF141414:0xFFF7F7F5;
-  int ink=dark?0xFFF6F3EC:0xFF17291F;
+  int background=NexPalette.background(dark,prefs.getBoolean("amoled",false));
+  int ink=NexPalette.ink(dark);
   getWindow().setStatusBarColor(background);getWindow().setNavigationBarColor(background);
   getWindow().getDecorView().setSystemUiVisibility(dark?0:View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
   LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setGravity(Gravity.TOP);
