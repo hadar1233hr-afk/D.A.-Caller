@@ -53,10 +53,10 @@ public final class ContactEditorActivity extends Activity {
  private Bundle restored;
  private android.content.SharedPreferences prefs;
  private boolean dark(){return prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);}
- private int background(){return prefs.getBoolean("amoled",false)?Color.BLACK:dark()?0xFF141414:0xFFF7F7F5;}
- private int ink(){return dark()?Color.WHITE:0xFF202020;}
- private int surface(){return dark()?0xFF272727:Color.WHITE;}
- private int muted(){return dark()?0xFFAAAAAA:0xFF777777;}
+ private int background(){return NexPalette.background(dark(),prefs.getBoolean("amoled",false));}
+ private int ink(){return NexPalette.ink(dark());}
+ private int surface(){return NexPalette.surface(dark(),prefs.getBoolean("amoled",false));}
+ private int muted(){return NexPalette.muted(dark());}
  private int accent(){return "silver".equals(prefs.getString("accent","gold"))?(dark()?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark());}
  private String tr(String heb){return I18n.text(this,heb);}
  private TextView progress,saveButton;
@@ -101,7 +101,7 @@ public final class ContactEditorActivity extends Activity {
   form.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);
   form.setPadding(dp(17),dp(10),dp(17),dp(22));scroll.addView(form);
   FrameLayout photoHolder=AvatarShapes.frame(this);
-  photoHolder.setBackground(shape(dark()?0xFF383328:0xFFEDE1CD,58));
+  photoHolder.setBackground(shape(NexPalette.soft(dark()),58));
   LinearLayout.LayoutParams holderParams=new LinearLayout.LayoutParams(dp(105),dp(105));
   holderParams.gravity=Gravity.CENTER_HORIZONTAL;holderParams.bottomMargin=dp(9);
   form.addView(photoHolder,holderParams);
@@ -148,12 +148,12 @@ public final class ContactEditorActivity extends Activity {
   field(form,"anniversary","תאריך לציון (YYYY-MM-DD)",InputType.TYPE_CLASS_TEXT);
   field(form,"notes","הערות",InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
   TextView nativeEdit=text("פתיחה בעורך אנשי הקשר",14,accent(),true);
-  nativeEdit.setGravity(Gravity.CENTER);nativeEdit.setBackground(shape(surface(),13));nativeEdit.setMinHeight(dp(48));
+  nativeEdit.setGravity(Gravity.CENTER);nativeEdit.setBackground(shape(surface(),20));nativeEdit.setMinHeight(dp(48));
   form.addView(nativeEdit,new LinearLayout.LayoutParams(-1,dp(52)));
   nativeEdit.setOnClickListener(v->NativeContacts.open(this,contactId,(get("first")+" "+get("last")).trim(),get("phone0")));
   progress=text("",12,accent(),false);form.addView(progress);
   saveButton=text("שמירת איש הקשר",16,Color.WHITE,true);
-  saveButton.setGravity(Gravity.CENTER);saveButton.setBackground(shape(0xFF8F2D52,16));
+  saveButton.setGravity(Gravity.CENTER);saveButton.setBackground(shape(NexPalette.primary(false),24));
   LinearLayout.LayoutParams sb=new LinearLayout.LayoutParams(-1,dp(57));sb.setMargins(dp(15),dp(7),dp(15),dp(13));
   root.addView(saveButton,sb);saveButton.setOnClickListener(v->save());
  }
@@ -167,7 +167,7 @@ public final class ContactEditorActivity extends Activity {
   entry.setId(0x01000000 | (key.hashCode() & 0x00ffffff));
   entry.setSingleLine(!key.equals("notes"));entry.setHint(tr(hint));entry.setInputType(inputType);
   entry.setTextSize(15);entry.setTextColor(ink());entry.setHintTextColor(muted());AppAppearance.font(entry,false);
-  entry.setPadding(dp(13),dp(6),dp(13),dp(6));entry.setBackground(shape(surface(),13));
+  entry.setPadding(dp(13),dp(6),dp(13),dp(6));entry.setBackground(shape(surface(),20));
   LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(-1,dp(key.equals("notes")?97:52));
   params.bottomMargin=dp(8);parent.addView(entry,params);
  }
