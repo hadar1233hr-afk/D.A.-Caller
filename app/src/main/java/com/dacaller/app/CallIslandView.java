@@ -108,7 +108,8 @@ final class CallIslandView extends FrameLayout {
  }
  private void palette(){
   String style=prefs.getString("island_style","apple");
-  if("glass".equals(style)){bodyTop=0xFF30343D;bodyBottom=0xFF151920;edge=0xFF616671;accent=0xFF94F0BE;}
+  if("nex".equals(style)){bodyTop=NexPalette.surface(true,false);bodyBottom=NexPalette.background(true,false);edge=NexPalette.outline(true);accent=0xFFF6A773;}
+  else if("glass".equals(style)){bodyTop=0xFF30343D;bodyBottom=0xFF151920;edge=0xFF616671;accent=0xFF94F0BE;}
   else if("emerald".equals(style)){bodyTop=0xFF194C3C;bodyBottom=0xFF071D17;edge=0xFF42614C;accent=0xFFE6CA85;}
   else if("transparent".equals(style)){bodyTop=0xFF17191D;bodyBottom=0xFF111318;edge=0xFFBBC1CC;accent=AppAppearance.gold(true);}
   else{bodyTop=0xFF1B1B1D;bodyBottom=0xFF070708;edge=0xFF38383B;accent=0xFF64E69A;}
