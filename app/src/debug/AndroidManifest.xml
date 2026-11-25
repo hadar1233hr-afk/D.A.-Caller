@@ -2,6 +2,7 @@
  <application>
   <!-- In-process instrumentation fixture; excluded from release builds. -->
   <activity android:name=".ListDispatchHostActivity" android:exported="false"/>
+  <activity android:name=".CallIslandFixtureActivity" android:exported="false"/>
   <!-- Native notification rendering fixture; cannot receive external broadcasts. -->
   <receiver android:name=".NotificationFixtureReceiver" android:exported="false"/>
   <!-- Instrumentation explicitly acquires and verifies ROLE_DIALER before starting this fixture. -->

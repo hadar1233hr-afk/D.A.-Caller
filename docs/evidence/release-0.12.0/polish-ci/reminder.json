@@ -1,0 +1,43 @@
+{
+  "source": "0d266d63d446b46d3e2a98048b112572d22768fa",
+  "run": 42001641651,
+  "scope": "Independent callback reminder functional scenario only",
+  "reminder_functional_checks": "PASS",
+  "expected_modem_calls": 4,
+  "actual_modem_calls": 4,
+  "actual_modem_commands": 8,
+  "retained_real_rows": 4,
+  "answered_call_duration_seconds": 2,
+  "initial_pending_count": 2,
+  "pending_after_later_miss": 1,
+  "total_missed_today": 3,
+  "alarm": {
+    "method": "production-private-immutable-PendingIntent-via-AlarmManager.setAndAllowWhileIdle",
+    "accelerated_delivery": true,
+    "waited_until_user_cutoff": false,
+    "app_background_before_alarm": true,
+    "scheduled_at": 1793871146448,
+    "due": 1793871147448,
+    "observed_at": 1793871151484,
+    "post_time": 1793871151472,
+    "day": "2026-11-05",
+    "channel": "dacaller_callbacks_v1",
+    "category": "reminder",
+    "id": 1504,
+    "people": 1,
+    "missed": 2
+  },
+  "configured_minute": 1439,
+  "read_only_observations": 4,
+  "raw_sha256": "818595dcb80fcf546e7884ec3f962875677efea6a9a786f3d637fd4c43df5da2",
+  "original_png_sha256": {
+    "callback-list-light.png": "cf0474fe2accc24e221ba65fa295f9b7226028266eea380451d187e14909bdaf",
+    "callback-settings-light.png": "7178da56c3dd3c6059716cce8f6417625528dfe74a23526b9f7b5d1875c29741",
+    "callback-list-dark.png": "e32389934de89e2ba3ab4439685d56ba8d35b5e8155f6521c150cab3a4fd90ab",
+    "callback-settings-dark.png": "3ee9d6a4cf629b5b860440c9261d65f2021a5f49f733babf0fd1d6364c550c06"
+  },
+  "visual_review_performed": false,
+  "business_dataset_verified": false,
+  "publication_approved": false,
+  "physical_cellular_audio_verified": false
+}

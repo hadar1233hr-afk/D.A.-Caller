@@ -1,0 +1,342 @@
+{
+  "api": 33,
+  "document_flow": "SAF intercepted by ActivityMonitor with isolated test provider; real DocumentsUI not exercised",
+  "nativeBarCaptures": [
+    {
+      "filename": "personalization-backup-saved-light.png",
+      "dark": false,
+      "validated": true,
+      "focused_window": "activity",
+      "capture_method": "UiAutomation.takeScreenshot",
+      "status_sample_left_px": 0,
+      "status_sample_right_px": 240,
+      "required_navigation_px": 72,
+      "required_contrasting_pixels_per_bar": 40,
+      "required_consecutive_valid_samples": 3,
+      "deadline_ms": 5000,
+      "sample_interval_ms": 100,
+      "max_samples": 50,
+      "sample_count": 3,
+      "samples": [
+        {
+          "uptime_ms": 537794,
+          "elapsed_ms": 12,
+          "window_before": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "activity"
+          },
+          "window_after": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "activity"
+          },
+          "width_px": 480,
+          "height_px": 854,
+          "contrasting_status_pixels": 305,
+          "contrasting_navigation_pixels": 1276,
+          "consecutive_valid_samples": 1
+        },
+        {
+          "uptime_ms": 537916,
+          "elapsed_ms": 134,
+          "window_before": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "activity"
+          },
+          "window_after": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "activity"
+          },
+          "width_px": 480,
+          "height_px": 854,
+          "contrasting_status_pixels": 305,
+          "contrasting_navigation_pixels": 1276,
+          "consecutive_valid_samples": 2
+        },
+        {
+          "uptime_ms": 538035,
+          "elapsed_ms": 253,
+          "window_before": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "activity"
+          },
+          "window_after": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "activity"
+          },
+          "width_px": 480,
+          "height_px": 854,
+          "contrasting_status_pixels": 305,
+          "contrasting_navigation_pixels": 1276,
+          "consecutive_valid_samples": 3
+        }
+      ],
+      "sha256": "72b4bce862bdbbb9d98b01e10bde0389eab28b3976806c7f67fc42a987476791"
+    },
+    {
+      "filename": "personalization-backup-saved-dark.png",
+      "dark": true,
+      "validated": true,
+      "focused_window": "activity",
+      "capture_method": "UiAutomation.takeScreenshot",
+      "status_sample_left_px": 0,
+      "status_sample_right_px": 240,
+      "required_navigation_px": 72,
+      "required_contrasting_pixels_per_bar": 40,
+      "required_consecutive_valid_samples": 3,
+      "deadline_ms": 5000,
+      "sample_interval_ms": 100,
+      "max_samples": 50,
+      "sample_count": 3,
+      "samples": [
+        {
+          "uptime_ms": 538879,
+          "elapsed_ms": 13,
+          "window_before": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "activity"
+          },
+          "window_after": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "activity"
+          },
+          "width_px": 480,
+          "height_px": 854,
+          "contrasting_status_pixels": 383,
+          "contrasting_navigation_pixels": 1276,
+          "consecutive_valid_samples": 1
+        },
+        {
+          "uptime_ms": 538999,
+          "elapsed_ms": 133,
+          "window_before": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "activity"
+          },
+          "window_after": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "activity"
+          },
+          "width_px": 480,
+          "height_px": 854,
+          "contrasting_status_pixels": 383,
+          "contrasting_navigation_pixels": 1276,
+          "consecutive_valid_samples": 2
+        },
+        {
+          "uptime_ms": 539118,
+          "elapsed_ms": 252,
+          "window_before": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "activity"
+          },
+          "window_after": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "activity"
+          },
+          "width_px": 480,
+          "height_px": 854,
+          "contrasting_status_pixels": 383,
+          "contrasting_navigation_pixels": 1276,
+          "consecutive_valid_samples": 3
+        }
+      ],
+      "sha256": "011083a5a68b997fea5e5bee266c0e97c8120db5cb7a1ada2073b28ba5598b51"
+    },
+    {
+      "filename": "personalization-backup-restore-confirmation.png",
+      "dark": true,
+      "validated": true,
+      "focused_window": "restore-confirmation",
+      "capture_method": "UiAutomation.takeScreenshot",
+      "status_sample_left_px": 0,
+      "status_sample_right_px": 240,
+      "required_navigation_px": 72,
+      "required_contrasting_pixels_per_bar": 40,
+      "required_consecutive_valid_samples": 3,
+      "deadline_ms": 5000,
+      "sample_interval_ms": 100,
+      "max_samples": 50,
+      "sample_count": 3,
+      "samples": [
+        {
+          "uptime_ms": 546414,
+          "elapsed_ms": 15,
+          "window_before": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "restore-confirmation"
+          },
+          "window_after": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "restore-confirmation"
+          },
+          "width_px": 480,
+          "height_px": 854,
+          "contrasting_status_pixels": 437,
+          "contrasting_navigation_pixels": 1281,
+          "consecutive_valid_samples": 1
+        },
+        {
+          "uptime_ms": 546538,
+          "elapsed_ms": 139,
+          "window_before": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "restore-confirmation"
+          },
+          "window_after": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "restore-confirmation"
+          },
+          "width_px": 480,
+          "height_px": 854,
+          "contrasting_status_pixels": 437,
+          "contrasting_navigation_pixels": 1281,
+          "consecutive_valid_samples": 2
+        },
+        {
+          "uptime_ms": 546657,
+          "elapsed_ms": 258,
+          "window_before": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "restore-confirmation"
+          },
+          "window_after": {
+            "focused": true,
+            "status_top_px": 36,
+            "navigation_bottom_px": 72,
+            "navigation_visible": true,
+            "status_visible": true,
+            "requested_system_bars_appearance": 0,
+            "owner_class": "com.dacaller.app.SettingsBackupActivity",
+            "owner_active": true,
+            "window_kind": "restore-confirmation"
+          },
+          "width_px": 480,
+          "height_px": 854,
+          "contrasting_status_pixels": 437,
+          "contrasting_navigation_pixels": 1281,
+          "consecutive_valid_samples": 3
+        }
+      ],
+      "sha256": "a9f96a2b30fce3b781d073a5067d0682ea1bf2cb5163ccd625f0465e2922862a"
+    }
+  ]
+}

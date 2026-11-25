@@ -1,0 +1,31 @@
+{
+  "saved_at_utc": "2026-11-19T02:46:50.125682+00:00",
+  "status": "READ_ONLY_BOUNDED_SOURCE_CODEGO_NOT_RUNTIME_PASS",
+  "reviewed_file": "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java",
+  "reviewed_sha256": "e33c5a845184217b033f042a29f75f07c161730df5beff3d1563769944ab32e2",
+  "reference_commit": "e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624",
+  "references": [
+    "https://github.com/LineageOS/android_frameworks_native/blob/e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624/services/inputflinger/dispatcher/InputDispatcher.cpp",
+    "https://github.com/LineageOS/android_frameworks_native/blob/e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624/libs/gui/WindowInfo.cpp",
+    "https://github.com/LineageOS/android_frameworks_native/blob/e424b61ebd9ecc1adb2a23d2ee4f18c6a8edd624/services/inputflinger/dispatcher/InputTarget.h"
+  ],
+  "verified_against_actual_pinned_source": [
+    "Window dump field order/region separator and empty form match source StringPrintf/dumpRegion.",
+    "Window order is front-to-back per findTouchedWindowAtLocked.",
+    "Direct display touch-region coordinate contains check matches WindowInfo.touchableRegionContainsPoint.",
+    "Touchscreen accept filters NOT_VISIBLE/NOT_TOUCHABLE and SPY match referenced source.",
+    "TouchStatesByDisplay down/window field format matches source.",
+    "InputTarget.FLAG_FOREGROUND is bit0.",
+    "Parser removes historical ANR state and requires API33 enabled/unfrozen dispatcher with portrait480x854 context.",
+    "Two stable pre-DOWN samples require firsteligible ownUID/title/token/inputchannel and actual positive nativeStatusBar frame.",
+    "After crossing real touchslop the injected live stream must have one foreground target named island; failure cancels and never retries injection.",
+    "No notifications/SystemUI protection disabled; no production gesture edits."
+  ],
+  "limitations": [
+    "Exact source-format audit only; no new actualAPI33dump/gestureexecution in this review.",
+    "Preconditions are deliberately conservative; actual stream/ownedcall/geometry assertions remain necessary for PASS."
+  ],
+  "material_issue_found": false,
+  "source_edits": false,
+  "gradle_or_native_executed": false
+}

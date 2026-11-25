@@ -1,0 +1,988 @@
+{
+  "review_status": "PASS_WITH_BOUNDED_FINDINGS",
+  "source_sha": "04e58247399aaa579b7de51c8439fa41653ab98c",
+  "app_tree": "7d00a6eca4d9f5005329d4790d6f8383b48e42a7",
+  "workflow_run_id": "41341757982",
+  "reviewed_at_utc": "2026-11-01T23:36:29.036452+00:00",
+  "reviewed_png_count": 88,
+  "reviewed_sheet_count": 22,
+  "review_method": "Opened and visually inspected all 22 fresh original-resolution 2x2 sheets other-01.png through other-22.png using view_image, covering all 88 native 480x854 source PNGs. Inspected Hebrew RTL/English text, glyphs, visible contrast, native bars, dialogs, list/FAB overlap, Settings, archive, backup/restore, widgets, and actual missed-call/changelog captures. Also opened all four bidi-sensitive source PNGs, both missed-call source PNGs, and both changelog-bottom source PNGs individually using view_image. Independently measured every source PNG SHA-256, checked 480x854 dimensions, and matched the fresh sheet manifest plus all available native per-image hashes. Compared every sheet tile pixel-for-pixel with its source PNG. Verified source/tree/run metadata in matrix, call-integration, personalization and followup verification files. This fresh review does not reuse a previous baseline or source2 pixel approval.",
+  "native_environment": {
+    "api": 33,
+    "size": "480x854",
+    "density_dpi": 240,
+    "followup_font_scale": 1.3,
+    "navigation_mode": "threebutton"
+  },
+  "individual_source_checks": [
+    "changelog-dark.png",
+    "changelog-light.png",
+    "settings-dark-bottom.png",
+    "settings-light-bottom.png",
+    "missed-multiple-he.png",
+    "missed-single-he.png",
+    "changelog-dark-bottom.png",
+    "changelog-light-bottom.png"
+  ],
+  "source3_bidi_correction": {
+    "result": "PASS",
+    "observed_version": "0.11.0-beta.9",
+    "visually_verified_files": [
+      "changelog-dark.png",
+      "changelog-light.png",
+      "settings-dark-bottom.png",
+      "settings-light-bottom.png"
+    ],
+    "native_glyph_order_checks": [
+      {
+        "palette": "light",
+        "installed_version_drawn_ltr": true,
+        "settings_entry_version_drawn_ltr": true
+      },
+      {
+        "palette": "dark",
+        "installed_version_drawn_ltr": true,
+        "settings_entry_version_drawn_ltr": true
+      }
+    ],
+    "note": "The source2 beta.9-0.11.0 inline ordering defect is absent in these four fresh source3 PNGs. Both native glyph-order assertions are true in light and dark."
+  },
+  "independent_integrity_checks": {
+    "source_png_count": 88,
+    "dimension_checks_passed": 88,
+    "source_sha256_matches_sheet_manifest": 88,
+    "source_sha256_matches_native_per_image_hashes": 67,
+    "sheet_tile_pixel_matches": 88,
+    "sheets": [
+      {
+        "file": "other-01.png",
+        "sha256": "4c181a778f16c40e0a1ae49ef6e0ac70dd424c6ea5cd0336258e369e5bdf37e1"
+      },
+      {
+        "file": "other-02.png",
+        "sha256": "6038fcaa30c8e61854334d82c75a2497552396a44314d2254ebde7aa074a9ced"
+      },
+      {
+        "file": "other-03.png",
+        "sha256": "136178e549e980ba7c28a43b082ee1a88b9a0c6b073b5f00cad29955183b5877"
+      },
+      {
+        "file": "other-04.png",
+        "sha256": "da5626eb7fe0bfb7406b17f988c401bfe9128687156619802b9dde198e54de86"
+      },
+      {
+        "file": "other-05.png",
+        "sha256": "034e2c08600ef891cebea23a2055a4c3491500a324d69fbed547c2e3a6e55438"
+      },
+      {
+        "file": "other-06.png",
+        "sha256": "1f8c7d959a7d731387b2fad4a0e766197845a946dc1fd986b07d7e4794287f26"
+      },
+      {
+        "file": "other-07.png",
+        "sha256": "7c4809d77394a7523456830645b9f4d362d94f789ad3c6a9131a599b6e1d6631"
+      },
+      {
+        "file": "other-08.png",
+        "sha256": "915998a8c616ccb05108af45abce3d5989e49112f258e88ad9b4818574d52997"
+      },
+      {
+        "file": "other-09.png",
+        "sha256": "05dec13e65bc702859888b59952639880ca9af64c8790d0f1ee86f4d49b49346"
+      },
+      {
+        "file": "other-10.png",
+        "sha256": "7b59e9abf1aa3a1bee2e0f923183a9688852f91bed51c90a4c371abf683a874c"
+      },
+      {
+        "file": "other-11.png",
+        "sha256": "378049985b2dd615c3faf9f45712f85cebf3a61763575c6059039705878bdfbb"
+      },
+      {
+        "file": "other-12.png",
+        "sha256": "e2d7a3da78203bc0f3ecc44c6bf88b2bd509a65a5cfd450dea0eef7ffa188920"
+      },
+      {
+        "file": "other-13.png",
+        "sha256": "8580d817fb7cd97f0ea1fccd78d4b67d86590265280cd101f8b51125af39e43a"
+      },
+      {
+        "file": "other-14.png",
+        "sha256": "7d7fd607cf45831c9ea05b1050f70c6fbe3c52c35ec11c4da62a5c2edf185d48"
+      },
+      {
+        "file": "other-15.png",
+        "sha256": "5933a82a8921d62c01489b0aa496be6d40dee2ab2b8efb5dc84397bf236cac6c"
+      },
+      {
+        "file": "other-16.png",
+        "sha256": "2dfe71dcd9624e03ff43ccc95b583376ac3ec5b83b42fbf9dc62b9fb9dd6ba2c"
+      },
+      {
+        "file": "other-17.png",
+        "sha256": "6a2efcad1b2eddc49b7801e61226124d9a0bf2d9c7fbbbb74e5df7c91aac3515"
+      },
+      {
+        "file": "other-18.png",
+        "sha256": "d93ccbb001f412a2a3e87415fa98917156b37fcc37d80c19b9fac148b1397811"
+      },
+      {
+        "file": "other-19.png",
+        "sha256": "f10e8e127aca1b4c3f4767cba735ea71ea296ef70389d2e063a94c644cd575c8"
+      },
+      {
+        "file": "other-20.png",
+        "sha256": "0d1f81952ded0dd4b6439279275b46f32e02c07309fe172c60cacef17ef6f3bb"
+      },
+      {
+        "file": "other-21.png",
+        "sha256": "411b7d3cdeb835de2f760f00d057e8c5b8529eeceb703c49fdc774f0aa211a5b"
+      },
+      {
+        "file": "other-22.png",
+        "sha256": "ebba1939cbc5f2ef489f4cf5df44947f66eec332d4bde68436eefaf9b909ec86"
+      }
+    ]
+  },
+  "bounded_findings": [
+    "Native SystemUI constrains some Hebrew notification-header metadata and the Hebrew speaker-on action label. The new missed-call notifications keep readable caller names, single/multiple titles and Clear; their phone-number suffix is ellipsized.",
+    "Contacts/recents show the fixed keypad button overlapping a lower row dial control at the captured scroll offset. Some lower rows are partial above fixed navigation. Long names and date/time metadata are ellipsized. Upper controls, selected shapes, tabs and summaries remain readable; scroll recovery and actual dialing require separate native evidence.",
+    "Icon chooser captures show opposite clipped endpoints of the scrollable list. Complementary bottom captures expose the final options; Cancel remains visible.",
+    "Some narrow widget previews ellipsize a long contact name or the DA CALLER header. Hebrew initials, other shown names and selected shapes remain legible."
+  ],
+  "blocking_findings": [],
+  "scope_limits": [
+    "Visual approval covers only these 88 exact fresh PNG byte sequences from source 04e58247399aaa579b7de51c8439fa41653ab98c, app tree 7d00a6eca4d9f5005329d4790d6f8383b48e42a7 and run 41341757982. It does not approve a different tree, workflow run or later publication capture.",
+    "Screenshots establish visible presentation. Telecom ownership, missed-notification Clear/Open acknowledgement, actual dialing, return/Back state, data retention and lifecycle behavior require separate native proof.",
+    "The six followup captures use actual emulator missed-call notifications and the local changelog Activity at font scale 1.3. Other matrix frames include deliberately configured standard/large-font fixtures and widget previews. Emulator layout previews do not establish arbitrary OEM launcher placement or human document-picker usability.",
+    "No physical Jelly Star, SIM/carrier/audio/Bluetooth/proximity/lockscreen behavior, full TalkBack, measured WCAG contrast audit or matching-key data-preserving upgrade is claimed."
+  ],
+  "files": [
+    {
+      "file": "call-integration-notification-active-private-en.png",
+      "sha256": "3c7099ebdcfcc439cf2c85eccd782e6d1e3448a0af5cf8fa0b22430bc1e42d16",
+      "result": "PASS",
+      "review_sheet": "other-01.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "call-integration-notification-active-private-he.png",
+      "sha256": "b6bf7f18318f5eea87f46ccefe2a312b26e1d32732908d1d45c7dfd5114fa92f",
+      "result": "BOUNDED",
+      "review_sheet": "other-01.png",
+      "individual_source_opened": false,
+      "notes": [
+        "SystemUI ellipsizes some notification-header metadata. Caller identity, call state, red hang-up and return controls remain readable. The speaker-on label is also shortened in the active-private Hebrew frame."
+      ]
+    },
+    {
+      "file": "call-integration-notification-active-speaker-en.png",
+      "sha256": "991352761ab67fcf9f28ae2744f5767bd4e95a4e6df33c697cffd780cc37627e",
+      "result": "PASS",
+      "review_sheet": "other-01.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "call-integration-notification-active-speaker-he.png",
+      "sha256": "bbad23be2b8fee248447285ab4569e02b0b56497bd39ac69569b6ab950fade13",
+      "result": "BOUNDED",
+      "review_sheet": "other-01.png",
+      "individual_source_opened": false,
+      "notes": [
+        "SystemUI ellipsizes some notification-header metadata. Caller identity, call state, red hang-up and return controls remain readable. The speaker-on label is also shortened in the active-private Hebrew frame."
+      ]
+    },
+    {
+      "file": "call-integration-notification-incoming-he.png",
+      "sha256": "80dd0de6217afe73a8cc776ecc2c4abc9441b5676d51810941ef8c361411aa08",
+      "result": "BOUNDED",
+      "review_sheet": "other-02.png",
+      "individual_source_opened": false,
+      "notes": [
+        "SystemUI ellipsizes some notification-header metadata. Caller identity, call state, red hang-up and return controls remain readable. The speaker-on label is also shortened in the active-private Hebrew frame."
+      ]
+    },
+    {
+      "file": "call-integration-notification-outgoing-he.png",
+      "sha256": "d56a65f840ab5f8b8a04da67589c472dd4b936e23ed58e6b642ce48b5d852815",
+      "result": "BOUNDED",
+      "review_sheet": "other-02.png",
+      "individual_source_opened": false,
+      "notes": [
+        "SystemUI ellipsizes some notification-header metadata. Caller identity, call state, red hang-up and return controls remain readable. The speaker-on label is also shortened in the active-private Hebrew frame."
+      ]
+    },
+    {
+      "file": "call-integration-return-contacts.png",
+      "sha256": "49f778259bc5570702f052920ff9f689661c62bd2803ba2d0d42abf59c7baaf7",
+      "result": "BOUNDED",
+      "review_sheet": "other-02.png",
+      "individual_source_opened": false,
+      "notes": [
+        "Long fixture contact names are ellipsized. The fixed keypad button overlaps a lower visible dial action at this list offset; upper rows and navigation remain readable. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "call-integration-return-settings.png",
+      "sha256": "5be038ef205da10b074201afd0c85460581bd73467560a2fdca7385cd6575f3a",
+      "result": "PASS",
+      "review_sheet": "other-02.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "changelog-dark-bottom.png",
+      "sha256": "613a79dd0625ab93163001ff1514db0fa030434b2d7221bd689710c458d5358f",
+      "result": "PASS",
+      "review_sheet": "other-03.png",
+      "individual_source_opened": true,
+      "notes": [
+        "Individually inspected the source PNG: the oldest expanded 0.1.0 entry and offline-availability footer are readable above native navigation. The preceding card is naturally partial at the scroll boundary."
+      ]
+    },
+    {
+      "file": "changelog-dark.png",
+      "sha256": "369a359be0524e5d31239ca73fc8e2a5be5f5398c6fd9089cd3dd2a04ba723d0",
+      "result": "PASS",
+      "review_sheet": "other-03.png",
+      "individual_source_opened": true,
+      "notes": [
+        "Individually inspected the source PNG: the Hebrew installed-version line and current-version card visibly render 0.11.0-beta.9 in correct LTR character order."
+      ]
+    },
+    {
+      "file": "changelog-light-bottom.png",
+      "sha256": "ea3fbea115f6f50046e21e3a087d7f5b79ff1b8129843c490d71a381785d7497",
+      "result": "PASS",
+      "review_sheet": "other-03.png",
+      "individual_source_opened": true,
+      "notes": [
+        "Individually inspected the source PNG: the oldest expanded 0.1.0 entry and offline-availability footer are readable above native navigation. The preceding card is naturally partial at the scroll boundary."
+      ]
+    },
+    {
+      "file": "changelog-light.png",
+      "sha256": "532f47393c2505e080091ac09e9f5ea3da70f7e5901baa0cd2346957686e3a6e",
+      "result": "PASS",
+      "review_sheet": "other-03.png",
+      "individual_source_opened": true,
+      "notes": [
+        "Individually inspected the source PNG: the Hebrew installed-version line and current-version card visibly render 0.11.0-beta.9 in correct LTR character order."
+      ]
+    },
+    {
+      "file": "missed-multiple-he.png",
+      "sha256": "7b32b014ef77b245144152804075c674a3e9797fe107b6b79030355da450c0d7",
+      "result": "BOUNDED",
+      "review_sheet": "other-04.png",
+      "individual_source_opened": true,
+      "notes": [
+        "The native notification shows the Hebrew caller name, single/multiple missed-call title and Clear action. SystemUI ellipsizes the phone-number suffix. Actions and acknowledgement require the separate native proof."
+      ]
+    },
+    {
+      "file": "missed-single-he.png",
+      "sha256": "4b1e658821362ead3f9e2d10cb7c1eaffeb59cfff3744853c03607f29fc37353",
+      "result": "BOUNDED",
+      "review_sheet": "other-04.png",
+      "individual_source_opened": true,
+      "notes": [
+        "The native notification shows the Hebrew caller name, single/multiple missed-call title and Clear action. SystemUI ellipsizes the phone-number suffix. Actions and acknowledgement require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-archive-dark.png",
+      "sha256": "3e52f4eb9367cb0190386551cd85799df0f9c6702ab530f154b0951fe85f4d0f",
+      "result": "PASS",
+      "review_sheet": "other-04.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "personalization-archive-light.png",
+      "sha256": "c26028b1aca6542e1c543fef8b64e1f2ee8a58eb0697cb67a3b6e8de85452a56",
+      "result": "PASS",
+      "review_sheet": "other-04.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "personalization-backup-restore-confirmation.png",
+      "sha256": "c800d5d9b0f7ffafcf38a25a36356419b6628626a451ea75bdd7adc86b05a2ba",
+      "result": "PASS",
+      "review_sheet": "other-05.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "personalization-backup-saved-dark.png",
+      "sha256": "693ebb0dc02b476fe6315dfa07e44fb01bb840dbdcbb314e576e313cc5141dcb",
+      "result": "PASS",
+      "review_sheet": "other-05.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "personalization-backup-saved-light.png",
+      "sha256": "0afd26eca39559757dc2bccb2b553538061eebd8b6c69bf6ba4be8701cd1b5de",
+      "result": "PASS",
+      "review_sheet": "other-05.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "personalization-chooser-dark-avatar_shapes-bottom.png",
+      "sha256": "b38f52c063fedcaa90bad78c166797eaaf5f7ae6e79d98d118901c5896bb536d",
+      "result": "PASS",
+      "review_sheet": "other-05.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "personalization-chooser-dark-avatar_shapes.png",
+      "sha256": "b38f52c063fedcaa90bad78c166797eaaf5f7ae6e79d98d118901c5896bb536d",
+      "result": "PASS",
+      "review_sheet": "other-06.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "personalization-chooser-dark-icons-bottom.png",
+      "sha256": "361881d6eda4de9b80a93c71f04afbb4f09293e0fbf71e83cd70a55a73dd27f0",
+      "result": "BOUNDED",
+      "review_sheet": "other-06.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The scrollable icon list clips the lower endpoint in its top capture and the upper endpoint after scrolling. Complementary bottom captures expose the final choices; Cancel remains visible."
+      ]
+    },
+    {
+      "file": "personalization-chooser-dark-icons.png",
+      "sha256": "e56c7e6d48ecf20fdee51f93d33cf74efecf6746ce4109f1eb38a4d0b9554306",
+      "result": "BOUNDED",
+      "review_sheet": "other-06.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The scrollable icon list clips the lower endpoint in its top capture and the upper endpoint after scrolling. Complementary bottom captures expose the final choices; Cancel remains visible."
+      ]
+    },
+    {
+      "file": "personalization-chooser-light-avatar_shapes-bottom.png",
+      "sha256": "541d7b624e3c7e5c0e6e0d22cdcc7112c278dcbea4b1af9719fcf3b47683737b",
+      "result": "PASS",
+      "review_sheet": "other-06.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "personalization-chooser-light-avatar_shapes.png",
+      "sha256": "541d7b624e3c7e5c0e6e0d22cdcc7112c278dcbea4b1af9719fcf3b47683737b",
+      "result": "PASS",
+      "review_sheet": "other-07.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "personalization-chooser-light-icons-bottom.png",
+      "sha256": "f2ab94cf43b5d150101c63463b0963fd76c2cf7bb3b7cb96a8f8d059aa417f96",
+      "result": "BOUNDED",
+      "review_sheet": "other-07.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The scrollable icon list clips the lower endpoint in its top capture and the upper endpoint after scrolling. Complementary bottom captures expose the final choices; Cancel remains visible."
+      ]
+    },
+    {
+      "file": "personalization-chooser-light-icons.png",
+      "sha256": "3b50e2586ec9abe0658c1b9dabdfa7a0fc5824bfc9eed46620f64c73b5387bff",
+      "result": "BOUNDED",
+      "review_sheet": "other-07.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The scrollable icon list clips the lower endpoint in its top capture and the upper endpoint after scrolling. Complementary bottom captures expose the final choices; Cancel remains visible."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-en-largefont-collapsed.png",
+      "sha256": "ba7d89362c8aa390793391e44db183fcdd3c35c725f5e55819eae667d76452bd",
+      "result": "BOUNDED",
+      "review_sheet": "other-07.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-en-largefont-expanded.png",
+      "sha256": "5d0eedb5e6134d5bcb78577ff7d3d7d9dd89998738e8efa003ce9f1e214747c6",
+      "result": "BOUNDED",
+      "review_sheet": "other-08.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-en-standard-collapsed.png",
+      "sha256": "c47729f9949c4cf61f43619898bca72eab82a5a3f0534aaeb9c5f1c81ca470b2",
+      "result": "BOUNDED",
+      "review_sheet": "other-08.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-en-standard-expanded.png",
+      "sha256": "7392038c6c0414c564d223b78ffa1e90b5df64fb7d837deb6104781d67cd1ff9",
+      "result": "BOUNDED",
+      "review_sheet": "other-08.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-he-largefont-collapsed.png",
+      "sha256": "2dec4b7060928f90570ee57c13e6f71ce8532290539cee04b6a780e52e4f897e",
+      "result": "BOUNDED",
+      "review_sheet": "other-08.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-he-largefont-expanded.png",
+      "sha256": "cdcb6a5767b4833aa91e4eac1916764f638927d7df65f9d9fb7f826e9acbab47",
+      "result": "BOUNDED",
+      "review_sheet": "other-09.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-he-standard-collapsed.png",
+      "sha256": "8d797755b03db28fbfed377c1b651bb72d235c2b3e0bf6ae4cd148bdce62ffbb",
+      "result": "BOUNDED",
+      "review_sheet": "other-09.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-dark-he-standard-expanded.png",
+      "sha256": "87d054139cd9f32af2ec997d588370fc65ab8e4b443bedbd37885ecd0621f1b5",
+      "result": "BOUNDED",
+      "review_sheet": "other-09.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-en-largefont-collapsed.png",
+      "sha256": "98969d89a6017d456ac467ce6eb043f100890ee916fd62fd1ddf6b25268ce78f",
+      "result": "BOUNDED",
+      "review_sheet": "other-09.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-en-largefont-expanded.png",
+      "sha256": "9814c402e03479d80d854287b8b8cd87de2721bef697803f713a956cbddddca7",
+      "result": "BOUNDED",
+      "review_sheet": "other-10.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-en-standard-collapsed.png",
+      "sha256": "4dce4e806ad648595b1c6d90e098b324e1fe4b5d047d9a1e28d3b2572e58efa1",
+      "result": "BOUNDED",
+      "review_sheet": "other-10.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-en-standard-expanded.png",
+      "sha256": "4e86290e503a75673ab744282bfcf4ab27fa81202510e986c10e4c836d705a73",
+      "result": "BOUNDED",
+      "review_sheet": "other-10.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-he-largefont-collapsed.png",
+      "sha256": "5db66ad99fed7dc3c731f765394a88c94e08075aee7866d617f76d6cbda0a8d2",
+      "result": "BOUNDED",
+      "review_sheet": "other-10.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-he-largefont-expanded.png",
+      "sha256": "e6d630cf1e9145b871cab8cfb4105faca612cc994e6ebece6d466c214de3ed5c",
+      "result": "BOUNDED",
+      "review_sheet": "other-11.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-he-standard-collapsed.png",
+      "sha256": "0cdfc4231e3c222bf6eca032c9650e8e52a87e3f3e7174acaaa572bd2e2d5d6b",
+      "result": "BOUNDED",
+      "review_sheet": "other-11.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-light-he-standard-expanded.png",
+      "sha256": "fe0c2fb1424b1b91a60c7ea8b64725e2604be0a26d59f67541831fd22a50c6b0",
+      "result": "BOUNDED",
+      "review_sheet": "other-11.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-shape-circle.png",
+      "sha256": "19a949d04d2ab13d8efbfb422184ca88335774e2bc043a2babb3b5537f36d9a7",
+      "result": "BOUNDED",
+      "review_sheet": "other-11.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-shape-hexagon.png",
+      "sha256": "b70102a19bf4485253a9dfacf0164f4ea56639c8e6e2e8cd7c80712676e7f34e",
+      "result": "BOUNDED",
+      "review_sheet": "other-12.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-shape-rounded_square.png",
+      "sha256": "135cf76ac59939987bd5d025e719ad2770b664a698c995da520afec2a52dcbac",
+      "result": "BOUNDED",
+      "review_sheet": "other-12.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-contacts-shape-square.png",
+      "sha256": "12f446b29629cb446c077c0325646d30540124055312292c223b452cfb0e2ae4",
+      "result": "BOUNDED",
+      "review_sheet": "other-12.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The fixed keypad button overlaps a lower visible dial action at this list offset; some expanded states show a partial lower row above fixed navigation. Long English names are ellipsized where needed. Upper rows, search/favorites controls, selected shapes and navigation remain legible. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-en-largefont-compact.png",
+      "sha256": "f6080b0a6582cfe84c64a2e7ddd3a3b4926413928f97bbafb09a1ab54283278f",
+      "result": "BOUNDED",
+      "review_sheet": "other-12.png",
+      "individual_source_opened": false,
+      "notes": [
+        "Narrow date/time metadata is ellipsized. The fixed keypad button overlaps a lower dial action and the last row can continue below fixed navigation. Main numbers, direction glyphs and the compact/expanded summary remain readable. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-en-largefont-expanded.png",
+      "sha256": "39614d2821c3e5bc70f646fdf559f344ce96673bb81c2b30f9d8612f9dca0f56",
+      "result": "BOUNDED",
+      "review_sheet": "other-13.png",
+      "individual_source_opened": false,
+      "notes": [
+        "Narrow date/time metadata is ellipsized. The fixed keypad button overlaps a lower dial action and the last row can continue below fixed navigation. Main numbers, direction glyphs and the compact/expanded summary remain readable. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-en-standard-compact.png",
+      "sha256": "fcf3e75e076451906b9a7fbc6984bbf3d96733f61c4ab86923f80535ce96a3ef",
+      "result": "BOUNDED",
+      "review_sheet": "other-13.png",
+      "individual_source_opened": false,
+      "notes": [
+        "Narrow date/time metadata is ellipsized. The fixed keypad button overlaps a lower dial action and the last row can continue below fixed navigation. Main numbers, direction glyphs and the compact/expanded summary remain readable. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-en-standard-expanded.png",
+      "sha256": "78c2121cca2a8ed3592711fee0b07d903ca1ed2a1472db844c774e3d6cd49238",
+      "result": "BOUNDED",
+      "review_sheet": "other-13.png",
+      "individual_source_opened": false,
+      "notes": [
+        "Narrow date/time metadata is ellipsized. The fixed keypad button overlaps a lower dial action and the last row can continue below fixed navigation. Main numbers, direction glyphs and the compact/expanded summary remain readable. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-he-largefont-compact.png",
+      "sha256": "9568836462affe89d01d3b72aa1bb7f75f0ad05c328ae945c71387d284aa6dad",
+      "result": "BOUNDED",
+      "review_sheet": "other-13.png",
+      "individual_source_opened": false,
+      "notes": [
+        "Narrow date/time metadata is ellipsized. The fixed keypad button overlaps a lower dial action and the last row can continue below fixed navigation. Main numbers, direction glyphs and the compact/expanded summary remain readable. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-he-largefont-expanded.png",
+      "sha256": "72f79cc72e7de451fd9e258d984550af633331067efc33357d3c727d375790a5",
+      "result": "BOUNDED",
+      "review_sheet": "other-14.png",
+      "individual_source_opened": false,
+      "notes": [
+        "Narrow date/time metadata is ellipsized. The fixed keypad button overlaps a lower dial action and the last row can continue below fixed navigation. Main numbers, direction glyphs and the compact/expanded summary remain readable. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-he-standard-compact.png",
+      "sha256": "3741509dcda1c0e9970494b3fdc88a6dc8075691e8a28fe9421cba2966cee118",
+      "result": "BOUNDED",
+      "review_sheet": "other-14.png",
+      "individual_source_opened": false,
+      "notes": [
+        "Narrow date/time metadata is ellipsized. The fixed keypad button overlaps a lower dial action and the last row can continue below fixed navigation. Main numbers, direction glyphs and the compact/expanded summary remain readable. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-recents-dark-he-standard-expanded.png",
+      "sha256": "6d76e76500cc2135645495d81391b8ef5ecf5606026214862f24b630b3c1b15a",
+      "result": "BOUNDED",
+      "review_sheet": "other-14.png",
+      "individual_source_opened": false,
+      "notes": [
+        "Narrow date/time metadata is ellipsized. The fixed keypad button overlaps a lower dial action and the last row can continue below fixed navigation. Main numbers, direction glyphs and the compact/expanded summary remain readable. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-en-largefont-compact.png",
+      "sha256": "467e96430abb7eeff88eeb1bf0bfdfafcfe39e4b2ecfb995b8ba64796ced7679",
+      "result": "BOUNDED",
+      "review_sheet": "other-14.png",
+      "individual_source_opened": false,
+      "notes": [
+        "Narrow date/time metadata is ellipsized. The fixed keypad button overlaps a lower dial action and the last row can continue below fixed navigation. Main numbers, direction glyphs and the compact/expanded summary remain readable. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-en-largefont-expanded.png",
+      "sha256": "86d30eb1e08c750e2369a0b05c0b49ea06efb283013eefe9a67e58aad491c3af",
+      "result": "BOUNDED",
+      "review_sheet": "other-15.png",
+      "individual_source_opened": false,
+      "notes": [
+        "Narrow date/time metadata is ellipsized. The fixed keypad button overlaps a lower dial action and the last row can continue below fixed navigation. Main numbers, direction glyphs and the compact/expanded summary remain readable. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-en-standard-compact.png",
+      "sha256": "042b1d7eb7d927be3517634918f07375c4bc5112aba6c1312568ab8e4dc23e74",
+      "result": "BOUNDED",
+      "review_sheet": "other-15.png",
+      "individual_source_opened": false,
+      "notes": [
+        "Narrow date/time metadata is ellipsized. The fixed keypad button overlaps a lower dial action and the last row can continue below fixed navigation. Main numbers, direction glyphs and the compact/expanded summary remain readable. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-en-standard-expanded.png",
+      "sha256": "916ba9103e186f44c80d96d22c94433806901e58328458cfe1a977ff2e58df6e",
+      "result": "BOUNDED",
+      "review_sheet": "other-15.png",
+      "individual_source_opened": false,
+      "notes": [
+        "Narrow date/time metadata is ellipsized. The fixed keypad button overlaps a lower dial action and the last row can continue below fixed navigation. Main numbers, direction glyphs and the compact/expanded summary remain readable. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-he-largefont-compact.png",
+      "sha256": "3b50a8ce92b5574f35236432a17898b9f80041af415150524e9b5dc66aa109b1",
+      "result": "BOUNDED",
+      "review_sheet": "other-15.png",
+      "individual_source_opened": false,
+      "notes": [
+        "Narrow date/time metadata is ellipsized. The fixed keypad button overlaps a lower dial action and the last row can continue below fixed navigation. Main numbers, direction glyphs and the compact/expanded summary remain readable. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-he-largefont-expanded.png",
+      "sha256": "3990ae656d0fe55e92a6da822dab6cf1251e917a3b754e26fd0d2fa12d686606",
+      "result": "BOUNDED",
+      "review_sheet": "other-16.png",
+      "individual_source_opened": false,
+      "notes": [
+        "Narrow date/time metadata is ellipsized. The fixed keypad button overlaps a lower dial action and the last row can continue below fixed navigation. Main numbers, direction glyphs and the compact/expanded summary remain readable. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-he-standard-compact.png",
+      "sha256": "54e1e2a44a9e23dfc1333bdba677d68b5c5dea0ae2fb7be835ab3a57e6acee55",
+      "result": "BOUNDED",
+      "review_sheet": "other-16.png",
+      "individual_source_opened": false,
+      "notes": [
+        "Narrow date/time metadata is ellipsized. The fixed keypad button overlaps a lower dial action and the last row can continue below fixed navigation. Main numbers, direction glyphs and the compact/expanded summary remain readable. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-recents-light-he-standard-expanded.png",
+      "sha256": "50fda13d2c2dfb3795e9e5cb0702e4f2ecab127117bf626870ccc0274f4f9fff",
+      "result": "BOUNDED",
+      "review_sheet": "other-16.png",
+      "individual_source_opened": false,
+      "notes": [
+        "Narrow date/time metadata is ellipsized. The fixed keypad button overlaps a lower dial action and the last row can continue below fixed navigation. Main numbers, direction glyphs and the compact/expanded summary remain readable. Scroll recovery and actionability require the separate native proof."
+      ]
+    },
+    {
+      "file": "personalization-widgets-shape-circle.png",
+      "sha256": "038159d66d1e40145052c742bf94e409d414e3393498f0d4ed474f6ab76101cb",
+      "result": "BOUNDED",
+      "review_sheet": "other-16.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The long fixture contact name is ellipsized in the narrow widget item. Hebrew initials, other names and selected avatar shapes remain legible."
+      ]
+    },
+    {
+      "file": "personalization-widgets-shape-hexagon.png",
+      "sha256": "76c8949e507fb55ccdfa00955c9f9214725795f051312a9f52713335a8dd1471",
+      "result": "BOUNDED",
+      "review_sheet": "other-17.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The long fixture contact name is ellipsized in the narrow widget item. Hebrew initials, other names and selected avatar shapes remain legible."
+      ]
+    },
+    {
+      "file": "personalization-widgets-shape-rounded_square.png",
+      "sha256": "3bc917f77a95f2f502869cf1dc262b2792b7cca4ff8edb6dc4ff88a3f5b9470b",
+      "result": "BOUNDED",
+      "review_sheet": "other-17.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The long fixture contact name is ellipsized in the narrow widget item. Hebrew initials, other names and selected avatar shapes remain legible."
+      ]
+    },
+    {
+      "file": "personalization-widgets-shape-square.png",
+      "sha256": "669f8d890940f3f5de37490bb19aa4cf2eeba2fdf5bb040fa2e5c30122496b64",
+      "result": "BOUNDED",
+      "review_sheet": "other-17.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The long fixture contact name is ellipsized in the narrow widget item. Hebrew initials, other names and selected avatar shapes remain legible."
+      ]
+    },
+    {
+      "file": "settings-dark-bottom.png",
+      "sha256": "066af92a1b3899dd993dd488de9a4be4b15b220e8fbb9d9ede98186ecf12da48",
+      "result": "PASS",
+      "review_sheet": "other-17.png",
+      "individual_source_opened": true,
+      "notes": [
+        "Individually inspected the source PNG: the Hebrew changelog subtitle and footer visibly render 0.11.0-beta.9 in correct LTR character order."
+      ]
+    },
+    {
+      "file": "settings-dark.png",
+      "sha256": "e124402348e07fe626f7d6e26babe64e8360c6f540c6708690936ee34c927783",
+      "result": "PASS",
+      "review_sheet": "other-18.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "settings-light-bottom.png",
+      "sha256": "771f0225c00ce2414eff292e238cefdb259ba159061da62f1aa07d1ad290e3ce",
+      "result": "PASS",
+      "review_sheet": "other-18.png",
+      "individual_source_opened": true,
+      "notes": [
+        "Individually inspected the source PNG: the Hebrew changelog subtitle and footer visibly render 0.11.0-beta.9 in correct LTR character order."
+      ]
+    },
+    {
+      "file": "settings-light.png",
+      "sha256": "55b193d7c7f90858339f831c8cf8067b6c87d6da764e4dfd480a38f63e23193a",
+      "result": "PASS",
+      "review_sheet": "other-18.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "widget-dark-contact-2x1.png",
+      "sha256": "5773c4b7b3a79a24c8bd8917c90f0b575b3625fb5283f5af2b6bda4a525bc5ae",
+      "result": "PASS",
+      "review_sheet": "other-18.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "widget-dark-empty.png",
+      "sha256": "f2bc93162ed04eed6fc993e17d79f10cdc5144c10cd19a5a82acfd3b44e3043e",
+      "result": "PASS",
+      "review_sheet": "other-19.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "widget-dark-favorites-2x2-largefont.png",
+      "sha256": "7fa0a8101288bbf7e42becb47c86357988520790752079d002054be3c63b0f0b",
+      "result": "BOUNDED",
+      "review_sheet": "other-19.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The narrow large-font widget preview ellipsizes the DA CALLER header. Contact initials and all four shown names remain legible."
+      ]
+    },
+    {
+      "file": "widget-dark-favorites-2x2.png",
+      "sha256": "cfc6fb449b10510f43dd4d4b517e90282b723f155f5b428e180a3b32218f5621",
+      "result": "PASS",
+      "review_sheet": "other-19.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "widget-dark-favorites-4x2.png",
+      "sha256": "cd3741db61f26aafceb86344bf565483e7e748064cab017333299a830dc9cb9b",
+      "result": "PASS",
+      "review_sheet": "other-19.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "widget-dark-permission.png",
+      "sha256": "996216b17f70aad37c9cbd6dd3e8f7949f88e66f73c0aa79cfdcdc7850d17682",
+      "result": "PASS",
+      "review_sheet": "other-20.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "widget-dark-quick-1x1.png",
+      "sha256": "d73fc76edf172fa86e35ad3b4f9f001d69d209b403d5929852376f22a02da5d3",
+      "result": "BOUNDED",
+      "review_sheet": "other-20.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The narrow quick-dial widget ellipsizes the fixture contact name; Hebrew initials remain visible."
+      ]
+    },
+    {
+      "file": "widget-dark-two-favorites.png",
+      "sha256": "609851a2bb868c3b192d25393ad6841b422e081b3e03ca51ac13933f09dc8e3a",
+      "result": "PASS",
+      "review_sheet": "other-20.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "widget-light-contact-2x1.png",
+      "sha256": "8af2726103ded9d06d38143e0bc0ee389923af1768f0dd96dc29d1f74f00fee2",
+      "result": "PASS",
+      "review_sheet": "other-20.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "widget-light-empty.png",
+      "sha256": "5c2ae604d59dc496bde0873109446974c9d5eb3a6eb56a317eb13f87bb171964",
+      "result": "PASS",
+      "review_sheet": "other-21.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "widget-light-favorites-2x2-largefont.png",
+      "sha256": "4e2b34f6cc4542ebb76303299119312a8b35198977a7f2d7b8d3410f2ec476aa",
+      "result": "BOUNDED",
+      "review_sheet": "other-21.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The narrow large-font widget preview ellipsizes the DA CALLER header. Contact initials and all four shown names remain legible."
+      ]
+    },
+    {
+      "file": "widget-light-favorites-2x2.png",
+      "sha256": "6b849904fa8a5f13c0985d34bd11c56cae12a2f7cadb6fea88866464f96492a1",
+      "result": "PASS",
+      "review_sheet": "other-21.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "widget-light-favorites-4x2.png",
+      "sha256": "655aacf9e830113992dc97faf4b1505ee0c8cb1521b0c90a6a959d8a0ebe2b7d",
+      "result": "PASS",
+      "review_sheet": "other-21.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "widget-light-permission.png",
+      "sha256": "06a2c032c02f58adf6ebc452665014a02e21fd13a14b08ba9634e850411bb537",
+      "result": "PASS",
+      "review_sheet": "other-22.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "widget-light-quick-1x1.png",
+      "sha256": "d848d25dab92e2a658c0c7fa469a605a1fc5e09b7e83f601cdee5e694466f647",
+      "result": "BOUNDED",
+      "review_sheet": "other-22.png",
+      "individual_source_opened": false,
+      "notes": [
+        "The narrow quick-dial widget ellipsizes the fixture contact name; Hebrew initials remain visible."
+      ]
+    },
+    {
+      "file": "widget-light-two-favorites.png",
+      "sha256": "4db1d9b6c14bcfd8b203b17c0a7b7c13ebeca92a104a13fe4c820e811b892334",
+      "result": "PASS",
+      "review_sheet": "other-22.png",
+      "individual_source_opened": false,
+      "notes": []
+    },
+    {
+      "file": "widget-reconfigured.png",
+      "sha256": "905cf70f9948070a6d45ff3ec7dfbea7a04eb569ea83851176a2b0d458a20602",
+      "result": "PASS",
+      "review_sheet": "other-22.png",
+      "individual_source_opened": false,
+      "notes": []
+    }
+  ]
+}

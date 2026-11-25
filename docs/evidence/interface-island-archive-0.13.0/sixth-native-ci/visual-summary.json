@@ -1,0 +1,30 @@
+{
+  "source_sha": "53a678fac4764dc0210cad4e6b11a9d431287241",
+  "run_id": 44470286600,
+  "actually_reviewed_unique_frames": 269,
+  "pass": 262,
+  "fail": 7,
+  "failed_frames": [
+    "call-pixel-dark-keypad-largefont.png",
+    "call-pixel-dark-keypad-standard.png",
+    "call-pixel-light-keypad-largefont.png",
+    "call-pixel-light-keypad-standard.png",
+    "modern-bottom-dialpad-dark-he.png",
+    "modern-bottom-dialpad-light-en.png",
+    "modern-island-status-inapp.png"
+  ],
+  "overall_visual_approved": false,
+  "native_tests": 40,
+  "native_pass": 40,
+  "unit_pass": 457,
+  "publication_allowed": false,
+  "reports": [
+    "call-a.json",
+    "call-b.json",
+    "island-a.json",
+    "island-b.json",
+    "other-a.json",
+    "other-b.json",
+    "modern-root.json"
+  ]
+}

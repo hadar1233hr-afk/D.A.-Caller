@@ -1,0 +1,373 @@
+{
+  "source_sha": "53a678fac4764dc0210cad4e6b11a9d431287241",
+  "app_tree": "c3cdd0ea05b5e094087cb86efe148224787e393e",
+  "run_id": 44470286600,
+  "review_scope": "ONLY call-01.png through call-13.png; 52 embedded native 480x854 raw frames",
+  "bounded_visual_result": "PASS",
+  "actually_viewed_sheet_count": 13,
+  "actually_viewed_raw_frame_count": 52,
+  "direct_raw_files_opened": [],
+  "hash_verification": "All 13 sheet SHA256 and 52 local raw PNG SHA256 independently matched manifest.json; no missing or mismatching files.",
+  "views": [
+    {
+      "sheet": "call-01.png",
+      "sheet_sha256": "6fe0fc4fc9480e053a50b1c46e2f549e1b9fb865ac9a90fe83a89ec23177abd8",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "Emerald dark audio: standard/large-font and English/Hebrew long identities remain separated from route panel; long names use ellipsis; selected route, close, four controls and hang-up stay intact.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "call-emerald-dark-audio-largefont.png",
+          "sha256": "43b4f31f93c5ff91de2d47cefb766035388c5c433a8ca4e004aeb968d23c8adf"
+        },
+        {
+          "filename": "call-emerald-dark-audio-longname-en.png",
+          "sha256": "1649c40feb090f95521c62d2dcb2aa653fa0795f6f976cb846e302e73ecfb249"
+        },
+        {
+          "filename": "call-emerald-dark-audio-longname-he.png",
+          "sha256": "a2277592836f336d8deaba0b81fbb701d442956eb6804f1bd6dea6c9f8b25f50"
+        },
+        {
+          "filename": "call-emerald-dark-audio-standard.png",
+          "sha256": "51133d4b51c0fe100b05a5721c80897ab18aef83eac425e0b41d4813895d9f23"
+        }
+      ]
+    },
+    {
+      "sheet": "call-02.png",
+      "sheet_sha256": "b8669877a86ae897d437e769f6060a37115f76ced1f58a2db69559eeff2dc3a7",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "Emerald dark keypad/more: complete 12-key dialpad with prominent digits/letter legends; more rows and all lower controls are visible without overlap at both font sizes.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "call-emerald-dark-keypad-largefont.png",
+          "sha256": "b0322624ee769be16dde80b28899a0a344cdff4546f94a739bc7b87970ed4dc1"
+        },
+        {
+          "filename": "call-emerald-dark-keypad-standard.png",
+          "sha256": "e58d5d506e670294b35f57f9de021bd630e2bcfec2e10276111ed798b7b4ecde"
+        },
+        {
+          "filename": "call-emerald-dark-more-largefont.png",
+          "sha256": "b38fa709ff7fe52dcf62375a057a053e8a055c5e11da0878dbea12797e07b106"
+        },
+        {
+          "filename": "call-emerald-dark-more-standard.png",
+          "sha256": "2e64331bb0bd3de7103693c665fc566f6119abb1a92c0a5372c758a5bae54ca3"
+        }
+      ]
+    },
+    {
+      "sheet": "call-03.png",
+      "sheet_sha256": "469077b6a8962fd731a6394d48524cb3c8d9f97403123ea4dff0052f28793262",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "Emerald dark normal: avatar, identity, number, duration and six controls are separated; English/Hebrew long names ellipsize within bounds; lower hang-up and native bar remain clear.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "call-emerald-dark-normal-largefont.png",
+          "sha256": "d7b994d2f2521a4e66384c3ca2ac3df6a661ef5acfc62b4043e854e9090e5503"
+        },
+        {
+          "filename": "call-emerald-dark-normal-longname-en.png",
+          "sha256": "6b13e3f59b58d85b59f16a61ed6a63f871cabb1eaffccd6658db2a213f67a3f4"
+        },
+        {
+          "filename": "call-emerald-dark-normal-longname-he.png",
+          "sha256": "c2da786c58daf3afb0381c22e6b156bf92ae743f7ed722cfd9f94b8b4fd4e675"
+        },
+        {
+          "filename": "call-emerald-dark-normal-standard.png",
+          "sha256": "0033b8c9097cbc1f2c0aec61218961ec1530f7841412e52bd2adbbe471838034"
+        }
+      ]
+    },
+    {
+      "sheet": "call-04.png",
+      "sheet_sha256": "b5b6993908602327dd26b88c976e69b17ab2b2769b8348fab74a53fdc7738736",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "Emerald light audio/keypad: dark text/icons remain legible on pale surfaces; large digits and all dialpad rows fit; panel and hang-up stay above native navigation.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "call-emerald-light-audio-largefont.png",
+          "sha256": "5c62c833a7bac1fff647e9b0f77565aeabfd9cc31bc451ee615490212ec8805c"
+        },
+        {
+          "filename": "call-emerald-light-audio-standard.png",
+          "sha256": "224b1bda1318d82811ccdf758214645ac427824539867c2f0038d8398b229b48"
+        },
+        {
+          "filename": "call-emerald-light-keypad-largefont.png",
+          "sha256": "265f2b04590db3c93bca0b7d790a7b98b95230ad3cc6cd9f751bbdc95cad87cc"
+        },
+        {
+          "filename": "call-emerald-light-keypad-standard.png",
+          "sha256": "cd1e36f0e6c6c4157394c1e512750976316447cb476016acf18038f8e69df379"
+        }
+      ]
+    },
+    {
+      "sheet": "call-05.png",
+      "sheet_sha256": "910d7bbcea9306f234c295cba8fe334d5a6dfc32c0eb2e399f3f5a407be19614",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "Emerald light more/normal: readable heavier Hebrew labels, complete more rows and six-control normal layout; sufficient spacing around identity, duration and hang-up.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "call-emerald-light-more-largefont.png",
+          "sha256": "8ec44f0b7826838cb0597e6834af8ed07ee0caab5ec8a217c423de1feebb6db2"
+        },
+        {
+          "filename": "call-emerald-light-more-standard.png",
+          "sha256": "5fdb6b25449cf4d6b2f5a8eb72a1fa583b48e925bc24752d1dfd546e18f99d68"
+        },
+        {
+          "filename": "call-emerald-light-normal-largefont.png",
+          "sha256": "d522fa3bcb8ef2ccd013242ed6fbd4f1b2c0bfa00550d8b6624235b60603e1b2"
+        },
+        {
+          "filename": "call-emerald-light-normal-standard.png",
+          "sha256": "761b9c53ffcbd7f683589e6c9ad65da85415a44a7d19d8330561091b711a6809"
+        }
+      ]
+    },
+    {
+      "sheet": "call-06.png",
+      "sheet_sha256": "66c402796ace33916790b07c4ad96d482cf14100e4311ca4761e2bb33ca16bc9",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "Frost dark audio: readable route rows and selected-state fill; English/Hebrew long-name ellipses do not collide with number or panel; all four controls and hang-up fit.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "call-frost-dark-audio-largefont.png",
+          "sha256": "371d0fcfac7b367fdd93ed9e9ff8f10b8ffd58e8df9eaef09ae42bd73bb9a07c"
+        },
+        {
+          "filename": "call-frost-dark-audio-longname-en.png",
+          "sha256": "60e9bb70d135aa5d77a087fa9f6734bb75feb65ffef32deded8cd6f116c67da5"
+        },
+        {
+          "filename": "call-frost-dark-audio-longname-he.png",
+          "sha256": "d89e22f940b75e0828270d61980d5ae09a686f97a7e1a1dc6b2dfac0fbdfac83"
+        },
+        {
+          "filename": "call-frost-dark-audio-standard.png",
+          "sha256": "e42ef22ccc42e819dee2d7bf7653d4a3d28aedb7b9767cf27cd26f99c334e258"
+        }
+      ]
+    },
+    {
+      "sheet": "call-07.png",
+      "sheet_sha256": "6d0cabed6d6ce859c6a94b28d6a7ecfccdc5c645f8e4de3e2b033ee70fc70e83",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "Frost dark keypad/more: prominent 12-key digits and legends, two complete more rows, four control labels and broad hang-up remain visible.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "call-frost-dark-keypad-largefont.png",
+          "sha256": "027dad5332bae2e833e0010b4dbb914882622b63bbe00f141bfae341b5774423"
+        },
+        {
+          "filename": "call-frost-dark-keypad-standard.png",
+          "sha256": "b2658fd07f2d6aaaa3769361561c083c84407306fce8eff67d1c5066f818b410"
+        },
+        {
+          "filename": "call-frost-dark-more-largefont.png",
+          "sha256": "38de6c5a0c7f111358415a34b6c92c380489325ffe0c966bb580976681b22b57"
+        },
+        {
+          "filename": "call-frost-dark-more-standard.png",
+          "sha256": "01a6f29f7f5ecb516b032f54769fe0b586150f250f8f2ba380dca9d74fe2e686"
+        }
+      ]
+    },
+    {
+      "sheet": "call-08.png",
+      "sheet_sha256": "8eba41c80d737e3dca4fe1134be4132a23cf8d828b5eba7a922025047b8bcef7",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "Frost dark normal: intentional side-avatar/identity arrangement and large central timer preserved; English/Hebrew long names ellipsize within available width; four rectangular controls and hang-up fit.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "call-frost-dark-normal-largefont.png",
+          "sha256": "eaa0b1a5977e9531f63972ba17757616680eeea98e860ecadeab6ac3fc82e349"
+        },
+        {
+          "filename": "call-frost-dark-normal-longname-en.png",
+          "sha256": "532743c9f81e36bdfa059f322a07925a0da3563f15220b667b8045644cc022fa"
+        },
+        {
+          "filename": "call-frost-dark-normal-longname-he.png",
+          "sha256": "7068f5c8d8d8e2c1e96ac7de45f51bc3298639246ce7352e1fcc1a8bed09b299"
+        },
+        {
+          "filename": "call-frost-dark-normal-standard.png",
+          "sha256": "34f2165f4a948a026919fce29bf22a7dba7a05e21c2499582f27dca0cb137eaa"
+        }
+      ]
+    },
+    {
+      "sheet": "call-09.png",
+      "sheet_sha256": "cdcb661e33fb365f1a0bef452c48e04bcf8a9bfa06b1091834596280355b35e0",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "Frost light audio/keypad: legible dark labels on light backgrounds, distinct selected fill, complete digit grid and controls; no collision with native bars.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "call-frost-light-audio-largefont.png",
+          "sha256": "032ac2df1ee892ae0f47fc87a36b8a95cfb95a6f0371baec201a762e3130d94c"
+        },
+        {
+          "filename": "call-frost-light-audio-standard.png",
+          "sha256": "3eb3f7345045ab2d9918cd8108f96c2c9800921556676325945e787658971f43"
+        },
+        {
+          "filename": "call-frost-light-keypad-largefont.png",
+          "sha256": "20aa0eb73f175dc27c816a82deaa2fd2ca6ee837aa4f88514ce9712dbae6516b"
+        },
+        {
+          "filename": "call-frost-light-keypad-standard.png",
+          "sha256": "e7acdc6557de5d2d4a196a0ff60e8f88de2d37d2be0f596196367030617a021b"
+        }
+      ]
+    },
+    {
+      "sheet": "call-10.png",
+      "sheet_sha256": "cb8aceacbd4607493e9913ac2048c5f942354b4f3f182b6b5b484c703e032b0a",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "Frost light more/normal: two more rows and four-card normal layout fit; identity and large central timer remain separate; all labels/hang-up clear.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "call-frost-light-more-largefont.png",
+          "sha256": "f40e4c72c57ddb2fd7abc65c78a4de4d3255392ba8adf76aa128c8f4530cc356"
+        },
+        {
+          "filename": "call-frost-light-more-standard.png",
+          "sha256": "1c2f42c19a8e01cd901ddc97d18d1f76ce8da75133e659807f7254aa3d200de0"
+        },
+        {
+          "filename": "call-frost-light-normal-largefont.png",
+          "sha256": "de9d88c1cb5576315c8f97c1346f94e8e6d69f48a9d135a39af4cb273d5451d1"
+        },
+        {
+          "filename": "call-frost-light-normal-standard.png",
+          "sha256": "8a163ab25b5c6965d745f9a4a4fabdf6ca5b12810f610e27b03f2b8e5be571de"
+        }
+      ]
+    },
+    {
+      "sheet": "call-11.png",
+      "sheet_sha256": "78c66c17c2e68f389f751fb055d438689f97069b64e60f85148ff45e6a64539f",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "Graphite dark audio: standard/large-font/English-Hebrew long identities stay above route chooser; route/header labels, four controls and circular hang-up fully visible.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "call-graphite-dark-audio-largefont.png",
+          "sha256": "18d47940478bbd52ba217f4d0d0db4927f155ad9c02b0f79333744c55110afbd"
+        },
+        {
+          "filename": "call-graphite-dark-audio-longname-en.png",
+          "sha256": "00a17266b71cc8b387cf7911800a4f9ac562eedca3d1fb851a58593450ccb14a"
+        },
+        {
+          "filename": "call-graphite-dark-audio-longname-he.png",
+          "sha256": "f2956b888fa28c61cd6fcbef6d10e7975c1f1cbce741124bc88936d739434e04"
+        },
+        {
+          "filename": "call-graphite-dark-audio-standard.png",
+          "sha256": "d7d0ba5a74397b8a0435d8c051c76acbaefd509070f6e93e4f7e70b228a61f05"
+        }
+      ]
+    },
+    {
+      "sheet": "call-12.png",
+      "sheet_sha256": "5a5d713665fe923e4a88428b8ed0270951ba9628d89f387bcdb9c3b34e335f53",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "Graphite dark keypad/more: complete 12-key grid with large bold digits/legends; two more rows and four labels fit above circular hang-up and native bar.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "call-graphite-dark-keypad-largefont.png",
+          "sha256": "e043d85db23cbe8866e35d0338e8cf68ee8505700d28d6cad8c5a67adc52913c"
+        },
+        {
+          "filename": "call-graphite-dark-keypad-standard.png",
+          "sha256": "b96abcd9a8d7e37d1b47d76f8e31b8dfdc9039561b0f541cfd227bfbf661e003"
+        },
+        {
+          "filename": "call-graphite-dark-more-largefont.png",
+          "sha256": "c192605e5a73d8dc076fd2f363faca788278003e6cd2b80ac91590489a55e0d0"
+        },
+        {
+          "filename": "call-graphite-dark-more-standard.png",
+          "sha256": "6a64593c6b167a80a1a68b85ae2fb90c168e0c03bc08dc6358591f235138f467"
+        }
+      ]
+    },
+    {
+      "sheet": "call-13.png",
+      "sheet_sha256": "b3706e9923208ee50e54537d9aa5cca20a52d04bfd8109de886c694a12e2f4c4",
+      "actually_viewed": true,
+      "view_method": "tools.view_image + image; full untruncated 2x2 sheet",
+      "result": "PASS",
+      "observation": "Graphite dark normal: centered avatar/identity, number and duration retain spacing; long names use bounded ellipses; six controls and circular hang-up remain intact at both font sizes.",
+      "raw_frames_actually_viewed_via_sheet": [
+        {
+          "filename": "call-graphite-dark-normal-largefont.png",
+          "sha256": "a61676b1f007323aea2e6cd9872b77f3fb041bba94ee20fdc70c8fcc2313ffcd"
+        },
+        {
+          "filename": "call-graphite-dark-normal-longname-en.png",
+          "sha256": "3bae16c625da4270fc68f0078f1405e1069bf3f5a9ac8dc218d7f108971397ae"
+        },
+        {
+          "filename": "call-graphite-dark-normal-longname-he.png",
+          "sha256": "b3e18457a3d5017bbc401c7bab88de2c44c5e75d9962477803ba2ef6af367eb7"
+        },
+        {
+          "filename": "call-graphite-dark-normal-standard.png",
+          "sha256": "c149dcbfd649d483846d38d64f2e10e241db396ed642f3ab29af542db7b7c056"
+        }
+      ]
+    }
+  ],
+  "bounded_findings": [
+    {
+      "result": "PASS",
+      "scope": "All 52 reviewed frames",
+      "finding": "No DA CALLER branding visible; identity, number/duration, chooser rows, controls, larger keypad digits and native status/navigation bars remain readable and separated. Light/dark palettes show legible text and recognizable active fills. Hebrew/English long-name ellipses preserve bounded layouts."
+    },
+    {
+      "result": "PASS",
+      "scope": "Intentional design variations",
+      "finding": "Emerald rounded outer panel, Frost edge-to-edge lower panel/side-avatar normal layout, and Graphite separate circular controls/hang-up remain distinct; no redesign requested."
+    }
+  ],
+  "not_in_scope": [
+    "Nothing style / centered Nothing layout (not present in these 52 frames)",
+    "Remaining 217 native PNGs",
+    "Physical hardware or audio-route behavior",
+    "Interaction execution or updating prior native/host results",
+    "Whole-269 visual approval or publication authority"
+  ],
+  "overall_269_approval": false,
+  "publication_authority": false,
+  "application_or_test_source_modified": false
+}

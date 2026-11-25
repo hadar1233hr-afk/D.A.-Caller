@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.dacaller.app.CallIntegrationSnapshotTest" tests="39" failures="8" errors="0" skipped="0" time="611.445" timestamp="2026-11-18T12:40:25" hostname="localhost">
+  <properties>
+    <property name="device" value="emulator-5554 - 13" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="testNativeNotificationStatesActionsAndDirectReturn" classname="com.dacaller.app.CallIntegrationSnapshotTest" time="37.913" />
+  <testcase name="testSystemBackReturnsToLastContactQueryAnchorAndSettingsScroll" classname="com.dacaller.app.CallIntegrationSnapshotTest" time="18.0" />
+  <testcase name="testActualTelecomExternalIslandOnLauncherAndOtherApps" classname="com.dacaller.app.CallIslandExternalIntegrationTest" time="30.276" />
+  <testcase name="testAllStylesLanguagesThemesAndCallStatesAtLargeFont" classname="com.dacaller.app.CallIslandSnapshotTest" time="41.43">
+    <failure>java.lang.AssertionError: junit.framework.AssertionFailedError: Hidden favorites_strip
+at com.dacaller.app.CallIslandSnapshotTest.ui(CallIslandSnapshotTest.java:98)
+at com.dacaller.app.CallIslandSnapshotTest.actualMainGeometry(CallIslandSnapshotTest.java:372)
+at com.dacaller.app.CallIslandSnapshotTest.actualMainScreens(CallIslandSnapshotTest.java:353)
+at com.dacaller.app.CallIslandSnapshotTest.matrixScenario(CallIslandSnapshotTest.java:216)
+at com.dacaller.app.CallIslandSnapshotTest.$r8$lambda$eZU0W-Kv54AMyM6uzd01f1Q_h5Q(Unknown Source:0)
+at com.dacaller.app.CallIslandSnapshotTest$$ExternalSyntheticLambda22.run(D8$$SyntheticClass:0)
+at com.dacaller.app.CallIslandSnapshotTest.checked(CallIslandSnapshotTest.java:573)
+at com.dacaller.app.CallIslandSnapshotTest.testAllStylesLanguagesThemesAndCallStatesAtLargeFont(CallIslandSnapshotTest.java:197)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+Caused by: junit.framework.AssertionFailedError: Hidden favorites_strip
+at com.dacaller.app.CallIslandSnapshotTest.visible(CallIslandSnapshotTest.java:116)
+at com.dacaller.app.CallIslandSnapshotTest.lambda$actualMainGeometry$21(CallIslandSnapshotTest.java:374)
+at com.dacaller.app.CallIslandSnapshotTest.$r8$lambda$jfSPD6zeDBJ6W_y7A-eieIQc74E(Unknown Source:0)
+at com.dacaller.app.CallIslandSnapshotTest$$ExternalSyntheticLambda41.run(D8$$SyntheticClass:0)
+at com.dacaller.app.CallIslandSnapshotTest.lambda$ui$0(CallIslandSnapshotTest.java:97)
+at com.dacaller.app.CallIslandSnapshotTest$$ExternalSyntheticLambda43.run(D8$$SyntheticClass:0)
+at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2379)
+at android.os.Handler.handleCallback(Handler.java:942)
+at android.os.Handler.dispatchMessage(Handler.java:99)
+at android.os.Looper.loopOnce(Looper.java:201)
+at android.os.Looper.loop(Looper.java:288)
+at android.app.ActivityThread.main(ActivityThread.java:7924)
+at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:936)
+</failure>
+  </testcase>
+  <testcase name="testCommandsConfirmationPauseReturnRecreationAndContentRestore" classname="com.dacaller.app.CallIslandSnapshotTest" time="11.667" />
+  <testcase name="testCustomizationPreviewBothThemesAndBottomControlsAtLargeFont" classname="com.dacaller.app.CallIslandSnapshotTest" time="7.627" />
+  <testcase name="testAudioSelectionAndMuteRemainSynchronizedInEveryDesign" classname="com.dacaller.app.CallLayoutSnapshotTest" time="15.247" />
+  <testcase name="testFiveDesignsBothThemesFourPanelsAndLargeFonts" classname="com.dacaller.app.CallLayoutSnapshotTest" time="75.128" />
+  <testcase name="testLongCallerNamesInBothLanguagesAtLargeFont" classname="com.dacaller.app.CallLayoutSnapshotTest" time="18.691" />
+  <testcase name="testNoBluetoothRouteWithoutConnectedDeviceAndEnglishLayout" classname="com.dacaller.app.CallLayoutSnapshotTest" time="0.981" />
+  <testcase name="testSequentialPanelsCloseAndNeverOverlap" classname="com.dacaller.app.CallLayoutSnapshotTest" time="24.773" />
+  <testcase name="testBundledBusinessDirectoryNativeIsolationSearchAndProvenance" classname="com.dacaller.app.CallbackBusinessIntegrationTest" time="13.396" />
+  <testcase name="testBundledBusinessManualNativeCallUsesExactSourceIdentity" classname="com.dacaller.app.CallbackBusinessIntegrationTest" time="8.674" />
+  <testcase name="testCallbackReminderFromActualTelecomAndPrivateOsAlarm" classname="com.dacaller.app.CallbackBusinessIntegrationTest" time="36.787" />
+  <testcase name="testUnknownActualRecentCallerOpensNewEditorWithoutDialOrWrite" classname="com.dacaller.app.CallbackBusinessIntegrationTest" time="8.664" />
+  <testcase name="testContactReturnPreservesStableIdentityOffsetAndQueryAfterReorder" classname="com.dacaller.app.ContactScrollDispatchTest" time="1.396" />
+  <testcase name="testNewTouchCancelsQueuedReturnRestore" classname="com.dacaller.app.ContactScrollDispatchTest" time="0.632" />
+  <testcase name="testRepeatedRebuildBeforeSelectionLayoutDoesNotLoseAnchor" classname="com.dacaller.app.ContactScrollDispatchTest" time="1.087" />
+  <testcase name="testSearchFilterSurvivesDetailReturnWithoutReset" classname="com.dacaller.app.ContactScrollDispatchTest" time="0.807" />
+  <testcase name="testChangelogNativeSettingsHistoryAndBack" classname="com.dacaller.app.FollowupIntegrationTest" time="23.434" />
+  <testcase name="testMissedCallsFromActualTelecomAndNativeNotificationActions" classname="com.dacaller.app.FollowupIntegrationTest" time="17.576" />
+  <testcase name="testConfiguredHorizontalSwipeCallsCorrectContactOnce" classname="com.dacaller.app.ListDialDispatchTest" time="1.389" />
+  <testcase name="testContactRowAndStarHaveIndependentActionsWithoutCalling" classname="com.dacaller.app.ListDialDispatchTest" time="0.736" />
+  <testcase name="testContactsTopMiddleEndDialExactDisplayedNumberWithoutJump" classname="com.dacaller.app.ListDialDispatchTest" time="0.911" />
+  <testcase name="testRecentDialExactNumberAndIndependentDetailsRegion" classname="com.dacaller.app.ListDialDispatchTest" time="1.061" />
+  <testcase name="testRecentInlineOwnershipSurvivesRecreationAndBackWithoutMovingAnchor" classname="com.dacaller.app.ListDialDispatchTest" time="1.362" />
+  <testcase name="testVerticalFlickStartingAtCallIconNeverCalls" classname="com.dacaller.app.ListDialDispatchTest" time="0.634" />
+  <testcase name="testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency" classname="com.dacaller.app.ModernFeaturesIntegrationTest" time="23.442">
+    <failure>junit.framework.AssertionFailedError: Zero background opacity must expose exact real pixels expected:&lt;-3421237&gt; but was:&lt;-3355444&gt;
+at com.dacaller.app.ModernFeaturesIntegrationTest.testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency(ModernFeaturesIntegrationTest.java:451)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at com.dacaller.app.ModernFeaturesIntegrationTest.runTest(ModernFeaturesIntegrationTest.java:88)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+</failure>
+  </testcase>
+  <testcase name="testModernInlineNavigationNineIconsAndWineSwitchPointer" classname="com.dacaller.app.ModernFeaturesIntegrationTest" time="4.087">
+    <failure>junit.framework.AssertionFailedError: Expected: &lt;null&gt; but was: android.widget.LinearLayout{4c6c20f G.E...... ......ID 9,105-435,291}
+at com.dacaller.app.ModernFeaturesIntegrationTest.testModernInlineNavigationNineIconsAndWineSwitchPointer(ModernFeaturesIntegrationTest.java:263)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at com.dacaller.app.ModernFeaturesIntegrationTest.runTest(ModernFeaturesIntegrationTest.java:88)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+</failure>
+  </testcase>
+  <testcase name="testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns" classname="com.dacaller.app.ModernFeaturesIntegrationTest" time="5.988">
+    <failure>java.lang.AssertionError: junit.framework.AssertionFailedError: View and native AX disagree expected:&lt;Rect(280, 764 - 438, 758)&gt; but was:&lt;Rect(280, 764 - 438, 836)&gt;
+at com.dacaller.app.ModernFeaturesIntegrationTest.ui(ModernFeaturesIntegrationTest.java:139)
+at com.dacaller.app.ModernFeaturesIntegrationTest.bounds(ModernFeaturesIntegrationTest.java:211)
+at com.dacaller.app.ModernFeaturesIntegrationTest.tap(ModernFeaturesIntegrationTest.java:224)
+at com.dacaller.app.ModernFeaturesIntegrationTest.importBackup(ModernFeaturesIntegrationTest.java:369)
+at com.dacaller.app.ModernFeaturesIntegrationTest.testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns(ModernFeaturesIntegrationTest.java:312)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at com.dacaller.app.ModernFeaturesIntegrationTest.runTest(ModernFeaturesIntegrationTest.java:88)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+Caused by: junit.framework.AssertionFailedError: View and native AX disagree expected:&lt;Rect(280, 764 - 438, 758)&gt; but was:&lt;Rect(280, 764 - 438, 836)&gt;
+at com.dacaller.app.ModernFeaturesIntegrationTest.lambda$bounds$6(ModernFeaturesIntegrationTest.java:217)
+at com.dacaller.app.ModernFeaturesIntegrationTest$$ExternalSyntheticLambda22.run(D8$$SyntheticClass:0)
+at com.dacaller.app.ModernFeaturesIntegrationTest.lambda$ui$0(ModernFeaturesIntegrationTest.java:138)
+at com.dacaller.app.ModernFeaturesIntegrationTest$$ExternalSyntheticLambda27.run(D8$$SyntheticClass:0)
+at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2379)
+at android.os.Handler.handleCallback(Handler.java:942)
+at android.os.Handler.dispatchMessage(Handler.java:99)
+at android.os.Looper.loopOnce(Looper.java:201)
+at android.os.Looper.loop(Looper.java:288)
+at android.app.ActivityThread.main(ActivityThread.java:7924)
+at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:936)
+</failure>
+  </testcase>
+  <testcase name="testAllAvatarShapesClipActualContactPhotoAndWidgetInitials" classname="com.dacaller.app.PersonalizationSnapshotTest" time="7.361" />
+  <testcase name="testArchiveResolvesRealProviderNamePhotoAndSearchesNames" classname="com.dacaller.app.PersonalizationSnapshotTest" time="6.097" />
+  <testcase name="testContactsAndRecentsCompactPresentationInBothLanguagesThemesAndFontSizes" classname="com.dacaller.app.PersonalizationSnapshotTest" time="64.365" />
+  <testcase name="testDocumentBackupRestoreRequiresConfirmationAndCancelKeepsPreferences" classname="com.dacaller.app.PersonalizationSnapshotTest" time="14.303">
+    <failure>junit.framework.AssertionFailedError: Backup native status/navigation bars must have stable rendered contrast: backup-saved-light status=6740 navigation=0 navInset=0
+at com.dacaller.app.PersonalizationSnapshotTest.backupSnapshot(PersonalizationSnapshotTest.java:267)
+at com.dacaller.app.PersonalizationSnapshotTest.testDocumentBackupRestoreRequiresConfirmationAndCancelKeepsPreferences(PersonalizationSnapshotTest.java:511)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+</failure>
+  </testcase>
+  <testcase name="testEveryRealLauncherAliasRemainsUniqueAndDialIntentStillResolves" classname="com.dacaller.app.PersonalizationSnapshotTest" time="4.986" />
+  <testcase name="testHorizontalFavoritesReachAllContactsWithoutDialingAndRememberSharedCollapse" classname="com.dacaller.app.PersonalizationSnapshotTest" time="31.81" />
+  <testcase name="testSettingsIconAndAvatarChoosersAtLargeFontInBothThemes" classname="com.dacaller.app.PersonalizationSnapshotTest" time="15.779">
+    <failure>java.lang.IllegalArgumentException: Targeted input event injection from pid 5998 was not directed at a window owned by uid 10174.
+at android.os.Parcel.createExceptionOrNull(Parcel.java:3015)
+at android.os.Parcel.createException(Parcel.java:2995)
+at android.os.Parcel.readException(Parcel.java:2978)
+at android.os.Parcel.readException(Parcel.java:2920)
+at android.hardware.input.IInputManager$Stub$Proxy.injectInputEventToTarget(IInputManager.java:1349)
+at android.hardware.input.InputManager.injectInputEvent(InputManager.java:1163)
+at android.app.Instrumentation.syncInputTransactionsAndInjectEventIntoSelf(Instrumentation.java:1194)
+at android.app.Instrumentation.sendPointerSync(Instrumentation.java:1179)
+at com.dacaller.app.PersonalizationSnapshotTest.tap(PersonalizationSnapshotTest.java:179)
+at com.dacaller.app.PersonalizationSnapshotTest.tap(PersonalizationSnapshotTest.java:175)
+at com.dacaller.app.PersonalizationSnapshotTest.testSettingsIconAndAvatarChoosersAtLargeFontInBothThemes(PersonalizationSnapshotTest.java:388)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+Caused by: android.os.RemoteException: Remote stack trace:
+at com.android.server.input.InputManagerService.injectInputEventToTarget(InputManagerService.java:922)
+at android.hardware.input.IInputManager$Stub.onTransact(IInputManager.java:638)
+at android.os.Binder.execTransactInternal(Binder.java:1285)
+at android.os.Binder.execTransact(Binder.java:1244)
+
+</failure>
+  </testcase>
+  <testcase name="testLastSettingsCategoryStaysInteractiveAndCallsCategoryHasNoPhoneSymbol" classname="com.dacaller.app.SettingsInteractionTest" time="10.108">
+    <failure>java.lang.AssertionError: junit.framework.AssertionFailedError: expected:&lt;8&gt; but was:&lt;0&gt;
+at com.dacaller.app.SettingsInteractionTest.ui(SettingsInteractionTest.java:35)
+at com.dacaller.app.SettingsInteractionTest.testLastSettingsCategoryStaysInteractiveAndCallsCategoryHasNoPhoneSymbol(SettingsInteractionTest.java:61)
+at android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)
+at android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)
+Caused by: junit.framework.AssertionFailedError: expected:&lt;8&gt; but was:&lt;0&gt;
+at com.dacaller.app.SettingsInteractionTest.lambda$testLastSettingsCategoryStaysInteractiveAndCallsCategoryHasNoPhoneSymbol$6(SettingsInteractionTest.java:61)
+at com.dacaller.app.SettingsInteractionTest$$ExternalSyntheticLambda15.run(D8$$SyntheticClass:0)
+at com.dacaller.app.SettingsInteractionTest.lambda$ui$2(SettingsInteractionTest.java:34)
+at com.dacaller.app.SettingsInteractionTest$$ExternalSyntheticLambda8.run(D8$$SyntheticClass:0)
+at android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2379)
+at android.os.Handler.handleCallback(Handler.java:942)
+at android.os.Handler.dispatchMessage(Handler.java:99)
+at android.os.Looper.loopOnce(Looper.java:201)
+at android.os.Looper.loop(Looper.java:288)
+at android.app.ActivityThread.main(ActivityThread.java:7924)
+at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)
+at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:936)
+</failure>
+  </testcase>
+  <testcase name="testNarrowFavoritesFitAtLargeSystemFont" classname="com.dacaller.app.WidgetSnapshotTest" time="10.957">
+    <failure></failure>
+  </testcase>
+  <system-err>Test run failed to complete. Instrumentation run failed due to Process crashed.
+</system-err>
+</testsuite>

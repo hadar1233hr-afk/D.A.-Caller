@@ -1,0 +1,46 @@
+{
+  "source_head": "545824f0071366ba2f8c432acb520719371aa570",
+  "original_seven_verifiers": {
+    "scripts/verify-ui-matrix.py": {
+      "head_sha256": "e3fd18f544b028ffeddaddee272b2f4e7aefa2cc47f5d2d90fac5d9580c9dab2",
+      "current_sha256": "e3fd18f544b028ffeddaddee272b2f4e7aefa2cc47f5d2d90fac5d9580c9dab2",
+      "unchanged": true
+    },
+    "scripts/verify-personalization-matrix.py": {
+      "head_sha256": "0fa3106ef1832cd5fb7fd8df167c56e19c70b5a034ae1ffc20636659220d2825",
+      "current_sha256": "0fa3106ef1832cd5fb7fd8df167c56e19c70b5a034ae1ffc20636659220d2825",
+      "unchanged": true
+    },
+    "scripts/verify-call-integration-matrix.py": {
+      "head_sha256": "0dbe8072173a2417ce9bb46fb686c9ab8fc194255c38dabdb1e396d5e0b22e6f",
+      "current_sha256": "0dbe8072173a2417ce9bb46fb686c9ab8fc194255c38dabdb1e396d5e0b22e6f",
+      "unchanged": true
+    },
+    "scripts/verify-island-matrix.py": {
+      "head_sha256": "a2f0b025aeb20536acadd574ec36a500141516a9cefe3f99e4b4478fa051be36",
+      "current_sha256": "a2f0b025aeb20536acadd574ec36a500141516a9cefe3f99e4b4478fa051be36",
+      "unchanged": true
+    },
+    "scripts/verify-external-island-matrix.py": {
+      "head_sha256": "db313c16aea96a65b1d194de80a3562e9a73204efb845473c89cff4664844c65",
+      "current_sha256": "db313c16aea96a65b1d194de80a3562e9a73204efb845473c89cff4664844c65",
+      "unchanged": true
+    },
+    "scripts/verify-followup-matrix.py": {
+      "head_sha256": "6f7c540bc7703f25957be11566789e021eb438208942fc9c0d73c94579c14fa8",
+      "current_sha256": "6f7c540bc7703f25957be11566789e021eb438208942fc9c0d73c94579c14fa8",
+      "unchanged": true
+    },
+    "scripts/verify-callback-business-matrix.py": {
+      "head_sha256": "18c3f965bd85cb4ed68ace00f83e1384b8b9416dc07a4323c5f3bfec4c0c70f2",
+      "current_sha256": "18c3f965bd85cb4ed68ace00f83e1384b8b9416dc07a4323c5f3bfec4c0c70f2",
+      "unchanged": true
+    }
+  },
+  "all_original_seven_unchanged": true,
+  "main_unit_workflow_gradle_changed_paths": [],
+  "main_unit_workflow_gradle_unchanged": true,
+  "diff_check_exitcode": 0,
+  "diff_check_output": "",
+  "evidence_scope": "Read-only source preservation check, not native execution or visual approval."
+}

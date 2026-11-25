@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.BusinessDirectoryTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:13:48" hostname="3ebae333e153" time="0.886">
+  <properties/>
+  <testcase name="internationalAndPartialPhoneAliasesUseWholePrefixWithoutSuffixGuessing" classname="com.dacaller.app.BusinessDirectoryTest" time="0.044"/>
+  <testcase name="countryCodeWithoutPlusIsDisplayedAsSourcedButDialledAsNationalIdentity" classname="com.dacaller.app.BusinessDirectoryTest" time="0.048"/>
+  <testcase name="nameAndCityPrefixSearchUsesUnicodeIndexAndNeverGuessesAnotherBusiness" classname="com.dacaller.app.BusinessDirectoryTest" time="0.033"/>
+  <testcase name="matchingChecksumCannotHideIncorrectDeclaredRecordCount" classname="com.dacaller.app.BusinessDirectoryTest" time="0.06"/>
+  <testcase name="equalSearchCountCannotHideMismatchedRecordIdentities" classname="com.dacaller.app.BusinessDirectoryTest" time="0.036"/>
+  <testcase name="validPublicDatabaseInstallsReadOnlyWithoutTouchingPrivateFiles" classname="com.dacaller.app.BusinessDirectoryTest" time="0.056"/>
+  <testcase name="fixedMobileAndStarIdentitiesRemainSupportedWithoutCountrySuffixGuessing" classname="com.dacaller.app.BusinessDirectoryTest" time="0.03"/>
+  <testcase name="serviceGrammarRejectsForeignPostDialAndFalseIdentityRows" classname="com.dacaller.app.BusinessDirectoryTest" time="0.029"/>
+  <testcase name="manifestRejectsUnsupportedOrMisTypedProvenance" classname="com.dacaller.app.BusinessDirectoryTest" time="0.044"/>
+  <testcase name="unsafeSourceUrlsAndMissingBusinessNamesAreRejected" classname="com.dacaller.app.BusinessDirectoryTest" time="0.032"/>
+  <testcase name="exactCountryCodeListingIncludesNationalMobileAndServiceSourceForms" classname="com.dacaller.app.BusinessDirectoryTest" time="0.065"/>
+  <testcase name="ftsAndSqlOperatorsAreLiteralDataAndCannotBroadenTheQuery" classname="com.dacaller.app.BusinessDirectoryTest" time="0.032"/>
+  <testcase name="boundedPagesPreserveStableIdsAcrossEqualNames" classname="com.dacaller.app.BusinessDirectoryTest" time="0.129"/>
+  <testcase name="checksumFailureKeepsEarlierVerifiedCacheAndNoTemporaryPartialFile" classname="com.dacaller.app.BusinessDirectoryTest" time="0.075"/>
+  <testcase name="missingSearchRowsRejectsDatasetRatherThanSilentlyLosingSearchResults" classname="com.dacaller.app.BusinessDirectoryTest" time="0.029"/>
+  <testcase name="displayedAndDialledNumbersMustBeTheSameIdentity" classname="com.dacaller.app.BusinessDirectoryTest" time="0.051"/>
+  <testcase name="serviceSourcePhonesAndInternationalPrefixesKeepTheirWholeNationalIdentity" classname="com.dacaller.app.BusinessDirectoryTest" time="0.035"/>
+  <testcase name="longMalformedQueriesCannotLoseTheirSuffixAndBecomeDirectoryOrPhoneQueries" classname="com.dacaller.app.BusinessDirectoryTest" time="0.048"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

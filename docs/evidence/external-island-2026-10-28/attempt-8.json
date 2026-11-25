@@ -1,0 +1,75 @@
+{
+  "provenance_verified_against_connector_digests": true,
+  "source": "4269b285ed5a985e7b93ee575a1e67f74681b9cf",
+  "run": 41284700998,
+  "conclusion": "failure",
+  "artifacts": {
+    "checks": {
+      "artifact_id": 13074732854,
+      "artifact_name": "DA-CALLER-checks-0f402dfbe31483c9df46632ca7f90ecf59bb3f9f",
+      "sha256": "4758aca813b5c49ebf86a2e91b6d9ed85a7c2ba06f5cc04ab1057e7d39e2c9ba",
+      "bytes": 107281,
+      "path": "/workspace/work/external-island-eighth-checks",
+      "zip": "/workspace/da-caller-native-evidence/native-review-export/41284700998/checks.zip"
+    },
+    "validate-apk": {
+      "artifact_id": 13074678429,
+      "artifact_name": "DA-CALLER-0.11.0-beta.9-debug-0f402dfbe31483c9df46632ca7f90ecf59bb3f9f",
+      "sha256": "d472db669045a8eb97d9e6f6ed8ed692588f13a45efa56da446aef82a3330149",
+      "bytes": 264309,
+      "path": "/workspace/work/external-island-eighth-validate-apk",
+      "zip": "/workspace/da-caller-native-evidence/native-review-export/41284700998/validate-apk.zip"
+    },
+    "ui": {
+      "artifact_id": 13074498687,
+      "artifact_name": "DA-CALLER-Android13-UI-0f402dfbe31483c9df46632ca7f90ecf59bb3f9f",
+      "sha256": "6e1c5b9bce84116498261973b2c56eebe4898bda46246f80c138f3c471874a6d",
+      "bytes": 12346580,
+      "path": "/workspace/work/external-island-eighth-ui",
+      "zip": "/workspace/da-caller-native-evidence/native-review-export/41284700998/ui.zip"
+    }
+  },
+  "export_commit": "52a31ce59d5319f8bf7ba8f4489fd01d217e9034",
+  "native_png_count": 218,
+  "unit": {
+    "tests": 257,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native": {
+    "tests": 30,
+    "failures": 2,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_failures": [
+    {
+      "test": {
+        "name": "testActualTelecomExternalIslandOnLauncherAndOtherApps",
+        "classname": "com.dacaller.app.CallIslandExternalIntegrationTest",
+        "time": "17.993"
+      },
+      "message": {},
+      "text": "junit.framework.AssertionFailedError: Actual native external surface must be visible and usable over com.google.android.apps.nexuslauncher: first-active\nat com.dacaller.app.CallIslandExternalIntegrationTest.awaitNativeSurface(CallIslandExternalIntegrationTest.java:387)\nat com.dacaller.app.CallIslandExternalIntegrationTest.scenario(CallIslandExternalIntegrationTest.java:575)\nat com.dacaller.app.CallIslandExternalIntegrationTest.testActualTelecomExternalIslandOnLauncherAndOtherApps(CallIslandExternalIntegrationTest.java:559)\nat android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)\nat android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)\nat android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)\nat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)\n"
+    },
+    {
+      "test": {
+        "name": "testLastSettingsCategoryStaysInteractiveAndCallsCategoryHasNoPhoneSymbol",
+        "classname": "com.dacaller.app.SettingsInteractionTest",
+        "time": "0.504"
+      },
+      "message": {},
+      "text": "java.lang.AssertionError: junit.framework.AssertionFailedError: Settings viewport must be shown in the focused Activity\nat com.dacaller.app.SettingsInteractionTest.ui(SettingsInteractionTest.java:35)\nat com.dacaller.app.SettingsInteractionTest.testLastSettingsCategoryStaysInteractiveAndCallsCategoryHasNoPhoneSymbol(SettingsInteractionTest.java:56)\nat android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)\nat android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)\nat android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)\nat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)\nCaused by: junit.framework.AssertionFailedError: Settings viewport must be shown in the focused Activity\nat com.dacaller.app.SettingsInteractionTest.assertCurrentViewport(SettingsInteractionTest.java:116)\nat com.dacaller.app.SettingsInteractionTest.lambda$testLastSettingsCategoryStaysInteractiveAndCallsCategoryHasNoPhoneSymbol$4(SettingsInteractionTest.java:56)\nat com.dacaller.app.SettingsInteractionTest.$r8$lambda$A88aTcOhzui3ocEEtJnoZjfZ4to(Unknown Source:0)\nat com.dacaller.app.SettingsInteractionTest$$ExternalSyntheticLambda11.run(D8$$SyntheticClass:0)\nat com.dacaller.app.SettingsInteractionTest.lambda$ui$2(SettingsInteractionTest.java:34)\nat com.dacaller.app.SettingsInteractionTest$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)\nat android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2379)\nat android.os.Handler.handleCallback(Handler.java:942)\nat android.os.Handler.dispatchMessage(Handler.java:99)\nat android.os.Looper.loopOnce(Looper.java:201)\nat android.os.Looper.loop(Looper.java:288)\nat android.app.ActivityThread.main(ActivityThread.java:7924)\nat com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:548)\nat com.android.internal.os.ZygoteInit.main(ZygoteInit.java:936)\n"
+    }
+  ],
+  "status": "FAIL",
+  "source_app_tree": "0ad90eca4ce84f1a12f806dbbad52e76f78743bb",
+  "native_artifacts_published_as_apk_release": false,
+  "failure_context": "Actual WindowInfo reports [44,48][434,132], while native AXroot/caller nodes and view report [45,48][435,132]. The exact WindowInfo containment check rejected a displayed overlay because of one-pixel transformed-coordinate rounding. No title gate remains. The Settings viewport strict focus assertion ran immediately after mounting and failed at0.504s; no readiness wait existed.",
+  "changes_for_next_run": [
+    "Require actual AXroot exactcontainment of the entire island, native apppackage/caller and stablevisibleactive state. Keep actual WindowInfo coordinates and allow atmostONEphysicalpixel peredge vsactual AXroot; explicitly record tolerance/rootbounds and verify both independently.",
+    "Add bounded actual-current-settings-viewport/decor/hostfocus readiness after eachpalette mount, stable350ms, retaining strict touch/currentcontent/fullbottom visibility checks. Record detailed failure samples/nativewindows/PNG.",
+    "All257unit/30native/227PNG coverage retained; no production code change."
+  ]
+}

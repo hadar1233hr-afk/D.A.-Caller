@@ -1,0 +1,71 @@
+{
+  "run_id": 44389278862,
+  "source_sha": "3db5a5f7af9b0bcebb5a34fe1e67802a62c61e7c",
+  "app_tree": "dbdf015c1af5ffe0b024814dd8ccd31e138babac",
+  "status": "NATIVE_FAIL_NO_APPROVAL",
+  "unit_pass": 457,
+  "native": {
+    "tests": 40,
+    "failures": 4,
+    "errors": 0,
+    "skipped": 0
+  },
+  "pass_count": 36,
+  "raw_pngs": 247,
+  "verified_artifacts": [
+    {
+      "name": "ui",
+      "artifact_id": 14469491183,
+      "bytes": 15348504,
+      "sha256": "70cf3912917850835023e8e4c3c2dde03958a0ca66ff7be8c92417e9a4a95dcf",
+      "all_crc_pass": true
+    },
+    {
+      "name": "native-failure",
+      "artifact_id": 14469835651,
+      "bytes": 1330591,
+      "sha256": "5f3fdb356d75bd7fe5972f5eff251e49996ee2dbc92d0350884330fa8310af13",
+      "all_crc_pass": true
+    }
+  ],
+  "publication_allowed": false,
+  "original_present": 238,
+  "modern_present": 5,
+  "diagnostic_pngs": [
+    "host-failed.png",
+    "modern-failed-testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency.png",
+    "modern-failed-testModernInlineNavigationNineIconsAndWineSwitchPointer.png",
+    "modern-failed-testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns.png"
+  ],
+  "missing_original": [
+    "personalization-chooser-dark-avatar_shapes-bottom.png",
+    "personalization-chooser-dark-avatar_shapes.png",
+    "personalization-chooser-dark-icons-bottom.png",
+    "personalization-chooser-dark-icons.png",
+    "personalization-chooser-light-avatar_shapes-bottom.png",
+    "personalization-chooser-light-avatar_shapes.png",
+    "personalization-chooser-light-icons-bottom.png"
+  ],
+  "missing_modern": [
+    "modern-archive-merged.png",
+    "modern-archive-restore-on.png",
+    "modern-bottom-dialpad-dark-he.png",
+    "modern-icons-all-nine-dark-he.png",
+    "modern-icons-all-nine-light-en.png",
+    "modern-island-below-inapp.png",
+    "modern-island-composition-background.png",
+    "modern-island-dragged.png",
+    "modern-island-hide-home.png",
+    "modern-island-new-call-shown.png",
+    "modern-island-opacity-0.png",
+    "modern-island-opacity-100.png",
+    "modern-island-opacity-35.png",
+    "modern-island-restore-home.png",
+    "modern-island-status-external.png",
+    "modern-island-status-inapp.png",
+    "modern-recents-inline-dark-he.png",
+    "modern-wine-controls-dark-he.png",
+    "modern-wine-controls-light-en.png"
+  ],
+  "whole_matrix_visual_approval": false
+}

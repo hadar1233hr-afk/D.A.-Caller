@@ -9,6 +9,8 @@ import java.util.Map;
 final class I18n {
  private static final Map<String,String> english=new HashMap<>();
  static{
+  put("לא נמצאה אפליקציה לשליחת הודעות","No messaging app is available");
+  put("פרופיל ממורכז, נקודות ושחור־לבן","Centered profile, dots and monochrome");
   put("הרשאות וחיבור למערכת","Permissions and phone integration");
   put("חייגן ברירת מחדל","Default phone app");
   put("הרשאת שיחות","Phone call permission");

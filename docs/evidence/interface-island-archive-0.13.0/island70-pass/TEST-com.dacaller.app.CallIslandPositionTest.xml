@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.CallIslandPositionTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:00:13" hostname="3ebae333e153" time="3.082">
+  <properties/>
+  <testcase name="invalidStoredCoordinatesAreBoundedAndAnUnusableDimensionDoesNotDivideByZero" classname="com.dacaller.app.CallIslandPositionTest" time="2.868"/>
+  <testcase name="savedFractionsSurviveRotationAndExpandedControlsStayInTheirViewport" classname="com.dacaller.app.CallIslandPositionTest" time="0.081"/>
+  <testcase name="statusIconsAndCentralCutoutForceSafeActualFallbackWithoutPrivilegedWindows" classname="com.dacaller.app.CallIslandPositionTest" time="0.039"/>
+  <testcase name="defaultStaysCenteredBelowUntilAUserDragAndResetReturnsThere" classname="com.dacaller.app.CallIslandPositionTest" time="0.093"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,7 @@
+© OpenStreetMap contributors
+ODbL-1.0: https://opendatacommons.org/licenses/odbl/1-0/
+Source: https://download.geofabrik.de/asia/israel-and-palestine.html
+Snapshot: 2026-11-03; user-uploaded source, publisher origin not independently authenticated.
+Bounded source geometry, not an official/legal border decision. Partial listed categories only; no complete or current business/phone ownership guarantee.
+Corresponding exact raw records, decisions and derivative materials are in the redistribution/ directory within the source-and-dataset archive linked here:
+https://github.com/hadar1233hr-afk/D.A.-Caller/blob/codex/da-caller-dynamic-island-20261027/docs/evidence/business-acquisition/owner-261103/verified-geometry-README.md

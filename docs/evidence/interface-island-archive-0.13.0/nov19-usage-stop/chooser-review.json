@@ -1,0 +1,14 @@
+{
+  "saved_at_utc": "2026-11-18T20:36:56.445623+00:00",
+  "source_native_run_id": 44389278862,
+  "actual_failure": "launcher-icon-wave vertically clipped58/114 after revealChoiceRow scrolls whole9-icon list tobottom; original5th icon is nowmiddle",
+  "actual_frame_viewed": "/workspace/work/native-013-ci-44389278862/ui/ui-snapshots/DA-CALLER-snapshots/personalization-chooser-light-icons.png",
+  "actual_frame_sha256": "8ec9eee2f48cca9c8524a5880252c9882e7584a50bf21143ed24fa70b3c4abac",
+  "source_sha256": "d6ae48910e9d3f5e17d21a2fa353f68b1dfe8d4f0f33def44cc8a8425377ab68",
+  "source_fix": "Request exact row drawing rectangle through ancestor offsets, boundedsettle, preservefullrow/fullpreview assertions, add48dp+stableactualnativeAXwindow proof",
+  "test_method_names_unchanged": true,
+  "capture_names_unchanged": true,
+  "production_or_old_verifier_changes": false,
+  "new_native_executed": false,
+  "source_frozen": true
+}

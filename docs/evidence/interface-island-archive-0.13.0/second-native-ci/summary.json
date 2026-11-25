@@ -1,0 +1,103 @@
+{
+  "run_id": 44303504696,
+  "source_sha": "da08214fc4bc42b7918980b81a0410b4136a0657",
+  "app_tree": "3818476df40e26ca5991d6d821a0573517e91197",
+  "status": "NATIVE_FAIL_NO_APPROVAL",
+  "unit_pass": 455,
+  "native": {
+    "tests": 39,
+    "failures": 8,
+    "errors": 0,
+    "skipped": 0
+  },
+  "raw_pngs": 232,
+  "verified_artifacts": [
+    {
+      "artifact_id": 14428336593,
+      "name": "ui",
+      "bytes": 16509797,
+      "sha256": "fd732fbae23111874843efd2e75b6bed459c02442d3d028ab8ac9fbbd3cdfb40",
+      "crc_all_pass": true
+    },
+    {
+      "artifact_id": 14426634374,
+      "name": "native-failure",
+      "bytes": 1330306,
+      "sha256": "4875882d8f6665f493d181a311db2c1687d855976c1aa4ec3a8afa7905e6160b",
+      "crc_all_pass": true
+    }
+  ],
+  "publication_allowed": false,
+  "reported_pass": 31,
+  "expected_methods": 40,
+  "missing_expected_cases": [
+    [
+      "com.dacaller.app.WidgetSnapshotTest",
+      "testRealHostAdditionResizeThemeEmptyAndRemoval"
+    ]
+  ],
+  "unexpected_cases": [],
+  "whole_matrix_visual_approval": false,
+  "observed_native_junit_sha256": "2c60c4743733eba7f4a411b89c3ecab1595ab5afafe7e195c6925a3d48d607c5",
+  "actually_viewed_diagnostics": [
+    "island-failed-app-main.png",
+    "modern-failed-testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency.png"
+  ],
+  "original_present": 212,
+  "modern_present": 14,
+  "diagnostic_pngs": [
+    "host-failed.png",
+    "island-failed-app-main.png",
+    "island-failed-matrix.png",
+    "modern-failed-testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency.png",
+    "modern-failed-testModernInlineNavigationNineIconsAndWineSwitchPointer.png",
+    "modern-failed-testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns.png"
+  ],
+  "missing_original": [
+    "island-app-contacts-expanded.png",
+    "island-app-recents-compact.png",
+    "island-app-recents-expanded.png",
+    "personalization-backup-restore-confirmation.png",
+    "personalization-backup-saved-dark.png",
+    "personalization-chooser-dark-avatar_shapes-bottom.png",
+    "personalization-chooser-dark-avatar_shapes.png",
+    "personalization-chooser-dark-icons-bottom.png",
+    "personalization-chooser-dark-icons.png",
+    "personalization-chooser-light-avatar_shapes-bottom.png",
+    "personalization-chooser-light-avatar_shapes.png",
+    "personalization-chooser-light-icons-bottom.png",
+    "personalization-chooser-light-icons.png",
+    "settings-dark-bottom.png",
+    "settings-dark.png",
+    "settings-light-bottom.png",
+    "settings-light.png",
+    "widget-dark-contact-2x1.png",
+    "widget-dark-empty.png",
+    "widget-dark-favorites-2x2-largefont.png",
+    "widget-dark-favorites-2x2.png",
+    "widget-dark-favorites-4x2.png",
+    "widget-dark-permission.png",
+    "widget-dark-quick-1x1.png",
+    "widget-dark-two-favorites.png",
+    "widget-light-contact-2x1.png",
+    "widget-light-empty.png",
+    "widget-light-favorites-2x2.png",
+    "widget-light-favorites-4x2.png",
+    "widget-light-permission.png",
+    "widget-light-quick-1x1.png",
+    "widget-light-two-favorites.png",
+    "widget-reconfigured.png"
+  ],
+  "missing_modern": [
+    "modern-archive-merged.png",
+    "modern-archive-restore-on.png",
+    "modern-bottom-dialpad-dark-he.png",
+    "modern-bottom-dialpad-light-en.png",
+    "modern-icons-all-nine-dark-he.png",
+    "modern-icons-all-nine-light-en.png",
+    "modern-island-new-call-shown.png",
+    "modern-recents-inline-dark-he.png",
+    "modern-wine-controls-dark-he.png",
+    "modern-wine-controls-light-en.png"
+  ]
+}

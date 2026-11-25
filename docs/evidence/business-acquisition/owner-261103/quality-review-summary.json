@@ -1,0 +1,65 @@
+{
+  "status": "RESEARCH_QUALITY_CHECKED_NOT_APP_INTEGRATED",
+  "observed_at_utc": "2026-11-05T17:13:56.295259+00:00",
+  "input_ndjson_sha256": "37ce40b735e144cc38eee1e72ce75c785424f0213d05c9c35feb766c1b2704df",
+  "corpus_phone_rows": 2448,
+  "source_nodes": 2393,
+  "distinct_base_phones": 2353,
+  "root_independently_executed_checks": {
+    "phone_identity": 16,
+    "source_text": 29,
+    "duplicate_identity": 8,
+    "geometry_country_existing": 16,
+    "extractor_packager_existing": 37,
+    "total": 106,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0
+  },
+  "new_quality_checks": 53,
+  "text_cross_review": {
+    "reviewers": 2,
+    "initial_concrete_findings": 2,
+    "fixed_and_rechecked": 2,
+    "remaining_concrete_findings": 0,
+    "corrections": [
+      "Bind source ID/URL/timestamp for every supplied reread, including non-name text failures",
+      "Exclude pronunciation/etymology/unsupported language tags from source-name alternatives"
+    ]
+  },
+  "measured_findings": {
+    "uan1599_rows": 7,
+    "uan1599_distinct_identities": 5,
+    "same_source_e164_round_trips": 7,
+    "text_blocked_rows_all_fields": 3,
+    "text_blocked_fields": 4,
+    "oversized_source_fields": 0,
+    "same_name_phone_extension_address_pairs": 5,
+    "shared_phones_across_nodes": 71,
+    "automatic_merges": 0,
+    "automatic_source_replacements": 0,
+    "app_rows_added": 0
+  },
+  "app_tree": "9f15350b457405bf88a35c0ac5badc8f3a85cd94",
+  "production_packager_sha256": "d0ffd2392ed43a356f6e84ee6b4a7526cf84a50dc555e5536d85975b3d0c123f",
+  "android_verification": "No new Android run: production app unchanged. Existing356unit/35native/243reviewedPNG evidence retained; unchanged245gate still FAIL.",
+  "publication_approval": false,
+  "explicit_signing_ci_exception_approval": "PENDING; PR comments/reviews empty when checked",
+  "files_sha256": {
+    "duplicate-readiness-README.md": "539cdb79e766f294d9d3451af28ab9be740b0bddb833c9067d42d01f9d2715e5",
+    "duplicate-readiness-report.json": "b7b5dee8b23bd8100ae5f359e85a6eabd5515088d17e72be89225c034a71ae6a",
+    "duplicate-readiness-verification.json": "ebb8da903e70c9b00abc739fe71dfca7f5fa7022bd73d2a2301900504b8ecdb0",
+    "phone-readiness-README.md": "9a148efd3dbe46201d74476c16facc03500c039c1942cd25f11e2717a74ae6d8",
+    "phone-readiness-checks.json": "26ec5fe28d971a2ba63463b2b271f92c40bbef268a0b5bba6c0435699efe54d3",
+    "phone-readiness-checks.txt": "b8f8ed085f50a29dcd36ea5df054abde5a2eb50e3b9e443e0828124335156c35",
+    "phone-readiness-review.json": "806afc59dce9d8d8af7670d63d92f86c0c101eae6f72cead14b89f9439e3cf63",
+    "text-readiness-README.md": "59e059ca3260d4488df747a013561b321b5bb72b5c67b949ed125eb280d53aae",
+    "text-readiness-checks.json": "f95c1dc94dd1a8a576c48aded5626a3d3eeb73d08b3e389018461455f16c1f5c",
+    "text-readiness-report.json": "e04848419c58d79e9d3e5eeab9c3e778cfa3f223554966f374625d4bd3a299fc"
+  },
+  "limits": [
+    "Research readiness, not live ownership/currentness, official geography or complete coverage.",
+    "All2448 rows still rejected unchanged by production packager; primary24-row package unchanged.",
+    "No app, other product, signing, workflow or release guard edits; no public APK published."
+  ]
+}

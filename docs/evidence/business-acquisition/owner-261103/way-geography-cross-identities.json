@@ -1,0 +1,107 @@
+{
+  "status": "RESEARCH_CROSS_REPRESENTATION_IDENTITY_REVIEW_ONLY",
+  "shared_phone_groups": [
+    {
+      "phone": "+972505556566",
+      "source_listings": [
+        {
+          "source_id": "osm:node:2079012098",
+          "name": "Brand Apartments Tel Aviv",
+          "source_updated_at": "2026-06-06T19:41:23+00:00"
+        },
+        {
+          "source_id": "osm:node:2079069969",
+          "name": "Brand Apartments Tel Aviv",
+          "source_updated_at": "2023-12-07T22:13:07+00:00"
+        },
+        {
+          "source_id": "osm:node:2079181983",
+          "name": "Brand Apartments Tel Aviv",
+          "source_updated_at": "2023-11-15T14:07:42+00:00"
+        },
+        {
+          "source_id": "osm:way:149229949",
+          "name": "Brand Apartments Tel Aviv",
+          "source_updated_at": "2023-10-30T00:45:04+00:00"
+        },
+        {
+          "source_id": "osm:way:203949250",
+          "name": "Brand Apartments Tel Aviv",
+          "source_updated_at": "2023-10-23T21:21:49+00:00"
+        }
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_ROWS_MANUAL_REVIEW_NO_CENTROID_OR_MERGE"
+    },
+    {
+      "phone": "+972545438296",
+      "source_listings": [
+        {
+          "source_id": "osm:node:1222156106",
+          "name": "\u05d3\u05d5\u05e8 \u05d0\u05dc\u05d5\u05df",
+          "source_updated_at": "2025-01-27T23:19:02+00:00"
+        },
+        {
+          "source_id": "osm:way:106153912",
+          "name": "\u05d0\u05dc\u05d5\u05e0\u05d9\u05ea",
+          "source_updated_at": "2017-09-25T14:32:21+00:00"
+        }
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_ROWS_MANUAL_REVIEW_NO_CENTROID_OR_MERGE"
+    },
+    {
+      "phone": "+97286373627",
+      "source_listings": [
+        {
+          "source_id": "osm:node:1087910159",
+          "name": "The Last Refuge",
+          "source_updated_at": "2019-03-20T14:11:38+00:00"
+        },
+        {
+          "source_id": "osm:way:370491418",
+          "name": "\u05d4\u05de\u05e4\u05dc\u05d8 \u05d4\u05d0\u05d7\u05e8\u05d5\u05df",
+          "source_updated_at": "2019-03-20T14:11:41+00:00"
+        }
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_ROWS_MANUAL_REVIEW_NO_CENTROID_OR_MERGE"
+    },
+    {
+      "phone": "+97286491375",
+      "source_listings": [
+        {
+          "source_id": "osm:node:12000741199",
+          "name": "Yellow",
+          "source_updated_at": "2024-06-22T14:15:08+00:00"
+        },
+        {
+          "source_id": "osm:way:364399369",
+          "name": "\u05e4\u05d6 - \u05d4\u05e0\u05e9\u05d9\u05d0\u05d9\u05dd",
+          "source_updated_at": "2024-06-22T14:15:08+00:00"
+        }
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_ROWS_MANUAL_REVIEW_NO_CENTROID_OR_MERGE"
+    },
+    {
+      "phone": "1700700740",
+      "source_listings": [
+        {
+          "source_id": "osm:node:2623363947",
+          "name": "Eldan \u05d2\u05dc\u05d9\u05dc\u05d5\u05ea",
+          "source_updated_at": "2023-10-26T23:10:52+00:00"
+        },
+        {
+          "source_id": "osm:way:258698293",
+          "name": "\u05d0\u05dc\u05d3\u05df \u05d2\u05dc\u05d9\u05dc\u05d5\u05ea",
+          "source_updated_at": "2023-10-23T11:08:38+00:00"
+        }
+      ],
+      "action": "RETAIN_DISTINCT_SOURCE_ROWS_MANUAL_REVIEW_NO_CENTROID_OR_MERGE"
+    }
+  ],
+  "group_count": 5,
+  "automatic_merges": 0,
+  "app_records_added": 0,
+  "limits": [
+    "A shared number on point/area listings does not prove a duplicate physical business.",
+    "No centroid or inferred point replaces full way geometry; all source rows remain intact."
+  ]
+}

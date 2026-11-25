@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "api": 33,
+  "emulator_only": true,
+  "test": "testBundledBusinessManualNativeCallUsesExactSourceIdentity",
+  "dataset_version": "owner-261103-source-spatial-v1",
+  "dataset_sha256": "cbc7dc7b41c3fa9335cbf37907243681820fe23107e40541efb306dc1b566af3",
+  "record_count": 2720,
+  "selected_record": {
+    "id": 2529482289071907401,
+    "name": "Bershka",
+    "phone": "1599510510",
+    "phone_display": "+9721599510510",
+    "source_id": "osm:node:10001924959",
+    "source_url": "https:\/\/www.openstreetmap.org\/node\/10001924959",
+    "source_license": "ODbL-1.0",
+    "source_updated_at": "2022-09-05T11:43:09+00:00"
+  },
+  "no_automatic_call_before_tap": true,
+  "no_new_call_log_rows_before_tap": true,
+  "business_tab_native_bounds_and_48dp_target_verified": true,
+  "dispatch_method": "native-UiAutomation-touchscreen-business-row-call-button-to-production-TelecomManager.placeCall",
+  "call_button_bounds": "[27,279][99,351]",
+  "call_token": "4b91c65a-3b9f-4b46-b612-2e48b17e97b9",
+  "call_address": "tel:1599510510",
+  "call_number": "1599510510",
+  "observed_call_state": 9,
+  "bound_call_token_verified": true,
+  "end_method": "native-production-call-end-touchscreen",
+  "end_button_bounds": "[139,683][340,764]",
+  "disconnect_cause": 2,
+  "disconnected_and_service_unbound": true,
+  "call_log_rows": [
+    {
+      "id": 3,
+      "number": "1599510510",
+      "date": 1794480648589,
+      "duration": 0,
+      "type": 2
+    }
+  ],
+  "preexisting_call_log_ids_preserved": true,
+  "no_call_log_delete": true,
+  "private_contacts_digest_before": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "private_contacts_digest_after": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "business_numbers_dialed": 1,
+  "additional_png_count": 0,
+  "physical_cellular_audio_verified": false,
+  "current_business_phone_ownership_verified": false
+}

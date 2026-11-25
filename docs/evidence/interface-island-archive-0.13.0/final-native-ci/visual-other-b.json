@@ -1,0 +1,580 @@
+{
+  "reviewer": "visual7e_other_b",
+  "source_sha": "7e039daaf2b43716ed2a2b3db1df0b04a8647fcd",
+  "app_tree_sha": "96aa47e9152edc931e4830dd3dbe65e3a09418df",
+  "run_id": 44521985299,
+  "scope": "Only other-14.png through other-25.png, 48 distinct raw native frames; bounded visual review only",
+  "manifest_path": "/workspace/work/native-013-review-44521985299/manifest.json",
+  "review_status": "BOUNDED_VISUAL_PASS",
+  "counts": {
+    "sheets_actually_viewed": 12,
+    "unique_raw_frames_actually_viewed": 48,
+    "pass": 48,
+    "fail": 0,
+    "unseen_credited": 0
+  },
+  "hash_verification": {
+    "sheets_matched_manifest": 12,
+    "raw_pngs_matched_manifest": 48
+  },
+  "sheets": [
+    {
+      "sheet": "other-14.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-14.png",
+      "sha256": "48a52c24ab653337e03cd51126ec480dfab205189cb25ee1f35a41a5453922b2",
+      "viewed": true,
+      "view_method": "One tools.view_image call and image() output per exec; complete sheet visible",
+      "visual_status": "PASS",
+      "observations": "Light Hebrew expanded favorites/contacts and dark circle, hexagon, rounded-square contact shapes are clear. Names, phone numbers, favorite stars, call controls, search/business entry and native bars remain readable. Last contact row is intentionally clipped by the list viewport.",
+      "frames": [
+        {
+          "filename": "personalization-contacts-light-he-standard-expanded.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-light-he-standard-expanded.png",
+          "sha256": "1dc7c739ae6781e96de4027e074b8c03c31ced30a43c39a0e77b6e94e67fec85",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-contacts-shape-circle.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-shape-circle.png",
+          "sha256": "effa9753a445cff03edf646af18b92a430c2345c855e8308e4a016a0c5d64406",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-contacts-shape-hexagon.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-shape-hexagon.png",
+          "sha256": "8c5127c8593c51c661816cb80eddacc4d0a21eb83bea5db59d910f83c78499d8",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-contacts-shape-rounded_square.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-shape-rounded_square.png",
+          "sha256": "3d98a59fad7567915497fc3b9d943230539912611dd30a5ced87889a5f1a8ae7",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "other-15.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-15.png",
+      "sha256": "7152c78c381b67fbcbd9f5fe3c1bedfec523a7d366422619dca5937da88598ce",
+      "viewed": true,
+      "view_method": "One tools.view_image call and image() output per exec; complete sheet visible",
+      "visual_status": "PASS",
+      "observations": "Square contact shape and dark English Recents standard/large-font compact/expanded states are readable. Favorites and summary chevrons, duration, outgoing/incoming/missed counts and bottom navigation fit. Secondary call metadata uses intentional ellipsis; the lower list continues beyond the viewport.",
+      "frames": [
+        {
+          "filename": "personalization-contacts-shape-square.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-contacts-shape-square.png",
+          "sha256": "f15dfae7a5f9e8d167a419a3318390a0b4de77662d9af7aaf78d884af43ae517",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-dark-en-largefont-compact.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-recents-dark-en-largefont-compact.png",
+          "sha256": "18a104d1876d1d9fb5127e815d7e64eb18136c62af263423e9d1634e0d4d30b1",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-dark-en-largefont-expanded.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-recents-dark-en-largefont-expanded.png",
+          "sha256": "a0d9c972bbcbc25cfbb4500f886d1f78634a5508544e3dfabf116d2f60332c3a",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-dark-en-standard-compact.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-recents-dark-en-standard-compact.png",
+          "sha256": "b7e89b90758dd6bb2bb6814c85a7b9b67abc111f33a07ab1cf5084a150b26792",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "other-16.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-16.png",
+      "sha256": "024e9cd3128d599b79297b0ba4ea3dbe59cc480e55e4f13d0b40af67d0285781",
+      "viewed": true,
+      "view_method": "One tools.view_image call and image() output per exec; complete sheet visible",
+      "visual_status": "PASS",
+      "observations": "Dark English standard expanded summary and Hebrew standard/large-font compact/expanded summaries retain readable identities, counts, directional arrows, summary metrics and RTL navigation. Secondary timestamps use ellipsis at large font without cutting the primary identity.",
+      "frames": [
+        {
+          "filename": "personalization-recents-dark-en-standard-expanded.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-recents-dark-en-standard-expanded.png",
+          "sha256": "841f2713961de283826de874bdc4cd6aea4d246e57027f3d0ed8f45d0659a935",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-dark-he-largefont-compact.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-recents-dark-he-largefont-compact.png",
+          "sha256": "fbb43b484fac635627e3aa3541eb819e7e64d9e3d9b7c3a45f92ad1ab61d6575",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-dark-he-largefont-expanded.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-recents-dark-he-largefont-expanded.png",
+          "sha256": "1640cafb3316a72dee7df8ab6b95d62f30d1826bc8ee077bc3f7d69bf5ba98e5",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-dark-he-standard-compact.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-recents-dark-he-standard-compact.png",
+          "sha256": "cc10d927dd0f6817724f125c687c0740c5b3ade5f2ba948bb4d839140b20b966",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "other-17.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-17.png",
+      "sha256": "207e9e01327cead80cf506d9930d70ad9cf2d03a97c2881ebde22fe628a2cc7e",
+      "viewed": true,
+      "view_method": "One tools.view_image call and image() output per exec; complete sheet visible",
+      "visual_status": "PASS",
+      "observations": "Dark Hebrew standard expanded and light English standard/large-font compact/expanded Recents retain readable summary labels/counts/arrows, bright gold controls, favorites and navigation. Large-font secondary metadata ellipsis and list clipping are intentional.",
+      "frames": [
+        {
+          "filename": "personalization-recents-dark-he-standard-expanded.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-recents-dark-he-standard-expanded.png",
+          "sha256": "e96c66eda942ca0bd1d706866fce1c74585efa154952151fbb0ff89a5156a54b",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-light-en-largefont-compact.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-recents-light-en-largefont-compact.png",
+          "sha256": "d82b2a1a6fb27ce5fe969b2bc387b6ab68b4b9ae647cd37d9936b712293bc7a5",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-light-en-largefont-expanded.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-recents-light-en-largefont-expanded.png",
+          "sha256": "c1ff0566d40f68ce8ee6eaf960825ef8b5b619f1beea35d9933056b99e70cfeb",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-light-en-standard-compact.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-recents-light-en-standard-compact.png",
+          "sha256": "2a262170d3bd108bcc8d0a5b4dfdb92a4a5ac24cb3b6eec0d4df97538bb3724d",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "other-18.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-18.png",
+      "sha256": "4378793594d61acbc8de5e515304e378cbcf148a501fc434abc9a34f503ebc88",
+      "viewed": true,
+      "view_method": "One tools.view_image call and image() output per exec; complete sheet visible",
+      "visual_status": "PASS",
+      "observations": "Light English expanded and Hebrew standard/large-font compact/expanded Recents preserve readable summary/counts/arrows and RTL placement. Favorites, refresh, row actions, call controls, app navigation and native bars fit.",
+      "frames": [
+        {
+          "filename": "personalization-recents-light-en-standard-expanded.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-recents-light-en-standard-expanded.png",
+          "sha256": "7a3f0358cf00b5ddfd706b6cae7ac1c907b87c700050d5bafd9aa5db833276ef",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-light-he-largefont-compact.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-recents-light-he-largefont-compact.png",
+          "sha256": "0c5b929732d7fd36accdc89929a8ac79394032a6f7d6905ed62acd3b543bd43f",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-light-he-largefont-expanded.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-recents-light-he-largefont-expanded.png",
+          "sha256": "f7009f1fb4db03202dc493eacd283de801b3ceacc81cae0ce49727af4e30883d",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-recents-light-he-standard-compact.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-recents-light-he-standard-compact.png",
+          "sha256": "0cc4e57fc557e060fe58660af1674cbc6849a69bddfd7dc66d94831022cfc3bf",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "other-19.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-19.png",
+      "sha256": "d71889ed9222e3981d460c6c67f65ee5a1ae780a08bf8fac35eb81222a17f045",
+      "viewed": true,
+      "view_method": "One tools.view_image call and image() output per exec; complete sheet visible",
+      "visual_status": "PASS",
+      "observations": "Light Hebrew standard expanded Recents and circle/hexagon/rounded-square widget photo previews are readable with clear shape changes, initials, names, dark-widget contrast and intact native system bars. Long widget contact names are ellipsized.",
+      "frames": [
+        {
+          "filename": "personalization-recents-light-he-standard-expanded.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-recents-light-he-standard-expanded.png",
+          "sha256": "a4e2dc82877a2269e15b43bfd95b944d3f207accb8e450883cae6c3fe4277d8b",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-widgets-shape-circle.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-widgets-shape-circle.png",
+          "sha256": "387a9772fd89d4c0bf02748449116939e1a4c3d99a6c6ca1437a58481f25e29a",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-widgets-shape-hexagon.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-widgets-shape-hexagon.png",
+          "sha256": "eba3a99c54fefc5d2d9dc72d6295d5582c6903307d59a9c5e510cebad5176068",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "personalization-widgets-shape-rounded_square.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-widgets-shape-rounded_square.png",
+          "sha256": "b93aba0e497fb79c61b8b96df1cd1bd8800d64d8084afe98623155296f08b1f0",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "other-20.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-20.png",
+      "sha256": "12bfdb7d1fd422e1b490d150d3f09e785ba35e16743966f2c8aabc482e0996f0",
+      "viewed": true,
+      "view_method": "One tools.view_image call and image() output per exec; complete sheet visible",
+      "visual_status": "PASS",
+      "observations": "Square widget preview, unknown-number inline Recents actions, scrolled contact editor and dark Settings bottom are readable. The editor shows the exact prefilled phone and wine save button clearly. Its photo-control edge is intentional scroll clipping confirmed by the fixture reveal(phone) before capture, not a visual defect.",
+      "frames": [
+        {
+          "filename": "personalization-widgets-shape-square.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/personalization-widgets-shape-square.png",
+          "sha256": "d065c5201f6d2eeb2dd4605d02599aa63c238effbfaec664d0c5d99bb851567c",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "recents-new-contact-editor.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/recents-new-contact-editor.png",
+          "sha256": "51c6d1aacf9e9196e9a10f79bba9b24cbdf7f69eb42f3b24cc428c0059c77dd2",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "recents-unknown-number-actions.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/recents-unknown-number-actions.png",
+          "sha256": "0045e9d16d6834b0a896b577b0edeab3b4cd88a7f61f8584ba9abf4853becded",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "settings-dark-bottom.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/settings-dark-bottom.png",
+          "sha256": "69790a783b65ecdc6afa61853e1fa84bd4c8423bf6b965074e2421961962bfc6",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "other-21.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-21.png",
+      "sha256": "f38a21ffe49cbd2c6b3f5ebcb1c3b625810b8ff7a07f09fc998e0eb197ee419a",
+      "viewed": true,
+      "view_method": "One tools.view_image call and image() output per exec; complete sheet visible",
+      "visual_status": "PASS",
+      "observations": "Dark/light Settings permission/integration section and light Settings bottom are readable with clear gold actions, separators, RTL labels and intact native bars. Settings content continues outside the captured scroll viewport. Dark contact widget identity and phone are readable.",
+      "frames": [
+        {
+          "filename": "settings-dark.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/settings-dark.png",
+          "sha256": "aead3276b56a86e8f5359fd53404db7d6202a4ca8bca2fde702a99defe650c40",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "settings-light-bottom.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/settings-light-bottom.png",
+          "sha256": "514c7b9f523082265bf29285791c6d70eb7cbb9368cff6f7e25209fe2caa1564",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "settings-light.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/settings-light.png",
+          "sha256": "c42315387772062a729298fb8f1af768dae5baffbb135d9f3ac846edc46a879d",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "widget-dark-contact-2x1.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/widget-dark-contact-2x1.png",
+          "sha256": "13526b3895160a625a9190b3b0aaf8f90785c4006e27e849c225205cc3467878",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "other-22.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-22.png",
+      "sha256": "b5ea33d04654c6dd494c0f38b86e4c1a1ee826f2e31a4238a91a90a36335ec17",
+      "viewed": true,
+      "view_method": "One tools.view_image call and image() output per exec; complete sheet visible",
+      "visual_status": "PASS",
+      "observations": "Dark widget empty state, 2x2 standard/large-font favorites and 4x2 favorites retain clear names/initials and adequate contrast. Compact brand header ellipsis is intentional; favorite identities remain visible.",
+      "frames": [
+        {
+          "filename": "widget-dark-empty.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/widget-dark-empty.png",
+          "sha256": "38a995fbf84b31fa1598fd0135c077ee7c43cfb0afb8f2370de120cc7ef7726c",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "widget-dark-favorites-2x2-largefont.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/widget-dark-favorites-2x2-largefont.png",
+          "sha256": "dc74faea2193e513cdb56a39e24642fa1c8be854e24284d114cd93f8a14a4fdd",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "widget-dark-favorites-2x2.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/widget-dark-favorites-2x2.png",
+          "sha256": "86a150cf2a32156e4735c72ae6c49955649d1fc3ffde1758dd60bea154d4e17b",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "widget-dark-favorites-4x2.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/widget-dark-favorites-4x2.png",
+          "sha256": "9e5fc28752642b65420024e5be2380ce4731fa4b8427358b85cc79f461a93337",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "other-23.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-23.png",
+      "sha256": "084295f8f9eae0fd531644a5c9957f0b06814fd4261b7171ac615c9ab4143812",
+      "viewed": true,
+      "view_method": "One tools.view_image call and image() output per exec; complete sheet visible",
+      "visual_status": "PASS",
+      "observations": "Dark widget permission state, 1x1 quick contact and two-favorite state plus light contact widget have clear readable text, initials and native bars. The 1x1 long name uses ellipsis.",
+      "frames": [
+        {
+          "filename": "widget-dark-permission.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/widget-dark-permission.png",
+          "sha256": "77bcee02a717d60b06fa668b5482202d9f616b5a20b93a9b7b1839dadddcbad3",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "widget-dark-quick-1x1.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/widget-dark-quick-1x1.png",
+          "sha256": "8166bbb70cbfd816f7e1c45c95ce815626d29999416524fea3c1f7ac66332c89",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "widget-dark-two-favorites.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/widget-dark-two-favorites.png",
+          "sha256": "46d9aafc09884f871d2e2c1ad29538dbdc11a0c92b14949ecdf1161372f38a0a",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "widget-light-contact-2x1.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/widget-light-contact-2x1.png",
+          "sha256": "b874127d35bf1d43fe34c0c4210351df14f6bc5bb905a63d6163ebe6fbe8038b",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "other-24.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-24.png",
+      "sha256": "66bd3d7af99e933045a596d2a3536518397dd6c042a989b02af0b151308783ad",
+      "viewed": true,
+      "view_method": "One tools.view_image call and image() output per exec; complete sheet visible",
+      "visual_status": "PASS",
+      "observations": "Light widget empty state, 2x2 standard/large-font favorites and 4x2 favorites retain clear text/initials and contrast. Compact brand header ellipsis is intentional; favorite identities remain visible.",
+      "frames": [
+        {
+          "filename": "widget-light-empty.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/widget-light-empty.png",
+          "sha256": "643a9f58d4a69be68e45f545254c3d87ed02c6a64c7c26845ca3b9237f143672",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "widget-light-favorites-2x2-largefont.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/widget-light-favorites-2x2-largefont.png",
+          "sha256": "5cac43aeaed9df527a73e49bab48d847becd870684792c381d524cbeba88b257",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "widget-light-favorites-2x2.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/widget-light-favorites-2x2.png",
+          "sha256": "a823f341123e5c03a9ee4f639004f9a3f804a3a3e1b575d1322bf7b30d5a4571",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "widget-light-favorites-4x2.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/widget-light-favorites-4x2.png",
+          "sha256": "1fc64f233cad7caca1c3c09e1e739cfc6f36ea2071d80c89de53df626b9c10a8",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        }
+      ]
+    },
+    {
+      "sheet": "other-25.png",
+      "path": "/workspace/work/native-013-review-44521985299/other-25.png",
+      "sha256": "e592d06d71abe466101750310cf92dd8b387223de9f62a6ed1074de6d3d5f5a9",
+      "viewed": true,
+      "view_method": "One tools.view_image call and image() output per exec; complete sheet visible",
+      "visual_status": "PASS",
+      "observations": "Light widget permission, 1x1 quick-contact and two-favorite states plus reconfigured dark quick contact are readable. Names/initials and native bars fit, with intentional long-name ellipsis in the compact quick widget.",
+      "frames": [
+        {
+          "filename": "widget-light-permission.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/widget-light-permission.png",
+          "sha256": "d62f5ecd732e2f43b8463589393acd65114e1b543c65f8655d41d38637612e9a",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "widget-light-quick-1x1.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/widget-light-quick-1x1.png",
+          "sha256": "9f21ede9e9811f0d5154ea675c86629333d952b99b843e646158774f8d52b4d2",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "widget-light-two-favorites.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/widget-light-two-favorites.png",
+          "sha256": "d68e125b49354ec9ecae5f014508c129b7951215eafd4ebd4a9168115c09d779",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        },
+        {
+          "filename": "widget-reconfigured.png",
+          "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/widget-reconfigured.png",
+          "sha256": "9fdbbab2675ad4b4230ca4152f702e53a18de3909f9d8639a098101816fb4b81",
+          "viewed": true,
+          "view_method": "Actually viewed in full unaltered 2x2 sheet via tools.view_image and image()",
+          "visual_status": "PASS"
+        }
+      ]
+    }
+  ],
+  "raw_detail_views": [
+    {
+      "filename": "recents-new-contact-editor.png",
+      "path": "/workspace/work/native-013-ci-44521985299/ui/ui-snapshots/DA-CALLER-snapshots/recents-new-contact-editor.png",
+      "sha256": "51c6d1aacf9e9196e9a10f79bba9b24cbdf7f69eb42f3b24cc428c0059c77dd2",
+      "viewed": true,
+      "reason": "Inspect photo-control edge and phone/save layout at original resolution; already included in the same 48 unique raw frames"
+    }
+  ],
+  "source_inspection": [
+    {
+      "path": "/workspace/D.A.-Caller/app/src/androidTest/java/com/dacaller/app/CallbackBusinessIntegrationTest.java",
+      "lines": [
+        545,
+        546
+      ],
+      "observation": "Fixture explicitly hides IME, calls reveal(phone), checks viewBounds(phone), then captures recents-new-contact-editor. Top photo-control edge is the deliberately scrolled viewport."
+    }
+  ],
+  "bounded_findings": [
+    {
+      "status": "PASS",
+      "finding": "Assigned Recents/Contacts/Settings/widgets show readable rounded/heavier text, identities, gold controls, appropriate light/dark contrast, favorites, summary arrows, RTL/LTR navigation, and native bars in the captured states."
+    },
+    {
+      "status": "PASS",
+      "finding": "Unknown caller inline actions and phone-prefilled contact editor are clear; wine save button text fits."
+    },
+    {
+      "status": "PASS",
+      "finding": "Intentional ellipsis and list/scroll viewport clipping do not obscure the primary reviewed identities or controls."
+    }
+  ],
+  "limitations": [
+    "Only the 48 assigned frames were reviewed; no claim about the remaining 221 frames or all-269 completion.",
+    "No source edits, build/Gradle execution, CI action, release or publication action performed.",
+    "Visual font readability observed; this review does not independently identify font family from pixels or assert pixel-measured contrast.",
+    "Main, backup/archive, wine switch states, call islands and call-screen frames outside this assignment are not credited.",
+    "No hardware, real-device, update/signing compatibility, publication approval or release readiness claim.",
+    "0.12 remains immutable/delivered and must not be resent. 0.13 remains unreleased with unresolved signing/publication approval."
+  ],
+  "usage_limit_encountered": false
+}

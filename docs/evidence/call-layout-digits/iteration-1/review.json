@@ -1,0 +1,46 @@
+{
+  "source": "da2baba8d3cd809258eca86b1f5fea99e6065af6",
+  "app_tree": "781ff6cc79806ac7fb3a70b53e2d34083c24b9c0",
+  "run": 41958726025,
+  "immutable_raw_export": "cd51f1255e34a4c7955477bfe49fb20fd0142419",
+  "unit": {
+    "unique": 356,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native": {
+    "unique": 35,
+    "passed": 34,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "failure": "Business directory AVAILABLE expected, MISSING actual; no licensed production data"
+  },
+  "pngs": {
+    "functional": 241,
+    "diagnostic": 2,
+    "previous233_retained": true,
+    "full245_required": false
+  },
+  "visual_review": {
+    "backup_3": "PASS: actual PNGs viewed; independent pixel/hash/stability proof passed",
+    "create_contact_2": "PASS: actual unknown-number actions and exact phone in new editor viewed",
+    "incoming_2": "FAIL: incoming phase partly obscured; dragged pill clipped at right edge. Functional swipe assertions passed, but UI not approved.",
+    "call_designs_101": "REVIEW IN PROGRESS",
+    "other_frames": "NOT REVIEWED FOR THIS SOURCE"
+  },
+  "next_fix": "Hide empty timer outside ACTIVE; bound prompt translation to allocated margins; native geometry assertions and correct effective bar palette.31 focused unit cases/native Java/lint passed locally; fresh native run/screens required.",
+  "sha256": {
+    "incoming-swipe-resting.png": "a2a0e14ac6c7e64fc8c6b1872da3631d474d2ed8a58e1d637a84e61d6b245048",
+    "incoming-swipe-dragging.png": "8330e61cfc798430f9750bb0dcb49a5a80cc513985d3254334879b537a9562b9",
+    "recents-unknown-number-actions.png": "1aa25bff4b12ee5c0db06ec1a131c06a978edce89b2da14bef45f04bea7015e4",
+    "recents-new-contact-editor.png": "3b7bcb162f7d158fb951b99d6f1bf4e863e21b4634ee044bf97442cb236fe64b",
+    "personalization-backup-saved-light.png": "72b4bce862bdbbb9d98b01e10bde0389eab28b3976806c7f67fc42a987476791",
+    "personalization-backup-saved-dark.png": "011083a5a68b997fea5e5bee266c0e97c8120db5cb7a1ada2073b28ba5598b51",
+    "personalization-backup-restore-confirmation.png": "a9f96a2b30fce3b781d073a5067d0682ea1bf2cb5163ccd625f0465e2922862a"
+  },
+  "publication_approved": false,
+  "full245_present": false,
+  "required_functional_images": 245
+}

@@ -1,0 +1,169 @@
+{
+  "checks": {
+    "actual_nonempty_licensed_bundled_dataset": true,
+    "native_small_contacts_tab": true,
+    "native_light_dark_rtl_ltr_phone": true,
+    "native_phone_query_keeps_source_identity": true,
+    "native_uan_alias_queries_keep_source_identity": true,
+    "details_show_source_license_and_source_date": true,
+    "native_about_data_visible_odbl_attribution": true,
+    "private_contacts_unchanged": true,
+    "no_automatic_business_call": true,
+    "native_detail_back_and_private_public_switch_preserve_query": true,
+    "bounded_production_pages": true
+  },
+  "readiness": "AVAILABLE",
+  "dataset": {
+    "version": "owner-261103-source-spatial-v1",
+    "record_count": 2720,
+    "sha256": "cbc7dc7b41c3fa9335cbf37907243681820fe23107e40541efb306dc1b566af3",
+    "source_name": "OpenStreetMap — © OpenStreetMap contributors",
+    "source_url": "https:\/\/download.geofabrik.de\/asia\/israel-and-palestine.html",
+    "license": "ODbL-1.0",
+    "license_url": "https:\/\/opendatacommons.org\/licenses\/odbl\/1-0\/",
+    "updated_at": "2026-11-03"
+  },
+  "selected_record": {
+    "id": 8876658358857361825,
+    "name": "10 פיקס",
+    "phone": "0542256708",
+    "source_url": "https:\/\/www.openstreetmap.org\/node\/14170569645",
+    "source_id": "osm:node:14170569645",
+    "source_license": "ODbL-1.0",
+    "source_updated_at": "2026-09-10T19:40:21+00:00"
+  },
+  "first_page_rows": 50,
+  "search_rows": 1,
+  "private_contacts_before": 0,
+  "private_contacts_after": 0,
+  "private_contacts_digest_before": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "private_contacts_digest_after": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "palettes": [
+    {
+      "palette": "light",
+      "native_entry_tag": "contacts_directory_tab",
+      "entry_bounds": "[90,200][234,272]",
+      "entry_native_accessibility_bounds_equal": true,
+      "entry_minimum_touch_dp": 48,
+      "root_rtl": true,
+      "phone_ltr": true,
+      "bar_contrast": {
+        "status": 996,
+        "navigation": 1276
+      },
+      "font_scale": 1.2999999523162842,
+      "first_record_id": 8876658358857361825
+    },
+    {
+      "palette": "dark",
+      "native_entry_tag": "contacts_directory_tab",
+      "entry_bounds": "[90,200][234,272]",
+      "entry_native_accessibility_bounds_equal": true,
+      "entry_minimum_touch_dp": 48,
+      "root_rtl": true,
+      "phone_ltr": true,
+      "bar_contrast": {
+        "status": 1073,
+        "navigation": 1276
+      },
+      "font_scale": 1.2999999523162842,
+      "first_record_id": 8876658358857361825
+    }
+  ],
+  "query": "0542256708",
+  "detail_text": "‏‪+972542256708‬‏\nכרמיאל\nההגנה 37 כרמיאל\nshop:mobile_phone_accessories\n\nמקור: https:\/\/www.openstreetmap.org\/node\/14170569645\nODbL-1.0\nתאריך מקור: 2026-09-10T19:40:21+00:00\n\nרשומה ציבורית; המספר עשוי להשתנות. אין שינוי באנשי הקשר הפרטיים שלך.",
+  "uan_source_alias_queries": [
+    {
+      "query": "1599510510",
+      "selected_record": {
+        "id": 2529482289071907401,
+        "name": "Bershka",
+        "phone": "1599510510",
+        "phone_display": "+9721599510510",
+        "source_id": "osm:node:10001924959",
+        "source_url": "https:\/\/www.openstreetmap.org\/node\/10001924959",
+        "source_license": "ODbL-1.0",
+        "source_updated_at": "2022-09-05T11:43:09+00:00"
+      },
+      "result_ids": [
+        2529482289071907401,
+        413925482919243006,
+        7320468738638272328
+      ],
+      "native_text_input": true,
+      "no_automatic_call": true
+    },
+    {
+      "query": "+9721599510510",
+      "selected_record": {
+        "id": 2529482289071907401,
+        "name": "Bershka",
+        "phone": "1599510510",
+        "phone_display": "+9721599510510",
+        "source_id": "osm:node:10001924959",
+        "source_url": "https:\/\/www.openstreetmap.org\/node\/10001924959",
+        "source_license": "ODbL-1.0",
+        "source_updated_at": "2022-09-05T11:43:09+00:00"
+      },
+      "result_ids": [
+        2529482289071907401,
+        413925482919243006,
+        7320468738638272328
+      ],
+      "native_text_input": true,
+      "no_automatic_call": true
+    },
+    {
+      "query": "009721599510510",
+      "selected_record": {
+        "id": 2529482289071907401,
+        "name": "Bershka",
+        "phone": "1599510510",
+        "phone_display": "+9721599510510",
+        "source_id": "osm:node:10001924959",
+        "source_url": "https:\/\/www.openstreetmap.org\/node\/10001924959",
+        "source_license": "ODbL-1.0",
+        "source_updated_at": "2022-09-05T11:43:09+00:00"
+      },
+      "result_ids": [
+        2529482289071907401,
+        413925482919243006,
+        7320468738638272328
+      ],
+      "native_text_input": true,
+      "no_automatic_call": true
+    },
+    {
+      "query": "9721599510510",
+      "selected_record": {
+        "id": 2529482289071907401,
+        "name": "Bershka",
+        "phone": "1599510510",
+        "phone_display": "+9721599510510",
+        "source_id": "osm:node:10001924959",
+        "source_url": "https:\/\/www.openstreetmap.org\/node\/10001924959",
+        "source_license": "ODbL-1.0",
+        "source_updated_at": "2022-09-05T11:43:09+00:00"
+      },
+      "result_ids": [
+        2529482289071907401,
+        413925482919243006,
+        7320468738638272328
+      ],
+      "native_text_input": true,
+      "no_automatic_call": true
+    }
+  ],
+  "native_about_data_attribution": {
+    "method": "native-business_directory_about-touchscreen-dialog-and-Back",
+    "button_bounds": "[164,479][310,551]",
+    "dialog_text": "רשומות במאגר: 2,720\nעדכון המקור: 2026-11-03\n\nOpenStreetMap — © OpenStreetMap contributors\nhttps:\/\/download.geofabrik.de\/asia\/israel-and-palestine.html\n\nODbL-1.0\nhttps:\/\/opendatacommons.org\/licenses\/odbl\/1-0\/\n\nפרטי עסקים ממקורות פתוחים. אין כאן אימות שבעל העסק עדיין משתמש במספר, והמאגר אינו כולל את כל בתי העסק בישראל. אנשי הקשר הפרטיים שלך אינם חלק מהמאגר.",
+    "formatted_record_count": "2,720",
+    "source_name_with_osm_copyright": true,
+    "source_url_license_license_url_snapshot_and_measured_count": true,
+    "back_preserved_query_and_source_row": true,
+    "no_automatic_call": true,
+    "additional_png_count": 0
+  },
+  "business_numbers_dialed": 0
+}

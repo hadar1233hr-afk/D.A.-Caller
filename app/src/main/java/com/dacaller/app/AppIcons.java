@@ -12,12 +12,17 @@ import java.util.ArrayList;
 final class AppIcons {
  static final String PREF="launcher_icon";
  static final String DEFAULT="crest";
- static final String[] IDS={"crest","orbit","monogram","prism","wave"};
- private static final String[] ALIASES={"LauncherCrest","LauncherOrbit","LauncherMonogram","LauncherPrism","LauncherWave"};
- private static final String[] HE={"חותם אמרלד","מסלול זהב","מונוגרמת DA","מנסרה","גלי קול"};
- private static final String[] EN={"Emerald crest","Golden orbit","DA monogram","Prism","Sound waves"};
+ // Append choices: existing IDs, aliases and order are durable preference/backup identities.
+ static final String[] IDS={"crest","orbit","monogram","prism","wave","aureole","facet","wine","signal"};
+ private static final String[] ALIASES={"LauncherCrest","LauncherOrbit","LauncherMonogram","LauncherPrism","LauncherWave",
+   "LauncherAureole","LauncherFacet","LauncherWine","LauncherSignal"};
+ private static final String[] HE={"חותם אמרלד","מסלול זהב","מונוגרמת DA","מנסרה","גלי קול",
+   "הילה זהובה","יהלום זהב","חותם יין","אות זוהר"};
+ private static final String[] EN={"Emerald crest","Golden orbit","DA monogram","Prism","Sound waves",
+   "Golden aureole","Golden facet","Wine seal","Luminous signal"};
  private static final int[] ICONS={R.mipmap.ic_launcher_crest,R.mipmap.ic_launcher_orbit,
-   R.mipmap.ic_launcher_monogram,R.mipmap.ic_launcher_prism,R.mipmap.ic_launcher_wave};
+   R.mipmap.ic_launcher_monogram,R.mipmap.ic_launcher_prism,R.mipmap.ic_launcher_wave,
+   R.mipmap.ic_launcher_aureole,R.mipmap.ic_launcher_facet,R.mipmap.ic_launcher_wine,R.mipmap.ic_launcher_signal};
  static boolean valid(String id){return index(id)>=0;}
  private static int index(String id){for(int i=0;i<IDS.length;i++)if(IDS[i].equals(id))return i;return -1;}
  static String selected(Context context){
@@ -55,15 +60,21 @@ final class AppIcons {
    return true;
   }catch(RuntimeException failure){
    if(!snapshotReady)return false;
-   // Some OEM launchers/package managers reject component changes. Restore the
-   // snapshot, enabling its original entry first, and let settings report failure.
+   // Android 13 also restores the complete snapshot atomically. Older systems
+   // restore their launchable original entry before removing the replacement.
    try{
-    for(int i=0;i<IDS.length;i++)if(prior[i]==PackageManager.COMPONENT_ENABLED_STATE_ENABLED||
-        (prior[i]==PackageManager.COMPONENT_ENABLED_STATE_DEFAULT&&i==0))
-     manager.setComponentEnabledSetting(component(context,IDS[i]),prior[i],PackageManager.DONT_KILL_APP);
-    for(int i=0;i<IDS.length;i++)if(!(prior[i]==PackageManager.COMPONENT_ENABLED_STATE_ENABLED||
-        (prior[i]==PackageManager.COMPONENT_ENABLED_STATE_DEFAULT&&i==0)))
-     manager.setComponentEnabledSetting(component(context,IDS[i]),prior[i],PackageManager.DONT_KILL_APP);
+    if(Build.VERSION.SDK_INT>=33){
+     ArrayList<PackageManager.ComponentEnabledSetting> restore=new ArrayList<>();
+     for(int i=0;i<IDS.length;i++)restore.add(new PackageManager.ComponentEnabledSetting(component(context,IDS[i]),prior[i],PackageManager.DONT_KILL_APP));
+     manager.setComponentEnabledSettings(restore);
+    }else{
+     for(int i=0;i<IDS.length;i++)if(prior[i]==PackageManager.COMPONENT_ENABLED_STATE_ENABLED||
+         (prior[i]==PackageManager.COMPONENT_ENABLED_STATE_DEFAULT&&i==0))
+      manager.setComponentEnabledSetting(component(context,IDS[i]),prior[i],PackageManager.DONT_KILL_APP);
+     for(int i=0;i<IDS.length;i++)if(!(prior[i]==PackageManager.COMPONENT_ENABLED_STATE_ENABLED||
+         (prior[i]==PackageManager.COMPONENT_ENABLED_STATE_DEFAULT&&i==0)))
+      manager.setComponentEnabledSetting(component(context,IDS[i]),prior[i],PackageManager.DONT_KILL_APP);
+    }
    }catch(RuntimeException ignored){/* Preserve the first error; never disable MainActivity. */}
    return false;
   }
@@ -71,12 +82,12 @@ final class AppIcons {
  @android.annotation.SuppressLint("ApplySharedPref") // A failed durable write must roll back the launcher.
  static boolean select(Context context,String id){
   if(!valid(id))return false;
-  String old=selected(context);if(!apply(context,id))return false;
   SharedPreferences prefs=context.getSharedPreferences("da_caller",Context.MODE_PRIVATE);
-  boolean hadPreference=prefs.contains(PREF);
+  String old=selected(context),oldStored=prefs.getString(PREF,null);boolean hadPreference=prefs.contains(PREF);
+  if(!apply(context,id))return false;
   if(prefs.edit().putString(PREF,id).commit())return true;
   SharedPreferences.Editor restore=prefs.edit();
-  if(hadPreference)restore.putString(PREF,old);else restore.remove(PREF);
+  if(hadPreference)restore.putString(PREF,oldStored);else restore.remove(PREF);
   restore.commit();
   apply(context,old);return false;
  }

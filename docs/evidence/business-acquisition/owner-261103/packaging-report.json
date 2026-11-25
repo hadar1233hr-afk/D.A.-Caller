@@ -1,0 +1,24 @@
+{
+  "status": "PACKAGED_NOT_PUBLISHED",
+  "dataset_version": "osm-il-owner-261103-explicit-il",
+  "counts": {
+    "packaged_records": 24,
+    "source_records": 24
+  },
+  "distinct_phone_count": 23,
+  "database_sha256": "ecea0fc10d4df8a2699d094d3c6cac677a5a95bc6550709af163b38bb1a5e61c",
+  "source_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "acquisition": {
+    "method": "owner-upload",
+    "source_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+    "source_bytes": 121050024,
+    "publisher_download_authenticated": false,
+    "transfer_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.11.0-beta.9-debug/israel-and-palestine-261103.osm.zip",
+    "transfer_asset_id": 712722687,
+    "transfer_archive_sha256": "578d67213db0cb617f18ccd12c60eab5c532f073fa5520b399d9f5d36973b11e",
+    "transfer_archive_bytes": 120936686,
+    "origin_note": "Owner-supplied OSM/Geofabrik source claim; publisher download not independently authenticated; retained input hashes and ZIP integrity checked"
+  },
+  "production_installation": "Not automatic; copy app-assets only after source/license and native review",
+  "license_requirement": "Publish exact redistribution/ contents with the app; do not hide derived data behind access controls"
+}

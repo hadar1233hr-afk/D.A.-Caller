@@ -1,0 +1,41 @@
+{
+  "saved_at_utc": "2026-11-18T17:59:21.272702+00:00",
+  "status": "STOPPED_ACTUAL_USAGE_LIMIT_NO_BYPASS",
+  "actual_usage_limit": {
+    "root_action": "Focused MainIslandSpaceTest Gradle execution requiring reviewed network/localhost permission",
+    "command_executed": false,
+    "rejection": "Automatic approval review could not complete because usage limit was hit; not a safety determination",
+    "reported_reset_text": "4:56 PM",
+    "reset_timezone_established": false,
+    "worker": "native_failures_nov18 also errored at the same actual limit"
+  },
+  "pushed_source": "da08214fc4bc42b7918980b81a0410b4136a0657",
+  "pushed_app_tree": "3818476df40e26ca5991d6d821a0573517e91197",
+  "pushed_source_local_host_pass": 455,
+  "pushed_source_ci": {
+    "id": 44303504696,
+    "validate": "SUCCESS455 unique units, official checks ZIP SHA/size/all CRC verified",
+    "android_ui": "LAST_OBSERVED_RUNNING; final result NOT FETCHED"
+  },
+  "new_source_status": "WIP_UNCOMPILED_UNTESTED_AFTER_FOLLOWUPS",
+  "wip_source_sha256": {
+    "app/src/main/java/com/dacaller/app/MainActivity.java": "bff192c505fb393a0391d64f6e38fce920ec0b01f32435ca4408b65ac8cd98f1",
+    "app/src/test/java/com/dacaller/app/MainIslandSpaceTest.java": "30b0f48fcc9c18ad20ded3f37e305d0ba629c8f1d5c838098dfb93a0dcff8089",
+    "app/src/androidTest/java/com/dacaller/app/CallIslandSnapshotTest.java": "796a920940eedc9c45fe4fecca059cf37d71960365330e346c53783f44bb93fe"
+  },
+  "last_focused_attempt": {
+    "tests": 5,
+    "pass": 4,
+    "fail": 1,
+    "errors": 0,
+    "skips": 0,
+    "failure": "New nativeSizedViewport full nav visibility fixture; proposed larger enclosing Robolectric window NOT RETESTED"
+  },
+  "native_snapshot_draft": "Agent wrote strengthened native viewport/pointer-scroll reachability assertions, then hit usage limit; do not assume complete or compiled/reviewed",
+  "next_step": "Inspect current remoteCI result/artifacts, read/review draft Snapshot changes, verify five space host cases with qualified host window, then current full/build/lint/Androidtest compile and fresh40/269 native/visual proof. Preserve all old gates and strict native semantics.",
+  "publication_allowed": false,
+  "old012_delivered_immutable_no_resend": true,
+  "new013_unreleased": true,
+  "future_signing_guards_unchanged": true,
+  "automation_enabled_until_all_owner_work_done": true
+}

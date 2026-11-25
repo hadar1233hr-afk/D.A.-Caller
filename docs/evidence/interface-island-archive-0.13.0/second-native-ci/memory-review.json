@@ -1,0 +1,52 @@
+{
+  "source_native_run_id": 44303504696,
+  "source_sha": "da08214fc4bc42b7918980b81a0410b4136a0657",
+  "status": "ACTUAL_EMULATOR_LOW_MEMORY_KILL_NO_WIDGET_ASSERTION_TRACE",
+  "instrumentation_count": {
+    "completed_junit": 39,
+    "pass": 31,
+    "failures_reported": 8,
+    "expected_at_runner_start": 40
+  },
+  "job_log_path": "/workspace/work/legacy-failures-evening/android-ui.log",
+  "job_log_sha256": "f527a9585ed9a645632badbb9d1623ea730d5e0c8bb26ce1c36132090efec9a9",
+  "logcat_evidence": [
+    {
+      "path": "/workspace/work/native-013-ci-44303504696/ui/outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.WidgetSnapshotTest-testNarrowFavoritesFitAtLargeSystemFont.txt",
+      "sha256": "e647b15ae2f74fd7ec4bc1617b2120fffef636353bba3b1059176df4a312da43",
+      "kill_excerpts": [
+        {
+          "line_1based": 899,
+          "excerpt": [
+            "11-18 12:40:13.173 22227 22530 W ziparchive: Unable to open '/data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.dm': No such file or directory",
+            "11-18 12:40:13.181 22688 22688 I gle.android.gms: Using CollectorTypeCC GC.",
+            "11-18 12:40:13.201   126   126 I lowmemorykiller: Kill 'com.dacaller.app' (5998), uid 10174, oom_score_adj 0 to free 711780kB rss, 1205776kB swap; reason: device is low on swap (0kB < 151000kB) and thrashing (300%)",
+            "11-18 12:40:13.236 22688 22688 W gle.android.gms: Unexpected CPU variant for x86: x86_64.",
+            "11-18 12:40:13.236 22688 22688 W gle.android.gms: Known variants: atom, sandybridge, silvermont, kabylake, default",
+            "11-18 12:40:13.258 22611 22611 D nativeloader: Configuring classloader-namespace-shared for other apk /system_ext/priv-app/NexusLauncherRelease/NexusLauncherRelease.apk. target_sdk_version=33, uses_libraries=, library_path=/system_ext/priv-app/NexusLauncherRelease/lib/x86_64:/system/lib64:/system_ext/lib64, permitted_path=/data:/mnt/expand:/data/user/0/com.google.android.apps.nexuslauncher:/system_ext/priv-app/NexusLauncherRelease:/system/lib64:/system_ext/lib64"
+          ]
+        }
+      ],
+      "fatal_java_lines": []
+    },
+    {
+      "path": "/workspace/work/native-013-ci-44303504696/ui/outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.SettingsInteractionTest-testLastSettingsCategoryStaysInteractiveAndCallsCategoryHasNoPhoneSymbol.txt",
+      "sha256": "1613aa31a83ace491f0c8888880d56ba0179386b7013e4873bccf58b597023e0",
+      "kill_excerpts": [
+        {
+          "line_1based": 288,
+          "excerpt": [
+            "11-18 12:39:57.301 21915 21915 W BcSmartspaceCard: No title view to update",
+            "11-18 12:39:57.304 21915 21915 I BcSmartspaceCard: setFormattedContentDescription: textView=SUBTITLE, text=null, iconDescription=null, contentDescription=null",
+            "11-18 12:39:57.333   126   126 I lowmemorykiller: Kill 'com.dacaller.app.test' (21929), uid 10175, oom_score_adj 700 to free 25272kB rss, 24252kB swap; reason: device is low on swap (0kB < 151000kB) and thrashing (181%)",
+            "11-18 12:39:57.335   126   131 E lowmemorykiller: process_mrelease 21929 failed: No such process",
+            "11-18 12:39:57.341   287   287 I Zygote  : Process 21929 exited due to signal 9 (Killed)",
+            "11-18 12:39:57.394   488   521 I libprocessgroup: Successfully killed process cgroup uid 10175 pid 21929 in 0ms"
+          ]
+        }
+      ],
+      "fatal_java_lines": []
+    }
+  ],
+  "interpretation": "Lowmemorykiller killed foreground instrumentation/app process. This establishes infrastructure/app-test memory pressure, not a proved production memory leak. JUnit retained finished Activity references are a concrete cleanup target. No assertion is disabled; fresh all40 execution required."
+}

@@ -1,0 +1,67 @@
+Picked up JAVA_TOOL_OPTIONS: -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080 -Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Djavax.net.ssl.trustStore=/workspace/toolchains/cacerts -Djavax.net.ssl.trustStorePassword=changeit -Duser.home=/workspace/D.A.-Caller/work/robolectric-home
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.9/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+
+> Task :app:compileDebugJavaWithJavac
+/workspace/D.A.-Caller/app/src/main/java/com/dacaller/app/MainActivity.java:75: error: cannot find symbol
+ private ViewGroup islandChromePage;
+         ^
+  symbol:   class ViewGroup
+  location: class MainActivity
+/workspace/D.A.-Caller/app/src/main/java/com/dacaller/app/MainActivity.java:412: error: cannot find symbol
+  ViewGroup pageContainer=(ViewGroup)list.getParent();
+  ^
+  symbol:   class ViewGroup
+  location: class MainActivity
+/workspace/D.A.-Caller/app/src/main/java/com/dacaller/app/MainActivity.java:412: error: cannot find symbol
+  ViewGroup pageContainer=(ViewGroup)list.getParent();
+                           ^
+  symbol:   class ViewGroup
+  location: class MainActivity
+/workspace/D.A.-Caller/app/src/main/java/com/dacaller/app/MainActivity.java:437: error: package ViewGroup does not exist
+  ViewGroup.LayoutParams params=child.getLayoutParams();
+           ^
+/workspace/D.A.-Caller/app/src/main/java/com/dacaller/app/MainActivity.java:441: error: package ViewGroup does not exist
+   if(params instanceof ViewGroup.MarginLayoutParams){ViewGroup.MarginLayoutParams margins=(ViewGroup.MarginLayoutParams)params;height+=margins.topMargin+margins.bottomMargin;}
+                                 ^
+/workspace/D.A.-Caller/app/src/main/java/com/dacaller/app/MainActivity.java:441: error: package ViewGroup does not exist
+   if(params instanceof ViewGroup.MarginLayoutParams){ViewGroup.MarginLayoutParams margins=(ViewGroup.MarginLayoutParams)params;height+=margins.topMargin+margins.bottomMargin;}
+                                                               ^
+/workspace/D.A.-Caller/app/src/main/java/com/dacaller/app/MainActivity.java:441: error: package ViewGroup does not exist
+   if(params instanceof ViewGroup.MarginLayoutParams){ViewGroup.MarginLayoutParams margins=(ViewGroup.MarginLayoutParams)params;height+=margins.topMargin+margins.bottomMargin;}
+                                                                                                     ^
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+7 errors
+
+> Task :app:compileDebugJavaWithJavac FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileDebugJavaWithJavac'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 19s
+16 actionable tasks: 1 executed, 15 up-to-date

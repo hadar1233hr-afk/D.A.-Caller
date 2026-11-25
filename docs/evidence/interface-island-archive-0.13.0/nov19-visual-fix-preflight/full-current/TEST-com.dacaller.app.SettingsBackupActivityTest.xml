@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.SettingsBackupActivityTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-19T06:50:30" hostname="3ebae333e153" time="1.645">
+  <properties/>
+  <testcase name="confirmedArchiveChoiceMergesThroughActivityWhileArchiveRemainsOff" classname="com.dacaller.app.SettingsBackupActivityTest" time="0.498"/>
+  <testcase name="importUsesAndroidOpenDocumentAndCancellationPreservesEveryPreference" classname="com.dacaller.app.SettingsBackupActivityTest" time="0.128"/>
+  <testcase name="exportUsesAndroidCreateDocumentWithoutBroadStoragePermission" classname="com.dacaller.app.SettingsBackupActivityTest" time="0.082"/>
+  <testcase name="longRestoreDisclosureAndArchiveChoiceStayReachableAtLargeFontWithoutApplying" classname="com.dacaller.app.SettingsBackupActivityTest" time="0.536"/>
+  <testcase name="archiveRestoreRequiresExplicitChoiceAndCancelLeavesPreferencesAndArchiveUntouched" classname="com.dacaller.app.SettingsBackupActivityTest" time="0.179"/>
+  <testcase name="unsupportedUriAndMissingPickerResultCannotRestore" classname="com.dacaller.app.SettingsBackupActivityTest" time="0.093"/>
+  <testcase name="exportArchiveChoiceSurvivesRotationAndPickerCancellationPreservesData" classname="com.dacaller.app.SettingsBackupActivityTest" time="0.129"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

@@ -1,0 +1,44 @@
+{
+  "reviewed_at_utc": "2026-11-18T12:20:12.043791+00:00",
+  "scope": "BOUNDED_SOURCE_REVIEW_AND_HOST_REGRESSIONS_ONLY",
+  "source_sha256": {
+    "app/src/main/java/com/dacaller/app/MainActivity.java": "b7d2fe56c916ae14f38d91bdd9cc6bb88a83137ff29bba8f69b3414e8639d00c",
+    "app/src/main/java/com/dacaller/app/CallIslandController.java": "22c90d66730dc5fe76733db18dadaae41d50e6dd76c1ff79a09cb4d29048ab5b",
+    "app/src/test/java/com/dacaller/app/MainIslandSpaceTest.java": "61fee69f7a98415cd6cf3dba55bef821790b335eca14d95ef69588db212d7989",
+    "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java": "65daa50ab305539ad5b0d328d07439d51c4765ce0abd1e92f7ffe77ff070fb11"
+  },
+  "independent_code_review": [
+    "spacing_review_nov18: initial signed budget and cap CODEGO",
+    "spacing_review_nov18: natural wrap-content measure CODEGO",
+    "native_failures_nov18 + independent child: native focus/shade fixture bounded CODEGO"
+  ],
+  "actual_space_methods": 4,
+  "space_pass": 4,
+  "space_failures": 0,
+  "initial_attempts_retained": true,
+  "actual_controller_cases_cover": [
+    "real personal FastPages contacts/recents with fixed error message, original prefs/anchors and at least60dp list",
+    "business fixed headers, complete scrollable controls, resize/collapse/custom positioning"
+  ],
+  "synthetic_layout_fixture_not_real_Telecom": true,
+  "full_current_source_preflight": {
+    "tests": 455,
+    "classes": 44,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "builds": [
+      "debug APK",
+      "Android-test APK"
+    ],
+    "lint": {
+      "errors": 0,
+      "fatal": 0,
+      "warnings": 16
+    },
+    "all_app_source_hashes_unchanged_during_run": true
+  },
+  "fresh_native_and_full_visual_review": "PENDING",
+  "signing_or_workflow_changes": false,
+  "publication_allowed": false
+}

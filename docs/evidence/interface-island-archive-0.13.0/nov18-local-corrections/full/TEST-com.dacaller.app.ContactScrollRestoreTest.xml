@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.ContactScrollRestoreTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-18T12:21:11" hostname="3ebae333e153" time="4.4">
+  <properties/>
+  <testcase name="accessibilityScrollCancelsQueuedRestore" classname="com.dacaller.app.ContactScrollRestoreTest" time="0.88"/>
+  <testcase name="detailReturnAndTwoRefreshesBeforeRestoreKeepSameContactAndOffset" classname="com.dacaller.app.ContactScrollRestoreTest" time="0.814"/>
+  <testcase name="recreatedStateAndChangedProviderOrderRestoreIdRatherThanIndex" classname="com.dacaller.app.ContactScrollRestoreTest" time="0.699"/>
+  <testcase name="userTouchCancelsRestoreAcrossReleaseAndNextFrame" classname="com.dacaller.app.ContactScrollRestoreTest" time="0.692"/>
+  <testcase name="searchDebounceCannotCarryOldQueryAnchorIntoNewFilter" classname="com.dacaller.app.ContactScrollRestoreTest" time="0.552"/>
+  <testcase name="emptyLoadingPageDoesNotConsumeRestoredIdentity" classname="com.dacaller.app.ContactScrollRestoreTest" time="0.76"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

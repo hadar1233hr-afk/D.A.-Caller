@@ -1,0 +1,27 @@
+{
+  "status": "PREPUBLICATION_MECHANISM_REVIEW_PENDING",
+  "recorded_at_utc": "2026-11-23T22:50:36.404109+00:00",
+  "owner_approval_date": "2026-11-24",
+  "owner_approval_timezone": "Asia/Jerusalem",
+  "owner_reply": "אני מאשר את הAPK",
+  "candidate_sha256": "e29b4c6beeb97ccb4ab1b306c83438bbd30eead7d169fda95e722ab84d5ae5f9",
+  "default_signing_contracts": {
+    "pass": 92,
+    "fail": 0
+  },
+  "immutable_012_contracts": {
+    "pass": 19,
+    "fail": 0
+  },
+  "unchanged_original_gates_replayed_on_retained_evidence": 8,
+  "fresh_native_execution": false,
+  "new_apk_build_or_signing": false,
+  "local_full_run_metadata_read": "Forbidden; no route/account/credential workaround; normal authorized Actions actions:read must provide authentic full metadata for real staging",
+  "publication_executed": false,
+  "public_byte_equality_verified": false,
+  "durable_signing_setup_waived": false,
+  "evidence_files": {
+    "independent-retained-audit.json": "c16fc39f56c0f176c21610006ed158785bb4a64d8212dc1297b9c6149219044b",
+    "root-retained-replay.json": "2e813331dcf67ea4fbb5b8c3254540064b1f3e9ef274d2112161ccd7f22894c1"
+  }
+}

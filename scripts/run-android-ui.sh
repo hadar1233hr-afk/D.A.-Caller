@@ -15,13 +15,50 @@ mkdir -p app/build
   adb shell cmd overlay list --user 0
   adb shell settings get secure navigation_mode
 } > app/build/ui-device-config.txt
-adb shell rm -rf /sdcard/Download/DA-CALLER-snapshots
+adb shell rm -rf /sdcard/Download/DA-CALLER-snapshots /sdcard/Download/DA-CALLER-next-snapshots
+# Only this host bridge may drive the disposable emulator's simulated modem.
+# The native integration test communicates requests through bounded JSON files;
+# it receives actual Android Telecom calls instead of injecting fixture state.
+rm -f app/build/emulator-call-driver.ready.json
+python3 -u scripts/emulator-call-driver.py app/build/emulator-call-driver.jsonl > app/build/emulator-call-driver.log 2>&1 &
+call_driver_pid=$!
+stop_call_driver() {
+  kill "$call_driver_pid" 2>/dev/null || true
+  wait "$call_driver_pid" 2>/dev/null || true
+}
+trap stop_call_driver EXIT
+for call_driver_attempt in {1..50}; do
+  if [ -f app/build/emulator-call-driver.ready.json ]; then break; fi
+  if ! kill -0 "$call_driver_pid" 2>/dev/null; then
+    cat app/build/emulator-call-driver.log >&2
+    exit 1
+  fi
+  sleep .2
+done
+test -f app/build/emulator-call-driver.ready.json
 test_status=0
-./gradlew --no-daemon :app:connectedDebugAndroidTest || test_status=$?
+# Leave time inside the job's30-minute budget to retain the actual emulator
+# state if instrumentation blocks instead of reaching a test assertion.
+timeout --signal=INT --kill-after=30s 15m ./gradlew --no-daemon :app:connectedDebugAndroidTest || test_status=$?
 mkdir -p app/build/ui-snapshots
+if [ "$test_status" -ne 0 ]; then
+  timeout 15s adb logcat -d -t 3000 > app/build/ui-snapshots/host-failure-logcat.txt 2>&1 || true
+  timeout 15s adb shell dumpsys activity activities > app/build/ui-snapshots/host-failure-activities.txt 2>&1 || true
+  timeout 15s adb shell dumpsys window windows > app/build/ui-snapshots/host-failure-windows.txt 2>&1 || true
+  timeout 15s adb shell screencap -p /sdcard/Download/DA-CALLER-snapshots/host-failed.png || true
+fi
 # Keep failing renders for visual debugging, even if instrumentation failed.
 adb pull /sdcard/Download/DA-CALLER-snapshots/ app/build/ui-snapshots/ || true
+mkdir -p app/build/ui-modern-snapshots
+adb pull /sdcard/Download/DA-CALLER-next-snapshots/ app/build/ui-modern-snapshots/ || true
 if [ "$test_status" -ne 0 ]; then exit "$test_status"; fi
 python3 scripts/verify-ui-matrix.py app/build/ui-snapshots
 python3 scripts/verify-personalization-matrix.py app/build/ui-snapshots
 python3 scripts/verify-call-integration-matrix.py app/build/ui-snapshots
+python3 scripts/verify-island-matrix.py app/build/ui-snapshots
+python3 scripts/verify-external-island-matrix.py app/build/ui-snapshots
+python3 scripts/verify-followup-matrix.py app/build/ui-snapshots
+python3 scripts/verify-callback-business-matrix.py app/build/ui-snapshots
+
+# Additive current-feature proof; every original245-frame verifier above remains required.
+python3 scripts/verify-modern-features-native.py app/build/ui-snapshots app/build/ui-modern-snapshots

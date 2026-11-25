@@ -1,0 +1,73 @@
+{
+  "provenance_verified_against_connector_digests": true,
+  "source": "5f7f41a9e0cafde5a71371d6c18e35d8d2a700e3",
+  "run": 40725941059,
+  "conclusion": "failure",
+  "artifacts": {
+    "validate-apk": {
+      "artifact_id": 12833335870,
+      "artifact_name": "DA-CALLER-0.11.0-beta.9-debug-1b30d5206d8c8915f36aba087988acd57f3dcc93",
+      "sha256": "e9ba2c67a3238b985c6c83a847ad41265d04e92aae49d983152183ec4abcc91b",
+      "bytes": 264058,
+      "path": "/workspace/work/external-island-third-validate-apk",
+      "zip": "native-review-export/40725941059/validate-apk.zip"
+    },
+    "checks": {
+      "artifact_id": 12833171459,
+      "artifact_name": "DA-CALLER-checks-1b30d5206d8c8915f36aba087988acd57f3dcc93",
+      "sha256": "9ca9bf716eee593850d5b4eb398334aee481e1eaaaeffa0a7a110b5abefb92f3",
+      "bytes": 106217,
+      "path": "/workspace/work/external-island-third-checks",
+      "zip": "native-review-export/40725941059/checks.zip"
+    },
+    "ui": {
+      "artifact_id": 12831854817,
+      "artifact_name": "DA-CALLER-Android13-UI-1b30d5206d8c8915f36aba087988acd57f3dcc93",
+      "sha256": "0c7e97da68cb488b232034ada247a485791a1a080a8403984246b5dbdceff9da",
+      "bytes": 1093065,
+      "path": "/workspace/work/external-island-third-ui",
+      "zip": "native-review-export/40725941059/ui.zip"
+    }
+  },
+  "export_commit": "92d83c343ac33a1a7aba81901ec64ecbe5c3faed",
+  "native_png_count": 9,
+  "unit": {
+    "tests": 255,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native": {
+    "tests": 3,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_failures": [
+    {
+      "test": {
+        "name": "testActualTelecomExternalIslandOnLauncherAndSettings",
+        "classname": "com.dacaller.app.CallIslandExternalIntegrationTest",
+        "time": "15.777"
+      },
+      "message": {},
+      "text": ""
+    }
+  ],
+  "status": "FAIL",
+  "source_app_tree": "6443772c268abf6f5615d11d3bb97e39b3802e15",
+  "instrumentation_process_aborted": true,
+  "unexecuted_tests": 27,
+  "evidence_branch": "codex/da-caller-native-evidence-20261028",
+  "native_artifacts_published_as_apk_release": false,
+  "verified_before_failure": [
+    "Actual Android dialer role and Telecom default dialer were DA CALLER.",
+    "Actual GSM modem call reached production InCallService with fresh UUID and real contact-provider name.",
+    "Permission denied and no application-overlay window; actual NexusLauncher shown."
+  ],
+  "failure_context": "Launcher package expectation from target PackageManager did not match actual native launcher. Unconditional role removal during cleanup revoked permissions and terminated instrumentation even though original dialer was already DA CALLER.",
+  "changes_for_next_run": [
+    "Resolve actual HOME with platform package shell and require exact resumed component plus native accessibility application window.",
+    "Never mutate role when original default already equals DA CALLER; use DONT_KILL_APP only if an actual restoration is needed."
+  ]
+}

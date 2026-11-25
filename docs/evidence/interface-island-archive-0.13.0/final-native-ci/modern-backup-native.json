@@ -1,0 +1,64 @@
+{
+  "document_flow": "Production SAF intents intercepted by test ActivityMonitor; isolated test ContentProvider, no human DocumentsUI claim",
+  "observations": [
+    {
+      "legacy_version": 1,
+      "legacy_contains_archive": false,
+      "bundle_version": 2,
+      "export_archive_default": false,
+      "restore_archive_default": false,
+      "archive_policy_at_export": "off",
+      "stored_rows_before": 2,
+      "stored_rows_exported": 2,
+      "opt_out_added": 0,
+      "opt_in_added": 1,
+      "same_identity_conflict_retained_seconds": 999,
+      "preexisting_rows_preserved": 0,
+      "pending_recovery_after_success": false,
+      "raw_archive_uploaded": false
+    }
+  ],
+  "independent_export_and_restore_opt_ins": true,
+  "insert_only_conflicts_preserved": true,
+  "settings_only_legacy_compatible": true,
+  "api": 33,
+  "density_dpi": 240,
+  "font_scale": 1.3,
+  "captures": {
+    "modern-backup-options-off.png": {
+      "sha256": "cb327c9856f416fe0a66cdfacb90626586bf2c6de6ba0985b7c77619ea6871f7",
+      "width": 480,
+      "height": 854,
+      "method": "UiAutomation.takeScreenshot"
+    },
+    "modern-backup-options-on.png": {
+      "sha256": "1d4ea95a5cd327532426b1bf060340b2b325b7dc3c5821c5855924cd8cb4dcdb",
+      "width": 480,
+      "height": 854,
+      "method": "UiAutomation.takeScreenshot"
+    },
+    "modern-archive-restore-off.png": {
+      "sha256": "2a9825aadae9727ae76e74c821cb92abc83783bb2a916b8c55aef1bb56b9a66b",
+      "width": 480,
+      "height": 854,
+      "method": "UiAutomation.takeScreenshot"
+    },
+    "modern-archive-restore-on.png": {
+      "sha256": "3a005c2bc5d48d04748832cf8d6c40afe40dc5ec40839987dd6950039420f76e",
+      "width": 480,
+      "height": 854,
+      "method": "UiAutomation.takeScreenshot"
+    },
+    "modern-archive-merged.png": {
+      "sha256": "512ae0d094a584765997f5a19774cb3816820337c28a4a1f60de6182e353d4ae",
+      "width": 480,
+      "height": 854,
+      "method": "UiAutomation.takeScreenshot"
+    }
+  },
+  "package": "com.dacaller.app",
+  "version_name": "0.13.0",
+  "version_code": 22,
+  "physical_carrier_audio_verified": false,
+  "matching_key_upgrade_verified": false
+}

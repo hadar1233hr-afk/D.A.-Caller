@@ -1,0 +1,37 @@
+{
+  "saved_at_utc": "2026-11-19T02:31:12.031645+00:00",
+  "status": "READ_ONLY_PRODUCTION_AUDIT_NO_SOURCE_CHANGES",
+  "run_id": 44442075483,
+  "actual_frame_viewed": "/workspace/work/native-013-ci-44442075483/ui/ui-modern-snapshots/DA-CALLER-next-snapshots/modern-failed-testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency.png",
+  "frame_sha256": "fea92893fb63d39f7ed39b99c2f456f8e701141812e74a8df23ef773967cb216",
+  "actual_observation": "Expanded SystemUI quick-settings/notification shade covers the display at drag failure, rather than Home/external island.",
+  "source_sha256": {
+    "app/src/main/java/com/dacaller/app/CallIslandView.java": "0f3106b7451b49a31b53f24487c08d345b8594f4203336653e6bfbabbb90d889",
+    "app/src/main/java/com/dacaller/app/CallIslandOverlay.java": "293339e3e4abb34879237a9f3acf7fadea38b6860849bd59a28d69c618d4803a",
+    "app/src/main/java/com/dacaller/app/TouchFeedback.java": "d6dd8229e2968222c0281b383c14860f3ca887a7b9a06bbfeb4acea804905d86",
+    "app/src/main/java/com/dacaller/app/CallNotifications.java": "11f9defb34dca7eec92955e4b3e5328bfc95e3e9c65b14cc1382d1cf9002d9f0"
+  },
+  "production_findings": [
+    "CallIslandView records raw coordinates on DOWN, requests parent noninterception and cancels child before drag on MOVE.",
+    "External listener verifies live owned call and saves normalized position only after uncancelled drag with live ownership.",
+    "TouchFeedback does not intercept or transform live hit regions.",
+    "Same-token presentation changes do conservatively cancel a view gesture, but this does not explain opening SystemUI shade; no such change was proven at the failed pointer.",
+    "Ongoing call channel is LOW/nonintrusive; incoming HIGH heads-up is removed around answer asynchronously."
+  ],
+  "log_path": "/workspace/work/native-013-ci-44442075483/ui/outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.ModernFeaturesIntegrationTest-testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency.txt",
+  "log_sha256": "f2aef76e492281486bb95b65f2f5622bfdf0b42d79797581c0f53cfd15fcd986",
+  "headsup_events": [
+    {
+      "line": 904,
+      "text": "11-19 02:23:40.300   767   767 W TouchableRegionManager: onHeadsUpPinnedModeChanged"
+    },
+    {
+      "line": 1146,
+      "text": "11-19 02:23:42.304   767   767 W TouchableRegionManager: onHeadsUpPinnedModeChanged"
+    }
+  ],
+  "hypothesis_not_proven": "A transient nonfocusable SystemUI heads-up/touch region can occlude the top island while launcher is focused and AX overlay bounds are still full. First DOWN may therefore reach SystemUI; its downward drag opens shade. Need native unoccluded-window/predrag evidence.",
+  "production_fix_justified": false,
+  "tests_executed": false,
+  "native_pass_claim": false
+}

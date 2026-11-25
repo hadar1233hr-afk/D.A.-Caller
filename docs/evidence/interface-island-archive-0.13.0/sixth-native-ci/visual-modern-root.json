@@ -1,0 +1,185 @@
+{
+  "source_sha": "53a678fac4764dc0210cad4e6b11a9d431287241",
+  "run_id": 44470286600,
+  "scope": "24 modern actual native frames",
+  "actually_viewed_sheets": [
+    {
+      "sheet": "modern-01.png",
+      "sha256": "0c460e00be1af821226b5823baa1d5899f8f79cc0310248cede02e094b5b2f66",
+      "actually_viewed": true,
+      "method": "Root tools.view_image+image, full one-sheet output; modern-bottom-dialpad-light-en original additionally viewed"
+    },
+    {
+      "sheet": "modern-02.png",
+      "sha256": "2f9a108c998bbdc1eab245159c109fe883fcbe00d42288a25b99a7aa99de6b64",
+      "actually_viewed": true,
+      "method": "Root tools.view_image+image, full one-sheet output; modern-bottom-dialpad-light-en original additionally viewed"
+    },
+    {
+      "sheet": "modern-03.png",
+      "sha256": "45b7fbc143768dc6e7fa172dacd547088ab223dd7e48a45181774e2a0174bb30",
+      "actually_viewed": true,
+      "method": "Root tools.view_image+image, full one-sheet output; modern-bottom-dialpad-light-en original additionally viewed"
+    },
+    {
+      "sheet": "modern-04.png",
+      "sha256": "bd94a3dd09ca7974a569d7eb44e63a912d2d9d76e1d6f3b3b329e563ee08cac3",
+      "actually_viewed": true,
+      "method": "Root tools.view_image+image, full one-sheet output; modern-bottom-dialpad-light-en original additionally viewed"
+    },
+    {
+      "sheet": "modern-05.png",
+      "sha256": "3c6bfdec0d5d8a1902d591ba0644cc34fa2282a1a2c32f09fe308eabd192125b",
+      "actually_viewed": true,
+      "method": "Root tools.view_image+image, full one-sheet output; modern-bottom-dialpad-light-en original additionally viewed"
+    },
+    {
+      "sheet": "modern-06.png",
+      "sha256": "7deecf49f54c374c76b1f138b05a3f2d3f977159113b92382ac923c922cd43b0",
+      "actually_viewed": true,
+      "method": "Root tools.view_image+image, full one-sheet output; modern-bottom-dialpad-light-en original additionally viewed"
+    }
+  ],
+  "exact_viewed_raw_frames": [
+    {
+      "filename": "modern-archive-merged.png",
+      "sha256": "a65e2010ce1c6b3ac2769711f5e6ac229e9ea25c8c4fd482c5d9820583b9fddb",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-archive-restore-off.png",
+      "sha256": "5b1631e38562671476ccece094534181edb06731379066c88fd1fa258068c198",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-archive-restore-on.png",
+      "sha256": "6c3378e9f43211a5a1b293f7bdf26a876d39b14668cc92649972ac923fa2a6e9",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-backup-options-off.png",
+      "sha256": "b996910f7b8af9572aa42a40b6f63723ff4f6a2e27b88e8f982c21382701d6b4",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-backup-options-on.png",
+      "sha256": "723aef53c3de38c62ea9b54e2259d65d03aa54491cb82a0a0cdabd58c1cd2749",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-bottom-dialpad-dark-he.png",
+      "sha256": "1aff3dcae42eb7c0c597762de8ba2e0c4536c6377b7f723457e027e59ed0e098",
+      "status": "FAIL"
+    },
+    {
+      "filename": "modern-bottom-dialpad-light-en.png",
+      "sha256": "efcf19fdf4cc2a27cdae7637f43733252cb2bcc374045daed42d57bf0c1983d0",
+      "status": "FAIL"
+    },
+    {
+      "filename": "modern-icons-all-nine-dark-he.png",
+      "sha256": "4ab56a7ea1ea5bbd8d3e1bf4f634dec748db4c911ec843e175579fb925f86432",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-icons-all-nine-light-en.png",
+      "sha256": "29ba2d8f70168de438cb16b0a8cec2068ac9d7df67ff53753c38ba53154ccc3a",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-island-below-inapp.png",
+      "sha256": "b81f5bd46868e8f3ccd56eb9b40b215ef9c353e8677052cd3099b3487578262a",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-island-composition-background.png",
+      "sha256": "9c4c3e1e57b4d5b9797a029f6f76127d6fa0a0b3a70a094b4e77706c02de93c8",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-island-dragged.png",
+      "sha256": "5cd78d4957ed1c4aa678467507b7c061fd45c0102f7ae0b372e84364fe158981",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-island-hide-home.png",
+      "sha256": "3d0b8d5fd65bc8d170778f8ceebe233830dd999be471eb1e059a600be3cfdca4",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-island-new-call-shown.png",
+      "sha256": "5994a1f9b5062ab90f825075c429053801e39f3e8b2da030659b7bbf766448b0",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-island-opacity-0.png",
+      "sha256": "c8c3a4908dd1e3f76a3b27e36a9607a9951966602fc0a113a25e22b4cee74721",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-island-opacity-100.png",
+      "sha256": "212d3d969d62665502133f5498be69b22a48816f37da291404c50b819fea3ff6",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-island-opacity-35.png",
+      "sha256": "9bf5bfb279405f7cb409bd7729985d6f2aedcea019a7e5257cace36f5a5664ba",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-island-restore-home.png",
+      "sha256": "3bd76a3ec4ee611b222bd78612f918be4829a5eab04306bef6d1d60d00de01c7",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-island-status-external.png",
+      "sha256": "281b8e06b4d93fd79054f53e9f91be1ae7c2123952cc8a9d0acf0ac896c00352",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-island-status-inapp.png",
+      "sha256": "7b68db17698291d9f5e880871d86b1c28638922b9216decb54871d7b1e9c801c",
+      "status": "FAIL"
+    },
+    {
+      "filename": "modern-recents-inline-dark-he.png",
+      "sha256": "038280f0c83f7bbca08b45c2d2bad79d8f82202ed03a69d5be5cada46816b6e0",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-recents-inline-light-en.png",
+      "sha256": "23ba3dd0bf228392b7055d3962bbf20839f4c7146f91d7a3845b6df5c0dd42e0",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-wine-controls-dark-he.png",
+      "sha256": "5d2d00fd7ef7d4d92698cc1bd69ef94ee5219a0ba61ec30afff07abad7f8bc4e",
+      "status": "PASS"
+    },
+    {
+      "filename": "modern-wine-controls-light-en.png",
+      "sha256": "7786260add55c428eab2f2b65f38a5936057cc7b6f2e280a1fbd9b42357837d7",
+      "status": "PASS"
+    }
+  ],
+  "findings": [
+    {
+      "filename": "modern-bottom-dialpad-dark-he.png",
+      "status": "FAIL",
+      "observation": "Phone-number hint is vertically cut in the large-font entry row."
+    },
+    {
+      "filename": "modern-bottom-dialpad-light-en.png",
+      "status": "FAIL",
+      "observation": "Phone-number hint is vertically cut and extends beneath the close control."
+    },
+    {
+      "filename": "modern-island-status-inapp.png",
+      "status": "FAIL",
+      "observation": "Status-area width cap collapses caller identity to nearly empty while fixed timer/avatar remain."
+    }
+  ],
+  "scope_status": "VISUAL_FAIL",
+  "publication_allowed": false,
+  "native_tests_not_claimed_by_images": true
+}

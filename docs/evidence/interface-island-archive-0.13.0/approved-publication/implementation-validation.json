@@ -1,0 +1,27 @@
+{
+  "status": "PASS_LOCAL_MECHANISM_VALIDATION_AND_INDEPENDENT_REVIEW",
+  "recorded_at_utc": "2026-11-25T11:59:55.098699+00:00",
+  "current_head": "b38fb48a80ac47a3e7405f2ba96b40f3ae29979d",
+  "app_tree": "96aa47e9152edc931e4830dd3dbe65e3a09418df",
+  "original_native_source": "7e039daaf2b43716ed2a2b3db1df0b04a8647fcd",
+  "new_publication_contracts": 16,
+  "new_publication_contract_failures": 0,
+  "default_signing_contracts": 92,
+  "immutable_012_contracts": 19,
+  "actual_retained_original_gate_replay": 8,
+  "workflow_yaml_and_bash_syntax": "PASS",
+  "owner_receipt_and_immutable_proposal_hash": "PASS",
+  "protected_source_and_untracked_fence": "PASS",
+  "build_resign_or_new_native_run": false,
+  "real_full_metadata_stage": "PENDING_ACTIONS_AUTHENTICATED_READ",
+  "publication_executed": false,
+  "sha256": {
+    "scripts/prepare-approved-013-release.py": "a3fa92ca1cd767647012defdaaa901f66e6133a5495608ade06458fc56a56d15",
+    "scripts/tests/test_release_013_stage.py": "0883e6e2c8953e559ca262112daef64f6a623ec2f3929a7b8c65e728da36975a",
+    ".github/workflows/release-013-approved.yml": "426c662bcf876055086762616e282ca3052c88573080ee36c3573728afe6be2a",
+    "docs/releases/0.13.0-publication-authorization.json": "3ce6f73aea8396015e167aad801f9fa9b676dfdd799ddf8b4469571d478f979a",
+    "docs/releases/0.13.0-owner-approval-receipt.json": "a0119e54d8932fe371baa3ac311eb2a02e2864bc783518dbbfb231c172be8a40"
+  },
+  "independent_review": "independent-mechanism-review.json",
+  "independent_review_sha256": "59a356d2ad7ee554e984edaeee47b80134b41e2ee4703acd62243f7a7b9ba5fe"
+}

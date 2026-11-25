@@ -1,0 +1,65 @@
+{
+  "run_id": 44447145702,
+  "source_sha": "71dd0f409552628b2fe255285e6c7b3c7b497413",
+  "app_tree": "4c52f1a156b793e7532d06c0321cf37be8ad7b05",
+  "publication_allowed": false,
+  "verified_artifacts": [
+    {
+      "name": "ui",
+      "artifact_id": 14494737079,
+      "bytes": 16082041,
+      "sha256": "fbb235bf95ed233fadcea200a3ab34417cec41eb26ceb8fe1cb4f1aa67037caf",
+      "all_crc_pass": true
+    },
+    {
+      "name": "native-failure",
+      "artifact_id": 14494936554,
+      "bytes": 1331224,
+      "sha256": "e89d055a1e019d538660281506640729526ecabd8cd2d3b4df22ae0bac00c40e",
+      "all_crc_pass": true
+    }
+  ],
+  "native_tests": 40,
+  "raw_pngs": 260,
+  "native": {
+    "tests": 40,
+    "pass": 39,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0
+  },
+  "unit": {
+    "tests": 457,
+    "classes": 44,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_failure": "Actual InputDispatcher pre-DOWN guard used server StatusBar frame.top35 as if screen0; native_status_bar_bottom=-1. Existing WMS-prefix title matcher works. No gesture injected.",
+  "root_viewed": [
+    {
+      "name": "modern-failed-testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency.png",
+      "sha256": "5be99c3afa2519ef234ef000460c0ef9cf21c30e7e5fd7a2f6e01c284a26f600",
+      "finding": "Actual Home visible with compact island below native statusbar; no shade in this run. Input guard stopped before DOWN."
+    }
+  ],
+  "expected_total_functional_pngs": 269,
+  "whole_matrix_visual_approval": false,
+  "local_exact_artifacts": "/workspace/work/native-013-ci-44447145702",
+  "original_present": 245,
+  "missing_original": [],
+  "modern_present": 13,
+  "diagnostic_pngs": [
+    "host-failed.png",
+    "modern-failed-testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency.png"
+  ],
+  "diagnostic_apk": {
+    "apk_sha256": "66e2efc8d767703df21abe1918ef24c9d8f630078c17fe0bf4a0d29cb7db729d",
+    "certificate_sha256": "aef2c0b78fb02b6c547a5dda82b106f4e886ac2d8998ea81ff84253f6846e50f",
+    "mode": "ephemeral-test-only",
+    "publication_allowed": false,
+    "required_update_certificate_matches": false,
+    "required_update_version": "0.11.0-beta.9",
+    "schema_version": 1
+  }
+}

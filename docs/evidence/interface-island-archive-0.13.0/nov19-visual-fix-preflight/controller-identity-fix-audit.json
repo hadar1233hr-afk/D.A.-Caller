@@ -1,0 +1,43 @@
+{
+  "baseline_source": "53a678fac4764dc0210cad4e6b11a9d431287241",
+  "baseline_run": 44470286600,
+  "task": "Controller-only compact identity fit correction after root actual-view failure in modern-island-status-inapp.png",
+  "status": "SOURCE_REFROZEN_AFTER_ACTUAL_LAYOUT_LOOP_PENDING_ROOT_SERIAL_TESTS",
+  "files": [
+    {
+      "path": "app/src/main/java/com/dacaller/app/CallIslandController.java",
+      "baseline_sha256": "d032cac81a0f1ef2fc61ce5605d83e6bcc0bd99b218749aa4ac5d77f3eabd758",
+      "working_sha256": "b09fd4ecd5b2b0d30306247b07fd0b4f3a103747c493b5f0a671855031f05e4b"
+    },
+    {
+      "path": "app/src/test/java/com/dacaller/app/CallIslandControllerTest.java",
+      "baseline_sha256": "c8c597468256a4f6f6a789dd7449c1b3688bac1d84491739a90027753765a93f",
+      "working_sha256": "ae04994e3c4aae723b4033334ff303c49b0db882bd6bad327df2ae7427e26395"
+    }
+  ],
+  "implementation": [
+    "Calculate six caller code points plus ellipsis, or complete shorter identity, from the bound actual TextPaint and padding.",
+    "Walk caller-to-capsule ancestors; sum horizontal padding/margins and actual fixed siblings: fixed LayoutParams dimensions for avatar/waveform and intrinsic current TextPaint width for timer.",
+    "Never measure live view or weighted caller inside minimum-width helper; no detached views, timer/photo clones or caching. Current options/font/timer recompute each layout.",
+    "Honor existing capsule minimum width; use status icon lane only when calculated readable minimum fits, otherwise retain preferred compact width and move below protected SystemUI.",
+    "Keep existing final layout measurement once at resolved width, default-below/decor/cutout/custom position/scroll/Main/call-command behavior."
+  ],
+  "regressions_added": [
+    "narrowStatusLaneKeepsPreferredWidthAndReadableIdentityBelowIconsWithoutChangingSavedPositions",
+    "aReadableStatusLaneRemainsAvailableButGrowingTextFallsBackAtItsPreferredWidth"
+  ],
+  "validation": {
+    "git_diff_check": "PASS",
+    "gradle_executed_by_worker": false,
+    "root_previous_attempt": "HUNG; zero completed tests; exact root logs retained",
+    "test_compile_after_correction": "NOT_RUN",
+    "unit_execution_after_correction": "NOT_RUN",
+    "new_native_execution": "NOT_RUN",
+    "new_visual_approval": "PENDING_FRESH_NATIVE_FRAMES",
+    "regression_finite_guard": "Status-lane fixtures retain draining idle(), plus global-layout assertion limits traversals to32 so a recurrence fails finitely."
+  },
+  "review_scope": "Only the two listed controller production/test files changed by this worker; evidence JSON only otherwise.",
+  "publication_authority": false,
+  "usage_error_observed": false,
+  "previous_attempt_evidence": "work/visual53/controller-identity-fix-first-probe-audit.json"
+}

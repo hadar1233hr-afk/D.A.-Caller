@@ -1,0 +1,4 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+<!-- Original DA CALLER geometric artwork, authored for this repository; no third-party artwork or trademark source. -->
+ <path android:pathData="M0,0 H108 V108 H0 Z"><aapt:attr name="android:fillColor"><gradient android:startX="8" android:startY="0" android:endX="94" android:endY="108" android:startColor="#5B203B" android:centerColor="#321321" android:endColor="#1E0B14" android:type="linear"/></aapt:attr></path>
+</vector>

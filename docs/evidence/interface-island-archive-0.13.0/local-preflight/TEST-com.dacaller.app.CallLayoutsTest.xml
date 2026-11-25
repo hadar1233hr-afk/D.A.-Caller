@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.CallLayoutsTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:14:17" hostname="3ebae333e153" time="0.001">
+  <properties/>
+  <testcase name="eachCallScreenHasADistinctControlOrder" classname="com.dacaller.app.CallLayoutsTest" time="0.001"/>
+  <testcase name="adaptiveColumnsAreSafeOnNarrowPhone" classname="com.dacaller.app.CallLayoutsTest" time="0.0"/>
+  <testcase name="orderRetainsOnlyEnabledActions" classname="com.dacaller.app.CallLayoutsTest" time="0.0"/>
+  <testcase name="largeTypeLayoutsHaveReachableControls" classname="com.dacaller.app.CallLayoutsTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

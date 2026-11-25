@@ -1,0 +1,39 @@
+{
+  "source_sha": "768135d084c2589c9aaa27fc279a9e64d72b4cfc",
+  "app_tree": "11ccc2ce90c6bd76a12a2eb02d6ea9a5ad7222ab",
+  "workflow_run_id": 40531656472,
+  "status": "FAIL",
+  "unit_tests": {
+    "tests": 239,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "native_tests": {
+    "tests": 29,
+    "passed": 27,
+    "failed": 2
+  },
+  "png_count": 189,
+  "initial_expected_png_count": 215,
+  "next_required_png_count": 219,
+  "failed_checks": [
+    "Header collapse failed after first compact/expanded capsule captures",
+    "Resuming the same app task did not restore island after HOME; shell start output was not captured, so the exact launch rejection was not certified"
+  ],
+  "corrective_work": [
+    "Defer expand/collapse rendering until gesture dispatch finishes; retain raw touch assertions",
+    "Use real user return through native Recents without exporting the debug fixture",
+    "Capture failure screenshot/accessibility diagnostics for future native failures",
+    "Add four actual MainActivity contacts/recents integration screenshots, beyond the isolated fixture"
+  ],
+  "island_files_sha256": {
+    "island-apple-light-he-compact.png": "29f9e1d25f7ce0a6f02d0ea7d17c34cc4d63432dd3ede7a3d3d41beb0d21692c",
+    "island-settings-dark-bottom.png": "06403ef4ca13bd5c7829961855fc53551625f9d01613ed0a66b96c4935891742",
+    "island-settings-dark.png": "685eaef286ceb9d0198cce9746877fc72673b5de127160a135c8da7426cba9c0",
+    "island-apple-light-he-expanded.png": "3ae91925fe5a78688baba3d9134513f216194c6f9d32ad261058ef883d917857",
+    "island-settings-light.png": "3b086f2a80dea1685215174ea171dd015670d41a09f7b2f4c8f7efcd6bdcddec",
+    "island-settings-light-bottom.png": "09e41a2b011a2b99dc68b2c35c14de2ed2a19a78c7c38ad0b2ff0404c96ab07b"
+  },
+  "limits": "Initial source only; no full native or visual approval. Physical SIM/Bluetooth/Jelly Star untested."
+}

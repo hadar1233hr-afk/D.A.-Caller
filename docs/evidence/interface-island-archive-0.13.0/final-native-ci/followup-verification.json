@@ -1,0 +1,525 @@
+{
+  "source_sha": "7e039daaf2b43716ed2a2b3db1df0b04a8647fcd",
+  "app_tree": "96aa47e9152edc931e4830dd3dbe65e3a09418df",
+  "workflow_run_id": "44521985299",
+  "api": 33,
+  "size": "480x854",
+  "density_dpi": 240,
+  "font_scale": 1.3,
+  "required_real_png_files": 6,
+  "total_required_png_files": 245,
+  "sha256": {
+    "changelog-dark-bottom.png": "3a13a9d42085af5042fa44b3a4a313b5ac710dfd81f5eb67f6f286bf2c4c1c9e",
+    "changelog-dark.png": "324edfc83e22830644664f0fdca43db49a2bcce92724715da998ab2886ae6ea5",
+    "changelog-light-bottom.png": "6a6d5eeb888f03e47d534d3f00a451cb463b3ad3d5b11028630e3d315a207d2a",
+    "changelog-light.png": "7cf15a8fa0dbad6851e7e6912c34b48677320726e68ec0ee8ffb00f742b626d2",
+    "missed-multiple-he.png": "6813076ed7f59bc9d7faba0a7307fb887130bc01430dd86bdb34c516a9ae5e8e",
+    "missed-single-he.png": "ed33431b59bca3f913b989f469bccd52b170eeb99abb01086e562aaffcfb1549"
+  },
+  "native_assertions": {
+    "api": 33,
+    "size": "480x854",
+    "density_dpi": 240,
+    "font_scale": 1.3,
+    "physical_cellular_audio_verified": false,
+    "data_origin": "Production Settings and Changelog Activity; emulator GSM modem -> Android Telecom protected missed-call broadcast -> production receiver",
+    "missed": {
+      "checks": {
+        "real_modem_telecom_to_protected_receiver": true,
+        "default_dialer_owns_missed_notification": true,
+        "actual_contact_identity": true,
+        "single_and_multiple_counts": true,
+        "notification_survives_call_service": true,
+        "native_open_returns_to_recents": true,
+        "native_clear_acknowledged": true,
+        "call_log_rows_retained": true,
+        "no_new_stock_dialer_missed_notification": true
+      },
+      "role": {
+        "role_held": true,
+        "default_dialer": "com.dacaller.app",
+        "system_dialer": "com.google.android.dialer"
+      },
+      "modem_commands": [
+        {
+          "id": "17950912804600",
+          "operation": "call",
+          "number": "0500099971",
+          "serial": "emulator-5554",
+          "returncode": 0,
+          "stdout": "OK",
+          "stderr": ""
+        },
+        {
+          "id": "17950912815321",
+          "operation": "cancel",
+          "number": "0500099971",
+          "serial": "emulator-5554",
+          "returncode": 0,
+          "stdout": "OK",
+          "stderr": ""
+        },
+        {
+          "id": "17950912848592",
+          "operation": "call",
+          "number": "0500099971",
+          "serial": "emulator-5554",
+          "returncode": 0,
+          "stdout": "OK",
+          "stderr": ""
+        },
+        {
+          "id": "17950912855483",
+          "operation": "cancel",
+          "number": "0500099971",
+          "serial": "emulator-5554",
+          "returncode": 0,
+          "stdout": "OK",
+          "stderr": ""
+        },
+        {
+          "id": "17950912889994",
+          "operation": "call",
+          "number": "0500099971",
+          "serial": "emulator-5554",
+          "returncode": 0,
+          "stdout": "OK",
+          "stderr": ""
+        },
+        {
+          "id": "17950912897555",
+          "operation": "cancel",
+          "number": "0500099971",
+          "serial": "emulator-5554",
+          "returncode": 0,
+          "stdout": "OK",
+          "stderr": ""
+        }
+      ],
+      "calls": [
+        {
+          "index": 1,
+          "token": "410d8da9-4403-4ef6-afcd-5fbda52c9720",
+          "ringing_confirmed": true,
+          "disconnect_cause": 5,
+          "call_log_row": {
+            "id": 9,
+            "number": "0500099971",
+            "type": 3,
+            "date": 1795091280741,
+            "duration": 0,
+            "new": 1,
+            "is_read": 0
+          }
+        },
+        {
+          "index": 2,
+          "token": "bca9db22-3cf6-4965-925d-b335d8080a94",
+          "ringing_confirmed": true,
+          "disconnect_cause": 5,
+          "call_log_row": {
+            "id": 10,
+            "number": "0500099971",
+            "type": 3,
+            "date": 1795091285023,
+            "duration": 0,
+            "new": 1,
+            "is_read": 0
+          }
+        },
+        {
+          "index": 3,
+          "token": "750e7e75-13af-4ab7-95b3-3523a4c7cac2",
+          "ringing_confirmed": true,
+          "disconnect_cause": 5,
+          "call_log_row": {
+            "id": 11,
+            "number": "0500099971",
+            "type": 3,
+            "date": 1795091289224,
+            "duration": 0,
+            "new": 1,
+            "is_read": 0
+          }
+        }
+      ],
+      "notifications": [
+        {
+          "stage": "single",
+          "package": "com.dacaller.app",
+          "id": 1503,
+          "channel": "dacaller_missed_v1",
+          "category": "missed_call",
+          "count": 1,
+          "platform_count": 1,
+          "title": "שיחה שלא נענתה",
+          "text": "מיכל שיחה שלא נענתה",
+          "name": "מיכל שיחה שלא נענתה",
+          "snapshot_ids": [
+            9
+          ],
+          "own_key": "0|com.dacaller.app|1503|null|10174",
+          "all_native_notification_keys": [
+            "0|com.dacaller.app|1503|null|10174"
+          ],
+          "stock_notification_keys": [],
+          "native_caller_visible": true,
+          "active_call_absent": true,
+          "incall_service_absent": true,
+          "platform_events": 1
+        },
+        {
+          "stage": "multiple",
+          "package": "com.dacaller.app",
+          "id": 1503,
+          "channel": "dacaller_missed_v1",
+          "category": "missed_call",
+          "count": 2,
+          "platform_count": 2,
+          "title": "2 שיחות שלא נענו",
+          "text": "מיכל שיחה שלא נענתה",
+          "name": "מיכל שיחה שלא נענתה",
+          "snapshot_ids": [
+            10,
+            9
+          ],
+          "own_key": "0|com.dacaller.app|1503|null|10174",
+          "all_native_notification_keys": [
+            "0|com.dacaller.app|1503|null|10174"
+          ],
+          "stock_notification_keys": [],
+          "native_caller_visible": true,
+          "active_call_absent": true,
+          "incall_service_absent": true,
+          "platform_events": 2
+        },
+        {
+          "stage": "third",
+          "package": "com.dacaller.app",
+          "id": 1503,
+          "channel": "dacaller_missed_v1",
+          "category": "missed_call",
+          "count": 1,
+          "platform_count": 1,
+          "title": "שיחה שלא נענתה",
+          "text": "מיכל שיחה שלא נענתה",
+          "name": "מיכל שיחה שלא נענתה",
+          "snapshot_ids": [
+            11
+          ],
+          "own_key": "0|com.dacaller.app|1503|null|10174",
+          "all_native_notification_keys": [
+            "0|com.dacaller.app|1503|null|10174"
+          ],
+          "stock_notification_keys": [],
+          "native_caller_visible": true,
+          "active_call_absent": true,
+          "incall_service_absent": true,
+          "platform_events": 4
+        }
+      ],
+      "actions": [
+        {
+          "action": "clear",
+          "input_method": "native-pointer",
+          "bounds": "[84,540][168,612]",
+          "acknowledged": true,
+          "notification_absent": true,
+          "state_count": 0,
+          "call_log_rows": [
+            {
+              "id": 9,
+              "number": "0500099971",
+              "type": 3,
+              "date": 1795091280741,
+              "duration": 0,
+              "new": 0,
+              "is_read": 1
+            },
+            {
+              "id": 10,
+              "number": "0500099971",
+              "type": 3,
+              "date": 1795091285023,
+              "duration": 0,
+              "new": 0,
+              "is_read": 1
+            }
+          ]
+        },
+        {
+          "action": "open",
+          "input_method": "native-accessibility-click",
+          "bounds": "[24,324][456,577]",
+          "acknowledged": true,
+          "notification_absent": true,
+          "state_count": 0,
+          "main_page": "recents",
+          "main_focused": true,
+          "call_log_rows": [
+            {
+              "id": 9,
+              "number": "0500099971",
+              "type": 3,
+              "date": 1795091280741,
+              "duration": 0,
+              "new": 0,
+              "is_read": 1
+            },
+            {
+              "id": 10,
+              "number": "0500099971",
+              "type": 3,
+              "date": 1795091285023,
+              "duration": 0,
+              "new": 0,
+              "is_read": 1
+            },
+            {
+              "id": 11,
+              "number": "0500099971",
+              "type": 3,
+              "date": 1795091289224,
+              "duration": 0,
+              "new": 0,
+              "is_read": 1
+            }
+          ]
+        }
+      ],
+      "stock_notification_keys_before": [],
+      "stock_notification_keys_after": [],
+      "stock_notification_packages": [
+        "com.google.android.dialer",
+        "com.android.server.telecom"
+      ]
+    },
+    "changelog": {
+      "checks": {
+        "actual_settings_entry_opens_activity": true,
+        "catalog_newest_first_and_current_version": true,
+        "hebrew_english_native_ui": true,
+        "native_light_dark_bar_contrast": true,
+        "large_font_rtl_and_text_layout": true,
+        "native_expand_collapse_and_bottom_reachable": true,
+        "back_returns_to_settings": true
+      },
+      "current_version": "0.13.0",
+      "versions": [
+        "0.13.0",
+        "0.12.0",
+        "0.11.0-beta.9",
+        "0.11.0-beta.8",
+        "0.11.0-beta.7",
+        "0.11.0-beta.6",
+        "0.11.0-beta.5",
+        "0.11.0-beta.4",
+        "0.11.0-beta.3",
+        "0.11.0-beta.2",
+        "0.11.0-beta.1",
+        "0.10.0-beta.1",
+        "0.9.0",
+        "0.8.0",
+        "0.7.0",
+        "0.6.0",
+        "0.5.0",
+        "0.4.0",
+        "0.3.0",
+        "0.2.0",
+        "0.1.0"
+      ],
+      "observations": [
+        {
+          "event": "changelog-settings-open",
+          "palette": "light",
+          "language": "he",
+          "activity": "com.dacaller.app.ChangelogActivity",
+          "tag": "settings_changelog",
+          "bounds": "[29,454][451,562]",
+          "version_drawn_ltr": true,
+          "input_method": "native-pointer"
+        },
+        {
+          "event": "changelog-palette",
+          "palette": "light",
+          "activity": "com.dacaller.app.ChangelogActivity",
+          "root_rtl": true,
+          "font_scale": 1.2999999523162842,
+          "density_dpi": 240,
+          "title": "יומן שינויים",
+          "installed_label": "הגרסה המותקנת: ‏‪0.13.0‬‏",
+          "installed_version_drawn_ltr": true,
+          "versions_in_native_tree": [
+            "0.13.0",
+            "0.12.0",
+            "0.11.0-beta.9",
+            "0.11.0-beta.8",
+            "0.11.0-beta.7",
+            "0.11.0-beta.6",
+            "0.11.0-beta.5",
+            "0.11.0-beta.4",
+            "0.11.0-beta.3",
+            "0.11.0-beta.2",
+            "0.11.0-beta.1",
+            "0.10.0-beta.1",
+            "0.9.0",
+            "0.8.0",
+            "0.7.0",
+            "0.6.0",
+            "0.5.0",
+            "0.4.0",
+            "0.3.0",
+            "0.2.0",
+            "0.1.0"
+          ],
+          "current_expanded": true,
+          "oldest_version": "0.1.0",
+          "oldest_expanded": true,
+          "bottom_reachable": true,
+          "footer_bounds": "[23,646][457,746]",
+          "nav_bottom_px": 72,
+          "status_top_px": 36,
+          "settings_entry": {
+            "tag": "settings_changelog",
+            "bounds": "[29,454][451,562]",
+            "version_drawn_ltr": true,
+            "input_method": "native-pointer"
+          },
+          "bar_contrast": {
+            "top": {
+              "status": 957,
+              "navigation": 1276
+            },
+            "bottom": {
+              "status": 957,
+              "navigation": 1276
+            }
+          }
+        },
+        {
+          "event": "changelog-native-back",
+          "main_page": "settings",
+          "main_focused": true,
+          "footer_entry_present": true
+        },
+        {
+          "event": "changelog-settings-open",
+          "palette": "dark",
+          "language": "he",
+          "activity": "com.dacaller.app.ChangelogActivity",
+          "tag": "settings_changelog",
+          "bounds": "[29,454][451,562]",
+          "version_drawn_ltr": true,
+          "input_method": "native-pointer"
+        },
+        {
+          "event": "changelog-palette",
+          "palette": "dark",
+          "activity": "com.dacaller.app.ChangelogActivity",
+          "root_rtl": true,
+          "font_scale": 1.2999999523162842,
+          "density_dpi": 240,
+          "title": "יומן שינויים",
+          "installed_label": "הגרסה המותקנת: ‏‪0.13.0‬‏",
+          "installed_version_drawn_ltr": true,
+          "versions_in_native_tree": [
+            "0.13.0",
+            "0.12.0",
+            "0.11.0-beta.9",
+            "0.11.0-beta.8",
+            "0.11.0-beta.7",
+            "0.11.0-beta.6",
+            "0.11.0-beta.5",
+            "0.11.0-beta.4",
+            "0.11.0-beta.3",
+            "0.11.0-beta.2",
+            "0.11.0-beta.1",
+            "0.10.0-beta.1",
+            "0.9.0",
+            "0.8.0",
+            "0.7.0",
+            "0.6.0",
+            "0.5.0",
+            "0.4.0",
+            "0.3.0",
+            "0.2.0",
+            "0.1.0"
+          ],
+          "current_expanded": true,
+          "oldest_version": "0.1.0",
+          "oldest_expanded": true,
+          "bottom_reachable": true,
+          "footer_bounds": "[23,646][457,746]",
+          "nav_bottom_px": 72,
+          "status_top_px": 36,
+          "settings_entry": {
+            "tag": "settings_changelog",
+            "bounds": "[29,454][451,562]",
+            "version_drawn_ltr": true,
+            "input_method": "native-pointer"
+          },
+          "bar_contrast": {
+            "top": {
+              "status": 1034,
+              "navigation": 1276
+            },
+            "bottom": {
+              "status": 1034,
+              "navigation": 1276
+            }
+          }
+        },
+        {
+          "event": "changelog-native-back",
+          "main_page": "settings",
+          "main_focused": true,
+          "footer_entry_present": true
+        },
+        {
+          "event": "changelog-settings-open",
+          "palette": "light",
+          "language": "en",
+          "activity": "com.dacaller.app.ChangelogActivity",
+          "tag": "settings_changelog",
+          "bounds": "[29,454][451,562]",
+          "version_drawn_ltr": true,
+          "input_method": "native-pointer"
+        },
+        {
+          "event": "changelog-english",
+          "title": "What's new",
+          "root_rtl": false,
+          "current_version": "0.13.0",
+          "catalog_bilingual": true
+        },
+        {
+          "event": "changelog-native-back",
+          "main_page": "settings",
+          "main_focused": true,
+          "footer_entry_present": true
+        },
+        {
+          "event": "changelog-settings-open",
+          "palette": "amoled",
+          "language": "he",
+          "activity": "com.dacaller.app.ChangelogActivity",
+          "tag": "settings_changelog",
+          "bounds": "[29,454][451,562]",
+          "version_drawn_ltr": true,
+          "input_method": "native-pointer"
+        },
+        {
+          "event": "changelog-amoled",
+          "background_argb": -16777216
+        },
+        {
+          "event": "changelog-native-back",
+          "main_page": "settings",
+          "main_focused": true,
+          "footer_entry_present": true
+        }
+      ]
+    }
+  },
+  "limits": "The six new screenshots come from actual Android UI. Missed calls use an emulator modem, Android Telecom's protected default-dialer broadcast and the production receiver. Native notification clear/open actions preserve platform call-log rows. Hardware SIM/audio/JellyStar and matching-key upgrades remain unverified. Permission-denial fallbacks are separately unit-tested; the native test does not revoke dangerous permissions or fake a platform broadcast."
+}

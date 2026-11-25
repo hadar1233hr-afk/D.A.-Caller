@@ -1,0 +1,13 @@
+{
+  "run_id": 44475349766,
+  "source_sha": "545824f0071366ba2f8c432acb520719371aa570",
+  "artifact_id": 14506107277,
+  "bytes": 163771,
+  "sha256": "791414af313099e52a5385fb42a24835220001d0f77114fd8ccddbd8c5b2db8b",
+  "all_crc_pass": true,
+  "unique_tests": 460,
+  "classes": 44,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0
+}

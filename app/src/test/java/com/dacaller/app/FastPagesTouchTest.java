@@ -76,7 +76,14 @@ public class FastPagesTouchTest {
   }
   throw new AssertionError("No fully visible row");
  }
- private View action(View row){return ((ViewGroup)row).getChildAt(((ViewGroup)row).getChildCount()-1);}
+ private View tagged(View node,String tag){
+  if(tag.equals(node.getTag()))return node;
+  if(node instanceof ViewGroup)for(int i=0;i<((ViewGroup)node).getChildCount();i++){
+   View value=tagged(((ViewGroup)node).getChildAt(i),tag);if(value!=null)return value;
+  }
+  return null;
+ }
+ private View action(View row){View call=tagged(row,"recent_call");return call!=null?call:((ViewGroup)row).getChildAt(((ViewGroup)row).getChildCount()-1);}
  private void motion(ListView list,int type,float x,float y,long time){
   MotionEvent event=MotionEvent.obtain(100,time,type,x,y,0);list.dispatchTouchEvent(event);event.recycle();
  }
@@ -150,8 +157,10 @@ public class FastPagesTouchTest {
  }
  @Test public void recentAvatarDetailsAndCallHaveIndependentActions(){
   ListView list=recents();ViewGroup row=(ViewGroup)list.getChildAt(0);
-  tap(list,row.getChildAt(0));assertEquals(1,host.contactOpened);assertTrue(host.calls.isEmpty());
-  tap(list,row.getChildAt(2));assertEquals(1,host.detailsOpened);assertTrue(host.calls.isEmpty());
+  tap(list,tagged(row,"recent_avatar"));assertEquals(1,host.contactOpened);assertTrue(host.calls.isEmpty());
+  tap(list,tagged(row,"recent_expand"));assertEquals(View.VISIBLE,tagged(row,"recent_actions").getVisibility());
+  assertEquals("Expanding the row never opens the old primary dialog",0,host.detailsOpened);assertTrue(host.calls.isEmpty());
+  tap(list,tagged(row,"recent_details"));assertEquals(1,host.detailsOpened);assertTrue(host.calls.isEmpty());
   tap(list,action(row));assertEquals(Arrays.asList("0501000"),host.calls);
  }
  @Test public void swipeBeginningOnDedicatedCallControlDoesNotCall(){

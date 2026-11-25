@@ -1,0 +1,23 @@
+{
+  "gradle_exit": 0,
+  "unit": {
+    "tests": 457,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0
+  },
+  "unit_classes": 44,
+  "app_source_unchanged": true,
+  "publication_allowed": false,
+  "native_approval": false,
+  "lint": {
+    "Error": 0,
+    "Fatal": 0,
+    "Warning": 16
+  },
+  "apk_sha256": {
+    "app/build/outputs/apk/debug/app-debug.apk": "37cd0fc53344df84819a40a376e959462c5c6eb323984c4feb287b83a5ebff83",
+    "app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk": "7abf70748d3c6c339c772f8e26d4d8f4dfb70e102fec0fe0f8267d4f1515dbaf"
+  },
+  "status": "LOCAL_ONLY_PASS"
+}

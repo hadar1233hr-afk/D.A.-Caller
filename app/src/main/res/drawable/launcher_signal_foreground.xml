@@ -1,0 +1,11 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt" android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
+<!-- Original DA CALLER geometric artwork, authored for this repository; no third-party artwork or trademark source. -->
+ <path android:pathData="M30,66 C35,78 51,84 64,79" android:fillColor="#00000000"  android:strokeColor="#FFE16A" android:strokeWidth="2" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+ <path android:pathData="M33,74 C38,79 45,82 51,82" android:fillColor="#00000000"  android:strokeColor="#FFF8D6" android:strokeWidth=".9" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+<group android:translateX="-1" android:translateY="4" android:scaleX=".88" android:scaleY=".88">
+ <path android:pathData="M40,35 C38,33 35,34 34,37 C32,44 37,54 45,62 C53,70 63,75 70,73 C73,72 74,69 72,67 L66,61 C65,60 63,60 62,61 L59,64 C54,62 46,54 44,49 L47,46 C48,45 48,43 47,42 Z" ><aapt:attr name="android:fillColor"><gradient android:startX="30" android:startY="28" android:endX="76" android:endY="80" android:startColor="#FFF6C2" android:centerColor="#FFE16A" android:endColor="#F9B928" android:type="linear"/></aapt:attr></path>
+</group>
+ <path android:pathData="M57.5,38 V46" android:fillColor="#00000000"  android:strokeColor="#FFF6C2" android:strokeWidth="4.5" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+ <path android:pathData="M65.5,34 V46" android:fillColor="#00000000"  android:strokeColor="#FFE16A" android:strokeWidth="4.5" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+ <path android:pathData="M73.5,31 V46" android:fillColor="#00000000"  android:strokeColor="#F9B928" android:strokeWidth="4.5" android:strokeLineCap="round" android:strokeLineJoin="round"/>
+</vector>

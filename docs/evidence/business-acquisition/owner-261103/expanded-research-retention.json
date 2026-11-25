@@ -1,0 +1,56 @@
+{
+  "status": "EXPLICIT_FIVE_COHORT_RESEARCH_DATABASE_RETAINED_NOT_APP_ACCEPTED",
+  "observed_at_utc": "2026-11-06T02:15:52.360577+00:00",
+  "database_sha256": "1a015426c33835a247198120bd05be026f4f0c25aa874d6c506cc7f07e1ad255",
+  "database_bytes": 6975488,
+  "archive_sha256": "2782bc396b40d5a99b1ae5e5a98b2679868b099f429b6607bc7d56b7b91849cb",
+  "archive_bytes": 1607530,
+  "archive_members_sha256": {
+    "research-search.sqlite": "1a015426c33835a247198120bd05be026f4f0c25aa874d6c506cc7f07e1ad255",
+    "manifest.json": "e400db80e964d763f5a5df342781c671f1b4c7083b50afdc9ae83c049d56eee7",
+    "independent-audit.json": "eb60bc3f97c039cf09ff4397127a70b484ab0af15f95f4d9d61a63b5ea8d1425",
+    "checks.txt": "6547cf4e0207910ccbe7a2a6b5e4f1b110e764a191555b0f9393387297ed657e",
+    "LICENSE-NOTICE.txt": "e98e9b402a48ffca3745d0973c4dbf93d20c7c28389778324a8523917348b4c8"
+  },
+  "script_sha256": {
+    "stage_expanded_research_sqlite.py": "7e2ec2a6976ae22ba98e9a6f60a8d46378bfb03898be711ded230bd6a5045ce0",
+    "check_expanded_research_sqlite.py": "c8b4f14315ceeb1181b82d496e1707d36307d2cb25d601c8b29539227313fe84",
+    "audit_expanded_research_sqlite.py": "7ad822ddbe2d96481ee035ff5d64a7febe0d5987eec9bea2686e8cfe29694c3d"
+  },
+  "new_contract_tests": {
+    "executed": 14,
+    "passed": 14,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "independently_rerun": true
+  },
+  "actual_database_checks": {
+    "raw_lines_and_projections": 2728,
+    "exact_fts_rows": 2725,
+    "default_searchable": 2715,
+    "separate_phone_proposals": 10,
+    "source_text_withheld": 3,
+    "country_null_values_preserved": 2712,
+    "extra_source_phone_queries_found": 32,
+    "fitness_pages": 4,
+    "fitness_results": 19,
+    "shop_pages": 33,
+    "shop_results": 1217,
+    "repeated_or_omitted": 0,
+    "status": "PASS"
+  },
+  "previous_base_tool_sha256": "5d4d264c8f88dccd9ed5dc1ae432bac767446105b8be9779f3dcf83714f82743",
+  "previous_2696_row_database_sha256": "b8d5f5209ea87969a1b42d3907e73f99466f869f7df2afcd8d7bb4eeb4dda274",
+  "previous_tool_and_database_unchanged": true,
+  "review_correction": "All present app-counter aliases must be strict integer zero; contradictory0/1 aliases are rejected. Actual retained audits were unaffected. Frozen relation producer/auditor and historical NODE audit source also snapshotted.",
+  "app_records_added": 0,
+  "production_admission": false,
+  "publication_approval": false,
+  "new_web_records_acquired": 0,
+  "limits": [
+    "Research schema/searchability is not production admission, live ownership, national coverage or an Android test.",
+    "Phone/text parsers and shared read-only query implementation are disclosed references.",
+    "Existing app/native APK, production packager, prior artifacts and signing/CI safeguards remain unchanged."
+  ]
+}

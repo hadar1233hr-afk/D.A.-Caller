@@ -1,0 +1,1820 @@
+{
+  "status": "PASS",
+  "source_sha": "c9d1eca7385c1b1711f5004185f292ca923c36bb",
+  "app_tree": "7d00a6eca4d9f5005329d4790d6f8383b48e42a7",
+  "workflow_run_id": "41363043464",
+  "workflow_run_attempt": 1,
+  "workflow_status": "completed",
+  "workflow_conclusion": "success",
+  "release_id": 430937764,
+  "release_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/tag/v0.11.0-beta.9-debug",
+  "release_tag": "v0.11.0-beta.9-debug",
+  "release_tag_target": "c9d1eca7385c1b1711f5004185f292ca923c36bb",
+  "release_target_commitish": "c9d1eca7385c1b1711f5004185f292ca923c36bb",
+  "release_draft": false,
+  "release_prerelease": true,
+  "release_created_at": "2026-11-01T23:37:39Z",
+  "release_published_at": "2026-11-01T23:49:18Z",
+  "exact_five_public_asset_set": true,
+  "assets": [
+    {
+      "id": 699881418,
+      "name": "DA-CALLER-v0.11.0-beta.9-Android13-screenshots.zip",
+      "state": "uploaded",
+      "size": 13488072,
+      "digest": "sha256:f976355a21565389a0821669f90b4c6db2adb5ecf31711d0abfbb377ad4a071d",
+      "browser_download_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.11.0-beta.9-debug/DA-CALLER-v0.11.0-beta.9-Android13-screenshots.zip",
+      "created_at": "2026-11-01T23:49:17Z",
+      "updated_at": "2026-11-01T23:49:18Z"
+    },
+    {
+      "id": 699881420,
+      "name": "DA-CALLER-v0.11.0-beta.9-debug.apk",
+      "state": "uploaded",
+      "size": 295291,
+      "digest": "sha256:10b78c9b422b9cb678d8ab97ced02818d40103de972bd3be6719df7d39c4396d",
+      "browser_download_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.11.0-beta.9-debug/DA-CALLER-v0.11.0-beta.9-debug.apk",
+      "created_at": "2026-11-01T23:49:17Z",
+      "updated_at": "2026-11-01T23:49:17Z"
+    },
+    {
+      "id": 699881417,
+      "name": "DA-CALLER-v0.11.0-beta.9-debug.apk.sha256",
+      "state": "uploaded",
+      "size": 101,
+      "digest": "sha256:7c4f7f435c1792870adc76cf75175bbb7b2892e9f10604f4383b86c3606eb32c",
+      "browser_download_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.11.0-beta.9-debug/DA-CALLER-v0.11.0-beta.9-debug.apk.sha256",
+      "created_at": "2026-11-01T23:49:17Z",
+      "updated_at": "2026-11-01T23:49:17Z"
+    },
+    {
+      "id": 699881422,
+      "name": "DA-CALLER-v0.11.0-beta.9-metadata.txt",
+      "state": "uploaded",
+      "size": 2141,
+      "digest": "sha256:084ea6e7eac3bb0eb6bdb2dfa3a4363b7b4a5e8ae159f2d6adc8ac61e2044b31",
+      "browser_download_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.11.0-beta.9-debug/DA-CALLER-v0.11.0-beta.9-metadata.txt",
+      "created_at": "2026-11-01T23:49:17Z",
+      "updated_at": "2026-11-01T23:49:17Z"
+    },
+    {
+      "id": 699881415,
+      "name": "DA-CALLER-v0.11.0-beta.9-signature.txt",
+      "state": "uploaded",
+      "size": 955,
+      "digest": "sha256:5cdf04a560abc5d290ecf741c3725ec4ff4748e5acbc8ac12ba8ceff88628059",
+      "browser_download_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.11.0-beta.9-debug/DA-CALLER-v0.11.0-beta.9-signature.txt",
+      "created_at": "2026-11-01T23:49:17Z",
+      "updated_at": "2026-11-01T23:49:17Z"
+    }
+  ],
+  "all_archive_entries_equal_final_native_ui_artifact": true,
+  "archive_file_count": 311,
+  "archive_files": [
+    {
+      "path": "emulator-call-driver.jsonl",
+      "size": 1596,
+      "sha256": "ce12c590dca17ee794b8b8446454159bed0847a00e1b90bfde490b5108c400e1"
+    },
+    {
+      "path": "emulator-call-driver.log",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "emulator-call-driver.ready.json",
+      "size": 67,
+      "sha256": "f11a5b4efe1878e25db13ce4e7f1b5428b1cac93ea23ae9a6f4afb009d298fca"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/TEST-emulator-5554 - 13-_app-.xml",
+      "size": 5100,
+      "sha256": "eae8bb89212e914f543bcfa4b7848a0e49347472b26808c486484d8ebb7902da"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/aapt.1.ok.txt",
+      "size": 2678,
+      "sha256": "baec68040807edf0417dd33340243ae948afa93044364f9d6fe60efb1cfdf2c2"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/aapt.2.ok.txt",
+      "size": 1138,
+      "sha256": "d3a137e8ccc25661dbbc62c08c73fbd7472a36b81c150c8f881d81a1ac749dc5"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/cpuinfo",
+      "size": 1663,
+      "sha256": "70623736085aa959ceb3443fde8aa0a323b8827c9bfa4d3259a28f6b8d5d84d4"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/device-info.pb",
+      "size": 104,
+      "sha256": "1954e90d487dc09b85e6219e5c94b87700a426a1466d0e437f554a2f384b4e54"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.CallIntegrationSnapshotTest-testNativeNotificationStatesActionsAndDirectReturn.txt",
+      "size": 1275331,
+      "sha256": "262479fdcbca2e0344b1d634adc64e3874f013b18a153428205978d739f6b265"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.CallIntegrationSnapshotTest-testSystemBackReturnsToLastContactQueryAnchorAndSettingsScroll.txt",
+      "size": 1033690,
+      "sha256": "83f4ff62900496fec1a556696c467e14812d5867b76dd726d8536082ce64395b"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.CallIslandExternalIntegrationTest-testActualTelecomExternalIslandOnLauncherAndOtherApps.txt",
+      "size": 626183,
+      "sha256": "48fdbb4f533c370081db8c29ccb4ea8b50ddf3ad20e4e1d630a7302981aee96d"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.CallIslandSnapshotTest-testAllStylesLanguagesThemesAndCallStatesAtLargeFont.txt",
+      "size": 510092,
+      "sha256": "9f6c21e9dc3dca971bd92cdda93272219bed5856dcfd2bce4f79d7ecb1458905"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.CallIslandSnapshotTest-testCommandsConfirmationPauseReturnRecreationAndContentRestore.txt",
+      "size": 210229,
+      "sha256": "efac9ff676fd071b77c70030bc7c8755a508728983a3fdfb76b8a87133ca5ecc"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.CallIslandSnapshotTest-testCustomizationPreviewBothThemesAndBottomControlsAtLargeFont.txt",
+      "size": 189518,
+      "sha256": "851eca3c09767d461245df77fc56f09ebc33d882308d5d21b44d0606e1ff4e3f"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.CallLayoutSnapshotTest-testAudioSelectionAndMuteRemainSynchronizedInEveryDesign.txt",
+      "size": 106889,
+      "sha256": "5f9405c5a4c978ab5a7bbdd310e07ff182ee7cdb3e9d6198bebcedd55999a362"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.CallLayoutSnapshotTest-testFiveDesignsBothThemesFourPanelsAndLargeFonts.txt",
+      "size": 1202829,
+      "sha256": "b1772f50f67919d2d4eabaaa4e628b89c4b7ed8d24b9c0240f9c17d749203a63"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.CallLayoutSnapshotTest-testLongCallerNamesInBothLanguagesAtLargeFont.txt",
+      "size": 410624,
+      "sha256": "8207e27488634cc615a1d287f53847d909922da8171d32bed83824f1b14d4ed1"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.CallLayoutSnapshotTest-testNoBluetoothRouteWithoutConnectedDeviceAndEnglishLayout.txt",
+      "size": 52693,
+      "sha256": "86ebc1f7e6701daf5522abad05df03e26e71a8e9b40a0adfd2ccc7899c5cd588"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.CallLayoutSnapshotTest-testSequentialPanelsCloseAndNeverOverlap.txt",
+      "size": 193105,
+      "sha256": "8fce1bc5536f101a12632e0b583af9b97b8132a2bf1d17edf213ca387c8eaf53"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.ContactScrollDispatchTest-testContactReturnPreservesStableIdentityOffsetAndQueryAfterReorder.txt",
+      "size": 11786,
+      "sha256": "3c93b2b1bd44b828da276fb5ff035b250682430c619ee9b04720658f60f9022d"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.ContactScrollDispatchTest-testNewTouchCancelsQueuedReturnRestore.txt",
+      "size": 15202,
+      "sha256": "eb445a32a0e33c1525706ba8fad4d114b7e769c720a066dec908905360b0ef04"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.ContactScrollDispatchTest-testRepeatedRebuildBeforeSelectionLayoutDoesNotLoseAnchor.txt",
+      "size": 12921,
+      "sha256": "96cffaba8056834f6bb10a5c8bb9faee4d830fdcacbe510882d1ea8e0daae305"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.ContactScrollDispatchTest-testSearchFilterSurvivesDetailReturnWithoutReset.txt",
+      "size": 14048,
+      "sha256": "d6232ae8b04ebb3d9e25f70448cde0347fe3369d35ed3d916dd4fdc0cfd8e262"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.FollowupIntegrationTest-testChangelogNativeSettingsHistoryAndBack.txt",
+      "size": 192264,
+      "sha256": "22fc717dfbe20599ce327a556d95de24070a1ebb34e17293417e1c7f41fd19ca"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.FollowupIntegrationTest-testMissedCallsFromActualTelecomAndNativeNotificationActions.txt",
+      "size": 372133,
+      "sha256": "d43e18dd5bf648e75076543c459fdd13cc7572e36dbc20a20dd94e684e8ad6bc"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.ListDialDispatchTest-testConfiguredHorizontalSwipeCallsCorrectContactOnce.txt",
+      "size": 31183,
+      "sha256": "411c0b04b4eb7e18a77a7c7654b48042caeb08db157c46d6c8306540a7161ef3"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.ListDialDispatchTest-testContactRowAndStarHaveIndependentActionsWithoutCalling.txt",
+      "size": 13434,
+      "sha256": "7a37ce9fd268bf718f05ea996a92c2530203aca2eff8961d4c13db7f0083cd99"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.ListDialDispatchTest-testContactsTopMiddleEndDialExactDisplayedNumberWithoutJump.txt",
+      "size": 12482,
+      "sha256": "dceadbbbbbfa8792cac61c553fae41a3a8968696dbcf2c53d6590300c99cfcb2"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.ListDialDispatchTest-testRecentDialExactNumberAndIndependentDetailsRegion.txt",
+      "size": 11689,
+      "sha256": "5ee983352de6b438d9cfd2b5b13c55525351b05f6cb900b6aa494add0669f8c9"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.ListDialDispatchTest-testVerticalFlickStartingAtCallIconNeverCalls.txt",
+      "size": 12629,
+      "sha256": "beb75790daef9d648f343e115767474bb6624f43671d9c2d3f00f60ead8c2994"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.PersonalizationSnapshotTest-testAllAvatarShapesClipActualContactPhotoAndWidgetInitials.txt",
+      "size": 157575,
+      "sha256": "76ef411da8aa5e8ec5b2627ccc71e0667b924eae4d7fc06b383f2f3c47f1088d"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.PersonalizationSnapshotTest-testArchiveResolvesRealProviderNamePhotoAndSearchesNames.txt",
+      "size": 190200,
+      "sha256": "063d462dd15a7073d7e983eab0db0bc67d97b7b5f04d8cc35cade0190ac2f3d6"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.PersonalizationSnapshotTest-testContactsAndRecentsCompactPresentationInBothLanguagesThemesAndFontSizes.txt",
+      "size": 355031,
+      "sha256": "eb96d5a090c984a9a95aa1fe2b6f62bd7a278dde96416275373bd64cbe1cd8ae"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.PersonalizationSnapshotTest-testDocumentBackupRestoreRequiresConfirmationAndCancelKeepsPreferences.txt",
+      "size": 264277,
+      "sha256": "1fcb1c996d4028f7abb1c8b334669635bec57e1139adfe0c8ba66ea17ef7feed"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.PersonalizationSnapshotTest-testEveryRealLauncherAliasRemainsUniqueAndDialIntentStillResolves.txt",
+      "size": 6669,
+      "sha256": "07789f7fb348ca774dfac599d05002568283c394f6fc18cb36a5510cefc23d43"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.PersonalizationSnapshotTest-testHorizontalFavoritesReachAllContactsWithoutDialingAndRememberSharedCollapse.txt",
+      "size": 181912,
+      "sha256": "64c3b412b585a2797cd7453b6c72cc1d708103bbc0f511caa78f9b8cb41ca5f2"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.PersonalizationSnapshotTest-testSettingsIconAndAvatarChoosersAtLargeFontInBothThemes.txt",
+      "size": 417818,
+      "sha256": "e0206c31353879625f4ee4c22ca4f83169a73c105fc89f85691c03e247d42428"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.SettingsInteractionTest-testLastSettingsCategoryStaysInteractiveAndCallsCategoryHasNoPhoneSymbol.txt",
+      "size": 68047,
+      "sha256": "4189d8f4ef8a402918b25bb713512c490c49d98ab16e3efe542b6c7c0de00107"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.WidgetSnapshotTest-testNarrowFavoritesFitAtLargeSystemFont.txt",
+      "size": 131695,
+      "sha256": "237ea826305f90bd55ee51987e823fd271bb3afbe8ce18d91560b66f764db772"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/logcat-com.dacaller.app.WidgetSnapshotTest-testRealHostAdditionResizeThemeEmptyAndRemoval.txt",
+      "size": 113358,
+      "sha256": "ef5f211df970d0acf7e81f9e720cff274b6dd9a58ffa682ae5cf49df180f1c68"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/meminfo",
+      "size": 1263,
+      "sha256": "8d7e480e6dc6425ad4e8045ae492b88fe9dcabe1bc00b7642d2292959d08856f"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/profiling/emulator-5554_profile.pb",
+      "size": 32,
+      "sha256": "bfa078da8cfd8a148c8bd9479c8bd84efe67cc63465e5442d4aabc9848002c90"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/test-result.pb",
+      "size": 28161,
+      "sha256": "aa52ca5fc93b42a02c3061b305562a35bb5235437b27e1657145a5718a542238"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/test-result.textproto",
+      "size": 48496,
+      "sha256": "2bc2723662dd5cd203119b5e50d955982c165061b8bc3238fabad862a265908b"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/testlog/test-results.log",
+      "size": 22791,
+      "sha256": "bd22f2d779a16ea240e0d58291f7776085e0aed287e68878b261f193d85743d8"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/utp.0.log",
+      "size": 5589,
+      "sha256": "9ebb2810a05b041c38bd1e5055ffe03402e1a0b32d0108b8f3cf8a2e2a9aca8a"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/emulator-5554 - 13/utp.0.log.lck",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "outputs/androidTest-results/connected/debug/test-result.pb",
+      "size": 28163,
+      "sha256": "10775d8448db8e1d7083bdfe8974dbccb476484e7350356a3db2ba8c601e7918"
+    },
+    {
+      "path": "reports/androidTests/connected/debug/com.dacaller.app.CallIntegrationSnapshotTest.html",
+      "size": 1925,
+      "sha256": "e56863f41c6c7fb28808409049874d394b2e76151c0c13d435649b5122e91558"
+    },
+    {
+      "path": "reports/androidTests/connected/debug/com.dacaller.app.CallIslandExternalIntegrationTest.html",
+      "size": 1821,
+      "sha256": "ace2f95e3fc87bbe4741798fc3fc0fccb77da0dfe76f7d5a427699ef33437ffb"
+    },
+    {
+      "path": "reports/androidTests/connected/debug/com.dacaller.app.CallIslandSnapshotTest.html",
+      "size": 2036,
+      "sha256": "7696003801a49e363c58542805fec51b31663a490add7bd7e1e5051ffbc4bcec"
+    },
+    {
+      "path": "reports/androidTests/connected/debug/com.dacaller.app.CallLayoutSnapshotTest.html",
+      "size": 2234,
+      "sha256": "cac778bb8dff9965c938b520fb0b8cd0f22772af1d8f0b14d9aa3843912e180c"
+    },
+    {
+      "path": "reports/androidTests/connected/debug/com.dacaller.app.ContactScrollDispatchTest.html",
+      "size": 2137,
+      "sha256": "bb0ed98346ed0b946bb822377037e49dc9f9b5020841b485bca7f143b54b9d24"
+    },
+    {
+      "path": "reports/androidTests/connected/debug/com.dacaller.app.FollowupIntegrationTest.html",
+      "size": 1902,
+      "sha256": "83663fce5a1f907b7401617399efbd950813501c4e0716369a7ccc319ae43fb4"
+    },
+    {
+      "path": "reports/androidTests/connected/debug/com.dacaller.app.ListDialDispatchTest.html",
+      "size": 2240,
+      "sha256": "dce0c82c51b807af8c30a42309a8999094fb216705d96f78e30fe3c3dbcb1a17"
+    },
+    {
+      "path": "reports/androidTests/connected/debug/com.dacaller.app.PersonalizationSnapshotTest.html",
+      "size": 2581,
+      "sha256": "f9ec4c6a66748b32af955e28b923dfeac73fb266bc85adb6c25db0487e7859ca"
+    },
+    {
+      "path": "reports/androidTests/connected/debug/com.dacaller.app.SettingsInteractionTest.html",
+      "size": 1808,
+      "sha256": "2fdc97fb7113dc9fc080792e6b55c372e454a1e826cc5ddd6986a6689ac72011"
+    },
+    {
+      "path": "reports/androidTests/connected/debug/com.dacaller.app.WidgetSnapshotTest.html",
+      "size": 1870,
+      "sha256": "45d0c0a9af2e882ad234d49aa31bee8f814bc533923361657bcc4835b0dc45b1"
+    },
+    {
+      "path": "reports/androidTests/connected/debug/com.dacaller.app.html",
+      "size": 3674,
+      "sha256": "421496ff77f8a790e1623fc0e35ad7b5e754de6139e4c7eb6d0bd275a33fe36e"
+    },
+    {
+      "path": "reports/androidTests/connected/debug/css/base-style.css",
+      "size": 2428,
+      "sha256": "2851d0b2f14f4ff1b75f0d01438887911eb474e235be93e561709227cefb18db"
+    },
+    {
+      "path": "reports/androidTests/connected/debug/css/style.css",
+      "size": 1798,
+      "sha256": "f1b366319836f8726d0939654d0eeddfc5b20f67d9e5954b9a1632c60f2f31bf"
+    },
+    {
+      "path": "reports/androidTests/connected/debug/index.html",
+      "size": 4137,
+      "sha256": "ecfd75b0ebf10681ab9d4bf08c07e49915c04317368af69cf526a3e961e12aab"
+    },
+    {
+      "path": "reports/androidTests/connected/debug/js/report.js",
+      "size": 2933,
+      "sha256": "0aa306f94805890682c639b2d5c06108801d64b859a171a3c6eea66c8bab4c6a"
+    },
+    {
+      "path": "ui-device-config.txt",
+      "size": 3985,
+      "sha256": "0ef9fa37d03fcc93a17141fbdb2b7ae43a600740711982d16446ba0c395d7614"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-dark-audio-largefont.png",
+      "size": 77512,
+      "sha256": "11daf98dffa5237391e6f0e1954e38818bac35b376a01f7d8218f0e44b55686b"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-dark-audio-longname-en.png",
+      "size": 85868,
+      "sha256": "3557979851fdead41328b2c5ae1e5621cae62b9e77335854d8e49c2db81ef8fc"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-dark-audio-longname-he.png",
+      "size": 80609,
+      "sha256": "053acffdf1fbf13b0bbe6fe36f34231311f73582ae84f7a81b52567060d3ee21"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-dark-audio-standard.png",
+      "size": 73083,
+      "sha256": "67285f0b0f4be1226e5f34de754c5a029cc5e9341a7b2e9f88ab18ee1c9adc36"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-dark-keypad-largefont.png",
+      "size": 74442,
+      "sha256": "bb40d2da1b54ebe498d80bfa41d69402297d80060fb23a7581ad4d96826d3b56"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-dark-keypad-standard.png",
+      "size": 71358,
+      "sha256": "7bb8f34bacf88a6b9944b91ebee1bce782e4de69f6811bc50bc475ada540d9a4"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-dark-more-largefont.png",
+      "size": 76916,
+      "sha256": "d71cf39edb462a4898183e778ba64e0e207d77fc197ebe8b9e48e2281a1e4aa5"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-dark-more-standard.png",
+      "size": 72552,
+      "sha256": "80e94bd1ef64d1bf7c6cba336415eecec937915862a7e81e10e8d5926cfc8ded"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-dark-normal-largefont.png",
+      "size": 94768,
+      "sha256": "90c517ba887d8594c8bfc65d4382b5dc8df5f4ea8260ba9e8aabc82ac2c3e3da"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-dark-normal-longname-en.png",
+      "size": 101321,
+      "sha256": "96808bf901fdc2c60b3a69a4d4da0876ea5e357ff937f5a726c4850845c0f502"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-dark-normal-longname-he.png",
+      "size": 96281,
+      "sha256": "867f17022dc54c8041cf89948c02fcb69938b4eb5d8e26bc3297786a571513a0"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-dark-normal-standard.png",
+      "size": 92388,
+      "sha256": "514ae77fcb3a075b931145dec48f331802cf062d78aeab40611612898c7ee17e"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-light-audio-largefont.png",
+      "size": 67367,
+      "sha256": "3f86ab372091b7301299d86b019f10c620ec4937851162de2340adcc4d0cd628"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-light-audio-standard.png",
+      "size": 63096,
+      "sha256": "f7f66af5ef0e3ff51659c06b45b7bfc37464bafc24603a69936ff18584b33eb2"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-light-keypad-largefont.png",
+      "size": 66640,
+      "sha256": "2a86b2d53c6e2ed72c67a90df5935a9b0685aa391fc64de1f47ce109f6e0602b"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-light-keypad-standard.png",
+      "size": 63859,
+      "sha256": "68808da95a96b1f4425e875eac54d653352ea274eec2a0701de251864de2f227"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-light-more-largefont.png",
+      "size": 64055,
+      "sha256": "19d01a0b7715dd14b33c2d8c598e4bc0e17a7f368114876a6943513a16c9897d"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-light-more-standard.png",
+      "size": 60047,
+      "sha256": "4a06c5d5d5b5c48ff880b6c57dd97b814d858ef257e658310510565484edb034"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-light-normal-largefont.png",
+      "size": 80360,
+      "sha256": "8658bae163334d1254332276858c7b2f1a70d940ee464e34bd4c6a10f123c82a"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-emerald-light-normal-standard.png",
+      "size": 77948,
+      "sha256": "7b1874dea8d3451b839d279373615d711c76ea0d71f4631d1a0d27d96cd65738"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-dark-audio-largefont.png",
+      "size": 46134,
+      "sha256": "f4279204e9e1c675cc6906948f15d4789d2c5deb793eefad8c870d8b9a129041"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-dark-audio-longname-en.png",
+      "size": 52652,
+      "sha256": "a0e0a8553c94e985bfc54a1bfa4e6bd79ab3e2629d868b6b5eae7a117def6194"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-dark-audio-longname-he.png",
+      "size": 49287,
+      "sha256": "509510333000230c10a9749b0f39c62e1e7ed46fd2613ac70d907985ab96195b"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-dark-audio-standard.png",
+      "size": 42648,
+      "sha256": "9526cf34261046199684f549d24c79249f03ad28a506e223a38d66145a176356"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-dark-keypad-largefont.png",
+      "size": 47053,
+      "sha256": "203ecb73a4ef0bfba4a5c60e5750aa963a829954c6caf4512ffc99e27ef7f946"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-dark-keypad-standard.png",
+      "size": 44414,
+      "sha256": "6d8f1de2214bfadcb1c778efb915c78fcdccb605bb62ab6a06e2afbcf450986d"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-dark-more-largefont.png",
+      "size": 42812,
+      "sha256": "6c447fee57742aa9af0f2036de3d5c902d28c825edb555fa5bd5f6eff96ef72d"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-dark-more-standard.png",
+      "size": 39870,
+      "sha256": "cf9bc9f8dde08716577643e7b5643de24e262bb3a717c016b68648bd47814a23"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-dark-normal-largefont.png",
+      "size": 39276,
+      "sha256": "e125aea136a712fea8b3e952cc1bb457ffc69c7b1e198de0585c8d34d59c3833"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-dark-normal-longname-en.png",
+      "size": 42322,
+      "sha256": "bf834f019ef3be92cf62d641ca61cae666f68ad1dcc1a6efc8efbb020c5b26b0"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-dark-normal-longname-he.png",
+      "size": 40071,
+      "sha256": "8b122dd0b6f771623610613a8e5474f65529312b47168803f536e8bf4b056cf9"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-dark-normal-standard.png",
+      "size": 36972,
+      "sha256": "54dd52f209dbf9a62ca91d6ad47d0fd23384458a120f3859c21ae3288bf9a4d8"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-light-audio-largefont.png",
+      "size": 43784,
+      "sha256": "d3d11f5f4c27b032410c7065cbf423d49eee60a16907b37b50bc561e621e2bef"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-light-audio-standard.png",
+      "size": 40404,
+      "sha256": "50a6a177c2348aa46edff954b2095b40232a30e22fb40916cb1b78bfe41570d7"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-light-keypad-largefont.png",
+      "size": 44483,
+      "sha256": "48c34d450e2bd413a66e4857f623c94632363f4c4ecec86d79f643d9ac28e284"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-light-keypad-standard.png",
+      "size": 41961,
+      "sha256": "4295aee2b2dec4710be360cd7a8c7d161cde13e4459bd11821ac647ae4f99aee"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-light-more-largefont.png",
+      "size": 40285,
+      "sha256": "13925e1813510b01068d9140afb5005f779023dd5504ce47dff9c65433818833"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-light-more-standard.png",
+      "size": 37258,
+      "sha256": "5af06b609ccff6e99a6d6ca4f3b92f3b302db57b4cd95880de0399302c187080"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-light-normal-largefont.png",
+      "size": 37305,
+      "sha256": "3a5d983baf9fc8d6215ec3ae3a8bd5d287f221c22adbe467f2e9e90607f511d8"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-frost-light-normal-standard.png",
+      "size": 35036,
+      "sha256": "e8500026329538c4806581264b6a057833cea767fff476c76407a20734826713"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-dark-audio-largefont.png",
+      "size": 45551,
+      "sha256": "6617ee8fdb783cc3f934a369dd75249d77d2f0fb11d4e009bee5be60011d6db0"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-dark-audio-longname-en.png",
+      "size": 52228,
+      "sha256": "6bfe2f080c942392ce8b17f4c4a76d45cf6a8f428cd325aae9c39f764a087af4"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-dark-audio-longname-he.png",
+      "size": 48809,
+      "sha256": "9b570742ee7e0df19e0ab9616a925e01870e62dadce6089d5c3e3fc40b150813"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-dark-audio-standard.png",
+      "size": 42085,
+      "sha256": "2c41847549811016fbd6c9cd48e5ee45116cb032081abbb980a07d20a457ecc4"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-dark-keypad-largefont.png",
+      "size": 48880,
+      "sha256": "b0a5f4f0366cdd5b01deebae28b850b1bd397ab6c9b5c6bdb6eeb6ed20507719"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-dark-keypad-standard.png",
+      "size": 46381,
+      "sha256": "7a25d861660b8433bb76e47e985657a6cb2075459c61929db7f0be320910f545"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-dark-more-largefont.png",
+      "size": 42121,
+      "sha256": "c48e0b602785ba57fa88ac6d048a3b2f610031f62b0912c59a166e982fbd19c4"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-dark-more-standard.png",
+      "size": 39197,
+      "sha256": "e2eb3318657fa7ed74c6b2f8395509f0bbec93db41f14145e63b3aaf9f669880"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-dark-normal-largefont.png",
+      "size": 40617,
+      "sha256": "aa3f97615f112798cf505a370d25a583bcefe9656b898b1e69db4751874c8cb0"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-dark-normal-longname-en.png",
+      "size": 46768,
+      "sha256": "4b55ea005c415b300490253508aaebe614ccbf739b0a2bf63c8a2fd077fb39ad"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-dark-normal-longname-he.png",
+      "size": 41530,
+      "sha256": "db8a7dcf81e657bceb214756bbda3e5f17250877a14602b97122c9063fd135f5"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-dark-normal-standard.png",
+      "size": 38623,
+      "sha256": "bf60f4973a3e1276ff6f8787ca9ccf9d475849eb4077e3a317127ef9aafca327"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-light-audio-largefont.png",
+      "size": 43396,
+      "sha256": "4a6a45d4f11fd859742b329fcf9bc79ced0d0611ebd67c09caa5e289618572df"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-light-audio-standard.png",
+      "size": 39809,
+      "sha256": "4cb103e6db0dc22f208a449fcfd853bce5ffb0ed4e9c730242331b407363e401"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-light-keypad-largefont.png",
+      "size": 45971,
+      "sha256": "f92ceab8977f5d9fcb5a6a55dd96fcf5402759f9f02d13710ceb47c3f699bfa9"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-light-keypad-standard.png",
+      "size": 43316,
+      "sha256": "0364770d8bf738eaf0d70254e0d6ebba56400ec717c56caa05e620520df00120"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-light-more-largefont.png",
+      "size": 39806,
+      "sha256": "b910455bbb52883de9322aa48a31c8147c43ea3c27af1b9a0e4b5fe80084c9a0"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-light-more-standard.png",
+      "size": 36395,
+      "sha256": "336efa6c49df3789f053251027f2cd7fe78505ea50506865eba7c505e6fd8e8e"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-light-normal-largefont.png",
+      "size": 38338,
+      "sha256": "dc0bd8485346644429456c3341c497e7e83daac727630439eed4bb206a43023e"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-graphite-light-normal-standard.png",
+      "size": 36313,
+      "sha256": "b9ddbc23b5cb793a83fe8deffba9ecbd3c9e99478e22168d1680b26591e34b30"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-integration-native.json",
+      "size": 982,
+      "sha256": "8c80cf28664480a45baafe698e5e0dfffed11fa957faeeca58ff9b168c9086dd"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-integration-notification-active-private-en.png",
+      "size": 64546,
+      "sha256": "af6f4f17f7517819cd89c223414d7947474598ca83ac4b5e28ef3c59a63f8d38"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-integration-notification-active-private-he.png",
+      "size": 60838,
+      "sha256": "91afc780b170d9ba2e2d9a5dae687e9483dc92e085cd7a1376e20f11a379a7d3"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-integration-notification-active-speaker-en.png",
+      "size": 64676,
+      "sha256": "5d52547392382a62c91186db2e343ed7d56785442b45c8dc50797dc7aa2bb714"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-integration-notification-active-speaker-he.png",
+      "size": 60810,
+      "sha256": "7f23e57f3abfcda9f791900e8e292f55e71bc0e9228aac6e010271d2f766dddc"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-integration-notification-incoming-he.png",
+      "size": 60826,
+      "sha256": "028ebc5a5a431a68d3fc7abe4e4a1df83d0eaefb5cb86a4e1441d714f7159c40"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-integration-notification-outgoing-he.png",
+      "size": 60663,
+      "sha256": "b5cd968ed8a79bcb31d47e4a7d03eebce1f38388b2099c779ede42a5053f1aee"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-integration-return-contacts.png",
+      "size": 65618,
+      "sha256": "1ad5b1ef97bfcbd480b980f8714b9dc426f7a8ea50b62b79d35dbce188971446"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-integration-return-settings.png",
+      "size": 49708,
+      "sha256": "f3ac99795754336b113d9720057ff81a1940fab23016fd5a9085fa928b29f579"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-dark-audio-largefont.png",
+      "size": 42634,
+      "sha256": "b1f5e24efddb6284e64d035b656e7290346d394c17918f0e90ebf4d3484fe840"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-dark-audio-longname-en.png",
+      "size": 48244,
+      "sha256": "000e8cf21e8424cb88286d1e8da37dd3c1ed4c684f9794a766d662d90b81bc25"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-dark-audio-longname-he.png",
+      "size": 45467,
+      "sha256": "b44fd1f63c334913f90d43ba00a5ab5c4e895d545ddf4a65f14772fb715a8540"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-dark-audio-standard.png",
+      "size": 38563,
+      "sha256": "ac6e5f6b27227bbfccd3ff599ee7654f074ca4eec7053ccc1d79edf660678009"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-dark-keypad-largefont.png",
+      "size": 41477,
+      "sha256": "d8d136cd94976220967f8ea303061beb1cd011864681e2af3023e9030e4ee40e"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-dark-keypad-standard.png",
+      "size": 38050,
+      "sha256": "da59bdf6c490ab2305c59c02afaaa585b73aa84274ed02bff4d5af83b5476e7d"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-dark-more-largefont.png",
+      "size": 40327,
+      "sha256": "4c209cd1d946505d84b1ca444aaf931167b7b529a69425fc1200dd15835675bd"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-dark-more-standard.png",
+      "size": 36890,
+      "sha256": "7b70d84b2816fda95ca7a3016512f3205153ed12360f044ee01f5d42f973b0d1"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-dark-normal-largefont.png",
+      "size": 38494,
+      "sha256": "b8956b7d661a612352e68b83090027ed40b543a29e629b1c0cecb07dd16193de"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-dark-normal-longname-en.png",
+      "size": 41718,
+      "sha256": "31b263e68199db2a3c70edc99ac2b0049ca53b287eaca35f55bd11008e2f2d0c"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-dark-normal-longname-he.png",
+      "size": 39181,
+      "sha256": "3fbd1abf2afd600988d792e7cbecfa32f56c7c6d7d2c35f69a05f9b341b22fc2"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-dark-normal-standard.png",
+      "size": 33621,
+      "sha256": "3ca68053c6c5c3fe5887b0d31aee7a46db49e1d6150984c7af014eb9ba1b59c1"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-light-audio-largefont.png",
+      "size": 40555,
+      "sha256": "1ef63d509f5283fceb3fcf734dbbfb97b39c63fabd961d1f9126cb70336ac2a4"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-light-audio-standard.png",
+      "size": 36417,
+      "sha256": "babaeaa327f93117c6d9d65695bb69d28c52944294a91159e2b91d8743eaaf5f"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-light-keypad-largefont.png",
+      "size": 38825,
+      "sha256": "062d423968ae875876f04ec66da6b199a8c52b53dea977f92a1513521cfe80a7"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-light-keypad-standard.png",
+      "size": 35716,
+      "sha256": "826c9dbb80b3e7288021564c56e61e6e1321828dea6ea527538e4bca33cbadac"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-light-more-largefont.png",
+      "size": 38026,
+      "sha256": "8181b0a78fd803230acda86ed3ee7890babb507fe7c029a85e848738605140a5"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-light-more-standard.png",
+      "size": 34308,
+      "sha256": "bd865abd2cf6e39bb777bbfe49726dac98e20265de466200b936275338e030aa"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-light-normal-largefont.png",
+      "size": 38123,
+      "sha256": "3f6f892802ff8fcfa8ad5ca21e23946dd5560b464912f8af90198b9ae5cf9bc5"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-ivory-light-normal-standard.png",
+      "size": 33135,
+      "sha256": "7d73b72c23968a011eaf7b2759e8a4cfbb8da67ca10b8c8e96945c5e8a9bfd68"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-dark-audio-largefont.png",
+      "size": 45349,
+      "sha256": "45c6a9854e08429d30b46548dbde3845beb3bfd24e217317ca435d37f131bc2a"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-dark-audio-longname-en.png",
+      "size": 51678,
+      "sha256": "2e6b7b07bfb220ddab1d4dbffddf160e6e1f9b3de061c75d9a60064471989cf1"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-dark-audio-longname-he.png",
+      "size": 48248,
+      "sha256": "ce77c8214056b1ac262d32714115de9b0f57664a2a15ceacfaec489feb2590ca"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-dark-audio-standard.png",
+      "size": 41041,
+      "sha256": "99f7b631d4c0abea45566a3962874cc8dbea5e9b2a040726dc21da5eb232d21c"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-dark-keypad-largefont.png",
+      "size": 47185,
+      "sha256": "a5cc24ed3b877a523bab0c72606fd532cd32368c5d635da3c9bacccc6d8e81d3"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-dark-keypad-standard.png",
+      "size": 43958,
+      "sha256": "96e8d38a9cfbece6593c3c275887a7d32e812e8fe4bcd6b599e4afce982c7f50"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-dark-more-largefont.png",
+      "size": 41643,
+      "sha256": "b8f2fef12ef8ee62bf9a3c76e9e1840ad1d5193a8297e94ccd7a37b284d640a7"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-dark-more-standard.png",
+      "size": 38657,
+      "sha256": "6b3fa7aa9ce0c188e783c9bb130e041a24169a70573aea697a283d4780abbe8e"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-dark-normal-largefont.png",
+      "size": 34690,
+      "sha256": "48c357583bed61c0dbd2e94064a9c3d29cfd7631d54f0ba2fac07d5563987916"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-dark-normal-longname-en.png",
+      "size": 39627,
+      "sha256": "2ee44302796318e78b827671df311a1c26d9716fd7f2404cf2716747f4a9c663"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-dark-normal-longname-he.png",
+      "size": 36818,
+      "sha256": "e3d7170d058c64648c67d81ff599157d1039d3f0365a4ace3b938ea72cca32f7"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-dark-normal-standard.png",
+      "size": 31289,
+      "sha256": "add512a164420de5832f7598d65a4ebcdcbd6c5381f1a31e1e433ab1f3789809"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-light-audio-english-no-bluetooth.png",
+      "size": 39792,
+      "sha256": "113d562ef237b0704dd9f5534012da5177e3cd54e2d0624d33bd87637afe5eab"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-light-audio-largefont.png",
+      "size": 43679,
+      "sha256": "73df4da125e28468d36618a90ff6e4f0cd0dc3a72c0464212efa43341856589c"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-light-audio-standard.png",
+      "size": 39572,
+      "sha256": "9ccecf903e4fce222334774a9bd4438524ae1689071de0f9aa5c14c865dc6035"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-light-keypad-largefont.png",
+      "size": 44502,
+      "sha256": "371ae75847e51f311ad70fbc1b4844752a7796472695d6b24bc3e060f9695366"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-light-keypad-standard.png",
+      "size": 41840,
+      "sha256": "0e1ac6832a12a03c2d4bd27ae0ecf9b638656e6fde5669e9a2d1a50f77b65df5"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-light-more-largefont.png",
+      "size": 39960,
+      "sha256": "104d022e22a84f95ee22451c65f2f3de8c161a45e791d199503b5f015521a5b7"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-light-more-standard.png",
+      "size": 37207,
+      "sha256": "63604f995a108a5a9f0ba3c9ad5cb644d4ec422f2b3212d9ae158cee202a4c90"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-light-normal-largefont.png",
+      "size": 34788,
+      "sha256": "4aa8b421aeef5558bac313031b57fae3f22044269b79066ffe0fec0c688dc833"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/call-pixel-light-normal-standard.png",
+      "size": 31371,
+      "sha256": "fe8c28bfa72d2bdae2df6f1fa02cf52761a376d79a35d6d76a057a678ccfb472"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/changelog-dark-bottom.png",
+      "size": 43700,
+      "sha256": "aafe5ee48f6114fc83530db0cf8c6d72ab32d3bcd88c4cfe7378ffc86318ff03"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/changelog-dark.png",
+      "size": 63862,
+      "sha256": "e4806024386c640d155edb2f5a54fa1b25f6b45564acb80a306342ca991cecde"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/changelog-light-bottom.png",
+      "size": 43239,
+      "sha256": "43f4225762a5411701e8706b4cf2d7936ab50010a0499d0ee3749a916010a6e9"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/changelog-light.png",
+      "size": 63519,
+      "sha256": "7d80daa1bf0ce6430d9f43dc427eb456f0bbb2f811788a2cee0f598fd2d342f9"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/external-end-confirmation.png",
+      "size": 50619,
+      "sha256": "311ea503c343b759814f8c403bcdcbb3f74058c16aa384d5e187ca6eace5dbc0"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/external-ended-launcher.png",
+      "size": 321518,
+      "sha256": "0eeaed01e01cace250804ce5f294f902b8e00a180339c3e58c437c5684ebc923"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/external-gsm-request.json",
+      "size": 66,
+      "sha256": "3700ca1c791cb1bb93d4066410a185e00dd397d13d09cf9237270a845a91f5ae"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/external-gsm-response.json",
+      "size": 145,
+      "sha256": "4e29b1595476f09b2839704177cf4d83828bebc0ea8bf171cb3bcf737af0686b"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/external-inapp-return.png",
+      "size": 49455,
+      "sha256": "0b72d22d24af4d5949d8ab341662f8816882753727433aab8c5bade2c475f9a3"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/external-island-native.json",
+      "size": 46811,
+      "sha256": "45e9873e697d45f04473ff4fd00ff087593121c65f945786baa0ac314fdd08ea"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/external-launcher-active-compact.png",
+      "size": 299915,
+      "sha256": "682d70269b88579bfc96c2cacbca69a0da0ae2d8d1427c63f669ca314b72ec69"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/external-launcher-active-expanded.png",
+      "size": 217790,
+      "sha256": "060cd360653ebdfbd02e108b98b8c676ac6418a9cbad01ea6a5ac0510bd471d3"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/external-launcher-native-incoming.png",
+      "size": 239316,
+      "sha256": "c8d4afb33e9774109a97572626f764f11045b91f4310981ab8482fe52439f743"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/external-other-app-active-expanded.png",
+      "size": 54164,
+      "sha256": "21216e962e4b5636a77f9bdaf174cc90a42a9dc0b18374ba14bf730442f0e85d"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/external-permission-denied-launcher.png",
+      "size": 239316,
+      "sha256": "c8d4afb33e9774109a97572626f764f11045b91f4310981ab8482fe52439f743"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/external-role-attempt.json",
+      "size": 153,
+      "sha256": "d81a6cb99f3c691919cd8abc1fcb9ba13cd4946f8f283746dfef84162817a5c1"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/followup-native.json",
+      "size": 13743,
+      "sha256": "6f217500769dc19036facb836e7c59cace598bd9744c39ac95a9becc50212f7e"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-app-contacts-compact.png",
+      "size": 67148,
+      "sha256": "f9dee14563b88f1a308169e4e322f756c433a5df2a4a81b68a9baf99c46060c8"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-app-contacts-expanded.png",
+      "size": 69932,
+      "sha256": "a28f19ec6d6d23eff7722346634c1c99145694586e26ae5001b0b4b68adba430"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-app-recents-compact.png",
+      "size": 67518,
+      "sha256": "06bdc0d9c474018b55f0c6c8fd71115582ba9847a2f2959296c63cd104bcdba5"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-app-recents-expanded.png",
+      "size": 71103,
+      "sha256": "1d277f6028b1863592fb5cfbdac1466eb4c881b27a7e65487bacf5b4f5ffc531"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-apple-dark-en-compact.png",
+      "size": 59723,
+      "sha256": "1f09aeed66ece00a4d114c22ae5a530703cc43c6b7d04d964d614363ffbea22a"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-apple-dark-en-expanded.png",
+      "size": 68634,
+      "sha256": "2a1b8c641af7d90da5494374560065604e4ae5ae96ff95a3f9ddd9f0e2e65dfa"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-apple-dark-he-compact.png",
+      "size": 51925,
+      "sha256": "a5c08bf064aa2b6efcfed72c74aed62ecf98e65e24e1d68ebd127f8a2703f318"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-apple-dark-he-expanded.png",
+      "size": 60078,
+      "sha256": "a98e7d6e9759f49d68a236cf8dbb8d4cc863db57e8b90f29a5f6e194497ffc9c"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-apple-light-en-compact.png",
+      "size": 63811,
+      "sha256": "eaa6fcac1b2fbcc8ca3c3c9b91532a506175add3717c6800ac7637d60d16ccfc"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-apple-light-en-expanded.png",
+      "size": 72542,
+      "sha256": "13e32ce38eda4aefd592fc7429b44c4d6825acc084104ee23995bd21b9132b84"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-apple-light-he-compact.png",
+      "size": 56357,
+      "sha256": "9d6eff55ce153a8a11efd8eabdff2b85e775bdba204d88871e4b2dc88ee0357a"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-apple-light-he-expanded.png",
+      "size": 64114,
+      "sha256": "1b1f5a886bfee01cb67e4e4c62021e8892bb66d59b8ddeeceb916199f96f29de"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-emerald-dark-en-compact.png",
+      "size": 61625,
+      "sha256": "f836728641b3472ac80a4cdcf615bb0548d96ff04381d521ed1125f49855878d"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-emerald-dark-en-expanded.png",
+      "size": 73815,
+      "sha256": "bcb0853a744fb3aa876e967feabb0df73ea8867053dc90a8144babaf404b8dc6"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-emerald-dark-he-compact.png",
+      "size": 53832,
+      "sha256": "ca9bda5a49feeba61cd2519645dab8f93c57aaaaa423bac7975aa8364f5dfe4c"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-emerald-dark-he-expanded.png",
+      "size": 65740,
+      "sha256": "fec92d8304e50a4c52f01fe52f40b956818db6fcf3f7423a04c8af7abf1d43f7"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-emerald-light-en-compact.png",
+      "size": 65535,
+      "sha256": "c62f86c2f178e53e55024abccaed36e0042acd818f5c73a127788dc199e64a83"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-emerald-light-en-expanded.png",
+      "size": 77684,
+      "sha256": "3033a1260655fc6ae0dd78e38b2d8007c893d1af273f1addb4720e89295bf09f"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-emerald-light-he-compact.png",
+      "size": 58187,
+      "sha256": "e1ca27ab527a2addd0908b45743f1c0a82772469fb1ecdb894f7b6a35bd94c0a"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-emerald-light-he-expanded.png",
+      "size": 69781,
+      "sha256": "fb1f14ae085ffc58a5c3e127f3b73e64b3340fa59d3ab809f71830073aeddc52"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-glass-dark-en-compact.png",
+      "size": 59661,
+      "sha256": "582659a3859597128d9894bfe5430d0b882c4b41d52128b490bb5cbf4b712d0e"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-glass-dark-en-expanded.png",
+      "size": 68519,
+      "sha256": "a900fbfc882f69823aab918fcf4ac18353313b9a31b37ec2bb29de24e6012804"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-glass-dark-he-compact.png",
+      "size": 51908,
+      "sha256": "19be26b51447ce17636f3170f10824a7598c5b945d826500c16ac3e13f753813"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-glass-dark-he-expanded.png",
+      "size": 60916,
+      "sha256": "cd82288d447ff608f93250c09b91b94434a9e4412616fe02939f0c74d8151c62"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-glass-light-en-compact.png",
+      "size": 63443,
+      "sha256": "32f436fa02a73df3f43f0fb0aade9227e3639a66d0ae24ee38e55e13f500ea7d"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-glass-light-en-expanded.png",
+      "size": 72109,
+      "sha256": "274c8580c6548072c1b4686673a83d8e79494e60128e7c3edd75e82381d2ac62"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-glass-light-he-compact.png",
+      "size": 56027,
+      "sha256": "0346a7d3a2009274f7166710d44005e50bd636cb8a8111c70f1589d9f5423027"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-glass-light-he-expanded.png",
+      "size": 64530,
+      "sha256": "13376e0cb88866d268b8fe4cf42091b8dcdf5de8532dd428951e7be244eec852"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-native.json",
+      "size": 1076,
+      "sha256": "68e3b28a9a0d9c8068929f167c47694e0d3fdf0d41c8a1817be79bced177515e"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-settings-dark-bottom.png",
+      "size": 59215,
+      "sha256": "e3590f592cb1d4355682b34981b28d3c09ec04024398f17ba886533dcfc18e4e"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-settings-dark.png",
+      "size": 63927,
+      "sha256": "301870eb347279e4d78025d43264dd1946c5d0b51d0cff4a52a78c3eef93487d"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-settings-light-bottom.png",
+      "size": 59136,
+      "sha256": "9f9b31cd3ac7f3b26872e9979c12c31a55d244b0604cc7dd67ef12d61a3cad41"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-settings-light.png",
+      "size": 62872,
+      "sha256": "1d3293502cd5d9b3b72f44e6ea297de9b014d714c8d288562d91e08a9b1e16ee"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-state-held.png",
+      "size": 60855,
+      "sha256": "e97f8e6eed82ddf839f5e2c9042ae7dfcdf57b5d939063f2087c2877335eb01c"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-state-incoming.png",
+      "size": 55423,
+      "sha256": "e9ae3e7bf95bedff748cbbe42390aaf9403abaf22fdedf02ff34d0f7e8aa7c12"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-state-noaudio.png",
+      "size": 55034,
+      "sha256": "1205a55b35ee9d5dbbc994edc56c8714b1647f421c9e9a1bfe018c001abf5c1a"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/island-state-outgoing.png",
+      "size": 59022,
+      "sha256": "31dcbb4e84c0dae49acc8002ac74c3a10c2a10fa7882bd48b1c99ae804a592b6"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/missed-multiple-he.png",
+      "size": 60148,
+      "sha256": "eb4d90b432094d37ae6759dedc997c322d740c2f764764c931ebc406bc275341"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/missed-single-he.png",
+      "size": 60225,
+      "sha256": "cee275009a87cbfac5b9ad6cfa2615acf67f58fb6bdd599f0c0e7df084c10e95"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-archive-dark.png",
+      "size": 29983,
+      "sha256": "4b00198886d0a4a08cf2ea9625cb791a2330e90dc76e8eb082cc201d93131b86"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-archive-light.png",
+      "size": 29939,
+      "sha256": "98870c5e504508aa3234f7157f595d13158a2b1a259067e5a047803470c7a2ca"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-backup-restore-confirmation.png",
+      "size": 76201,
+      "sha256": "829f444061b0cdaa6f09ff4524d8d4bbe94810cf0621084e24c3cbe169e5f8da"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-backup-saved-dark.png",
+      "size": 77406,
+      "sha256": "3c569df0af08e14bb187aee80a6edfc0a3db5183ac7e12fb9c4a75e01afda141"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-backup-saved-light.png",
+      "size": 77459,
+      "sha256": "566725ad7b33f27e7e0029653e4a0494fd10c98cc070141b3f8d19654a011cbb"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-chooser-dark-avatar_shapes-bottom.png",
+      "size": 40729,
+      "sha256": "e4403f83e27ac061fc787ce96eae84c1cc1bf3f7128ca6a9e367e7ef20b377a2"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-chooser-dark-avatar_shapes.png",
+      "size": 40729,
+      "sha256": "e4403f83e27ac061fc787ce96eae84c1cc1bf3f7128ca6a9e367e7ef20b377a2"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-chooser-dark-icons-bottom.png",
+      "size": 66283,
+      "sha256": "e9196ef85b71cf75f696ef21c983524ae54f724bda10a6c99e39bfaae1e25290"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-chooser-dark-icons.png",
+      "size": 66406,
+      "sha256": "c823b60645d53b9ef8cb35144598edb0750a7c58e83dbcdc79e90957fcfacb4b"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-chooser-light-avatar_shapes-bottom.png",
+      "size": 43736,
+      "sha256": "78caf04f2a434d077aad4054b94998537d0ab98ec68434b9a17bbe670ea5bd2f"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-chooser-light-avatar_shapes.png",
+      "size": 43736,
+      "sha256": "78caf04f2a434d077aad4054b94998537d0ab98ec68434b9a17bbe670ea5bd2f"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-chooser-light-icons-bottom.png",
+      "size": 71404,
+      "sha256": "df75f00b4080134fb2e00e567cba1cbaabf076b5af3e93229b7261ec090d5c9e"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-chooser-light-icons.png",
+      "size": 71489,
+      "sha256": "dec1f4d14b30f690f549f073abde07690321cd9b0ed04ff450ae0c9d182451bf"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-dark-en-largefont-collapsed.png",
+      "size": 70175,
+      "sha256": "14c1c865f6fe95bb24e0544ab939e7c9a434cb55b7b05f0ef13e6b1ef280a79d"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-dark-en-largefont-expanded.png",
+      "size": 65508,
+      "sha256": "2001c8bb9f38694b0904d17e70ecde99c61e0ffa0cdba9500d922ca164b6d1cc"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-dark-en-standard-collapsed.png",
+      "size": 61327,
+      "sha256": "5b85c7f96c92b9816121fa3a4c75bc304ccd60706d7eca4c1d8ffa260a90bcaf"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-dark-en-standard-expanded.png",
+      "size": 57577,
+      "sha256": "d0f7b28b02da109f70f9e1cea4665bd74fd0d7aa7f76f15d5822b84d6098cb94"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-dark-he-largefont-collapsed.png",
+      "size": 60550,
+      "sha256": "a30a8716e77f15244f96fcf35fa6b827ca9c479b7084936634076ef6fb3b597e"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-dark-he-largefont-expanded.png",
+      "size": 56247,
+      "sha256": "dac0f65d48c63c43a0c5fe6f8fac6bfb6d4a44644a6176a32de2b024eddd7a75"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-dark-he-standard-collapsed.png",
+      "size": 54470,
+      "sha256": "eec31075b499170c264c0e4798a156b2dee4dbaffa15b9720a2dc8d2ec10a805"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-dark-he-standard-expanded.png",
+      "size": 50786,
+      "sha256": "630ef4d7abadec358e589a4dbd8b28ed889b68db40405999b98e70f0b531b611"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-light-en-largefont-collapsed.png",
+      "size": 70946,
+      "sha256": "a723211ab8451a45ee5345b786b8d0e735338efaa3308c7d143e8e7a5069343e"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-light-en-largefont-expanded.png",
+      "size": 66140,
+      "sha256": "0bb478dc0fc826cae01f765689e1aea13b62b37411083509c7c6a2f92ec45645"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-light-en-standard-collapsed.png",
+      "size": 62524,
+      "sha256": "038c5e25b1158584a4aeb84f63254a73a4f499c467325ae785e38efe6df7c870"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-light-en-standard-expanded.png",
+      "size": 59015,
+      "sha256": "3ab877559b205f5ee3e526f08a2cb18fa407eec46f8d32870be5832e1a532a25"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-light-he-largefont-collapsed.png",
+      "size": 61877,
+      "sha256": "347eb9c15fb8c22bebb6849c5ef80c11b9658c3e2e3bc1b93d4ee6eb4217faf5"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-light-he-largefont-expanded.png",
+      "size": 57631,
+      "sha256": "4114c8d194a5b3efa248d653e20390cd486f0ffaf6f3ec470a9a97dba3401293"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-light-he-standard-collapsed.png",
+      "size": 55735,
+      "sha256": "a5ae9d588345ea99d130331f4b7a1b6a44f30d9257f4a10e8c485394ca5c866c"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-light-he-standard-expanded.png",
+      "size": 52099,
+      "sha256": "cbbde8f2609dffc13b2b93e87ad76473127edb0d2def74ed20c7ea44cec4f8a4"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-shape-circle.png",
+      "size": 59498,
+      "sha256": "d5c8274516b364bfa4f6d0d3bd6c9f39840d11b2b875fa1602aa4f8f9df0057e"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-shape-hexagon.png",
+      "size": 57357,
+      "sha256": "b25455c85be7adb5bbca41bb2a084585e4dc6b9c5168d77f1530b73cd85deba4"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-shape-rounded_square.png",
+      "size": 56852,
+      "sha256": "4f1de662cde3df9dd0967f4891dab4ccb7a6fae2ee2f7ae8eca84e5c9c67dfbb"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-contacts-shape-square.png",
+      "size": 54469,
+      "sha256": "02f5e191c25a1b8c373aea7a6204409aaa4674cac966546c6a4ceb60a86df67b"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-recents-dark-en-largefont-compact.png",
+      "size": 76210,
+      "sha256": "5412c13e435e6ab811fd41c23d85895569b22fd533ea54619ccad1c742783365"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-recents-dark-en-largefont-expanded.png",
+      "size": 76554,
+      "sha256": "38b0f68ce071d85d7e57fc131dc2dcfd77f7077f59bdb9853c830dce09ab28ed"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-recents-dark-en-standard-compact.png",
+      "size": 68301,
+      "sha256": "e9f326350d375808689134a39b85aaa859c04478d7d595899028019dcbffb62f"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-recents-dark-en-standard-expanded.png",
+      "size": 68227,
+      "sha256": "8c50f28e30ca90c502f97daa19942526d57f6552b76eb53d6541dbab2b86b5be"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-recents-dark-he-largefont-compact.png",
+      "size": 69235,
+      "sha256": "78a8fb8fe37c7221a4eb307eec1aa20f4e3e88f8abbbbd813491f58f3fe7264a"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-recents-dark-he-largefont-expanded.png",
+      "size": 67051,
+      "sha256": "9a180a3618cbf4a959763f83cba754051efd66beeb4796403732f381e3dfb656"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-recents-dark-he-standard-compact.png",
+      "size": 64600,
+      "sha256": "4c5be56181af6cf6cec04880078ae54d4619e12cfa288169a7f41c0f1d159b05"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-recents-dark-he-standard-expanded.png",
+      "size": 63899,
+      "sha256": "8499d3a4a6bf7ff5549ad87ff2a08075a995d8acf15ab93a49bcbc602d02f6c2"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-recents-light-en-largefont-compact.png",
+      "size": 78619,
+      "sha256": "4311f48dca03e18324b97eb693419b1656f9f671c77acc6639108428a12f282c"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-recents-light-en-largefont-expanded.png",
+      "size": 79342,
+      "sha256": "8aa803b6c83b6cfca13bb81b47aa3b2b38a88411c5f1f21ddb706f86f9a5b9a9"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-recents-light-en-standard-compact.png",
+      "size": 71310,
+      "sha256": "7b38ae8fe92fb2a3aae0c894c070881fa15a5d275f83a876c8f3ee36b7848449"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-recents-light-en-standard-expanded.png",
+      "size": 71513,
+      "sha256": "8bfa8acad78737cdfcd715c54c860c29fe550b9ac2a7b073b68ab56e500ed3a5"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-recents-light-he-largefont-compact.png",
+      "size": 71819,
+      "sha256": "ead99d51c0058a0d1b1ba661b38a7d45e97bf82f2e857e83d3a6bf17ae7b998f"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-recents-light-he-largefont-expanded.png",
+      "size": 70319,
+      "sha256": "6f56aecf15b3a63788c80e0881afbad8521bdb1a420236beb55fd9cd4917858d"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-recents-light-he-standard-compact.png",
+      "size": 68064,
+      "sha256": "5a083f6613a7336ba16c2c528b65b552900ca4662220be2715cc7bbf6310eb7d"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-recents-light-he-standard-expanded.png",
+      "size": 67212,
+      "sha256": "6abec3bda1d54264f32896aa0f2818a441096c16a401c084691bec02aa77b8f2"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-widgets-shape-circle.png",
+      "size": 25224,
+      "sha256": "f61e9678d6d422b6a3aff77e889d6c75eb612e90ea957b3f246a4101ae50bee9"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-widgets-shape-hexagon.png",
+      "size": 24275,
+      "sha256": "77812a00036c973c1f7a3bed949e4b3ca539868d681b9e776ce298dbbb46583f"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-widgets-shape-rounded_square.png",
+      "size": 24754,
+      "sha256": "80f3daa4312071142768ddc940c662e89c9a53f33de9a0acdfbfdb5427629d11"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/personalization-widgets-shape-square.png",
+      "size": 22647,
+      "sha256": "0926235e6da6c768af45fbc174b461695b766733e41e8f1a5ba41eff9ae25bdd"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/settings-dark-bottom.png",
+      "size": 45877,
+      "sha256": "f033d8c393f7cc91e6227a6110a7a40193cbd123386320c0a5374fb97c53dd36"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/settings-dark.png",
+      "size": 51698,
+      "sha256": "77abbebbd4f6f19ae371baaac23e7b898dfbb69a0e2a479346b781da2943a5ff"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/settings-light-bottom.png",
+      "size": 45774,
+      "sha256": "e11c5a0e864cfe047107ae6e640539ca535df810f5ddd5af89bc282cd4b1443b"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/settings-light.png",
+      "size": 51567,
+      "sha256": "c38d0427b6062107acfe6adbae8b4b2a6146edb5591a687d54f79eb65b02f22b"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/widget-dark-contact-2x1.png",
+      "size": 19542,
+      "sha256": "3b28e0be1cb981b293583cbf475f20f0408e0d967a2b94b70f50a35009e603a5"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/widget-dark-empty.png",
+      "size": 19953,
+      "sha256": "7c5f6e813b57eede08dcc9d2204b6fd3b80340dff3870313019887668f631697"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/widget-dark-favorites-2x2-largefont.png",
+      "size": 24761,
+      "sha256": "86b898bcab271a3f6442aaeb116c483cce68f34f9c36e257767d961c4a672887"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/widget-dark-favorites-2x2.png",
+      "size": 22401,
+      "sha256": "37c9ee7c3f401a7d1887a5e853229714d119c462e8f3ce17703f0ac164395e58"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/widget-dark-favorites-4x2.png",
+      "size": 23499,
+      "sha256": "51c2eaad22b8b9323a92195e6099370a9ab35dbeaf04fe6a06fad13723727eab"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/widget-dark-permission.png",
+      "size": 21814,
+      "sha256": "54dd785f6d69cc8794a4876bc651f1d619394cb6095a2633d6766dbb57fcf155"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/widget-dark-quick-1x1.png",
+      "size": 15695,
+      "sha256": "06b69570efe12f886e8521a11ceafc9283d089d141cb569fe78f80f28995d369"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/widget-dark-two-favorites.png",
+      "size": 20083,
+      "sha256": "95080b3ec0a4ea34b300c60b5909ebba9d793cbb80352e017295ed1c586ca18d"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/widget-light-contact-2x1.png",
+      "size": 18755,
+      "sha256": "50191cf6f14e737db828063a0f07109e20f11f8f5c28456d391ec8e65b059882"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/widget-light-empty.png",
+      "size": 19312,
+      "sha256": "04d871273bbbeef9610ada2a88a9a40f15cde7c50df8586982ad9a95668e45a8"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/widget-light-favorites-2x2-largefont.png",
+      "size": 23744,
+      "sha256": "b3155f5f434ed0ca17417cdda5b20f717627f0749278206c053456ea0c242114"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/widget-light-favorites-2x2.png",
+      "size": 21403,
+      "sha256": "db6290f8bb72fba77ac269a6bda3572299b1caa439ac69e9ac62386ff5022843"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/widget-light-favorites-4x2.png",
+      "size": 22762,
+      "sha256": "1996bf6fb1d5b2b001bff33601adbf361f7d560afa701222ef06db04124bf076"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/widget-light-permission.png",
+      "size": 21128,
+      "sha256": "c6ba99205a8d7a1ff94b402c725d7bc04ba7c2d0a22b3b43e0daec257f838876"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/widget-light-quick-1x1.png",
+      "size": 14841,
+      "sha256": "1d1caa74b8d6359cd92a217198807294647bfeaee8188a5e41b29469718a9dc4"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/widget-light-two-favorites.png",
+      "size": 19289,
+      "sha256": "a5bb2385a98388fa758bb7731c65927cfb5ebdfc32cc958dd48bd870bd73a188"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/widget-reconfigured.png",
+      "size": 16572,
+      "sha256": "8ac422691a8e39fd14e533b36c08077d81b87fe280fbdc73a46a64ffa27c6e52"
+    },
+    {
+      "path": "ui-snapshots/DA-CALLER-snapshots/window-insets.json",
+      "size": 111,
+      "sha256": "29b801ed33fc7e24dd64274ca44a1df57cb563ed951e3307958a091d92fcbe0a"
+    },
+    {
+      "path": "ui-snapshots/call-integration-verification.json",
+      "size": 2539,
+      "sha256": "afb46ecb5d7e2adff7e10d8e2577968469d6c45b04e2223c39f5c18ae9f2da73"
+    },
+    {
+      "path": "ui-snapshots/external-island-verification.json",
+      "size": 51172,
+      "sha256": "c14c9f077ac24bc0bc9e56e439c06be095b3804fb9574a52d6e2eef25ff4c166"
+    },
+    {
+      "path": "ui-snapshots/followup-verification.json",
+      "size": 16141,
+      "sha256": "4b501a94fc1322fc538fe5d7ca2bb51e2366c4026e8d90bfa6be33ec3ad23d76"
+    },
+    {
+      "path": "ui-snapshots/island-verification.json",
+      "size": 5893,
+      "sha256": "b59b4217b3a765888b7d15b6688f52f23c8b0a2443ccb653547d8a3405d791a5"
+    },
+    {
+      "path": "ui-snapshots/matrix-verification.json",
+      "size": 11449,
+      "sha256": "5b8456b2038197faf5d17dd51252b094d5af9a84d51ae5eec374971a3f21d7d4"
+    },
+    {
+      "path": "ui-snapshots/personalization-verification.json",
+      "size": 7459,
+      "sha256": "3fb1031a8edc2c716ba071148f81b6caf0ae3966fc20f5b0e897d5d27567bc30"
+    }
+  ],
+  "public_signature_and_metadata_reports_equal_final_tested_artifact": true,
+  "unit_junit": {
+    "totals": {
+      "tests": 278,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "unique_case_count": 278,
+    "reports": [
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.AppIconsTest.xml",
+        "sha256": "9bf18c71e5362b6e0614c972c06273f67a0e6b4633a19104a66ef161b0152c31",
+        "actual_unique_cases": 9
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.ArchiveActivityTest.xml",
+        "sha256": "0fa557a4ce2da761dbded46a900fb419dfd9e37f6c6386f33b087d07cdc5756e",
+        "actual_unique_cases": 8
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.ArchiveContactsTest.xml",
+        "sha256": "86c8d11817880de29659ff9de33be608e5b9cdadc6ca0f32b38b772dee94d745",
+        "actual_unique_cases": 6
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.AvatarShapesTest.xml",
+        "sha256": "c8c87683e68b78f8a93b060aaa5b8920fd9b14b0747d56d02ccbbe3353416a80",
+        "actual_unique_cases": 4
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallArchiveTest.xml",
+        "sha256": "2bddb3073bbad13cc6a090b8fba42ffbc3d5dfefc84e05dc6d11a8ca75f5cb0f",
+        "actual_unique_cases": 10
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallAudioRoutesTest.xml",
+        "sha256": "5431c82f8059afdcd0e3a2ec846d5fd94a2b41f66fa65ee1d71673789233ac97",
+        "actual_unique_cases": 17
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallHistoryTest.xml",
+        "sha256": "b335ab627b7c068ec095e0fabe42896553cc8338d3f016005332e8a6bd52d5fd",
+        "actual_unique_cases": 6
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallIslandControllerTest.xml",
+        "sha256": "cd4848d590686b41c58bdcf52c2354a4995100a45e166ed8700bf385bed78d52",
+        "actual_unique_cases": 8
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallIslandOverlayTest.xml",
+        "sha256": "eb59117bbd111c99011d975af1781fd8fbcc2431443495cfc90e3d60f18a879f",
+        "actual_unique_cases": 11
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallIslandSessionTest.xml",
+        "sha256": "e0bb64ebfb2a7cc3a0d54aae0373f872de312c52f9d1465cb402e6adaa429ae6",
+        "actual_unique_cases": 14
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallIslandSettingsActivityTest.xml",
+        "sha256": "61975ac3d6e53452f6ab62fcee74ab888b02e8f1d76546dc679fbf0b7ce6635e",
+        "actual_unique_cases": 6
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallIslandViewTest.xml",
+        "sha256": "9d5545a35587b18b7d51385bb80062dc4e2850edc48fd208583aa13bb27d3f01",
+        "actual_unique_cases": 7
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallLauncherTest.xml",
+        "sha256": "5bf1db5d015ccf6c69c0e4babd5342b4e4155915a560b0c74199a60a3cace2f5",
+        "actual_unique_cases": 4
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallLayoutsTest.xml",
+        "sha256": "01e2b1a3ff90dd66d352b68345a180c335443f9c232b29ccad84b36d9efbb0dc",
+        "actual_unique_cases": 4
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallNotificationsTest.xml",
+        "sha256": "641c580093f3ebea0e4a90580e0cadde49426c21c4e57ed02d94bfbf5b5b42b1",
+        "actual_unique_cases": 17
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallReturnNavigationTest.xml",
+        "sha256": "f06a33e4b4e7c1afd428c1ac0a80301e6e6adb93e24fa4b169f80f8fc34ea4ab",
+        "actual_unique_cases": 9
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallScreenActivityTest.xml",
+        "sha256": "8c9ededb36a0daf63b1f4a8bf7e2035e1d1212dbb5a2b5389aad62304591783d",
+        "actual_unique_cases": 18
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.CallThemesContrastTest.xml",
+        "sha256": "2bc6ba3503898038155f4ba9468dbb0b76126719268131a70da1755f02706251",
+        "actual_unique_cases": 1
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.ContactDataTest.xml",
+        "sha256": "872ae3f34c1093dc8dd0ecaa2eecf0481f9be55d3637bea55523be00b15ba4e6",
+        "actual_unique_cases": 9
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.ContactPhotosTest.xml",
+        "sha256": "f22773293e867a3445a35f89564520d0d0430d8fbc73449c7cdb1c05b1916ed9",
+        "actual_unique_cases": 4
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.ContactScrollRestoreTest.xml",
+        "sha256": "90c9f3b4f563bb9282c686d52f560cd2a44a54c74c74a584cd5617a73cc09f8d",
+        "actual_unique_cases": 6
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.FastPagesTouchTest.xml",
+        "sha256": "d8363b9176568e88899fd1c4492a6550a83fee4963c30f028e63f4bafb908b02",
+        "actual_unique_cases": 17
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.FavoritesPresentationTest.xml",
+        "sha256": "da93cf96b43e2deb3ab424fda72a24e25c11b9d00b7448e638d3b4c552e054f7",
+        "actual_unique_cases": 9
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.IncomingGestureTest.xml",
+        "sha256": "561673b6db9f62b13d28cb98ed21913d1e7494bbc9003740b4aa10bd69f62098",
+        "actual_unique_cases": 3
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.MainActivityRegressionTest.xml",
+        "sha256": "f51b30f3421639e97c690511f2339ee66ecde7783aac12017f8565a4975cc0a4",
+        "actual_unique_cases": 8
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.MissedCallNotificationsTest.xml",
+        "sha256": "8f57d886c65e80e6b03136092cbdda34f98cb6055829fd6786e9f3746b6b93e9",
+        "actual_unique_cases": 21
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.NativeContactsTest.xml",
+        "sha256": "9b15ee2fb4c70e817f4f043edfa7b22e08202926e994ce264cc2dcf651817e7d",
+        "actual_unique_cases": 3
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.PhoneSessionServiceTest.xml",
+        "sha256": "1e9fd638c59326631469a7430c4a40e0594178545735742da0a8cba4cdf1213c",
+        "actual_unique_cases": 9
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.SettingsBackupActivityTest.xml",
+        "sha256": "fe79545ca00862eb7e8d77e9df544a7a96009266165e77789e4bad5fb8637570",
+        "actual_unique_cases": 3
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.SettingsBackupTest.xml",
+        "sha256": "cf6a453a1eeb9964629edec7255a8bac9d17c59399564edc45de0d99ab1323fb",
+        "actual_unique_cases": 12
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.SettingsScreenTest.xml",
+        "sha256": "fbcbab4129238f3db943cc9866d78e6f4826a36dce155eddac2d8d705f77ccd1",
+        "actual_unique_cases": 5
+      },
+      {
+        "path": "test-results/testDebugUnitTest/TEST-com.dacaller.app.WidgetSupportTest.xml",
+        "sha256": "a3d83703b3de60466c2faa206a716e52f9f47f014463a477eca1e95b1658aa97",
+        "actual_unique_cases": 10
+      }
+    ]
+  },
+  "native_junit": {
+    "totals": {
+      "tests": 32,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "unique_case_count": 32,
+    "reports": [
+      {
+        "path": "outputs/androidTest-results/connected/debug/TEST-emulator-5554 - 13-_app-.xml",
+        "sha256": "eae8bb89212e914f543bcfa4b7848a0e49347472b26808c486484d8ebb7902da",
+        "actual_unique_cases": 32
+      }
+    ]
+  },
+  "physical_device_verified": false,
+  "matching_installed_key_available": false
+}

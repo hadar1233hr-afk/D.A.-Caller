@@ -1,0 +1,706 @@
+{
+  "review_status": "PASS_WITH_BOUNDED_FINDINGS",
+  "scope": "All 82 non-island/non-call-design native screenshots from successful source7, independently and freshly inspected. Root separately reviews the 36 island captures; another agent reviews 101 call-design captures.",
+  "source_sha": "51f975011692c44cf348139e7d8d2569eec74d5d",
+  "app_tree": "48d9adfcc8341e8f36413313b63d2f4e8e5f569b",
+  "workflow_run_id": 40642457660,
+  "expected_png_count": 82,
+  "reviewed_png_count": 82,
+  "reviewed_at_utc": "2026-10-28T06:27:59.112336+00:00",
+  "group_counts": {
+    "notification": 6,
+    "return_from_call": 2,
+    "personalization": 53,
+    "settings": 4,
+    "widget": 17
+  },
+  "review_method": "Personally and freshly inspected all 21 source7 full-resolution 2x2 sheets (other-01.png through other-21.png) using view_image detail=original, preserving each original 480x854 capture. Also inspected same-resolution temporary RGB/JPEG copies of the light shape chooser and four widget permission/quick screens, plus original-resolution bottom-native-bar crops for 14 captures where the tool display omitted repeated flat regions. Original PNGs remain unchanged; their exact fresh SHA256 values are recorded below.",
+  "findings": [
+    {
+      "severity": "minor",
+      "files": [
+        "call-integration-notification-active-private-he.png",
+        "call-integration-notification-outgoing-he.png"
+      ],
+      "description": "At font 1.3 the native Hebrew speaker-on caption is ellipsized. Speaker icon and action remain visible; fictional caller identity and call state remain fully legible in the notification body. Freshly observed in both named source7 captures."
+    },
+    {
+      "severity": "expected",
+      "files": [
+        "personalization-contacts-dark-en-largefont-collapsed.png",
+        "personalization-contacts-dark-en-largefont-expanded.png",
+        "personalization-contacts-dark-en-standard-collapsed.png",
+        "personalization-contacts-dark-en-standard-expanded.png",
+        "personalization-contacts-dark-he-largefont-collapsed.png",
+        "personalization-contacts-dark-he-largefont-expanded.png",
+        "personalization-contacts-dark-he-standard-collapsed.png",
+        "personalization-contacts-dark-he-standard-expanded.png",
+        "personalization-contacts-light-en-largefont-collapsed.png",
+        "personalization-contacts-light-en-largefont-expanded.png",
+        "personalization-contacts-light-en-standard-collapsed.png",
+        "personalization-contacts-light-en-standard-expanded.png",
+        "personalization-contacts-light-he-largefont-collapsed.png",
+        "personalization-contacts-light-he-largefont-expanded.png",
+        "personalization-contacts-light-he-standard-collapsed.png",
+        "personalization-contacts-light-he-standard-expanded.png",
+        "personalization-contacts-shape-circle.png",
+        "personalization-contacts-shape-hexagon.png",
+        "personalization-contacts-shape-rounded_square.png",
+        "personalization-contacts-shape-square.png",
+        "personalization-recents-dark-en-largefont-compact.png",
+        "personalization-recents-dark-en-largefont-expanded.png",
+        "personalization-recents-dark-en-standard-compact.png",
+        "personalization-recents-dark-en-standard-expanded.png",
+        "personalization-recents-dark-he-largefont-compact.png",
+        "personalization-recents-dark-he-largefont-expanded.png",
+        "personalization-recents-dark-he-standard-compact.png",
+        "personalization-recents-dark-he-standard-expanded.png",
+        "personalization-recents-light-en-largefont-compact.png",
+        "personalization-recents-light-en-largefont-expanded.png",
+        "personalization-recents-light-en-standard-compact.png",
+        "personalization-recents-light-en-standard-expanded.png",
+        "personalization-recents-light-he-largefont-compact.png",
+        "personalization-recents-light-he-largefont-expanded.png",
+        "personalization-recents-light-he-standard-compact.png",
+        "personalization-recents-light-he-standard-expanded.png"
+      ],
+      "description": "Long English contact/favorite labels and secondary recent-call date metadata ellipsize within bounded rows. Primary phone numbers, navigation and call icons remain legible. The existing floating dial control overlaps a low list row/action in these scrollable lists; no new island overlap is present in this baseline subset."
+    },
+    {
+      "severity": "expected",
+      "files": [
+        "widget-dark-favorites-2x2-largefont.png",
+        "widget-light-favorites-2x2-largefont.png",
+        "widget-dark-quick-1x1.png",
+        "widget-light-quick-1x1.png",
+        "personalization-widgets-shape-circle.png",
+        "personalization-widgets-shape-hexagon.png",
+        "personalization-widgets-shape-rounded_square.png",
+        "personalization-widgets-shape-square.png"
+      ],
+      "description": "Narrow large-font widget branding and long quick-contact or shape-preview favorite names ellipsize. All four names in each narrow favorites grid remain readable; quick-contact initials and target label remain visible, and all five shape-preview favorites retain distinct avatar positions and readable bounded labels."
+    },
+    {
+      "severity": "expected",
+      "files": [
+        "personalization-chooser-dark-icons-bottom.png",
+        "personalization-chooser-dark-icons.png",
+        "personalization-chooser-light-icons-bottom.png",
+        "personalization-chooser-light-icons.png"
+      ],
+      "description": "The five-icon chooser is scrollable at font 1.3: top captures partly hide the fifth row behind the footer, and bottom captures fully expose it while clipping the first row at the scrolled top. Across each theme pair, all five icon artworks and names are readable."
+    }
+  ],
+  "blocking_findings": [],
+  "positive_evidence": [
+    "All six SystemUI notifications show the full fictional caller identity and incoming/outgoing/active state in their body. Red decline/end, return and speaker actions are distinct; the incoming notification has a visible green answer action.",
+    "Back-to-contacts capture retains the Hebrew search query and list position with complete phone numbers; Back-to-settings retains the scrolled personalization section and selected settings tab.",
+    "Archive captures resolve the contact name above the secondary phone number with matching search text. Light archive has dark native clock/navigation icons; dark archive has white native icons.",
+    "Backup success in both themes explains file contents, exclusions, local offline storage and non-transferable permissions/widget placement. Restore confirmation exposes Cancel and Restore, reports 40 settings/2 favorites/1 note, and explains replacement and preservation.",
+    "All five green/gold launcher choices are visible across top/bottom captures in both themes. All four photo shapes appear in choosers, contact-photo crops, favorite avatars and widget previews.",
+    "All 32 contacts/recents presentation combinations preserve readable favorites, search or call summary, complete primary phone numbers, actions and navigation across Hebrew/English, light/dark and standard/large fonts. Expanded summaries show outgoing/incoming/missed counts and average duration.",
+    "Existing settings category and version v0.11.0-beta.8 remain visible; native status/navigation contrast is clear in both themes.",
+    "Narrow 2x2 favorites show four names; 4x2 favorites show five. Empty and permission widget states explain the required action. Contact, quick-call, two-favorite and reconfigured widget states remain legible. Supplemental crops confirmed native navigation contrast in both quick-call themes."
+  ],
+  "scope_limits": [
+    "No physical SIM/carrier, Bluetooth routing, Jelly Star, proximity, lock-screen/ringing or full TalkBack walkthrough is claimed.",
+    "Notification call states are synthetic using the production builder and a real phoneCall foreground service; visual inspection does not certify physical Telecom behavior.",
+    "Backup document result is supplied by instrumentation; not every external document-provider interface is verified.",
+    "This visual review covers only the 82 named files; the new island settings/native-bar stability captures and physical telephony are outside this subset."
+  ],
+  "files": [
+    {
+      "name": "call-integration-notification-active-private-en.png",
+      "sha256": "a75bc36d702f31896d68bf26b98b844c2bc903315fa2f1742845bf7d4286818b",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "call-integration-notification-active-private-he.png",
+      "sha256": "fc26cea74cb49396f7353f5908aee060f1fe1414a31eb371d65c1baa84ab864f",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        0
+      ]
+    },
+    {
+      "name": "call-integration-notification-active-speaker-en.png",
+      "sha256": "ca197fce456cbb658c930674fe0ed2b52276d91e9d108ee5f706af3efafd542f",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "call-integration-notification-active-speaker-he.png",
+      "sha256": "885365af361bdba92aefd280756840e492191c10f2f1791cf2ce74bbe554070f",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "call-integration-notification-incoming-he.png",
+      "sha256": "636fb01574df76a02cc7b0aa0ea019130996abc1f1355e153d1ea9d371bf75ab",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "call-integration-notification-outgoing-he.png",
+      "sha256": "8c5d033759c7e7a8a5b56af4dba238cf4fe8f585a4a5ddf5c66bee7329ab8575",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        0
+      ]
+    },
+    {
+      "name": "call-integration-return-contacts.png",
+      "sha256": "5c7b685e6204f0e36de12afa0c886290344743c8c1049a18a2a7c2bfc56e4d62",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "call-integration-return-settings.png",
+      "sha256": "e330142343752d631f8bdf2ca1080ded1498c14c1053f9371391b3c7378e2a83",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "personalization-archive-dark.png",
+      "sha256": "a3470d4ae1dde730235688e1cb9f65dc14697d1b82be518c496c9684b2010809",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "personalization-archive-light.png",
+      "sha256": "e1f9086d0637066acee971bcf0bf246a983059742821fc2bd3a9d1b2568a95bf",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "personalization-backup-restore-confirmation.png",
+      "sha256": "d2d0d6d6af2fe94c9b7e30d0c63e9d183c8ae76c7faa49972be0de182705102b",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "personalization-backup-saved-dark.png",
+      "sha256": "1da7f7c22ad315aa68561916fc2906ff4fdc3a976e790ba29a747c1547357e36",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "personalization-backup-saved-light.png",
+      "sha256": "6db6eae4ec9e2b98ec2a63f9a8dbac72626da0d99a977087ac69b4b17ad2ec64",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "personalization-chooser-dark-avatar_shapes-bottom.png",
+      "sha256": "723350ee952fd286b9cce3b065052d43255c2056a717062b7b327961d4b0e546",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "personalization-chooser-dark-avatar_shapes.png",
+      "sha256": "723350ee952fd286b9cce3b065052d43255c2056a717062b7b327961d4b0e546",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "personalization-chooser-dark-icons-bottom.png",
+      "sha256": "ccc65b0b2f5d60cc96367f1a282cb156ed97f022f81227b512cc526a562a333e",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        3
+      ]
+    },
+    {
+      "name": "personalization-chooser-dark-icons.png",
+      "sha256": "f60e3bd1f69675721f062b4de133cd5b9725866cf4528924276500b8fb5f04c6",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        3
+      ]
+    },
+    {
+      "name": "personalization-chooser-light-avatar_shapes-bottom.png",
+      "sha256": "933dd184b70be7397c218b891177a7abd33d2c0debe099ffd960d7f83056e3b2",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "personalization-chooser-light-avatar_shapes.png",
+      "sha256": "933dd184b70be7397c218b891177a7abd33d2c0debe099ffd960d7f83056e3b2",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "personalization-chooser-light-icons-bottom.png",
+      "sha256": "b11510a25ca96fa3d9c9eb6d83b1c8595aedf89579a8fd6b2d489a4349b6ab49",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        3
+      ]
+    },
+    {
+      "name": "personalization-chooser-light-icons.png",
+      "sha256": "7961393398befc6facf104b288f70a77c69364c0de51d845aeb14f8a4b9323a1",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        3
+      ]
+    },
+    {
+      "name": "personalization-contacts-dark-en-largefont-collapsed.png",
+      "sha256": "bbb654203f57ddf5f71b3aa6f406650da1be54c07069585f76d6d50c1e428258",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-dark-en-largefont-expanded.png",
+      "sha256": "1331ec0ad2d28fcea4bf7e7668d116fcc56d408465a39d26a61391bfe38496dc",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-dark-en-standard-collapsed.png",
+      "sha256": "6942e87d9b89fa33f2ed130f18545c66a385d14fe81bb43cd4c5855e03d03264",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-dark-en-standard-expanded.png",
+      "sha256": "902c175da86e3521c38ca46fb912c5c0a1b57a688f29373ec0c376f91d4925d9",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-dark-he-largefont-collapsed.png",
+      "sha256": "855f0d2052616aeffe4e99eb24c4e2cc88037fb7acf9b24438102f111d4b9638",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-dark-he-largefont-expanded.png",
+      "sha256": "dcf25bf6aa7ce4f3408e1c8c2abfe3c2ca6c6a07750e14bc1da6c9c4114fcccf",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-dark-he-standard-collapsed.png",
+      "sha256": "608ee2daaa72ac77c3aaa9a9c9e929428c6e14cb10b97c027c008b00ca9d149f",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-dark-he-standard-expanded.png",
+      "sha256": "fcc28622e4e909076e5aed2884fd19e4015de0eee5175a24d438aaf925a8abb2",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-light-en-largefont-collapsed.png",
+      "sha256": "bb1a9ae3e6f5c5d425aded570950199bac8ce61f204c240e641c7ab6f3cb167b",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-light-en-largefont-expanded.png",
+      "sha256": "d0b5e9931d45b4a875b1a39933a54673b4e230d728946799790c43b36b22ac89",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-light-en-standard-collapsed.png",
+      "sha256": "311e4d31234ece0c7c1e20b2bdaead5745db4f6adb78b2692c7c85211157de48",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-light-en-standard-expanded.png",
+      "sha256": "0ec7dd36bbc4a75149172e4a511fb7492f716969107d57ea4cb12a641fda6a2a",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-light-he-largefont-collapsed.png",
+      "sha256": "3e4badb2223803349f18a2a9a9a36cf97cd60aefbce7bf367be1e13fcd803f9c",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-light-he-largefont-expanded.png",
+      "sha256": "d3d081705da19a7d8ee1fea96e4c282a28e7468abb6fa37d7e2931c739a32bed",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-light-he-standard-collapsed.png",
+      "sha256": "493b6965b9a8d7793cac69d380c83e5f7f55685e80519566b752ec47cee80c53",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-light-he-standard-expanded.png",
+      "sha256": "17f816b972a05a778d8a3c88be2a0305975b8ea040b172ae2c7b013e3d2fc555",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-shape-circle.png",
+      "sha256": "186c39bbbb4180c6468a70c2fc2d3a120dd34f64c1532a8ba489b159d4b9792c",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-shape-hexagon.png",
+      "sha256": "ca5f5de38ea041454af30aace572aec4d19a8f489cc46d1d223f07532f8c021b",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-shape-rounded_square.png",
+      "sha256": "089aa924f7091c59a1443e672fd3d57b4a0a297eddc73f9f9f54e9d51d91c5f5",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-contacts-shape-square.png",
+      "sha256": "a6c944f612b5ff17340cdbb54343555026407f25baf8886da1f561eb061efd9e",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-recents-dark-en-largefont-compact.png",
+      "sha256": "7d7e05bf2558a13870bfdbc04c5a96a074423a8d97446910eb09ef486240c290",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-recents-dark-en-largefont-expanded.png",
+      "sha256": "17c86ccd95d2e6104d0dd12ae9b244064f672121d6973e9e8612ca7c3c6505a4",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-recents-dark-en-standard-compact.png",
+      "sha256": "a1f138f17445ce5872d1802b3f5e53fe15aba835ef5dc2ff20c70b7427cde728",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-recents-dark-en-standard-expanded.png",
+      "sha256": "7d7a5673f42b835212c6772d31567145db99da1c5a70259f33e5b1822ab033b0",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-recents-dark-he-largefont-compact.png",
+      "sha256": "5122069faee545b5877dcc7d9d8c2d39a66e08ad3edcfaacee44fd15b71c5edf",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-recents-dark-he-largefont-expanded.png",
+      "sha256": "fb43f6db03ba5368172e7864eeb0dffb247385e25e19f14ede00b7b4606ef758",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-recents-dark-he-standard-compact.png",
+      "sha256": "749b92256af2c6349a7ef87b3ac05dc5b2313945451859da76442336c1d95c92",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-recents-dark-he-standard-expanded.png",
+      "sha256": "3a09d85af6f2e68f95d2727665f3e992ec0d0621843ff87624e42f9d06b10020",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-recents-light-en-largefont-compact.png",
+      "sha256": "e20e7a49a626b605bd46953c55cf4bf6eda8d128a4b69e9efa1b3783f0a6550b",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-recents-light-en-largefont-expanded.png",
+      "sha256": "51e79ed1f8ec9289259a6b266faa6de5ecee14571ec9c82dd9518831b04022a8",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-recents-light-en-standard-compact.png",
+      "sha256": "45059bbd781206f975fb7dd84e3a40ef7ab4d72a64d170c6b7af804378444686",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-recents-light-en-standard-expanded.png",
+      "sha256": "d5292db1315eb536591d0cdecfe1324b84e9e98e1a1070f72a2c3ae4a8d899c6",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-recents-light-he-largefont-compact.png",
+      "sha256": "70a5fed4815489082089c80aba14b086645363a9d7a38bf550fc6d05602c0ee9",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-recents-light-he-largefont-expanded.png",
+      "sha256": "8abba6883a9e85722e63605b2d2949734cb7a3bfc3dff125e2650c3f3df8f71e",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-recents-light-he-standard-compact.png",
+      "sha256": "d6325721d307f3616434918618c976451d45333d8e3833b99978b78b5b6fb263",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-recents-light-he-standard-expanded.png",
+      "sha256": "73571523001dedc971a0321fb0bfbe1491a69a5ea596bdf8b277bd86c2a389a2",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        1
+      ]
+    },
+    {
+      "name": "personalization-widgets-shape-circle.png",
+      "sha256": "dc6971c0a0495180b412dc9a82d480a4da2f0314677ccdfc7429525d41207445",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        2
+      ]
+    },
+    {
+      "name": "personalization-widgets-shape-hexagon.png",
+      "sha256": "f3f20ec3fe7dc9f9cfec67c85aeccc17c1bde10e55559771effad20a411b6a8e",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        2
+      ]
+    },
+    {
+      "name": "personalization-widgets-shape-rounded_square.png",
+      "sha256": "bc94c50e6edda1c89f01930945b2d7c44a1f1efdf904689b017c38a858538368",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        2
+      ]
+    },
+    {
+      "name": "personalization-widgets-shape-square.png",
+      "sha256": "b879162ee4259a9385d1228761f8cd92fe8821a74ec2fcf928238f0db4b91b1f",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        2
+      ]
+    },
+    {
+      "name": "settings-dark-bottom.png",
+      "sha256": "4596ea107c91c705ed55e003d6b3252674d80bd5ccb6acea98e2148229c3e1b3",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "settings-dark.png",
+      "sha256": "8ef66113d0ac01c6b28c12ea49333f11809b84d60782ffaeea6f89e2135d7c06",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "settings-light-bottom.png",
+      "sha256": "81e0231bfd7ec7c1a5b1657f05104b08f9d62e39cefa49b414d41e80b295f800",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "settings-light.png",
+      "sha256": "706ecfcab05bb80636b05e7c8a06feb1f20450f6997583cd9ad0f62bc834c3d5",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "widget-dark-contact-2x1.png",
+      "sha256": "5002100d979138be1a020286089951c08e496027497080ae242611fbc89c7b29",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "widget-dark-empty.png",
+      "sha256": "237acc770687ba95916c6f2424dd918a3e79d8f3812166460a5b93185075d0b1",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "widget-dark-favorites-2x2-largefont.png",
+      "sha256": "4d434840da337a9824813c11da7581824eca59daea56e287904117ec307f27eb",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        2
+      ]
+    },
+    {
+      "name": "widget-dark-favorites-2x2.png",
+      "sha256": "3cd5e67ca48ca830ed155406c00e8a01d4a31b3d17ab161c1db36e321093e118",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "widget-dark-favorites-4x2.png",
+      "sha256": "128aa89adf9e8663242d50fd8012b28cdb3a55552fbbc6891190dec9ff8c144b",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "widget-dark-permission.png",
+      "sha256": "0394f1dd78a36adfbf950b08ea4f2fc83e46c15c0393b6be45a344f0ba55ce2d",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "widget-dark-quick-1x1.png",
+      "sha256": "cf400868bb4f23c23bb86f73801ed01dbd5e69c639c81787fe7d0e3c01fbf4b1",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        2
+      ]
+    },
+    {
+      "name": "widget-dark-two-favorites.png",
+      "sha256": "97d960fcecac5f83ba4d2c27307035d93a556f25ab9742367a954a2631e0bb97",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "widget-light-contact-2x1.png",
+      "sha256": "bd2baf30f95d313f2b0c1997909a55f60be5f30e528007a17fe5c3e76e571036",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "widget-light-empty.png",
+      "sha256": "c65e249d3114a0be60877f4987f1088b5b7d1a561e7350d0ab71004370b4f944",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "widget-light-favorites-2x2-largefont.png",
+      "sha256": "3ecda219bb81d16cc14ce31c8c996a9a2760ddba8a4249397a0deff70862b183",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        2
+      ]
+    },
+    {
+      "name": "widget-light-favorites-2x2.png",
+      "sha256": "adf8e04cca431c5cc38b5fe590b52b98f280d036fdea1f5b5ce34ef68d5d3cf4",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "widget-light-favorites-4x2.png",
+      "sha256": "b6b3e1556395b50dcbc9a7736a8b19a316426044da0b07d06c1a6cce6d9cf874",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "widget-light-permission.png",
+      "sha256": "1c3e7d94ffa668862f4266064e37f0eb9b9546c5ce872d048eb87d7ad3f72d9e",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "widget-light-quick-1x1.png",
+      "sha256": "6c2dc93e178faa5afa9080681e65e9c1f0f81f2473ad27383ffa88341a30a4cd",
+      "status": "PASS_WITH_BOUNDED_FINDING",
+      "finding_indices": [
+        2
+      ]
+    },
+    {
+      "name": "widget-light-two-favorites.png",
+      "sha256": "23edfe98dabae687b64adf10e64c76339012977d44d1d84a7635a6f910e3d031",
+      "status": "PASS",
+      "finding_indices": []
+    },
+    {
+      "name": "widget-reconfigured.png",
+      "sha256": "58c5e93d94627671511e0f753e2d689fdbf3f174475cd20751b173f4ec86edbc",
+      "status": "PASS",
+      "finding_indices": []
+    }
+  ],
+  "source7_confirmation": "Every one of the 82 fresh captures was viewed. Observed bounded caption/name/date/branding ellipses and scroll/FAB clipping are documented above; no independent blocker or native-bar contrast regression was observed in this subset."
+}

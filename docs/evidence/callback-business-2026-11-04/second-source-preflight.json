@@ -1,0 +1,41 @@
+{
+  "app_tree": "8a2fed904c74c44e57b837a5675e79487e2dba7e",
+  "recorded_at_utc": "2026-11-04T14:52:04.161618+00:00",
+  "version": "0.11.0-beta.10",
+  "version_code": 20,
+  "changes": [
+    "Businesses chip12sp96dp wide/singleline48dp high, accessible separate native tap target",
+    "All36 island captures now require3 consecutive actual compositor contrast samples within5s; exact checked PNG hash and bounded raw samples retained; clock region excludes privacy chip",
+    "Callback/business verifier accepts actual Android float32 representation within1e-6 of1.3"
+  ],
+  "local_tests": {
+    "full_attempt": {
+      "tests": 352,
+      "passed": 350,
+      "failures": 2,
+      "reason": "Two new chip touch tests used wrong coordinate conversion for a scrolled single-line TextView; production unchanged afterwards"
+    },
+    "corrected_focused_tests": {
+      "tests": 3,
+      "passed": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "correction": "getDrawingRect includes internal scroll before offsetDescendantRectToMyCoords; actual DOWN/UP retained"
+    },
+    "new_full_source_ci": "PENDING; do not claim352PASS until fresh reports"
+  },
+  "gradle": {
+    "debug_build": "PASS",
+    "unsigned_release_build": "PASS",
+    "android_test_java_compilation": "PASS",
+    "lint_errors": 0,
+    "lint_warnings": 6
+  },
+  "native_and_fresh_visual_review": "PENDING",
+  "publication_approved": false,
+  "persistent_blockers": [
+    "Original beta9 private key unavailable",
+    "No licensed production business dataset;0 imported records"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "schema": "DA_CALLER_RESEARCH_SEARCH_V1_NOT_APP_ACCEPTED",
+  "research_only": true,
+  "app_accepted": false,
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "source_pbf_bytes": 121050024,
+  "cohorts": [
+    {
+      "kind": "node",
+      "corpus_path": "/workspace/work/business-data/node-geography-owner-261103-v2/research-node-businesses.ndjson",
+      "rows": 2448,
+      "source_objects": 2393,
+      "corpus_sha256": "37ce40b735e144cc38eee1e72ce75c785424f0213d05c9c35feb766c1b2704df",
+      "report_sha256": "08008cc5dc305a7c6a1d0e8a92bafd186d24d0a61424cec45aebeefe388e8f1f",
+      "audit_sha256": "3da31677ac4a8897ecf2c3be77e51ab714f857c2dd8bf38e815c5adfc40b821f",
+      "audit_status": "INDEPENDENT_ACTUAL_SOURCE_NODE_AUDIT_PASS_RESEARCH_ONLY",
+      "scope": "research-node-source-IL-interior-minus-filled-WB-and-Gaza"
+    },
+    {
+      "kind": "way",
+      "corpus_path": "/workspace/work/business-data/way-geography-owner-261103-v1/research-way-businesses.ndjson",
+      "rows": 247,
+      "source_objects": 242,
+      "corpus_sha256": "cdbac300bf164e252e606d990f648c040e7193444b525786b16aba9049a692d6",
+      "report_sha256": "33ee5cf3296aca31c0771deadb6b44b59051d857d12bd88b869c9a49c5025cf8",
+      "audit_sha256": "172e3510b485879725e13bdfe9e54ed1c5f91a8c5bee1e0ee4b9bb3fa426360b",
+      "audit_status": "PASS_RESEARCH_SOURCE_AND_COMPLETE_POLYGON_AUDIT_ONLY",
+      "scope": "research-complete-closed-way-source-IL-interior-minus-filled-WB-and-Gaza"
+    },
+    {
+      "kind": "relation",
+      "corpus_path": "/workspace/work/business-data/relation-geography-owner-261103-v2/research-relation-businesses.ndjson",
+      "rows": 1,
+      "source_objects": 1,
+      "corpus_sha256": "2e56ba410ea38bc06897d43c50108b5d007895d41856daeffa55e136dda58ae8",
+      "report_sha256": "14b12e58052b8d26ca1271a175024bc50b1cf5230a5dc15187d2650b65fe568c",
+      "audit_sha256": "3d93f9f508c9c4ef056c67c320b7124b7c2cd5136aa5fe2639c55ff46b66b584",
+      "audit_status": "PASS_RESEARCH_SOURCE_AND_HOLE_AWARE_RELATION_AUDIT_ONLY",
+      "scope": "research-complete-role-aware-multipolygon-source-IL-minus-filled-WB-and-Gaza"
+    }
+  ],
+  "counts": {
+    "IDENTITY_UNCHANGED": 2686,
+    "RESEARCH_REFORMAT_PROPOSAL": 10,
+    "SOURCE_TEXT_WITHHELD": 3,
+    "SOURCE_TEXT_WITHIN_BOUNDS": 2693,
+    "default_searchable_rows": 2683,
+    "raw_rows": 2696
+  },
+  "observed_at_utc": "2026-11-05T20:09:23.803237+00:00",
+  "staging_script_sha256": "5d4d264c8f88dccd9ed5dc1ae432bac767446105b8be9779f3dcf83714f82743",
+  "phone_review_sha256": "89452692195fa9e9b7b3dc65a75f7943d0fddbffa26fb4d28ad3b747b58759f0",
+  "text_review_sha256": "a0ba075c107a17e990fb285752f4447156d4c429a770303fb560e689a52d64a5",
+  "production_phone_contract_sha256": "d0ffd2392ed43a356f6e84ee6b4a7526cf84a50dc555e5536d85975b3d0c123f",
+  "requirements_lock_sha256": "40f702ed012b78157fe9ef0791811376a336e60a7840283105835696b36dfe37",
+  "phonenumbers_version": "9.0.42",
+  "sqlite_version": "3.53.1",
+  "limits": [
+    "Research searchability is not production admission or verified ownership/currentness.",
+    "Raw source lines and null country tags remain unchanged; no country is inferred.",
+    "Three source-text rows are retained outside search; phone proposals require explicit research opt-in.",
+    "No app/businesses schema, dial action, personal data, network or release safeguard changes."
+  ],
+  "database_sha256": "b8d5f5209ea87969a1b42d3907e73f99466f869f7df2afcd8d7bb4eeb4dda274",
+  "database_bytes": 6844416
+}

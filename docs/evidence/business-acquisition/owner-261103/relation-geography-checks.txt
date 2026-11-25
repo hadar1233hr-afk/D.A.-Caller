@@ -1,0 +1,25 @@
+test_boundary_contact_and_angular_margin_rejected (__main__.RoleAwareGeometryContract.test_boundary_contact_and_angular_margin_rejected) ... ok
+test_branching_endpoints_are_rejected (__main__.RoleAwareGeometryContract.test_branching_endpoints_are_rejected) ... ok
+test_disjoint_source_outer_islands_preserved (__main__.RoleAwareGeometryContract.test_disjoint_source_outer_islands_preserved) ... ok
+test_every_outer_island_must_clear_inclusion_and_exclusions (__main__.RoleAwareGeometryContract.test_every_outer_island_must_clear_inclusion_and_exclusions) ... ok
+test_hole_touching_or_crossing_outer_is_rejected (__main__.RoleAwareGeometryContract.test_hole_touching_or_crossing_outer_is_rejected) ... ok
+test_hole_with_multiple_containing_outer_shells_is_ambiguous (__main__.RoleAwareGeometryContract.test_hole_with_multiple_containing_outer_shells_is_ambiguous) ... ok
+test_invalid_node_values_never_enter_geos (__main__.RoleAwareGeometryContract.test_invalid_node_values_never_enter_geos) ... ok
+test_missing_way_and_missing_coordinate_reject_whole_relation (__main__.RoleAwareGeometryContract.test_missing_way_and_missing_coordinate_reject_whole_relation) ... ok
+test_nested_nonway_unknown_empty_roles_are_not_guessed (__main__.RoleAwareGeometryContract.test_nested_nonway_unknown_empty_roles_are_not_guessed) ... ok
+test_no_outer_shell_and_area_no_rejected (__main__.RoleAwareGeometryContract.test_no_outer_shell_and_area_no_rejected) ... ok
+test_orphan_hole_is_not_discarded_or_assigned_to_nearest_shell (__main__.RoleAwareGeometryContract.test_orphan_hole_is_not_discarded_or_assigned_to_nearest_shell) ... ok
+test_overlapping_or_nested_holes_are_not_repaired (__main__.RoleAwareGeometryContract.test_overlapping_or_nested_holes_are_not_repaired) ... ok
+test_overlapping_outer_shells_are_not_union_repaired (__main__.RoleAwareGeometryContract.test_overlapping_outer_shells_are_not_union_repaired) ... ok
+test_repeated_source_way_is_rejected_even_if_role_changes (__main__.RoleAwareGeometryContract.test_repeated_source_way_is_rejected_even_if_role_changes) ... ok
+test_research_assembly_never_changes_original_roles_or_refs (__main__.RoleAwareGeometryContract.test_research_assembly_never_changes_original_roles_or_refs) ... ok
+test_self_intersection_and_zero_area_not_repaired (__main__.RoleAwareGeometryContract.test_self_intersection_and_zero_area_not_repaired) ... ok
+test_source_hole_can_exclude_forbidden_area_without_filling_it (__main__.RoleAwareGeometryContract.test_source_hole_can_exclude_forbidden_area_without_filling_it) ... ok
+test_source_hole_is_preserved_and_not_filled (__main__.RoleAwareGeometryContract.test_source_hole_is_preserved_and_not_filled) ... ok
+test_unambiguous_open_segments_join_only_matching_refs_with_reversal (__main__.RoleAwareGeometryContract.test_unambiguous_open_segments_join_only_matching_refs_with_reversal) ... ok
+test_unclosed_segments_are_never_given_a_closing_edge (__main__.RoleAwareGeometryContract.test_unclosed_segments_are_never_given_a_closing_edge) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.816s
+
+OK

@@ -1,0 +1,288 @@
+{
+  "review_status": "PASS_WITH_BOUNDED_FINDINGS",
+  "source_sha": "5d984dc5f9d336a71755b33951ab09d50f11193e",
+  "app_tree": "077ea26b62ac30ea3856fd78e3d7386a35b5cb0e",
+  "workflow_run_id": "41287047774",
+  "reviewed_png_count": 44,
+  "reviewed_at_utc": "2026-11-01T08:16:08.265438+00:00",
+  "review_method": "Root personally inspected all11 original-resolution2x2 sheets island-01 through island-11, covering all44 unmodified480x854 source10 PNGs. Inspected each of8 real-Telecom external views, actualcontacts/recents compact/expanded, all3styles/lightdark/HEEN fixture layouts,4settings top/bottom captures and4additional call-state fixtures. Every image is bound to its source pixel SHA256.",
+  "blocking_findings": [],
+  "bounded_findings": [
+    "Compact capsules intentionally ellipsize longer caller names; the expanded real-call capsule shows the complete two-line identity and readable timer/phase/actions.",
+    "At480x854/font1.3, expanded actualcontacts/recents leave roughly one visible list row; native tests require at least60dp of list area and preserve scrolling, query and anchors. The floating dial button is hidden in these constrained expanded views.",
+    "The inherited floating dial button in compact main lists can cover part of a lower-row call control at the pictured scroll position; the list can be scrolled to expose it. This is recorded rather than claiming that every list pixel remains uncovered.",
+    "Settings top/bottom images show the outer controls and nativebar contrast; permission/role, demo and style/size controls in the scroll middle are exercised by native assertions, and are not all pictured by these four settings captures."
+  ],
+  "scope_limits": [
+    "The36 internal island frames use explicitly labelled fictional sessions with production renderer/controller; the8 external frames use actual emulator GSM→Telecom→production service calls.",
+    "Incoming realcalls use Android nativeCallStyle, rather than an external ringing capsule; the incoming/held/outgoing/nonaudio internal fixtures verify the pictured UI only.",
+    "Protected Android Settings hides overlays by design; its two actual call states and retained incoming/ongoing notifications are verified in nativeJSON, not counted as an extra protected-screen PNG.",
+    "Native speaker on/off switching is UNAVAILABLE because the emulator exposes only route8/mask8; unsupported controls are absent. No physical SIM/audio/BT/JellyStar, fullTalkBack or matching-key upgrade proof."
+  ],
+  "files": [
+    {
+      "file": "external-end-confirmation.png",
+      "sha256": "2b94b5991256914bcde45211e81fbcf807babe39a8e90583a8fb74fdd38f1b8e",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "external-ended-launcher.png",
+      "sha256": "34b037a6758fa1765523e6d56c300bcac1e86b356998eee4bc7498206e425335",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "external-inapp-return.png",
+      "sha256": "37c948654b601e0c760f7330521a07651a6fec026640711f57b3fe6b39994397",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "external-launcher-active-compact.png",
+      "sha256": "ba3b3ce000d67acad877c3bcb6cb16309065af8488c4990afadd0f7775775065",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "external-launcher-active-expanded.png",
+      "sha256": "4bb204078873510d5f335c344d0362ed81d88fc57d73c9ea50ab42cac45dad36",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "external-launcher-native-incoming.png",
+      "sha256": "89cef1988e8df50cc6a6a6f39188bd0d06b9b25fa6019d2f2b652aa44da7f3ab",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "external-other-app-active-expanded.png",
+      "sha256": "42dee92d991bc5705369a1d472b5ebb9d040a9868fca0ace1e28782361b52a07",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "external-permission-denied-launcher.png",
+      "sha256": "89cef1988e8df50cc6a6a6f39188bd0d06b9b25fa6019d2f2b652aa44da7f3ab",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-app-contacts-compact.png",
+      "sha256": "2d7cb2a04a8bff3a4f7501bea9e6146ed40a72349654955b19f59294dd750594",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "island-app-contacts-expanded.png",
+      "sha256": "577b8ee1fc5627a8604aeb02e68a2d24e1d92bcd047caa5deccd90a7815d413a",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "island-app-recents-compact.png",
+      "sha256": "08375caa7402ce68882db73649b8972a44ce05110c66f584013d570d3157e2bc",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "island-app-recents-expanded.png",
+      "sha256": "8fdaacebd297195eb0f2373074432355f620672f6b734ef6d136f0e7c59ac7a1",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "island-apple-dark-en-compact.png",
+      "sha256": "e41b2ffa4fb3dd61095015ecffc937e007afb5e2d57c536c88dcd3d6984ba359",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "island-apple-dark-en-expanded.png",
+      "sha256": "e81b9018c4edeb498c07690e610b36b580e9220a48bbb4acf7d5b131c390ae13",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-apple-dark-he-compact.png",
+      "sha256": "18511dc2b1f5a47fdf6466113c32bf1b40b32acaedfc91c2b5eee80d01c089d7",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "island-apple-dark-he-expanded.png",
+      "sha256": "9b3da4c441451cee1694291292147c1d6ea0e5866ddecdfa47556d829ccc4a5c",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-apple-light-en-compact.png",
+      "sha256": "c433c24b7e4f68bb971168133dbeb9803f991e991479bd0413a9b13aa63d2f01",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "island-apple-light-en-expanded.png",
+      "sha256": "ffb1379a365c8bc5a2392c403a54bb48c35b3b712748d18b9703c32d042b2481",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-apple-light-he-compact.png",
+      "sha256": "f581c1272826a0e6d3064666c8f7ca3e5c83ea771b9f0310db784ea9439e6b42",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "island-apple-light-he-expanded.png",
+      "sha256": "8413577b38800c56d3d5f066cf7811c0885588ab1392b93be083477637781e81",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-emerald-dark-en-compact.png",
+      "sha256": "5cf0be611ef0acc28495a4decacf2259616c44b5fe93addaf2908c3a21313bdc",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "island-emerald-dark-en-expanded.png",
+      "sha256": "4230324c7c3554d9db069ea889ad401f022951d6a83698714694dfb2d146a8b4",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-emerald-dark-he-compact.png",
+      "sha256": "d1958157864332e4971dd7c74c2c14fdedc7977454c372ec7c43de5ab80d9b5f",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "island-emerald-dark-he-expanded.png",
+      "sha256": "1242368be6a45e3a52efeaa20442ac6f255ac04eda59f22c69e0a5ea8e231a96",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-emerald-light-en-compact.png",
+      "sha256": "65bfc089d98a131db2f80d192b7899d0d48553cef545f6350d120276f6e25cc6",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "island-emerald-light-en-expanded.png",
+      "sha256": "87d7f61d586366943069e6b49a6797d572b02166d8f260dc4fbc871bdcd40e10",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-emerald-light-he-compact.png",
+      "sha256": "1581b3faabd36a31c9b529e70ebe98ec99a229c79f87b50c2c0f7edae099c4c1",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "island-emerald-light-he-expanded.png",
+      "sha256": "d989194de4f920ce0fcd6c9d9f736b215b93311a24177775e4afce0c2749e906",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-glass-dark-en-compact.png",
+      "sha256": "fe5b812629acc9f45dcf5d034e0ecb43f03feec32005d9406245ecf103280947",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "island-glass-dark-en-expanded.png",
+      "sha256": "e6063c2092d8617366dbe6993b914a98be0ff68b50aeb131132178843b24b404",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-glass-dark-he-compact.png",
+      "sha256": "ec02b6fc91c82c6be5d8fa048cf9fa80bbfcea39bd4ba57bf6385528d7b39d12",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "island-glass-dark-he-expanded.png",
+      "sha256": "1d7266251aed9d734deb5df462a7841fba7fc44dd5111d398b6a45c702c9cec9",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-glass-light-en-compact.png",
+      "sha256": "056d0e1b193ed3e7ec9a0a819bdfd27fe664d8918ee3b811da31738cadf14583",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "island-glass-light-en-expanded.png",
+      "sha256": "7b30a2d819a7c951245d79c16bc4f6d783c6f62a2455d063b1ca997e5b7eacfc",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-glass-light-he-compact.png",
+      "sha256": "d011867ddacbbefed4929b9e6fd6d71f0b5e43f7ad31512c2610f1b107298997",
+      "result": "BOUNDED",
+      "reviewed": true
+    },
+    {
+      "file": "island-glass-light-he-expanded.png",
+      "sha256": "fdcc5f9faae2fb2000fd72b180e0a4b64fc97eae5bf8b216eda673847b7f0eeb",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-settings-dark-bottom.png",
+      "sha256": "d7313aa99cec74e235d2084ce9c2e006fa984ad4b2ac03f39929f5a254ed9ecb",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-settings-dark.png",
+      "sha256": "6fcf832021f058809619b7629871e59c1b7bfc5abd7e7bf6ab53f0d79554ee6c",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-settings-light-bottom.png",
+      "sha256": "df8792f51288d9bd406e697170cbf5d700a6841bb14d8b124fb0757024d27d08",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-settings-light.png",
+      "sha256": "f154a1b3e0261c694eee3c8a33008f6d1b92f5bc07d6e5172933412ee70ab0af",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-state-held.png",
+      "sha256": "f24fd8e3e7706156fe3f941f732367ad2b22c50cd20847deac85546259a2d874",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-state-incoming.png",
+      "sha256": "f875677081218818a26cf5de00b3fcd9853dd20fddd88feeddf399f816452b04",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-state-noaudio.png",
+      "sha256": "b62e52c4fabded6041b666d2122351df551f0463dd0a80194a01cacd1f17c350",
+      "result": "PASS",
+      "reviewed": true
+    },
+    {
+      "file": "island-state-outgoing.png",
+      "sha256": "4edd8b73231ee5de7f5b32a0c17bd88643e0ba9c6988b356745127e66884cfad",
+      "result": "PASS",
+      "reviewed": true
+    }
+  ]
+}

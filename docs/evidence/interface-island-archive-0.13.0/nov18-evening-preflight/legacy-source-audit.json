@@ -1,0 +1,52 @@
+{
+  "saved_at_utc": "2026-11-18T20:11:44.119862+00:00",
+  "source_ci": 44303504696,
+  "status": "TEST_SOURCE_REVIEW_NOT_NATIVE_EXECUTION",
+  "files": {
+    "PersonalizationSnapshotTest.java": {
+      "sha256": "ba6a12941409f2ca454f8de8503bb1c123400c60192c2e3667df55c23b034062",
+      "test_methods": [
+        "testContactsAndRecentsCompactPresentationInBothLanguagesThemesAndFontSizes",
+        "testHorizontalFavoritesReachAllContactsWithoutDialingAndRememberSharedCollapse",
+        "testSettingsIconAndAvatarChoosersAtLargeFontInBothThemes",
+        "testEveryRealLauncherAliasRemainsUniqueAndDialIntentStillResolves",
+        "testAllAvatarShapesClipActualContactPhotoAndWidgetInitials",
+        "testArchiveResolvesRealProviderNamePhotoAndSearchesNames",
+        "testDocumentBackupRestoreRequiresConfirmationAndCancelKeepsPreferences"
+      ],
+      "method_names_unchanged": true
+    },
+    "SettingsInteractionTest.java": {
+      "sha256": "528c7d43babc9189b30a5b7d5b1dcf9635608f4b6ebbf01a1fdf3a6a21d7ba9a",
+      "test_methods": [
+        "testLastSettingsCategoryStaysInteractiveAndCallsCategoryHasNoPhoneSymbol"
+      ],
+      "method_names_unchanged": true
+    },
+    "WidgetSnapshotTest.java": {
+      "sha256": "7261d00d4d819172e0fba958b2e4648b2016f458661bfd88677bafdc3a58deb1",
+      "test_methods": [
+        "testNarrowFavoritesFitAtLargeSystemFont",
+        "testRealHostAdditionResizeThemeEmptyAndRemoval"
+      ],
+      "method_names_unchanged": true
+    }
+  },
+  "bar_profile_unchanged": {
+    "deadline_ms": 5000,
+    "max_samples": 50,
+    "interval_ms": 100,
+    "stable_samples": 3,
+    "min_contrasting_pixels": 40,
+    "navigation_min_dp": 48
+  },
+  "old_verifier_scripts_changed": false,
+  "actual_focus_inputs_retained": true,
+  "actual_camera_or_hardware_validation": false,
+  "native_result_for_new_source": "NOT_EXECUTED",
+  "production_files_changed_by_legacy_agent": false,
+  "publication_allowed": false,
+  "direct_jdk17_javac": "PASS:threefiles,API35+runner/mock+currentapp/testclasspaths; noGradleornativeexecution",
+  "independent_review": "BoundedCODEGOafterfixingpre-boundsnativeeducationcleanupordering; unchanged5sbarprofile canhandleonlyknownnativepromptwithoutresettingdeadline",
+  "source_frozen": true
+}

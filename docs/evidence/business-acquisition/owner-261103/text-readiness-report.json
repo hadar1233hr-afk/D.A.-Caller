@@ -1,0 +1,653 @@
+{
+  "app_accepted_rows": 0,
+  "automatically_replaced_names": 0,
+  "corpus_rows_examined": 2448,
+  "corpus_sha256": "37ce40b735e144cc38eee1e72ce75c785424f0213d05c9c35feb766c1b2704df",
+  "field_failure_counts": {
+    "address": 1,
+    "city": 1,
+    "name": 2
+  },
+  "generated_at": "2026-11-05T17:12:21.922092+00:00",
+  "independent_pbf_method": "pyosmium C++ EntityFilter(NODE) + IdFilter; exact source tags/timestamp reread",
+  "independent_pbf_nodes_found": 3,
+  "limits": [
+    "This report does not evaluate production geographic admission or phone dial identities",
+    "Within text bounds is not app admission or name/phone ownership verification",
+    "Exact source alternatives remain review-only, with no language preference chosen",
+    "Historical source timestamps do not establish current business names or phones"
+  ],
+  "production_packager_sha256": "d0ffd2392ed43a356f6e84ee6b4a7526cf84a50dc555e5536d85975b3d0c123f",
+  "production_scope_or_country_guards_changed": false,
+  "purpose": "Source-text triage only; no rows rewritten, selected, packaged or app accepted",
+  "rows": [
+    {
+      "app_accepted": false,
+      "classification": "TEXT_REVIEW_REQUIRED",
+      "failed_fields": [
+        "city",
+        "address"
+      ],
+      "field_reviews": {
+        "address": {
+          "contract_controls": [
+            {
+              "category": "Cf",
+              "code_point": "U+200E",
+              "index": 28,
+              "unicode_name": "LEFT-TO-RIGHT MARK"
+            }
+          ],
+          "contract_length": 29,
+          "contract_observed_text": "Simtat Beit HaBad 3 Tel Aviv\u200e",
+          "empty_allowed": true,
+          "maximum": 1200,
+          "normalization_is_observation_only": true,
+          "original_controls": [
+            {
+              "category": "Cf",
+              "code_point": "U+200E",
+              "index": 28,
+              "unicode_name": "LEFT-TO-RIGHT MARK"
+            }
+          ],
+          "original_length": 29,
+          "original_value": "Simtat Beit HaBad 3 Tel Aviv\u200e",
+          "reasons": [
+            "disallowed-control-or-format-character"
+          ],
+          "within_text_contract": false
+        },
+        "category": {
+          "contract_controls": [],
+          "contract_length": 17,
+          "contract_observed_text": "tourism:apartment",
+          "empty_allowed": true,
+          "maximum": 300,
+          "normalization_is_observation_only": true,
+          "original_controls": [],
+          "original_length": 17,
+          "original_value": "tourism:apartment",
+          "reasons": [],
+          "within_text_contract": true
+        },
+        "city": {
+          "contract_controls": [
+            {
+              "category": "Cf",
+              "code_point": "U+200E",
+              "index": 8,
+              "unicode_name": "LEFT-TO-RIGHT MARK"
+            }
+          ],
+          "contract_length": 9,
+          "contract_observed_text": "Tel Aviv\u200e",
+          "empty_allowed": true,
+          "maximum": 300,
+          "normalization_is_observation_only": true,
+          "original_controls": [
+            {
+              "category": "Cf",
+              "code_point": "U+200E",
+              "index": 8,
+              "unicode_name": "LEFT-TO-RIGHT MARK"
+            }
+          ],
+          "original_length": 9,
+          "original_value": "Tel Aviv\u200e",
+          "reasons": [
+            "disallowed-control-or-format-character"
+          ],
+          "within_text_contract": false
+        },
+        "name": {
+          "contract_controls": [],
+          "contract_length": 12,
+          "contract_observed_text": "Rena's House",
+          "empty_allowed": false,
+          "maximum": 300,
+          "normalization_is_observation_only": true,
+          "original_controls": [],
+          "original_length": 12,
+          "original_value": "Rena's House",
+          "reasons": [],
+          "within_text_contract": true
+        },
+        "phone": {
+          "contract_controls": [],
+          "contract_length": 13,
+          "contract_observed_text": "+972542972233",
+          "empty_allowed": false,
+          "maximum": 80,
+          "normalization_is_observation_only": true,
+          "original_controls": [],
+          "original_length": 13,
+          "original_value": "+972542972233",
+          "reasons": [],
+          "within_text_contract": true
+        },
+        "source_id": {
+          "contract_controls": [],
+          "contract_length": 19,
+          "contract_observed_text": "osm:node:5066707334",
+          "empty_allowed": false,
+          "maximum": 100,
+          "normalization_is_observation_only": true,
+          "original_controls": [],
+          "original_length": 19,
+          "original_value": "osm:node:5066707334",
+          "reasons": [],
+          "within_text_contract": true
+        },
+        "source_updated_at": {
+          "contract_controls": [],
+          "contract_length": 25,
+          "contract_observed_text": "2023-10-26T19:50:14+00:00",
+          "empty_allowed": false,
+          "maximum": 80,
+          "normalization_is_observation_only": true,
+          "original_controls": [],
+          "original_length": 25,
+          "original_value": "2023-10-26T19:50:14+00:00",
+          "reasons": [],
+          "within_text_contract": true
+        }
+      },
+      "independent_source_node": {
+        "source_fields": {
+          "addr:city": "Tel Aviv\u200e",
+          "addr:housenumber": "3",
+          "addr:street": "Simtat Beit HaBad",
+          "email": "renashousetlv@gmail.com",
+          "internet_access": "yes",
+          "internet_access:fee": "no",
+          "name": "Rena's House",
+          "name:en": "Rena's House",
+          "phone": "+972-54-297-2233",
+          "source": "Bing, local knowledge",
+          "tourism": "apartment"
+        },
+        "source_id": "osm:node:5066707334",
+        "source_updated_at": "2023-10-26T19:50:14+00:00",
+        "source_url": "https://www.openstreetmap.org/node/5066707334"
+      },
+      "original_record": {
+        "address": "Simtat Beit HaBad 3 Tel Aviv\u200e",
+        "category": "tourism:apartment",
+        "city": "Tel Aviv\u200e",
+        "country_admission": "missing-source-country-tag",
+        "country_tag": null,
+        "dialing_scope": "E164",
+        "e164": "+972542972233",
+        "extension": "",
+        "geographic_scope": "research-node-source-IL-interior-minus-filled-WB-and-Gaza",
+        "geometry_input_sha256": "04b9d0ed2ad8d28e2947bb9fde88cbe39dd7f37c666940ab48869fdb3939750f",
+        "id": "osm:node:5066707334:+972542972233",
+        "imported_at": "2026-11-05T10:07:11.746970+00:00",
+        "latitude": 32.0607858,
+        "license_id": "ODbL-1.0",
+        "longitude": 34.7697195,
+        "margin_degrees": 0.001,
+        "name": "Rena's House",
+        "original_phone": "+972-54-297-2233",
+        "phone": "+972542972233",
+        "phone_type": "1",
+        "source_country_fields": {},
+        "source_id": "osm:node:5066707334",
+        "source_names": {
+          "name": "Rena's House",
+          "name:en": "Rena's House"
+        },
+        "source_updated_at": "2023-10-26T19:50:14+00:00",
+        "source_url": "https://www.openstreetmap.org/node/5066707334",
+        "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED",
+        "verification": "source-listed-not-phone-confirmed"
+      },
+      "source_name_alternatives": [],
+      "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED"
+    },
+    {
+      "app_accepted": false,
+      "classification": "TEXT_REVIEW_REQUIRED",
+      "failed_fields": [
+        "name"
+      ],
+      "field_reviews": {
+        "address": {
+          "contract_controls": [],
+          "contract_length": 20,
+          "contract_observed_text": "\u0634\u0627\u0631\u0639 \u0627\u0644\u0643\u0646\u0627\u0626\u0633 \u0643\u0641\u0631 \u0643\u0646\u0627",
+          "empty_allowed": true,
+          "maximum": 1200,
+          "normalization_is_observation_only": true,
+          "original_controls": [],
+          "original_length": 20,
+          "original_value": "\u0634\u0627\u0631\u0639 \u0627\u0644\u0643\u0646\u0627\u0626\u0633 \u0643\u0641\u0631 \u0643\u0646\u0627",
+          "reasons": [],
+          "within_text_contract": true
+        },
+        "category": {
+          "contract_controls": [],
+          "contract_length": 19,
+          "contract_observed_text": "tourism:guest_house",
+          "empty_allowed": true,
+          "maximum": 300,
+          "normalization_is_observation_only": true,
+          "original_controls": [],
+          "original_length": 19,
+          "original_value": "tourism:guest_house",
+          "reasons": [],
+          "within_text_contract": true
+        },
+        "city": {
+          "contract_controls": [],
+          "contract_length": 7,
+          "contract_observed_text": "\u0643\u0641\u0631 \u0643\u0646\u0627",
+          "empty_allowed": true,
+          "maximum": 300,
+          "normalization_is_observation_only": true,
+          "original_controls": [],
+          "original_length": 7,
+          "original_value": "\u0643\u0641\u0631 \u0643\u0646\u0627",
+          "reasons": [],
+          "within_text_contract": true
+        },
+        "name": {
+          "contract_controls": [
+            {
+              "category": "Cf",
+              "code_point": "U+202B",
+              "index": 0,
+              "unicode_name": "RIGHT-TO-LEFT EMBEDDING"
+            },
+            {
+              "category": "Cf",
+              "code_point": "U+202C",
+              "index": 5,
+              "unicode_name": "POP DIRECTIONAL FORMATTING"
+            },
+            {
+              "category": "Cf",
+              "code_point": "U+202B",
+              "index": 7,
+              "unicode_name": "RIGHT-TO-LEFT EMBEDDING"
+            },
+            {
+              "category": "Cf",
+              "code_point": "U+202C",
+              "index": 13,
+              "unicode_name": "POP DIRECTIONAL FORMATTING"
+            },
+            {
+              "category": "Cf",
+              "code_point": "U+202B",
+              "index": 15,
+              "unicode_name": "RIGHT-TO-LEFT EMBEDDING"
+            },
+            {
+              "category": "Cf",
+              "code_point": "U+202C",
+              "index": 19,
+              "unicode_name": "POP DIRECTIONAL FORMATTING"
+            }
+          ],
+          "contract_length": 20,
+          "contract_observed_text": "\u202b\u05d1\u05db\u05e0\u05d0\u202c \u202b\u05d4\u05d0\u05e8\u05d7\u05d4\u202c \u202b\u05d1\u05d9\u05ea\u202c",
+          "empty_allowed": false,
+          "maximum": 300,
+          "normalization_is_observation_only": true,
+          "original_controls": [
+            {
+              "category": "Cf",
+              "code_point": "U+202B",
+              "index": 0,
+              "unicode_name": "RIGHT-TO-LEFT EMBEDDING"
+            },
+            {
+              "category": "Cf",
+              "code_point": "U+202C",
+              "index": 5,
+              "unicode_name": "POP DIRECTIONAL FORMATTING"
+            },
+            {
+              "category": "Cf",
+              "code_point": "U+202B",
+              "index": 7,
+              "unicode_name": "RIGHT-TO-LEFT EMBEDDING"
+            },
+            {
+              "category": "Cf",
+              "code_point": "U+202C",
+              "index": 13,
+              "unicode_name": "POP DIRECTIONAL FORMATTING"
+            },
+            {
+              "category": "Cf",
+              "code_point": "U+202B",
+              "index": 15,
+              "unicode_name": "RIGHT-TO-LEFT EMBEDDING"
+            },
+            {
+              "category": "Cf",
+              "code_point": "U+202C",
+              "index": 19,
+              "unicode_name": "POP DIRECTIONAL FORMATTING"
+            }
+          ],
+          "original_length": 20,
+          "original_value": "\u202b\u05d1\u05db\u05e0\u05d0\u202c \u202b\u05d4\u05d0\u05e8\u05d7\u05d4\u202c \u202b\u05d1\u05d9\u05ea\u202c",
+          "reasons": [
+            "disallowed-control-or-format-character"
+          ],
+          "within_text_contract": false
+        },
+        "phone": {
+          "contract_controls": [],
+          "contract_length": 13,
+          "contract_observed_text": "+972504007637",
+          "empty_allowed": false,
+          "maximum": 80,
+          "normalization_is_observation_only": true,
+          "original_controls": [],
+          "original_length": 13,
+          "original_value": "+972504007637",
+          "reasons": [],
+          "within_text_contract": true
+        },
+        "source_id": {
+          "contract_controls": [],
+          "contract_length": 19,
+          "contract_observed_text": "osm:node:5801536067",
+          "empty_allowed": false,
+          "maximum": 100,
+          "normalization_is_observation_only": true,
+          "original_controls": [],
+          "original_length": 19,
+          "original_value": "osm:node:5801536067",
+          "reasons": [],
+          "within_text_contract": true
+        },
+        "source_updated_at": {
+          "contract_controls": [],
+          "contract_length": 25,
+          "contract_observed_text": "2019-05-04T18:43:41+00:00",
+          "empty_allowed": false,
+          "maximum": 80,
+          "normalization_is_observation_only": true,
+          "original_controls": [],
+          "original_length": 25,
+          "original_value": "2019-05-04T18:43:41+00:00",
+          "reasons": [],
+          "within_text_contract": true
+        }
+      },
+      "independent_source_node": {
+        "source_fields": {
+          "addr:city": "\u0643\u0641\u0631 \u0643\u0646\u0627",
+          "addr:postcode": "16930",
+          "addr:street": "\u0634\u0627\u0631\u0639 \u0627\u0644\u0643\u0646\u0627\u0626\u0633",
+          "name": "\u062f\u0627\u0631 \u0643\u0646\u0627 \u0627\u0644\u0636\u064a\u0627\u0641\u0629",
+          "name:ar": "\u062f\u0627\u0631 \u0643\u0646\u0627 \u0627\u0644\u0636\u064a\u0627\u0641\u0629",
+          "name:en": "Cana Guest House",
+          "name:he": "\u202b\u05d1\u05db\u05e0\u05d0\u202c \u202b\u05d4\u05d0\u05e8\u05d7\u05d4\u202c \u202b\u05d1\u05d9\u05ea\u202c",
+          "phone": "\u202b\u202a+972\u202c\u202c \u202b\u202a50\u202c\u202c \u202b\u202a400\u202c\u202c \u202b\u202a7637\u202c\u202c",
+          "tourism": "guest_house"
+        },
+        "source_id": "osm:node:5801536067",
+        "source_updated_at": "2019-05-04T18:43:41+00:00",
+        "source_url": "https://www.openstreetmap.org/node/5801536067"
+      },
+      "name_disposition": "EXACT_SOURCE_ALTERNATIVES_REQUIRE_REVIEW",
+      "original_record": {
+        "address": "\u0634\u0627\u0631\u0639 \u0627\u0644\u0643\u0646\u0627\u0626\u0633 \u0643\u0641\u0631 \u0643\u0646\u0627",
+        "category": "tourism:guest_house",
+        "city": "\u0643\u0641\u0631 \u0643\u0646\u0627",
+        "country_admission": "missing-source-country-tag",
+        "country_tag": null,
+        "dialing_scope": "E164",
+        "e164": "+972504007637",
+        "extension": "",
+        "geographic_scope": "research-node-source-IL-interior-minus-filled-WB-and-Gaza",
+        "geometry_input_sha256": "04b9d0ed2ad8d28e2947bb9fde88cbe39dd7f37c666940ab48869fdb3939750f",
+        "id": "osm:node:5801536067:+972504007637",
+        "imported_at": "2026-11-05T10:07:11.746970+00:00",
+        "latitude": 32.7471838,
+        "license_id": "ODbL-1.0",
+        "longitude": 35.3385226,
+        "margin_degrees": 0.001,
+        "name": "\u202b\u05d1\u05db\u05e0\u05d0\u202c \u202b\u05d4\u05d0\u05e8\u05d7\u05d4\u202c \u202b\u05d1\u05d9\u05ea\u202c",
+        "original_phone": "\u202b\u202a+972\u202c\u202c \u202b\u202a50\u202c\u202c \u202b\u202a400\u202c\u202c \u202b\u202a7637\u202c\u202c",
+        "phone": "+972504007637",
+        "phone_type": "1",
+        "source_country_fields": {},
+        "source_id": "osm:node:5801536067",
+        "source_names": {
+          "name": "\u062f\u0627\u0631 \u0643\u0646\u0627 \u0627\u0644\u0636\u064a\u0627\u0641\u0629",
+          "name:en": "Cana Guest House",
+          "name:he": "\u202b\u05d1\u05db\u05e0\u05d0\u202c \u202b\u05d4\u05d0\u05e8\u05d7\u05d4\u202c \u202b\u05d1\u05d9\u05ea\u202c"
+        },
+        "source_updated_at": "2019-05-04T18:43:41+00:00",
+        "source_url": "https://www.openstreetmap.org/node/5801536067",
+        "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED",
+        "verification": "source-listed-not-phone-confirmed"
+      },
+      "source_name_alternatives": [
+        {
+          "app_accepted": false,
+          "automatically_selected": false,
+          "exact_source_value": "Cana Guest House",
+          "source_fields": [
+            "name:en"
+          ],
+          "source_id": "osm:node:5801536067",
+          "source_updated_at": "2019-05-04T18:43:41+00:00",
+          "source_url": "https://www.openstreetmap.org/node/5801536067",
+          "status": "REVIEW_ONLY_NOT_SELECTED_OR_APP_ACCEPTED"
+        },
+        {
+          "app_accepted": false,
+          "automatically_selected": false,
+          "exact_source_value": "\u062f\u0627\u0631 \u0643\u0646\u0627 \u0627\u0644\u0636\u064a\u0627\u0641\u0629",
+          "source_fields": [
+            "name",
+            "name:ar"
+          ],
+          "source_id": "osm:node:5801536067",
+          "source_updated_at": "2019-05-04T18:43:41+00:00",
+          "source_url": "https://www.openstreetmap.org/node/5801536067",
+          "status": "REVIEW_ONLY_NOT_SELECTED_OR_APP_ACCEPTED"
+        }
+      ],
+      "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED"
+    },
+    {
+      "app_accepted": false,
+      "classification": "TEXT_REVIEW_REQUIRED",
+      "failed_fields": [
+        "name"
+      ],
+      "field_reviews": {
+        "address": {
+          "contract_controls": [],
+          "contract_length": 10,
+          "contract_observed_text": "\u05d4\u05e6\u05d5\u05e8\u05e4\u05d9\u05dd 14",
+          "empty_allowed": true,
+          "maximum": 1200,
+          "normalization_is_observation_only": true,
+          "original_controls": [],
+          "original_length": 10,
+          "original_value": "\u05d4\u05e6\u05d5\u05e8\u05e4\u05d9\u05dd 14",
+          "reasons": [],
+          "within_text_contract": true
+        },
+        "category": {
+          "contract_controls": [],
+          "contract_length": 14,
+          "contract_observed_text": "office:company",
+          "empty_allowed": true,
+          "maximum": 300,
+          "normalization_is_observation_only": true,
+          "original_controls": [],
+          "original_length": 14,
+          "original_value": "office:company",
+          "reasons": [],
+          "within_text_contract": true
+        },
+        "city": {
+          "contract_controls": [],
+          "contract_length": 0,
+          "contract_observed_text": "",
+          "empty_allowed": true,
+          "maximum": 300,
+          "normalization_is_observation_only": true,
+          "original_controls": [],
+          "original_length": 0,
+          "original_value": "",
+          "reasons": [],
+          "within_text_contract": true
+        },
+        "name": {
+          "contract_controls": [
+            {
+              "category": "Cf",
+              "code_point": "U+200E",
+              "index": 0,
+              "unicode_name": "LEFT-TO-RIGHT MARK"
+            }
+          ],
+          "contract_length": 15,
+          "contract_observed_text": "\u200e\u05d0\u05e8. \u05d2\u05d0\u05dc\u05e8\u05d9 \u05d1\u05e2\"\u05de",
+          "empty_allowed": false,
+          "maximum": 300,
+          "normalization_is_observation_only": true,
+          "original_controls": [
+            {
+              "category": "Cf",
+              "code_point": "U+200E",
+              "index": 0,
+              "unicode_name": "LEFT-TO-RIGHT MARK"
+            }
+          ],
+          "original_length": 15,
+          "original_value": "\u200e\u05d0\u05e8. \u05d2\u05d0\u05dc\u05e8\u05d9 \u05d1\u05e2\"\u05de",
+          "reasons": [
+            "disallowed-control-or-format-character"
+          ],
+          "within_text_contract": false
+        },
+        "phone": {
+          "contract_controls": [],
+          "contract_length": 12,
+          "contract_observed_text": "+97239072950",
+          "empty_allowed": false,
+          "maximum": 80,
+          "normalization_is_observation_only": true,
+          "original_controls": [],
+          "original_length": 12,
+          "original_value": "+97239072950",
+          "reasons": [],
+          "within_text_contract": true
+        },
+        "source_id": {
+          "contract_controls": [],
+          "contract_length": 20,
+          "contract_observed_text": "osm:node:12543641901",
+          "empty_allowed": false,
+          "maximum": 100,
+          "normalization_is_observation_only": true,
+          "original_controls": [],
+          "original_length": 20,
+          "original_value": "osm:node:12543641901",
+          "reasons": [],
+          "within_text_contract": true
+        },
+        "source_updated_at": {
+          "contract_controls": [],
+          "contract_length": 25,
+          "contract_observed_text": "2025-01-30T12:36:34+00:00",
+          "empty_allowed": false,
+          "maximum": 80,
+          "normalization_is_observation_only": true,
+          "original_controls": [],
+          "original_length": 25,
+          "original_value": "2025-01-30T12:36:34+00:00",
+          "reasons": [],
+          "within_text_contract": true
+        }
+      },
+      "independent_source_node": {
+        "source_fields": {
+          "addr:housenumber": "14",
+          "addr:street": "\u05d4\u05e6\u05d5\u05e8\u05e4\u05d9\u05dd",
+          "contact:facebook": "rgallery.israel",
+          "contact:instagram": "r_gallery_israel",
+          "email": "info@rgallery.co.il",
+          "level": "0",
+          "name": "R. Gallery Ltd",
+          "name:en": "R. Gallery Ltd",
+          "name:he": "\u200e\u05d0\u05e8. \u05d2\u05d0\u05dc\u05e8\u05d9 \u05d1\u05e2\"\u05de",
+          "office": "company",
+          "phone": "039072950",
+          "website": "https://rgallery.co.il"
+        },
+        "source_id": "osm:node:12543641901",
+        "source_updated_at": "2025-01-30T12:36:34+00:00",
+        "source_url": "https://www.openstreetmap.org/node/12543641901"
+      },
+      "name_disposition": "EXACT_SOURCE_ALTERNATIVES_REQUIRE_REVIEW",
+      "original_record": {
+        "address": "\u05d4\u05e6\u05d5\u05e8\u05e4\u05d9\u05dd 14",
+        "category": "office:company",
+        "city": "",
+        "country_admission": "missing-source-country-tag",
+        "country_tag": null,
+        "dialing_scope": "E164",
+        "e164": "+97239072950",
+        "extension": "",
+        "geographic_scope": "research-node-source-IL-interior-minus-filled-WB-and-Gaza",
+        "geometry_input_sha256": "04b9d0ed2ad8d28e2947bb9fde88cbe39dd7f37c666940ab48869fdb3939750f",
+        "id": "osm:node:12543641901:+97239072950",
+        "imported_at": "2026-11-05T10:07:11.746970+00:00",
+        "latitude": 31.9699682,
+        "license_id": "ODbL-1.0",
+        "longitude": 34.8923213,
+        "margin_degrees": 0.001,
+        "name": "\u200e\u05d0\u05e8. \u05d2\u05d0\u05dc\u05e8\u05d9 \u05d1\u05e2\"\u05de",
+        "original_phone": "039072950",
+        "phone": "+97239072950",
+        "phone_type": "0",
+        "source_country_fields": {},
+        "source_id": "osm:node:12543641901",
+        "source_names": {
+          "name": "R. Gallery Ltd",
+          "name:en": "R. Gallery Ltd",
+          "name:he": "\u200e\u05d0\u05e8. \u05d2\u05d0\u05dc\u05e8\u05d9 \u05d1\u05e2\"\u05de"
+        },
+        "source_updated_at": "2025-01-30T12:36:34+00:00",
+        "source_url": "https://www.openstreetmap.org/node/12543641901",
+        "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED",
+        "verification": "source-listed-not-phone-confirmed"
+      },
+      "source_name_alternatives": [
+        {
+          "app_accepted": false,
+          "automatically_selected": false,
+          "exact_source_value": "R. Gallery Ltd",
+          "source_fields": [
+            "name",
+            "name:en"
+          ],
+          "source_id": "osm:node:12543641901",
+          "source_updated_at": "2025-01-30T12:36:34+00:00",
+          "source_url": "https://www.openstreetmap.org/node/12543641901",
+          "status": "REVIEW_ONLY_NOT_SELECTED_OR_APP_ACCEPTED"
+        }
+      ],
+      "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED"
+    }
+  ],
+  "script_sha256": "a0ba075c107a17e990fb285752f4447156d4c429a770303fb560e689a52d64a5",
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "status": "RESEARCH_ONLY_NOT_APP_ACCEPTED",
+  "text_blocker_rows": 3
+}

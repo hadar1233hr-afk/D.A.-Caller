@@ -1,0 +1,194 @@
+{
+  "status": "PASS_HOST_CONTRACT_OBSERVATION_ONLY",
+  "environment": "HOST_ROBOLECTRIC_API33_NATIVE_SQLITE",
+  "observed_at": "2026-11-11T10:17:45.642281+00:00",
+  "framework": "Robolectric4.14.1 @Config(sdk=33) @SQLiteMode(NATIVE)",
+  "host_sqlite_version": "3.32.2",
+  "junit": {
+    "name": "com.dacaller.app.CandidateReaderHostContractTest",
+    "tests": "6",
+    "skipped": "0",
+    "failures": "0",
+    "errors": "0",
+    "timestamp": "2026-11-11T10:16:09",
+    "hostname": "3ebae333e153",
+    "time": "21.314"
+  },
+  "test_cases": [
+    {
+      "name": "everyRecordSurvivesActualReaderPagesWithExactNamesAndDialIdentities",
+      "classname": "com.dacaller.app.CandidateReaderHostContractTest",
+      "time": "5.421"
+    },
+    {
+      "name": "exactCandidateManifestInstallsReadOnlyAndPreservesPrivateCanary",
+      "classname": "com.dacaller.app.CandidateReaderHostContractTest",
+      "time": "0.227"
+    },
+    {
+      "name": "realUnicodeAndEnglishNamesUseActualFts4WithLiteralPunctuation",
+      "classname": "com.dacaller.app.CandidateReaderHostContractTest",
+      "time": "0.1"
+    },
+    {
+      "name": "exactReaderRejectsWrongManifestTypesAndCorruptChecksumWithoutReplacingGoodCopy",
+      "classname": "com.dacaller.app.CandidateReaderHostContractTest",
+      "time": "0.195"
+    },
+    {
+      "name": "everyDistinctPhoneSearchKeepsAllSharedSourceIdentities",
+      "classname": "com.dacaller.app.CandidateReaderHostContractTest",
+      "time": "14.833"
+    },
+    {
+      "name": "equalDigestCannotHideSchemaCountOrFtsIdentityCorruption",
+      "classname": "com.dacaller.app.CandidateReaderHostContractTest",
+      "time": "0.528"
+    }
+  ],
+  "counts": {
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "observations": {
+    "full_reader_records": 2715,
+    "full_reader_pages": 55,
+    "all_fields_and_dial_identities": "PASS",
+    "host_sqlite_version": "3.32.2",
+    "installation_readonly_and_canary": "PASS",
+    "text_queries": "PASS",
+    "hebrew_query": "מעדני",
+    "hebrew_niqqud_query": "מְעדני",
+    "english_query": "Askari",
+    "implicit_intersection_query": "Askari Mini",
+    "negative_manifest_and_checksum": "PASS",
+    "distinct_phone_groups": 2612,
+    "shared_phone_groups_preserved": 77,
+    "actual_reader_phone_queries": 10360,
+    "phone_queries": "PASS",
+    "negative_self_consistent_database_cases": 5,
+    "schema_count_fts_rejection": "PASS",
+    "environment": "HOST_ROBOLECTRIC_API33_NATIVE_SQLITE",
+    "android_emulator": false,
+    "telecom_tested": false,
+    "production_admission": false,
+    "publication_approval": false,
+    "app_records_added": 0,
+    "source_database_sha256": "4eee8e84a3ccab3f291cb58be1e384a0dc16351612511cfe884e14519af3fd0e"
+  },
+  "executed_input": {
+    "database_path": "/workspace/work/business-data/business-candidate-owner-261103-v1/candidate-businesses.sqlite",
+    "manifest_path": "/workspace/work/business-data/business-candidate-owner-261103-v1/candidate-reader-manifest.json",
+    "database_sha256": "4eee8e84a3ccab3f291cb58be1e384a0dc16351612511cfe884e14519af3fd0e",
+    "reader_manifest_sha256": "be9ce29231392c50920fdaaf53a9375a24a810a9b5bf65a3d6bf200f1179ee88"
+  },
+  "final_candidate_binding": {
+    "path": "/workspace/work/business-data/business-candidate-owner-261103-v2",
+    "database_exact_bytes_equal_v1": true,
+    "manifest_exact_bytes_equal_v1": true,
+    "database_sha256": "4eee8e84a3ccab3f291cb58be1e384a0dc16351612511cfe884e14519af3fd0e",
+    "reader_manifest_sha256": "be9ce29231392c50920fdaaf53a9375a24a810a9b5bf65a3d6bf200f1179ee88",
+    "note": "Actual host run used v1; independent post-run byte equality binds the same reader data to final v2. Candidate builder/envelope were not executed by these Java tests."
+  },
+  "application": {
+    "app_tree": "9f15350b457405bf88a35c0ac5badc8f3a85cd94",
+    "reader_path": "app/src/main/java/com/dacaller/app/BusinessDirectory.java",
+    "reader_sha256": "cb0d33991080c8231421c9e3e5ed8f3a8d83ba502bf636930d4bd97ea1282929",
+    "tracked_app_files_modified": false,
+    "candidate_added_to_assets": false,
+    "apk_rebuilt_or_signed": false
+  },
+  "archive": {
+    "file": "candidate-host-checks.zip",
+    "bytes": 9619,
+    "sha256": "6c344da794f32c58cd51f1255ee5280fa42d4cd173c44e83270d6686a91ab4c6",
+    "zip_crc_checked": true,
+    "members": {
+      "CandidateReaderHostContractTest.java": {
+        "sha256": "0561a9893939b75103c4712c15c3564214fc5d727e6a3786b3048953dbf14b19",
+        "bytes": 13882
+      },
+      "init.gradle": {
+        "sha256": "c5ef41116bf0785327a385bf87e07e1d73fec6dd7c880a1a3da6fa81a950d4e9",
+        "bytes": 753
+      },
+      "TEST-com.dacaller.app.CandidateReaderHostContractTest.xml": {
+        "sha256": "6f08ac1d5b7535e2d882c708dfad279ed2da62cfe0aeb991208f5eb1a60a3628",
+        "bytes": 1285
+      },
+      "host-observations.json": {
+        "sha256": "4fe7b8273648a5a8314600625dc8ee9386da93526b7b11e1486a3ead20751100",
+        "bytes": 934
+      },
+      "host-run.log": {
+        "sha256": "20ac99e94c68482bdf4b5f80a795d5bfa8338195ca4af351c64caf716e1146fb",
+        "bytes": 2379
+      },
+      "host-run-initial-ipc-block.log": {
+        "sha256": "7290fd10485aa32ac7fc8d339c0725bf36a76f11558c7ab8d7400f5c733e8762",
+        "bytes": 4603
+      },
+      "host-run-initial-compile-failure.log": {
+        "sha256": "7f84942a6871eb4fc51875b4b9ed34178f1faa893fc3da6287d4a99916c32e30",
+        "bytes": 2336
+      }
+    }
+  },
+  "attempt_history": [
+    {
+      "attempt": 1,
+      "result": "BLOCKED_BEFORE_COMPILE",
+      "test_cases_executed": 0,
+      "reason": "Gradle daemon local socket sandbox denial; retained exact log."
+    },
+    {
+      "attempt": 2,
+      "result": "EXTERNAL_HARNESS_COMPILE_FAILURE",
+      "test_cases_executed": 0,
+      "reason": "Files.writeString unavailable under Android compile API; corrected only external harness to Files.write(bytes), retained exact log."
+    },
+    {
+      "attempt": 3,
+      "result": "PASS",
+      "test_cases_executed": 6,
+      "gradle_exit_code": 0,
+      "gradle_elapsed": "41s",
+      "note": "Same offline filtered Gradle command with supported extra network permission for Gradle local IPC."
+    }
+  ],
+  "limitations": [
+    "Host JVM/native SQLite contracts, not an Android emulator or actual Telecom/UI/dialing test.",
+    "Install uses explicit temporary input streams/cache; no app assets or production directory activation.",
+    "Private-data canary is an isolated test file, not a physical device archive or an in-place upgrade.",
+    "Full row/phone search checks share the unchanged actual Java reader and its normalization; independent source/geometry/admission audit is separate.",
+    "No phone reachability, current ownership, national coverage or million-record performance claim."
+  ],
+  "production_admission": false,
+  "native_integration": "NOT_TESTED",
+  "android_emulator_tested": false,
+  "hardware_tested": false,
+  "publication_approval": false,
+  "app_records_added": 0,
+  "retention_scan": {
+    "checked_members": [
+      "CandidateReaderHostContractTest.java",
+      "init.gradle",
+      "TEST-com.dacaller.app.CandidateReaderHostContractTest.xml",
+      "host-observations.json",
+      "host-run.log",
+      "host-run-initial-ipc-block.log",
+      "host-run-initial-compile-failure.log"
+    ],
+    "credential_pattern_matches": {
+      "github_token": 0,
+      "authorization_header": 0,
+      "private_key": 0,
+      "aws_access_key": 0,
+      "url_credentials": 0
+    },
+    "manual_review": "Retained logs/JUnit/source were reviewed; only password-like value is the public Java CA truststore default changeit, not an account/key secret. No environment dump or signing key material retained.",
+    "redaction_applied": false
+  }
+}

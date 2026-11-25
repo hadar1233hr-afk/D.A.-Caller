@@ -1,0 +1,78 @@
+{
+  "status": "PASS",
+  "recorded_at_utc": "2026-11-12T22:14:49.260039+00:00",
+  "total_tests": 47,
+  "classes": [
+    {
+      "name": "com.dacaller.app.SettingsBackupTest",
+      "tests": "14",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-11-12T22:14:15",
+      "time": "0.568"
+    },
+    {
+      "name": "com.dacaller.app.SettingsBackupActivityTest",
+      "tests": "6",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-11-12T22:13:59",
+      "time": "10.193"
+    },
+    {
+      "name": "com.dacaller.app.SettingsArchiveBackupTest",
+      "tests": "17",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-11-12T22:14:14",
+      "time": "1.004"
+    },
+    {
+      "name": "com.dacaller.app.CallArchiveTest",
+      "tests": "10",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "timestamp": "2026-11-12T22:14:10",
+      "time": "4.093"
+    }
+  ],
+  "command": "./gradlew :app:testDebugUnitTest --tests com.dacaller.app.SettingsBackupTest --tests com.dacaller.app.SettingsBackupActivityTest --tests com.dacaller.app.SettingsArchiveBackupTest --tests com.dacaller.app.CallArchiveTest --offline --no-daemon",
+  "configuration": {
+    "sdk": 33,
+    "sqlite": "NATIVE, explicit on all four classes",
+    "activity_graphics": "NATIVE",
+    "data": "Synthetic metadata only; no private user archive copied"
+  },
+  "fixes": [
+    "Verify AtomicFile journal publication by full validated readback before changing either store",
+    "Verify journal removal and report cleanup failure",
+    "Record a resolved token after durable undo when journal cleanup fails, preventing obsolete undo replay",
+    "Keep failed icon-change tracking until previous icon rollback succeeds",
+    "Apply rounded typography, dark/light dialogs and wine native checkbox themes in backup activity"
+  ],
+  "independent_data_review": "Read-only second reviewer found no concrete introduced data-loss or exception-path issue after fixes",
+  "limitations": [
+    "Host Robolectric tests only; not emulator DocumentsUI/Telecom proof",
+    "Real private archive, hardware and matching-key upgrade not tested",
+    "Application recovery hook and Main pending guards owned by root; final integrated testing pending"
+  ],
+  "earlier_attempts": [
+    "first-run:46 cases,2 new test assertions failed under legacy font graphics",
+    "second-run:46 cases,2 new min-height test assertions used wrong TextView/View API",
+    "third-run:46 cases,1 dialog-button test needed main-looper event dispatch"
+  ],
+  "source_sha256": {
+    "app/src/main/java/com/dacaller/app/SettingsBackup.java": "7e741309df879cac7505ac3bf4adedf43441f55eb078a674f7c8f0f3ad4c6db1",
+    "app/src/main/java/com/dacaller/app/SettingsBackupActivity.java": "433f7d1a359cb4f6c0543ea1d0ac1811b38e38984fe175374b6fd3ceef23a5b2",
+    "app/src/main/java/com/dacaller/app/CallArchive.java": "e38e68c682b96f17c84010e1bf5a39fda802394527f31ec5ca40e26b95d991a8",
+    "app/src/test/java/com/dacaller/app/SettingsBackupTest.java": "7b5e9290aa787c2910d08034f23625386f4efcf17592e03310aea1a2cae898e7",
+    "app/src/test/java/com/dacaller/app/SettingsBackupActivityTest.java": "2bf9d5e050d03630f5531f7fca98902c8bef9db9fcfe0024725db867285d0309",
+    "app/src/test/java/com/dacaller/app/SettingsArchiveBackupTest.java": "d5f6b0d919fe5275a518eafab6afef41716092ab083c44e8cf53f36a3ee328e4",
+    "app/src/test/java/com/dacaller/app/CallArchiveTest.java": "a04fd1f65ed54cf661634824fa4814514663e264c23c33361ee325544fcaf2d3"
+  },
+  "final_log_sha256": "380ee79cddb84dddbf4aca72a2cb664ffd2122f117169b7fd6128e4841a39591"
+}

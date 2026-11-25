@@ -1,0 +1,134 @@
+name: Publish owner-approved DA CALLER 0.12.0
+
+on:
+  pull_request:
+    types: [labeled, synchronize]
+
+concurrency:
+  group: da-caller-owner-approved-exact-012
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  publish-exact-012:
+    if: >-
+      github.event.pull_request.number == 5 &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.repository == 'hadar1233hr-afk/D.A.-Caller' &&
+      github.event.pull_request.head.ref == 'codex/da-caller-dynamic-island-20261027' &&
+      contains(github.event.pull_request.labels.*.name, 'visual-reviewed') &&
+      contains(github.event.pull_request.labels.*.name, 'release-012-approved') &&
+      (github.event_name == 'pull_request' &&
+       (github.event.action == 'synchronize' || github.event.label.name == 'release-012-approved'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+      - name: Install verification tools only; never build or sign
+        run: sdkmanager 'build-tools;35.0.0'
+      - name: Check signing and bounded-release negative contracts
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s scripts/tests -p 'test_da_caller*.py' -v
+          python3 -m unittest discover -s scripts/tests -p 'test_release_012_stage.py' -v
+      - name: Retain original authenticated native artifacts and check unchanged source
+        run: python3 scripts/prepare-approved-012-release.py stage --output approved-012
+      - name: Revalidate actual native cases, all functional proofs and 243 reviewed PNGs
+        run: >-
+          python3 scripts/verify-release-012-matrix.py
+          --artifacts approved-012/artifacts
+          --apk approved-012/native/app-debug.apk
+          --output approved-012/scope.json
+      - name: Verify actual embedded identity and exact approved native signer and bytes
+        run: >-
+          python3 scripts/da_caller_ci_signing.py verify-apk --publication
+          --approved-preview-012
+          --apk approved-012/native/app-debug.apk
+          --context approved-012/native/debug-signing-policy.json
+          --report approved-012/signing.json
+          --apksigner "$ANDROID_HOME/build-tools/35.0.0/apksigner"
+          --aapt "$ANDROID_HOME/build-tools/35.0.0/aapt"
+      - name: Package only the exact retained tested binary and verified evidence
+        run: python3 scripts/prepare-approved-012-release.py package --root approved-012
+      - name: Publish new immutable 0.12.0 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PUBLICATION_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          test -z "$(git ls-remote --tags origin refs/tags/v0.12.0)"
+          if gh release view v0.12.0 >/dev/null 2>&1; then
+            echo 'Release already exists; never overwrite.' >&2
+            exit 1
+          fi
+          gh release create v0.12.0 approved-012/assets/* \
+            --target "$PUBLICATION_SHA" --prerelease --title 'DA CALLER 0.12.0' \
+            --notes-file approved-012/release-notes.md
+          gh release view v0.12.0 --json tagName,targetCommitish,isDraft,isPrerelease,assets,url > approved-012/public-release.json
+      - name: Compare every anonymous public download with the reviewed release bytes
+        env:
+          PUBLICATION_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, time, urllib.request
+          from pathlib import Path
+          root = Path('approved-012')
+          release = json.loads((root/'public-release.json').read_text())
+          manifest = json.loads((root/'assets-manifest.json').read_text())
+          assert release['tagName'] == 'v0.12.0' and release['isDraft'] is False and release['isPrerelease'] is True
+          assert release['targetCommitish'] == os.environ['PUBLICATION_SHA']
+          files = manifest['files']
+          assets = {asset['name']: asset for asset in release['assets']}
+          assert set(assets) == set(files) and len(assets) >= 5
+          verified = {}
+          for name, expected in files.items():
+              url = assets[name]['url']
+              assert url == 'https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.12.0/' + name
+              for attempt in range(4):
+                  try:
+                      with urllib.request.urlopen(url, timeout=45) as response:
+                          assert response.status == 200
+                          data = response.read(32*1024*1024+1)
+                      break
+                  except Exception:
+                      if attempt == 3: raise
+                      time.sleep(2)
+              assert len(data) == expected['bytes'] and hashlib.sha256(data).hexdigest() == expected['sha256']
+              assert data == (root/'assets'/name).read_bytes()
+              verified[name] = dict(url=url, bytes=len(data), sha256=expected['sha256'], exact_bytes_equal=True)
+          (root/'public-verification.json').write_text(json.dumps(dict(status='PASS_ALL_PUBLIC_RELEASE_BYTES',
+              publication_commit=os.environ['PUBLICATION_SHA'], assets=verified), indent=2)+'\n')
+          print('Every public release asset exactly matches its reviewed native/evidence bytes.')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: DA-CALLER-0.12.0-approved-publication-${{ github.event.pull_request.head.sha }}
+          path: |
+            approved-012/stage.json
+            approved-012/scope.json
+            approved-012/signing.json
+            approved-012/assets-manifest.json
+            approved-012/public-release.json
+            approved-012/public-verification.json
+          if-no-files-found: warn
+          retention-days: 90

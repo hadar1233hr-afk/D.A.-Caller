@@ -1,0 +1,1413 @@
+{
+  "review_status": "PASS_WITH_BOUNDED_FINDINGS",
+  "group": "call",
+  "source_sha": "04e58247399aaa579b7de51c8439fa41653ab98c",
+  "app_tree": "7d00a6eca4d9f5005329d4790d6f8383b48e42a7",
+  "workflow_run_id": "41341757982",
+  "reviewed_at_utc": "2026-11-01T23:35:06.744250+00:00",
+  "reviewed_png_count": 101,
+  "pass_png_count": 79,
+  "bounded_png_count": 22,
+  "review_method": "Freshly viewed all101 native480x854 call PNGs using tools.view_image across each of the26 original-resolution2x2 sheets call-01.png through call-26.png; all four quadrants of sheets01-25 and the one frame of sheet26 were inspected. Also individually viewed the third-run original emerald-dark-normal-longname-he, emerald-light-normal-largefont and frost-dark-normal-longname-en PNGs to confirm the bounded caption and name patterns. This is a new review of the exact third-run image bytes, not approval reused from the second run. Recomputed each original SHA-256, verified exact source/tree/run metadata from the current matrix manifest, and verified every sheet frame pixel-for-pixel against its original PNG.",
+  "provenance_manifest": {
+    "path": "/workspace/work/call-followup-third-ui/ui-snapshots/matrix-verification.json",
+    "sha256": "a3853afd7a54638a84c9a6f36272e24b33e3a309098436fb98709e326c138148"
+  },
+  "reviewed_sheets": [
+    {
+      "file": "call-01.png",
+      "sha256": "e6e88d9333fe89492b8162db9bc8b94c32bdc1a887b54e02567114038a4d0129",
+      "inspected": true,
+      "frames": [
+        "call-emerald-dark-audio-largefont.png",
+        "call-emerald-dark-audio-longname-en.png",
+        "call-emerald-dark-audio-longname-he.png",
+        "call-emerald-dark-audio-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-02.png",
+      "sha256": "1325b1867bff9a3f0086b2ece0979c3603fbb4314422e3ada84c4926ad58fa73",
+      "inspected": true,
+      "frames": [
+        "call-emerald-dark-keypad-largefont.png",
+        "call-emerald-dark-keypad-standard.png",
+        "call-emerald-dark-more-largefont.png",
+        "call-emerald-dark-more-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-03.png",
+      "sha256": "3ae696ddc9cb85bcd0fb219f7c02c72266f54779ef1fc721721c03a5430c1c73",
+      "inspected": true,
+      "frames": [
+        "call-emerald-dark-normal-largefont.png",
+        "call-emerald-dark-normal-longname-en.png",
+        "call-emerald-dark-normal-longname-he.png",
+        "call-emerald-dark-normal-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-04.png",
+      "sha256": "c155a0b263d9a3df28d0e89194acec31696092d35ae8c63aefc39b43d4bf9a03",
+      "inspected": true,
+      "frames": [
+        "call-emerald-light-audio-largefont.png",
+        "call-emerald-light-audio-standard.png",
+        "call-emerald-light-keypad-largefont.png",
+        "call-emerald-light-keypad-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-05.png",
+      "sha256": "192b3bc405e13bac0e07b7c383073eae7d49215b21496d652613c707468a81c4",
+      "inspected": true,
+      "frames": [
+        "call-emerald-light-more-largefont.png",
+        "call-emerald-light-more-standard.png",
+        "call-emerald-light-normal-largefont.png",
+        "call-emerald-light-normal-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-06.png",
+      "sha256": "f5c601d99c11954192cf1ab9c0d83e77c4c12ac2507987d603668aa1bb86c2ba",
+      "inspected": true,
+      "frames": [
+        "call-frost-dark-audio-largefont.png",
+        "call-frost-dark-audio-longname-en.png",
+        "call-frost-dark-audio-longname-he.png",
+        "call-frost-dark-audio-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-07.png",
+      "sha256": "4bbee83db3798993585004fd1ad1652b9be508a9d4c95d7c82128bcf3613a3b0",
+      "inspected": true,
+      "frames": [
+        "call-frost-dark-keypad-largefont.png",
+        "call-frost-dark-keypad-standard.png",
+        "call-frost-dark-more-largefont.png",
+        "call-frost-dark-more-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-08.png",
+      "sha256": "443587bdba5abfb32767a10a4db5de8bf896927afe4c25037082fc7887eae82e",
+      "inspected": true,
+      "frames": [
+        "call-frost-dark-normal-largefont.png",
+        "call-frost-dark-normal-longname-en.png",
+        "call-frost-dark-normal-longname-he.png",
+        "call-frost-dark-normal-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-09.png",
+      "sha256": "06ade36c4e4e2f9752fbe6c03953aac15d2840648398e48a433c8b30489452ca",
+      "inspected": true,
+      "frames": [
+        "call-frost-light-audio-largefont.png",
+        "call-frost-light-audio-standard.png",
+        "call-frost-light-keypad-largefont.png",
+        "call-frost-light-keypad-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-10.png",
+      "sha256": "6d5b1a014daac8ddbd70f7c17ae3c28fae72a43e909ed10990405ec8aa53d1c4",
+      "inspected": true,
+      "frames": [
+        "call-frost-light-more-largefont.png",
+        "call-frost-light-more-standard.png",
+        "call-frost-light-normal-largefont.png",
+        "call-frost-light-normal-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-11.png",
+      "sha256": "183934cb5c45b761898268881f9946ae6f7b10170c3d874ee98885189fed902e",
+      "inspected": true,
+      "frames": [
+        "call-graphite-dark-audio-largefont.png",
+        "call-graphite-dark-audio-longname-en.png",
+        "call-graphite-dark-audio-longname-he.png",
+        "call-graphite-dark-audio-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-12.png",
+      "sha256": "82f7fb57fa97438b6999130e091972feaa95ba345caf2f3015836d94128cefed",
+      "inspected": true,
+      "frames": [
+        "call-graphite-dark-keypad-largefont.png",
+        "call-graphite-dark-keypad-standard.png",
+        "call-graphite-dark-more-largefont.png",
+        "call-graphite-dark-more-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-13.png",
+      "sha256": "a26ed562aa60b27b3145296545733476d191c1fa8fcf6d15596db6059ea274dc",
+      "inspected": true,
+      "frames": [
+        "call-graphite-dark-normal-largefont.png",
+        "call-graphite-dark-normal-longname-en.png",
+        "call-graphite-dark-normal-longname-he.png",
+        "call-graphite-dark-normal-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-14.png",
+      "sha256": "a6de73d5ec1796ff2f49a524a9c4e2539dc4cee113955acfb7d9342d97cbc135",
+      "inspected": true,
+      "frames": [
+        "call-graphite-light-audio-largefont.png",
+        "call-graphite-light-audio-standard.png",
+        "call-graphite-light-keypad-largefont.png",
+        "call-graphite-light-keypad-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-15.png",
+      "sha256": "a6aba632fe89a4feb74b0ff0ce731fda1aa5af568034498f41d23130642250a1",
+      "inspected": true,
+      "frames": [
+        "call-graphite-light-more-largefont.png",
+        "call-graphite-light-more-standard.png",
+        "call-graphite-light-normal-largefont.png",
+        "call-graphite-light-normal-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-16.png",
+      "sha256": "7b2297f407af73c343d474d313dfcd2e4b29752e5250f2f4992b37635f1d3adf",
+      "inspected": true,
+      "frames": [
+        "call-ivory-dark-audio-largefont.png",
+        "call-ivory-dark-audio-longname-en.png",
+        "call-ivory-dark-audio-longname-he.png",
+        "call-ivory-dark-audio-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-17.png",
+      "sha256": "cf76461c1edae37b8c8f35cae69d17313ece6f6b192e881419e9eea9e50edef0",
+      "inspected": true,
+      "frames": [
+        "call-ivory-dark-keypad-largefont.png",
+        "call-ivory-dark-keypad-standard.png",
+        "call-ivory-dark-more-largefont.png",
+        "call-ivory-dark-more-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-18.png",
+      "sha256": "eb9134ead009d96a08625dad40335f0c69ca59c97f9d0ef1d8f8fe347f3602ef",
+      "inspected": true,
+      "frames": [
+        "call-ivory-dark-normal-largefont.png",
+        "call-ivory-dark-normal-longname-en.png",
+        "call-ivory-dark-normal-longname-he.png",
+        "call-ivory-dark-normal-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-19.png",
+      "sha256": "1836371b577399bd2ccafb53bcadda108f4b13eebc074856f362558010a588ee",
+      "inspected": true,
+      "frames": [
+        "call-ivory-light-audio-largefont.png",
+        "call-ivory-light-audio-standard.png",
+        "call-ivory-light-keypad-largefont.png",
+        "call-ivory-light-keypad-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-20.png",
+      "sha256": "1a4396b6004a7f7cc06cd9e3df149fe59d8e457eed3c209d216776f9cc566330",
+      "inspected": true,
+      "frames": [
+        "call-ivory-light-more-largefont.png",
+        "call-ivory-light-more-standard.png",
+        "call-ivory-light-normal-largefont.png",
+        "call-ivory-light-normal-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-21.png",
+      "sha256": "e07cf42ea0ecc47ad9be7ef0544a864df7bc85068cdf900ca321bc1ddc2a0f23",
+      "inspected": true,
+      "frames": [
+        "call-pixel-dark-audio-largefont.png",
+        "call-pixel-dark-audio-longname-en.png",
+        "call-pixel-dark-audio-longname-he.png",
+        "call-pixel-dark-audio-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-22.png",
+      "sha256": "d840ffc58e66d5b3c60facd75f1db2552eea34370babd6057ac461733d80218b",
+      "inspected": true,
+      "frames": [
+        "call-pixel-dark-keypad-largefont.png",
+        "call-pixel-dark-keypad-standard.png",
+        "call-pixel-dark-more-largefont.png",
+        "call-pixel-dark-more-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-23.png",
+      "sha256": "4f7d11f7e1012b2b6d6877e57cdc8efaf54d833322680beba317b5dc8c0085de",
+      "inspected": true,
+      "frames": [
+        "call-pixel-dark-normal-largefont.png",
+        "call-pixel-dark-normal-longname-en.png",
+        "call-pixel-dark-normal-longname-he.png",
+        "call-pixel-dark-normal-standard.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-24.png",
+      "sha256": "7e305634067c86aec55a42191ece4d01f8821b7785f5777ec6b0624dda7546c2",
+      "inspected": true,
+      "frames": [
+        "call-pixel-light-audio-english-no-bluetooth.png",
+        "call-pixel-light-audio-largefont.png",
+        "call-pixel-light-audio-standard.png",
+        "call-pixel-light-keypad-largefont.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-25.png",
+      "sha256": "91517d56c2891a78740a1c9724714696f2b00fc690609e562bfa1aea160623d0",
+      "inspected": true,
+      "frames": [
+        "call-pixel-light-keypad-standard.png",
+        "call-pixel-light-more-largefont.png",
+        "call-pixel-light-more-standard.png",
+        "call-pixel-light-normal-largefont.png"
+      ],
+      "original_pixels_verified": true
+    },
+    {
+      "file": "call-26.png",
+      "sha256": "98f4625e7652d8114cbf9970047bc8f3fab467dc5dfaf2ed81039581f9c7086b",
+      "inspected": true,
+      "frames": [
+        "call-pixel-light-normal-standard.png"
+      ],
+      "original_pixels_verified": true
+    }
+  ],
+  "individual_original_pngs_viewed": [
+    "call-emerald-dark-normal-longname-he.png",
+    "call-emerald-light-normal-largefont.png",
+    "call-frost-dark-normal-longname-en.png"
+  ],
+  "bounded_findings": [
+    {
+      "id": "CALL-LONG-NAME-ELLIPSIZATION",
+      "severity": "BOUNDED",
+      "files": [
+        "call-emerald-dark-audio-longname-en.png",
+        "call-emerald-dark-audio-longname-he.png",
+        "call-emerald-dark-normal-longname-en.png",
+        "call-emerald-dark-normal-longname-he.png",
+        "call-frost-dark-audio-longname-en.png",
+        "call-frost-dark-audio-longname-he.png",
+        "call-frost-dark-normal-longname-en.png",
+        "call-frost-dark-normal-longname-he.png",
+        "call-graphite-dark-audio-longname-en.png",
+        "call-graphite-dark-audio-longname-he.png",
+        "call-graphite-dark-normal-longname-en.png",
+        "call-graphite-dark-normal-longname-he.png",
+        "call-ivory-dark-audio-longname-en.png",
+        "call-ivory-dark-audio-longname-he.png",
+        "call-ivory-dark-normal-longname-en.png",
+        "call-ivory-dark-normal-longname-he.png",
+        "call-pixel-dark-audio-longname-en.png",
+        "call-pixel-dark-audio-longname-he.png",
+        "call-pixel-dark-normal-longname-en.png",
+        "call-pixel-dark-normal-longname-he.png"
+      ],
+      "finding": "All20 Hebrew/English long-name captures ellipsize the caller name inside its allotted identity area. The frost/ivory side-avatar normal layouts show stronger truncation. Phone number, timer, avatar and controls remain separate and readable."
+    },
+    {
+      "id": "CALL-EMERALD-HE-NEW-CALL-CAPTION",
+      "severity": "BOUNDED",
+      "files": [
+        "call-emerald-dark-normal-largefont.png",
+        "call-emerald-light-normal-largefont.png",
+        "call-emerald-dark-normal-longname-he.png"
+      ],
+      "finding": "At font scale1.3 the Hebrew New call caption is ellipsized in the emerald normal six-control layout: dark/light normal-largefont and dark normal-longname-he. The last file also belongs to the long-name finding, giving22 unique bounded frames in total. The phone-plus icon, other controls and hang-up remain visible, while the matching More-panel captures display the full label."
+    }
+  ],
+  "blocking_findings": [],
+  "scope_limits": [
+    "All101 call-design captures are static fictional call-state fixtures rendered by the production in-app call UI. This visual inspection does not establish real Telecom action acknowledgement or actual audible routing.",
+    "The pictured coverage includes five call designs, light/dark variants, normal/audio/more/keypad states, Hebrew/English long names, font scale1.3 and an English no-Bluetooth output chooser. It does not exhaust every possible font, data, theme and device combination.",
+    "This visual review does not test a physical Jelly Star, SIM/carrier calls, microphone/speaker/Bluetooth audio, lockscreen/proximity, full TalkBack or a matching-key data-preserving upgrade.",
+    "This report covers the current-run call group. Overall candidate approval requires the other fresh current-run visual groups and the independently verified native/test provenance."
+  ],
+  "files": [
+    {
+      "file": "call-emerald-dark-audio-largefont.png",
+      "sha256": "ec7b13771a8a35c8161157f88a077a2dea0c5ca4355c2f962b63e6a89adac7b4",
+      "result": "PASS",
+      "review_sheet": "call-01.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-audio-longname-en.png",
+      "sha256": "a22233d0991b0778501540116583620c8a7a6e71996c1d418587ec47567abc72",
+      "result": "BOUNDED",
+      "review_sheet": "call-01.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-audio-longname-he.png",
+      "sha256": "055c5ab477cece7bd23de456b97ab58fbb392a557bd2bd58f736e637f562f1f3",
+      "result": "BOUNDED",
+      "review_sheet": "call-01.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-audio-standard.png",
+      "sha256": "aa43bc5a9c5d49f12e3f155f09d3dd98b683ed1d7971e34d245e5a55716a2bdf",
+      "result": "PASS",
+      "review_sheet": "call-01.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-keypad-largefont.png",
+      "sha256": "79d6497c43b9264aa9aaeb139a44079f631109f660f0c2452e8f374e070f1f55",
+      "result": "PASS",
+      "review_sheet": "call-02.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-keypad-standard.png",
+      "sha256": "7b098b4e380726eebf159943e3ddf67588f1e4ab120814bc18c346484ac4ad2e",
+      "result": "PASS",
+      "review_sheet": "call-02.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-more-largefont.png",
+      "sha256": "3e7c01a00770db6f923747c4321c4d09b7ad97a569e4dae3fba261bc30813224",
+      "result": "PASS",
+      "review_sheet": "call-02.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-more-standard.png",
+      "sha256": "0d83f3bc0327d12b096253a70c9e517184fadaa22736a813d18bfd2b43a64f86",
+      "result": "PASS",
+      "review_sheet": "call-02.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-normal-largefont.png",
+      "sha256": "ef560daf8f6be41d2747e5bb473d1b3ed8cd650b376bfc133d0a6f06b5d1da35",
+      "result": "BOUNDED",
+      "review_sheet": "call-03.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The Hebrew New call caption is ellipsized at font scale1.3. The phone-plus icon, other controls and hang-up remain visible; the matching More captures display the full caption.",
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-normal-longname-en.png",
+      "sha256": "c18b3a9f779fb645c7860165bf68047b531377bd28fe5e01264fd1ffa813adc6",
+      "result": "BOUNDED",
+      "review_sheet": "call-03.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-normal-longname-he.png",
+      "sha256": "35571363950d488cc5539298b7caf26113042117cc75cef264ac94c13dde7d76",
+      "result": "BOUNDED",
+      "review_sheet": "call-03.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The Hebrew New call caption is ellipsized at font scale1.3. The phone-plus icon, other controls and hang-up remain visible; the matching More captures display the full caption.",
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-emerald-dark-normal-standard.png",
+      "sha256": "324256d10180573d561f6c3909c06bfe336074af0d504e3ab892353ccaf6830c",
+      "result": "PASS",
+      "review_sheet": "call-03.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-emerald-light-audio-largefont.png",
+      "sha256": "aa812e163ef2e97123837c2dcc8fb1dd4e827eeba7e8f7571aefd33b2ed29cf8",
+      "result": "PASS",
+      "review_sheet": "call-04.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-emerald-light-audio-standard.png",
+      "sha256": "d8d7ab80983a20ac0658a66384e3c582061a1c70b315d24c632f4836a93a1596",
+      "result": "PASS",
+      "review_sheet": "call-04.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-emerald-light-keypad-largefont.png",
+      "sha256": "cc62a9d2dd75ba8cde01a6f3d1005e1eb5b81904ee2ce6c360166763ab1e91ef",
+      "result": "PASS",
+      "review_sheet": "call-04.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-emerald-light-keypad-standard.png",
+      "sha256": "682e047d3718b96cd0781d6c8220d532f96a650f216dfc7986f08712ea3cf041",
+      "result": "PASS",
+      "review_sheet": "call-04.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-emerald-light-more-largefont.png",
+      "sha256": "2382cbe947a2aa662cf59461f8a8338531f2d98aa1b1b16972fa255cce3c330c",
+      "result": "PASS",
+      "review_sheet": "call-05.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-emerald-light-more-standard.png",
+      "sha256": "c3996bd7ef133a23444b9c4f250e5c4ef628fad856485a10ec411c40a4b1c954",
+      "result": "PASS",
+      "review_sheet": "call-05.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-emerald-light-normal-largefont.png",
+      "sha256": "3b39685ff053bdc811e3d2ea6e97ea68fe495fc44a184feb6a777f2808f8bfa9",
+      "result": "BOUNDED",
+      "review_sheet": "call-05.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The Hebrew New call caption is ellipsized at font scale1.3. The phone-plus icon, other controls and hang-up remain visible; the matching More captures display the full caption.",
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-emerald-light-normal-standard.png",
+      "sha256": "032246c4f769e20b5425712a74cd1d4aaa41d100a39d56ff1dc2fa4312e67b9f",
+      "result": "PASS",
+      "review_sheet": "call-05.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-frost-dark-audio-largefont.png",
+      "sha256": "2072d70ea87983cb8a2e6f97c7c86486f6c824e656846be5dbd96ebdbd2fa0a5",
+      "result": "PASS",
+      "review_sheet": "call-06.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-frost-dark-audio-longname-en.png",
+      "sha256": "4ac973817536e91c32ef08a12c60b45270581bf624f50c6dc8a5e9a841b186ff",
+      "result": "BOUNDED",
+      "review_sheet": "call-06.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-frost-dark-audio-longname-he.png",
+      "sha256": "de72d5dafc96a8b666251c9ce2f51a55bcdab1e3dbe431056ac7a40c38dc9e46",
+      "result": "BOUNDED",
+      "review_sheet": "call-06.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-frost-dark-audio-standard.png",
+      "sha256": "147a161af11e9dbd27c9da13477c08b60e733985401465a363f07d9b015280df",
+      "result": "PASS",
+      "review_sheet": "call-06.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-frost-dark-keypad-largefont.png",
+      "sha256": "146567b52bf8a7dde316dfcbc8b077d0cb75969ad33bbe3f28b77a59434d6a60",
+      "result": "PASS",
+      "review_sheet": "call-07.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-frost-dark-keypad-standard.png",
+      "sha256": "17442bcd45c6769d75e1ac00b2bb9ccffd1a444b3ce7a60420dc3c38f0f7b104",
+      "result": "PASS",
+      "review_sheet": "call-07.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-frost-dark-more-largefont.png",
+      "sha256": "3aaf8977ddb675329fa1587200d18f565b1469b7de60d142988513647c0e7a1d",
+      "result": "PASS",
+      "review_sheet": "call-07.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-frost-dark-more-standard.png",
+      "sha256": "3edc222ad6d1927e900705cfb079d581bd390fb6a4cbe9771168ab9e12283bf7",
+      "result": "PASS",
+      "review_sheet": "call-07.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-frost-dark-normal-largefont.png",
+      "sha256": "96258ec3aea01675cd5d783731a0cf37b73c319684aecc1e2e7fd40829e019a4",
+      "result": "PASS",
+      "review_sheet": "call-08.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-frost-dark-normal-longname-en.png",
+      "sha256": "f03a7fafab72c9c0c73ddf64811b32cdce874e3ca6fa7abef0ca673c46d5a207",
+      "result": "BOUNDED",
+      "review_sheet": "call-08.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-frost-dark-normal-longname-he.png",
+      "sha256": "856fd5330985e9d7c921e8d90f4cd08bcbcf302c917a10b97ceb5e5d41744ab7",
+      "result": "BOUNDED",
+      "review_sheet": "call-08.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-frost-dark-normal-standard.png",
+      "sha256": "b5c07f086ebb1bf88e51d495c3bc8c576abdd3fbcfb0e6cd2fc01c90f49c96c4",
+      "result": "PASS",
+      "review_sheet": "call-08.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-frost-light-audio-largefont.png",
+      "sha256": "9bff7944183a521bbe97198cfd306774e194bb80afd77a15dfaae3e8949899cd",
+      "result": "PASS",
+      "review_sheet": "call-09.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-frost-light-audio-standard.png",
+      "sha256": "f3a9721a3d38739cbd5862fe402132444dc56f6872a6a0f85530954e8527ddb7",
+      "result": "PASS",
+      "review_sheet": "call-09.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-frost-light-keypad-largefont.png",
+      "sha256": "0326a0d291096ea189059ebb08ea1127dc4bee57bdd491141c6dfbd31c8b2679",
+      "result": "PASS",
+      "review_sheet": "call-09.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-frost-light-keypad-standard.png",
+      "sha256": "64799db883da047c10e9cfe8725f311c6c15fc312eb3d8cad2d5a164062b659c",
+      "result": "PASS",
+      "review_sheet": "call-09.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-frost-light-more-largefont.png",
+      "sha256": "dc699d6001ac043e7121bb6aa5489aaecbd90a5368cad6d204d81ceae96605fa",
+      "result": "PASS",
+      "review_sheet": "call-10.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-frost-light-more-standard.png",
+      "sha256": "2dbe23dd3f29f4a30d33210e4407057da85ef77a454ed5e41a4c1633e6c4ad1d",
+      "result": "PASS",
+      "review_sheet": "call-10.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-frost-light-normal-largefont.png",
+      "sha256": "37629f81c5f73f1521ea1705014f3cea8dcb66fe056d02a0e0c190d8d39f8874",
+      "result": "PASS",
+      "review_sheet": "call-10.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-frost-light-normal-standard.png",
+      "sha256": "946cfd9504081e64a7e499ae475a5013ebea14826c343f7cf2f5064b4c69173b",
+      "result": "PASS",
+      "review_sheet": "call-10.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-audio-largefont.png",
+      "sha256": "5b033c47781aeb208d14f382b5a04cd7003176fb5ce18fb1c725e46b0494679e",
+      "result": "PASS",
+      "review_sheet": "call-11.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-audio-longname-en.png",
+      "sha256": "bce2d3c42eedb0c3adb5f158478c51c1b3d072fe1f58edab1767e68efe9fa3e5",
+      "result": "BOUNDED",
+      "review_sheet": "call-11.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-audio-longname-he.png",
+      "sha256": "ae6496c1429d61b14e22b25af6a683ba9d0f500f1a86d95f23e21a04937e4509",
+      "result": "BOUNDED",
+      "review_sheet": "call-11.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-audio-standard.png",
+      "sha256": "f4a577f7cbcb93eb5a4436005ee15d76c2fbde4f4df81f6cb828a30478bcd8d5",
+      "result": "PASS",
+      "review_sheet": "call-11.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-keypad-largefont.png",
+      "sha256": "250138c511ca1fa8c53dd5b17fab7e12b4214bc5e330e93d6a34333c4c425c3e",
+      "result": "PASS",
+      "review_sheet": "call-12.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-keypad-standard.png",
+      "sha256": "15faeb31edbf228bf17dbd423497a9c5d5efa2c5cda8bae0bf8bbe2ac40b12f9",
+      "result": "PASS",
+      "review_sheet": "call-12.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-more-largefont.png",
+      "sha256": "8f0a081a42d2477e993fcf5384e070b9ad17f76cc098c02b8a59908c384f8d7c",
+      "result": "PASS",
+      "review_sheet": "call-12.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-more-standard.png",
+      "sha256": "3d527d3d9238895e0c04d63821ce2cd3be66f8544aec675ac46d2c937498f21f",
+      "result": "PASS",
+      "review_sheet": "call-12.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-normal-largefont.png",
+      "sha256": "6861c717b6ca948cd3c4a437a4da235f6e5309c379e1eb463ef594d97f8e219f",
+      "result": "PASS",
+      "review_sheet": "call-13.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-normal-longname-en.png",
+      "sha256": "ddd8703f4d0399052ff9424ba7890856befc90bb6e50411a098dd73120e8203f",
+      "result": "BOUNDED",
+      "review_sheet": "call-13.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-normal-longname-he.png",
+      "sha256": "23d2f04cbc31301cbbbaca52f446419ee4c2eb811f6e937369e8dd0898a9a631",
+      "result": "BOUNDED",
+      "review_sheet": "call-13.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-graphite-dark-normal-standard.png",
+      "sha256": "da23d9c923d81aba5cf698e87c3367a832fa3f2dd5dd5586474e22e5c535ba2d",
+      "result": "PASS",
+      "review_sheet": "call-13.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-graphite-light-audio-largefont.png",
+      "sha256": "2b5da84dfd0470acec923633faea9bda0937b5da6936cc99050bf2a9e7695ce5",
+      "result": "PASS",
+      "review_sheet": "call-14.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-graphite-light-audio-standard.png",
+      "sha256": "c3a7edb73c4d392387851bbcb9d76cf6a5a3e3b54c6cbfd2dac9a4ac4bba45a5",
+      "result": "PASS",
+      "review_sheet": "call-14.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-graphite-light-keypad-largefont.png",
+      "sha256": "8d682937257d098ca625a9cdcfc7b83a6557b3a8fb3686f5783dff0f7c34dd4b",
+      "result": "PASS",
+      "review_sheet": "call-14.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-graphite-light-keypad-standard.png",
+      "sha256": "fc28981f311ed5759961c9c90ac42f8c723470e055f2f75e115e85b363be4bcc",
+      "result": "PASS",
+      "review_sheet": "call-14.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-graphite-light-more-largefont.png",
+      "sha256": "4397c708cfd37df3f74aa8b9eef7defd95912dadbf02f790151a1fda82584a4c",
+      "result": "PASS",
+      "review_sheet": "call-15.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-graphite-light-more-standard.png",
+      "sha256": "20d44c07e14e2276fbd6ea35a13781b8112836801e413af79db2d293d10b2a0e",
+      "result": "PASS",
+      "review_sheet": "call-15.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-graphite-light-normal-largefont.png",
+      "sha256": "688e0d6e128f75b3286411e0b755ac06d2db286bfa14620ecd8cee0cbe1438a9",
+      "result": "PASS",
+      "review_sheet": "call-15.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-graphite-light-normal-standard.png",
+      "sha256": "bf100f75578faa07e7e9bd4a5f782374320f85e9b279b368a505b6a2bcfb2a21",
+      "result": "PASS",
+      "review_sheet": "call-15.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-audio-largefont.png",
+      "sha256": "17e3923db735bd94fbdf33975aa9ae7425f052764906003af79d4b4cfa93740d",
+      "result": "PASS",
+      "review_sheet": "call-16.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-audio-longname-en.png",
+      "sha256": "cd9eb1dba2bbd54bb353e6962b34591d400f15cd2b9f8ed854c01f7e6431e9c1",
+      "result": "BOUNDED",
+      "review_sheet": "call-16.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-audio-longname-he.png",
+      "sha256": "761205e0b466c2432fdfab698bf98c0f5482086c6be29f018c1d0d2910a379ee",
+      "result": "BOUNDED",
+      "review_sheet": "call-16.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-audio-standard.png",
+      "sha256": "0507da979fdb95378d7eba7a9269b3e4cec6ff614690e5e0d41a7a2f4f470c47",
+      "result": "PASS",
+      "review_sheet": "call-16.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-keypad-largefont.png",
+      "sha256": "9a2a4dd4c46a731053b8e888503faaf232e08337f0d7e61b21abd2c145590627",
+      "result": "PASS",
+      "review_sheet": "call-17.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-keypad-standard.png",
+      "sha256": "93568c340c7f8d6d16cd36f72bcc7dd57c71f810c31d1b09089e6f0df4b99090",
+      "result": "PASS",
+      "review_sheet": "call-17.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-more-largefont.png",
+      "sha256": "e497aeaa092750ff21684d1d35f66c2daab2a52e7ce1d20db413a75f4586712c",
+      "result": "PASS",
+      "review_sheet": "call-17.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-more-standard.png",
+      "sha256": "c1f6191eede82bfe697985dee9439aaec47f2c3c9975aa355a821c71011eafc4",
+      "result": "PASS",
+      "review_sheet": "call-17.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-normal-largefont.png",
+      "sha256": "c4380a96bb7d4e1f90c067bb5118c0f8b0e4ba2bed53e05763d2c79c305d828b",
+      "result": "PASS",
+      "review_sheet": "call-18.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-normal-longname-en.png",
+      "sha256": "ce6389864093e2ff3629791a5e40d66c92a39a3bac6945334fc534dd89b258f7",
+      "result": "BOUNDED",
+      "review_sheet": "call-18.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-normal-longname-he.png",
+      "sha256": "f9d6c06605a125a1a105b878e634d4e52e2b261bce92d26e40f805926b3dc2c5",
+      "result": "BOUNDED",
+      "review_sheet": "call-18.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-ivory-dark-normal-standard.png",
+      "sha256": "ad848cff98b739188310f623cc0c22218df0e21e0f4bca7eb53f7082714bb648",
+      "result": "PASS",
+      "review_sheet": "call-18.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-ivory-light-audio-largefont.png",
+      "sha256": "7a17117e3277e0a7524e3fc2f146936fb09ae9dcd2f96ed127fcf7821414d82b",
+      "result": "PASS",
+      "review_sheet": "call-19.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-ivory-light-audio-standard.png",
+      "sha256": "a668d5dbca3f4c9068a260178e809e4df85b48ec95fa0e99287c5ff3ca040ad2",
+      "result": "PASS",
+      "review_sheet": "call-19.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-ivory-light-keypad-largefont.png",
+      "sha256": "f53b35aa4ced64db9cefda765b0ea27ab1112604411616cc4d28712e8e378de2",
+      "result": "PASS",
+      "review_sheet": "call-19.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-ivory-light-keypad-standard.png",
+      "sha256": "39f3e61682288f2c21a650467909e624546487f43c72a5401db97030a10d5c2a",
+      "result": "PASS",
+      "review_sheet": "call-19.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-ivory-light-more-largefont.png",
+      "sha256": "ae3087736d3c1903eac50b8905bf728e6dac21b1da4054a9950938375a7e75d0",
+      "result": "PASS",
+      "review_sheet": "call-20.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-ivory-light-more-standard.png",
+      "sha256": "3bd58d7ae96eb1cf6579f865d438d83609c734e54ee4e6a44c14bd335c295ea4",
+      "result": "PASS",
+      "review_sheet": "call-20.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-ivory-light-normal-largefont.png",
+      "sha256": "f4489ed36b2bde4902cb84b51a0bab6db4fd44eabc20183ada3a688ea363992d",
+      "result": "PASS",
+      "review_sheet": "call-20.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-ivory-light-normal-standard.png",
+      "sha256": "e388dac651e88403720140101ecd24d425f9afeed4397343d4b2def359f4b763",
+      "result": "PASS",
+      "review_sheet": "call-20.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-audio-largefont.png",
+      "sha256": "c8c487d78f9f4f436712abfcd058724ad661d88ff506966348638cceccf41c4b",
+      "result": "PASS",
+      "review_sheet": "call-21.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-audio-longname-en.png",
+      "sha256": "ee469743d11a443a0795f3ddc0666de6ca2f4ee86b3a5ee6255c80cd00b212ae",
+      "result": "BOUNDED",
+      "review_sheet": "call-21.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-audio-longname-he.png",
+      "sha256": "afca025e89b13a1a3be94fc12187b601e9ccc62443f84b0188a0b10efbed57b0",
+      "result": "BOUNDED",
+      "review_sheet": "call-21.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-audio-standard.png",
+      "sha256": "d6371c0284711e6d38837bcd588c8f5bd561cc82ac8380c64e42bc312ef636cf",
+      "result": "PASS",
+      "review_sheet": "call-21.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-keypad-largefont.png",
+      "sha256": "720f98c8aa0684dc9ddd37af868927dee97837c8d9848e5043c143e044650056",
+      "result": "PASS",
+      "review_sheet": "call-22.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-keypad-standard.png",
+      "sha256": "8282d13f96778a64e1fa4e3bd94b2935e8571e0c2d808f6e491c64b2e67d0cbf",
+      "result": "PASS",
+      "review_sheet": "call-22.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-more-largefont.png",
+      "sha256": "dd9fe2804ffa6f05b767d8f21964d25572f349f2c223c13511d5a1ae08221c31",
+      "result": "PASS",
+      "review_sheet": "call-22.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-more-standard.png",
+      "sha256": "3673a87eb6e36cb8eab1e8801a3fd9ab218f37c0f74e14fe60012a0dc2a5cd82",
+      "result": "PASS",
+      "review_sheet": "call-22.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-normal-largefont.png",
+      "sha256": "f3a22714f414d3a0f2477130ef26ade17601fbf7fbabb4a77810e7d1cf0534c4",
+      "result": "PASS",
+      "review_sheet": "call-23.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-normal-longname-en.png",
+      "sha256": "db4eaa72dbcad00dd0fe4c882619e9eefab459ad179f004ae1dccb44450ba1c9",
+      "result": "BOUNDED",
+      "review_sheet": "call-23.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-normal-longname-he.png",
+      "sha256": "b99a345fc4353c57b8a95e3d5e1a89fd5d4c05c06e8aad3b175afcf75a5f595d",
+      "result": "BOUNDED",
+      "review_sheet": "call-23.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The long caller name is visibly ellipsized within the identity area; the complete displayed phone number, timer and call controls remain readable without overlap.",
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-pixel-dark-normal-standard.png",
+      "sha256": "3868ebfae7cc8b8720f7fccce7a76d9313ddf25d48c842acd1a9dba5ab51112e",
+      "result": "PASS",
+      "review_sheet": "call-23.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-pixel-light-audio-english-no-bluetooth.png",
+      "sha256": "4e2fd68875ca1b24db5d1c0693f219071199e1b86c2ba40cf659c14dc7a43b83",
+      "result": "PASS",
+      "review_sheet": "call-24.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The English Audio output sheet shows Speaker and Phone, with Phone selected and no unavailable Bluetooth row; identity, timer and hang-up are readable."
+      ]
+    },
+    {
+      "file": "call-pixel-light-audio-largefont.png",
+      "sha256": "b8c239518987c8f27baa371b004020fadcfc82257267f5f710ee97451db527cc",
+      "result": "PASS",
+      "review_sheet": "call-24.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-pixel-light-audio-standard.png",
+      "sha256": "a62ffdcca166bf59024c68de257295c2718715a814e9869c60fa8aca91590c9a",
+      "result": "PASS",
+      "review_sheet": "call-24.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The output chooser, selected F901 route, Speaker/Phone options, close control and hang-up are visible without overlap."
+      ]
+    },
+    {
+      "file": "call-pixel-light-keypad-largefont.png",
+      "sha256": "3b7310595658a5cf95910eea667f072ca1021b28f9a9acfab95e00abc3a1c393",
+      "result": "PASS",
+      "review_sheet": "call-24.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-pixel-light-keypad-standard.png",
+      "sha256": "1b9b51d5ea679259f445a3ee0d76d31e7106877f85b70046ad9e393794b041d6",
+      "result": "PASS",
+      "review_sheet": "call-25.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The complete twelve-key keypad, close control, lower call controls and hang-up remain visible above the navigation bar."
+      ]
+    },
+    {
+      "file": "call-pixel-light-more-largefont.png",
+      "sha256": "180b3bd856738a7757b98524870dafd0b5d929e260b836f3826e7bfbb7db517a",
+      "result": "PASS",
+      "review_sheet": "call-25.png",
+      "sheet_position": "top-right",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-pixel-light-more-standard.png",
+      "sha256": "50cf69f6bad096b6010f57a574b3b893b9297c062501cfe721d90421a857455f",
+      "result": "PASS",
+      "review_sheet": "call-25.png",
+      "sheet_position": "bottom-left",
+      "observations": [
+        "The More sheet displays the full New call and Hold options, close control, current call controls and hang-up without obstruction."
+      ]
+    },
+    {
+      "file": "call-pixel-light-normal-largefont.png",
+      "sha256": "81345c58e3896face84453632fe15793abc77a5472bb0e54b7854b49e2964e1d",
+      "result": "PASS",
+      "review_sheet": "call-25.png",
+      "sheet_position": "bottom-right",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    },
+    {
+      "file": "call-pixel-light-normal-standard.png",
+      "sha256": "adae8e6001a3d6fea877a4086864e777f7baf36f0b70ecd48c62334a728b0b79",
+      "result": "PASS",
+      "review_sheet": "call-26.png",
+      "sheet_position": "top-left",
+      "observations": [
+        "The pictured caller identity, phone number, timer, avatar and call controls remain distinct and clear of the system status/navigation bars."
+      ]
+    }
+  ]
+}

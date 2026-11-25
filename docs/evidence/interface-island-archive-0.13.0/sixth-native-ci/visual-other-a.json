@@ -1,0 +1,468 @@
+{
+  "reviewer_scope": "other-a; other-01.png through other-13.png only",
+  "source_sha": "53a678fac4764dc0210cad4e6b11a9d431287241",
+  "app_tree_sha": "c3cdd0ea05b5e094087cb86efe148224787e393e",
+  "run_id": 44470286600,
+  "manifest_path": "/workspace/work/native-013-review-44470286600/manifest.json",
+  "manifest_sha256": "f19b35924d9cdefffbd665d32e5a022fbe961a698227efdacbb775f9b0f5363b",
+  "review_status": "PASS",
+  "scope_result": "No unintended visual clipping, overlapping essential controls or unreadable content found in the 52 assigned current native frames. Deliberate ellipses and normal scroll-window boundaries are recorded per sheet.",
+  "actually_viewed_sheet_count": 13,
+  "actually_viewed_raw_frame_count": 52,
+  "raw_frames_viewed_directly_in_addition_to_sheets": [
+    "personalization-chooser-light-avatar_shapes-bottom.png",
+    "personalization-chooser-light-avatar_shapes.png"
+  ],
+  "integrity": "All 13 assigned sheet SHA256 and all 52 raw PNG SHA256 independently matched manifest in this review.",
+  "actually_viewed_sheets": [
+    {
+      "sheet": "other-01.png",
+      "sheet_sha256": "91623b41ae264e5739686b133d065163021cb2eff980b674525009aba538e8b8",
+      "method": "tools.view_image followed by image(); one sheet per exec; all four panels visible",
+      "status": "PASS",
+      "finding": "Business source URL, source timestamp and attribution are readable; summary is compact and rows use readable Hebrew taxonomy. Dark/light business list header no longer has the historical large empty gap. Bottom partial row is ordinary list continuation.",
+      "raw_frames": [
+        {
+          "filename": "business-detail.png",
+          "sha256": "67cfb55d2dce8fafbab8bc0712f0a269d473172a2c61b878f5f148ba3cef06aa",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "business-search.png",
+          "sha256": "e9ab453c8772a86e3735b603ed2cf44bcee1d68ad7f5c988683c1d122de6f6c7",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "business-tab-dark.png",
+          "sha256": "f73dd175d4f021554ff644b5382e68bb6cf315ff25d15d3ecf103d04dc5495b7",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "business-tab-light.png",
+          "sha256": "6962c0fd2f4f2c9fe0f64217bb4de6b624956e25df038b78edb5c6eaa987f46a",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        }
+      ]
+    },
+    {
+      "sheet": "other-02.png",
+      "sheet_sha256": "f4831e3db1d3f5a3adec83cce277f280f457bfe46fcb773cda3c2ad3802c7f4f",
+      "method": "tools.view_image followed by image(); one sheet per exec; all four panels visible",
+      "status": "PASS",
+      "finding": "Active-call native notifications show contact identity, active state and distinct hang-up/speaker/return controls in English and Hebrew. Android template ellipsizes some Hebrew action/header text; icons and action pills remain visible and distinct.",
+      "raw_frames": [
+        {
+          "filename": "call-integration-notification-active-private-en.png",
+          "sha256": "a5f55bc9f106b85fc9d1026f8444358e6103e458af418f3793db5403f340f03c",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "call-integration-notification-active-private-he.png",
+          "sha256": "78855ca0f5aa32a361993c79e055b97ad0d9cf36a2df165b3a3d204e43951de2",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "call-integration-notification-active-speaker-en.png",
+          "sha256": "222400213a3c6447d65085e5749f23c957942a7a13398fd8ef570a6f2532fde8",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "call-integration-notification-active-speaker-he.png",
+          "sha256": "daaa6f8b5eeae86a59b4a1fdddd47af111087f0a1921c5cce8ec2dc4879bf074",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        }
+      ]
+    },
+    {
+      "sheet": "other-03.png",
+      "sheet_sha256": "8165068c9b7f2eebfbc0787674b29a3288025ba65accca94603b2ab6c70d2858",
+      "method": "tools.view_image followed by image(); one sheet per exec; all four panels visible",
+      "status": "PASS",
+      "finding": "Incoming/outgoing notification states and their controls are legible. Return-to-contacts shows preserved search/list; return-to-Settings shows a scrolled appearance section. Partial top/bottom Settings rows are scroll-window boundaries.",
+      "raw_frames": [
+        {
+          "filename": "call-integration-notification-incoming-he.png",
+          "sha256": "3dcc6877172e9b19a00bcdd98ace7b1bda5923d3ac068fb7f2ea0f2e26202299",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "call-integration-notification-outgoing-he.png",
+          "sha256": "3c794df1eaec79215830ae028f79c362ed3255c180c56eb491dce79675d3bf29",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "call-integration-return-contacts.png",
+          "sha256": "603671e7a0ab91898b0e99c364e6ca333a5d7fd000dae759e52e8034344f570c",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "call-integration-return-settings.png",
+          "sha256": "72c04a952c6296985c74612eb22bb6c62f7568d45cf987577419b4804097a657",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        }
+      ]
+    },
+    {
+      "sheet": "other-04.png",
+      "sheet_sha256": "80c46feb33c3165172d5a1586c1a1f5326565d41bcd8ff7e92bf2faacd018df5",
+      "method": "tools.view_image followed by image(); one sheet per exec; all four panels visible",
+      "status": "PASS",
+      "finding": "Dark/light callback list has readable date, missed count, contact identity and action. Settings disclosure rows and wine switch are distinct with adequate visible contrast.",
+      "raw_frames": [
+        {
+          "filename": "callback-list-dark.png",
+          "sha256": "79ec02bae7eb209800908d29a004ebdbe29b77c77a0fadf5e8cdc840e36c6412",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "callback-list-light.png",
+          "sha256": "ae444afa9aac8ba1981e2294b2da0ffdb660620ec637d11a30c0218def87c64d",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "callback-settings-dark.png",
+          "sha256": "323d47c68d78477c0810231d6c24fab96a670b5448b28e7a917bbf27f4b8b459",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "callback-settings-light.png",
+          "sha256": "49a551c510bab9f5d7136a4128eea1c424d122a9ed1f09c4094d0e1c782f10b6",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        }
+      ]
+    },
+    {
+      "sheet": "other-05.png",
+      "sheet_sha256": "cbc0bb695b925ba14d39444f45a9198fa14282aae4213645dbe5058541cc8965",
+      "method": "tools.view_image followed by image(); one sheet per exec; all four panels visible",
+      "status": "PASS",
+      "finding": "Dark/light changelog heading, current version, version cards and bottom local-availability note are readable. Long changelog body continues in its visible scroll viewport.",
+      "raw_frames": [
+        {
+          "filename": "changelog-dark-bottom.png",
+          "sha256": "d51326c2df96db8508bea4b126e75f18b917dd73fadf80e4c4def8ae5140f95c",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "changelog-dark.png",
+          "sha256": "d38244fbcef4d74384b7dbade73774e5a27312ce6076c622f2b55a8b57280e4a",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "changelog-light-bottom.png",
+          "sha256": "8803189ab2c2e233574085279ce9873180729a39b899c32fe71053d0493895b0",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "changelog-light.png",
+          "sha256": "40f767f101e54dc79a043b3bc9852b39890c4faed4a11876c102181bb41402a6",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        }
+      ]
+    },
+    {
+      "sheet": "other-06.png",
+      "sheet_sha256": "52925d874a0d75969d14403d5f4f53a32a95ccdad9acc0b9660bfe7996627d4a",
+      "method": "tools.view_image followed by image(); one sheet per exec; all four panels visible",
+      "status": "PASS",
+      "finding": "Incoming swipe/resting call states retain legible number and separate answer/reject affordances. Long caller name uses ellipsis. Single/multiple missed-call native notifications remain readable within Android template limits.",
+      "raw_frames": [
+        {
+          "filename": "incoming-swipe-dragging.png",
+          "sha256": "0a230a03a54414a137b8a026b1efa14281e784805d33c33fa16c95bf94cd92da",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "incoming-swipe-resting.png",
+          "sha256": "314f236223d3ff389a45c29090f352535edc3e1c2d3e17f49a0c4b755205532b",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "missed-multiple-he.png",
+          "sha256": "54f3ec79e8f8987a571aca9986e348ed9ab9f774afd700b8b0ec4b8d1be132ea",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "missed-single-he.png",
+          "sha256": "87faf5a6171b740f20f7f5df2350dc91a02b9267393d853ef745cc633107fb7d",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        }
+      ]
+    },
+    {
+      "sheet": "other-07.png",
+      "sheet_sha256": "99b8ef960192e1f024b9582e3f087e05c39d2639a8ed3eb1bcebfc24a42f7819",
+      "method": "tools.view_image followed by image(); one sheet per exec; all four panels visible",
+      "status": "PASS",
+      "finding": "Archive dark/light cards retain name, number, direction/date/duration. Restore dialog title and native CANCEL/RESTORE buttons are unobstructed while long body has a scrollbar. Backup success screen has readable confirmation and CLOSE control; long explanatory text continues below viewport.",
+      "raw_frames": [
+        {
+          "filename": "personalization-archive-dark.png",
+          "sha256": "cd82695bb5a1c11d367448cdf0902bfbd9ddbf2d8a4c4dbff8b2fd738cf2a11b",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-archive-light.png",
+          "sha256": "84c0d9546d89ee3e7bf0387e3581d93f618150e450199abd5b51a3d4234a4996",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-backup-restore-confirmation.png",
+          "sha256": "d75cc1da550c0c4217faa292273eae4a51b2a23c74511cd081d7a240f6b8b1b8",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-backup-saved-dark.png",
+          "sha256": "680d30669a908b7854a826feb67d47c410d2cb20678e2b9e6f299880402ae9b7",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        }
+      ]
+    },
+    {
+      "sheet": "other-08.png",
+      "sheet_sha256": "f25d797ada002ce7b26ca3553d33e587f58507ae1d7604766547361605a6c3ed",
+      "method": "tools.view_image followed by image(); one sheet per exec; all four panels visible",
+      "status": "PASS",
+      "finding": "Light backup success keeps readable title/confirmation/CLOSE. Dark avatar chooser shows all four distinct shapes. Dark icon chooser bottom shows final icon choice and cancel; partial upper row reflects scroll position.",
+      "raw_frames": [
+        {
+          "filename": "personalization-backup-saved-light.png",
+          "sha256": "3c7989e6696873eb1ead0347737ff0cbda6d696c86687e8e29d2d42021c488f4",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-chooser-dark-avatar_shapes-bottom.png",
+          "sha256": "92c6d769bd6c48469a647266c28ed24fb44981a31195326df061730109dd9cdb",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-chooser-dark-avatar_shapes.png",
+          "sha256": "92c6d769bd6c48469a647266c28ed24fb44981a31195326df061730109dd9cdb",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-chooser-dark-icons-bottom.png",
+          "sha256": "bd9ccd32af9cb103bb8aac0c8f18201ff9b7652a6e9302d7e5ed247447afebea",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        }
+      ]
+    },
+    {
+      "sheet": "other-09.png",
+      "sheet_sha256": "118b882d794b642483aeacb679d64854d10ede0ad26589d70e95cd80d6bcbfe4",
+      "method": "tools.view_image followed by image(); one sheet per exec; all four panels visible",
+      "status": "PASS",
+      "finding": "Dark/light icon choosers show clear gold/green icon designs and native selection/cancel controls. Light avatar originals were additionally viewed directly and show intact DA initials in all four shapes; reduced contact-sheet rendering was insufficient for that detail.",
+      "raw_frames": [
+        {
+          "filename": "personalization-chooser-dark-icons.png",
+          "sha256": "9c8b9fe7683cde26d9ee98eb0e604b1bfbc924d49184fe82419db894c95c3c91",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-chooser-light-avatar_shapes-bottom.png",
+          "sha256": "5b6d52da49010051ba020379731c5d489121d71b743092262d5be26a42ea8624",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": true
+        },
+        {
+          "filename": "personalization-chooser-light-avatar_shapes.png",
+          "sha256": "5b6d52da49010051ba020379731c5d489121d71b743092262d5be26a42ea8624",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": true
+        },
+        {
+          "filename": "personalization-chooser-light-icons-bottom.png",
+          "sha256": "4636489940abfa179fbbd025aed9a5e6ff257e71a258037d1df5beaaf377f804",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        }
+      ]
+    },
+    {
+      "sheet": "other-10.png",
+      "sheet_sha256": "9cfd669c9f2e96c3f7c8eb348b9a91b63667b40c0b02acd680de841e7abe8a17",
+      "method": "tools.view_image followed by image(); one sheet per exec; all four panels visible",
+      "status": "PASS",
+      "finding": "Light icon chooser top and dark English contacts standard/large-font states remain legible. Favorites collapses/expands into a bounded strip, list and bottom navigation remain present, Settings stays upper-left, and Keypad is in bottom navigation. Large-font Businesses/contact labels use ordinary ellipsis.",
+      "raw_frames": [
+        {
+          "filename": "personalization-chooser-light-icons.png",
+          "sha256": "3423953806f20eeafb6cbd1a6344517adccf8bdf56772bf3749195d20f0a0c9e",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-contacts-dark-en-largefont-collapsed.png",
+          "sha256": "d430b8bc3028e3f2a57ad06fbc7d3bf906001d0ce6b8739b8310c9ee6fabe60f",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-contacts-dark-en-largefont-expanded.png",
+          "sha256": "fe5e666bc71949ceb727ea7bd2fac803a2e9fe40b04030bc913ff047f2edabb3",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-contacts-dark-en-standard-collapsed.png",
+          "sha256": "d7508e5e988d966183b83b6b4f1edd58f22f149b437bc3232ca483736b488b6b",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        }
+      ]
+    },
+    {
+      "sheet": "other-11.png",
+      "sheet_sha256": "17b00c405f0955a6b9130b41943fa493e8786da29dd3332825ac8a11c5b21aee",
+      "method": "tools.view_image followed by image(); one sheet per exec; all four panels visible",
+      "status": "PASS",
+      "finding": "Dark contacts English/Hebrew standard/large-font states maintain mirrored RTL/LTR row hierarchy, clear call/favorite buttons and readable counts. Expanded favorites remains bounded; bottom navigation is visible.",
+      "raw_frames": [
+        {
+          "filename": "personalization-contacts-dark-en-standard-expanded.png",
+          "sha256": "7a712409c937c98845b92945457f34ff452f98afec5a8abbcaf3b81644bed387",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-contacts-dark-he-largefont-collapsed.png",
+          "sha256": "a34a92049120f78649493d496ccb3f9dec59131396ba6b611e858e9bf8c7b94c",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-contacts-dark-he-largefont-expanded.png",
+          "sha256": "c0b84ffc0347960b134920f009eb6680c66c9c1017e2f73df6c11ea8f597b325",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-contacts-dark-he-standard-collapsed.png",
+          "sha256": "debef920110415471516d28b8cf233cd7726df627f81e6ed397356fd948c0044",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        }
+      ]
+    },
+    {
+      "sheet": "other-12.png",
+      "sheet_sha256": "ed640ff360ee3f61c77adde9d0fcfbd35f1d003fccf5bc92c6eed2c4bb0acc48",
+      "method": "tools.view_image followed by image(); one sheet per exec; all four panels visible",
+      "status": "PASS",
+      "finding": "Dark Hebrew and light English standard/large-font contacts remain readable with distinct gold action/favorite vectors and green call buttons. Light-theme gold darkens sufficiently for visible contrast. Expanded/collapsed favorites and bottom navigation are intact.",
+      "raw_frames": [
+        {
+          "filename": "personalization-contacts-dark-he-standard-expanded.png",
+          "sha256": "c891913cd18c9d3609afa260fe20397f955f73e1bd45ea86cee0068a9ab3fd0c",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-contacts-light-en-largefont-collapsed.png",
+          "sha256": "89ea90ede35bfd73422cce2e55a205357b946d3f4e194be045de1ea05e2d164f",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-contacts-light-en-largefont-expanded.png",
+          "sha256": "9a0990d4c2796dc34998545a757b212990414fc8ccd347423eb5b78b94ecdf25",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-contacts-light-en-standard-collapsed.png",
+          "sha256": "6702ea6cbef18193853ecbc1bba25f819bba42ecb141ef4e3184e81fd060eb86",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        }
+      ]
+    },
+    {
+      "sheet": "other-13.png",
+      "sheet_sha256": "b3e2138f3c958ea53940ed8445614edd01e4a4815ea5c2cf3a5878fc271db62a",
+      "method": "tools.view_image followed by image(); one sheet per exec; all four panels visible",
+      "status": "PASS",
+      "finding": "Light English/Hebrew standard/large-font contacts preserve readable identities, mirrored directionality, bounded favorites and bottom navigation. Long favorite names ellipsize deliberately. Partial lower list rows are scroll-window continuation, with navigation labels unobstructed.",
+      "raw_frames": [
+        {
+          "filename": "personalization-contacts-light-en-standard-expanded.png",
+          "sha256": "01ca85dc0d03033af106c60031473874db6f14fb9503d4b8077c7c3b933cbf2b",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-contacts-light-he-largefont-collapsed.png",
+          "sha256": "489f6764518214c4483358fa5d73b6604586cba4b8d1ab72f02f6c7cf333e362",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-contacts-light-he-largefont-expanded.png",
+          "sha256": "099c9c3b44a87320f4dc48a00c07d77ad708df94aace10a3bd82418087fd0092",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        },
+        {
+          "filename": "personalization-contacts-light-he-standard-collapsed.png",
+          "sha256": "b3c5610c9fc5a60946555e040715451c52d71aa7b1b128b723dcfb0a76990049",
+          "viewed_via_sheet": true,
+          "also_viewed_directly": false
+        }
+      ]
+    }
+  ],
+  "bounded_findings": [
+    {
+      "status": "PASS",
+      "scope": "Business detail/search/tab, notifications/callbacks/swipe, changelog, archive/backup/choosers, contacts/favorites",
+      "observation": "Assigned visual states are coherent and readable. Historical business empty-header gap, truncated source summary and raw taxonomy label issues are not present in the current reviewed business frames."
+    },
+    {
+      "status": "PASS",
+      "scope": "Typography, wine control accents, gold contrast, vector affordances, RTL/LTR and large font in assigned frames",
+      "observation": "Rounded heavier text is readable, wine switch/dialog action accents are visible, gold works in both themes, and contact/favorites layouts keep essential navigation controls visible. Font family/weight and touch behavior are not asserted from pixels."
+    }
+  ],
+  "limitations": [
+    "Review is limited to the 52 exact frames listed above; no claim about other frames, the full 269-frame matrix, publication or physical hardware.",
+    "Static visual review does not establish gesture, touch-target, focus, scroll reachability or Telecom behavior; those require separate native evidence.",
+    "No widgets, modern recents summary or other unassigned states were assessed in this subset.",
+    "No source edits, Gradle, CI launch, publication, APK delivery or 0.12 resend performed."
+  ],
+  "usage_error_encountered": false,
+  "tool_note": "One raw-image path initially lacked nested ui-snapshots/DA-CALLER-snapshots directories; file was found read-only and then successfully viewed. This was a missing-file lookup, not a quota/usage-limit error."
+}

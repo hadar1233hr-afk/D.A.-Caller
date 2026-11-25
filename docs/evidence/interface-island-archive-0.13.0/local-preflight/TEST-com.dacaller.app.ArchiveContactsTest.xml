@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.ArchiveContactsTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-13T06:13:44" hostname="3ebae333e153" time="0.216">
+  <properties/>
+  <testcase name="deniedPermissionOrCancelledSnapshotDoesNotReadProvider" classname="com.dacaller.app.ArchiveContactsTest" time="0.034"/>
+  <testcase name="privateSentinelsAndUnavailableLabelsNeverBecomeRealContactNumbers" classname="com.dacaller.app.ArchiveContactsTest" time="0.055"/>
+  <testcase name="securityFailureReturnsOnlyNumberFallbackAndLaterResolveUsesCurrentName" classname="com.dacaller.app.ArchiveContactsTest" time="0.03"/>
+  <testcase name="similarlyEndingNumbersNeverShareGuessedIdentityAndServicesStayDistinct" classname="com.dacaller.app.ArchiveContactsTest" time="0.027"/>
+  <testcase name="permissionRevokedMidLookupDiscardsPreviouslyResolvedIdentities" classname="com.dacaller.app.ArchiveContactsTest" time="0.043"/>
+  <testcase name="distinctArchivedNumbersUseIndexedLookupOnceAndFindSecondaryNumbers" classname="com.dacaller.app.ArchiveContactsTest" time="0.026"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

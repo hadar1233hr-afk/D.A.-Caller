@@ -1,0 +1,37 @@
+{
+  "source_sha": "53a678fac4764dc0210cad4e6b11a9d431287241",
+  "app_tree": "c3cdd0ea05b5e094087cb86efe148224787e393e",
+  "workflow_run_id": "44470286600",
+  "required_real_png_files": 8,
+  "sha256": {
+    "call-integration-notification-active-private-en.png": "a5f55bc9f106b85fc9d1026f8444358e6103e458af418f3793db5403f340f03c",
+    "call-integration-notification-active-private-he.png": "78855ca0f5aa32a361993c79e055b97ad0d9cf36a2df165b3a3d204e43951de2",
+    "call-integration-notification-active-speaker-en.png": "222400213a3c6447d65085e5749f23c957942a7a13398fd8ef570a6f2532fde8",
+    "call-integration-notification-active-speaker-he.png": "daaa6f8b5eeae86a59b4a1fdddd47af111087f0a1921c5cce8ec2dc4879bf074",
+    "call-integration-notification-incoming-he.png": "3dcc6877172e9b19a00bcdd98ace7b1bda5923d3ac068fb7f2ea0f2e26202299",
+    "call-integration-notification-outgoing-he.png": "3c794df1eaec79215830ae028f79c362ed3255c180c56eb491dce79675d3bf29",
+    "call-integration-return-contacts.png": "603671e7a0ab91898b0e99c364e6ca333a5d7fd000dae759e52e8034344f570c",
+    "call-integration-return-settings.png": "72c04a952c6296985c74612eb22bb6c62f7568d45cf987577419b4804097a657"
+  },
+  "native_assertions": {
+    "api": 33,
+    "real_systemui": true,
+    "notification_actions_acknowledged": true,
+    "native_back_returns_to_app": true,
+    "call_state_source": "debug-only synthetic snapshots, shared production CallNotifications builder",
+    "real_phone_call_foreground_service": true,
+    "initial_foreground": {
+      "activity": "com.dacaller.app.MainActivity",
+      "activity_and_decor_focused": true,
+      "native_application_window_active_and_focused": true,
+      "top_resumed_activity": "topResumedActivity=ActivityRecord{dfb7eba u0 com.dacaller.app/.MainActivity} t9}",
+      "stable_millis": 417,
+      "wait_millis": 487
+    },
+    "foreground_service_type": "phoneCall",
+    "dialer_role": "Granted with Android role manager on disposable emulator before foreground start; emulator discarded after suite",
+    "telecom_commands": "Unit-tested separately; no physical carrier/SIM assertion",
+    "native_back_panels": "normal/audio/more/keypad; contact query, row identity/offset and settings scroll"
+  },
+  "limits": "SystemUI renders the production notification builder from a real debug phoneCall foreground service with Android's dialer role on a disposable emulator. Call state and command acknowledgements are synthetic; Telecom/carrier operations are separately unit-tested and require physical-device verification."
+}

@@ -1,0 +1,19 @@
+{
+  "run_id": 44447145702,
+  "source_sha": "71dd0f409552628b2fe255285e6c7b3c7b497413",
+  "app_tree": "4c52f1a156b793e7532d06c0321cf37be8ad7b05",
+  "artifact_id": 14492954790,
+  "bytes": 162419,
+  "sha256": "ddc9f6fc5a075c1f8298ff364bf490581fd17628094f624bafd01150b2e45482",
+  "all_crc_pass": true,
+  "unit": {
+    "tests": 457,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "unique_cases": 457,
+  "classes": 44,
+  "native_status": "RUNNING_NO_RESULT",
+  "publication_allowed": false
+}

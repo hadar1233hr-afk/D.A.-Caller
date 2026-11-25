@@ -1,0 +1,26 @@
+{
+  "app_records_added": 0,
+  "errors": 0,
+  "failures": 0,
+  "files_sha256": {
+    "docs/evidence/business-acquisition/owner-261103/phone-readiness-checks.txt": "b8f8ed085f50a29dcd36ea5df054abde5a2eb50e3b9e443e0828124335156c35",
+    "docs/evidence/business-acquisition/owner-261103/phone-readiness-review.json": "806afc59dce9d8d8af7670d63d92f86c0c101eae6f72cead14b89f9439e3cf63",
+    "scripts/business-directory/package_app_dataset.py": "d0ffd2392ed43a356f6e84ee6b4a7526cf84a50dc555e5536d85975b3d0c123f",
+    "scripts/business-directory/requirements-lock.txt": "40f702ed012b78157fe9ef0791811376a336e60a7840283105835696b36dfe37",
+    "scripts/business-directory/research/check_phone_identity_review.py": "eb4c05d6d1ea2547ee27e684cc9ee95bb05ecc58c418a9efd117570e8530ea12",
+    "scripts/business-directory/research/phone_identity_review.py": "89452692195fa9e9b7b3dc65a75f7943d0fddbffa26fb4d28ad3b747b58759f0"
+  },
+  "limitations": [
+    "No app, production packager, signing or workflow changes.",
+    "No current ownership, assignment, reachability or physical-device verification."
+  ],
+  "observed_at_utc": "2026-11-05T17:09:24.991023+00:00",
+  "phone_calls_or_network_requests": 0,
+  "phonenumbers_version": "9.0.42",
+  "python_version": "3.12.14",
+  "scope": "research-only offline phone identity checks; not Android verification or production admission",
+  "skipped": 0,
+  "source_corpus_sha256": "37ce40b735e144cc38eee1e72ce75c785424f0213d05c9c35feb766c1b2704df",
+  "status": "PASS",
+  "tests": 16
+}

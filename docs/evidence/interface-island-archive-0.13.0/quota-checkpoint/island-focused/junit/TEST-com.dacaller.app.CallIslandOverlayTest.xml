@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.CallIslandOverlayTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2026-11-12T22:20:34" hostname="3ebae333e153" time="3.72">
+  <properties/>
+  <testcase name="outsideSettingIsOptInAndPermissionAndOwnedCallAreAllRequired" classname="com.dacaller.app.CallIslandOverlayTest" time="1.528"/>
+  <testcase name="externalHideAndStaleDragAreCallScopedAndRestoreAcrossOwnAppTransitions" classname="com.dacaller.app.CallIslandOverlayTest" time="0.473"/>
+  <testcase name="disabledFeatureDoesNotPollTelecomAndPreferenceEnableRestoresCurrentCall" classname="com.dacaller.app.CallIslandOverlayTest" time="0.124"/>
+  <testcase name="optionalTopRequestRetainsNormalOverlayTypeAndNeverUsesNoLimitsOrPrivilegedFlags" classname="com.dacaller.app.CallIslandOverlayTest" time="0.101"/>
+  <testcase name="preferenceOffCallEndAndServiceStopCleanUpIdempotently" classname="com.dacaller.app.CallIslandOverlayTest" time="0.169"/>
+  <testcase name="windowHasOnlyCapsuleBoundsAndCannotStealKeyboardOrOutsideTouches" classname="com.dacaller.app.CallIslandOverlayTest" time="0.201"/>
+  <testcase name="windowPermissionFailureCannotInterruptOrDisconnectTelecom" classname="com.dacaller.app.CallIslandOverlayTest" time="0.092"/>
+  <testcase name="incomingAndUnknownCallStatesNeverCreateExternalUiOrDispatchCallControls" classname="com.dacaller.app.CallIslandOverlayTest" time="0.044"/>
+  <testcase name="screenPrivacyOwnAppAndPermissionRevocationRemoveTheWindowWithoutEndingCall" classname="com.dacaller.app.CallIslandOverlayTest" time="0.143"/>
+  <testcase name="confirmationCancelDoesNotEndCallAndAcceptCannotEndReplacement" classname="com.dacaller.app.CallIslandOverlayTest" time="0.257"/>
+  <testcase name="replacementCallCancelsAGenuineExternalDragBeforeTheOldPointerFinishes" classname="com.dacaller.app.CallIslandOverlayTest" time="0.107"/>
+  <testcase name="resumingAnyOwnActivityHidesExternalSurfaceBeforeInAppUi" classname="com.dacaller.app.CallIslandOverlayTest" time="0.113"/>
+  <testcase name="realExternalPointerDragPersistsPositionWithoutExpandingOrIssuingCallCommands" classname="com.dacaller.app.CallIslandOverlayTest" time="0.091"/>
+  <testcase name="fullCallNavigationAndAudioCommandsUseOnlyCurrentSessionToken" classname="com.dacaller.app.CallIslandOverlayTest" time="0.091"/>
+  <testcase name="answeredIncomingCallAppearsWithoutChangingPermissionAndWaitingCallHidesIt" classname="com.dacaller.app.CallIslandOverlayTest" time="0.147"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

@@ -1,0 +1,33 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts/tests",
+    "-p",
+    "test_da_caller_modern_native.py",
+    "-v"
+  ],
+  "cwd": "/workspace/D.A.-Caller",
+  "started_utc": "2026-11-19T12:10:09.917745+00:00",
+  "completed_utc": "2026-11-19T12:10:19.585855+00:00",
+  "returncode": 0,
+  "methods": 32,
+  "seconds": 9.332,
+  "result": "PASS",
+  "source_sha256_before": {
+    "scripts/verify-modern-features-native.py": "a615b533729f61484cca04fefc07d43f26efd87c29a33fdc5e186343c3482b57",
+    "scripts/tests/test_da_caller_modern_native.py": "82ca0484a350f6972739f4209d5b785d6793b98dfc4aeed911d79f6ca03b3560",
+    "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java": "1b82532fe55bc7a3b5865a4743b398be88137e86f31e7742d25dce9aa8d6ba47"
+  },
+  "source_sha256_after": {
+    "scripts/verify-modern-features-native.py": "a615b533729f61484cca04fefc07d43f26efd87c29a33fdc5e186343c3482b57",
+    "scripts/tests/test_da_caller_modern_native.py": "82ca0484a350f6972739f4209d5b785d6793b98dfc4aeed911d79f6ca03b3560",
+    "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java": "1b82532fe55bc7a3b5865a4743b398be88137e86f31e7742d25dce9aa8d6ba47"
+  },
+  "source_unchanged": true,
+  "log_sha256": "bb6569998248652a05011f5f07788ecdd3d46f79e4089f90389b3ac9cdf1139e",
+  "evidence_scope": "Offline synthetic verifier contracts only; not Android/native/visual evidence."
+}

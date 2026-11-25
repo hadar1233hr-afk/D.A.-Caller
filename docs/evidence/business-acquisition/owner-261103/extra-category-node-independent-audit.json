@@ -1,0 +1,78 @@
+{
+  "status": "PASS_RESEARCH_EXTRA_CATEGORY_NODE_SOURCE_AND_POINT_AUDIT_ONLY",
+  "observed_at_utc": "2026-11-05T22:14:51.093948+00:00",
+  "elapsed_seconds": 11.534,
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "source_pbf_bytes": 121050024,
+  "research_ndjson_sha256": "8f9fbe7d47041e47b38aec62f1f5b4f7b199c2671ac4b199cf4f27ec2a5a8fe8",
+  "research_report_sha256": "fbc642fb5653178f552468b3f6c4f1cfd89ae2c873c0b94904294b2276d01044",
+  "audit_script_sha256": "87596823f3bfe1aa0ca341a662d3b903a14ba28b625b5e9918e273abb04a3d37",
+  "reviewed_producer_sha256": "1b9d358cbeee8b807c4033be32ac22a1a7d6c998c8d6ffdbda3557e654c45c1d",
+  "reviewed_policy_sha256": "b9ff71844e21a2605d26452920edae8fa62026383a4008581191a40e78d7c060",
+  "reference_extractor_sha256": "3b770ebf3af5322e77421d4e2458b360a7488985b8d4e36e69a42e0ad55577d8",
+  "reference_spatial_binding_sha256": "d179364bf7034c108371fae3b11e32f9de64f8d880ab262dc4d7cae83e9e450b",
+  "geometry_input_sha256": {
+    "research-region-outer-rings.json": "04b9d0ed2ad8d28e2947bb9fde88cbe39dd7f37c666940ab48869fdb3939750f",
+    "research-region-geometry-inventory.json": "ba44cf5695ada7b33a33acf86976a185768c8fb6396e9156ecc4c00c9fd823b1",
+    "country-relation-inventory.json": "cef27b1ec8c92b6a68d5bd57b0c65eb4ecd282ed949b75b767996069d3104125",
+    "disputed-region-relation-inventory.json": "b96552bfa717e01d9ad4d6275f45ee04ebe967a267e2a30c9a6cd42e5fc5d3f1",
+    "geography-research-review.json": "84ee86f8d48083ffb32c3cc51bfc4f0f3d0a507435d78068a8d7265c6360a0cc",
+    "owner-upload-receipt.json": "8ac1da66a8771f289b73a01cf15ca0351b13795ac5cb552fcb0a5fbc4c6532c2"
+  },
+  "source_node_rows": 29,
+  "unique_original_source_nodes_found": 29,
+  "checks_passed": {
+    "exact_original_coordinates_rows": 29,
+    "exact_original_id_url_timestamp_version_rows": 29,
+    "exact_original_raw_tags_rows": 29,
+    "exact_source_country_fields_without_inference_rows": 29,
+    "exact_source_name_city_address_rows": 29,
+    "exact_source_original_canonical_phone_and_extension_rows": 29,
+    "independent_source_point_inclusion_margin_exclusion_rows": 29,
+    "independent_whitelist_access_residential_lifecycle_and_shared_policy_rows": 29,
+    "research_status_license_provenance_rows": 29
+  },
+  "minimum_actual_point_distances_degrees": {
+    "source_IL_boundary": 0.0054993232601850215,
+    "Gaza_admin4": 0.27528605192541206,
+    "JudeaSamaria_admin4_outer_filled": 0.0054993232601850215,
+    "WestBank_historic_outer_filled": 0.00417619262606404
+  },
+  "geos_version": "3.13.1-CAPI-1.19.2",
+  "prior_cohorts": [
+    {
+      "path": "/workspace/work/business-data/node-geography-owner-261103-v2/research-node-businesses.ndjson",
+      "sha256": "37ce40b735e144cc38eee1e72ce75c785424f0213d05c9c35feb766c1b2704df",
+      "rows": 2448
+    },
+    {
+      "path": "/workspace/work/business-data/way-geography-owner-261103-v1/research-way-businesses.ndjson",
+      "sha256": "cdbac300bf164e252e606d990f648c040e7193444b525786b16aba9049a692d6",
+      "rows": 247
+    },
+    {
+      "path": "/workspace/work/business-data/relation-geography-owner-261103-v2/research-relation-businesses.ndjson",
+      "sha256": "2e56ba410ea38bc06897d43c50108b5d007895d41856daeffa55e136dda58ae8",
+      "rows": 1
+    }
+  ],
+  "source_id_overlap_with_prior_cohorts": 0,
+  "source_phone_overlap_with_prior_cohorts": 0,
+  "app_records_added": 0,
+  "source_mutations": 0,
+  "automatic_merges": 0,
+  "method": [
+    "Direct actual-PBF C++ NODE/IdFilter reread of every emitted source ID, full tags/version/time/coordinate",
+    "Exact source names/addresses/country and original/canonical phone/extension compared for every emitted row",
+    "Independent narrow whitelist/privacy observations with hash-bound shared reviewed policy parity",
+    "Separate GEOS point bindings test actual points against retained original source polygons; never producer GeometryScope.classify",
+    "All prior source cohorts compared for duplicate source IDs without merging shared phone numbers"
+  ],
+  "limits": [
+    "The original phone/category parser and reviewed policy remain shared hash-bound reference contracts.",
+    "Spatial replay uses the separate existing audit GEOS bindings and source geometry provenance validator; official/legal geography is not established.",
+    "Only emitted source nodes are audited; this is not proof all eligible source categories/objects were captured.",
+    "Source listing, privacy-tag checks and numbering metadata do not establish public access, current operation/ownership or reachability.",
+    "Angular0.001degree margins are not meters; no country field is inferred or production/app/release admission approved."
+  ]
+}

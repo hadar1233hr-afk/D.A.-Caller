@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.CallReturnNavigationTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2026-11-18T20:13:33" hostname="3ebae333e153" time="5.451">
+  <properties/>
+  <testcase name="liveMainReturnKeepsItsActualPageAndIgnoresInjectedDialExtras" classname="com.dacaller.app.CallReturnNavigationTest" time="0.151"/>
+  <testcase name="separateExistingAppTaskIsBroughtBackWithoutClearingItsDetailActivity" classname="com.dacaller.app.CallReturnNavigationTest" time="0.945"/>
+  <testcase name="coldReturnRetainsExactExpandedIdentityAndSettingsOriginWithoutCallExtras" classname="com.dacaller.app.CallReturnNavigationTest" time="0.46"/>
+  <testcase name="businessColdReturnRestoresSeparateTabAndRecentShortcutNeverDials" classname="com.dacaller.app.CallReturnNavigationTest" time="0.2"/>
+  <testcase name="incomingAccessibilityCanAnswerButOldCallSwipeCannotAffectItsReplacement" classname="com.dacaller.app.CallReturnNavigationTest" time="0.129"/>
+  <testcase name="legacyBackColdStartOpensExplicitAppReturnWithoutAnyPhoneExtras" classname="com.dacaller.app.CallReturnNavigationTest" time="1.13"/>
+  <testcase name="incomingTouchRequiresCompletedSwipeAndCancelledDragCannotAnswer" classname="com.dacaller.app.CallReturnNavigationTest" time="0.074"/>
+  <testcase name="mainStopPersistsNavigationForColdReturnWhileNormalLaunchRetainsConfiguredStartPage" classname="com.dacaller.app.CallReturnNavigationTest" time="0.547"/>
+  <testcase name="coldMainReturnRestoresLastTabSearchAndAnchorsAndSuppressesRolePrompt" classname="com.dacaller.app.CallReturnNavigationTest" time="0.1"/>
+  <testcase name="backFinishesOnlyCallScreenInRingingOutgoingAndActiveIncludingEveryOpenPanel" classname="com.dacaller.app.CallReturnNavigationTest" time="0.71"/>
+  <testcase name="businessReturnPreservesOnlyTypedSearchAndAnchorsWithoutReplayingDial" classname="com.dacaller.app.CallReturnNavigationTest" time="0.031"/>
+  <testcase name="malformedRuntimeExpansionAndSettingsOriginCollapseSafely" classname="com.dacaller.app.CallReturnNavigationTest" time="0.058"/>
+  <testcase name="coldContactReturnRebuildsReadOnlyDestinationOnceWhileSavedTaskRecreationDoesNotDuplicateIt" classname="com.dacaller.app.CallReturnNavigationTest" time="0.114"/>
+  <testcase name="bottomDialpadAndTopLeftSettingsPreserveContactDestinationAndDoNotDial" classname="com.dacaller.app.CallReturnNavigationTest" time="0.718"/>
+  <testcase name="coldReadOnlyDestinationsAreExplicitAndPermissionScoped" classname="com.dacaller.app.CallReturnNavigationTest" time="0.054"/>
+  <testcase name="runtimeSnapshotContainsOnlyTypedNavigationAndNeverCallDestinations" classname="com.dacaller.app.CallReturnNavigationTest" time="0.024"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

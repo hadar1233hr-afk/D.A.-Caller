@@ -1,0 +1,113 @@
+{
+  "source": "46c500a62d3e12699e377280afaf82284be188bc",
+  "app_tree": "8a2fed904c74c44e57b837a5675e79487e2dba7e",
+  "run": 41851873318,
+  "run_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/actions/runs/41851873318",
+  "export_commit": "df80d31c740af544174b1080ec278659f6ec4b01",
+  "official_artifact_digests_sizes_and_crc_verified": true,
+  "fresh_connector_downloads_verified": true,
+  "official_zip_bytes_match_remote_immutable_export_git_blobs": true,
+  "remote_zip_blob_proof": "/workspace/work/callback-business-second-export-remote-blob-shas.json",
+  "artifact_categories": [
+    "checks",
+    "native-failure-candidate",
+    "ui",
+    "validate-apk"
+  ],
+  "job_conclusions": {
+    "validate": "success",
+    "android-ui": "failure",
+    "beta": "skipped",
+    "preview-debug": "skipped"
+  },
+  "unit": {
+    "unique_cases": 352,
+    "passed": 352,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duplicate_report_cases": 0
+  },
+  "native": {
+    "unique_cases": 34,
+    "passed": 33,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "duplicate_report_cases": 0
+  },
+  "native_failure": "testBundledBusinessDirectoryNativeIsolationSearchAndProvenance: BLOCKED no verified licensed business asset bundled (AVAILABLE expected, MISSING observed)",
+  "png": {
+    "total": 239,
+    "functional": 237,
+    "diagnostic": 2,
+    "all_prior_233_names_present": true,
+    "groups": {
+      "call": 101,
+      "island": 44,
+      "other": 92,
+      "diagnostic": 2
+    },
+    "review_directory": "/workspace/work/callback-business-second-review"
+  },
+  "reminder_functional_checks": "PASS",
+  "reminder_raw_independent_audit": "/workspace/work/callback-business-second-reminder-independent-audit.json",
+  "island_native_bar_proofs_36": "PASS: unmodified committed strict verifier, all actual PNG pixel counts and SHA bindings independently confirmed",
+  "island_native_bar_audit": "/workspace/work/callback-business-second-island-bar-verification.json",
+  "full_callback_business_verifier": {
+    "status": "BLOCKED",
+    "exit_code": 1,
+    "error": "Traceback (most recent call last):\n  File \"/workspace/D.A.-Caller/scripts/verify-callback-business-matrix.py\", line 24, in <module>\n    assert all(counts[name] == 1 for name in required), \"Missing/duplicate real callback/business PNG; an unavailable dataset is BLOCKED\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Missing/duplicate real callback/business PNG; an unavailable dataset is BLOCKED",
+    "unmodified": true
+  },
+  "native_exact_tested_apk_step": "SKIPPED after failed native suite; candidate retained as diagnostic only",
+  "apk_verification": {
+    "native-failure-candidate": {
+      "path": "/workspace/work/callback-business-second-native-failure-candidate/app-debug.apk",
+      "sha256": "9f2f980886f3e029d38d9aa6c10759e6579a1105152a547b9de416f670e7ffe4",
+      "bytes": 338667,
+      "certificate_sha256": "2cde710d5cec38582402cb6e3aecd2732f8605592cea4fec9f9713ab71de2d3c",
+      "signature_verified_from_actual_apk": true,
+      "metadata_and_recorded_signature_exact": true,
+      "signing_policy": {
+        "apk_sha256": "9f2f980886f3e029d38d9aa6c10759e6579a1105152a547b9de416f670e7ffe4",
+        "certificate_sha256": "2cde710d5cec38582402cb6e3aecd2732f8605592cea4fec9f9713ab71de2d3c",
+        "mode": "ephemeral-test-only",
+        "publication_allowed": false,
+        "required_update_certificate_matches": false,
+        "required_update_version": "0.11.0-beta.9",
+        "schema_version": 1
+      }
+    },
+    "validate-apk": {
+      "path": "/workspace/work/callback-business-second-validate-apk/outputs/apk/debug/app-debug.apk",
+      "sha256": "477144e74fa1789192d1b46012255c74e816ab1912c9f741e320499506387e41",
+      "bytes": 338667,
+      "certificate_sha256": "ffc86229baf9a1ee54edc93b4982878f7c06051628fcea615f55a5d8ddee6673",
+      "signature_verified_from_actual_apk": true,
+      "metadata_and_recorded_signature_exact": true,
+      "signing_policy": {
+        "apk_sha256": "477144e74fa1789192d1b46012255c74e816ab1912c9f741e320499506387e41",
+        "certificate_sha256": "ffc86229baf9a1ee54edc93b4982878f7c06051628fcea615f55a5d8ddee6673",
+        "mode": "ephemeral-test-only",
+        "publication_allowed": false,
+        "required_update_certificate_matches": false,
+        "required_update_version": "0.11.0-beta.9",
+        "schema_version": 1
+      }
+    },
+    "lint_counts": {
+      "Error": 0,
+      "Fatal": 0,
+      "Warning": 6
+    }
+  },
+  "visual_review_performed": false,
+  "publication_approved": false,
+  "hardware_verified": false,
+  "remaining_blockers": [
+    "No licensed nonempty production business dataset:0 imported business rows",
+    "beta9 exact matching private signing key unavailable; both actual APK policies forbid publication and claim no update certificate match"
+  ],
+  "continuation": "Source frozen. No unchanged-source CI rerun or publication until new evidence, source changes, or resolved data/signing blockers justify it."
+}

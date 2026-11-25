@@ -1,0 +1,54 @@
+{
+  "status": "REPRODUCIBLE_RESEARCH_INPUTS_NOT_APP_DATA",
+  "archive": "node-geography-geometry-inputs.zip",
+  "archive_bytes": 738943,
+  "archive_sha256": "b267c97f59af724e572bf56a9d5281abfaa82dc97d3771b79658b757e838d73a",
+  "members": {
+    "research-region-outer-rings.json": {
+      "bytes": 2441340,
+      "sha256": "04b9d0ed2ad8d28e2947bb9fde88cbe39dd7f37c666940ab48869fdb3939750f"
+    },
+    "research-region-geometry-inventory.json": {
+      "bytes": 6355,
+      "sha256": "ba44cf5695ada7b33a33acf86976a185768c8fb6396e9156ecc4c00c9fd823b1"
+    },
+    "country-relation-inventory.json": {
+      "bytes": 197951,
+      "sha256": "cef27b1ec8c92b6a68d5bd57b0c65eb4ecd282ed949b75b767996069d3104125"
+    },
+    "disputed-region-relation-inventory.json": {
+      "bytes": 255539,
+      "sha256": "b96552bfa717e01d9ad4d6275f45ee04ebe967a267e2a30c9a6cd42e5fc5d3f1"
+    },
+    "geography-research-review.json": {
+      "bytes": 12760,
+      "sha256": "84ee86f8d48083ffb32c3cc51bfc4f0f3d0a507435d78068a8d7265c6360a0cc"
+    },
+    "owner-upload-receipt.json": {
+      "bytes": 757,
+      "sha256": "8ac1da66a8771f289b73a01cf15ca0351b13795ac5cb552fcb0a5fbc4c6532c2"
+    }
+  },
+  "source_pbf_sha256": "62c6ff161b738588454719f0fd1c4971c9b46535f4ab04313e7bbe1dd582afdf",
+  "research_script_path": "/workspace/work/business-data/research_node_geography.py",
+  "research_script_sha256": "a5a01b32666bf4c22585de39b79801aedbadc0d1e2bf0d5074e20bc4a2518d0f",
+  "research_output_ndjson_path": "/workspace/work/business-data/node-geography-owner-261103-v2/research-node-businesses.ndjson",
+  "research_output_ndjson_sha256": "37ce40b735e144cc38eee1e72ce75c785424f0213d05c9c35feb766c1b2704df",
+  "source_node_audit_script_path": "/workspace/work/business-data/audit-node-geography.py",
+  "source_node_audit_script_sha256": "56a0aae27269fa6e322df0f1b7b166418d55f8192642d4748b17193631dcd96d",
+  "research_rows": 2448,
+  "unique_source_nodes": 2393,
+  "unique_base_phones": 2353,
+  "raw_original_country_fields_preserved": true,
+  "primary24_unchanged": true,
+  "app_bundled_rows": 0,
+  "provisional_v1_rows": 2456,
+  "v2_rows": 2448,
+  "v1_to_v2_omitted_diplomatic_rows": 8,
+  "diplomatic_semantic_caution": "country may identify represented/sending state. Eight rows conservatively omitted, NOT proven outside Israel. Nine prior24 records show this valid semantic distinction; prior24 are not declared geographically wrong.",
+  "missing_address_rows": 745,
+  "phone_extension_rows": 0,
+  "independent_source_node_audit": "PASS, all2448 records exact to originalsource fields/coords/timestamps/phone values",
+  "phone_currentness": "NOT VERIFIED",
+  "official_country_or_national_coverage": "NOT CLAIMED"
+}

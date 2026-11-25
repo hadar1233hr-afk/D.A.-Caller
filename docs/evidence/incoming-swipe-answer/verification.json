@@ -1,0 +1,31 @@
+{
+  "scope": "In-call incoming screen and emergency fallback touch answering",
+  "implementation": [
+    "Physical touch follows finger using raw screen coordinates",
+    "Partial/cancelled/multi-pointer gestures reset; no tap answer tile",
+    "Completed swipe guarded to currently owned ringing Call",
+    "Explicit accessibility click action preserved"
+  ],
+  "checks": {
+    "prior_focused_suite": {
+      "tests": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "final_source_UI_regressions": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "android_test_compilation": "PASS",
+    "lint": {
+      "Error": 0,
+      "Fatal": 0,
+      "Warning": 7
+    }
+  },
+  "native_telecom_swipe_and_new_screenshots": "NOT TESTED; required before release",
+  "publication_approved": false
+}

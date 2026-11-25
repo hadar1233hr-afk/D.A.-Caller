@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.app.PendingIntent;
@@ -15,6 +16,8 @@ import android.app.role.RoleManager;
 import android.graphics.drawable.AdaptiveIconDrawable;
 import android.net.Uri;
 import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.Before;
@@ -37,7 +40,7 @@ public final class AppIconsTest {
   for(String id:AppIcons.IDS)app.getPackageManager().setComponentEnabledSetting(AppIcons.component(app,id),
     PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,PackageManager.DONT_KILL_APP);
  }
- @Test public void allFiveIconsHaveDistinctAdaptiveResourcesAndThemedForeground(){
+ @Test public void allNineIconsHaveDistinctAdaptiveResourcesAndThemedForeground(){
   HashSet<Integer> resources=new HashSet<>();HashSet<String> labels=new HashSet<>();
   for(String id:AppIcons.IDS){
    assertTrue(AppIcons.valid(id));assertTrue(resources.add(AppIcons.iconResource(id)));
@@ -46,9 +49,60 @@ public final class AppIconsTest {
    AdaptiveIconDrawable icon=(AdaptiveIconDrawable)AppIcons.preview(app,id);
    assertNotNull(icon.getBackground());assertNotNull(icon.getForeground());assertNotNull(icon.getMonochrome());
   }
-  assertEquals(5,resources.size());assertEquals("crest",AppIcons.selected(app));
+  assertEquals(9,resources.size());assertEquals("crest",AppIcons.selected(app));
+ }
+ @Test public void originalPreferenceIdsAliasesAndOrderRemainStable(){
+  String[] oldIds={"crest","orbit","monogram","prism","wave"};
+  String[] oldAliases={"LauncherCrest","LauncherOrbit","LauncherMonogram","LauncherPrism","LauncherWave"};
+  assertArrayEquals(oldIds,Arrays.copyOf(AppIcons.IDS,oldIds.length));
+  for(int i=0;i<oldIds.length;i++){
+   prefs.edit().putString(AppIcons.PREF,oldIds[i]).commit();assertEquals(oldIds[i],AppIcons.selected(app));
+   assertEquals(app.getPackageName()+"."+oldAliases[i],AppIcons.component(app,oldIds[i]).getClassName());
+  }
+  prefs.edit().putString(AppIcons.PREF,"future-choice").commit();
+  assertEquals("crest",AppIcons.selected(app));assertEquals("future-choice",prefs.getString(AppIcons.PREF,null));
+ }
+ @Test public void bothLanguagesGiveEveryChoiceADistinctReadableLabel(){
+  for(String language:new String[]{"he","en"}){
+   prefs.edit().putString("language",language).commit();HashSet<String> labels=new HashSet<>();
+   for(String id:AppIcons.IDS){String label=AppIcons.label(app,id);assertTrue(label.length()>3);assertTrue(labels.add(label));}
+  }
+ }
+ @Test public void manifestKeepsOneDefaultLauncherAndEveryAliasTargetsOriginalDialActivity()throws Exception{
+  PackageManager manager=app.getPackageManager();
+  Intent launcher=new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER).setPackage(app.getPackageName());
+  List<ResolveInfo> enabled=manager.queryIntentActivities(launcher,0);assertEquals(1,enabled.size());
+  assertEquals(AppIcons.component(app,"crest").getClassName(),enabled.get(0).activityInfo.name);
+  for(String id:AppIcons.IDS){
+   ActivityInfo alias=manager.getActivityInfo(AppIcons.component(app,id),PackageManager.MATCH_DISABLED_COMPONENTS);
+   assertEquals(MainActivity.class.getName(),alias.targetActivity);assertTrue(alias.exported);
+   assertEquals(AppIcons.iconResource(id),alias.icon);assertEquals(id.equals("crest"),alias.enabled);
+  }
+  assertTrue(manager.getActivityInfo(new ComponentName(app,MainActivity.class),0).enabled);
+  Intent bareDial=new Intent(Intent.ACTION_DIAL).setPackage(app.getPackageName());
+  assertEquals(MainActivity.class.getName(),manager.resolveActivity(bareDial,0).activityInfo.name);
+ }
+ @Test public void everyOldAndNewChoiceRoundTripsThroughSettingsBackupAndAliases()throws Exception{
+  prefs.edit().putString("note_123","preserved private fixture").putBoolean("dark",true).commit();
+  for(String id:AppIcons.IDS){
+   assertTrue(AppIcons.select(app,id));
+   SettingsBackup.Snapshot saved=SettingsBackup.decode(SettingsBackup.encode(SettingsBackup.capture(prefs)));
+   assertEquals(id,saved.values.get(AppIcons.PREF));assertTrue(AppIcons.select(app,"crest"));
+   assertTrue(SettingsBackup.restore(prefs,saved,choice->AppIcons.apply(app,choice)));
+   assertEquals(id,AppIcons.selected(app));assertEquals("preserved private fixture",prefs.getString("note_123",null));
+   assertTrue(prefs.getBoolean("dark",false));
+   Intent launcher=new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER).setPackage(app.getPackageName());
+   List<ResolveInfo> enabled=app.getPackageManager().queryIntentActivities(launcher,0);
+   assertEquals(1,enabled.size());assertEquals(AppIcons.component(app,id).getClassName(),enabled.get(0).activityInfo.name);
+  }
  }
  @Test public void everyChoiceLeavesExactlyOneLauncherAndKeepsDialActivityEnabled()throws Exception{
+  assertEveryChoice();
+ }
+ @Test @Config(sdk=26) public void everyChoiceAlsoWorksOnOldestSupportedAndroid()throws Exception{
+  assertEveryChoice();
+ }
+ private void assertEveryChoice()throws Exception{
   Intent launcher=new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER).setPackage(app.getPackageName());
   for(String id:AppIcons.IDS){
    assertTrue(AppIcons.select(app,id));assertEquals(id,AppIcons.selected(app));
@@ -88,12 +142,53 @@ public final class AppIconsTest {
   assertTrue(AppIcons.apply(context,"wave"));
   @SuppressWarnings("unchecked") ArgumentCaptor<List<PackageManager.ComponentEnabledSetting>> changes=ArgumentCaptor.forClass(List.class);
   verify(manager).setComponentEnabledSettings(changes.capture());
-  assertEquals(5,changes.getValue().size());int enabled=0;
+  assertEquals(9,changes.getValue().size());int enabled=0;HashSet<ComponentName> components=new HashSet<>();
   for(PackageManager.ComponentEnabledSetting setting:changes.getValue()){
+   assertTrue(components.add(setting.getComponentName()));
+   assertNotEquals(new ComponentName(context,MainActivity.class),setting.getComponentName());
    assertEquals(PackageManager.DONT_KILL_APP,setting.getEnabledFlags());
    if(setting.getEnabledState()==PackageManager.COMPONENT_ENABLED_STATE_ENABLED){enabled++;assertEquals(AppIcons.component(context,"wave"),setting.getComponentName());}
   }
   assertEquals(1,enabled);verify(manager,never()).setComponentEnabledSetting(any(),anyInt(),anyInt());
+ }
+ @Test public void android13RejectionRestoresTheExactSnapshotAtomically(){
+  PackageManager manager=mock(PackageManager.class);Context context=withManager(manager);
+  HashMap<ComponentName,Integer> states=new HashMap<>();
+  for(String id:AppIcons.IDS)states.put(AppIcons.component(context,id),id.equals("wine")?PackageManager.COMPONENT_ENABLED_STATE_ENABLED:PackageManager.COMPONENT_ENABLED_STATE_DISABLED);
+  when(manager.getComponentEnabledSetting(any())).thenAnswer(call->states.get(call.getArgument(0)));
+  AtomicBoolean first=new AtomicBoolean(true);
+  doAnswer(call->{if(first.getAndSet(false))throw new SecurityException("OEM refused atomic change");return null;})
+    .when(manager).setComponentEnabledSettings(anyList());
+  prefs.edit().putString(AppIcons.PREF,"wine").putString("unrelated_fixture","preserved").commit();
+  assertFalse(AppIcons.select(context,"signal"));assertEquals("wine",AppIcons.selected(context));
+  assertEquals("preserved",prefs.getString("unrelated_fixture",null));
+  @SuppressWarnings("unchecked") ArgumentCaptor<List<PackageManager.ComponentEnabledSetting>> changes=ArgumentCaptor.forClass(List.class);
+  verify(manager,times(2)).setComponentEnabledSettings(changes.capture());
+  List<PackageManager.ComponentEnabledSetting> restore=changes.getAllValues().get(1);assertEquals(9,restore.size());
+  for(PackageManager.ComponentEnabledSetting setting:restore){
+   assertEquals((int)states.get(setting.getComponentName()),setting.getEnabledState());
+   assertEquals(PackageManager.DONT_KILL_APP,setting.getEnabledFlags());
+  }
+  verify(manager,never()).setComponentEnabledSetting(any(),anyInt(),anyInt());
+ }
+ @Test public void failedPreferenceCommitRestoresAliasesAndExactPreviousPreference(){
+  prefs.edit().putString(AppIcons.PREF,"wine").putString("unrelated_fixture","preserved").commit();
+  assertTrue(AppIcons.apply(app,"wine"));
+  SharedPreferences failing=mock(SharedPreferences.class);AtomicBoolean first=new AtomicBoolean(true);
+  when(failing.getString(anyString(),nullable(String.class))).thenAnswer(call->prefs.getString(call.getArgument(0),call.getArgument(1)));
+  when(failing.contains(anyString())).thenAnswer(call->prefs.contains(call.getArgument(0)));
+  when(failing.edit()).thenAnswer(call->{
+   SharedPreferences.Editor real=prefs.edit(),editor=mock(SharedPreferences.Editor.class);
+   when(editor.putString(anyString(),nullable(String.class))).thenAnswer(edit->{real.putString(edit.getArgument(0),edit.getArgument(1));return editor;});
+   when(editor.remove(anyString())).thenAnswer(edit->{real.remove(edit.getArgument(0));return editor;});
+   when(editor.commit()).thenAnswer(edit->{real.commit();return !first.getAndSet(false);});return editor;
+  });
+  Context context=new ContextWrapper(app){@Override public SharedPreferences getSharedPreferences(String name,int mode){return failing;}};
+  assertFalse(AppIcons.select(context,"facet"));assertEquals("wine",prefs.getString(AppIcons.PREF,null));
+  assertEquals("preserved",prefs.getString("unrelated_fixture",null));
+  Intent launcher=new Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER).setPackage(app.getPackageName());
+  List<ResolveInfo> enabled=app.getPackageManager().queryIntentActivities(launcher,0);
+  assertEquals(1,enabled.size());assertEquals(AppIcons.component(app,"wine").getClassName(),enabled.get(0).activityInfo.name);
  }
  @Test @Config(sdk=26) public void oldAndroidEnablesReplacementBeforeDisablingPreviousEntry(){
   PackageManager manager=mock(PackageManager.class);Context context=withManager(manager);

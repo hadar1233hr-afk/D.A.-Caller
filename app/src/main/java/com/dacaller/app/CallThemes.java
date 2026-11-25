@@ -11,7 +11,7 @@ final class CallThemes {
  static final String[] NAMES={"Samsung · One UI","Google Phone","iOS 26 · Glass","Xiaomi · HyperOS","Nothing OS"};
  static final String[] DESCRIPTIONS={
   "פרופיל עגול ומערך פעולות רחב", "ארבע פעולות ומגשים מעוגלים בהשראת Google Phone",
-  "משטחי זכוכית קלים ומערך סימטרי", "כרטיסי פעולה ופרופיל במבנה אופקי", "טיפוגרפיה טכנית, נקודות ושחור־לבן"
+  "משטחי זכוכית קלים ומערך סימטרי", "כרטיסי פעולה ופרופיל במבנה אופקי", "פרופיל ממורכז, נקודות ושחור־לבן"
  };
  final int background,surface,surface2,ink,muted,accent,call,decline,line,selected,selectedInk,end,endInk;
  final int radius,style;

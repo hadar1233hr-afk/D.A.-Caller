@@ -1,0 +1,106 @@
+name: Publish owner-approved DA CALLER 0.13.0
+
+on:
+  pull_request:
+    types: [labeled, synchronize]
+
+concurrency:
+  group: da-caller-owner-approved-exact-013
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  publish-exact-013:
+    if: >-
+      github.event.pull_request.number == 5 &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.repository == 'hadar1233hr-afk/D.A.-Caller' &&
+      github.event.pull_request.head.ref == 'codex/da-caller-dynamic-island-20261027' &&
+      contains(github.event.pull_request.labels.*.name, 'visual-reviewed') &&
+      contains(github.event.pull_request.labels.*.name, 'release-013-approved') &&
+      (github.event_name == 'pull_request' &&
+       (github.event.action == 'synchronize' || github.event.label.name == 'release-013-approved'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+      - name: Install verification tools only; never build or sign
+        run: sdkmanager 'build-tools;35.0.0'
+      - name: Check unchanged default signing and bounded publication rejection contracts
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s scripts/tests -p 'test_da_caller*.py' -v
+          python3 -m unittest discover -s scripts/tests -p 'test_release_012_stage.py' -v
+          python3 -m unittest discover -s scripts/tests -p 'test_release_013_stage.py' -v
+      - name: Download original authenticated artifacts without extracting or rebuilding
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          mkdir original-013
+          gh api repos/hadar1233hr-afk/D.A.-Caller/actions/runs/44521985299 > original-013/source-run.json
+          gh api repos/hadar1233hr-afk/D.A.-Caller/actions/runs/44521985299/artifacts > original-013/artifacts.json
+          gh api repos/hadar1233hr-afk/D.A.-Caller/actions/artifacts/14528288719/zip > original-013/tested-apk.zip
+          gh api repos/hadar1233hr-afk/D.A.-Caller/actions/artifacts/14528238780/zip > original-013/ui.zip
+          gh api repos/hadar1233hr-afk/D.A.-Caller/actions/artifacts/14528790986/zip > original-013/checks.zip
+      - name: Verify exact owner authorization, source, signature, native gates and visual union
+        run: >-
+          python3 scripts/prepare-approved-013-release.py stage
+          --artifacts original-013 --output approved-013
+          --apksigner "$ANDROID_HOME/build-tools/35.0.0/apksigner"
+          --aapt "$ANDROID_HOME/build-tools/35.0.0/aapt"
+      - name: Package only exact native APK, authentic evidence and corresponding licensed source
+        run: python3 scripts/prepare-approved-013-release.py package --root approved-013
+      - name: Publish new immutable owner-approved 0.13.0 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PUBLICATION_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          existing_tag=$(git ls-remote --tags origin refs/tags/v0.13.0)
+          test -z "$existing_tag"
+          if gh release view v0.13.0 >/dev/null 2>&1; then
+            echo 'Release already exists; never overwrite.' >&2
+            exit 1
+          fi
+          gh release create v0.13.0 approved-013/assets/* \
+            --target "$PUBLICATION_SHA" --prerelease --title 'DA CALLER 0.13.0' \
+            --notes-file approved-013/release-notes.md
+          gh release view v0.13.0 --json tagName,targetCommitish,isDraft,isPrerelease,assets,url > approved-013/public-release.json
+      - name: Verify every anonymous public download against exact approved bytes and proofs
+        run: >-
+          python3 scripts/prepare-approved-013-release.py verify-public --root approved-013
+          --apksigner "$ANDROID_HOME/build-tools/35.0.0/apksigner"
+          --aapt "$ANDROID_HOME/build-tools/35.0.0/aapt"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: DA-CALLER-0.13.0-approved-publication-${{ github.event.pull_request.head.sha }}
+          path: |
+            original-013/source-run.json
+            original-013/artifacts.json
+            approved-013/*.json
+            approved-013/*.txt
+            approved-013/release-notes.md
+          if-no-files-found: warn
+          retention-days: 90

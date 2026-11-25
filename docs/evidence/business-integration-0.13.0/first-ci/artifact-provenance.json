@@ -1,0 +1,41 @@
+{
+  "repository": "hadar1233hr-afk/D.A.-Caller",
+  "source_sha": "21150b40896ba4ead7bf90d1bb9fc518bee6a5f7",
+  "source_run_id": "43199541915",
+  "conclusion": "failure",
+  "artifacts": {
+    "validate-apk": {
+      "artifact_id": 13935590016,
+      "artifact_name": "DA-CALLER-0.13.0-debug-d5086ffacd0c39714c9c793f1b0403e18481132d",
+      "github_digest": "sha256:5e516faa3f4fbc2512fe02057fcdde30723c018b7a15454cbe9498fcf1a238f1",
+      "sha256": "5e516faa3f4fbc2512fe02057fcdde30723c018b7a15454cbe9498fcf1a238f1",
+      "bytes": 1130055,
+      "path": "validate-apk.zip"
+    },
+    "ui": {
+      "artifact_id": 13935377643,
+      "artifact_name": "DA-CALLER-Android13-UI-d5086ffacd0c39714c9c793f1b0403e18481132d",
+      "github_digest": "sha256:71e749bb3bbbc491e69bd8cb0aa3f30bee947d7e105944ddfd758d471f504971",
+      "sha256": "71e749bb3bbbc491e69bd8cb0aa3f30bee947d7e105944ddfd758d471f504971",
+      "bytes": 14688958,
+      "path": "ui.zip"
+    },
+    "checks": {
+      "artifact_id": 13935160765,
+      "artifact_name": "DA-CALLER-checks-d5086ffacd0c39714c9c793f1b0403e18481132d",
+      "github_digest": "sha256:9f0b15a6212c134a87b145c9827e629d39ba2065ff3ffe03ab29ad857387c6ac",
+      "sha256": "9f0b15a6212c134a87b145c9827e629d39ba2065ff3ffe03ab29ad857387c6ac",
+      "bytes": 130705,
+      "path": "checks.zip"
+    },
+    "native-failure-candidate": {
+      "artifact_id": 13934304186,
+      "artifact_name": "DA-CALLER-native-failure-candidate-d5086ffacd0c39714c9c793f1b0403e18481132d",
+      "github_digest": "sha256:fb6998fba7e7992ec1eb4a892a422b5579e1a9575c3562a752571a972a1c3c71",
+      "sha256": "fb6998fba7e7992ec1eb4a892a422b5579e1a9575c3562a752571a972a1c3c71",
+      "bytes": 1130245,
+      "path": "native-failure-candidate.zip"
+    }
+  },
+  "purpose": "Native screenshot/code review only; no APK Release or publication approval"
+}
