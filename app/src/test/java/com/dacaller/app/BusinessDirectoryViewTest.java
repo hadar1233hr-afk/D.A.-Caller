@@ -147,7 +147,7 @@ public class BusinessDirectoryViewTest {
    activity.getResources().updateConfiguration(configuration,activity.getResources().getDisplayMetrics());
    if(directory!=null)directory.close();show((context,query,offset)->new BusinessDirectory.Page(BusinessDirectory.Status.AVAILABLE,osm,Arrays.asList(entry(1)),0,false));complete();layoutSmall();
    TextView source=(TextView)root.findViewWithTag("business_directory_status");String text=source.getText().toString();
-   assertTrue(text.contains("2,720"));assertTrue(text.contains("© OpenStreetMap contributors"));assertEquals(500,source.getTypeface().getWeight());
+   assertTrue(text.contains("2,720"));assertTrue(text.contains("© OpenStreetMap contributors"));assertEquals(600,source.getTypeface().getWeight());
    assertTrue(source.getHeight()>=48*activity.getResources().getDisplayMetrics().density);assertNotNull(source.getLayout());
    assertTrue(source.getLayout().getLineCount()<=2);for(int n=0;n<source.getLayout().getLineCount();n++)assertEquals(0,source.getLayout().getEllipsisCount(n));
    assertEquals(text.length(),source.getLayout().getLineEnd(source.getLayout().getLineCount()-1));
