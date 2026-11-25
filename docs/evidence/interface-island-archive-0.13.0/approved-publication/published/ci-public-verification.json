@@ -1,0 +1,70 @@
+{
+  "actual_tag_ref": {
+    "node_id": "REF_kwDOVTq7Q7FyZWZzL3RhZ3MvdjAuMTMuMA",
+    "object": {
+      "sha": "2e5d81f92574f7a2bcd2dc1707647d06f29cf623",
+      "type": "commit",
+      "url": "https://api.github.com/repos/hadar1233hr-afk/D.A.-Caller/git/commits/2e5d81f92574f7a2bcd2dc1707647d06f29cf623"
+    },
+    "ref": "refs/tags/v0.13.0",
+    "url": "https://api.github.com/repos/hadar1233hr-afk/D.A.-Caller/git/refs/tags/v0.13.0"
+  },
+  "anonymous_download_provenance": "Root/workflow must attest independent downloads when directory mode is used",
+  "anonymous_download_verified": true,
+  "apk_signature_reverified": true,
+  "archives_crc_members_source_gates_verified": true,
+  "assets": {
+    "DA-CALLER-v0.13.0-Android13-evidence.zip": {
+      "bytes": 17134697,
+      "exact_bytes_equal": true,
+      "sha256": "4ee0610b0b8fd57af1f72f7434fa7be3380546f86fabf8743ba63d8e41458eda",
+      "url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.13.0/DA-CALLER-v0.13.0-Android13-evidence.zip"
+    },
+    "DA-CALLER-v0.13.0-CI-checks.zip": {
+      "bytes": 163499,
+      "exact_bytes_equal": true,
+      "sha256": "afc4d05f503f7ef2d4193636a64074ec306521a5006e8659e833383b483e858c",
+      "url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.13.0/DA-CALLER-v0.13.0-CI-checks.zip"
+    },
+    "DA-CALLER-v0.13.0-business-source.zip": {
+      "bytes": 3169035,
+      "exact_bytes_equal": true,
+      "sha256": "5d6358c7d8ebc7b3be51717c3829a1b3c56e0f1aacf90bbf54fa1a04f71a5224",
+      "url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.13.0/DA-CALLER-v0.13.0-business-source.zip"
+    },
+    "DA-CALLER-v0.13.0-metadata.txt": {
+      "bytes": 2134,
+      "exact_bytes_equal": true,
+      "sha256": "6fe72408544857cde24c6bab53aaae1c2c7417534ee69a1a22224e43287a516f",
+      "url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.13.0/DA-CALLER-v0.13.0-metadata.txt"
+    },
+    "DA-CALLER-v0.13.0-signature.txt": {
+      "bytes": 955,
+      "exact_bytes_equal": true,
+      "sha256": "811ec7ee5e546818e91cc3ba918b39c1e1a06328aa1989d0b6e15ab942758c85",
+      "url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.13.0/DA-CALLER-v0.13.0-signature.txt"
+    },
+    "DA-CALLER-v0.13.0-verification.json": {
+      "bytes": 182533,
+      "exact_bytes_equal": true,
+      "sha256": "446bcf563a006b5ceed1af4c45bdc704463cf8aa9ece6fde5243f992d1e94891",
+      "url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.13.0/DA-CALLER-v0.13.0-verification.json"
+    },
+    "DA-CALLER-v0.13.0.apk": {
+      "bytes": 1357445,
+      "exact_bytes_equal": true,
+      "sha256": "e29b4c6beeb97ccb4ab1b306c83438bbd30eead7d169fda95e722ab84d5ae5f9",
+      "url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.13.0/DA-CALLER-v0.13.0.apk"
+    },
+    "DA-CALLER-v0.13.0.apk.sha256": {
+      "bytes": 88,
+      "exact_bytes_equal": true,
+      "sha256": "c113df9b409c760f486bc0ba85553ef21a8857c0287e7d3c7c90d0b5a0656f23",
+      "url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.13.0/DA-CALLER-v0.13.0.apk.sha256"
+    }
+  },
+  "independent_download_directory_supplied": false,
+  "limits": "Ephemeral DEBUG test signer differs from beta.9 and 0.12.0; cannot update those installations in place. Keep existing installation/data; never uninstall to install this APK. Durable owner-controlled signing/private backup/CI secrets remain unresolved. No physical Jelly Star/carrier/audio/Bluetooth/proximity/overnight Doze/full TalkBack/matching-key upgrade verification. Physical testing was waived as a publication prerequisite only. Fixed320dp/font1.3 uses readable protected below-bar fallback; compatible wide native/hardware status placement remains NOT TESTED.",
+  "publication_commit": "2e5d81f92574f7a2bcd2dc1707647d06f29cf623",
+  "status": "PASS_ALL_ANONYMOUS_PUBLIC_RELEASE_BYTES"
+}

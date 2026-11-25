@@ -1,0 +1,40 @@
+{
+  "files": {
+    "DA-CALLER-v0.13.0-Android13-evidence.zip": {
+      "bytes": 17134697,
+      "sha256": "4ee0610b0b8fd57af1f72f7434fa7be3380546f86fabf8743ba63d8e41458eda"
+    },
+    "DA-CALLER-v0.13.0-CI-checks.zip": {
+      "bytes": 163499,
+      "sha256": "afc4d05f503f7ef2d4193636a64074ec306521a5006e8659e833383b483e858c"
+    },
+    "DA-CALLER-v0.13.0-business-source.zip": {
+      "bytes": 3169035,
+      "sha256": "5d6358c7d8ebc7b3be51717c3829a1b3c56e0f1aacf90bbf54fa1a04f71a5224"
+    },
+    "DA-CALLER-v0.13.0-metadata.txt": {
+      "bytes": 2134,
+      "sha256": "6fe72408544857cde24c6bab53aaae1c2c7417534ee69a1a22224e43287a516f"
+    },
+    "DA-CALLER-v0.13.0-signature.txt": {
+      "bytes": 955,
+      "sha256": "811ec7ee5e546818e91cc3ba918b39c1e1a06328aa1989d0b6e15ab942758c85"
+    },
+    "DA-CALLER-v0.13.0-verification.json": {
+      "bytes": 182533,
+      "sha256": "446bcf563a006b5ceed1af4c45bdc704463cf8aa9ece6fde5243f992d1e94891"
+    },
+    "DA-CALLER-v0.13.0.apk": {
+      "bytes": 1357445,
+      "sha256": "e29b4c6beeb97ccb4ab1b306c83438bbd30eead7d169fda95e722ab84d5ae5f9"
+    },
+    "DA-CALLER-v0.13.0.apk.sha256": {
+      "bytes": 88,
+      "sha256": "c113df9b409c760f486bc0ba85553ef21a8857c0287e7d3c7c90d0b5a0656f23"
+    }
+  },
+  "public_download_verification": "PENDING_POST_PUBLICATION",
+  "publication_commit": "2e5d81f92574f7a2bcd2dc1707647d06f29cf623",
+  "tag_name": "v0.13.0",
+  "version_name": "0.13.0"
+}

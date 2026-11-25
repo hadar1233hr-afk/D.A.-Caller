@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "OWNER_APPROVED_MECHANISM_REVIEWED_READY_FOR_AUTHENTICATED_CI",
+  "status": "PUBLISHED_ALL_PUBLIC_ASSETS_VERIFIED",
   "version_name": "0.13.0",
   "version_code": 22,
   "application_id": "com.dacaller.app",
@@ -26,8 +26,8 @@
   "owner_approval_received": true,
   "approval_evidence": "docs/releases/0.13.0-owner-approval-receipt.json",
   "signing_or_ci_mechanism_change_executed": true,
-  "publication_started": false,
-  "public_download_bytes_verified": false,
+  "publication_started": true,
+  "public_download_bytes_verified": true,
   "future_default_signing_guards_must_remain": true,
   "durable_signing_setup_complete": false,
   "physical_hardware_verified": false,
@@ -40,5 +40,10 @@
   "bounded_mechanism_implemented": true,
   "bounded_mechanism_independently_reviewed": true,
   "default_signing_policy_changed": false,
-  "independent_review": "docs/evidence/interface-island-archive-0.13.0/approved-publication/independent-mechanism-review.json"
+  "independent_review": "docs/evidence/interface-island-archive-0.13.0/approved-publication/independent-mechanism-review.json",
+  "publication_commit": "2e5d81f92574f7a2bcd2dc1707647d06f29cf623",
+  "publication_run_id": 45610220396,
+  "public_assets_verified": 8,
+  "root_independent_public_assets_verified": 8,
+  "verified_apk_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/releases/download/v0.13.0/DA-CALLER-v0.13.0.apk"
 }

@@ -1,5 +1,11 @@
 # Remaining signing work after 0.12.0 — 2026-11-12
 
+0.13.0 was published on 2026-11-25 UTC under the exact approved exception.
+CI and root independently verified all eight anonymous public downloads and
+the exact retained APK/signature/source/tag. This completes APK publication;
+keep the stable owner key/private backup/repository-secret tasks below separate.
+No durable setup, matching-key update or hardware check was performed.
+
 Latest 2026-11-24 Asia/Jerusalem: the owner directly approved the exact retained
 0.13.0 APK (“אני מאשר את הAPK”) under the six constraints in
 [the publication exception](releases/0.13.0-publication-approval.md). The new

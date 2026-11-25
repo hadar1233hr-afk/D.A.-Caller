@@ -1,5 +1,32 @@
 # DA CALLER continuation state
 
+## 0.13.0 published; all eight public assets verified — 2026-11-25 UTC
+
+The owner-approved exact retained APK is now public at tagv0.13.0, publication
+commit2e5d81f92574f7a2bcd2dc1707647d06f29cf623, approved workflow45610220396
+SUCCESS. Authentic API metadata/staging, all127publication/signing contracts,
+all8unchanged gates, exact native JUnit/269visual union and source/signature
+gates passed before creation. Published APK remains1357445bytes/e29b4c6b…5ae5f9/
+certc42aa0e8…933376; no rebuild/re-sign of this candidate.
+
+CI anonymously downloaded all8public assets and verified exact bytes/signature/
+archives/source/gates/tag. Root independently downloaded all8 again with no
+Authorization header and reverified bytes/signature/CRC/source/gates against the
+original retained bytes and authentic CI stage proof. Fresh remote tag read also
+resolves exactly to2e5d81f. Proof artifact15019114230/56974bytes/SHA2de4fd99…
+f4e6e73 is hash-verified and retained; full public evidence is
+approved-publication/published. Both trigger labels removed; no overwrite.
+
+The new verified APK link is ready for this run's completion response. After that
+delivery, never send it again or invent UI/data/version tasks. The0.12link remains
+old/delivered/immutable. Durable owner-controlled private key, independent private
+backup and supported authorized repository-secret setup remain the sole separate
+unfinished request; no secure vault/secret setter is exposed and local API access
+was Forbidden. Do not call a workspace-only key durable, share secrets in chat,
+change default pins, claim hardware/update checks or recommend uninstalling.
+The exact publication approval did not waive durable setup. Keep the existing
+automation active while that requested setup remains unresolved; no duplicate.
+
 ## Approved exact 0.13.0 publication mechanism ready — 2026-11-25 UTC
 
 Owner approval remains the actual Nov24 direct reply, recorded in the receipt.
