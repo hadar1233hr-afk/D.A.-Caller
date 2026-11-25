@@ -172,7 +172,7 @@ public class CallIslandViewTest {
  }
 
  @Test public void sizesStylesAndTimerChoiceKeepAUsableCompactCapsule(){
-  for(String style:new String[]{"apple","glass","emerald"}){
+  for(String style:new String[]{"apple","glass","emerald","nex"}){
    prefs.edit().putString("island_style",style).putString("island_size","compact").commit();
    island.bind(active("preferences"),false);layout(320);int compactHeight=island.getHeight();
    assertTrue(compactHeight>=dp(56));required("island-timer");
