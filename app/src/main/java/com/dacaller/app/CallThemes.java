@@ -29,16 +29,16 @@ final class CallThemes {
   int[] darkSurface={0xFF202631,0xFF292A2A,0xFF293747,0xFF232C3A,0xFF222222};
   int[] lightButton={0xFFE7ECF6,0xFFE5E3DF,0xFFDFE6EF,0xFFE8EDF6,0xFFE5E5E2};
   int[] darkButton={0xFF2B3443,0xFF121313,0xFF354559,0xFF303D50,0xFF171717};
-  background=amoled?Color.BLACK:dark?darkBg[index]:lightBg[index];
-  surface=dark?darkSurface[index]:lightSurface[index];surface2=dark?darkButton[index]:lightButton[index];
-  ink=dark?0xFFE4E5E7:0xFF1D2229;muted=dark?0xFFC3C6CB:0xFF555C66;
-  accent=dark?new int[]{0xFFB6D1FF,0xFFFFDDBD,0xFFD5E5FF,0xFFC3D8FF,0xFFF3F3EF}[index]:
+  background=index==1?NexPalette.background(dark,amoled):amoled?Color.BLACK:dark?darkBg[index]:lightBg[index];
+  surface=index==1?NexPalette.surface(dark,amoled):dark?darkSurface[index]:lightSurface[index];surface2=index==1?NexPalette.soft(dark):dark?darkButton[index]:lightButton[index];
+  ink=index==1?NexPalette.ink(dark):dark?0xFFE4E5E7:0xFF1D2229;muted=index==1?NexPalette.muted(dark):dark?0xFFC3C6CB:0xFF555C66;
+  accent=index==1?NexPalette.primaryText(dark):dark?new int[]{0xFFB6D1FF,0xFFFFDDBD,0xFFD5E5FF,0xFFC3D8FF,0xFFF3F3EF}[index]:
    new int[]{0xFF244E8A,0xFF655042,0xFF354F71,0xFF2E4F81,0xFF30302E}[index];
-  selected=new int[]{0xFFBDD5FF,0xFFFFDDBD,0xFFEEF4FC,0xFFC5D8FF,0xFFECECEA}[index];
+  selected=new int[]{0xFFBDD5FF,0xFFF6A773,0xFFEEF4FC,0xFFC5D8FF,0xFFECECEA}[index];
   selectedInk=0xFF25272B;call=0xFF14784D;decline=0xFFAC343D;
   end=index==1?0xFFF46359:index==4?0xFFE44343:0xFFE84F59;
   endInk=index==1?0xFF242222:Color.WHITE;
-  line=dark?0xFF526074:0xFFB8C1CF;
+  line=index==1?NexPalette.outline(dark):dark?0xFF526074:0xFFB8C1CF;
  }
  GradientDrawable card(Context context,int kind){
   float density=context.getResources().getDisplayMetrics().density;
