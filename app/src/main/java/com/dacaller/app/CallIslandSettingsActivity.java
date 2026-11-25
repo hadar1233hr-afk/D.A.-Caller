@@ -190,7 +190,7 @@ public final class CallIslandSettingsActivity extends Activity {
   }catch(RuntimeException unavailable){Toast.makeText(this,tr("בחר ב־DA CALLER כחייגן ברירת המחדל בהגדרות המכשיר.","Choose DA CALLER as the default phone app in device settings."),Toast.LENGTH_LONG).show();}
  }
  private void chooseStyle(){
-  String[] values={"apple","glass","emerald","transparent"};String[] labels={tr("קלאסי שחור","Classic black"),tr("זכוכית רכה","Soft glass"),tr("אמרלד","Emerald"),tr("שקוף · רקע אמיתי","See-through · real background")};
+  String[] values={"apple","glass","emerald","transparent","nex"};String[] labels={tr("קלאסי שחור","Classic black"),tr("זכוכית רכה","Soft glass"),tr("אמרלד","Emerald"),tr("שקוף · רקע אמיתי","See-through · real background"),tr("נקס · חום ונחושת","NEX · espresso and copper")};
   choose(tr("סגנון האי","Island style"),values,labels,prefs.getString("island_style","apple"),value->{if(!SettingsBackup.allowPreferenceChange(this))return;prefs.edit().putString("island_style",value).apply();renderPreview();});
  }
  private void choosePosition(){
@@ -249,7 +249,7 @@ public final class CallIslandSettingsActivity extends Activity {
    preview.tick(System.currentTimeMillis());
   }
  }
- private String styleLabel(){String value=prefs.getString("island_style","apple");return "transparent".equals(value)?tr("שקוף","See-through"):"glass".equals(value)?tr("זכוכית רכה","Soft glass"):"emerald".equals(value)?tr("אמרלד","Emerald"):tr("קלאסי שחור","Classic black");}
+ private String styleLabel(){String value=prefs.getString("island_style","apple");return "nex".equals(value)?tr("נקס","NEX"):"transparent".equals(value)?tr("שקוף","See-through"):"glass".equals(value)?tr("זכוכית רכה","Soft glass"):"emerald".equals(value)?tr("אמרלד","Emerald"):tr("קלאסי שחור","Classic black");}
  private void applySystemBars(){
   getWindow().setStatusBarColor(background);getWindow().setNavigationBarColor(background);
   if(Build.VERSION.SDK_INT>=30){WindowInsetsController controller=getWindow().getInsetsController();if(controller!=null){
