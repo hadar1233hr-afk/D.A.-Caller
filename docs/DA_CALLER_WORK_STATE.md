@@ -21,6 +21,15 @@ cloud secret bindings is not evidence GitHub repository secrets are empty.
 Required next input: an owner-controlled private backup destination and supported
 authorized GitHub-secret setup route. Ask for that concrete setup information,
 not another APK approval, and never ask for private key/password/token in chat.
+The missing-input question was actually sent in the preceding completion
+response: “נותרה רק החתימה הקבועה, שדורשת גיבוי פרטי והגדרת סודות ב־GitHub.
+היכן תרצה לשמור את הגיבוי, והאם יש לך גישה להגדרות סודות המאגר?”
+No answer or new PR comment was present at the16:02UTC scheduled check; remote
+HEAD5f2e24e and local clean tree were unchanged, no competing worker or new
+capability/secret binding appeared. This is an owner-input wait, not new work.
+Do not repeat that question, the APK links, unchanged blocker notifications,
+passing tests or routine repository commits on later no-change polls. Resume
+dependent signing setup only after actual owner input/configuration changes.
 Keep the original automation enabled while this requested setup remains unwaived
 and incomplete; do not create a timer or poll unchanged software/builds. Preserve
 all immutable public assets, actual hardware/update NOT_TESTED limits and global
