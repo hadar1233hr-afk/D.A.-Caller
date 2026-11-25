@@ -489,7 +489,7 @@ public class MainActivity extends Activity {
   tile.setTag("main_nav_"+target);
   boolean keypad="keypad".equals(target);
   tile.setBackground(keypad?rounded(NexPalette.primary(dark()),22):active?rounded(soft(),20):rounded(panel(),20));
-  int navInk=keypad?NexPalette.onPrimary(dark()):active?NexPalette.primary(dark()):muted();
+  int navInk=keypad?NexPalette.onPrimary(dark()):active?NexPalette.primaryText(dark()):muted();
   ImageView glyph=icon(drawable,navInk,24,24);
   tile.addView(glyph,lp(26,27));
   TextView name=center(I18n.text(this,title),11,true,navInk);
