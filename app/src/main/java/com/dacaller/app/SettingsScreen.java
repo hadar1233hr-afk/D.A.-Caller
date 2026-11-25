@@ -43,12 +43,12 @@ final class SettingsScreen {
   this.host=host;
   prefs=host.getSharedPreferences("da_caller",Context.MODE_PRIVATE);
   dark=prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);
-  bg=prefs.getBoolean("amoled",false)?Color.BLACK:dark?0xFF141414:0xFFF7F7F5;
-  ink=dark?Color.WHITE:0xFF161616;
-  subtle=dark?0xFFA9A9A9:0xFF6B6B6B;
-  surface=dark?0xFF232323:Color.WHITE;
+  bg=NexPalette.background(dark,prefs.getBoolean("amoled",false));
+  ink=NexPalette.ink(dark);
+  subtle=NexPalette.muted(dark);
+  surface=NexPalette.surface(dark,prefs.getBoolean("amoled",false));
   accent="silver".equals(prefs.getString("accent","gold"))?(dark?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark);
-  divider=dark?0xFF383838:0xFFE5E5E2;
+  divider=NexPalette.outline(dark);
  }
  private GradientDrawable card(int c,int radius){
   GradientDrawable g=new GradientDrawable();g.setColor(c);g.setCornerRadius(dp(radius));return g;
@@ -362,7 +362,7 @@ final class SettingsScreen {
   final String key="settings_group_open_"+sectionNumber++;
   LinearLayout header=row();
   header.setPadding(dp(15),dp(3),dp(12),dp(3));
-  header.setBackground(card(surface,19));
+  header.setBackground(card(surface,24));
   header.setMinimumHeight(dp(57));
   LinearLayout.LayoutParams hp=new LinearLayout.LayoutParams(-1,-2);
   hp.topMargin=dp(12);
@@ -384,7 +384,7 @@ final class SettingsScreen {
  }
  private void cardStart(){
   card=column();
-  GradientDrawable surfaceShape=card(surface,18);
+  GradientDrawable surfaceShape=card(surface,24);
   surfaceShape.setStroke(dp(1),dark?0xFF343434:0xFFE9E7E0);
   card.setBackground(surfaceShape);
   card.setPadding(dp(6),dp(8),dp(6),dp(8));
