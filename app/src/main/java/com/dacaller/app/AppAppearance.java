@@ -61,7 +61,7 @@ final class AppAppearance {
  private static void dialogFonts(View view,int title){
   if(view instanceof TextView){
    TextView text=(TextView)view;Typeface old=text.getTypeface();
-   boolean strong=view.getId()==title&&title!=0||old!=null&&(old.isBold()||Build.VERSION.SDK_INT>=28&&old.getWeight()>=600);
+   boolean strong=view.getId()==title&&title!=0||old!=null&&(old.isBold()||Build.VERSION.SDK_INT>=28&&old.getWeight()>=650);
    // A global layout can follow our first font change; skip views whose applied
    // Typeface is still current, so observation cannot cause a relayout loop.
    if(old==null||text.getTag(R.id.appearance_dialog_font)!=old){font(text,strong);text.setTag(R.id.appearance_dialog_font,text.getTypeface());}
