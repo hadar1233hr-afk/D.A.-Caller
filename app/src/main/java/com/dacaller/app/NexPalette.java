@@ -10,6 +10,7 @@ final class NexPalette {
  static int outline(boolean dark){return dark?0xFF634D43:0xFFDCCBBF;}
  static int soft(boolean dark){return dark?0xFF4C3A31:0xFFEFDFD2;}
  static int primary(boolean dark){return dark?0xFFF6A773:0xFFB9542F;}
+ static int primaryText(boolean dark){return dark?0xFFF6A773:0xFF93401F;}
  static int onPrimary(boolean dark){return dark?0xFF241A17:0xFFFFFFFF;}
  static int call(boolean dark){return dark?0xFF39A98E:0xFF217C69;}
  static int onCall(boolean dark){return dark?0xFF241A17:0xFFFFFFFF;}
