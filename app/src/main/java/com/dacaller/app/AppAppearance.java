@@ -25,16 +25,16 @@ final class AppAppearance {
  private AppAppearance(){}
  static void font(TextView v,boolean strong){
   Typeface family=v.getResources().getFont(R.font.app_round);
-  v.setTypeface(Build.VERSION.SDK_INT>=28?Typeface.create(family,strong?650:500,false):
+  v.setTypeface(Build.VERSION.SDK_INT>=28?Typeface.create(family,strong?750:600,false):
     Typeface.create(family,strong?Typeface.BOLD:Typeface.NORMAL));
-  v.setFontVariationSettings(strong?"'wght' 650":"'wght' 500");
+  v.setFontVariationSettings(strong?"'wght' 750":"'wght' 600");
  }
  /** Bitmap initials use the same licensed family, including Hebrew, on API26+. */
  static void font(Paint paint,Context context,boolean strong){
   Typeface family=context.getResources().getFont(R.font.app_round);
-  paint.setTypeface(Build.VERSION.SDK_INT>=28?Typeface.create(family,strong?650:500,false):
+  paint.setTypeface(Build.VERSION.SDK_INT>=28?Typeface.create(family,strong?750:600,false):
     Typeface.create(family,strong?Typeface.BOLD:Typeface.NORMAL));
-  paint.setFontVariationSettings(strong?"'wght' 650":"'wght' 500");
+  paint.setFontVariationSettings(strong?"'wght' 750":"'wght' 600");
  }
  /** Android's native alert layouts explicitly override the theme's font family.
   * Apply after show; layout observation also covers lazily inflated choice rows. */
