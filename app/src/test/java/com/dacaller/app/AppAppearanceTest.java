@@ -92,7 +92,7 @@ public final class AppAppearanceTest {
  @Test public void canvasTypographyShapesHebrewAndLatinWithTheActualBundledFontAtBothWeights() throws Exception {
   for(boolean strong:new boolean[]{false,true})for(String label:new String[]{"דנה","DA"}){
    Paint paint=new Paint(Paint.ANTI_ALIAS_FLAG);AppAppearance.font(paint,context,strong);paint.setTextSize(28);
-   assertEquals(strong?650:500,paint.getTypeface().getWeight());
+   assertEquals(strong?750:600,paint.getTypeface().getWeight());
    PositionedGlyphs shaped=TextRunShaper.shapeTextRun(label,0,label.length(),0,label.length(),0,0,label.startsWith("ד"),paint);
    assertTrue(shaped.glyphCount()>0);assertTrue(shaped.getAdvance()>0);
    for(int i=0;i<shaped.glyphCount();i++){
@@ -107,11 +107,11 @@ public final class AppAppearanceTest {
  }
  @Test public void themeAndDialogsUseRoundedFontAndBothWeightsFitLargerHebrewAndEnglish(){
   RuntimeEnvironment.setFontScale(1.5f);
-  TextView inherited=new TextView(context);assertEquals(500,inherited.getTypeface().getWeight());
+  TextView inherited=new TextView(context);assertEquals(600,inherited.getTypeface().getWeight());
   for(String label:new String[]{"שמות אנשי קשר ושיחות אחרונות","Contact names and recent calls"}){
    for(boolean strong:new boolean[]{false,true}){
     TextView text=new TextView(context);text.setText(label);text.setTextSize(16);AppAppearance.font(text,strong);
-    assertEquals(strong?650:500,text.getTypeface().getWeight());
+    assertEquals(strong?750:600,text.getTypeface().getWeight());
     assertTrue(text.getPaint().hasGlyph(label.startsWith("ש")?"ש":"C"));
     text.measure(View.MeasureSpec.makeMeasureSpec(dp(286),View.MeasureSpec.EXACTLY),View.MeasureSpec.makeMeasureSpec(0,View.MeasureSpec.UNSPECIFIED));
     text.layout(0,0,text.getMeasuredWidth(),text.getMeasuredHeight());
@@ -124,8 +124,8 @@ public final class AppAppearanceTest {
   AlertDialog dialog=new AlertDialog.Builder(context).setMessage("עברית · English").setPositiveButton("OK",null)
     .setOnDismissListener(ignored->dismissals.incrementAndGet()).create();
   AppAppearance.show(dialog);TextView message=dialog.findViewById(android.R.id.message);
-  assertNotNull(message);assertEquals(500,message.getTypeface().getWeight());
-  assertEquals(500,dialog.getButton(AlertDialog.BUTTON_POSITIVE).getTypeface().getWeight());dialog.dismiss();
+  assertNotNull(message);assertEquals(600,message.getTypeface().getWeight());
+  assertEquals(600,dialog.getButton(AlertDialog.BUTTON_POSITIVE).getTypeface().getWeight());dialog.dismiss();
   Shadows.shadowOf(Looper.getMainLooper()).idle();assertEquals(1,dismissals.get());
  }
  @Test public void dialogFontsAlsoReachLazyNativeChoiceRowsInBothPalettes(){
@@ -135,9 +135,9 @@ public final class AppAppearanceTest {
    AppAppearance.show(dialog);layout(dialog.getListView(),280,120);
    dialog.getWindow().getDecorView().getViewTreeObserver().dispatchOnGlobalLayout();
    int title=context.getResources().getIdentifier("alertTitle","id","android");
-   assertEquals(650,((TextView)dialog.findViewById(title)).getTypeface().getWeight());
+   assertEquals(750,((TextView)dialog.findViewById(title)).getTypeface().getWeight());
    assertEquals(2,dialog.getListView().getChildCount());
-   for(int i=0;i<2;i++)assertEquals(500,((TextView)dialog.getListView().getChildAt(i)).getTypeface().getWeight());
+   for(int i=0;i<2;i++)assertEquals(600,((TextView)dialog.getListView().getChildAt(i)).getTypeface().getWeight());
    dialog.dismiss();
   }
  }
