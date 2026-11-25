@@ -55,9 +55,9 @@ public final class CallIslandSettingsActivity extends Activity {
  @Override public void onCreate(Bundle state){
   super.onCreate(state);prefs=getSharedPreferences("da_caller",Context.MODE_PRIVATE);
   dark=prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);
-  background=prefs.getBoolean("amoled",false)?Color.BLACK:dark?0xFF121413:0xFFF5F6F3;
-  surface=dark?0xFF202521:Color.WHITE;ink=dark?0xFFF5F7F4:0xFF17231B;
-  secondary=dark?0xFFB8C4BA:0xFF596B5D;accent=AppAppearance.gold(dark);
+  background=NexPalette.background(dark,prefs.getBoolean("amoled",false));
+  surface=NexPalette.surface(dark,prefs.getBoolean("amoled",false));ink=NexPalette.ink(dark);
+  secondary=NexPalette.muted(dark);accent=AppAppearance.gold(dark);
   if(state!=null){expanded=state.getBoolean("expanded");muted=state.getBoolean("muted");speaker=state.getBoolean("speaker");
    ended=state.getBoolean("ended");phase=state.getInt("phase",Call.STATE_ACTIVE);connectedAt=state.getLong("connected_at",connectedAt);}
   ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);scroll.setBackgroundColor(background);scroll.setTag("island-settings-scroll");
