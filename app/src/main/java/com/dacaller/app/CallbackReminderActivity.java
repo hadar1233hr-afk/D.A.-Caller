@@ -58,8 +58,8 @@ public final class CallbackReminderActivity extends Activity {
  @Override public void onCreate(Bundle state){
   super.onCreate(state);CallReturnNavigation.install(this);prefs=getSharedPreferences("da_caller",Context.MODE_PRIVATE);
   english=I18n.isEnglish(this);dark=prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);
-  background=prefs.getBoolean("amoled",false)?Color.BLACK:dark?0xFF141414:0xFFF7F7F5;
-  surface=dark?0xFF232323:Color.WHITE;ink=dark?0xFFF5F5F3:0xFF161C17;secondary=dark?0xFFB8BEB9:0xFF59635B;
+  background=NexPalette.background(dark,prefs.getBoolean("amoled",false));
+  surface=NexPalette.surface(dark,prefs.getBoolean("amoled",false));ink=NexPalette.ink(dark);secondary=NexPalette.muted(dark);
   accent="silver".equals(prefs.getString("accent","gold"))?(dark?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark);
   selectedDay=state==null?getIntent().getStringExtra(CallbackReminder.EXTRA_DAY):state.getString(CallbackReminder.EXTRA_DAY);
   LinearLayout root=column();root.setTag("callback-reminder-root");root.setBackgroundColor(background);
