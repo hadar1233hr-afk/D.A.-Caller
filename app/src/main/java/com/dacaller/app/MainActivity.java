@@ -85,22 +85,21 @@ public class MainActivity extends Activity {
  private int d(float n){return (int)(getResources().getDisplayMetrics().density*n+0.5f);}
  private boolean dark(){return prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);}
  private boolean amoled(){return prefs.getBoolean("amoled",false);}
- private int bg(){return amoled()?Color.BLACK:dark()?0xFF131313:0xFFF5F5F4;}
- private int panel(){return amoled()?0xFF0A0A0A:dark()?0xFF1E1E1E:Color.WHITE;}
- private int text(){return dark()?0xFFF7F7F7:0xFF181818;}
- private int muted(){return dark()?0xFF9D9D9D:0xFF747474;}
- private int border(){return dark()?0xFF343434:0xFFE6E6E5;}
+ private int bg(){return NexPalette.background(dark(),amoled());}
+ private int panel(){return NexPalette.surface(dark(),amoled());}
+ private int text(){return NexPalette.ink(dark());}
+ private int muted(){return NexPalette.muted(dark());}
+ private int border(){return NexPalette.outline(dark());}
  private int tint(){
   if("silver".equals(prefs.getString("accent","gold")))return dark()?0xFFE0E0E0:0xFF626262;
   return AppAppearance.gold(dark());
  }
- private int soft(){return dark()?0xFF24211B:0xFFF3EEE4;}
+ private int soft(){return NexPalette.soft(dark());}
  private int scaled(int value){return Math.round(value*prefs.getInt("font_"+page,100)/100f);}
  private int screenHeight(){return (int)(getResources().getDisplayMetrics().heightPixels/getResources().getDisplayMetrics().density);}
  private GradientDrawable rounded(int c,int radius){GradientDrawable b=new GradientDrawable();b.setColor(c);b.setCornerRadius(d(radius));return b;}
  private GradientDrawable stroked(int c,int radius){
-  int upper=dark()?0xFF282828:0xFFFDFDFD;
-  GradientDrawable b=new GradientDrawable(GradientDrawable.Orientation.TL_BR,new int[]{upper,c});
+  GradientDrawable b=new GradientDrawable();b.setColor(c);
   b.setCornerRadius(d(radius));b.setStroke(d(1),border());return b;
  }
  private void haptic(View target){
@@ -358,7 +357,7 @@ public class MainActivity extends Activity {
    workspace=new FrameLayout(this);
    root.addView(workspace,new LinearLayout.LayoutParams(-1,0,1));
    nav=row();nav.setGravity(Gravity.CENTER_VERTICAL);pad(nav,9,5);
-   nav.setBackground(stroked(panel(),17));
+   nav.setBackground(stroked(panel(),28));
    nav.setMinimumHeight(d(63));root.addView(nav,lp(-1,-2));
    setContentView(root);
   }
@@ -488,10 +487,12 @@ public class MainActivity extends Activity {
   boolean active="keypad".equals(target)?keypadDialog!=null&&keypadDialog.isShowing():page.equals(target);
   LinearLayout tile=column();tile.setGravity(Gravity.CENTER);
   tile.setTag("main_nav_"+target);
-  tile.setBackground(active?rounded(soft(),15):rounded(panel(),15));
-  ImageView glyph=icon(drawable,active?tint():muted(),22,22);
-  tile.addView(glyph,lp(24,25));
-  TextView name=center(I18n.text(this,title),11,active,active?tint():muted());
+  boolean keypad="keypad".equals(target);
+  tile.setBackground(keypad?rounded(NexPalette.primary(dark()),22):active?rounded(soft(),20):rounded(panel(),20));
+  int navInk=keypad?NexPalette.onPrimary(dark()):active?NexPalette.primary(dark()):muted();
+  ImageView glyph=icon(drawable,navInk,24,24);
+  tile.addView(glyph,lp(26,27));
+  TextView name=center(I18n.text(this,title),11,true,navInk);
   tile.addView(name,lp(-1,-2));
   tile.setMinimumHeight(d(51));
   LinearLayout.LayoutParams tabs=new LinearLayout.LayoutParams(0,-2,1);
@@ -651,7 +652,7 @@ public class MainActivity extends Activity {
   dialog.setOnDismissListener(ignored->{keypadDialog=null;keypadInput=null;renderNavigation();});
   LinearLayout sheet=column();
   pad(sheet,15,13);
-  sheet.setBackground(rounded(panel(),27));
+  sheet.setBackground(rounded(panel(),32));
   TextView handle=center("━━━━",17,false,muted());
   sheet.addView(handle,lp(-1,23));
   LinearLayout entryBar=row();
@@ -699,14 +700,14 @@ public class MainActivity extends Activity {
     String key=digit[idx];
     LinearLayout tile=column();tile.setGravity(Gravity.CENTER);
     GradientDrawable glass=new GradientDrawable(GradientDrawable.Orientation.TL_BR,
-      dark()?new int[]{0xFF30353D,0xFF20242B}:new int[]{0xFFFFFEFC,0xFFF3F4F7});
+      new int[]{panel(),soft()});
     glass.setCornerRadius(d(24));
-    glass.setStroke(d(1),dark()?0xFF3F4752:0xFFE7E8ED);
+    glass.setStroke(d(1),border());
     tile.setBackground(glass);tile.setMinimumHeight(d(48));
     LinearLayout.LayoutParams tileP=new LinearLayout.LayoutParams(0,d(buttonHeight),1);
     tileP.setMargins(d(5),d(2),d(5),d(2));row.addView(tile,tileP);
     TextView number=center(key,key.equals("*")||key.equals("#")?26:29,true,text());
-    AppAppearance.font(number,false);
+    AppAppearance.font(number,true);
     tile.addView(number,lp(-1,35));
     if(!letters[idx].isEmpty()){
      TextView subtitle=center(letters[idx],10,true,muted());
@@ -738,8 +739,8 @@ public class MainActivity extends Activity {
   });
   remove.setOnLongClickListener(v->{haptic(remove);input.setText("");return true;});
   FrameLayout call=new FrameLayout(this);
-  call.setBackground(rounded(0xFF168D61,31));call.setElevation(d(3));
-  ImageView callIcon=icon(R.drawable.ic_phone_line,Color.WHITE,38,38);
+  call.setBackground(rounded(NexPalette.call(dark()),31));call.setElevation(d(3));
+  ImageView callIcon=icon(R.drawable.ic_phone_line,NexPalette.onCall(dark()),38,38);
   call.addView(callIcon,new FrameLayout.LayoutParams(d(44),d(44),Gravity.CENTER));
   LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(0,d(68),2);
   cp.setMargins(d(8),0,d(8),0);actions.addView(call,cp);
