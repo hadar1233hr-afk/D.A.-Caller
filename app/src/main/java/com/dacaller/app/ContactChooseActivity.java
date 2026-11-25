@@ -29,9 +29,9 @@ public final class ContactChooseActivity extends Activity {
  private ArrayAdapter<String> adapter;
  private String incoming="",searchQuery="";
  private boolean dark(){android.content.SharedPreferences p=getSharedPreferences("da_caller",0);return p.getBoolean("dark",false)||p.getBoolean("amoled",false);}
- private int bg(){return getSharedPreferences("da_caller",0).getBoolean("amoled",false)?Color.BLACK:dark()?0xFF141414:0xFFF7F7F5;}
- private int ink(){return dark()?Color.WHITE:0xFF1A1A1A;}
- private int muted(){return dark()?0xFFAEAEAE:0xFF777777;}
+ private int bg(){return NexPalette.background(dark(),getSharedPreferences("da_caller",0).getBoolean("amoled",false));}
+ private int ink(){return NexPalette.ink(dark());}
+ private int muted(){return NexPalette.muted(dark());}
  private int accent(){return "silver".equals(getSharedPreferences("da_caller",0).getString("accent","gold"))?(dark()?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark());}
  private String tr(String s){return I18n.text(this,s);}
  private int dp(int n){return (int)(getResources().getDisplayMetrics().density*n+.5f);}
