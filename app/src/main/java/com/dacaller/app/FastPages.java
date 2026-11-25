@@ -66,17 +66,17 @@ final class FastPages {
  }
  private int dp(float n){return (int)(host.getResources().getDisplayMetrics().density*n+0.5f);}
  private boolean dark(){return prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);}
- private int background(){return prefs.getBoolean("amoled",false)?Color.BLACK:dark()?0xFF131313:0xFFF5F5F4;}
- private int panel(){return prefs.getBoolean("amoled",false)?0xFF090909:dark()?0xFF1D1D1D:0xFFFFFFFF;}
- private int ink(){return dark()?0xFFF6F6F6:0xFF161616;}
- private int subtle(){return dark()?0xFF9A9A9A:0xFF696969;}
+ private int background(){return NexPalette.background(dark(),prefs.getBoolean("amoled",false));}
+ private int panel(){return NexPalette.surface(dark(),prefs.getBoolean("amoled",false));}
+ private int ink(){return NexPalette.ink(dark());}
+ private int subtle(){return NexPalette.muted(dark());}
  private int tint(){return "silver".equals(prefs.getString("accent","gold"))?(dark()?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark());}
- private int soft(){return dark()?0xFF28231B:0xFFF1EBDD;}
+ private int soft(){return NexPalette.soft(dark());}
  private GradientDrawable bg(int color,int radius){
   GradientDrawable g=new GradientDrawable();g.setColor(color);g.setCornerRadius(dp(radius));return g;
  }
  private GradientDrawable edge(int color,int radius){
-  GradientDrawable g=bg(color,radius);g.setStroke(dp(1),dark()?0xFF383838:0xFFE9E7E2);return g;
+  GradientDrawable g=bg(color,radius);g.setStroke(dp(1),NexPalette.outline(dark()));return g;
  }
  private TextView text(String value,int sp,int color,boolean bold){
   TextView t=new TextView(host);
@@ -410,7 +410,7 @@ final class FastPages {
   search.setSingleLine(true);search.setHint(tr("חיפוש שם או מספר"));
   AppAppearance.font(search,false);
   search.setHintTextColor(subtle());search.setTextColor(ink());search.setTextSize(15);
-  search.setPadding(dp(12),0,dp(12),0);search.setBackground(edge(panel(),14));
+  search.setPadding(dp(12),0,dp(12),0);search.setBackground(edge(panel(),22));
   head.addView(search,new LinearLayout.LayoutParams(0,dp(48),1));
   TextView add=text("＋",28,tint(),true);add.setGravity(Gravity.CENTER);
   add.setContentDescription(tr("הוספת איש קשר חדש"));
@@ -581,7 +581,7 @@ final class FastPages {
   CallRow(){
    root=vertical();
    root.setPadding(dp(6),dp(6),dp(6),dp(6));
-   root.setBackground(edge(panel(),20));
+   root.setBackground(edge(panel(),24));
    root.setMinimumHeight(dp(76));
    header=horizontal();header.setTag("recent_header");root.addView(header,lp(-1,-2));header.setMinimumHeight(dp(64));
    avatar=AvatarShapes.frame(host);
@@ -629,7 +629,7 @@ final class FastPages {
   }
   void showExpansion(){
    boolean expanded=expandedRecent.isExpanded(entry);actions.setVisibility(expanded?View.VISIBLE:View.GONE);
-   root.setBackground(edge(expanded?soft():panel(),20));chevron.setImageDrawable(AppAppearance.chevron(host,expanded,tint()));
+   root.setBackground(edge(expanded?soft():panel(),24));chevron.setImageDrawable(AppAppearance.chevron(host,expanded,tint()));
    String label=(I18n.isEnglish(host)?(expanded?"Collapse call actions ":"Expand call actions "):(expanded?"סגירת פעולות שיחה ":"הרחבת פעולות שיחה "))+(entry==null?"":contactName(entry.number));
    center.setContentDescription(label);header.setContentDescription(label);
    if(android.os.Build.VERSION.SDK_INT>=30)center.setStateDescription(I18n.isEnglish(host)?(expanded?"Expanded":"Collapsed"):(expanded?"מורחב":"מכווץ"));
@@ -729,7 +729,7 @@ final class FastPages {
   boolean expanded=prefs.getBoolean("stats_expanded",false);
   String[] periods={tr("היום"),tr("השבוע"),tr("החודש"),tr("השנה")};
   LinearLayout summary=vertical();summary.setTag("stats_summary");
-  summary.setPadding(dp(10),0,dp(3),expanded?dp(5):0);summary.setBackground(edge(panel(),20));
+  summary.setPadding(dp(10),0,dp(3),expanded?dp(5):0);summary.setBackground(edge(panel(),24));
   LinearLayout.LayoutParams block=lp(-1,-2);block.bottomMargin=dp(6);page.addView(summary,block);
   LinearLayout header=horizontal();header.setMinimumHeight(dp(48));summary.addView(header,lp(-1,-2));
   ImageView overview=icon(R.drawable.ic_recent,tint());overview.setPadding(dp(6),dp(6),dp(6),dp(6));
@@ -762,7 +762,7 @@ final class FastPages {
   // Preserve every starred contact, including two people sharing a phone number.
   // The legacy favorite identity is a number; deduplicating it hides real cards.
   for(Contacts.Person person:contacts)if(!person.phone.isEmpty()&&starred.contains(person.key))chosen.add(person);
-  LinearLayout band=horizontal();band.setTag("favorites_strip");band.setBackground(edge(panel(),20));
+  LinearLayout band=horizontal();band.setTag("favorites_strip");band.setBackground(edge(panel(),24));
   LinearLayout.LayoutParams block=lp(-1,expanded&&!chosen.isEmpty()?82:48);block.bottomMargin=dp(6);page.addView(band,block);
   LinearLayout toggle=vertical();toggle.setTag("favorites_toggle");toggle.setGravity(Gravity.CENTER);toggle.setPadding(dp(3),0,dp(3),0);
   TextView heading=text(tr("מועדפים"),11,tint(),true);heading.setGravity(Gravity.CENTER);toggle.addView(heading,lp(-1,-2));
