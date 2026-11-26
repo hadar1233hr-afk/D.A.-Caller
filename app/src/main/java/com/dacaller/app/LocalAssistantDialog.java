@@ -43,13 +43,14 @@ final class LocalAssistantDialog {
   input=new EditText(host);input.setTag("assistant_input");input.setTextColor(NexPalette.ink(dark));
   input.setHintTextColor(NexPalette.muted(dark));input.setHint(tr("לדוגמה: חפש איש קשר דוד","For example: find contact Dana"));
   input.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-  input.setSingleLine(true);input.setTextSize(16);input.setPadding(dp(12),0,dp(12),0);
+  input.setSingleLine(true);input.setImeOptions(android.view.inputmethod.EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING|android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH);input.setTextSize(16);input.setPadding(dp(12),0,dp(12),0);
   input.setBackground(shape(NexPalette.surface(dark,amoled),18));AppAppearance.font(input,false);
   input.setFilters(new android.text.InputFilter[]{new android.text.InputFilter.LengthFilter(512)});
   input.setSaveEnabled(false);if(android.os.Build.VERSION.SDK_INT>=26)input.setImportantForAutofill(View.IMPORTANT_FOR_AUTOFILL_NO);
   body.addView(input,new LinearLayout.LayoutParams(-1,dp(56)));
   TextView submit=button(tr("חפש / הבן פקודה","Run command"),true);submit.setTag("assistant_submit");
   body.addView(submit);submit.setOnClickListener(v->submit(input.getText().toString()));
+  input.setOnEditorActionListener((v,action,event)->{if(action!=android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH)return false;submit(input.getText().toString());return true;});
   for(String example:new String[]{tr("שיחות שלא נענו","Missed calls"),tr("שיחות אחרונות","Recent calls"),tr("חזור למתקשר האחרון","Call back last caller")}){
    TextView chip=button(example,false);body.addView(chip);chip.setOnClickListener(v->{input.setText(example);submit(example);});
   }
@@ -91,6 +92,10 @@ final class LocalAssistantDialog {
   if(request.kind==LocalAssistant.Kind.UNKNOWN){message(tr("לא זוהתה פקודה נתמכת. נסה חיפוש איש קשר, עסק או שיחות אחרונות.","Unsupported command. Try contact search, business search or recent calls."));return;}
   String permission=permission(request);
   if(!permitted(permission)){message(tr("נדרשת הרשאה מתאימה בהגדרות החייגן. לא נקראו נתונים.","Permission is required in dialer settings. No data was read."));return;}
+  if(request.kind==LocalAssistant.Kind.CALL_PROPOSAL&&LocalAssistant.safeNumber(request.query)!=null){
+   Answer answer=new Answer();answer.rows.add(new Row(tr("מספר שהוזן","Entered number"),LocalAssistant.safeNumber(request.query)));
+   display(answer,request,permission,token);return;
+  }
   message(tr("מחפש במכשיר…","Searching device…"));
   IO.execute(()->{
    Answer answer;
@@ -120,7 +125,7 @@ final class LocalAssistantDialog {
    for(BusinessDirectory.Entry entry:page.entries){if(result.rows.size()==LIMIT){result.more=true;break;}
     result.rows.add(new Row(entry.name+" · "+entry.city,entry.phone));}
    result.more|=page.hasMore;
-   result.info=tr("מאגר חלקי, מספרים לא אומתו. מקור: ","Partial directory, numbers unverified. Source: ")+page.manifest.sourceName+" · "+page.manifest.license+" · "+page.manifest.updatedAt;
+   result.info=tr("מאגר חלקי, מספרים לא אומתו. מקור: ","Partial directory, numbers unverified. Source: ")+page.manifest.sourceName+" · "+page.manifest.license+" · "+page.manifest.updatedAt+"\n"+page.manifest.sourceUrl+"\n"+page.manifest.licenseUrl;
    return result;
   }
   if(request.kind==LocalAssistant.Kind.CALL_PROPOSAL){
@@ -161,8 +166,8 @@ final class LocalAssistantDialog {
    String number=LocalAssistant.safeNumber(row.number);
    TextView item=label(row.name+"\n"+(row.number==null||row.number.isEmpty()?tr("מספר לא זמין","Number unavailable"):row.number),15,true);
    item.setBackground(shape(NexPalette.surface(dark,amoled),16));results.addView(item);
-   if(request.requiresConfirmation()&&number!=null){
-    TextView action=button(tr("בחר לחיוג","Select to call"),false);results.addView(action);
+   if(number!=null){
+    TextView action=button(tr("בחר לחיוג","Select to call"),false);action.setTag("assistant_select_call");results.addView(action);
     action.setOnClickListener(v->{
      if(!live(token)||!permitted(permission))return;
      AppAppearance.show(new AlertDialog.Builder(host,dark?R.style.AppDialogDark:R.style.AppDialogLight)
