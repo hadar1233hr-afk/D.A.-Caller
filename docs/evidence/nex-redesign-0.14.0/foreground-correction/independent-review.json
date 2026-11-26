@@ -1,0 +1,33 @@
+{
+  "reviewer": "/root/foreground_independent_review_014",
+  "status": "CODEGO",
+  "base_source_sha": "c7b4e62e5aac324a7ea46e84ca14d4170a6241fb",
+  "source_sha256": {
+    "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java": "58e82d9cd723bc8734d36c9427262229e45eb20800504797a89b746cf6948067",
+    "scripts/verify-modern-features-native.py": "553c1a7368c28411838dd3580f3d6e92eb15dc2eadc90ecb3f049c78a74807fd",
+    "scripts/tests/test_da_caller_modern_native.py": "cef0d8db5b77e1f37165288ff34aed673c0aaf74ae0f326c40262c3ea1a02772"
+  },
+  "independent_checks": {
+    "synthetic_parser_positive_cases": 16,
+    "synthetic_parser_negative_cases": 40,
+    "synthetic_geometry_rejections": 20,
+    "native_method_ids_unchanged": 40,
+    "original_gates_byte_identical": 7,
+    "required_modern_captures": 27,
+    "required_total_captures": 272
+  },
+  "findings": [
+    "Exact resumed ActivityRecord grammar accepts API33 component-closing brace and historical space forms with compact/full equivalent components.",
+    "Invalid prefixes, stale/paused/nonresumed/wrong-component records, multiline stitching, malformed task/record and nonstring input are rejected.",
+    "Java requires exact ComponentName and actual Activity/Decor focused, attached, shown, visible native accessibility window ID.",
+    "The active and focused native application window must match Decor accessibility ID, visible target-package root and valid onscreen bounds; existing geometry evidence crossbinds that ID.",
+    "Bounded diagnostic-only probe retains pre-cleanup actual resumed rows, Decor and native accessibility observations; original failure is rethrown.",
+    "All forty native method identities and all seven preexisting gate script bytes remain unchanged."
+  ],
+  "limitations": [
+    "Synthetic parser and corruption probes are unit checks only and are not native emulator evidence.",
+    "This reviewer did not run Gradle, emulator Telecom or visual review.",
+    "Fresh all40 native execution, all272 captures and full actual visual review are still required.",
+    "This review provides no signing/publication approval, hardware validation or matching-key update claim."
+  ]
+}

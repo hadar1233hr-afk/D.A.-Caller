@@ -85,7 +85,7 @@ def widget_configuration_fixture():
             amoled=amoled, layout_direction="LTR" if amoled else "RTL", font_scale=1.3,
             widget_id=2147483000, intent_widget_id=2147483000, widget_provider_info="null",
             foreground=dict(component="com.dacaller.app/.WidgetConfigure",
-                resumed_record="mResumedActivity: ActivityRecord{123 u0 com.dacaller.app/.WidgetConfigure t1}",
+                resumed_record="topResumedActivity=ActivityRecord{123 u0 com.dacaller.app/.WidgetConfigure} t1}",
                 top_resumed=True, native_application_window_visible=True, window_id=17),
             root_geometry=geometry("[0,36][480,818]"), heading_geometry=geometry("[96,48][456,120]"),
             search_geometry=geometry("[24,149][456,230]"), back_geometry=geometry("[24,48][96,120]"),
@@ -113,7 +113,7 @@ def nex_island_fixture():
         previous_bounds="[45,48][435,180]", restored_bounds="[45,48][435,180]", view_alpha=1, scale_x=1, scale_y=1,
         body_top_argb=signed((52, 39, 32)), body_bottom_argb=signed((36, 26, 23)), edge_argb=signed((99, 77, 67)),
         accent_argb=signed((246, 167, 115)), timer_argb=signed((246, 167, 115)),
-        foreground=dict(component="com.dacaller.app/.MainActivity", resumed_record="mResumedActivity: ActivityRecord{123 u0 com.dacaller.app/.MainActivity t1}",
+        foreground=dict(component="com.dacaller.app/.MainActivity", resumed_record="topResumedActivity=ActivityRecord{123 u0 com.dacaller.app/.MainActivity} t1}",
             top_resumed=True, native_application_window_visible=True, window_id=19),
         geometry=dict(bounds="[45,48][435,180]", native_ax_bounds="[45,48][435,180]", window_id=19, stable_samples=2,
             view_window_focus=True, native_window_focus=True),
@@ -599,6 +599,87 @@ class ModernNativeContracts(unittest.TestCase):
                              ("top_resumed", False), ("native_application_window_visible", False), ("window_id", 18)):
             with self.subTest(key=key), self.assertRaises(AssertionError):
                 proof=widget_configuration_fixture();proof["observations"][0]["foreground"][key]=invalid;gate.widget_configuration(proof, images)
+
+    def test_resumed_record_accepts_actual_api33_brace_legacy_space_and_qualified_components(self):
+        # The authentic API33 failure dump used the brace immediately after the
+        # component. These are schema fixtures; they are not native PASS proof.
+        source=(REPO / "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java").read_text()
+        pattern=re.search(r'RESUMED_ACTIVITY=Pattern\.compile\(("(?:\\.|[^"\\])*")\);',source)
+        self.assertIsNotNone(pattern)
+        native_pattern=re.compile(json.loads(pattern.group(1)))
+        self.proofs_fixture();images={p.name:p for p in self.modern.glob("*.png")}
+        for activity in ("MainActivity", "WidgetConfigure"):
+            component="com.dacaller.app/."+activity
+            qualified="com.dacaller.app/com.dacaller.app."+activity
+            for label, separator, spelling, suffix in (
+                ("topResumedActivity", "=", component, "} t8}"),
+                ("topResumedActivity", "=", qualified, "} t8}"),
+                ("mResumedActivity", ": ", component, " t8}"),
+                ("mResumedActivity", ": ", qualified, " t8}"),
+            ):
+                record=f"  {label}{separator}ActivityRecord{{901df3e u0 {spelling}{suffix}"
+                with self.subTest(activity=activity,record=record):
+                    self.assertTrue(gate.resumed_activity_record(record,component))
+                    self.assertIsNotNone(native_pattern.fullmatch(record))
+                    if activity=="MainActivity":
+                        proof=nex_island_fixture();proof["foreground"]["resumed_record"]=record
+                        gate.nex_island(proof,"first-owned-token",images)
+                    else:
+                        proof=widget_configuration_fixture()
+                        for observation in proof["observations"]: observation["foreground"]["resumed_record"]=record
+                        gate.widget_configuration(proof,images)
+
+    def test_resumed_record_rejects_prefix_paused_stale_wrong_component_and_nonrecords(self):
+        source=(REPO / "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java").read_text()
+        pattern=re.search(r'RESUMED_ACTIVITY=Pattern\.compile\(("(?:\\.|[^"\\])*")\);',source)
+        native_pattern=re.compile(json.loads(pattern.group(1)))
+        self.proofs_fixture();images={p.name:p for p in self.modern.glob("*.png")}
+        for activity in ("MainActivity", "WidgetConfigure"):
+            component="com.dacaller.app/."+activity
+            valid=f"topResumedActivity=ActivityRecord{{901df3e u0 {component}}} t8}}"
+            records=(
+                valid.replace(component,component+"Stale"),
+                valid.replace(component,"com.other.app/."+activity),
+                valid.replace(component,"com.dacaller.app/.ListDispatchHostActivity"),
+                valid.replace("topResumedActivity","mLastPausedActivity"),
+                valid.replace("topResumedActivity","oldtopResumedActivity"),
+                "mLastPausedActivity="+valid,
+                valid+" stale=true",
+                valid.replace(" u0 ","\n u0 "),
+                valid.replace("} t8}","}\n t8}"),
+                valid+"\n"+valid.replace(component,"com.dacaller.app/.ListDispatchHostActivity"),
+                valid.replace("ActivityRecord{","FakeRecord{"),
+                valid.replace("} t8}",""),
+                "topResumedActivity=null "+component,
+                None,
+            )
+            for record in records:
+                with self.subTest(activity=activity,record=record):
+                    self.assertFalse(gate.resumed_activity_record(record,component))
+                    match=native_pattern.fullmatch(record) if type(record) is str else None
+                    if match is not None:
+                        self.assertNotIn(match.group(1),(component,"com.dacaller.app/com.dacaller.app."+activity))
+                    with self.assertRaisesRegex(AssertionError,"foreground Activity missing|resumed component is missing"):
+                        if activity=="MainActivity":
+                            proof=nex_island_fixture();proof["foreground"]["resumed_record"]=record
+                            gate.nex_island(proof,"first-owned-token",images)
+                        else:
+                            proof=widget_configuration_fixture();proof["observations"][0]["foreground"]["resumed_record"]=record
+                            gate.widget_configuration(proof,images)
+
+    def test_every_widget_and_nex_geometry_requires_its_actual_focused_native_window(self):
+        self.proofs_fixture();images={p.name:p for p in self.modern.glob("*.png")}
+        for part in ("root", "heading", "search", "back"):
+            for key, invalid in (("window_id",18),("window_id",False),("view_window_focus",False),
+                                 ("native_window_focus",False),("native_ax_bounds","[0,0][0,0]")):
+                with self.subTest(part=part,key=key,invalid=invalid), self.assertRaises(AssertionError):
+                    proof=widget_configuration_fixture();proof["observations"][0][part+"_geometry"][key]=invalid
+                    gate.widget_configuration(proof,images)
+        for key, invalid in (("window_id",20),("window_id",False),("view_window_focus",False),
+                             ("native_window_focus",False),("native_ax_bounds","[0,0][0,0]")):
+            with self.subTest(nex_geometry=key,invalid=invalid), self.assertRaises(AssertionError):
+                proof=nex_island_fixture();proof["geometry"][key]=invalid
+                gate.nex_island(proof,"first-owned-token",images)
 
     def test_widget_targets_fonts_and_actual_text_layout_cannot_be_weakened(self):
         self.proofs_fixture();images={p.name:p for p in self.modern.glob("*.png")}

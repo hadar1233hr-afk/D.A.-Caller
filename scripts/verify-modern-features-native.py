@@ -261,6 +261,23 @@ def native_geometry(value, expected):
     return value["window_id"]
 
 
+RESUMED_ACTIVITY = re.compile(
+    r"[ \t]*(?:mResumedActivity|topResumedActivity)[ \t]*[:=][ \t]*ActivityRecord\{"
+    r"[0-9a-fA-F]+[ \t]+u[0-9]+[ \t]+([^\s}]+)(?:\}[ \t]+t[0-9]+\}|[ \t]+t[0-9]+\})[ \t]*")
+
+
+def resumed_activity_record(record, component):
+    """Exact compact/qualified component in an API33 or historical resumed row."""
+    if type(record) is not str:
+        return False
+    match = RESUMED_ACTIVITY.fullmatch(record)
+    if match is None:
+        return False
+    package, activity = component.split("/", 1)
+    qualified = package + "/" + (package + activity if activity.startswith(".") else activity)
+    return match.group(1) in (component, qualified)
+
+
 def widget_configuration(proof, images):
     require(type(proof) is dict, "Actual WidgetConfigure configuration preview proof missing")
     require(proof.get("scope") == "Actual WidgetConfigure Activity; synthetic unbound ID configuration preview"
@@ -280,8 +297,7 @@ def widget_configuration(proof, images):
                 and value.get("widget_provider_info") == "null", "Widget preview requires explicit synthetic unbound nonINVALID ID")
         foreground = value.get("foreground", {})
         component = "com.dacaller.app/.WidgetConfigure"
-        require(foreground.get("component") == component and re.search(
-            r"(?:mResumedActivity|topResumedActivity).* " + re.escape(component) + r" ", str(foreground.get("resumed_record"))),
+        require(foreground.get("component") == component and resumed_activity_record(foreground.get("resumed_record"), component),
             "Actual WidgetConfigure resumed component is missing")
         flags(foreground, ("top_resumed", "native_application_window_visible"))
         require(integer(foreground.get("window_id")) and foreground["window_id"] >= 0, "Actual WidgetConfigure native window missing")
@@ -626,7 +642,7 @@ def nex_island(value, token, images):
     require(rectangle(value.get("previous_bounds")) == rectangle(value.get("restored_bounds")), "NEX style preview must restore previous live layout")
     foreground = value.get("foreground", {})
     component = "com.dacaller.app/.MainActivity"
-    require(foreground.get("component") == component and re.search(r"(?:mResumedActivity|topResumedActivity).* " + re.escape(component) + r" ", str(foreground.get("resumed_record"))),
+    require(foreground.get("component") == component and resumed_activity_record(foreground.get("resumed_record"), component),
             "NEX island actual production foreground Activity missing")
     flags(foreground, ("top_resumed", "native_application_window_visible"))
     require(integer(foreground.get("window_id")) and foreground["window_id"] >= 0, "NEX foreground native window missing")

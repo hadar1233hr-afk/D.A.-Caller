@@ -94,3 +94,39 @@ retained in`docs/evidence/nex-redesign-0.14.0/first-ci-failure`.
 This is test-fixture-only; appTree7aa469df7e34eda9568b5adc92a56795f3fdf2fd and
 local467host/build/lint results remain unchanged. Fresh emulator40cases/272real
 captures and all-image visual review remain pending; no native PASS is claimed.
+
+## Actual second native CI: foreground-proof format correction — 2026-11-26 UTC
+
+CI45728361423 at c7b4e62e5aac324a7ea46e84ca14d4170a6241fb completed:
+103 tooling contracts PASS,467 unique host methods/45classes PASS, lint0errors/
+16warnings; native40 completed with38PASS/2FAIL/0errors/0skips. Both failures
+occurred in the newly added foreground proof before the three new captures.
+The API33 ActivityRecord format places a closing brace immediately after the
+component; the new helper incorrectly required a space. The original native
+focused-window checks had passed. Correct exact-component parsing and focused
+Activity/native-window identity checks are being prepared without dropping gates.
+
+The artifact has267actual PNGs:245original functional,19modern functional and
+3diagnostic. Cleanup precedes the failed-test diagnostic captures, so these are
+not the exact failing NEX/widget surface. Eight verification reports were not
+produced after the JUnit failure. No272-frame visual GO or tested-debug APK exists;
+the retained failure candidate remains explicitly unapproved. Authentic evidence
+is retained under second-native-ci. Fresh all40native/272captures/full actual
+visual review are required after compilation/lint of the correction. No production
+UI/data changes, no signing/publication exception, no old-link resend or AI.
+
+## Foreground correction locally verified; fresh native proof next — 2026-11-26 UTC
+
+The exact-component ActivityRecord parser now accepts actualAPI33 closing-brace
+and historical task formats, compact/full class spellings, while rejecting stale/
+prefix/paused/wrong-component rows. The real Activity Decor AXwindowID must match
+the focused active visible native application window with valid onscreen bounds.
+Bounded diagnostic-only pre-cleanup observations retain future rejection reasons.
+Actual full106Python contracts PASS, Androidtest APK compilation PASS, lint0errors/
+16warnings (48seconds), all226tracked inputs unchanged. Production/host/debug/
+signing/workflows remain unchanged from actual467host45classCI PASS, so no local
+host rerun. Independent16accept/40reject/20window-corruption probes CODEGO; all40
+nativeIDs/seven original gates/272requiredframes preserved. Evidence is retained
+in foreground-correction. Fresh emulator40/272/fullactualvisual still PENDING;
+previous38/40failure remains truthful history. No0.14publication approval or
+hardware/update/durablekey claim; oldreleases/AI/otherproducts unchanged.

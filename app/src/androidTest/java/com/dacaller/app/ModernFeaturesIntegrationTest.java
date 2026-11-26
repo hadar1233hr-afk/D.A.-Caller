@@ -97,12 +97,15 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
  private final JSONArray nativeAnswers=new JSONArray(),foregroundEvidence=new JSONArray();
  private final JSONArray nativeDragRouting=new JSONArray();
  private String launcherPackage;
+ private JSONObject lastForegroundProbe;
 
  @Override protected void runTest()throws Throwable {
   try{super.runTest();}
   catch(Throwable failure){
    // Retain the actual failed surface before tearDown closes SystemUI. These
    // diagnostic-only names are outside the strict 27-frame passing profile.
+   if(lastForegroundProbe!=null)try{write(DIRECTORY,"modern-failed-"+getName()+"-foreground.json",lastForegroundProbe.toString(2));}
+    catch(Throwable diagnosticFailure){failure.addSuppressed(diagnosticFailure);}
    try{screenshot("modern-failed-"+getName()+".png");}catch(Throwable captureFailure){failure.addSuppressed(captureFailure);}
    throw failure;
   }
@@ -566,14 +569,68 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   return new JSONObject().put("scope","Actual WidgetConfigure Activity; synthetic unbound ID configuration preview").put("launcher_host_binding","NOT_TESTED")
    .put("preferences_restored",true).put("observations",observations);
  }
+ // API33 closes the ActivityRecord component with `} tN}`; older dumps use
+ // ` tN}`. Parse the exact resumed record/component, never a component prefix
+ // or a historical paused entry that merely mentions the expected Activity.
+ private static final Pattern RESUMED_ACTIVITY=Pattern.compile("^[ \\t]*(?:mResumedActivity|topResumedActivity)[ \\t]*[:=][ \\t]*ActivityRecord\\{[0-9a-fA-F]+[ \\t]+u[0-9]+[ \\t]+([^\\s}]+)(?:\\}[ \\t]+t[0-9]+\\}|[ \\t]+t[0-9]+\\})[ \\t]*$");
  private JSONObject activityForeground(Activity activity)throws Exception {
-  String component=target.getPackageName()+"/."+activity.getClass().getSimpleName(),record=null;
-  for(String line:shell("dumpsys activity activities").split("\\n"))if((line.contains("mResumedActivity")||line.contains("topResumedActivity"))&&line.contains(" "+component+" ")){record=line.trim();break;}
-  if(record==null||!activity.hasWindowFocus())return null;
+  ComponentName expected=new ComponentName(activity,activity.getClass());String record=null;
+  JSONObject probe=new JSONObject().put("diagnostic_only",true).put("sampled_uptime_millis",SystemClock.uptimeMillis())
+   .put("expected_component",expected.flattenToShortString()).put("outcome","INCOMPLETE_SAMPLE");lastForegroundProbe=probe;
+  JSONArray resumedRows=new JSONArray();int omittedRows=0;
+  for(String line:shell("dumpsys activity activities").split("\\n")){
+   if(line.contains("ResumedActivity")||line.contains("resumedActivity")){
+    if(resumedRows.length()<16)resumedRows.put(line.length()>1000?line.substring(0,1000)+" [TRUNCATED]":line);else omittedRows++;
+   }
+   Matcher match=RESUMED_ACTIVITY.matcher(line);
+   if(record==null&&match.matches()&&expected.equals(ComponentName.unflattenFromString(match.group(1))))record=line.trim();
+  }
+  probe.put("actual_resumed_rows",resumedRows).put("omitted_resumed_rows",omittedRows).put("matched_record",record==null?JSONObject.NULL:record);
+  AtomicReference<Integer> decorWindow=new AtomicReference<>(-1);AtomicReference<Rect> decorBounds=new AtomicReference<>();
+  AtomicReference<JSONObject> decorState=new AtomicReference<>();
+  ui(()->{try{
+   View decor=activity.getWindow().getDecorView();
+   boolean finishing=activity.isFinishing(),destroyed=activity.isDestroyed(),activityFocus=activity.hasWindowFocus(),decorFocus=decor.hasWindowFocus(),
+    attached=decor.isAttachedToWindow(),shown=decor.isShown();int visibility=decor.getWindowVisibility();
+   JSONObject observed=new JSONObject().put("finishing",finishing).put("destroyed",destroyed).put("activity_focus",activityFocus).put("decor_focus",decorFocus)
+    .put("attached",attached).put("shown",shown).put("window_visibility",visibility).put("window_id",-1).put("bounds",JSONObject.NULL).put("ready",false);decorState.set(observed);
+   if(finishing||destroyed||!activityFocus||!decorFocus||!attached||!shown||visibility!=View.VISIBLE)return;
+   AccessibilityNodeInfo node=decor.createAccessibilityNodeInfo();try{
+    Rect bounds=new Rect();node.getBoundsInScreen(bounds);observed.put("window_id",node.getWindowId()).put("bounds",bounds.toShortString());
+    if(node.getWindowId()<0||bounds.isEmpty()||!new Rect(0,0,480,854).contains(bounds))return;
+    decorWindow.set(node.getWindowId());decorBounds.set(bounds);observed.put("ready",true);
+   }finally{node.recycle();}
+  }catch(Exception failure){throw new RuntimeException(failure);}});
+  probe.put("decor",decorState.get());JSONArray nativeWindows=new JSONArray();probe.put("native_windows",nativeWindows);int omittedWindows=0,acceptedWindow=-1;
   for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
-   AccessibilityNodeInfo root=window.getRoot();if(window.getType()==AccessibilityWindowInfo.TYPE_APPLICATION&&window.isFocused()&&root!=null&&root.isVisibleToUser()&&target.getPackageName().contentEquals(String.valueOf(root.getPackageName())))
-    return new JSONObject().put("component",component).put("resumed_record",record).put("top_resumed",true).put("native_application_window_visible",true).put("window_id",window.getId());
-  }return null;
+   try{
+    Rect windowBounds=new Rect(),rootBounds=new Rect();window.getBoundsInScreen(windowBounds);
+    JSONObject observed=new JSONObject().put("window_id",window.getId()).put("type",window.getType()).put("focused",window.isFocused())
+     .put("active",window.isActive()).put("bounds",windowBounds.toShortString());
+    AccessibilityNodeInfo root=window.getRoot();String rejection;
+    if(root==null){observed.put("root",JSONObject.NULL);rejection="MISSING_AX_ROOT";}
+    else try{
+     root.getBoundsInScreen(rootBounds);observed.put("root_package",root.getPackageName()==null?JSONObject.NULL:root.getPackageName().toString())
+      .put("root_visible",root.isVisibleToUser()).put("root_bounds",rootBounds.toShortString());
+     if(window.getId()!=decorWindow.get())rejection="NOT_ACTIVITY_DECOR_WINDOW";
+     else if(window.getType()!=AccessibilityWindowInfo.TYPE_APPLICATION)rejection="NOT_APPLICATION_WINDOW";
+     else if(!window.isActive()||!window.isFocused())rejection="NOT_ACTIVE_AND_FOCUSED";
+     else if(!root.isVisibleToUser()||!target.getPackageName().contentEquals(String.valueOf(root.getPackageName())))rejection="ROOT_NOT_VISIBLE_TARGET_PACKAGE";
+     else if(decorBounds.get()==null||windowBounds.isEmpty()||rootBounds.isEmpty()||!new Rect(0,0,480,854).contains(windowBounds)||
+       !windowBounds.contains(rootBounds)||!Rect.intersects(decorBounds.get(),rootBounds))rejection="ROOT_OR_WINDOW_BOUNDS_INVALID";
+     else{rejection="NONE";acceptedWindow=window.getId();}
+    }finally{root.recycle();}
+    observed.put("rejection_reason",rejection);
+    if(nativeWindows.length()<32)nativeWindows.put(observed);else omittedWindows++;
+   }finally{window.recycle();}
+  }
+  probe.put("omitted_native_windows",omittedWindows);
+  if(record==null){probe.put("outcome","REJECTED_NO_EXACT_RESUMED_ACTIVITY");return null;}
+  if(decorBounds.get()==null){probe.put("outcome","REJECTED_ACTIVITY_DECOR_NOT_READY");return null;}
+  if(acceptedWindow<0){probe.put("outcome","REJECTED_NO_MATCHING_NATIVE_APPLICATION_WINDOW");return null;}
+  probe.put("outcome","FOREGROUND_CHECK_ACCEPTED").put("accepted_window_id",acceptedWindow);
+  return new JSONObject().put("component",expected.flattenToShortString()).put("resumed_record",record).put("top_resumed",true)
+   .put("native_application_window_visible",true).put("window_id",acceptedWindow);
  }
 
  public void testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns()throws Exception {
