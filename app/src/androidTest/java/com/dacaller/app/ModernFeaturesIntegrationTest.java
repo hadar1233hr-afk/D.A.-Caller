@@ -224,7 +224,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
    }
    if(uniform)return points;
   }
-  fail("Real baseline has no uniform guarded background patch in the capsule's empty top padding");return null;
+  return null; // The caller tries other real capsule positions before failing.
  }
  private <T extends Activity>T launch(Class<T> type)throws Exception {
   T activity=type.cast(getInstrumentation().startActivitySync(new Intent(target,type).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));activities.add(activity);settle();awaitActivityForeground(activity);return activity;
@@ -252,8 +252,8 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
      view.isLayoutRequested()||root.isLayoutRequested())return;
    int[] location=new int[2];view.getLocationOnScreen(location);
    // Android TextView can include its own internal RTL scroll in this API.
-   Rect result=new Rect();
-   result.set(location[0]-view.getScrollX(),location[1]-view.getScrollY(),location[0]-view.getScrollX()+view.getWidth(),location[1]-view.getScrollY()+view.getHeight());
+   Rect direct=new Rect(location[0],location[1],location[0]+view.getWidth(),location[1]+view.getHeight());
+   Rect adjusted=new Rect(direct);adjusted.offset(-view.getScrollX(),-view.getScrollY());
    Rect visible=new Rect();boolean shown=view.getGlobalVisibleRect(visible);
    // "Global" visibility is in the root/window coordinate space. Dialogs and
    // TYPE_APPLICATION_OVERLAY windows have a nonzero screen origin, whereas
@@ -263,9 +263,12 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
    AccessibilityNodeInfo node=view.createAccessibilityNodeInfo();Rect nativeBounds=new Rect();
    try{
     node.getBoundsInScreen(nativeBounds);windowId.set(node.getWindowId());
-    lastGeometry.set("screen="+result+", rootVisible="+visible+", rootScreen="+rootScreen[0]+","+rootScreen[1]+
+    lastGeometry.set("screen="+direct+", scrollAdjusted="+adjusted+", rootVisible="+visible+", rootScreen="+rootScreen[0]+","+rootScreen[1]+
      ", rootWindow="+rootWindow[0]+","+rootWindow[1]+", visibleOnScreen="+visibleOnScreen+", nativeAX="+nativeBounds+", window="+windowId.get());
    }finally{node.recycle();}
+   // The raw screen origin may already exclude internal RTL text scroll.
+   // Require exact independent agreement with BOTH global visibility and AX.
+   Rect result=direct.equals(visibleOnScreen)&&direct.equals(nativeBounds)?direct:adjusted;
    if(result.width()<=0||result.height()<=0||!new Rect(0,0,480,854).contains(result)||!shown||
      visible.width()!=view.getWidth()||visible.height()!=view.getHeight()||!visibleOnScreen.equals(result)||!nativeBounds.equals(result))return;
    candidate.set(result);
@@ -782,15 +785,30 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   proof.put("nex_active",nexIslandPresentation(main,call,token));
   // Show an unmodified real app surface behind the same capsule. Sampling its empty
   // top padding avoids opaque caller-label backplates and proves compositor blending.
-  prefs.edit().putBoolean(CallIslandPosition.SET,true).putInt(CallIslandPosition.X,5000).putInt(CallIslandPosition.Y,6000).commit();settle();
-  Rect composition=bounds(tag(main,"island-root"));prefs.edit().putString("island_hidden_token",token).commit();await(()->main.getWindow().getDecorView().findViewWithTag("island-root")==null,"Composition baseline must have no island");
-  Bitmap background=capture("modern-island-composition-background.png");
+  // Select a real uncluttered patch before any opacity captures. Do not
+  // relax pixel uniformity, brightness, guard, blend or geometry assertions.
+  Rect selectedComposition=null;JSONArray attemptedPositions=new JSONArray();
+  for(int position:new int[]{6000,7500,8500,5000,4000,3000,2000,1000,9000,0,10000}){
+   prefs.edit().remove("island_hidden_token").putBoolean(CallIslandPosition.SET,true)
+    .putInt(CallIslandPosition.X,5000).putInt(CallIslandPosition.Y,position).commit();
+   await(()->main.getWindow().getDecorView().findViewWithTag("island-root")!=null,"Candidate capsule must be shown");
+   settle();Rect candidate=bounds(tag(main,"island-root"));assertOwned(call,token);
+   prefs.edit().putString("island_hidden_token",token).commit();
+   await(()->main.getWindow().getDecorView().findViewWithTag("island-root")==null,"Composition baseline must have no island");
+   settle();Bitmap probe=getInstrumentation().getUiAutomation().takeScreenshot();assertNotNull(probe);
+   boolean usable;try{assertEquals(480,probe.getWidth());assertEquals(854,probe.getHeight());usable=uniformBackgroundSamples(probe,candidate)!=null;}finally{probe.recycle();}
+   attemptedPositions.put(new JSONObject().put("normalized_y",position).put("bounds",candidate.toShortString()).put("uniform_baseline",usable));
+   if(usable){selectedComposition=candidate;break;}
+  }
+  assertNotNull("Real baseline has no uniform guarded background patch at any candidate capsule position",selectedComposition);
+  final Rect composition=selectedComposition;Bitmap background=capture("modern-island-composition-background.png");
   // Choose empty, uniform real background using this baseline only, before
   // any opacity image exists. Text antialiasing below a transparent layer can
   // quantize by one channel; it is not the empty padding this proof samples.
   Bitmap[] levels=new Bitmap[3];int[] opacity={0,35,100};
   try {
    int[] sampleXs=uniformBackgroundSamples(background,composition);
+   assertNotNull("Saved real baseline must retain the guarded uniform light patch",sampleXs);
    for(int i=0;i<opacity.length;i++){
     prefs.edit().remove("island_hidden_token").putInt("island_background_opacity",opacity[i]).commit();
     await(()->main.getWindow().getDecorView().findViewWithTag("island-root")!=null,"Transparent island did not return");settle();
@@ -810,7 +828,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
    proof.put("transparency",new JSONObject().put("sample_region",composition.toShortString()).put("background_is_real_app_compositor",true).put("view_alpha",1)
     .put("caller_alpha",1).put("background_alpha_35",89).put("rgb_tolerance",3).put("samples",pixels)
     .put("sample_selection","baseline-only uniform light background in central top padding")
-    .put("baseline_uniform_guard_pixels",1).put("baseline_min_rgb",200));
+    .put("baseline_uniform_guard_pixels",1).put("baseline_min_rgb",200).put("attempted_baseline_positions",attemptedPositions));
   }finally{background.recycle();for(Bitmap bitmap:levels)if(bitmap!=null)bitmap.recycle();}
   prefs.edit().putString("island_hidden_token",token).commit();modem("cancel");await(()->PhoneSessionService.current==null||PhoneSessionService.current.getState()==Call.STATE_DISCONNECTED,"First actual call did not end");
   key(KeyEvent.KEYCODE_HOME);modem("call");await(()->state(Call.STATE_RINGING)&&PhoneSessionService.islandSnapshot()!=null,"Second actual call did not bind");
