@@ -19,3 +19,62 @@ Added optional fifth island appearance `nex` (espresso/copper) to view palette, 
 
 ## First Android CI regression fixes
 Authentic CI run 45712687526 on 3c130f4: 463 host tests, 455 passed and 8 failed; native job skipped. Log identifies two dialog font-weight failures, two clipped Businesses chip failures, one business attribution font-weight assertion, one old dark-root palette assertion and two backup checkbox font-weight assertions. Production fixes: regular 600 for native dialog buttons/checked choice rows; measure full Businesses label using real current text paint and padding instead of fixed 96dp width, preserving 48dp refresh target and weighted count. Updated only intentionally changed visual expected values for source attribution (600), dark-root background (NexPalette) and backup checkbox (600); original functional assertions remain. All edits committed through 380c689. Fresh CI required; no claim of passing these fixes, native validation or new APK. Previous standalone palette claim is not independently evidenced in this chat; rely on authentic CI evidence instead. Keep AI deferred and permanent signing safeguards intact.
+
+## Managed continuation — current work
+The managed continuation uses isolated worktree `/workspace/D.A.-Caller-nex-014`
+on `design/nex-caller-0.14`, PR7 only, starting from latest handoffdf7ccf4.
+No competing local worker was active; later source work was scoped among root
+and bounded workers, now frozen for one serial local build/test/lint command.
+Actual NEX Theme/MainActivity source was read only through the connected provider;
+reference findings are retained privately in work/nex-014/reference-audit.md.
+Warm cards/selected-icon pills, stronger600/750 typography and secondary/call/
+island coherence are implemented. Five call styles and four island style IDs,
+user accents, functional handlers and opacity/token mechanisms are preserved.
+Day gold was minimally darkened to pass4.5:1 on the new soft surface; dialog
+font classification distinguishes600body from750headings. AMOLED stays black.
+Version0.14.0/code23 and bilingual changelog are coordinated; old21entries remain.
+Native40cases and245+24required frames remain; version/catalog checks are strict.
+Only focused33Pythonversion contracts and static checks have passed so far.
+Full current-source unit/build/lint is IN_PROGRESS; no native/visual PASS yet.
+Fresh emulator Telecom269-image proof and full actual visual review are required.
+Signing/publication safeguards, immutable0.12/0.13 and frozen business data remain.
+There is NO0.14publication exception approval; durable owner key/backup/secrets
+setup still awaits the already requested owner information. Complete design and
+proof before asking about a concrete publication candidate. AI remains deferred.
+
+## Integrated upstream continuation6191392 — managed checkpoint
+RemotePR7 advanced during the environment pause. Root preserved all36localWIP
+paths and patch privately, stashed the WIP, fast-forwarded to6191392, then merged
+without force or dropping owner work. Five conflicts were resolved preserving
+the upstream optional fifth `nex` island style/backup allowlist, matching600/750
+font XML, full-label measured Businesses chip width and updated visual checks,
+plus local NEX surfaces, gestures/opacity invariants and AMOLED/cache fixes.
+The original four island IDs/order/default remain supported; NEX adds a fifth.
+Local first runnable host suite before this merge genuinely ran467cases:
+465PASS/2FAIL (full Businesses label clipped in both permission paths), no errors
+or skips and no source drift. Upstream measured-width fix directly addresses
+those two failures without relaxing the label/48dp assertions. Full merged host
+and debug build is IN_PROGRESS with writable JVM test cache; no PASS yet.
+Earlier sandbox socket/home-lock failures are retained as infrastructure failures.
+Two actual WidgetConfigure previews plus one actual owned NEX-island call frame
+are being added to the existing native methods: preserve all40case IDs and old
+245+24images, require27additive/272total, no synthetic launcher-host binding claim.
+No fresh native execution or visual approval exists yet. Existing signing,
+publication and fixed business-data guards remain; no0.14exception approval.
+
+## Current local preflight PASS; fresh native and visual proof next — 2026-11-26 UTC
+
+Merged source now passes467uniquehost methods in45classes,0failures/errors/skips,
+local debug and Androidtest APK builds, lint0errors/16warnings and42focused
+Python modern-profile contracts. All frozen source hashes remained unchanged.
+Independent merged-source and additive-native reviews are CODEGO; authentic
+JUnit/logs/metadata/source manifests retained in
+`docs/evidence/nex-redesign-0.14.0/local-preflight`.
+
+The original40native IDs and all245+24original images remain. The strict profile
+adds2actual WidgetConfigure previews with synthetic IDs/no launcherhostbinding
+claim and1actualowned NEX-island call image:27modern/272total. These native
+captures are NOT YET EXECUTED; fresh CI Telecom and actual full272visualreview
+are required on the newly committed app tree. No publication, hardware, upgrade
+or durable-signing success is claimed. No0.14signing/publication exception was
+approved; finish concrete software proof before requesting that boundary.

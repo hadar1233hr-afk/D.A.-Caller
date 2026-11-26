@@ -321,7 +321,7 @@ final class FastPages {
   addFavorites(page,host.contactsSnapshot());
   if(prefs.getBoolean("show_stats",true))addSummary(page);
   LinearLayout top=horizontal();top.setTag("call-island-secondary");page.addView(top,lp(-1,48));
-  TextView title=text(tr("כל השיחות"),15,ink(),true);
+  TextView title=text(tr("כל השיחות"),20,ink(),true);
   top.addView(title,new LinearLayout.LayoutParams(0,-1,1));
   TextView count=text(String.valueOf(CallHistory.entries.size()),11,subtle(),false);
   top.addView(count,lp(-2,48));
@@ -376,7 +376,7 @@ final class FastPages {
   item.setTag("stats_metric_"+kind);
   item.setGravity(Gravity.CENTER);
   item.setPadding(dp(1),dp(2),dp(1),dp(2));
-  item.setBackground(bg(dark()?0xFF262626:0xFFF5F3F0,12));
+  item.setBackground(bg(soft(),14));
   item.setMinimumHeight(dp(42));
   LinearLayout.LayoutParams ip=new LinearLayout.LayoutParams(0,-2,1);
   ip.leftMargin=dp(3);ip.rightMargin=dp(3);
@@ -585,7 +585,7 @@ final class FastPages {
   CallRow(){
    root=vertical();
    root.setPadding(dp(6),dp(6),dp(6),dp(6));
-   root.setBackground(edge(panel(),24));
+   root.setBackground(edge(panel(),20));
    root.setMinimumHeight(dp(76));
    header=horizontal();header.setTag("recent_header");root.addView(header,lp(-1,-2));header.setMinimumHeight(dp(64));
    avatar=AvatarShapes.frame(host);
@@ -614,7 +614,7 @@ final class FastPages {
    dialIcon.setPadding(dp(11),dp(11),dp(11),dp(11));
    call.addView(dialIcon,new FrameLayout.LayoutParams(-1,-1));
    actions=vertical();actions.setTag("recent_actions");actions.setPadding(dp(5),dp(3),dp(5),dp(3));root.addView(actions,lp(-1,-2));
-   View divider=new View(host);divider.setBackgroundColor(dark()?0xFF443A29:0xFFE6DDCA);actions.addView(divider,lp(-1,1));
+   View divider=new View(host);divider.setBackgroundColor(NexPalette.outline(dark()));actions.addView(divider,lp(-1,1));
    number=text("",14,ink(),true);number.setTag("recent_number");number.setGravity(Gravity.CENTER);number.setPadding(dp(4),dp(8),dp(4),dp(8));
    number.setMaxLines(2);actions.addView(number,lp(-1,-2));
    LinearLayout controls=horizontal();controls.setBaselineAligned(false);actions.addView(controls,lp(-1,-2));
@@ -721,8 +721,8 @@ final class FastPages {
    phone=text("",11,subtle(),false);phone.setSingleLine(true);description.addView(phone);
    star=text("☆",26,subtle(),false);star.setGravity(Gravity.CENTER);
    root.addView(star,lp(48,51));
-   quick=new FrameLayout(host);quick.setBackground(bg(dark()?0xFF29352F:0xFFE7F4EA,14));
-   ImageView icon=icon(R.drawable.ic_phone_line,0xFF128758);
+   quick=new FrameLayout(host);quick.setBackground(bg(soft(),16));
+   ImageView icon=icon(R.drawable.ic_phone_line,NexPalette.call(dark()));
    quick.addView(icon,new FrameLayout.LayoutParams(dp(49),dp(49),Gravity.CENTER));
    root.addView(quick,lp(49,50));
    touch(star);touch(quick);touch(root);touch(avatar);root.setTag(this);
@@ -733,7 +733,7 @@ final class FastPages {
   boolean expanded=prefs.getBoolean("stats_expanded",false);
   String[] periods={tr("היום"),tr("השבוע"),tr("החודש"),tr("השנה")};
   LinearLayout summary=vertical();summary.setTag("stats_summary");
-  summary.setPadding(dp(10),0,dp(3),expanded?dp(5):0);summary.setBackground(edge(panel(),24));
+  summary.setPadding(dp(10),0,dp(3),expanded?dp(5):0);summary.setBackground(edge(panel(),20));
   LinearLayout.LayoutParams block=lp(-1,-2);block.bottomMargin=dp(6);page.addView(summary,block);
   LinearLayout header=horizontal();header.setMinimumHeight(dp(48));summary.addView(header,lp(-1,-2));
   ImageView overview=icon(R.drawable.ic_recent,tint());overview.setPadding(dp(6),dp(6),dp(6),dp(6));
@@ -766,7 +766,7 @@ final class FastPages {
   // Preserve every starred contact, including two people sharing a phone number.
   // The legacy favorite identity is a number; deduplicating it hides real cards.
   for(Contacts.Person person:contacts)if(!person.phone.isEmpty()&&starred.contains(person.key))chosen.add(person);
-  LinearLayout band=horizontal();band.setTag("favorites_strip");band.setBackground(edge(panel(),24));
+  LinearLayout band=horizontal();band.setTag("favorites_strip");band.setBackground(edge(panel(),20));
   LinearLayout.LayoutParams block=lp(-1,expanded&&!chosen.isEmpty()?82:48);block.bottomMargin=dp(6);page.addView(band,block);
   LinearLayout toggle=vertical();toggle.setTag("favorites_toggle");toggle.setGravity(Gravity.CENTER);toggle.setPadding(dp(3),0,dp(3),0);
   TextView heading=text(tr("מועדפים"),11,tint(),true);heading.setGravity(Gravity.CENTER);toggle.addView(heading,lp(-1,-2));

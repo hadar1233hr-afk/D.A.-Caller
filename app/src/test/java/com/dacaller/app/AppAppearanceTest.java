@@ -128,6 +128,16 @@ public final class AppAppearanceTest {
   assertEquals(600,dialog.getButton(AlertDialog.BUTTON_POSITIVE).getTypeface().getWeight());dialog.dismiss();
   Shadows.shadowOf(Looper.getMainLooper()).idle();assertEquals(1,dismissals.get());
  }
+ @Test public void dialogKeepsPrestyledSemiboldBodyDistinctFromHeavyHeadings(){
+  TextView body=new TextView(context);body.setText("עברית · English");AppAppearance.font(body,false);
+  AlertDialog dialog=new AlertDialog.Builder(context).setTitle("כותרת · Title").setView(body).create();
+  AppAppearance.show(dialog);
+  dialog.getWindow().getDecorView().getViewTreeObserver().dispatchOnGlobalLayout();
+  assertEquals(600,body.getTypeface().getWeight());
+  int title=context.getResources().getIdentifier("alertTitle","id","android");
+  assertEquals(750,((TextView)dialog.findViewById(title)).getTypeface().getWeight());
+  dialog.dismiss();
+ }
  @Test public void dialogFontsAlsoReachLazyNativeChoiceRowsInBothPalettes(){
   for(int theme:new int[]{R.style.AppDialogLight,R.style.AppDialogDark}){
    AlertDialog dialog=new AlertDialog.Builder(new ContextThemeWrapper(context,theme))

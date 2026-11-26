@@ -121,7 +121,9 @@ flags(changelog, ("actual_settings_entry_opens_activity", "catalog_newest_first_
                   "native_expand_collapse_and_bottom_reachable", "back_returns_to_settings"))
 versions = changelog.get("versions", [])
 current = changelog.get("current_version")
-assert versions and len(versions) >= 19 and len(versions) == len(set(versions)) and versions[0] == current
+expected_versions = ["0.14.0", "0.13.0", "0.12.0", "0.11.0-beta.9", "0.11.0-beta.8", "0.11.0-beta.7", "0.11.0-beta.6", "0.11.0-beta.5", "0.11.0-beta.4", "0.11.0-beta.3", "0.11.0-beta.2", "0.11.0-beta.1", "0.10.0-beta.1", "0.9.0", "0.8.0", "0.7.0", "0.6.0", "0.5.0", "0.4.0", "0.3.0", "0.2.0", "0.1.0"]
+assert current == "0.14.0" and versions == expected_versions, "Current NEX release and all21 retained historical entries are mandatory"
+assert len(versions) == len(set(versions)) and versions[0] == current
 assert versions[-1] == "0.1.0"
 
 

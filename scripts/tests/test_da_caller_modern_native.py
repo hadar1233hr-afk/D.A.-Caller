@@ -1,7 +1,7 @@
 """Synthetic corruption contracts for the additive native-evidence verifier.
 
 Generated images/proofs below are unit fixtures, never emulator/native evidence.
-The CI still has to execute the actual40 native methods and all269 captures.
+The CI still has to execute the actual40 native methods and all272 captures.
 """
 import copy
 import hashlib
@@ -68,6 +68,56 @@ def native_identities():
         for method in re.findall(r"public\s+void\s+(test\w+)\s*\(\s*\)", source.read_text()):
             result.append(("com.dacaller.app." + source.stem, method))
     return result
+
+
+def widget_configuration_fixture():
+    """Synthetic actual-Activity schema only; never a native launch/visual result."""
+    observations = []
+    def geometry(bounds):
+        return dict(bounds=bounds, native_ax_bounds=bounds, window_id=17, stable_samples=2,
+                    view_window_focus=True, native_window_focus=True)
+    for amoled in (False, True):
+        heading = "Choose a contact" if amoled else "בחר איש קשר"
+        bg, surface, ink, muted = (((0, 0, 0), (10, 10, 10), (249, 241, 232), (242, 229, 221)) if amoled
+                                   else ((246, 240, 232), (255, 253, 252), (55, 41, 31), (76, 53, 42)))
+        observations.append(dict(frame="modern-nex-widget-" + ("amoled-en" if amoled else "light-he") + ".png",
+            activity="com.dacaller.app.WidgetConfigure", theme="amoled" if amoled else "light", language="en" if amoled else "he",
+            amoled=amoled, layout_direction="LTR" if amoled else "RTL", font_scale=1.3,
+            widget_id=2147483000, intent_widget_id=2147483000, widget_provider_info="null",
+            foreground=dict(component="com.dacaller.app/.WidgetConfigure",
+                resumed_record="mResumedActivity: ActivityRecord{123 u0 com.dacaller.app/.WidgetConfigure t1}",
+                top_resumed=True, native_application_window_visible=True, window_id=17),
+            root_geometry=geometry("[0,36][480,818]"), heading_geometry=geometry("[96,48][456,120]"),
+            search_geometry=geometry("[24,149][456,230]"), back_geometry=geometry("[24,48][96,120]"),
+            background_argb=signed(bg), surface_argb=signed(surface), heading_argb=signed(ink), search_argb=signed(ink), hint_argb=signed(muted),
+            status_bar_argb=signed(bg), navigation_bar_argb=signed(bg),
+            heading=dict(text=heading, text_size_sp=22, font_weight=750, font_variation="'wght' 750", layout_width_px=348,
+                content_width_px=348, content_height_px=54,
+                lines=[dict(start_utf16=0, end_utf16=len(heading), ellipsis_count=0, left_px=0, right_px=315, bottom_px=51)]),
+            search_hint=dict(text="Search name or number" if amoled else "חיפוש שם או מספר", text_size_sp=16, font_weight=600,
+                font_variation="'wght' 600", measured_width_px=330, available_width_px=384, font_top_px=-36, font_bottom_px=10,
+                baseline_px=51, padding_top_px=15, padding_bottom_px=15, height_px=81),
+            background_samples=[dict(x=3+n, y=39, argb=signed(bg)) for n in range(5)],
+            selection_actions=0, native_pointer_inputs=0, provider_writes_requested=0, provider_change_notifications=0,
+            preferences_unchanged=True, telecom_call_unchanged=True, finished=True))
+    return dict(scope="Actual WidgetConfigure Activity; synthetic unbound ID configuration preview", launcher_host_binding="NOT_TESTED",
+                preferences_restored=True, observations=observations)
+
+
+def nex_island_fixture():
+    """Synthetic owned-Telecom schema; no real modem call is placed here."""
+    return dict(frame="modern-nex-island-active-he.png", style_id="nex", language="he", layout_direction="RTL",
+        data_origin="Android Telecom -> production PhoneSessionService -> live CallIslandView", token="first-owned-token",
+        bound_view_token="first-owned-token", call_state=4, bound_view_state=4, number="0500099971", same_owned_call=True,
+        single_owned_surface=True, preferences_restored=True, previous_layout_restored=True, extra_modem_commands=0,
+        previous_bounds="[45,48][435,180]", restored_bounds="[45,48][435,180]", view_alpha=1, scale_x=1, scale_y=1,
+        body_top_argb=signed((52, 39, 32)), body_bottom_argb=signed((36, 26, 23)), edge_argb=signed((99, 77, 67)),
+        accent_argb=signed((246, 167, 115)), timer_argb=signed((246, 167, 115)),
+        foreground=dict(component="com.dacaller.app/.MainActivity", resumed_record="mResumedActivity: ActivityRecord{123 u0 com.dacaller.app/.MainActivity t1}",
+            top_resumed=True, native_application_window_visible=True, window_id=19),
+        geometry=dict(bounds="[45,48][435,180]", native_ax_bounds="[45,48][435,180]", window_id=19, stable_samples=2,
+            view_window_focus=True, native_window_focus=True),
+        background_samples=[dict(x=238+n, y=53, argb=signed((44, 32, 27))) for n in range(5)])
 
 
 def status_protection_fixture():
@@ -254,6 +304,8 @@ class ModernNativeContracts(unittest.TestCase):
         cls.base_png = image()
         cls.opaque_png = image((20, 20, 20))
         cls.blend_png = image(tuple(int(fg * 89 / 255 + bg * 166 / 255 + 0.5) for bg, fg in zip((180, 120, 60), (20, 20, 20))))
+        cls.widget_light_png, cls.widget_amoled_png = image((246, 240, 232)), image((0, 0, 0))
+        cls.nex_island_png = image((44, 32, 27))
 
     def setUp(self):
         # Hosted CI supplies its real run ID; synthetic fixtures must be isolated.
@@ -303,8 +355,13 @@ class ModernNativeContracts(unittest.TestCase):
     def proofs_fixture(self):
         for name in gate.REQUIRED:
             data = self.opaque_png if name == "modern-island-opacity-100.png" else self.blend_png if name == "modern-island-opacity-35.png" else self.base_png
+            if name in gate.WIDGET:
+                data = self.widget_amoled_png if "amoled" in name else self.widget_light_png
+            if name == gate.NEX_ISLAND:
+                data = self.nex_island_png
             (self.modern / name).write_bytes(data)
-        presentation = dict(no_floating_dialpad=True, all_inline_actions_retained=True, back_collapses_without_dial=True, observations=[])
+        presentation = dict(no_floating_dialpad=True, all_inline_actions_retained=True, back_collapses_without_dial=True, observations=[],
+                            widget_configuration=widget_configuration_fixture())
         for theme, language in (("light", "en"), ("dark", "he")):
             presentation["observations"].append(dict(theme=theme, language=language, font_scale=1.3,
                 inline_expansion_dial_requests=0, icon_choices=9, selected_last_icon="signal",
@@ -317,7 +374,7 @@ class ModernNativeContracts(unittest.TestCase):
             archive_policy_at_export="off", opt_out_added=0, opt_in_added=1, same_identity_conflict_retained_seconds=999,
             pending_recovery_after_success=False, raw_archive_uploaded=False, preexisting_rows_preserved=0,
             stored_rows_before=2, stored_rows_exported=2)])
-        island = dict(role_held=True, hide_preserves_call_and_notification=True, settings_restore_on_home=True,
+        island = dict(nex_active=nex_island_fixture(), role_held=True, hide_preserves_call_and_notification=True, settings_restore_on_home=True,
             new_call_ignores_previous_hidden_token=True, single_owned_surface=True, protected_status_icons_remain_visible=True,
             modem_end_removes_island=True, default_dialer="com.dacaller.app", data_origin="Android Telecom -> production PhoneSessionService",
             first_token="first-owned-token", second_token="second-owned-token", launcher_package="com.android.launcher3",
@@ -340,7 +397,7 @@ class ModernNativeContracts(unittest.TestCase):
                 opacity35=signed(tuple(int(fg * 89 / 255 + bg * 166 / 255 + 0.5) for bg, fg in zip((180, 120, 60), (20, 20, 20)))), opacity100=signed((20, 20, 20))) for n in range(5)]))
         proofs = dict(zip(gate.PROOFS, (presentation, backup, island)))
         for name, value in proofs.items():
-            value.update(api=33, density_dpi=240, font_scale=1.3, package="com.dacaller.app", version_name="0.13.0", version_code=22,
+            value.update(api=33, density_dpi=240, font_scale=1.3, package="com.dacaller.app", version_name="0.14.0", version_code=23,
                 physical_carrier_audio_verified=False, matching_key_upgrade_verified=False,
                 captures={frame: dict(sha256=hashlib.sha256((self.modern / frame).read_bytes()).hexdigest(), width=480, height=854,
                     method="UiAutomation.takeScreenshot") for frame in gate.PROOFS[name]})
@@ -422,7 +479,7 @@ class ModernNativeContracts(unittest.TestCase):
         proofs = self.proofs_fixture()
         value = proofs["modern-presentation-native.json"];value["observations"][0]["inline_expansion_dial_requests"] = False
         with self.assertRaisesRegex(AssertionError, "no-dial"):
-            gate.presentation(value)
+            gate.presentation(value, {p.name:p for p in self.modern.glob("*.png")})
         value = proofs["modern-backup-native.json"];value["observations"][0]["opt_out_added"] = False
         with self.assertRaisesRegex(AssertionError, "Wrong backup result"):
             gate.backup(value)
@@ -466,6 +523,26 @@ class ModernNativeContracts(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError, "actually move"):
             gate.island(value, images)
 
+    def test_previous_release_wrong_version_and_untyped_code_are_rejected(self):
+        self.legacy_fixture()
+        self.proofs_fixture()
+        self.write_junit()
+        name = next(iter(gate.PROOFS))
+        path = self.modern / name
+        valid = path.read_text()
+        for version, code in (("0.13.0", 22), ("0.14.0-beta.1", 23),
+                              ("0.14.1", 23), ("0.14.0", 22),
+                              ("0.14.0", "23"), ("0.14.0", True)):
+            value = json.loads(valid)
+            value.update(version_name=version, version_code=code)
+            path.write_text(json.dumps(value))
+            with self.subTest(version=version, code=code), \
+                 mock.patch.object(gate.subprocess, "check_output", side_effect=[SOURCE, TREE]), \
+                 mock.patch.object(gate, "png"), \
+                 self.assertRaisesRegex(AssertionError, "Wrong native package/version/configuration"):
+                gate.verify(self.baseline, self.modern, self.xml)
+        path.write_text(valid)
+
     def test_duplicate_json_keys_cannot_hide_conflicting_native_assertions(self):
         (self.modern / "conflict.json").write_text('{"api":32,"api":33}')
         with self.assertRaisesRegex(AssertionError, "Duplicate JSON key"):
@@ -475,15 +552,131 @@ class ModernNativeContracts(unittest.TestCase):
         self.legacy_fixture();self.proofs_fixture();self.write_junit()
         with mock.patch.object(gate.subprocess, "check_output", side_effect=[SOURCE, TREE]):
             report = gate.verify(self.baseline, self.modern, self.xml)
-        self.assertEqual(269, report["total_required_png_files"])
+        self.assertEqual("0.14.0", report["version_name"])
+        self.assertEqual(23, report["version_code"])
+        self.assertEqual(27, report["required_real_png_files"])
+        self.assertEqual(272, report["total_required_png_files"])
         self.assertEqual(40, report["native_junit"]["tests"])
         (self.modern / "unexpected-diagnostic.png").write_bytes(self.base_png)
-        with mock.patch.object(gate.subprocess, "check_output", side_effect=[SOURCE, TREE]), self.assertRaisesRegex(AssertionError, "exactly24"):
+        with mock.patch.object(gate.subprocess, "check_output", side_effect=[SOURCE, TREE]), self.assertRaisesRegex(AssertionError, "exactly27"):
             gate.verify(self.baseline, self.modern, self.xml)
         (self.modern / "unexpected-diagnostic.png").unlink()
         extra=self.modern / "duplicate";extra.mkdir();(extra / next(iter(gate.REQUIRED))).write_bytes(self.base_png)
-        with mock.patch.object(gate.subprocess, "check_output", side_effect=[SOURCE, TREE]), self.assertRaisesRegex(AssertionError, "exactly24"):
+        with mock.patch.object(gate.subprocess, "check_output", side_effect=[SOURCE, TREE]), self.assertRaisesRegex(AssertionError, "exactly27"):
             gate.verify(self.baseline, self.modern, self.xml)
+
+    def test_both_widget_images_and_widget_proof_are_required(self):
+        self.legacy_fixture();proofs=self.proofs_fixture();self.write_junit()
+        for frame in sorted(gate.WIDGET):
+            path=self.modern/frame;data=path.read_bytes();path.unlink()
+            with self.subTest(frame=frame), mock.patch.object(gate.subprocess, "check_output", side_effect=[SOURCE, TREE]), \
+                 self.assertRaisesRegex(AssertionError, "exactly27"):
+                gate.verify(self.baseline, self.modern, self.xml)
+            path.write_bytes(data)
+        proof=proofs["modern-presentation-native.json"];proof.pop("widget_configuration")
+        with self.assertRaisesRegex(AssertionError, "preview proof missing"):
+            gate.presentation(proof, {p.name:p for p in self.modern.glob("*.png")})
+
+    def test_widget_capture_hash_is_bound_to_its_presentation_proof(self):
+        self.legacy_fixture();self.proofs_fixture();self.write_junit()
+        path=self.modern/"modern-presentation-native.json";proof=json.loads(path.read_text())
+        proof["captures"]["modern-nex-widget-light-he.png"]["sha256"]="0"*64;path.write_text(json.dumps(proof))
+        with mock.patch.object(gate.subprocess, "check_output", side_effect=[SOURCE, TREE]), self.assertRaisesRegex(AssertionError, "saved bytes differ"):
+            gate.verify(self.baseline, self.modern, self.xml)
+
+    def test_widget_preview_requires_real_foreground_and_honest_unbound_scope(self):
+        self.proofs_fixture();images={p.name:p for p in self.modern.glob("*.png")}
+        changes = (("activity", "com.dacaller.app.ListDispatchHostActivity"), ("widget_id", 0), ("intent_widget_id", False),
+                   ("widget_provider_info", "bound"), ("layout_direction", "LTR"), ("language", "en"), ("amoled", True),
+                   ("frame", "modern-recents-inline-light-en.png"))
+        for key, invalid in changes:
+            with self.subTest(key=key), self.assertRaises(AssertionError):
+                proof=widget_configuration_fixture();proof["observations"][0][key]=invalid;gate.widget_configuration(proof, images)
+        for key, invalid in (("scope", "RemoteViews fixture"), ("launcher_host_binding", "PASS"), ("preferences_restored", False), ("observations", [])):
+            with self.subTest(key=key), self.assertRaises(AssertionError):
+                proof=widget_configuration_fixture();proof[key]=invalid;gate.widget_configuration(proof, images)
+        for key, invalid in (("component", "com.dacaller.app/.MainActivity"), ("resumed_record", "unrecorded"),
+                             ("top_resumed", False), ("native_application_window_visible", False), ("window_id", 18)):
+            with self.subTest(key=key), self.assertRaises(AssertionError):
+                proof=widget_configuration_fixture();proof["observations"][0]["foreground"][key]=invalid;gate.widget_configuration(proof, images)
+
+    def test_widget_targets_fonts_and_actual_text_layout_cannot_be_weakened(self):
+        self.proofs_fixture();images={p.name:p for p in self.modern.glob("*.png")}
+        for part, key, invalid in (("back_geometry", "bounds", "[24,48][95,120]"),
+                                   ("search_geometry", "bounds", "[24,149][456,229]"),
+                                   ("heading_geometry", "native_ax_bounds", "[96,48][455,120]"),
+                                   ("root_geometry", "native_window_focus", False),
+                                   ("heading", "font_weight", 600), ("heading", "font_variation", "'wght' 600"),
+                                   ("heading", "text_size_sp", 21), ("heading", "text", "בחר"),
+                                   ("heading", "content_height_px", 50), ("heading", "lines", []),
+                                   ("search_hint", "text", "Search"), ("search_hint", "font_weight", 750),
+                                   ("search_hint", "measured_width_px", 385), ("search_hint", "baseline_px", 49),
+                                   ("search_hint", "font_top_px", float("nan"))):
+            with self.subTest(part=part, key=key), self.assertRaises(AssertionError):
+                proof=widget_configuration_fixture();proof["observations"][0][part][key]=invalid;gate.widget_configuration(proof, images)
+        for key, invalid in (("end_utf16", 3), ("start_utf16", 1), ("ellipsis_count", 1), ("right_px", 350), ("bottom_px", 55)):
+            with self.subTest(line_key=key), self.assertRaises(AssertionError):
+                proof=widget_configuration_fixture();proof["observations"][0]["heading"]["lines"][0][key]=invalid;gate.widget_configuration(proof, images)
+
+    def test_widget_live_and_saved_colors_require_nex_day_and_true_amoled_black(self):
+        self.proofs_fixture();images={p.name:p for p in self.modern.glob("*.png")}
+        for index in range(2):
+            for key in ("background_argb", "surface_argb", "heading_argb", "search_argb", "hint_argb", "status_bar_argb", "navigation_bar_argb"):
+                with self.subTest(index=index, key=key), self.assertRaisesRegex(AssertionError, "live color differs"):
+                    proof=widget_configuration_fixture();proof["observations"][index][key]+=1;gate.widget_configuration(proof, images)
+        for frame in sorted(gate.WIDGET):
+            path=images[frame];original=path.read_bytes();path.write_bytes(self.base_png)
+            with self.subTest(frame=frame), self.assertRaisesRegex(AssertionError, "actual saved PNG"):
+                gate.widget_configuration(widget_configuration_fixture(), images)
+            path.write_bytes(original)
+
+    def test_widget_preview_rejects_selection_input_provider_changes_and_mutation(self):
+        self.proofs_fixture();images={p.name:p for p in self.modern.glob("*.png")}
+        for key, invalid in (("selection_actions", 1), ("native_pointer_inputs", 1), ("provider_writes_requested", 1),
+                             ("provider_change_notifications", 1), ("selection_actions", False), ("preferences_unchanged", False),
+                             ("telecom_call_unchanged", False), ("finished", False)):
+            with self.subTest(key=key, invalid=invalid), self.assertRaises(AssertionError):
+                proof=widget_configuration_fixture();proof["observations"][0][key]=invalid;gate.widget_configuration(proof, images)
+
+    def test_nex_island_real_image_and_owned_call_proof_are_required(self):
+        self.legacy_fixture();proofs=self.proofs_fixture();self.write_junit()
+        images={p.name:p for p in self.modern.glob("*.png")};gate.nex_island(nex_island_fixture(), "first-owned-token", images)
+        path=images[gate.NEX_ISLAND];data=path.read_bytes();path.unlink()
+        with mock.patch.object(gate.subprocess, "check_output", side_effect=[SOURCE, TREE]), self.assertRaisesRegex(AssertionError, "exactly27"):
+            gate.verify(self.baseline, self.modern, self.xml)
+        path.write_bytes(data);proof=proofs["modern-island-native.json"];proof.pop("nex_active")
+        with self.assertRaisesRegex(AssertionError, "active Telecom island proof missing"):
+            gate.island(proof, images)
+
+    def test_nex_island_cannot_substitute_preview_token_state_style_or_foreground(self):
+        self.proofs_fixture();images={p.name:p for p in self.modern.glob("*.png")}
+        for key, invalid in (("frame", "modern-island-dragged.png"), ("style_id", "apple"), ("language", "en"), ("layout_direction", "LTR"),
+                             ("data_origin", "synthetic preview"), ("token", "second-owned-token"), ("bound_view_token", "unbound"),
+                             ("call_state", 2), ("bound_view_state", False), ("number", "0500000000"), ("extra_modem_commands", 1),
+                             ("same_owned_call", False), ("single_owned_surface", False), ("preferences_restored", False),
+                             ("previous_layout_restored", False), ("restored_bounds", "[45,49][435,181]"), ("view_alpha", 0.35),
+                             ("body_top_argb", signed((20, 20, 20))), ("accent_argb", signed((0, 255, 0)))):
+            with self.subTest(key=key), self.assertRaises(AssertionError):
+                proof=nex_island_fixture();proof[key]=invalid;gate.nex_island(proof, "first-owned-token", images)
+        for key, invalid in (("component", "com.dacaller.app/.ListDispatchHostActivity"), ("resumed_record", "unrecorded"),
+                             ("top_resumed", False), ("native_application_window_visible", False), ("window_id", 20)):
+            with self.subTest(foreground=key), self.assertRaises(AssertionError):
+                proof=nex_island_fixture();proof["foreground"][key]=invalid;gate.nex_island(proof, "first-owned-token", images)
+        proof=nex_island_fixture();proof["geometry"]["native_ax_bounds"]="[45,48][434,180]"
+        with self.assertRaisesRegex(AssertionError, "AX bounds"):
+            gate.nex_island(proof, "first-owned-token", images)
+
+    def test_nex_island_palette_samples_are_bound_to_saved_compositor_bytes(self):
+        self.proofs_fixture();images={p.name:p for p in self.modern.glob("*.png")}
+        proof=nex_island_fixture();proof["background_samples"][0]["argb"]+=1
+        with self.assertRaisesRegex(AssertionError, "actual saved PNG"):
+            gate.nex_island(proof, "first-owned-token", images)
+        proof=nex_island_fixture();proof["background_samples"][0]["y"]=60
+        with self.assertRaisesRegex(AssertionError, "top padding"):
+            gate.nex_island(proof, "first-owned-token", images)
+        images[gate.NEX_ISLAND].write_bytes(self.base_png)
+        with self.assertRaisesRegex(AssertionError, "actual saved PNG"):
+            gate.nex_island(nex_island_fixture(), "first-owned-token", images)
 
 
 if __name__ == "__main__":

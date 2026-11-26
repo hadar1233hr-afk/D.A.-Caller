@@ -69,7 +69,7 @@ final class SettingsScreen {
   scroll.setBackgroundColor(bg);scroll.setFillViewport(true);
   root=column();root.setId(ROOT_ID);root.setTag(this);
   root.setPadding(dp(13),dp(14),dp(13),dp(24));scroll.addView(root);
-  TextView headline=text("התאמה אישית",23,true,ink);
+  TextView headline=text("התאמה אישית",22,true,ink);
   root.addView(headline,new LinearLayout.LayoutParams(-1,dp(40)));
   TextView sub=text("כל ההגדרות נשמרות במכשיר",11,false,subtle);
   root.addView(sub,new LinearLayout.LayoutParams(-1,dp(27)));
@@ -362,7 +362,7 @@ final class SettingsScreen {
   final String key="settings_group_open_"+sectionNumber++;
   LinearLayout header=row();
   header.setPadding(dp(15),dp(3),dp(12),dp(3));
-  header.setBackground(card(surface,24));
+  header.setBackground(card(surface,20));
   header.setMinimumHeight(dp(57));
   LinearLayout.LayoutParams hp=new LinearLayout.LayoutParams(-1,-2);
   hp.topMargin=dp(12);
@@ -384,8 +384,8 @@ final class SettingsScreen {
  }
  private void cardStart(){
   card=column();
-  GradientDrawable surfaceShape=card(surface,24);
-  surfaceShape.setStroke(dp(1),dark?0xFF343434:0xFFE9E7E0);
+  GradientDrawable surfaceShape=card(surface,20);
+  surfaceShape.setStroke(dp(1),divider);
   card.setBackground(surfaceShape);
   card.setPadding(dp(6),dp(8),dp(6),dp(8));
   LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(-1,-2);

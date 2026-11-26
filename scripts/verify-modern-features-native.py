@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Additive0.13 native gate: original245 frames AND24 new real compositor frames.
+"""Additive0.14 native gate: original245 frames AND27 real compositor frames.
 
 This gate does not authorize publication/signing or relabel preview fixtures as
 Telecom proof. It requires all original gate reports, actual current-source
@@ -22,6 +22,8 @@ import zlib
 PRESENTATION = {f"modern-{part}-{suffix}.png" for part in (
     "recents-inline", "bottom-dialpad", "icons-all-nine", "wine-controls")
     for suffix in ("light-en", "dark-he")}
+WIDGET = {"modern-nex-widget-light-he.png", "modern-nex-widget-amoled-en.png"}
+PRESENTATION |= WIDGET
 BACKUP = {f"modern-{part}.png" for part in (
     "backup-options-off", "backup-options-on", "archive-restore-off",
     "archive-restore-on", "archive-merged")}
@@ -29,6 +31,8 @@ ISLAND = {f"modern-island-{part}.png" for part in (
     "dragged", "hide-home", "restore-home", "status-external", "status-inapp",
     "below-inapp", "composition-background", "opacity-0", "opacity-35",
     "opacity-100", "new-call-shown")}
+NEX_ISLAND = "modern-nex-island-active-he.png"
+ISLAND.add(NEX_ISLAND)
 REQUIRED = PRESENTATION | BACKUP | ISLAND
 PROOFS = {"modern-presentation-native.json": PRESENTATION,
           "modern-backup-native.json": BACKUP,
@@ -193,7 +197,7 @@ def junit(root, sources):
     return {"tests": len(actual), "failures": 0, "errors": 0, "skipped": 0, "files_sha256": hashes}
 
 
-def presentation(proof):
+def presentation(proof, images):
     flags(proof, ("no_floating_dialpad", "all_inline_actions_retained", "back_collapses_without_dial"))
     observations = proof.get("observations", [])
     require([(o.get("theme"), o.get("language")) for o in observations] == [("light", "en"), ("dark", "he")], "Both native theme/language cases required")
@@ -210,6 +214,7 @@ def presentation(proof):
                 and value["switch_before"] != value["switch_after"], "Native wine Switch did not toggle")
         left, top, right, bottom = rectangle(value.get("switch_bounds"))
         require(right - left >= 72 and bottom - top >= 72, "Native Switch is smaller than48dp")
+    widget_configuration(proof.get("widget_configuration"), images)
 
 
 def backup(proof):
@@ -254,6 +259,94 @@ def native_geometry(value, expected):
             "Actual native geometry needs a window and two stable samples")
     flags(value, ("view_window_focus", "native_window_focus"))
     return value["window_id"]
+
+
+def widget_configuration(proof, images):
+    require(type(proof) is dict, "Actual WidgetConfigure configuration preview proof missing")
+    require(proof.get("scope") == "Actual WidgetConfigure Activity; synthetic unbound ID configuration preview"
+            and proof.get("launcher_host_binding") == "NOT_TESTED", "Synthetic widget preview cannot claim launcher-host binding")
+    flags(proof, ("preferences_restored",))
+    observations = proof.get("observations", [])
+    require(type(observations) is list and [(v.get("theme"), v.get("language")) for v in observations]
+            == [("light", "he"), ("amoled", "en")], "Both actual WidgetConfigure theme/language previews required")
+    for value in observations:
+        amoled = value["theme"] == "amoled"
+        frame = "modern-nex-widget-" + ("amoled-en" if amoled else "light-he") + ".png"
+        require(value.get("frame") == frame and frame in images, "Widget preview must bind its exact compositor image")
+        require(value.get("activity") == "com.dacaller.app.WidgetConfigure" and value.get("amoled") is amoled
+                and value.get("layout_direction") == ("LTR" if amoled else "RTL")
+                and large_font(value.get("font_scale")), "Widget preview must use the actual localized production Activity")
+        require(integer(value.get("widget_id"), 2147483000) and integer(value.get("intent_widget_id"), 2147483000)
+                and value.get("widget_provider_info") == "null", "Widget preview requires explicit synthetic unbound nonINVALID ID")
+        foreground = value.get("foreground", {})
+        component = "com.dacaller.app/.WidgetConfigure"
+        require(foreground.get("component") == component and re.search(
+            r"(?:mResumedActivity|topResumedActivity).* " + re.escape(component) + r" ", str(foreground.get("resumed_record"))),
+            "Actual WidgetConfigure resumed component is missing")
+        flags(foreground, ("top_resumed", "native_application_window_visible"))
+        require(integer(foreground.get("window_id")) and foreground["window_id"] >= 0, "Actual WidgetConfigure native window missing")
+        geometry = {}
+        for name in ("root", "heading", "search", "back"):
+            record = value.get(name + "_geometry", {})
+            bounds = rectangle(record.get("bounds"))
+            require(native_geometry(record, bounds) == foreground["window_id"], "Widget views must share the actual focused window")
+            geometry[name] = bounds
+            if name != "root":
+                require(contained(geometry["root"], bounds), "Widget content must remain inside its visible root")
+        for name, minimum in (("back", 72), ("search", 81)):
+            left, top, right, bottom = geometry[name]
+            require(right - left >= 72 and bottom - top >= minimum, "Widget back/search targets must be48dp/54dp")
+        bg, surface, ink, muted = ((0xff000000, 0xff0a0a0a, 0xfff9f1e8, 0xfff2e5dd) if amoled
+                                   else (0xfff6f0e8, 0xfffffdfc, 0xff37291f, 0xff4c352a))
+        for key, color in (("background_argb", bg), ("surface_argb", surface), ("heading_argb", ink),
+                           ("search_argb", ink), ("hint_argb", muted), ("status_bar_argb", bg), ("navigation_bar_argb", bg)):
+            require(integer(value.get(key)) and -(1 << 31) <= value[key] < (1 << 31)
+                    and value[key] & 0xffffffff == color, "Widget NEX/AMOLED live color differs: " + key)
+        heading, hint = value.get("heading", {}), value.get("search_hint", {})
+        for record, text, size, weight in ((heading, "Choose a contact" if amoled else "בחר איש קשר", 22, 750),
+                                           (hint, "Search name or number" if amoled else "חיפוש שם או מספר", 16, 600)):
+            require(record.get("text") == text and finite_number(record.get("text_size_sp"))
+                    and abs(record["text_size_sp"] - size) <= 0.01 and integer(record.get("font_weight"), weight)
+                    and record.get("font_variation") == "'wght' " + str(weight), "Widget localized text/font differs")
+        for key in ("layout_width_px", "content_width_px", "content_height_px"):
+            require(integer(heading.get(key)) and heading[key] > 0, "Actual widget heading layout metrics missing")
+        require(heading["layout_width_px"] == heading["content_width_px"] <= geometry["heading"][2] - geometry["heading"][0]
+                and heading["content_height_px"] <= geometry["heading"][3] - geometry["heading"][1], "Widget heading layout exceeds visible text area")
+        lines, covered, previous_bottom = heading.get("lines", []), 0, 0
+        require(type(lines) is list and bool(lines), "Actual widget heading lines missing")
+        for line in lines:
+            require(integer(line.get("start_utf16"), covered) and integer(line.get("end_utf16")) and line["end_utf16"] > covered
+                    and integer(line.get("ellipsis_count"), 0), "Widget heading is clipped/ellipsized")
+            require(finite_number(line.get("left_px")) and finite_number(line.get("right_px"))
+                    and -1 <= line["left_px"] < line["right_px"] <= heading["layout_width_px"] + 1
+                    and integer(line.get("bottom_px")) and previous_bottom < line["bottom_px"] <= heading["content_height_px"],
+                    "Widget heading actual Layout must fit its visible bounds")
+            covered, previous_bottom = line["end_utf16"], line["bottom_px"]
+        require(covered == len(heading["text"].encode("utf-16-le")) // 2, "Widget heading must show every character")
+        for key in ("available_width_px", "baseline_px", "padding_top_px", "padding_bottom_px", "height_px"):
+            require(integer(hint.get(key)) and hint[key] >= 0, "Actual widget search layout metrics missing")
+        require(0 < hint["available_width_px"] <= geometry["search"][2] - geometry["search"][0]
+                and hint["height_px"] == geometry["search"][3] - geometry["search"][1]
+                and finite_number(hint.get("measured_width_px")) and 0 < hint["measured_width_px"] <= hint["available_width_px"]
+                and finite_number(hint.get("font_top_px")) and hint["font_top_px"] < 0
+                and finite_number(hint.get("font_bottom_px")) and hint["font_bottom_px"] > 0
+                and hint["baseline_px"] + hint["font_top_px"] >= hint["padding_top_px"] - 1
+                and hint["baseline_px"] + hint["font_bottom_px"] <= hint["height_px"] - hint["padding_bottom_px"] + 1,
+                "Widget search hint must fit the actual text width and font baseline")
+        samples = value.get("background_samples", [])
+        require(type(samples) is list and len(samples) == 5, "Widget compositor background samples missing")
+        decoded, points = png(images[frame].read_bytes(), frame, True), set()
+        for sample in samples:
+            x, y = sample.get("x"), sample.get("y")
+            require(integer(x) and integer(y) and geometry["root"][0] < x < geometry["root"][0] + 24
+                    and geometry["root"][1] < y < geometry["root"][1] + 12 and (x, y) not in points,
+                    "Widget background samples must lie in its clear native root padding")
+            require(integer(sample.get("argb")) and -(1 << 31) <= sample["argb"] < (1 << 31)
+                    and sample["argb"] & 0xffffffff == argb(decoded, x, y) == bg, "Widget background differs from actual saved PNG")
+            points.add((x, y))
+        for key in ("selection_actions", "native_pointer_inputs", "provider_writes_requested", "provider_change_notifications"):
+            require(integer(value.get(key), 0), "Widget preview must remain read-only without selection/input/provider changes: " + key)
+        flags(value, ("preferences_unchanged", "telecom_call_unchanged", "finished"))
 
 
 def signed_rectangle(value):
@@ -452,6 +545,7 @@ def island(proof, images):
     require(proof.get("default_dialer") == "com.dacaller.app" and "Android Telecom -> production PhoneSessionService" in proof.get("data_origin", ""), "Actual production Telecom binding missing")
     first, second = proof.get("first_token"), proof.get("second_token")
     require(isinstance(first, str) and first and isinstance(second, str) and second and first != second, "Two distinct real call tokens required")
+    nex_island(proof.get("nex_active"), first, images)
     launcher = proof.get("launcher_package")
     require(isinstance(launcher, str) and re.fullmatch(r"[A-Za-z][A-Za-z0-9_]*(?:\.[A-Za-z][A-Za-z0-9_]*)+", launcher)
             and launcher not in {"com.dacaller.app", "com.android.systemui"}, "Resolved native Home package missing")
@@ -519,6 +613,49 @@ def island(proof, images):
         require(difference > 80, "Samples cannot distinguish actual underlying content and opaque capsule")
 
 
+def nex_island(value, token, images):
+    require(type(value) is dict, "Actual NEX active Telecom island proof missing")
+    require(value.get("frame") == NEX_ISLAND and NEX_ISLAND in images and value.get("style_id") == "nex"
+            and value.get("language") == "he" and value.get("layout_direction") == "RTL", "NEX island must bind its Hebrew actual compositor image/style")
+    require(value.get("data_origin") == "Android Telecom -> production PhoneSessionService -> live CallIslandView"
+            and value.get("token") == value.get("bound_view_token") == token and bool(token)
+            and integer(value.get("call_state"), 4) and integer(value.get("bound_view_state"), 4)
+            and value.get("number") == "0500099971", "NEX island must retain the same owned ACTIVE Telecom call and live view token")
+    flags(value, ("same_owned_call", "single_owned_surface", "preferences_restored", "previous_layout_restored"))
+    require(integer(value.get("extra_modem_commands"), 0), "NEX style selection must not add modem/dial commands")
+    require(rectangle(value.get("previous_bounds")) == rectangle(value.get("restored_bounds")), "NEX style preview must restore previous live layout")
+    foreground = value.get("foreground", {})
+    component = "com.dacaller.app/.MainActivity"
+    require(foreground.get("component") == component and re.search(r"(?:mResumedActivity|topResumedActivity).* " + re.escape(component) + r" ", str(foreground.get("resumed_record"))),
+            "NEX island actual production foreground Activity missing")
+    flags(foreground, ("top_resumed", "native_application_window_visible"))
+    require(integer(foreground.get("window_id")) and foreground["window_id"] >= 0, "NEX foreground native window missing")
+    geometry = value.get("geometry", {})
+    bounds = rectangle(geometry.get("bounds"))
+    require(native_geometry(geometry, bounds) == foreground["window_id"], "NEX island must occupy its actual focused production window")
+    for key in ("view_alpha", "scale_x", "scale_y"):
+        require(finite_number(value.get(key)) and value[key] == 1, "NEX island must have stable unscaled opaque view geometry")
+    for key, color in (("body_top_argb", 0xff342720), ("body_bottom_argb", 0xff241a17), ("edge_argb", 0xff634d43),
+                       ("accent_argb", 0xfff6a773), ("timer_argb", 0xfff6a773)):
+        require(integer(value.get(key)) and -(1 << 31) <= value[key] < (1 << 31)
+                and value[key] & 0xffffffff == color, "NEX island actual view palette differs: " + key)
+    samples = value.get("background_samples", [])
+    require(type(samples) is list and len(samples) == 5, "NEX island real compositor samples missing")
+    decoded, points = png(images[NEX_ISLAND].read_bytes(), NEX_ISLAND, True), set()
+    for sample in samples:
+        x, y = sample.get("x"), sample.get("y")
+        require(integer(x) and integer(y), "NEX island sample coordinates must be integers")
+        require(bounds[0] + 24 < x < bounds[2] - 24 and bounds[1] + 1 < y < bounds[1] + 6 and (x, y) not in points,
+                "NEX island samples must lie in clear central top padding")
+        require(integer(sample.get("argb")) and -(1 << 31) <= sample["argb"] < (1 << 31)
+                and sample["argb"] & 0xffffffff == argb(decoded, x, y), "NEX island sample differs from actual saved PNG")
+        pixel = sample["argb"] & 0xffffffff
+        for shift in (16, 8, 0):
+            color, top, bottom = (v >> shift & 255 for v in (pixel, 0xff342720, 0xff241a17))
+            require(min(top, bottom) - 1 <= color <= max(top, bottom) + 1, "NEX island saved gradient differs from actual selected palette")
+        points.add((x, y))
+
+
 def legacy(baseline, all_baseline, source, app_tree):
     images = {p.name: p for p in all_baseline}
     hashes = {}
@@ -560,7 +697,7 @@ def verify(baseline, modern, junit_root):
     legacy_reports = legacy(baseline, all_baseline, source, app_tree)
     files = [p for p in modern.rglob("*.png") if p.is_file()]
     counts = collections.Counter(p.name for p in files)
-    require(set(counts) == REQUIRED and all(v == 1 for v in counts.values()) and len(files) == 24, "Require exactly24 new real PNGs; no missing/duplicate/unknown diagnostic frame")
+    require(set(counts) == REQUIRED and all(v == 1 for v in counts.values()) and len(files) == 27, "Require exactly27 new real PNGs; no missing/duplicate/unknown diagnostic frame")
     images = {p.name: p for p in files}
     hashes = {}
     for name, path in sorted(images.items()):
@@ -569,7 +706,7 @@ def verify(baseline, modern, junit_root):
     for name, expected in PROOFS.items():
         proof = one(modern, name)
         require(integer(proof.get("api"), 33) and integer(proof.get("density_dpi"), 240) and large_font(proof.get("font_scale"))
-                and proof.get("package") == "com.dacaller.app" and proof.get("version_name") == "0.13.0" and integer(proof.get("version_code"), 22), "Wrong native package/version/configuration")
+                and proof.get("package") == "com.dacaller.app" and proof.get("version_name") == "0.14.0" and integer(proof.get("version_code"), 23), "Wrong native package/version/configuration")
         require(proof.get("physical_carrier_audio_verified") is False and proof.get("matching_key_upgrade_verified") is False, "Emulator cannot establish hardware/audio/upgrade proof")
         captures = proof.get("captures", {})
         require(set(captures) == expected, "Exact per-scenario saved captures missing: " + name)
@@ -577,18 +714,18 @@ def verify(baseline, modern, junit_root):
             require(value.get("sha256") == hashes[frame] and integer(value.get("width"), 480) and integer(value.get("height"), 854)
                     and value.get("method") == "UiAutomation.takeScreenshot", "Real compositor saved bytes differ: " + frame)
         proofs[name] = proof
-    presentation(proofs["modern-presentation-native.json"])
+    presentation(proofs["modern-presentation-native.json"], images)
     backup(proofs["modern-backup-native.json"])
     island(proofs["modern-island-native.json"], images)
     native = junit(junit_root, Path("app/src/androidTest/java/com/dacaller/app"))
     return {"source_sha": source, "app_tree": app_tree, "workflow_run_id": os.environ.get("GITHUB_RUN_ID"),
             "api": 33, "size": "480x854", "density_dpi": 240, "font_scale": 1.3,
-            "version_name": "0.13.0", "version_code": 22, "required_real_png_files": 24,
-            "original_required_png_files": 245, "total_required_png_files": 269,
+            "version_name": "0.14.0", "version_code": 23, "required_real_png_files": 27,
+            "original_required_png_files": 245, "total_required_png_files": 272,
             "native_junit": native, "legacy_reports_canonical_sha256": legacy_reports,
             "sha256": hashes, "baseline_sha256": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in all_baseline},
             "native_assertions": proofs,
-            "limits": "Fresh emulator interaction and actual production Telecom island proof. List presentation uses the explicit no-dial debug host; archive uses synthetic stored rows and isolated test-provider SAF results. No human DocumentsUI, physical JellyStar/carrier/audio/overnightDoze/matching-key upgrade proof or publication authorization."}
+            "limits": "Fresh emulator interaction and actual production Telecom island proof. List presentation uses the explicit no-dial debug host; widget configuration uses the actual WidgetConfigure Activity with a synthetic unbound preview ID, launcher-host binding NOT_TESTED; archive uses synthetic stored rows and isolated test-provider SAF results. No human DocumentsUI, physical JellyStar/carrier/audio/overnightDoze/matching-key upgrade proof or publication authorization."}
 
 
 def main():
@@ -597,7 +734,7 @@ def main():
     results = Path(sys.argv[3] if len(sys.argv) > 3 else "app/build/outputs/androidTest-results")
     result = verify(baseline, modern, results)
     (modern / "modern-features-verification.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
-    print("Verified40 authentic API33 native cases, original245frames and24additive real compositor frames (269total)")
+    print("Verified40 authentic API33 native cases, original245frames and27additive real compositor frames (272total)")
 
 
 if __name__ == "__main__":

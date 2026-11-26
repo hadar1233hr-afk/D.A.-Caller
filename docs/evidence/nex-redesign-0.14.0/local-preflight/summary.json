@@ -1,0 +1,63 @@
+{
+  "status": "LOCAL_PREFLIGHT_AND_INDEPENDENT_CODE_REVIEWS_PASS",
+  "observed_at_utc": "2026-11-26T00:15:26.820221+00:00",
+  "branch": "design/nex-caller-0.14",
+  "pull_request": 7,
+  "base_commit": "619139268be9d5d00b7f892f682d8eb3473ba8ba",
+  "staged_app_tree": "7aa469df7e34eda9568b5adc92a56795f3fdf2fd",
+  "version_name": "0.14.0",
+  "version_code": 23,
+  "actual_unique_host_methods": 467,
+  "actual_host_classes": 45,
+  "host_failures": 0,
+  "host_errors": 0,
+  "host_skipped": 0,
+  "debug_apk_build": "PASS",
+  "android_test_apk_build": "PASS",
+  "lint_errors": 0,
+  "lint_warnings": 16,
+  "focused_modern_python_contracts": 42,
+  "source_inputs_changed_during_checks": [],
+  "original_native_methods_required": 40,
+  "original_pngs_required": 245,
+  "modern_pngs_required": 27,
+  "total_real_pngs_required": 272,
+  "original_24_modern_frames_preserved": true,
+  "native_execution": "PENDING_FRESH_EMULATOR_CI",
+  "visual_review": "PENDING_ALL272_ACTUAL_IMAGES",
+  "hardware_tested": false,
+  "matching_key_upgrade_tested": false,
+  "publication_allowed": false,
+  "owner_014_publication_exception_approval_received": false,
+  "durable_owner_signing_complete": false,
+  "notes": [
+    "Host prototype before upstream integration actually465/467PASS with2fullBusinesseslabelclippingfailures; upstreamnativePaintwidthfixpreservedfullassertions, all467nowPASS.",
+    "Earlier sandbox socket/home-lock bootstrapfailuresretained; local JVM testcache redirected to permittedworkspace, noCI/signingguard change.",
+    "Production/localAPKnot finalnativepublicationcandidate; exactnative-testedCIAPKmust be retained, no publication-time rebuild/resign.",
+    "NEXprivate source was read only; AIdeferred; frozenbusinessdata/separateproducts/defaultsigning andoldreleases unchanged."
+  ],
+  "authentic_raw_logs_zip": {
+    "file": "local-build-logs.zip",
+    "sha256": "52a5c870db96f7bf7e3b6f030404f7f9d5de1840d878c1c254b4b91487a0615c",
+    "members": {
+      "full-local-checks.log": {
+        "bytes": 4489,
+        "sha256": "9ca401fbb789e97c5829f5e939b94f248e9fbb667c7031fd731c262768d1d560"
+      },
+      "host-build-corrected.log": {
+        "bytes": 4309,
+        "sha256": "6e7062015e31176f23bb23c1f5c0c58fd38261c868f3e2d16c9d1ab0c0a1af7f"
+      },
+      "host-build-merged.log": {
+        "bytes": 3981,
+        "sha256": "86402015b4a046e44ba8c754ab64ea6c61a5d779c831a6ac509088f46089a02a"
+      },
+      "native-compile-lint.log": {
+        "bytes": 4283,
+        "sha256": "b70b5e111d990ca7919dc69e507cc21ecba10c6d96e1f6922baa171e3bf1e1a6"
+      }
+    },
+    "crc": "PASS",
+    "note": "Raw log bytes retained verbatim in ZIP, including original Gradle trailing whitespace."
+  }
+}

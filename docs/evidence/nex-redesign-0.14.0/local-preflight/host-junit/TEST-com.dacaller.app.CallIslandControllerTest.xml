@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.CallIslandControllerTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-11-26T00:07:57" hostname="3ebae333e153" time="8.515">
+  <properties/>
+  <testcase name="aReadableStatusLaneRemainsAvailableButGrowingTextFallsBackAtItsPreferredWidth" classname="com.dacaller.app.CallIslandControllerTest" time="0.424"/>
+  <testcase name="appearingAndExpandingReserveSpaceWithoutLosingQueryFocusOrListAnchor" classname="com.dacaller.app.CallIslandControllerTest" time="0.463"/>
+  <testcase name="seeThroughStyleCompositesTheActualHostPageAndKeepsItsControlsOpaque" classname="com.dacaller.app.CallIslandControllerTest" time="0.407"/>
+  <testcase name="topAreaSurvivesHostPaletteAndFocusRepaintAndRestoresTheLatestHostColor" classname="com.dacaller.app.CallIslandControllerTest" time="0.15"/>
+  <testcase name="disablingAndReenablingPreferenceNeverChangesTheLiveCall" classname="com.dacaller.app.CallIslandControllerTest" time="0.374"/>
+  <testcase name="realPointerDragPersistsAClampedPositionAndRestoresUnderneathWithoutCallCommands" classname="com.dacaller.app.CallIslandControllerTest" time="0.387"/>
+  <testcase name="repeatedStartAndStopDoNotLeakServiceListeners" classname="com.dacaller.app.CallIslandControllerTest" time="0.33"/>
+  <testcase name="pageReplacementReattachesIslandWithoutResettingTheNewPage" classname="com.dacaller.app.CallIslandControllerTest" time="0.548"/>
+  <testcase name="endCallRequiresConfirmationAndCancelKeepsItRunning" classname="com.dacaller.app.CallIslandControllerTest" time="0.812"/>
+  <testcase name="cancelledAndStaleDragsDoNotSaveOrControlAReplacementCall" classname="com.dacaller.app.CallIslandControllerTest" time="0.418"/>
+  <testcase name="resizedViewportImmediatelyReclampsWidthAndScrollsOverflowOnlyWhileNeeded" classname="com.dacaller.app.CallIslandControllerTest" time="0.605"/>
+  <testcase name="topAreaWorksOnTheMinimumApiWithoutCallingNewInsetsApis" classname="com.dacaller.app.CallIslandControllerTest" time="1.07"/>
+  <testcase name="hideIsScopedToThisCallAndRestorePreferenceIsReachableWithoutChangingCall" classname="com.dacaller.app.CallIslandControllerTest" time="0.648"/>
+  <testcase name="topAreaUsesOnlyNormalDecorAndRestoresStatusBarColorAndDefaultParent" classname="com.dacaller.app.CallIslandControllerTest" time="0.279"/>
+  <testcase name="delayedConfirmationForOldCallCannotEndItsReplacement" classname="com.dacaller.app.CallIslandControllerTest" time="0.712"/>
+  <testcase name="endedCallRemovesIslandAndRestoresOriginalAppMargins" classname="com.dacaller.app.CallIslandControllerTest" time="0.259"/>
+  <testcase name="narrowStatusLaneKeepsPreferredWidthAndReadableIdentityBelowIconsWithoutChangingSavedPositions" classname="com.dacaller.app.CallIslandControllerTest" time="0.213"/>
+  <testcase name="stopAndRestartPreserveCallAndRestoreAppLayout" classname="com.dacaller.app.CallIslandControllerTest" time="0.413"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+Invalid ID 0x00000000.
+]]></system-err>
+</testsuite>

@@ -15,10 +15,18 @@ public final class NexPaletteTest {
     contrast(NexPalette.ink(dark),bg);
     contrast(NexPalette.muted(dark),bg);
     contrast(NexPalette.primaryText(dark),bg);
+    contrast(AppAppearance.gold(dark),bg);
+    contrast(dark?0xFFE4E4E4:0xFF616161,bg);
    }
    contrast(NexPalette.onPrimary(dark),NexPalette.primary(dark));
    contrast(NexPalette.onCall(dark),NexPalette.call(dark));
   }
  }
- @Test public void amoledRetainsBlackBackground(){assertEquals(0xFF000000,NexPalette.background(true,true));}
+ @Test public void amoledRetainsBlackBackground(){
+  assertEquals(0xFF000000,NexPalette.background(true,true));
+  assertEquals(0xFF000000,NexPalette.background(false,true));
+  assertEquals(0xFF0A0A0A,NexPalette.surface(true,true));
+  assertEquals(0xFFF6F0E8,NexPalette.background(false,false));
+  assertEquals(0xFF241A17,NexPalette.background(true,false));
+ }
 }

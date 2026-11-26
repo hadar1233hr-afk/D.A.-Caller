@@ -5,7 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,33 +41,36 @@ public final class SettingsBackupActivity extends Activity {
  static Intent intent(Context context,boolean export){return new Intent(context,SettingsBackupActivity.class).putExtra(EXPORT,export);}
  private String tr(String he,String en){return I18n.isEnglish(this)?en:he;}
  private int dp(float n){return Math.round(getResources().getDisplayMetrics().density*n);}
+ private GradientDrawable shape(int color,int radius){GradientDrawable value=new GradientDrawable();value.setColor(color);value.setCornerRadius(dp(radius));return value;}
  @Override protected void onCreate(Bundle state){
   super.onCreate(state);setResult(RESULT_CANCELED);
   SharedPreferences prefs=SettingsBackup.preferences(this);boolean dark=prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);
   dialogTheme=dark?R.style.AppDialogDark:R.style.AppDialogLight;
   int background=NexPalette.background(dark,prefs.getBoolean("amoled",false));
-  int ink=NexPalette.ink(dark);
+  int ink=NexPalette.ink(dark),surface=NexPalette.surface(dark,prefs.getBoolean("amoled",false)),secondary=NexPalette.muted(dark);
   getWindow().setStatusBarColor(background);getWindow().setNavigationBarColor(background);
   getWindow().getDecorView().setSystemUiVisibility(dark?0:View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
   LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setGravity(Gravity.TOP);
   root.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);
-  root.setPadding(dp(24),dp(24),dp(24),dp(24));root.setBackgroundColor(background);
+  root.setPadding(dp(16),dp(20),dp(16),dp(24));root.setBackgroundColor(background);
   ScrollView viewport=new ScrollView(this);viewport.setFillViewport(true);viewport.setBackgroundColor(background);
   viewport.addView(root,new ScrollView.LayoutParams(-1,-2));setContentView(viewport);
-  TextView title=new TextView(this);title.setText(tr("גיבוי ושחזור הגדרות","Settings backup and restore"));title.setTextSize(24);title.setTextColor(ink);AppAppearance.font(title,true);
+  TextView title=new TextView(this);title.setText(tr("גיבוי ושחזור הגדרות","Settings backup and restore"));title.setTextSize(22);title.setTextColor(ink);AppAppearance.font(title,true);
   root.addView(title,new LinearLayout.LayoutParams(-1,-2));
-  status=new TextView(this);status.setTextSize(16);status.setTextColor(ink);AppAppearance.font(status,false);status.setPadding(0,dp(18),0,dp(18));root.addView(status,new LinearLayout.LayoutParams(-1,-2));
+  status=new TextView(this);status.setTextSize(15);status.setTextColor(ink);AppAppearance.font(status,false);status.setPadding(dp(16),dp(16),dp(16),dp(16));status.setBackground(shape(surface,20));
+  LinearLayout.LayoutParams statusParams=new LinearLayout.LayoutParams(-1,-2);statusParams.topMargin=dp(16);statusParams.bottomMargin=dp(11);root.addView(status,statusParams);
   exportArchive=new CheckBox(new ContextThemeWrapper(this,dialogTheme));exportArchive.setText(tr("כלול גם רשומות מארכיון השיחות","Also include call-archive records"));exportArchive.setTextColor(ink);AppAppearance.font(exportArchive,false);
-  exportArchive.setMinHeight(dp(48));root.addView(exportArchive,new LinearLayout.LayoutParams(-1,-2));
-  exportDocument=new Button(this);exportDocument.setText(tr("בחר קובץ ושמור גיבוי","Choose file and save backup"));exportDocument.setMinHeight(dp(48));AppAppearance.font(exportDocument,true);
+  exportArchive.setMinHeight(dp(48));exportArchive.setTextSize(15);exportArchive.setPadding(dp(8),dp(8),dp(8),dp(8));exportArchive.setButtonTintList(ColorStateList.valueOf(NexPalette.primaryText(dark)));root.addView(exportArchive,new LinearLayout.LayoutParams(-1,-2));
+  exportDocument=new Button(this);exportDocument.setText(tr("בחר קובץ ושמור גיבוי","Choose file and save backup"));exportDocument.setMinHeight(dp(56));exportDocument.setAllCaps(false);exportDocument.setTextColor(NexPalette.onPrimary(dark));exportDocument.setBackground(shape(NexPalette.primary(dark),18));exportDocument.setPadding(dp(14),dp(12),dp(14),dp(12));AppAppearance.font(exportDocument,true);
   exportDocument.setOnClickListener(v->{session.includeArchiveExport=exportArchive.isChecked();session.phase=Phase.PICKING;render();chooseDocument();});
-  root.addView(exportDocument,new LinearLayout.LayoutParams(-1,-2));
-  progress=new ProgressBar(this);progress.setContentDescription(tr("מעבד קובץ","Processing file"));root.addView(progress,new LinearLayout.LayoutParams(dp(48),dp(48)));
-  close=new Button(this);close.setText(tr("סגור","Close"));close.setMinHeight(dp(48));AppAppearance.font(close,false);close.setOnClickListener(v->finish());root.addView(close,new LinearLayout.LayoutParams(-1,-2));
+  LinearLayout.LayoutParams exportParams=new LinearLayout.LayoutParams(-1,-2);exportParams.topMargin=dp(11);root.addView(exportDocument,exportParams);
+  progress=new ProgressBar(this);progress.setContentDescription(tr("מעבד קובץ","Processing file"));progress.setIndeterminateTintList(ColorStateList.valueOf(NexPalette.primaryText(dark)));root.addView(progress,new LinearLayout.LayoutParams(dp(48),dp(48)));
+  close=new Button(this);close.setText(tr("סגור","Close"));close.setMinHeight(dp(48));close.setAllCaps(false);close.setTextColor(NexPalette.primaryText(dark));close.setBackground(shape(NexPalette.soft(dark),18));close.setPadding(dp(14),dp(10),dp(14),dp(10));AppAppearance.font(close,false);close.setOnClickListener(v->finish());
+  LinearLayout.LayoutParams closeParams=new LinearLayout.LayoutParams(-1,-2);closeParams.topMargin=dp(11);root.addView(close,closeParams);
   TextView note=new TextView(this);note.setText(tr(
     "הקובץ כולל הגדרות, מועדפים והערות שיחה מקומיות. רק אם תבחר בכך, ייכללו גם כל רשומות הארכיון השמורות, עם מספרים וזמני שיחות. הקובץ פרטי ולא מוצפן: שמור אותו במקום מהימן. אנשי קשר, תמונות, הקלטות ויומן השיחות של Android אינם נכללים ואינם נמחקים. הרשאות ומיקומי ווידג׳טים אינם ניתנים להעברה. ניתן לשמור במכשיר ללא אינטרנט.",
     "The file includes settings, favorites and local call notes. Only when selected, it also includes all stored archive records with phone numbers and call times. The file is private and unencrypted: save it somewhere trusted. Contacts, photos, recordings and Android call history are not included or deleted. Permissions and widget placements cannot be transferred. Save locally to work offline."));
-  note.setTextSize(14);note.setTextColor(ink);AppAppearance.font(note,false);note.setPadding(0,dp(18),0,dp(18));root.addView(note,new LinearLayout.LayoutParams(-1,-2));
+  note.setTextSize(14);note.setTextColor(secondary);AppAppearance.font(note,false);note.setPadding(dp(4),dp(18),dp(4),dp(18));root.addView(note,new LinearLayout.LayoutParams(-1,-2));
   Object retained=getLastNonConfigurationInstance();
   if(retained instanceof Session)session=(Session)retained;
   else{

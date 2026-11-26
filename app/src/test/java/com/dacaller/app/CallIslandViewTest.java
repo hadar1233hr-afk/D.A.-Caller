@@ -223,6 +223,54 @@ public class CallIslandViewTest {
   assertNotEquals(0xFF4386BC,canvas.getPixel(island.getWidth()/2,island.getHeight()/2));canvas.recycle();
  }
 
+ @Test public void themeAndAccentChangesRepaintTheSameOwnedCallWithoutDispatchingActions(){
+  CallIslandState current=active("appearance");island.bind(current,false);layout(320);
+  View caller=required("island-caller");island.bind(current,false);assertSame(caller,required("island-caller"));
+  prefs.edit().putBoolean("dark",true).commit();island.bind(current,false);layout(320);
+  assertNotSame(caller,required("island-caller"));
+  prefs.edit().putString("island_style","transparent").putString("accent","gold").commit();island.bind(current,false);layout(320);
+  TextView gold=(TextView)required("island-timer");int previous=gold.getCurrentTextColor();
+  prefs.edit().putString("accent","silver").commit();island.bind(current,false);layout(320);
+  TextView silver=(TextView)required("island-timer");assertNotSame(gold,silver);assertNotEquals(previous,silver.getCurrentTextColor());
+  assertEquals(0xFFE0E0E0,silver.getCurrentTextColor());assertTrue(listener.actions.isEmpty());
+ }
+ @Test public void amoledRepaintsEveryOpaqueStyleWithActualBlackBackground(){
+  for(String style:new String[]{"apple","glass","emerald"}){
+   prefs.edit().putString("island_style",style).putBoolean("amoled",false).commit();island.bind(active("amoled"),false);layout(320);
+   View previous=required("island-caller");assertNotEquals(android.graphics.Color.BLACK,drawSurfacePixel());
+   prefs.edit().putBoolean("amoled",true).commit();island.bind(active("amoled"),false);layout(320);
+   assertNotSame(previous,required("island-caller"));assertEquals(android.graphics.Color.BLACK,drawSurfacePixel());
+  }
+  assertTrue(listener.actions.isEmpty());
+ }
+ @Test public void actualNexCallControlsKeepContrastingGlyphsWithoutShrinkingTargets(){
+  for(String style:new String[]{"apple","glass","emerald","transparent"}){
+   prefs.edit().putString("island_style",style).commit();island.bind(active("contrast"),true);layout(320);
+   for(String action:new String[]{"MUTE_ON","SPEAKER_ON","HOLD","END"}){
+    ViewGroup slot=(ViewGroup)required("island-action-"+action);touchTargetFits(slot);
+    ViewGroup tile=(ViewGroup)slot.getChildAt(0);android.graphics.drawable.GradientDrawable surface=(android.graphics.drawable.GradientDrawable)tile.getBackground();
+    android.widget.ImageView glyph=(android.widget.ImageView)tile.getChildAt(0);
+    int tint=drawGlyphInk(glyph);
+    assertTrue("Legible call glyph in "+style+"/"+action,contrast(tint,surface.getColor().getDefaultColor())>=4.5);
+   }
+  }
+  assertTrue(listener.actions.isEmpty());
+ }
+ private int drawGlyphInk(View glyph){
+  android.graphics.Bitmap image=android.graphics.Bitmap.createBitmap(glyph.getWidth(),glyph.getHeight(),android.graphics.Bitmap.Config.ARGB_8888);
+  glyph.draw(new android.graphics.Canvas(image));int best=0;
+  for(int y=0;y<image.getHeight();y++)for(int x=0;x<image.getWidth();x++){int pixel=image.getPixel(x,y);if(android.graphics.Color.alpha(pixel)>android.graphics.Color.alpha(best))best=pixel;}
+  image.recycle();assertTrue("Actual call glyph has visible ink",android.graphics.Color.alpha(best)>200);return best|0xFF000000;
+ }
+ private int drawSurfacePixel(){
+  android.graphics.Bitmap image=android.graphics.Bitmap.createBitmap(island.getWidth(),island.getHeight(),android.graphics.Bitmap.Config.ARGB_8888);
+  android.graphics.Canvas canvas=new android.graphics.Canvas(image);island.getBackground().setBounds(0,0,image.getWidth(),image.getHeight());island.getBackground().draw(canvas);
+  int color=image.getPixel(image.getWidth()/2,image.getHeight()/2);image.recycle();return color;
+ }
+ private double contrast(int first,int second){double a=luminance(first),b=luminance(second);return (Math.max(a,b)+.05)/(Math.min(a,b)+.05);}
+ private double luminance(int color){double sum=0;int[] parts={android.graphics.Color.red(color),android.graphics.Color.green(color),android.graphics.Color.blue(color)};double[] weights={.2126,.7152,.0722};
+  for(int i=0;i<parts.length;i++){double channel=parts[i]/255.0;sum+=weights[i]*(channel<=.04045?channel/12.92:Math.pow((channel+.055)/1.055,2.4));}return sum;}
+
  @Test public void overflowingControlsScrollWithoutDraggingOrCallingWhileTheHeaderStillDrags(){
   listener.movable=true;content.removeView(island);
   android.widget.ScrollView scroll=new android.widget.ScrollView(activity);content.addView(scroll,new FrameLayout.LayoutParams(-1,dp(130)));

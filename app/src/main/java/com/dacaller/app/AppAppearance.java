@@ -61,10 +61,10 @@ final class AppAppearance {
  private static void dialogFonts(View view,int title){
   if(view instanceof TextView){
    TextView text=(TextView)view;Typeface old=text.getTypeface();
-   // Native action buttons and choice rows may inherit bold platform fonts.
-   // Keep these readable at regular 600; preserve explicit title and other heading emphasis.
+   // Native action buttons and choice rows retain the regular600 role.
    boolean control=text instanceof android.widget.Button||text instanceof android.widget.CheckedTextView;
-   boolean strong=view.getId()==title&&title!=0||!control&&old!=null&&(old.isBold()||Build.VERSION.SDK_INT>=28&&old.getWeight()>=650);
+   boolean strong=view.getId()==title&&title!=0||!control&&old!=null&&
+     (Build.VERSION.SDK_INT>=28?old.getWeight()>=700:old.isBold());
    // A global layout can follow our first font change; skip views whose applied
    // Typeface is still current, so observation cannot cause a relayout loop.
    if(old==null||text.getTag(R.id.appearance_dialog_font)!=old){font(text,strong);text.setTag(R.id.appearance_dialog_font,text.getTypeface());}
@@ -74,7 +74,7 @@ final class AppAppearance {
   }
  }
  /** The light shade meets ordinary-text contrast on our light cards. */
- static int gold(boolean dark){return dark?0xFFF5CB63:0xFF85620A;}
+ static int gold(boolean dark){return dark?0xFFF5CB63:0xFF805D08;}
  private static int dp(Context c,float value){return Math.round(c.getResources().getDisplayMetrics().density*value);}
  private static GradientDrawable capsule(Context c,int color,int stroke,int width,int height){
   GradientDrawable shape=new GradientDrawable();shape.setColor(color);shape.setCornerRadius(dp(c,height/2f));

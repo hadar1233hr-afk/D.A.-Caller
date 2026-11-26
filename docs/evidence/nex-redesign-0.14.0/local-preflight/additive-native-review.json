@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-11-26T00:13:56.731188+00:00",
+  "reviewer": "nex_merge_audit",
+  "independent_java_reviewer": "widget_style_audit",
+  "verdict": "CODE_GO",
+  "scope": "Final bounded read-only review of frozen three additive native files before CI; source review only.",
+  "repository": "/workspace/D.A.-Caller-nex-014",
+  "branch": "design/nex-caller-0.14",
+  "head_commit": "619139268be9d5d00b7f892f682d8eb3473ba8ba",
+  "frozen_sha256_by_path": {
+    "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java": "99e959147482e698c57a13e6f0f7359f480f6ced1faa563d916eba182c7eb3f2",
+    "scripts/verify-modern-features-native.py": "1d10376eea4e68e8f05478d44cdcfa10cd84bdebabe61e8fad8942b1cb296eed",
+    "scripts/tests/test_da_caller_modern_native.py": "5d80b7ff5d712b69192d6040842302fca42a9b8afe9b81905c80d2641a82b7e0"
+  },
+  "matches_all_parent_supplied_frozen_hashes": true,
+  "blockers": [],
+  "checks": [
+    {
+      "id": "original_native_cases",
+      "result": "PASS_STATIC",
+      "details": "All40 exact original class/method IDs retained, no addition/removal/rename. Original Modern3 methods remain and add captures inside the existing scenarios.",
+      "original_count": 40,
+      "current_count": 40,
+      "missing": [],
+      "added": []
+    },
+    {
+      "id": "original_frames",
+      "result": "PASS_STATIC",
+      "details": "All24 original additive image names retained. Exactly3 new names are added, distributed as two presentation previews and one actual Telecom island capture; total27 additive/272 with unchanged245 baseline.",
+      "original_additive_frames": [
+        "modern-archive-merged.png",
+        "modern-archive-restore-off.png",
+        "modern-archive-restore-on.png",
+        "modern-backup-options-off.png",
+        "modern-backup-options-on.png",
+        "modern-bottom-dialpad-dark-he.png",
+        "modern-bottom-dialpad-light-en.png",
+        "modern-icons-all-nine-dark-he.png",
+        "modern-icons-all-nine-light-en.png",
+        "modern-island-below-inapp.png",
+        "modern-island-composition-background.png",
+        "modern-island-dragged.png",
+        "modern-island-hide-home.png",
+        "modern-island-new-call-shown.png",
+        "modern-island-opacity-0.png",
+        "modern-island-opacity-100.png",
+        "modern-island-opacity-35.png",
+        "modern-island-restore-home.png",
+        "modern-island-status-external.png",
+        "modern-island-status-inapp.png",
+        "modern-recents-inline-dark-he.png",
+        "modern-recents-inline-light-en.png",
+        "modern-wine-controls-dark-he.png",
+        "modern-wine-controls-light-en.png"
+      ],
+      "new_frames": [
+        "modern-nex-island-active-he.png",
+        "modern-nex-widget-amoled-en.png",
+        "modern-nex-widget-light-he.png"
+      ],
+      "total_additive": 27,
+      "total_including_original_245": 272
+    },
+    {
+      "id": "old_functional_assertions",
+      "result": "PASS_STATIC",
+      "details": "Java diff removes only the old24 profile comment and replaces the presentation proof-chain line with an additive widget field. All existing pointer/call/backup/drag/status/opacity/token assertions remain; original backup method unchanged. New NEX helper runs after below-restored frame and before the original transparency sequence."
+    },
+    {
+      "id": "widget_actual_activity",
+      "result": "PASS_STATIC",
+      "details": "Launches production WidgetConfigure with startActivitySync, explicit unbound nonINVALID ID2147483000 and pregranted READ_CONTACTS. Requires null AppWidgetProviderInfo and no current Telecom call. Two native dayHE/AMOLEDEN windows are foreground/resumed/nativeAX focused, not RemoteViews/host substitutes. Launcher-host binding explicitly NOT_TESTED."
+    },
+    {
+      "id": "widget_no_selection_or_writes",
+      "result": "PASS_STATIC",
+      "details": "New helper injects no pointer/key or selection, calls no widget select/update/provider write/dial. Verifies configured preference map unchanged after each finish, no Telecom call, no host binding and zero delivered contact/call-log observer notifications. Finally unregisters observer and restores exact full preference map. Temporary appearance preference changes are restored; no widget-selection preferences are persisted."
+    },
+    {
+      "id": "widget_geometry_text_color",
+      "result": "PASS_STATIC",
+      "details": "Existing bounds/nativeGeometry helpers require laid-out/shown/attached non-layout-requested views, matching screen/global/nativeAX rectangles, focused same native window and stable samples. Captures production root/heading/search/back,48dp back and54dp search, complete heading Layout lines/no ellipsis, exact localized text,750/600 font/variation/22sp/16sp, hint measured width+baseline/font extents, exact NEX day/true-black AMOLED surface/system-bar colors."
+    },
+    {
+      "id": "widget_lifecycle",
+      "result": "PASS_STATIC",
+      "details": "Activity launch is through instrumentation; metric/view mutations and finish use main-thread ui helper. Each launched Activity is registered in preexisting teardown list and also finished in inner finally; observer and full prefs restored in outer finally. Existing async WidgetConfigure load discards results after finishing/destroying. Full-suite READ_CONTACTS precondition is explicit; helper itself does not change grant state."
+    },
+    {
+      "id": "nex_owned_call",
+      "result": "PASS_STATIC",
+      "details": "Uses current actual ACTIVE Call/token/number0500099971; UI-thread reflection verifies bound live CallIslandState/token/state/number, actual GradientDrawable top/bottom, edge/accent/timer colors, view alpha and scales1. Confirms production MainActivity foreground/nativeAX geometry, no external duplicate, unchanged modem-command count, same call before/after. No synthetic Call/session is substituted."
+    },
+    {
+      "id": "nex_cleanup",
+      "result": "PASS_STATIC",
+      "details": "NEX helper changes island_style and language only temporarily, then finally restores exact full pref map, settles, checks same call/token and exact previous island bounds. Existing original transparent-style opacity proof runs after restoration, with its original bounds/pixel/touch assertions intact."
+    },
+    {
+      "id": "real_compositor_binding",
+      "result": "PASS_STATIC",
+      "details": "All three captures use existing UiAutomation.takeScreenshot480x854, write actual PNG bytes, record SHA256 and capture method. New verifier independently decodes saved pixels and checks five distinct points at clear root/top padding against recorded colors and actual day/AMOLED/NEX palette; no View.draw/synthetic rendering replaces native output."
+    },
+    {
+      "id": "strict_gate",
+      "result": "PASS_STATIC",
+      "details": "Requires exact27 unique known additive files, current0.14.0/code23 with strict integer types,40 exact source-enumerated authentic JUnit cases with zero failures/errors/skips/duplicates, all245 prior real files and source/app-tree/workflow-bound legacy gate reports/hashes. Per-scenario capture names/hash/dimensions/method are exact. Geometry/font/color/pixel/token/foreground/read-only flags cannot be omitted; preview cannot claim host binding. No weakening of existing gates found.",
+      "unchanged_top_level_functions": [
+        "argb",
+        "backup",
+        "contained",
+        "finite_number",
+        "flags",
+        "integer",
+        "junit",
+        "large_font",
+        "legacy",
+        "native_geometry",
+        "one",
+        "png",
+        "readable_status_surface",
+        "rectangle",
+        "require",
+        "signed_rectangle",
+        "status_bar_protection",
+        "status_surfaces",
+        "strict_object"
+      ],
+      "modified_original_top_level_functions": [
+        "island",
+        "main",
+        "presentation",
+        "verify"
+      ],
+      "new_top_level_functions": [
+        "nex_island",
+        "widget_configuration"
+      ]
+    },
+    {
+      "id": "negative_contracts_and_scope",
+      "result": "PASS_STATIC",
+      "details": "Original32 Python contract method identities retained;10 new contracts exercise missing/duplicate/unknown frames, capture hash, old/wrong/untyped version, wrong foreground/activity/ID/scope, target/AX/window/font/text/line/baseline clipping, day/AMOLED pixels, input/provider/preference mutation, NEX wrong token/state/number/style/foreground/palette/layout restoration and saved PNG samples. Fixture module and new fixture docstrings expressly label generated PNG/proof/JUnit records synthetic; temp directories and mocked source/run values stay unit fixtures and are not runtime evidence.",
+      "original_contract_count": 32,
+      "current_contract_count": 42,
+      "missing_contracts": [],
+      "new_contracts": [
+        "test_both_widget_images_and_widget_proof_are_required",
+        "test_nex_island_cannot_substitute_preview_token_state_style_or_foreground",
+        "test_nex_island_palette_samples_are_bound_to_saved_compositor_bytes",
+        "test_nex_island_real_image_and_owned_call_proof_are_required",
+        "test_previous_release_wrong_version_and_untyped_code_are_rejected",
+        "test_widget_capture_hash_is_bound_to_its_presentation_proof",
+        "test_widget_live_and_saved_colors_require_nex_day_and_true_amoled_black",
+        "test_widget_preview_rejects_selection_input_provider_changes_and_mutation",
+        "test_widget_preview_requires_real_foreground_and_honest_unbound_scope",
+        "test_widget_targets_fonts_and_actual_text_layout_cannot_be_weakened"
+      ]
+    }
+  ],
+  "native_ids": [
+    "com.dacaller.app.CallIntegrationSnapshotTest.testNativeNotificationStatesActionsAndDirectReturn",
+    "com.dacaller.app.CallIntegrationSnapshotTest.testSystemBackReturnsToLastContactQueryAnchorAndSettingsScroll",
+    "com.dacaller.app.CallIslandExternalIntegrationTest.testActualTelecomExternalIslandOnLauncherAndOtherApps",
+    "com.dacaller.app.CallIslandSnapshotTest.testAllStylesLanguagesThemesAndCallStatesAtLargeFont",
+    "com.dacaller.app.CallIslandSnapshotTest.testCommandsConfirmationPauseReturnRecreationAndContentRestore",
+    "com.dacaller.app.CallIslandSnapshotTest.testCustomizationPreviewBothThemesAndBottomControlsAtLargeFont",
+    "com.dacaller.app.CallLayoutSnapshotTest.testFiveDesignsBothThemesFourPanelsAndLargeFonts",
+    "com.dacaller.app.CallLayoutSnapshotTest.testSequentialPanelsCloseAndNeverOverlap",
+    "com.dacaller.app.CallLayoutSnapshotTest.testNoBluetoothRouteWithoutConnectedDeviceAndEnglishLayout",
+    "com.dacaller.app.CallLayoutSnapshotTest.testAudioSelectionAndMuteRemainSynchronizedInEveryDesign",
+    "com.dacaller.app.CallLayoutSnapshotTest.testLongCallerNamesInBothLanguagesAtLargeFont",
+    "com.dacaller.app.CallbackBusinessIntegrationTest.testCallbackReminderFromActualTelecomAndPrivateOsAlarm",
+    "com.dacaller.app.CallbackBusinessIntegrationTest.testUnknownActualRecentCallerOpensNewEditorWithoutDialOrWrite",
+    "com.dacaller.app.CallbackBusinessIntegrationTest.testBundledBusinessDirectoryNativeIsolationSearchAndProvenance",
+    "com.dacaller.app.CallbackBusinessIntegrationTest.testBundledBusinessManualNativeCallUsesExactSourceIdentity",
+    "com.dacaller.app.ContactScrollDispatchTest.testContactReturnPreservesStableIdentityOffsetAndQueryAfterReorder",
+    "com.dacaller.app.ContactScrollDispatchTest.testRepeatedRebuildBeforeSelectionLayoutDoesNotLoseAnchor",
+    "com.dacaller.app.ContactScrollDispatchTest.testNewTouchCancelsQueuedReturnRestore",
+    "com.dacaller.app.ContactScrollDispatchTest.testSearchFilterSurvivesDetailReturnWithoutReset",
+    "com.dacaller.app.FollowupIntegrationTest.testChangelogNativeSettingsHistoryAndBack",
+    "com.dacaller.app.FollowupIntegrationTest.testMissedCallsFromActualTelecomAndNativeNotificationActions",
+    "com.dacaller.app.ListDialDispatchTest.testContactsTopMiddleEndDialExactDisplayedNumberWithoutJump",
+    "com.dacaller.app.ListDialDispatchTest.testRecentDialExactNumberAndIndependentDetailsRegion",
+    "com.dacaller.app.ListDialDispatchTest.testRecentInlineOwnershipSurvivesRecreationAndBackWithoutMovingAnchor",
+    "com.dacaller.app.ListDialDispatchTest.testVerticalFlickStartingAtCallIconNeverCalls",
+    "com.dacaller.app.ListDialDispatchTest.testConfiguredHorizontalSwipeCallsCorrectContactOnce",
+    "com.dacaller.app.ListDialDispatchTest.testContactRowAndStarHaveIndependentActionsWithoutCalling",
+    "com.dacaller.app.ModernFeaturesIntegrationTest.testModernInlineNavigationNineIconsAndWineSwitchPointer",
+    "com.dacaller.app.ModernFeaturesIntegrationTest.testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns",
+    "com.dacaller.app.ModernFeaturesIntegrationTest.testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency",
+    "com.dacaller.app.PersonalizationSnapshotTest.testContactsAndRecentsCompactPresentationInBothLanguagesThemesAndFontSizes",
+    "com.dacaller.app.PersonalizationSnapshotTest.testHorizontalFavoritesReachAllContactsWithoutDialingAndRememberSharedCollapse",
+    "com.dacaller.app.PersonalizationSnapshotTest.testSettingsIconAndAvatarChoosersAtLargeFontInBothThemes",
+    "com.dacaller.app.PersonalizationSnapshotTest.testEveryRealLauncherAliasRemainsUniqueAndDialIntentStillResolves",
+    "com.dacaller.app.PersonalizationSnapshotTest.testAllAvatarShapesClipActualContactPhotoAndWidgetInitials",
+    "com.dacaller.app.PersonalizationSnapshotTest.testArchiveResolvesRealProviderNamePhotoAndSearchesNames",
+    "com.dacaller.app.PersonalizationSnapshotTest.testDocumentBackupRestoreRequiresConfirmationAndCancelKeepsPreferences",
+    "com.dacaller.app.SettingsInteractionTest.testLastSettingsCategoryStaysInteractiveAndCallsCategoryHasNoPhoneSymbol",
+    "com.dacaller.app.WidgetSnapshotTest.testNarrowFavoritesFitAtLargeSystemFont",
+    "com.dacaller.app.WidgetSnapshotTest.testRealHostAdditionResizeThemeEmptyAndRemoval"
+  ],
+  "methods": [
+    "Read frozen file diffs and relevant existing production/helper context.",
+    "Static AST/name inventory and byte/hash comparison only; no verifier imports, test execution, Android builds or emulator calls.",
+    "Independent second Java lifecycle/ownership review."
+  ],
+  "limitations": [
+    "CODE_GO approves source for fresh CI, not native execution or visual appearance.",
+    "The parent reports42 focused synthetic contracts PASS and467 merged host tests/debug APK PASS; this reviewer did not rerun them.",
+    "Android-test compile/lint belongs to parent sole Gradle run and was not inferred completed here.",
+    "New widget captures prove actual configuration preview only. Launcher binding, selection, installed-widget tapping and provider transactions are not established by these captures; existing widget suite remains mandatory.",
+    "Provider observer count measures delivered notifications plus the reviewed no-write control flow, not a provider transaction audit.",
+    "Fresh complete40 native/272 real PNG run and actual full visual review remain required. Physical hardware/carrier/audio/update/signing/publication claims remain unapproved."
+  ]
+}

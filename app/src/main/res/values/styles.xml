@@ -6,18 +6,26 @@
   <item name="android:alertDialogTheme">@style/AppDialogLight</item>
   <item name="android:windowActionModeOverlay">true</item>
   <item name="android:windowLightStatusBar">true</item>
-  <item name="android:statusBarColor">#F5F5F4</item>
-  <item name="android:navigationBarColor">#F5F5F4</item>
-  <item name="android:windowBackground">#F5F5F4</item>
+  <item name="android:statusBarColor">#F6F0E8</item>
+  <item name="android:navigationBarColor">#F6F0E8</item>
+  <item name="android:windowBackground">#F6F0E8</item>
  </style>
  <style name="AppTheme" parent="AppThemeBase"/>
  <style name="AppDialogLight" parent="android:style/Theme.Material.Light.Dialog.Alert">
   <item name="android:fontFamily">@font/app_round</item>
+  <item name="android:colorBackground">#FFFDFC</item>
+  <item name="android:colorBackgroundFloating">#FFFDFC</item>
+  <item name="android:textColorPrimary">#37291F</item>
+  <item name="android:textColorSecondary">#4C352A</item>
   <item name="android:colorAccent">#8F2D52</item>
   <item name="android:colorControlActivated">#8F2D52</item>
  </style>
  <style name="AppDialogDark" parent="android:style/Theme.Material.Dialog.Alert">
   <item name="android:fontFamily">@font/app_round</item>
+  <item name="android:colorBackground">#342720</item>
+  <item name="android:colorBackgroundFloating">#342720</item>
+  <item name="android:textColorPrimary">#F9F1E8</item>
+  <item name="android:textColorSecondary">#F2E5DD</item>
   <item name="android:colorAccent">#C76589</item>
   <item name="android:colorControlActivated">#C76589</item>
  </style>

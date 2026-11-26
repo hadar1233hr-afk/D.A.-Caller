@@ -34,15 +34,17 @@ final class CallThemes {
   ink=index==1?NexPalette.ink(dark):dark?0xFFE4E5E7:0xFF1D2229;muted=index==1?NexPalette.muted(dark):dark?0xFFC3C6CB:0xFF555C66;
   accent=index==1?NexPalette.primaryText(dark):dark?new int[]{0xFFB6D1FF,0xFFFFDDBD,0xFFD5E5FF,0xFFC3D8FF,0xFFF3F3EF}[index]:
    new int[]{0xFF244E8A,0xFF655042,0xFF354F71,0xFF2E4F81,0xFF30302E}[index];
-  selected=new int[]{0xFFBDD5FF,0xFFF6A773,0xFFEEF4FC,0xFFC5D8FF,0xFFECECEA}[index];
-  selectedInk=0xFF25272B;call=0xFF14784D;decline=0xFFAC343D;
+  selected=index==1?(dark?NexPalette.primary(true):NexPalette.soft(false)):
+   new int[]{0xFFBDD5FF,0xFFF6A773,0xFFEEF4FC,0xFFC5D8FF,0xFFECECEA}[index];
+  selectedInk=index==1?(dark?NexPalette.onPrimary(true):NexPalette.primaryText(false)):0xFF25272B;
+  call=index==1?NexPalette.call(dark):0xFF14784D;decline=0xFFAC343D;
   end=index==1?0xFFF46359:index==4?0xFFE44343:0xFFE84F59;
   endInk=index==1?0xFF242222:Color.WHITE;
   line=index==1?NexPalette.outline(dark):dark?0xFF526074:0xFFB8C1CF;
  }
  GradientDrawable card(Context context,int kind){
   float density=context.getResources().getDisplayMetrics().density;
-  int front=kind==2?decline:surface,back=kind==2?decline:surface2;
+  int front=kind==2?decline:surface,back=kind==2?decline:style==1?surface:surface2;
   GradientDrawable d=new GradientDrawable(GradientDrawable.Orientation.TL_BR,new int[]{front,back});
   d.setCornerRadius(radius*density);d.setStroke(Math.max(1,(int)density),kind==1?accent:kind==2?decline:line);return d;
  }

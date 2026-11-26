@@ -1,5 +1,73 @@
 # DA CALLER continuation state
 
+## Current local preflight PASS; fresh native and visual proof next — 2026-11-26 UTC
+
+Merged source now passes467uniquehost methods in45classes,0failures/errors/skips,
+local debug and Androidtest APK builds, lint0errors/16warnings and42focused
+Python modern-profile contracts. All frozen source hashes remained unchanged.
+Independent merged-source and additive-native reviews are CODEGO; authentic
+JUnit/logs/metadata/source manifests retained in
+`docs/evidence/nex-redesign-0.14.0/local-preflight`.
+
+The original40native IDs and all245+24original images remain. The strict profile
+adds2actual WidgetConfigure previews with synthetic IDs/no launcherhostbinding
+claim and1actualowned NEX-island call image:27modern/272total. These native
+captures are NOT YET EXECUTED; fresh CI Telecom and actual full272visualreview
+are required on the newly committed app tree. No publication, hardware, upgrade
+or durable-signing success is claimed. No0.14signing/publication exception was
+approved; finish concrete software proof before requesting that boundary.
+
+## NEX source integrated with latestPR7; actual host failures being fixed — 2026-11-26 UTC
+
+Latest upstream6191392 includes an optional fifth NEX island style, backup
+allowlist, matching600/750font resource and measured full-label Businesses width.
+Root backed up/stashed all local work and integrated it without replacing remote
+commits; all local screen coherence, typography, data-action fences and new
+WidgetConfigure styling remain. The upstream fifth island option is preserved.
+
+Actual local467host suite before integration:465PASS/2FAIL/0errors/0skips. Both
+failures are strict complete Businesses-label fit checks at320dp/font1.3; the
+upstream width-from-current-Paint fix is retained, not weakened expectations.
+Full merged production/host checks are IN_PROGRESS. Earlier first attempts
+failed before Android runtime loading because sandbox sockets/home cache were
+unwritable; the local environment now uses writable JVM cache and normal allowed
+network. No default CI/signing workaround or app INTERNET permission was added.
+
+Existing40native IDs/allold269images remain. Strict additive coverage is being
+finished for2actual WidgetConfigure previews and1actualowned NEX-island call
+image (27modern/272total), with no actual launcher-host-binding claim for preview
+IDs. Fresh native Telecom, all272screens and real full visual review remain
+pending. AI remains deferred; no0.14publication exception has been approved.
+
+## New authorized NEX redesign0.14 scope in progress — 2026-11-25 UTC
+
+The new owner request authorizes a completely redesigned DA CALLER inspired by
+NEX before any AI. Work now continues ONLY in branchdesign/nex-caller-0.14/PR7
+(based on PR5), isolated worktree /workspace/D.A.-Caller-nex-014. Old no-new-UI
+checkpoints below remain historical for completed0.13; the new request supersedes
+them for this design scope. No NEX/DA-SECRETARY/other product is modified.
+
+Latest initial handoffdf7ccf4 already updated most screen palettes; root and
+scoped workers completed NEX navigation pills/cards/typography/secondary screens/
+call and island coherence while preserving functional handlers, style IDs, user
+customization, archive, backup, frozen sourced directory and offline app identity.
+NEX reference was read from actual Theme.kt/MainActivity.kt through the provider.
+Version0.14.0/code23/new bilingual changelog is coordinated; all21older entries
+are byte-preserved. Original40native cases and245+24frame gates remain required;
+version/catalog assertions were updated strictly.33focusedPython contracts PASS,
+static audits only; full current-source host/build/lint is IN_PROGRESS and has
+NOT yet passed. No fresh native/visual/hardware/update test is claimed.
+
+All production/test inputs were frozen and hashed before the sole root Gradle
+command. Independent source-preservation and design reviews run read-only in
+parallel. Next: fix concrete failures, pass full local checks, push source toPR7,
+obtain actual Telecom/native269screens and review ALL images on exactnewsource.
+No signing/defaultCI/publication change is allowed by this design request.
+0.14exception approval does not exist; stable owner key/private backup/secrets
+remain separately unresolved. Finish reviewable candidate before any permission
+question; never rebuild/re-sign a reviewed publication candidate, overwrite old
+releases, send an old link, weaken gates or implement AI.
+
 ## Verified 0.13.0 APK delivered; awaiting owner-controlled signing setup — 2026-11-25 14:03 UTC
 
 The verified NEW0.13.0 APK link was actually sent in the previous completion

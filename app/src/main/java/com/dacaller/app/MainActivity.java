@@ -357,7 +357,9 @@ public class MainActivity extends Activity {
    workspace=new FrameLayout(this);
    root.addView(workspace,new LinearLayout.LayoutParams(-1,0,1));
    nav=row();nav.setGravity(Gravity.CENTER_VERTICAL);pad(nav,9,5);
-   nav.setBackground(stroked(panel(),28));
+   GradientDrawable navigationSurface=rounded(panel(),28);
+   navigationSurface.setCornerRadii(new float[]{d(28),d(28),d(28),d(28),0,0,0,0});
+   nav.setBackground(navigationSurface);
    nav.setMinimumHeight(d(63));root.addView(nav,lp(-1,-2));
    setContentView(root);
   }
@@ -488,11 +490,13 @@ public class MainActivity extends Activity {
   LinearLayout tile=column();tile.setGravity(Gravity.CENTER);
   tile.setTag("main_nav_"+target);
   boolean keypad="keypad".equals(target);
-  tile.setBackground(keypad?rounded(NexPalette.primary(dark()),22):active?rounded(soft(),20):rounded(panel(),20));
-  int navInk=keypad?NexPalette.onPrimary(dark()):active?NexPalette.primaryText(dark()):muted();
-  ImageView glyph=icon(drawable,navInk,24,24);
-  tile.addView(glyph,lp(26,27));
-  TextView name=center(I18n.text(this,title),11,true,navInk);
+  int navInk=keypad||active?NexPalette.primaryText(dark()):muted();
+  FrameLayout iconPill=new FrameLayout(this);
+  iconPill.setBackground(rounded(keypad?NexPalette.primary(dark()):active?soft():android.graphics.Color.TRANSPARENT,16));
+  ImageView glyph=icon(drawable,keypad?NexPalette.onPrimary(dark()):navInk,24,24);
+  iconPill.addView(glyph,new FrameLayout.LayoutParams(d(24),d(24),Gravity.CENTER));
+  tile.addView(iconPill,lp(51,32));
+  TextView name=center(I18n.text(this,title),12,true,navInk);
   tile.addView(name,lp(-1,-2));
   tile.setMinimumHeight(d(51));
   LinearLayout.LayoutParams tabs=new LinearLayout.LayoutParams(0,-2,1);
@@ -683,7 +687,7 @@ public class MainActivity extends Activity {
   FrameLayout dismiss=new FrameLayout(this);
   dismiss.setBackground(rounded(soft(),16));
   dismiss.addView(closeIcon,new FrameLayout.LayoutParams(d(24),d(24),Gravity.CENTER));
-  entryBar.addView(dismiss,lp(44,44));
+  entryBar.addView(dismiss,lp(48,48));
   dismiss.setContentDescription(I18n.text(this,"סגירת מקשי החיוג"));
   decorate(dismiss);
   dismiss.setOnClickListener(v->{haptic(dismiss);dialog.dismiss();});
@@ -699,11 +703,7 @@ public class MainActivity extends Activity {
     final int idx=r*3+c;
     String key=digit[idx];
     LinearLayout tile=column();tile.setGravity(Gravity.CENTER);
-    GradientDrawable glass=new GradientDrawable(GradientDrawable.Orientation.TL_BR,
-      new int[]{panel(),soft()});
-    glass.setCornerRadius(d(24));
-    glass.setStroke(d(1),border());
-    tile.setBackground(glass);tile.setMinimumHeight(d(48));
+    tile.setBackground(rounded(soft(),20));tile.setMinimumHeight(d(48));
     LinearLayout.LayoutParams tileP=new LinearLayout.LayoutParams(0,d(buttonHeight),1);
     tileP.setMargins(d(5),d(2),d(5),d(2));row.addView(tile,tileP);
     TextView number=center(key,key.equals("*")||key.equals("#")?26:29,true,text());

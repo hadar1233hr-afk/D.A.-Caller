@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.AvatarShapesTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-26T00:07:47" hostname="3ebae333e153" time="4.263">
+  <properties/>
+  <testcase name="absentOrUnknownPreferencesUseCircleWithoutChangingStoredSettings" classname="com.dacaller.app.AvatarShapesTest" time="0.082"/>
+  <testcase name="widgetAndSettingsPreviewUseAllFourChosenGeometries" classname="com.dacaller.app.AvatarShapesTest" time="0.09"/>
+  <testcase name="polygonClipsPhotoOnAndroidBeforePathOutlineClipping" classname="com.dacaller.app.AvatarShapesTest" time="4.028"/>
+  <testcase name="clippingIncludesTheActualPhotoChildAndInitialBackground" classname="com.dacaller.app.AvatarShapesTest" time="0.063"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

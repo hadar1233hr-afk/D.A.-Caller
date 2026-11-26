@@ -224,7 +224,7 @@ public class MainActivityRegressionTest {
    Shadows.shadowOf(android.os.Looper.getMainLooper()).idleFor(java.time.Duration.ofMillis(550));
    java.lang.reflect.Field field=MainActivity.class.getDeclaredField("root");field.setAccessible(true);
    assertNotNull("Recovered archive scheduling must resume",jobs.getPendingJob(CallArchive.JOB_ID));assertNotNull("Recovered reminder scheduling must resume",alarms.peekNextScheduledAlarm());
-   View root=(View)field.get(activity);assertEquals(NexPalette.background(true,false),((android.graphics.drawable.ColorDrawable)root.getBackground()).getColor());
+   View root=(View)field.get(activity);assertEquals(0xFF241A17,((android.graphics.drawable.ColorDrawable)root.getBackground()).getColor());
    activity.favoriteFromList(person);assertTrue(prefs.getStringSet("favorites",java.util.Collections.emptySet()).contains(person.key));
    assertNull(Shadows.shadowOf(activity).getNextStartedActivity());
   }finally{new android.util.AtomicFile(new java.io.File(app.getFilesDir(),"settings_archive_restore.pending")).delete();}
