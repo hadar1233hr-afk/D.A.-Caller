@@ -45,5 +45,11 @@ final class LocalAssistant {
   if(target.matches(".*[\\p{Cc}\\p{Cf}*#].*"))return unknown();
   return new Intent(kind,target);
  }
+ /** Accept ordinary phone-number formatting only, never MMI, post-dial or arbitrary text. */
+ static String safeNumber(String raw){
+  if(raw==null||raw.length()>64||!raw.matches("[+0-9() .\\-]+"))return null;
+  String dial=raw.replaceAll("[() .\\-]","");
+  return dial.matches("\\+?[0-9]{3,20}")?dial:null;
+ }
  private static Intent unknown(){return new Intent(Kind.UNKNOWN,"");}
 }
