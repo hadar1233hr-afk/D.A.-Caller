@@ -18,10 +18,10 @@ final class LocalAssistant {
  private static final Pattern CALL=Pattern.compile("^(?:התקשר(?:י)?(?:\\s+אל)?|חייג(?:י)?(?:\\s+אל)?|call|dial)\\s+(.+)$");
  private static final Pattern CONTACT=Pattern.compile("^(?:חפש(?:י)?(?:\\s+איש קשר)?|מצא(?:י)?(?:\\s+איש קשר)?|find contact|search contacts?|find)\\s+(.+)$");
  private static final Pattern BUSINESS=Pattern.compile("^(?:חפש(?:י)? עסק|מצא(?:י)? עסק|בתי עסק|find business|search businesses)\\s+(.+)$");
- private static final Pattern NEGATION=Pattern.compile("(?:^|\\s)(?:אל|לא|don't|dont|not|never)(?:\\s|$)");
+ private static final Pattern NEGATION=Pattern.compile("(?:^|\\s)(?:לא|don't|dont|not|never)(?:\\s|$)");
  private LocalAssistant(){}
  static Intent parse(String raw){
-  if(raw==null||raw.length()>512)return unknown();
+  if(raw==null||raw.length()>512||raw.matches("(?s).*[\\p{Cc}\\p{Cf};!?].*"))return unknown();
   String query=Normalizer.normalize(raw,Normalizer.Form.NFKC)
    .replaceAll("[\\u0591-\\u05BD\\u05BF-\\u05C7]","")
    .replaceAll("[\\p{Z}\\s]+"," ").trim().toLowerCase(Locale.ROOT);
