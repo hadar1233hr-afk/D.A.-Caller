@@ -130,3 +130,45 @@ nativeIDs/seven original gates/272requiredframes preserved. Evidence is retained
 in foreground-correction. Fresh emulator40/272/fullactualvisual still PENDING;
 previous38/40failure remains truthful history. No0.14publication approval or
 hardware/update/durablekey claim; oldreleases/AI/otherproducts unchanged.
+
+## Third CI: exact foreground succeeded; measured AX bounds offset — 2026-11-26 UTC
+
+CI45766109135 at24d90804b84ff473cbe749eace0f27f2655f2ea3/app68bebeded
+passed106tooling contracts,467uniquehost/45classes and lint0errors/16warnings.
+Native40completed with38PASS/2FAIL/0errors/0skips,267PNGs and all8downstream
+reports absent. No tested-debug artifact or272visualapproval was produced.
+The two new pre-cleanup probes now identify exact resumed MainActivity/Widget
+records, matching Decor/nativewindow IDs, active/focused visible application
+roots and correct package. Both reject only native-window containment: Android
+reports [0,0][479,853] while actual root and Decor are [0,0][480,854]. The same
+one-pixel representation difference appears in independent SystemUI windows.
+
+A narrow coordinate correction is being prepared: actual native root must equal
+Decor exactly; all three bounds stay valid/nonempty/on-screen; native window
+edges may differ by at most one measured pixel, while two pixels must reject.
+Passing proof will record all raw bounds and computed maximum delta, independently
+recomputed by Python. Original target AXgeometry/focus/windowID/40nativeIDs/old7
+gates remain mandatory. Authentic logs/JUnit/pre-cleanup probes retained under
+third-native-ci. Compile/lint and a fresh40/272/fullvisualrun still required.
+Production/UI/host/debug/data/signing/workflows remain unchanged; no publication
+approval, oldAPKlink, AI or otherproduct work.
+
+## Measured window-edge correction passes local checks — 2026-11-26 UTC
+
+The two authentic pre-cleanup probes now have a narrowly bounded correction.
+Native accessible root must equal Activity Decor exactly. All three rectangles
+must be nonempty and onscreen; each native-window edge may differ by at most one
+measured pixel. Passing proof retains all raw bounds and the computed maximum,
+which Python independently recomputes. Two pixels, wrong window identity/focus,
+false summaries and content outside Decor still fail. Original exact target AX
+geometry, all 40 native IDs, seven prior gates and 272 required images remain.
+
+Actual local results: 109 tooling tests PASS; 48 focused modern contracts PASS;
+Androidtest APK build PASS; lint zero errors/16 warnings in 56 seconds. All 226
+tracked inputs remained unchanged. Independent review passed 16 valid cases and
+114 rejection probes. Production, host/debug sources, data, signing policy and
+workflows are unchanged from the authentic 467-test/45-class CI pass; that host
+suite was not rerun locally. Evidence: foreground-bounds-correction and authentic
+third-native-ci failure bundle. Fresh full native/272-image visual proof remains
+pending. No 0.14 publication exception or durable signing setup is approved;
+immutable older releases, deferred AI and separate products remain unchanged.

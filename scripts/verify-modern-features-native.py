@@ -278,6 +278,18 @@ def resumed_activity_record(record, component):
     return match.group(1) in (component, qualified)
 
 
+def foreground_bounds(value):
+    """Bind exact native root/Decor geometry and measured API33 edge rounding."""
+    decor = rectangle(value.get("decor_bounds"))
+    window = rectangle(value.get("native_window_bounds"))
+    root = rectangle(value.get("native_root_bounds"))
+    require(root == decor, "Foreground native root must exactly equal its Activity Decor bounds")
+    delta = max(abs(actual - expected) for actual, expected in zip(window, decor))
+    require(integer(value.get("max_window_edge_delta_px"), delta) and delta <= 1,
+            "Foreground native window edges must match raw Decor/root bounds within at most one pixel")
+    return decor
+
+
 def widget_configuration(proof, images):
     require(type(proof) is dict, "Actual WidgetConfigure configuration preview proof missing")
     require(proof.get("scope") == "Actual WidgetConfigure Activity; synthetic unbound ID configuration preview"
@@ -301,11 +313,13 @@ def widget_configuration(proof, images):
             "Actual WidgetConfigure resumed component is missing")
         flags(foreground, ("top_resumed", "native_application_window_visible"))
         require(integer(foreground.get("window_id")) and foreground["window_id"] >= 0, "Actual WidgetConfigure native window missing")
+        decor_bounds = foreground_bounds(foreground)
         geometry = {}
         for name in ("root", "heading", "search", "back"):
             record = value.get(name + "_geometry", {})
             bounds = rectangle(record.get("bounds"))
             require(native_geometry(record, bounds) == foreground["window_id"], "Widget views must share the actual focused window")
+            require(contained(decor_bounds, bounds), "Widget native views must remain inside their actual foreground Decor")
             geometry[name] = bounds
             if name != "root":
                 require(contained(geometry["root"], bounds), "Widget content must remain inside its visible root")
@@ -646,9 +660,11 @@ def nex_island(value, token, images):
             "NEX island actual production foreground Activity missing")
     flags(foreground, ("top_resumed", "native_application_window_visible"))
     require(integer(foreground.get("window_id")) and foreground["window_id"] >= 0, "NEX foreground native window missing")
+    decor_bounds = foreground_bounds(foreground)
     geometry = value.get("geometry", {})
     bounds = rectangle(geometry.get("bounds"))
     require(native_geometry(geometry, bounds) == foreground["window_id"], "NEX island must occupy its actual focused production window")
+    require(contained(decor_bounds, bounds), "NEX island must remain inside its actual foreground Decor")
     for key in ("view_alpha", "scale_x", "scale_y"):
         require(finite_number(value.get(key)) and value[key] == 1, "NEX island must have stable unscaled opaque view geometry")
     for key, color in (("body_top_argb", 0xff342720), ("body_bottom_argb", 0xff241a17), ("edge_argb", 0xff634d43),

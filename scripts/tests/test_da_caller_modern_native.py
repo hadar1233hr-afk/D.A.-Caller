@@ -86,7 +86,9 @@ def widget_configuration_fixture():
             widget_id=2147483000, intent_widget_id=2147483000, widget_provider_info="null",
             foreground=dict(component="com.dacaller.app/.WidgetConfigure",
                 resumed_record="topResumedActivity=ActivityRecord{123 u0 com.dacaller.app/.WidgetConfigure} t1}",
-                top_resumed=True, native_application_window_visible=True, window_id=17),
+                top_resumed=True, native_application_window_visible=True, window_id=17,
+                decor_bounds="[0,0][480,854]",native_root_bounds="[0,0][480,854]",
+                native_window_bounds="[0,0][479,853]",max_window_edge_delta_px=1),
             root_geometry=geometry("[0,36][480,818]"), heading_geometry=geometry("[96,48][456,120]"),
             search_geometry=geometry("[24,149][456,230]"), back_geometry=geometry("[24,48][96,120]"),
             background_argb=signed(bg), surface_argb=signed(surface), heading_argb=signed(ink), search_argb=signed(ink), hint_argb=signed(muted),
@@ -114,7 +116,9 @@ def nex_island_fixture():
         body_top_argb=signed((52, 39, 32)), body_bottom_argb=signed((36, 26, 23)), edge_argb=signed((99, 77, 67)),
         accent_argb=signed((246, 167, 115)), timer_argb=signed((246, 167, 115)),
         foreground=dict(component="com.dacaller.app/.MainActivity", resumed_record="topResumedActivity=ActivityRecord{123 u0 com.dacaller.app/.MainActivity} t1}",
-            top_resumed=True, native_application_window_visible=True, window_id=19),
+            top_resumed=True, native_application_window_visible=True, window_id=19,
+            decor_bounds="[0,0][480,854]",native_root_bounds="[0,0][480,854]",
+            native_window_bounds="[0,0][479,853]",max_window_edge_delta_px=1),
         geometry=dict(bounds="[45,48][435,180]", native_ax_bounds="[45,48][435,180]", window_id=19, stable_samples=2,
             view_window_focus=True, native_window_focus=True),
         background_samples=[dict(x=238+n, y=53, argb=signed((44, 32, 27))) for n in range(5)])
@@ -680,6 +684,57 @@ class ModernNativeContracts(unittest.TestCase):
             with self.subTest(nex_geometry=key,invalid=invalid), self.assertRaises(AssertionError):
                 proof=nex_island_fixture();proof["geometry"][key]=invalid
                 gate.nex_island(proof,"first-owned-token",images)
+
+    def test_foreground_raw_bounds_accept_exact_edges_and_measured_one_pixel_rounding(self):
+        self.proofs_fixture();images={p.name:p for p in self.modern.glob("*.png")}
+        # First pair is the authentic failed API33 coordinate representation;
+        # this synthetic test verifies it without claiming a native PASS.
+        for window, delta in (("[0,0][479,853]",1),("[0,0][480,854]",0),("[1,1][479,853]",1)):
+            with self.subTest(window=window):
+                widget=widget_configuration_fixture();nex=nex_island_fixture()
+                for foreground in [o["foreground"] for o in widget["observations"]]+[nex["foreground"]]:
+                    foreground["native_window_bounds"]=window;foreground["max_window_edge_delta_px"]=delta
+                    self.assertEqual((0,0,480,854),gate.foreground_bounds(foreground))
+                gate.widget_configuration(widget,images);gate.nex_island(nex,"first-owned-token",images)
+
+    def test_foreground_raw_bounds_reject_two_pixel_edges_and_false_computed_delta(self):
+        self.proofs_fixture();images={p.name:p for p in self.modern.glob("*.png")}
+        mutations=[("native_window_bounds",window) for window in
+                   ("[2,0][480,854]","[0,2][480,854]","[0,0][478,854]","[0,0][480,852]")]
+        mutations += [("max_window_edge_delta_px",delta) for delta in (0,2,True,False,1.0,"1",None)]
+        for key, invalid in mutations:
+            with self.subTest(key=key,invalid=invalid):
+                widget=widget_configuration_fixture();nex=nex_island_fixture()
+                widget["observations"][0]["foreground"][key]=invalid;nex["foreground"][key]=invalid
+                if key=="native_window_bounds":
+                    # An honestly reported two-pixel delta must still refuse;
+                    # failing only a false summary would not test the limit.
+                    widget["observations"][0]["foreground"]["max_window_edge_delta_px"]=2
+                    nex["foreground"]["max_window_edge_delta_px"]=2
+                with self.assertRaisesRegex(AssertionError,"at most one pixel"):
+                    gate.widget_configuration(widget,images)
+                with self.assertRaisesRegex(AssertionError,"at most one pixel"):
+                    gate.nex_island(nex,"first-owned-token",images)
+
+    def test_foreground_root_decor_are_exact_and_every_raw_bound_is_nonempty_on_screen(self):
+        self.proofs_fixture();images={p.name:p for p in self.modern.glob("*.png")}
+        mutations=[("native_root_bounds","[0,0][479,854]"),("decor_bounds","[0,0][480,853]")]
+        for key in ("native_root_bounds","decor_bounds","native_window_bounds"):
+            mutations.extend((key,invalid) for invalid in
+                ("[-1,0][480,854]","[0,0][481,854]","[0,0][480,855]","[0,0][0,854]","[0,0][480,0]",None))
+        for key, invalid in mutations:
+            with self.subTest(key=key,invalid=invalid):
+                widget=widget_configuration_fixture();nex=nex_island_fixture()
+                widget["observations"][0]["foreground"][key]=invalid;nex["foreground"][key]=invalid
+                with self.assertRaises(AssertionError): gate.widget_configuration(widget,images)
+                with self.assertRaises(AssertionError): gate.nex_island(nex,"first-owned-token",images)
+        for proof, widget in ((widget_configuration_fixture(),True),(nex_island_fixture(),False)):
+            foreground=proof["observations"][0]["foreground"] if widget else proof["foreground"]
+            for key in ("decor_bounds","native_root_bounds","native_window_bounds"): foreground[key]="[0,0][480,160]"
+            foreground["max_window_edge_delta_px"]=0
+            with self.subTest(widget=widget), self.assertRaisesRegex(AssertionError,"actual foreground Decor"):
+                if widget: gate.widget_configuration(proof,images)
+                else: gate.nex_island(proof,"first-owned-token",images)
 
     def test_widget_targets_fonts_and_actual_text_layout_cannot_be_weakened(self):
         self.proofs_fixture();images={p.name:p for p in self.modern.glob("*.png")}

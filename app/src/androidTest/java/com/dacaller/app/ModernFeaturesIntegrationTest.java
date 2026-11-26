@@ -601,7 +601,8 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
     decorWindow.set(node.getWindowId());decorBounds.set(bounds);observed.put("ready",true);
    }finally{node.recycle();}
   }catch(Exception failure){throw new RuntimeException(failure);}});
-  probe.put("decor",decorState.get());JSONArray nativeWindows=new JSONArray();probe.put("native_windows",nativeWindows);int omittedWindows=0,acceptedWindow=-1;
+  probe.put("decor",decorState.get());JSONArray nativeWindows=new JSONArray();probe.put("native_windows",nativeWindows);int omittedWindows=0,acceptedWindow=-1,acceptedEdgeDelta=-1;
+  Rect acceptedWindowBounds=null,acceptedRootBounds=null;
   for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
    try{
     Rect windowBounds=new Rect(),rootBounds=new Rect();window.getBoundsInScreen(windowBounds);
@@ -610,15 +611,22 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
     AccessibilityNodeInfo root=window.getRoot();String rejection;
     if(root==null){observed.put("root",JSONObject.NULL);rejection="MISSING_AX_ROOT";}
     else try{
-     root.getBoundsInScreen(rootBounds);observed.put("root_package",root.getPackageName()==null?JSONObject.NULL:root.getPackageName().toString())
-      .put("root_visible",root.isVisibleToUser()).put("root_bounds",rootBounds.toShortString());
+     root.getBoundsInScreen(rootBounds);Rect decor=decorBounds.get();int edgeDelta=decor==null?-1:Math.max(Math.max(Math.abs(windowBounds.left-decor.left),Math.abs(windowBounds.top-decor.top)),
+      Math.max(Math.abs(windowBounds.right-decor.right),Math.abs(windowBounds.bottom-decor.bottom)));
+     observed.put("root_package",root.getPackageName()==null?JSONObject.NULL:root.getPackageName().toString())
+      .put("root_visible",root.isVisibleToUser()).put("root_bounds",rootBounds.toShortString()).put("max_window_edge_delta_px",edgeDelta);
      if(window.getId()!=decorWindow.get())rejection="NOT_ACTIVITY_DECOR_WINDOW";
      else if(window.getType()!=AccessibilityWindowInfo.TYPE_APPLICATION)rejection="NOT_APPLICATION_WINDOW";
      else if(!window.isActive()||!window.isFocused())rejection="NOT_ACTIVE_AND_FOCUSED";
      else if(!root.isVisibleToUser()||!target.getPackageName().contentEquals(String.valueOf(root.getPackageName())))rejection="ROOT_NOT_VISIBLE_TARGET_PACKAGE";
-     else if(decorBounds.get()==null||windowBounds.isEmpty()||rootBounds.isEmpty()||!new Rect(0,0,480,854).contains(windowBounds)||
-       !windowBounds.contains(rootBounds)||!Rect.intersects(decorBounds.get(),rootBounds))rejection="ROOT_OR_WINDOW_BOUNDS_INVALID";
-     else{rejection="NONE";acceptedWindow=window.getId();}
+     else if(decor==null||decor.isEmpty()||windowBounds.isEmpty()||rootBounds.isEmpty()||!new Rect(0,0,480,854).contains(decor)||
+       !new Rect(0,0,480,854).contains(windowBounds)||!new Rect(0,0,480,854).contains(rootBounds))rejection="ROOT_OR_WINDOW_BOUNDS_INVALID";
+     else if(!rootBounds.equals(decor))rejection="NATIVE_ROOT_DIFFERS_FROM_ACTIVITY_DECOR";
+     // Measured API33 AX window edges can round one pixel inward from its
+     // exact root/Decor bounds. Keep all raw bounds and independently verify
+     // this bounded representation difference; two pixels must still refuse.
+     else if(edgeDelta>1)rejection="NATIVE_WINDOW_EDGE_DELTA_EXCEEDS_ONE_PIXEL";
+     else{rejection="NONE";acceptedWindow=window.getId();acceptedEdgeDelta=edgeDelta;acceptedWindowBounds=new Rect(windowBounds);acceptedRootBounds=new Rect(rootBounds);}
     }finally{root.recycle();}
     observed.put("rejection_reason",rejection);
     if(nativeWindows.length()<32)nativeWindows.put(observed);else omittedWindows++;
@@ -630,7 +638,8 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   if(acceptedWindow<0){probe.put("outcome","REJECTED_NO_MATCHING_NATIVE_APPLICATION_WINDOW");return null;}
   probe.put("outcome","FOREGROUND_CHECK_ACCEPTED").put("accepted_window_id",acceptedWindow);
   return new JSONObject().put("component",expected.flattenToShortString()).put("resumed_record",record).put("top_resumed",true)
-   .put("native_application_window_visible",true).put("window_id",acceptedWindow);
+   .put("native_application_window_visible",true).put("window_id",acceptedWindow).put("decor_bounds",decorBounds.get().toShortString())
+   .put("native_window_bounds",acceptedWindowBounds.toShortString()).put("native_root_bounds",acceptedRootBounds.toShortString()).put("max_window_edge_delta_px",acceptedEdgeDelta);
  }
 
  public void testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns()throws Exception {

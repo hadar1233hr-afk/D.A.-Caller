@@ -1,0 +1,37 @@
+{
+  "status": "CODEGO",
+  "reviewer": "/root/foreground_independent_review_014",
+  "source_sha256": {
+    "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java": "3e420f0dc64227c38757d585ccfa9173c048b93d7b1c086df9aa8164c42e06d4",
+    "scripts/verify-modern-features-native.py": "8bdd4f9e1b4445e9cd02230cc433f7ceb24bbf83d17418652e3d4ed42774ff1a",
+    "scripts/tests/test_da_caller_modern_native.py": "d41eac586aaa3b8c11f43933dd1a547737ce9b95103b95e2272c678f579b48ae"
+  },
+  "actual_diagnostics_audited": [
+    {
+      "file": "modern-failed-testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency-foreground.json",
+      "sha256": "a11cbc2bc09e369f708a03384db7836f6a2c21059c4f32e7dec01479c02b4ed9",
+      "observed_delta": 1,
+      "exact_root_decor": true,
+      "actual_window_id": 465
+    },
+    {
+      "file": "modern-failed-testModernInlineNavigationNineIconsAndWineSwitchPointer-foreground.json",
+      "sha256": "771fa82e742adf7ad8d928c8322712951e10921d2b857142086747e7123d1e71",
+      "observed_delta": 1,
+      "exact_root_decor": true,
+      "actual_window_id": 490
+    }
+  ],
+  "synthetic_exhaustive_window_edge_cases": 81,
+  "synthetic_valid_zero_or_one_pixel_accepts": 16,
+  "synthetic_two_pixel_rejections": 65,
+  "synthetic_raw_rectangle_or_claimed_delta_rejections": 32,
+  "synthetic_fullgate_window_focus_or_content_rejections": 17,
+  "native_ids_unchanged": 40,
+  "prior_gate_bytes_unchanged": 7,
+  "limits": [
+    "In-memory synthetic verifier probes, not native PASS evidence",
+    "No Gradle/emulator/visual execution by this reviewer",
+    "Fresh native40/272 and full visual review remain required"
+  ]
+}
