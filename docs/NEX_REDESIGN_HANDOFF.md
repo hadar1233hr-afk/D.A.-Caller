@@ -78,3 +78,19 @@ captures are NOT YET EXECUTED; fresh CI Telecom and actual full272visualreview
 are required on the newly committed app tree. No publication, hardware, upgrade
 or durable-signing success is claimed. No0.14signing/publication exception was
 approved; finish concrete software proof before requesting that boundary.
+
+## First CI historical-contract fixture corrected — 2026-11-26 UTC
+
+FreshCI45727531391 at962fab4 stopped before Java/native:101of102Python tooling
+contracts passed, one historical0.12scope test read the current stronger0.14
+followup verifier and the immutable0.12hash guard correctly rejected it.
+The test now uses six exact historical0d266d63source fixtures verified against
+unchanged legacy pins; workspace-unchanged checks remain, and an addednegative
+rejects all six corrupted sources plus changed current0.14bytes. ActualfullCI
+Python command now103PASS/0fail/error. No helper/hash pin/signing/defaultCI or
+publication guard changed. Authentic failed artifact and fixed-test logs are
+retained in`docs/evidence/nex-redesign-0.14.0/first-ci-failure`.
+
+This is test-fixture-only; appTree7aa469df7e34eda9568b5adc92a56795f3fdf2fd and
+local467host/build/lint results remain unchanged. Fresh emulator40cases/272real
+captures and all-image visual review remain pending; no native PASS is claimed.

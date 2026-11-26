@@ -15,35 +15,62 @@ import zipfile
 
 HERE = Path(__file__).resolve()
 REPO = HERE.parents[2]
+# Exact verifier bytes retained from scope.NATIVE_SOURCE; portable in shallow CI.
+FIXTURES = HERE.parent / "fixtures" / "release_012"
 SPEC = importlib.util.spec_from_file_location("da_caller_release_012_scope", REPO / "scripts/verify-release-012-matrix.py")
 scope = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(scope)
 
 
 class ScopeContracts(unittest.TestCase):
+    def original_verifier(self, name):
+        self.assertIn(name, scope.VERIFIERS)
+        blob = (FIXTURES / name).read_bytes()
+        self.assertEqual(scope.VERIFIERS[name], hashlib.sha256(blob).hexdigest())
+        return blob
+
+    def workspace_verifiers(self):
+        return {name: (REPO / "scripts" / name).read_bytes() for name in scope.VERIFIERS}
+
     def test_scoped_adaptation_preserves_all_functional_source(self):
+        before = self.workspace_verifiers()
         for name in scope.SCOPED_COUNTS:
-            blob = (REPO / "scripts" / name).read_bytes()
+            blob = self.original_verifier(name)
             changed, proof = scope.profile_source(name, blob)
             self.assertEqual(blob.decode().replace("245", "243"), changed)
             self.assertEqual(3, proof["replaced_total_count_literals"])
             self.assertTrue(proof["all_other_native_assertions_unchanged"])
-            self.assertEqual(blob, (REPO / "scripts" / name).read_bytes())
+            self.assertEqual(before, self.workspace_verifiers())
 
     def test_changed_original_guard_is_never_adapted(self):
         name = "verify-external-island-matrix.py"
-        blob = (REPO / "scripts" / name).read_bytes()
+        blob = self.original_verifier(name)
         with self.assertRaisesRegex(ValueError, "Original verifier changed"):
             scope.profile_source(name, blob.replace(b"is True", b"is False", 1))
         with self.assertRaises(ValueError):
             scope.profile_source("unreviewed.py", blob)
 
+    def test_corrupted_or_changed_workspace_verifiers_are_never_adapted(self):
+        before = self.workspace_verifiers()
+        for name, current in before.items():
+            blob = self.original_verifier(name)
+            with self.subTest(name=name, source="corrupted historical fixture"):
+                with self.assertRaisesRegex(ValueError, "Original verifier changed"):
+                    scope.profile_source(name, blob + b"\n# Deliberate corruption for rejection only.\n")
+            if current != blob:
+                with self.subTest(name=name, source="changed current workspace"):
+                    with self.assertRaisesRegex(ValueError, "Original verifier changed"):
+                        scope.profile_source(name, current)
+        self.assertEqual(before, self.workspace_verifiers())
+
     def test_noncount_original_verifiers_are_byte_identical(self):
+        before = self.workspace_verifiers()
         for name in set(scope.VERIFIERS) - scope.SCOPED_COUNTS:
-            blob = (REPO / "scripts" / name).read_bytes()
+            blob = self.original_verifier(name)
             source, proof = scope.profile_source(name, blob)
             self.assertEqual(blob.decode(), source)
             self.assertEqual(0, proof["replaced_total_count_literals"])
+        self.assertEqual(before, self.workspace_verifiers())
 
     def junit(self, temporary, body):
         root = Path(temporary)
