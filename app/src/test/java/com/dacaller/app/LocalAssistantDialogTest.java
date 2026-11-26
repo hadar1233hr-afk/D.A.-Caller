@@ -47,7 +47,13 @@ public class LocalAssistantDialogTest {
    AlertDialog confirm=ShadowAlertDialog.getLatestAlertDialog();assertNotSame(assistant,confirm);assertTrue(confirm.isShowing());
    assertNull(Shadows.shadowOf(host).getNextStartedActivity());confirm.getButton(AlertDialog.BUTTON_NEGATIVE).performClick();
    Shadows.shadowOf(android.os.Looper.getMainLooper()).idle();assertNull(Shadows.shadowOf(host).getNextStartedActivity());assertTrue(assistant.isShowing());
-   assistant.dismiss();assertEquals("",input.getText().toString());
+   assistant.dismiss();
+   // Android dispatches Dialog.OnDismissListener through the main Handler.
+   // Drain that real lifecycle callback before checking private input cleanup.
+   Shadows.shadowOf(android.os.Looper.getMainLooper()).idle();
+   assertFalse(assistant.isShowing());assertEquals("",input.getText().toString());
+   assertEquals(0,((LinearLayout)root.findViewWithTag("assistant_results")).getChildCount());
+   assertNull(Shadows.shadowOf(host).getNextStartedActivity());
   }
  }
 }
