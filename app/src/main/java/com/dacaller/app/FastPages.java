@@ -66,17 +66,17 @@ final class FastPages {
  }
  private int dp(float n){return (int)(host.getResources().getDisplayMetrics().density*n+0.5f);}
  private boolean dark(){return prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);}
- private int background(){return prefs.getBoolean("amoled",false)?Color.BLACK:dark()?0xFF131313:0xFFF5F5F4;}
- private int panel(){return prefs.getBoolean("amoled",false)?0xFF090909:dark()?0xFF1D1D1D:0xFFFFFFFF;}
- private int ink(){return dark()?0xFFF6F6F6:0xFF161616;}
- private int subtle(){return dark()?0xFF9A9A9A:0xFF696969;}
+ private int background(){return NexPalette.background(dark(),prefs.getBoolean("amoled",false));}
+ private int panel(){return NexPalette.surface(dark(),prefs.getBoolean("amoled",false));}
+ private int ink(){return NexPalette.ink(dark());}
+ private int subtle(){return NexPalette.muted(dark());}
  private int tint(){return "silver".equals(prefs.getString("accent","gold"))?(dark()?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark());}
- private int soft(){return dark()?0xFF28231B:0xFFF1EBDD;}
+ private int soft(){return NexPalette.soft(dark());}
  private GradientDrawable bg(int color,int radius){
   GradientDrawable g=new GradientDrawable();g.setColor(color);g.setCornerRadius(dp(radius));return g;
  }
  private GradientDrawable edge(int color,int radius){
-  GradientDrawable g=bg(color,radius);g.setStroke(dp(1),dark()?0xFF383838:0xFFE9E7E2);return g;
+  GradientDrawable g=bg(color,radius);g.setStroke(dp(1),NexPalette.outline(dark()));return g;
  }
  private TextView text(String value,int sp,int color,boolean bold){
   TextView t=new TextView(host);
@@ -321,7 +321,7 @@ final class FastPages {
   addFavorites(page,host.contactsSnapshot());
   if(prefs.getBoolean("show_stats",true))addSummary(page);
   LinearLayout top=horizontal();top.setTag("call-island-secondary");page.addView(top,lp(-1,48));
-  TextView title=text(tr("כל השיחות"),15,ink(),true);
+  TextView title=text(tr("כל השיחות"),20,ink(),true);
   top.addView(title,new LinearLayout.LayoutParams(0,-1,1));
   TextView count=text(String.valueOf(CallHistory.entries.size()),11,subtle(),false);
   top.addView(count,lp(-2,48));
@@ -376,7 +376,7 @@ final class FastPages {
   item.setTag("stats_metric_"+kind);
   item.setGravity(Gravity.CENTER);
   item.setPadding(dp(1),dp(2),dp(1),dp(2));
-  item.setBackground(bg(dark()?0xFF262626:0xFFF5F3F0,12));
+  item.setBackground(bg(soft(),14));
   item.setMinimumHeight(dp(42));
   LinearLayout.LayoutParams ip=new LinearLayout.LayoutParams(0,-2,1);
   ip.leftMargin=dp(3);ip.rightMargin=dp(3);
@@ -407,10 +407,12 @@ final class FastPages {
   addFavorites(page,contacts);
   LinearLayout head=horizontal();page.addView(head,lp(-1,48));
   EditText search=new EditText(host);
-  search.setSingleLine(true);search.setHint(tr("חיפוש שם או מספר"));
+  String searchDescription=tr("חיפוש שם או מספר");
+  search.setSingleLine(true);search.setHint(I18n.isEnglish(host)?"Name or number":searchDescription);
+  search.setContentDescription(searchDescription);
   AppAppearance.font(search,false);
   search.setHintTextColor(subtle());search.setTextColor(ink());search.setTextSize(15);
-  search.setPadding(dp(12),0,dp(12),0);search.setBackground(edge(panel(),14));
+  search.setPadding(dp(12),0,dp(12),0);search.setBackground(edge(panel(),22));
   head.addView(search,new LinearLayout.LayoutParams(0,dp(48),1));
   TextView add=text("＋",28,tint(),true);add.setGravity(Gravity.CENTER);
   add.setContentDescription(tr("הוספת איש קשר חדש"));
@@ -468,7 +470,11 @@ final class FastPages {
   // Keep the full English label readable at 1.3x font scale without growing the toolbar.
   businesses.setSingleLine(true);businesses.setEllipsize(android.text.TextUtils.TruncateAt.END);
   businesses.setBackground(edge(panel(),12));businesses.setPadding(dp(6),0,dp(6),0);
-  row.addView(businesses,lp(96,48));touch(businesses);
+  // Measure the complete label using its current font weight and scale.
+  // The count remains weighted and the refresh control retains its fixed 48dp target.
+  int labelWidth=(int)Math.ceil(businesses.getPaint().measureText(businesses.getText().toString()));
+  int requiredWidth=Math.max(dp(96),labelWidth+businesses.getPaddingLeft()+businesses.getPaddingRight()+dp(4));
+  row.addView(businesses,new LinearLayout.LayoutParams(requiredWidth,dp(48)));touch(businesses);
   businesses.setContentDescription(I18n.isEnglish(host)?"Search businesses separately from personal contacts":"חיפוש בתי עסק בנפרד מאנשי הקשר האישיים");
   businesses.setOnClickListener(view->{pulse(businesses);host.openBusinessDirectory();});
  }
@@ -610,7 +616,7 @@ final class FastPages {
    dialIcon.setPadding(dp(11),dp(11),dp(11),dp(11));
    call.addView(dialIcon,new FrameLayout.LayoutParams(-1,-1));
    actions=vertical();actions.setTag("recent_actions");actions.setPadding(dp(5),dp(3),dp(5),dp(3));root.addView(actions,lp(-1,-2));
-   View divider=new View(host);divider.setBackgroundColor(dark()?0xFF443A29:0xFFE6DDCA);actions.addView(divider,lp(-1,1));
+   View divider=new View(host);divider.setBackgroundColor(NexPalette.outline(dark()));actions.addView(divider,lp(-1,1));
    number=text("",14,ink(),true);number.setTag("recent_number");number.setGravity(Gravity.CENTER);number.setPadding(dp(4),dp(8),dp(4),dp(8));
    number.setMaxLines(2);actions.addView(number,lp(-1,-2));
    LinearLayout controls=horizontal();controls.setBaselineAligned(false);actions.addView(controls,lp(-1,-2));
@@ -629,7 +635,7 @@ final class FastPages {
   }
   void showExpansion(){
    boolean expanded=expandedRecent.isExpanded(entry);actions.setVisibility(expanded?View.VISIBLE:View.GONE);
-   root.setBackground(edge(expanded?soft():panel(),20));chevron.setImageDrawable(AppAppearance.chevron(host,expanded,tint()));
+   root.setBackground(edge(expanded?soft():panel(),24));chevron.setImageDrawable(AppAppearance.chevron(host,expanded,tint()));
    String label=(I18n.isEnglish(host)?(expanded?"Collapse call actions ":"Expand call actions "):(expanded?"סגירת פעולות שיחה ":"הרחבת פעולות שיחה "))+(entry==null?"":contactName(entry.number));
    center.setContentDescription(label);header.setContentDescription(label);
    if(android.os.Build.VERSION.SDK_INT>=30)center.setStateDescription(I18n.isEnglish(host)?(expanded?"Expanded":"Collapsed"):(expanded?"מורחב":"מכווץ"));
@@ -717,8 +723,8 @@ final class FastPages {
    phone=text("",11,subtle(),false);phone.setSingleLine(true);description.addView(phone);
    star=text("☆",26,subtle(),false);star.setGravity(Gravity.CENTER);
    root.addView(star,lp(48,51));
-   quick=new FrameLayout(host);quick.setBackground(bg(dark()?0xFF29352F:0xFFE7F4EA,14));
-   ImageView icon=icon(R.drawable.ic_phone_line,0xFF128758);
+   quick=new FrameLayout(host);quick.setBackground(bg(soft(),16));
+   ImageView icon=icon(R.drawable.ic_phone_line,NexPalette.call(dark()));
    quick.addView(icon,new FrameLayout.LayoutParams(dp(49),dp(49),Gravity.CENTER));
    root.addView(quick,lp(49,50));
    touch(star);touch(quick);touch(root);touch(avatar);root.setTag(this);

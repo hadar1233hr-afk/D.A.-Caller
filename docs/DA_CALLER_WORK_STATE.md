@@ -1,5 +1,199 @@
 # DA CALLER continuation state
 
+## Visual polish locally verified; fresh emulator review next — 2026-11-27
+
+The isolated two-cause polish passes469 unique host methods in45 classes with
+zero failures/errors/skips, debug and Androidtest APK builds, and lint with zero
+errors. All tracked app/script source hashes remained unchanged during checks.
+All40native method IDs, signing/workflows and frozen business assets are preserved.
+Authentic JUnit/log/lint proof is retained in visual-polish-preflight.
+
+The historical1a492678 full actual review remains266PASS/6FAIL; it is not relabeled
+as passing. This new source needs fresh40native/272screens and actual visual
+review before approval. No official publication, matching-key update or hardware
+verification is claimed. Previously delivered APKs are not resent; AI stays inPR8.
+
+## Completed272-image review and required polish — 2026-11-27
+
+The authenticated1a492678/CI45773402159 source genuinely passed40native methods,
+467host methods and all272automatic image checks. All272 images have now also
+been actually reviewed:266PASS/6FAIL/0unreviewed in69lossless sheets. Two visual
+causes affect six frames: native Hebrew speaker activation label truncation and
+large-font English Contacts hint clipping. Evidence and all six raw before
+images are retained in visual-review-1a49267. No full visual GO is claimed.
+
+The current isolated polish changes only visible copy/accessibility and two
+corresponding native label expectations: short Hebrew קול preserves full TTS
+הפעל רמקול and unchanged SPEAKER_ON/OFF intents; short English Name or number
+keeps15sp and the full search accessible description. Widget hints, actual
+search, dialing, data, all40native method IDs and release/signing guards stay
+unchanged. Two new host regressions check fit and full spoken/action semantics.
+Build/unit/lint are running; fresh40native/272screens and actual review remain
+required. Do not send the already delivered0.14test APK again. PR8AI work stays
+in feature/da-intelligence-0.15; never mix it into this0.14branch.
+
+## Measured window-edge correction passes local checks — 2026-11-26 UTC
+
+The two authentic pre-cleanup probes now have a narrowly bounded correction.
+Native accessible root must equal Activity Decor exactly. All three rectangles
+must be nonempty and onscreen; each native-window edge may differ by at most one
+measured pixel. Passing proof retains all raw bounds and the computed maximum,
+which Python independently recomputes. Two pixels, wrong window identity/focus,
+false summaries and content outside Decor still fail. Original exact target AX
+geometry, all 40 native IDs, seven prior gates and 272 required images remain.
+
+Actual local results: 109 tooling tests PASS; 48 focused modern contracts PASS;
+Androidtest APK build PASS; lint zero errors/16 warnings in 56 seconds. All 226
+tracked inputs remained unchanged. Independent review passed 16 valid cases and
+114 rejection probes. Production, host/debug sources, data, signing policy and
+workflows are unchanged from the authentic 467-test/45-class CI pass; that host
+suite was not rerun locally. Evidence: foreground-bounds-correction and authentic
+third-native-ci failure bundle. Fresh full native/272-image visual proof remains
+pending. No 0.14 publication exception or durable signing setup is approved;
+immutable older releases, deferred AI and separate products remain unchanged.
+
+## Third CI: exact foreground succeeded; measured AX bounds offset — 2026-11-26 UTC
+
+CI45766109135 at24d90804b84ff473cbe749eace0f27f2655f2ea3/app68bebeded
+passed106tooling contracts,467uniquehost/45classes and lint0errors/16warnings.
+Native40completed with38PASS/2FAIL/0errors/0skips,267PNGs and all8downstream
+reports absent. No tested-debug artifact or272visualapproval was produced.
+The two new pre-cleanup probes now identify exact resumed MainActivity/Widget
+records, matching Decor/nativewindow IDs, active/focused visible application
+roots and correct package. Both reject only native-window containment: Android
+reports [0,0][479,853] while actual root and Decor are [0,0][480,854]. The same
+one-pixel representation difference appears in independent SystemUI windows.
+
+A narrow coordinate correction is being prepared: actual native root must equal
+Decor exactly; all three bounds stay valid/nonempty/on-screen; native window
+edges may differ by at most one measured pixel, while two pixels must reject.
+Passing proof will record all raw bounds and computed maximum delta, independently
+recomputed by Python. Original target AXgeometry/focus/windowID/40nativeIDs/old7
+gates remain mandatory. Authentic logs/JUnit/pre-cleanup probes retained under
+third-native-ci. Compile/lint and a fresh40/272/fullvisualrun still required.
+Production/UI/host/debug/data/signing/workflows remain unchanged; no publication
+approval, oldAPKlink, AI or otherproduct work.
+
+## Foreground correction locally verified; fresh native proof next — 2026-11-26 UTC
+
+The exact-component ActivityRecord parser now accepts actualAPI33 closing-brace
+and historical task formats, compact/full class spellings, while rejecting stale/
+prefix/paused/wrong-component rows. The real Activity Decor AXwindowID must match
+the focused active visible native application window with valid onscreen bounds.
+Bounded diagnostic-only pre-cleanup observations retain future rejection reasons.
+Actual full106Python contracts PASS, Androidtest APK compilation PASS, lint0errors/
+16warnings (48seconds), all226tracked inputs unchanged. Production/host/debug/
+signing/workflows remain unchanged from actual467host45classCI PASS, so no local
+host rerun. Independent16accept/40reject/20window-corruption probes CODEGO; all40
+nativeIDs/seven original gates/272requiredframes preserved. Evidence is retained
+in foreground-correction. Fresh emulator40/272/fullactualvisual still PENDING;
+previous38/40failure remains truthful history. No0.14publication approval or
+hardware/update/durablekey claim; oldreleases/AI/otherproducts unchanged.
+
+## Actual second native CI: foreground-proof format correction — 2026-11-26 UTC
+
+CI45728361423 at c7b4e62e5aac324a7ea46e84ca14d4170a6241fb completed:
+103 tooling contracts PASS,467 unique host methods/45classes PASS, lint0errors/
+16warnings; native40 completed with38PASS/2FAIL/0errors/0skips. Both failures
+occurred in the newly added foreground proof before the three new captures.
+The API33 ActivityRecord format places a closing brace immediately after the
+component; the new helper incorrectly required a space. The original native
+focused-window checks had passed. Correct exact-component parsing and focused
+Activity/native-window identity checks are being prepared without dropping gates.
+
+The artifact has267actual PNGs:245original functional,19modern functional and
+3diagnostic. Cleanup precedes the failed-test diagnostic captures, so these are
+not the exact failing NEX/widget surface. Eight verification reports were not
+produced after the JUnit failure. No272-frame visual GO or tested-debug APK exists;
+the retained failure candidate remains explicitly unapproved. Authentic evidence
+is retained under second-native-ci. Fresh all40native/272captures/full actual
+visual review are required after compilation/lint of the correction. No production
+UI/data changes, no signing/publication exception, no old-link resend or AI.
+
+## First CI historical-contract fixture corrected — 2026-11-26 UTC
+
+FreshCI45727531391 at962fab4 stopped before Java/native:101of102Python tooling
+contracts passed, one historical0.12scope test read the current stronger0.14
+followup verifier and the immutable0.12hash guard correctly rejected it.
+The test now uses six exact historical0d266d63source fixtures verified against
+unchanged legacy pins; workspace-unchanged checks remain, and an addednegative
+rejects all six corrupted sources plus changed current0.14bytes. ActualfullCI
+Python command now103PASS/0fail/error. No helper/hash pin/signing/defaultCI or
+publication guard changed. Authentic failed artifact and fixed-test logs are
+retained in`docs/evidence/nex-redesign-0.14.0/first-ci-failure`.
+
+This is test-fixture-only; appTree7aa469df7e34eda9568b5adc92a56795f3fdf2fd and
+local467host/build/lint results remain unchanged. Fresh emulator40cases/272real
+captures and all-image visual review remain pending; no native PASS is claimed.
+
+## Current local preflight PASS; fresh native and visual proof next — 2026-11-26 UTC
+
+Merged source now passes467uniquehost methods in45classes,0failures/errors/skips,
+local debug and Androidtest APK builds, lint0errors/16warnings and42focused
+Python modern-profile contracts. All frozen source hashes remained unchanged.
+Independent merged-source and additive-native reviews are CODEGO; authentic
+JUnit/logs/metadata/source manifests retained in
+`docs/evidence/nex-redesign-0.14.0/local-preflight`.
+
+The original40native IDs and all245+24original images remain. The strict profile
+adds2actual WidgetConfigure previews with synthetic IDs/no launcherhostbinding
+claim and1actualowned NEX-island call image:27modern/272total. These native
+captures are NOT YET EXECUTED; fresh CI Telecom and actual full272visualreview
+are required on the newly committed app tree. No publication, hardware, upgrade
+or durable-signing success is claimed. No0.14signing/publication exception was
+approved; finish concrete software proof before requesting that boundary.
+
+## NEX source integrated with latestPR7; actual host failures being fixed — 2026-11-26 UTC
+
+Latest upstream6191392 includes an optional fifth NEX island style, backup
+allowlist, matching600/750font resource and measured full-label Businesses width.
+Root backed up/stashed all local work and integrated it without replacing remote
+commits; all local screen coherence, typography, data-action fences and new
+WidgetConfigure styling remain. The upstream fifth island option is preserved.
+
+Actual local467host suite before integration:465PASS/2FAIL/0errors/0skips. Both
+failures are strict complete Businesses-label fit checks at320dp/font1.3; the
+upstream width-from-current-Paint fix is retained, not weakened expectations.
+Full merged production/host checks are IN_PROGRESS. Earlier first attempts
+failed before Android runtime loading because sandbox sockets/home cache were
+unwritable; the local environment now uses writable JVM cache and normal allowed
+network. No default CI/signing workaround or app INTERNET permission was added.
+
+Existing40native IDs/allold269images remain. Strict additive coverage is being
+finished for2actual WidgetConfigure previews and1actualowned NEX-island call
+image (27modern/272total), with no actual launcher-host-binding claim for preview
+IDs. Fresh native Telecom, all272screens and real full visual review remain
+pending. AI remains deferred; no0.14publication exception has been approved.
+
+## New authorized NEX redesign0.14 scope in progress — 2026-11-25 UTC
+
+The new owner request authorizes a completely redesigned DA CALLER inspired by
+NEX before any AI. Work now continues ONLY in branchdesign/nex-caller-0.14/PR7
+(based on PR5), isolated worktree /workspace/D.A.-Caller-nex-014. Old no-new-UI
+checkpoints below remain historical for completed0.13; the new request supersedes
+them for this design scope. No NEX/DA-SECRETARY/other product is modified.
+
+Latest initial handoffdf7ccf4 already updated most screen palettes; root and
+scoped workers completed NEX navigation pills/cards/typography/secondary screens/
+call and island coherence while preserving functional handlers, style IDs, user
+customization, archive, backup, frozen sourced directory and offline app identity.
+NEX reference was read from actual Theme.kt/MainActivity.kt through the provider.
+Version0.14.0/code23/new bilingual changelog is coordinated; all21older entries
+are byte-preserved. Original40native cases and245+24frame gates remain required;
+version/catalog assertions were updated strictly.33focusedPython contracts PASS,
+static audits only; full current-source host/build/lint is IN_PROGRESS and has
+NOT yet passed. No fresh native/visual/hardware/update test is claimed.
+
+All production/test inputs were frozen and hashed before the sole root Gradle
+command. Independent source-preservation and design reviews run read-only in
+parallel. Next: fix concrete failures, pass full local checks, push source toPR7,
+obtain actual Telecom/native269screens and review ALL images on exactnewsource.
+No signing/defaultCI/publication change is allowed by this design request.
+0.14exception approval does not exist; stable owner key/private backup/secrets
+remain separately unresolved. Finish reviewable candidate before any permission
+question; never rebuild/re-sign a reviewed publication candidate, overwrite old
+releases, send an old link, weaken gates or implement AI.
+
 ## Verified 0.13.0 APK delivered; awaiting owner-controlled signing setup — 2026-11-25 14:03 UTC
 
 The verified NEW0.13.0 APK link was actually sent in the previous completion

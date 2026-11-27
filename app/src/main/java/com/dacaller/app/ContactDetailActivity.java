@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/** Google-like clean contact profile with contact image, number and edit actions. */
+/** Warm, layered contact profile with contact image, number and edit actions. */
 public final class ContactDetailActivity extends Activity {
  private static final ExecutorService IO=Executors.newSingleThreadExecutor();
  private android.content.SharedPreferences prefs;
@@ -41,10 +41,10 @@ public final class ContactDetailActivity extends Activity {
  private int fetchGeneration;
  private int d(float n){return (int)(getResources().getDisplayMetrics().density*n+.5f);}
  private boolean dark(){return prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);}
- private int page(){return prefs.getBoolean("amoled",false)?Color.BLACK:dark()?0xFF141414:0xFFF8F8F7;}
- private int surface(){return dark()?0xFF242424:Color.WHITE;}
- private int ink(){return dark()?Color.WHITE:0xFF151515;}
- private int muted(){return dark()?0xFFAEAEAE:0xFF737373;}
+ private int page(){return NexPalette.background(dark(),prefs.getBoolean("amoled",false));}
+ private int surface(){return NexPalette.surface(dark(),prefs.getBoolean("amoled",false));}
+ private int ink(){return NexPalette.ink(dark());}
+ private int muted(){return NexPalette.muted(dark());}
  private int accent(){return "silver".equals(prefs.getString("accent","gold"))?(dark()?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark());}
  private String tr(String s){return I18n.text(this,s);}
  private GradientDrawable shape(int color,int radius){
@@ -70,16 +70,16 @@ public final class ContactDetailActivity extends Activity {
   getWindow().setStatusBarColor(page());getWindow().setNavigationBarColor(page());
   getWindow().getDecorView().setSystemUiVisibility(dark()?0:View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
   LinearLayout root=col();root.setBackgroundColor(page());setContentView(root);
-  LinearLayout top=row();top.setPadding(d(14),d(7),d(14),d(7));root.addView(top,new LinearLayout.LayoutParams(-1,d(62)));
+  LinearLayout top=row();top.setMinimumHeight(d(64));top.setPadding(d(12),d(8),d(12),d(8));root.addView(top,new LinearLayout.LayoutParams(-1,-2));
   ImageView back=new ImageView(this);back.setImageDrawable(AppAppearance.backArrow(this,accent()));back.setScaleType(ImageView.ScaleType.CENTER);
   back.setContentDescription(tr("חזרה"));back.setFocusable(true);
   top.addView(back,new LinearLayout.LayoutParams(d(48),d(48)));back.setOnClickListener(v->finish());
-  TextView heading=label("כרטיס איש קשר",17,true,ink());top.addView(heading,new LinearLayout.LayoutParams(0,-2,1));
-  TextView edit=label("עריכה",15,true,accent());edit.setPadding(d(10),d(10),d(10),d(10));top.addView(edit);
+  TextView heading=label("כרטיס איש קשר",22,true,ink());top.addView(heading,new LinearLayout.LayoutParams(0,-2,1));
+  TextView edit=label("עריכה",14,true,accent());edit.setGravity(Gravity.CENTER);edit.setMinimumHeight(d(48));edit.setMinWidth(d(48));edit.setPadding(d(10),d(10),d(10),d(10));top.addView(edit);
   edit.setOnClickListener(v->editContact());
   ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);scroll.setVerticalScrollBarEnabled(false);
   root.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));
-  content=col();content.setPadding(d(17),d(12),d(17),d(22));scroll.addView(content);
+  content=col();content.setPadding(d(16),d(8),d(16),d(24));scroll.addView(content);
  }
  private void fetch(){
   if(contactId<0){finish();return;}
@@ -134,11 +134,11 @@ public final class ContactDetailActivity extends Activity {
  }
  private void populate(String name,ArrayList<String[]> phones,ArrayList<String[]> emails,ArrayList<String[]> misc){
   content.removeAllViews();
-  LinearLayout hero=col();hero.setGravity(Gravity.CENTER);hero.setPadding(d(8),d(13),d(8),d(20));
-  content.addView(hero,new LinearLayout.LayoutParams(-1,-2));
+  LinearLayout hero=col();hero.setGravity(Gravity.CENTER);hero.setPadding(d(12),d(18),d(12),d(16));hero.setBackground(shape(surface(),20));
+  LinearLayout.LayoutParams heroParams=new LinearLayout.LayoutParams(-1,-2);heroParams.bottomMargin=d(11);content.addView(hero,heroParams);
   FrameLayout avatar=AvatarShapes.frame(this);
-  avatar.setBackground(shape(dark()?0xFF343029:0xFFF1E8D8,70));
-  hero.addView(avatar,new LinearLayout.LayoutParams(d(116),d(116)));
+  avatar.setBackground(shape(NexPalette.soft(dark()),70));
+  hero.addView(avatar,new LinearLayout.LayoutParams(d(104),d(104)));
   initials=label(name.isEmpty()?"?":name.substring(0,name.offsetByCodePoints(0,1)).toUpperCase(I18n.locale(this)),45,true,accent());
   initials.setGravity(Gravity.CENTER);avatar.addView(initials,new FrameLayout.LayoutParams(-1,-1));
   photo=new ImageView(this);final ImageView requestedPhoto=photo;photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -150,9 +150,9 @@ public final class ContactDetailActivity extends Activity {
    else requestedPhoto.setVisibility(View.GONE);
   });
   TextView fullName=label("",25,true,ink());fullName.setText(name);
-  fullName.setGravity(Gravity.CENTER);fullName.setSingleLine(true);
+  fullName.setGravity(Gravity.CENTER);fullName.setMaxLines(2);fullName.setMinimumHeight(d(52));
   fullName.setEllipsize(android.text.TextUtils.TruncateAt.END);
-  LinearLayout.LayoutParams n=new LinearLayout.LayoutParams(-1,d(55));n.topMargin=d(8);
+  LinearLayout.LayoutParams n=new LinearLayout.LayoutParams(-1,-2);n.topMargin=d(10);n.bottomMargin=d(8);
   hero.addView(fullName,n);
   LinearLayout actions=row();actions.setGravity(Gravity.CENTER);
   hero.addView(actions,new LinearLayout.LayoutParams(-1,d(66)));
@@ -172,13 +172,13 @@ public final class ContactDetailActivity extends Activity {
    section("טלפון");
    for(String[] phone:phones){
     LinearLayout line=row();line.setPadding(d(13),d(10),d(13),d(10));
-    line.setBackground(shape(surface(),15));
-    LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,d(75));lp.bottomMargin=d(8);content.addView(line,lp);
+    line.setBackground(shape(surface(),20));line.setMinimumHeight(d(76));
+    LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,-2);lp.bottomMargin=d(11);content.addView(line,lp);
     LinearLayout left=col();line.addView(left,new LinearLayout.LayoutParams(0,-2,1));
     TextView numberLabel=label("",17,true,ink());numberLabel.setText(phone[0]);numberLabel.setTextDirection(View.TEXT_DIRECTION_LTR);left.addView(numberLabel);
     left.addView(label(tr("מספר טלפון"),12,false,muted()));
     ImageView call=new ImageView(this);call.setImageResource(R.drawable.ic_phone_line);
-    call.setImageTintList(ColorStateList.valueOf(accent()));call.setPadding(d(11),d(11),d(11),d(11));
+    call.setImageTintList(ColorStateList.valueOf(NexPalette.onCall(dark())));call.setBackground(shape(NexPalette.call(dark()),16));call.setPadding(d(13),d(13),d(13),d(13));
     line.addView(call,new LinearLayout.LayoutParams(d(51),d(51)));
     call.setContentDescription(tr("התקשר")+" "+phone[0]);
     call.setOnClickListener(v->call(phone[0]));left.setOnClickListener(v->AppAppearance.show(new AlertDialog.Builder(this)
@@ -201,8 +201,8 @@ public final class ContactDetailActivity extends Activity {
    for(String[] pair:misc)info(pair[0]+" · "+pair[1],"◈");
   }
   TextView nativeEdit=label("פתיחה בעורך אנשי הקשר",14,true,accent());
-  nativeEdit.setGravity(Gravity.CENTER);nativeEdit.setBackground(shape(surface(),15));
-  LinearLayout.LayoutParams nativeParams=new LinearLayout.LayoutParams(-1,d(52));nativeParams.topMargin=d(10);content.addView(nativeEdit,nativeParams);
+  nativeEdit.setGravity(Gravity.CENTER);nativeEdit.setMinimumHeight(d(52));nativeEdit.setPadding(d(12),d(10),d(12),d(10));nativeEdit.setBackground(shape(surface(),20));
+  LinearLayout.LayoutParams nativeParams=new LinearLayout.LayoutParams(-1,-2);nativeParams.topMargin=d(11);content.addView(nativeEdit,nativeParams);
   nativeEdit.setOnClickListener(v->NativeContacts.open(this,contactId,name,phones.isEmpty()?"":phones.get(0)[0]));
  }
  private void section(String name){
@@ -211,19 +211,20 @@ public final class ContactDetailActivity extends Activity {
  }
  private void info(String line,String mark){
   TextView text=label(mark+"    "+line,14,false,ink());
-  text.setPadding(d(15),d(15),d(15),d(15));text.setBackground(shape(surface(),15));
-  LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,-2);p.bottomMargin=d(7);
+  text.setPadding(d(16),d(16),d(16),d(16));text.setBackground(shape(surface(),20));
+  LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,-2);p.bottomMargin=d(11);
   content.addView(text,p);
  }
  private void profileAction(LinearLayout group,String icon,String title,Runnable run){
   LinearLayout col=col();col.setGravity(Gravity.CENTER);
-  TextView symbol=label(icon,23,true,accent());symbol.setGravity(Gravity.CENTER);
+  boolean primary="☎".equals(icon);
+  TextView symbol=label(icon,23,true,primary?NexPalette.onCall(dark()):accent());symbol.setGravity(Gravity.CENTER);
   col.addView(symbol,new LinearLayout.LayoutParams(-1,d(34)));
-  TextView desc=label(title,11,false,ink());desc.setGravity(Gravity.CENTER);
+  TextView desc=label(title,11,false,primary?NexPalette.onCall(dark()):ink());desc.setGravity(Gravity.CENTER);
   col.addView(desc,new LinearLayout.LayoutParams(-1,d(23)));
   LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(0,d(63),1);
   params.setMargins(d(6),0,d(6),0);group.addView(col,params);
-  col.setContentDescription(title);col.setBackground(shape(surface(),15));col.setOnClickListener(v->run.run());
+  col.setContentDescription(title);col.setBackground(shape(primary?NexPalette.call(dark()):NexPalette.soft(dark()),18));col.setOnClickListener(v->run.run());
  }
  private void editContact(){
   Intent edit=new Intent(this,ContactEditorActivity.class);

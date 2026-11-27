@@ -1,0 +1,50 @@
+{
+  "status": "FIRST_CI_TOOLING_FAILURE_FIXED_NATIVE_NOT_EXECUTED",
+  "observed_at_utc": "2026-11-26T00:22:57.478811+00:00",
+  "failed_source": "962fab4384c272b60d4d778842775805019cde93",
+  "failed_run_id": 45727531391,
+  "failed_job_id": 139601033391,
+  "failed_stage": "Verify all DA CALLER Python tooling contracts",
+  "original_contracts": 102,
+  "original_contract_pass": 101,
+  "original_contract_errors": 1,
+  "error": "Historical0.12 unit fixture incorrectly read current0.14 followup verifier; immutable helper correctly rejected changed source.",
+  "authentic_failed_checks_artifact": {
+    "id": 15075032433,
+    "bytes": 3814,
+    "sha256": "a8df6667ea5649311a55d8ee465808fe71fc81d8b42ab0c4a8cfe906086b4d66",
+    "crc": "PASS",
+    "members": [
+      "tooling-checks/signing-tests.txt"
+    ]
+  },
+  "fixed_actual_python_contracts": 103,
+  "fixed_python_failures": 0,
+  "fixed_python_errors": 0,
+  "frozen_historical_fixture_source": "0d266d63d446b46d3e2a98048b112572d22768fa",
+  "fixtures_sha256": {
+    "scripts/tests/fixtures/release_012/verify-followup-matrix.py": "6f7c540bc7703f25957be11566789e021eb438208942fc9c0d73c94579c14fa8",
+    "scripts/tests/fixtures/release_012/verify-ui-matrix.py": "e3fd18f544b028ffeddaddee272b2f4e7aefa2cc47f5d2d90fac5d9580c9dab2",
+    "scripts/tests/fixtures/release_012/verify-call-integration-matrix.py": "0dbe8072173a2417ce9bb46fb686c9ab8fc194255c38dabdb1e396d5e0b22e6f",
+    "scripts/tests/fixtures/release_012/verify-personalization-matrix.py": "0fa3106ef1832cd5fb7fd8df167c56e19c70b5a034ae1ffc20636659220d2825",
+    "scripts/tests/fixtures/release_012/verify-external-island-matrix.py": "db313c16aea96a65b1d194de80a3562e9a73204efb845473c89cff4664844c65",
+    "scripts/tests/fixtures/release_012/verify-island-matrix.py": "a2f0b025aeb20536acadd574ec36a500141516a9cefe3f99e4b4478fa051be36"
+  },
+  "fix_scope": "Only historical test factory and exactpinnedfixturedata. Positives use exactoriginal bytes, workspace unchanged checks retained; addedall6corruption/current0.14source rejection.",
+  "legacy_helper_hash_pins_CI_signing_or_publication_guards_changed": false,
+  "application_source_changed": false,
+  "app_tree": "7aa469df7e34eda9568b5adc92a56795f3fdf2fd",
+  "local_host467_debug_androidtest_lint_results_remain_valid": true,
+  "native_execution_on_new_source": "PENDING_FRESH_CI",
+  "visual_review": "PENDING272_ACTUAL_FRAMES",
+  "raw_log_sha256": {
+    "first-ci-validate.log": {
+      "bytes": 218644,
+      "sha256": "eca61f51b37ad39c0745d48536ebb95bffb8822835e6637cb2919503118a7986"
+    },
+    "python-contracts-ci-fix.log": {
+      "bytes": 19461,
+      "sha256": "98c612b7b51edf3dfb353e4d633e7b1bb7fdf3d10e6a3fee77afd68fb9ab5f63"
+    }
+  }
+}

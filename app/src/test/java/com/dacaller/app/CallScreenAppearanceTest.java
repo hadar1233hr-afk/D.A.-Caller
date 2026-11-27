@@ -124,7 +124,7 @@ public class CallScreenAppearanceTest {
      expected.setTypeface(Typeface.create(activity.getResources().getFont(R.font.nunito_round),650,false));expected.setFontVariationSettings("'wght' 650");
      assertEquals("Google digits lost Nunito glyph metrics",expected.measureText("0123456789*#"),number.getPaint().measureText("0123456789*#"),0.01f);
      assertEquals(expected.getFontMetrics().ascent,number.getPaint().getFontMetrics().ascent,0.01f);
-    }else assertEquals("'wght' 500",number.getFontVariationSettings());
+    }else assertEquals("'wght' 600",number.getFontVariationSettings());
    }
   }
  }

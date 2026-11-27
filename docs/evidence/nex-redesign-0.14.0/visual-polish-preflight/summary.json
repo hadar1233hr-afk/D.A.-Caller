@@ -1,0 +1,23 @@
+{
+  "baseline_source": "1a4926785a72bec25c188f9c5b74116c5b498c31",
+  "host_methods": 469,
+  "host_classes": 45,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "debug_apk_build": "PASS",
+  "androidtest_apk_build": "PASS",
+  "lint": {
+    "Fatal": 0,
+    "Error": 0,
+    "Warning": 16,
+    "Information": 0
+  },
+  "source_files_unchanged_during_checks": 300,
+  "original_native_method_ids_unchanged": 40,
+  "signing_workflows_business_assets_unchanged": true,
+  "actual_old_visual_review": "272reviewed:266PASS6FAIL",
+  "fresh_native_and_visual_review": "PENDING",
+  "hardware_or_matching_key_update": "NOT_TESTED",
+  "publication_allowed": false
+}

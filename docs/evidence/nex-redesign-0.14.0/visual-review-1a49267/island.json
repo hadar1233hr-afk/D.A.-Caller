@@ -1,0 +1,285 @@
+{
+  "group": "island",
+  "source_sha": "1a4926785a72bec25c188f9c5b74116c5b498c31",
+  "app_tree": "b5f973f6b837cc747ece84e32815a102de293937",
+  "run_id": "45773402159",
+  "sheets_viewed": [
+    "island-01.png",
+    "island-02.png",
+    "island-03.png",
+    "island-04.png",
+    "island-05.png",
+    "island-06.png",
+    "island-07.png",
+    "island-08.png",
+    "island-09.png",
+    "island-10.png",
+    "island-11.png"
+  ],
+  "frames": [
+    {
+      "filename": "external-end-confirmation.png",
+      "sha256": "af735064381e4bd9ee8483ac66a66ee65eb9452a25e339567ed188dd4d2c742a",
+      "status": "PASS",
+      "notes": "End-call confirmation is centered and readable with separate cancel and end actions; dimmed expanded island remains below visible SystemUI clock, call chip and right-side icons."
+    },
+    {
+      "filename": "external-ended-launcher.png",
+      "sha256": "ec9a7506247a758d611bc31ed896866753550c804d032371a7ddbd8bec483dfe",
+      "status": "PASS",
+      "notes": "Launcher is unobstructed after call end; clock, date, app dock, search bar and navigation icons remain visible with no residual island."
+    },
+    {
+      "filename": "external-inapp-return.png",
+      "sha256": "562df500206ecca9b7e4ebadc050f2342a26c51e2ceb5acc3b46eb97ec0d24ee",
+      "status": "PASS",
+      "notes": "Compact RTL caller label uses bounded ellipsis beside readable active-state text and timer; contacts search, contact row and bottom navigation retain usable visible space below the island."
+    },
+    {
+      "filename": "external-launcher-active-compact.png",
+      "sha256": "7b918b7432105147a48280b7c44f01b6bcddef5cd9fccb1f91807543fd6bf05d",
+      "status": "PASS",
+      "notes": "Compact RTL island is below the SystemUI clock/call chip and microphone indicator; caller ellipsis, active-state label and timer are readable, with launcher dock and navigation visible."
+    },
+    {
+      "filename": "external-launcher-active-expanded.png",
+      "sha256": "6346ecd10b44bede02055078638fed43fc48d541b9105b80952f5e7426c6d3a3",
+      "status": "PASS",
+      "notes": "Expanded launcher island has readable caller, timer, end/hold/mute labels, return-to-call row and hide action; SystemUI clock/call chip, microphone indicator and launcher dock remain visible."
+    },
+    {
+      "filename": "external-launcher-native-incoming.png",
+      "sha256": "188a41771b352d98872c282b0209ffd1504561d3e3a42de9fc8077057f563def",
+      "status": "PASS",
+      "notes": "Native incoming-call card shows readable RTL caller/state text and distinct red reject, return and green answer controls; right-side status icons and launcher dock remain unobscured."
+    },
+    {
+      "filename": "external-other-app-active-expanded.png",
+      "sha256": "44fb318654ab9a34808b2f1781b9186fe18a081d378247fd5847c2c3cef7daad",
+      "status": "PASS",
+      "notes": "Expanded island over Clock shows readable end/hold/mute, return-to-call and hide labels; status clock/call chip and right-side icons are clear, and Clock tabs/navigation remain visible below."
+    },
+    {
+      "filename": "external-permission-denied-launcher.png",
+      "sha256": "188a41771b352d98872c282b0209ffd1504561d3e3a42de9fc8077057f563def",
+      "status": "PASS",
+      "notes": "Permission-denied launcher frame visibly presents the native incoming-call card with readable caller/state text and separate red reject, return and green answer controls; launcher dock/navigation remain visible."
+    },
+    {
+      "filename": "island-app-contacts-compact.png",
+      "sha256": "1d0d964e7063c231777cf881e7c4ea85b8589de5dc77da2b39919d5ace15dad2",
+      "status": "PASS",
+      "notes": "Compact RTL island has readable timer/state and bounded caller ellipsis; SystemUI clock/icons are clear and contacts favourites, search, visible rows and bottom tabs retain space."
+    },
+    {
+      "filename": "island-app-contacts-expanded.png",
+      "sha256": "ffb67f2824628f79eca0448548865797543409d6e0a3fcc4cd33019d1405f529",
+      "status": "PASS",
+      "notes": "Expanded in-app panel keeps caller/state/timer and all four primary call-control labels readable, with clock/icons and a contact row visible. Panel has a visible scroll indicator; only a clipped sliver of its lower return action appears in the initial viewport, so this image does not establish its offscreen label visibility."
+    },
+    {
+      "filename": "island-app-recents-compact.png",
+      "sha256": "e062a940daf5975971ea652e2fd697a6cbace691c41b9afeefd03d885b335b67",
+      "status": "PASS",
+      "notes": "Compact RTL caller ellipsis, timer and active-state label are readable; status clock/icons remain clear and recent-call summary plus list rows and bottom navigation retain usable space."
+    },
+    {
+      "filename": "island-app-recents-expanded.png",
+      "sha256": "c991a6511310615519cc487f4ac054c2137461a5f7945b7c3618fcc05401094d",
+      "status": "PASS",
+      "notes": "Expanded in-app panel keeps caller/state/timer and all four primary call-control labels readable, with status icons and a recent-call row visible. A scroll indicator bounds the panel; lower return action is only a clipped sliver in this initial viewport, so its offscreen label is not judged visible."
+    },
+    {
+      "filename": "island-apple-dark-en-compact.png",
+      "sha256": "1ed0eb79d2b56f6ce0c18b27e21655e02f410213cad288d44313b5f6d46cb395",
+      "status": "PASS",
+      "notes": "Dark Apple compact island shows bounded Noa Islan... caller label, Active call, timer and waveform; SystemUI clock/icons and the search plus multiple contact rows remain visible."
+    },
+    {
+      "filename": "island-apple-dark-en-expanded.png",
+      "sha256": "65af625f404722698d75a88488f75fa2c2745fd932c63ffdb5c53f11f44a2e0a",
+      "status": "PASS",
+      "notes": "Dark Apple expanded caller, timer, collapse caret, Mute/Speaker/Hold/End labels, Open call and Hide for this call are readable; clock/icons and two contact rows remain visible below."
+    },
+    {
+      "filename": "island-apple-dark-he-compact.png",
+      "sha256": "8ac245fb45c8955e83791711c2ccf5e916710f72f166b6c1adeffdc3bb0eb605",
+      "status": "PASS",
+      "notes": "Dark Apple compact RTL caller ellipsis, active-state label, timer and waveform are readable; clock/icons are clear and Hebrew search/list text remains legible below."
+    },
+    {
+      "filename": "island-apple-dark-he-expanded.png",
+      "sha256": "92c73c1b06488e086d1d9570d020e533a840a446594e38c71905df76b1464589",
+      "status": "PASS",
+      "notes": "Dark Apple expanded RTL layout has readable caller/state/timer, collapse caret, four call-control labels, return-to-call and hide actions; Hebrew search/list and SystemUI clock/icons remain clear."
+    },
+    {
+      "filename": "island-apple-light-en-compact.png",
+      "sha256": "e6ef25a028fa817512179b8fb41d73c45f2e68c97b8f5b722c83ee676ac3178f",
+      "status": "PASS",
+      "notes": "Light screen with dark Apple compact island has readable bounded caller ellipsis, state and timer; grey SystemUI clock/icons and black contacts/search text have visible contrast."
+    },
+    {
+      "filename": "island-apple-light-en-expanded.png",
+      "sha256": "5393972947a8fba24e1cd0c24eea2f9c658fcbcb974f95ac2cbef757896230be",
+      "status": "PASS",
+      "notes": "Light Apple expanded frame shows visible collapse caret, all four primary labels, Open call and Hide for this call; dark island text contrasts and contact search plus two rows remain visible."
+    },
+    {
+      "filename": "island-apple-light-he-compact.png",
+      "sha256": "2367c7554866cf616cbdba3056545ed511a731fc86ec3f6c0873622c5a40ebf5",
+      "status": "PASS",
+      "notes": "Light Apple compact RTL caller ellipsis, state, waveform and timer are readable; SystemUI clock/icons and Hebrew search/list text remain clear."
+    },
+    {
+      "filename": "island-apple-light-he-expanded.png",
+      "sha256": "4035b97c40852a1b06621ad51069f9aacc04dca50e7cb8e5725bb874bda8db95",
+      "status": "PASS",
+      "notes": "Light Apple expanded RTL frame has visible collapse caret, readable four control labels, return-to-call and hide labels; status clock/icons and two Hebrew contact rows retain space."
+    },
+    {
+      "filename": "island-emerald-dark-en-compact.png",
+      "sha256": "5fdb3197b836b53c71e8ccdd40d1cebd1b5b48ff90a5cd96c2abd65845d6d352",
+      "status": "PASS",
+      "notes": "Emerald dark compact island shows readable bounded caller ellipsis, Active call, yellow timer and waveform; status clock/icons and contact search/list remain clear."
+    },
+    {
+      "filename": "island-emerald-dark-en-expanded.png",
+      "sha256": "eb689d9d42e30f48fd0d064d85b698c78d63afebc2ef2b135b82128b7390d2b0",
+      "status": "PASS",
+      "notes": "Raw original individually re-reviewed: Emerald dark expanded frame clearly shows the collapse caret, full Open call and Hide for this call labels, caller/state/timer and all four primary controls. SystemUI clock/icons and two contact rows remain readable."
+    },
+    {
+      "filename": "island-emerald-dark-he-compact.png",
+      "sha256": "11b426463253c181ba74be36371ff68b17d003d429852cf8b80817116556566e",
+      "status": "PASS",
+      "notes": "Emerald dark compact RTL island has readable caller ellipsis, active-state text, yellow timer and waveform; clock/icons and Hebrew list content remain visible."
+    },
+    {
+      "filename": "island-emerald-dark-he-expanded.png",
+      "sha256": "c9ff53db55f7d03ce816a5423cf1b1456a9698f9ffa8ca91ea97b8fc695eaa74",
+      "status": "PASS",
+      "notes": "Raw original individually re-reviewed: Emerald dark RTL expanded frame clearly shows the collapse caret, full return-to-call and hide labels, caller/state/timer and four primary call-control labels. Clock/icons and two Hebrew contact rows remain visible."
+    },
+    {
+      "filename": "island-emerald-light-en-compact.png",
+      "sha256": "a3edf97611efee8d82638a1ca24e7787dc396d179973a9f9f179ae6a547c3be8",
+      "status": "PASS",
+      "notes": "Emerald compact island on light background retains readable caller ellipsis, state and yellow timer; grey status clock/icons contrast and contact search/list have usable space."
+    },
+    {
+      "filename": "island-emerald-light-en-expanded.png",
+      "sha256": "a3e71ccfc1982b7375cb76c1dd89cf84d24ca467d5753a1eaebbefd61e0363df",
+      "status": "PASS",
+      "notes": "Emerald light expanded frame shows visible collapse caret, readable caller/state/timer, four primary controls, Open call and Hide for this call; clock/icons and two contact rows remain clear."
+    },
+    {
+      "filename": "island-emerald-light-he-compact.png",
+      "sha256": "8caaff0f6567d7ef4910f89fb14d7fe6babd79114caf475c1e6c5e31a139fbcf",
+      "status": "PASS",
+      "notes": "Emerald light compact RTL island keeps caller ellipsis, state, yellow timer and waveform readable; Hebrew search/list and grey status clock/icons remain visible."
+    },
+    {
+      "filename": "island-emerald-light-he-expanded.png",
+      "sha256": "410f1eb0a5b13439205bb65437d5e86a2fed0d9c862c3d1c0a62bae0b0a2b833",
+      "status": "PASS",
+      "notes": "Emerald light expanded RTL frame shows collapse caret, all four call-control labels, return-to-call and hide labels; status icons and Hebrew search plus two contact rows retain space."
+    },
+    {
+      "filename": "island-glass-dark-en-compact.png",
+      "sha256": "8dfdd53ef2539a53f340dcee97ff0c15f3b089efea73d30fd3c469846dc52ec0",
+      "status": "PASS",
+      "notes": "Glass dark compact island has readable bounded caller ellipsis, Active call, orange timer and waveform; clock/icons and contact search/list remain visible."
+    },
+    {
+      "filename": "island-glass-dark-en-expanded.png",
+      "sha256": "ec2a6b943b48778e6997300b3e3a7670b1aa73c9bd70dfadbd7518bc6a7a07bc",
+      "status": "PASS",
+      "notes": "Raw original individually re-reviewed: Glass dark expanded frame clearly shows the collapse caret, centered Open call and Hide for this call labels, caller/state/timer and four primary control labels. SystemUI clock/icons and two contact rows remain clear."
+    },
+    {
+      "filename": "island-glass-dark-he-compact.png",
+      "sha256": "933d87e727922f3c8a3f7e9be5f0d288007d241bd55f81b77d2f89503f0176fe",
+      "status": "PASS",
+      "notes": "Glass dark compact RTL island has readable caller ellipsis, state, orange timer and waveform; SystemUI clock/icons and Hebrew search/list remain clear."
+    },
+    {
+      "filename": "island-glass-dark-he-expanded.png",
+      "sha256": "19d7c53c1876cd22f1cb100e5ed9a5ad69015c234bc48a7810e6285a1fc03839",
+      "status": "PASS",
+      "notes": "Raw original individually re-reviewed: Glass dark RTL expanded frame clearly shows the collapse caret, full return-to-call and hide labels, caller/state/timer and four primary controls. Clock/icons and Hebrew search/list remain legible."
+    },
+    {
+      "filename": "island-glass-light-en-compact.png",
+      "sha256": "711c69204af29de27e4b080dee916bcb14fb31f51d350041d6d62d4dd0c34fc0",
+      "status": "PASS",
+      "notes": "Glass compact island on light background keeps bounded caller ellipsis, state, orange timer and waveform readable; grey clock/icons contrast and contact search/list remain visible."
+    },
+    {
+      "filename": "island-glass-light-en-expanded.png",
+      "sha256": "241c827aaab6fc2de07a77a7a70559bf98fa002dc91e9bb23d34a341a7bd3919",
+      "status": "PASS",
+      "notes": "Raw original individually re-reviewed: Glass light expanded frame clearly shows the collapse caret, full Open call and Hide for this call labels, caller/state/timer and four primary controls. Grey SystemUI clock/icons and contact search plus two rows remain visible."
+    },
+    {
+      "filename": "island-glass-light-he-compact.png",
+      "sha256": "d3d459c1153f49aaf568d29ff09e00ac939c5cd0b594a97be1e0efe152bbafb9",
+      "status": "PASS",
+      "notes": "Glass light compact RTL island shows readable caller ellipsis, active-state label, orange timer and waveform; Hebrew list/search text and grey SystemUI clock/icons are clear."
+    },
+    {
+      "filename": "island-glass-light-he-expanded.png",
+      "sha256": "1a39923311a7dc25aaa5b04284f43766ab667fb1d8c040bf3ee4ce802ec81cae",
+      "status": "PASS",
+      "notes": "Raw original individually re-reviewed: Glass light RTL expanded frame clearly shows the collapse caret, centered return-to-call and hide labels, caller/state/timer and four primary control labels. Grey clock/icons and Hebrew search plus two rows remain clear."
+    },
+    {
+      "filename": "island-settings-dark-bottom.png",
+      "sha256": "be7e31c109d6d5b30ee47f699b0732b88236db987310fd7dd19c62cd77e594ea",
+      "status": "PASS",
+      "notes": "Dark RTL lower settings show separate readable mute/speaker/hold and end-confirmation labels with explanatory text and distinct switches; instructions below and SystemUI clock/icons remain visible without text overlap."
+    },
+    {
+      "filename": "island-settings-dark.png",
+      "sha256": "bb8030f3ca306405ed688c7781e63975874cdfc94c310da1d78a29a17c6f2725",
+      "status": "PASS",
+      "notes": "Dark RTL settings heading, introduction, activation section and in-app/outside-app switch labels are readable with distinct switch states; clock/icons remain unobscured and content is vertically scroll-indicated."
+    },
+    {
+      "filename": "island-settings-light-bottom.png",
+      "sha256": "b0d745aed3340ecb73c8e3f0b1168a6cc02448f8b53256d5e29d99860081e33f",
+      "status": "PASS",
+      "notes": "Light RTL lower settings show readable mute/speaker/hold and end-confirmation text with contrasting switches and clear instructions below; SystemUI clock/icons and navigation remain visible."
+    },
+    {
+      "filename": "island-settings-light.png",
+      "sha256": "5c0abf4f8b32eb7e67112c2fe3384707260dd36fc4f3c2f4fbe582aba44f1466",
+      "status": "PASS",
+      "notes": "Light RTL settings title, introduction and in-app/outside-app option labels are readable; switch on/off appearance is distinct, and status clock/icons plus navigation remain clear."
+    },
+    {
+      "filename": "island-state-held.png",
+      "sha256": "464302e2065f8f83a8ee99290ddb47bc025d089f3459d50322db60d6fea74299",
+      "status": "PASS",
+      "notes": "Held-state island shows yellow held status and orange resume control with readable end/resume/speaker/mute labels, return and hide actions; caller/timer, clock/icons and two contact rows remain visible."
+    },
+    {
+      "filename": "island-state-incoming.png",
+      "sha256": "bb9013c160b7f4ff2eb5ec23241f0280d2b213b8aacc20294ae49bf3bd318a38",
+      "status": "PASS",
+      "notes": "Incoming-state RTL island shows readable caller/incoming label with separate green answer and red reject controls, readable return/hide actions and a visible collapse caret; status clock/icons and list space remain clear."
+    },
+    {
+      "filename": "island-state-noaudio.png",
+      "sha256": "01a903f67fdf99f84c247d5779d8599d852109dce7e6439b8fbfb7b01fcc79a2",
+      "status": "PASS",
+      "notes": "No-audio RTL state visibly contains end and hold controls with readable labels, readable return/hide actions and a visible collapse caret; caller/state/timer, clock/icons and search/list remain clear."
+    },
+    {
+      "filename": "island-state-outgoing.png",
+      "sha256": "c7c4f4e33edd99d3aec58ff0a23f4768768c0cf9b7df1e25ab2b628645637cba",
+      "status": "PASS",
+      "notes": "Outgoing-state RTL island has readable caller/outgoing text, collapse caret, four call-control labels and return/hide actions; clock/icons and search plus two contact rows remain visible."
+    }
+  ]
+}

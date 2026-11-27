@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.database.ContentObserver;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -59,10 +60,10 @@ public final class ArchiveActivity extends Activity {
  };
  private int dp(float x){return (int)(getResources().getDisplayMetrics().density*x+0.5f);}
  private boolean dark(){return prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);}
- private int surface(){return prefs.getBoolean("amoled",false)?Color.BLACK:dark()?0xFF151515:0xFFF8F8F7;}
- private int card(){return dark()?0xFF232323:Color.WHITE;}
- private int ink(){return dark()?Color.WHITE:0xFF1B1B1B;}
- private int muted(){return dark()?0xFFBBBBBB:0xFF666666;}
+ private int surface(){return NexPalette.background(dark(),prefs.getBoolean("amoled",false));}
+ private int card(){return NexPalette.surface(dark(),prefs.getBoolean("amoled",false));}
+ private int ink(){return NexPalette.ink(dark());}
+ private int muted(){return NexPalette.muted(dark());}
  private int gold(){return "silver".equals(prefs.getString("accent","gold"))?(dark()?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark());}
  private Locale locale(){return I18n.isEnglish(this)?Locale.ENGLISH:new Locale("he","IL");}
  private String tr(String he,String en){return I18n.isEnglish(this)?en:he;}
@@ -89,12 +90,12 @@ public final class ArchiveActivity extends Activity {
   root.setLayoutDirection(I18n.isEnglish(this)?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);
   root.setBackgroundColor(surface());setContentView(root);
   applySystemBars();
-  LinearLayout header=new LinearLayout(this);header.setGravity(Gravity.CENTER_VERTICAL);header.setPadding(dp(8),dp(4),dp(8),dp(4));
+  LinearLayout header=new LinearLayout(this);header.setGravity(Gravity.CENTER_VERTICAL);header.setMinimumHeight(dp(64));header.setPadding(dp(12),dp(8),dp(12),dp(8));
   root.addView(header,new LinearLayout.LayoutParams(-1,-2));
   ImageView back=new ImageView(this);back.setImageDrawable(AppAppearance.backArrow(this,gold()));back.setScaleType(ImageView.ScaleType.CENTER);
   back.setContentDescription(tr("חזרה","Back"));header.addView(back,new LinearLayout.LayoutParams(dp(48),dp(48)));
   back.setOnClickListener(v->finish());
-  TextView title=text("ארכיון שיחות",20,true,ink());header.addView(title,new LinearLayout.LayoutParams(0,-2,1));
+  TextView title=text("ארכיון שיחות",22,true,ink());header.addView(title,new LinearLayout.LayoutParams(0,-2,1));
   TextView reload=text("↻",25,false,gold());reload.setGravity(Gravity.CENTER);
   reload.setContentDescription(tr("רענון ארכיון","Refresh archive"));header.addView(reload,new LinearLayout.LayoutParams(dp(48),dp(48)));
   reload.setOnClickListener(v->{ContactPhotos.clearCache();load();});
@@ -106,9 +107,9 @@ public final class ArchiveActivity extends Activity {
   refreshContactAccess();
   search=new EditText(this);search.setSingleLine(true);search.setTextColor(ink());search.setHintTextColor(muted());
   search.setTextSize(15);AppAppearance.font(search,false);search.setHint(tr("חיפוש שם או מספר בארכיון","Search archive by name or number"));
-  search.setContentDescription(search.getHint());search.setMinHeight(dp(48));search.setBackground(shape(card(),12));
-  search.setPadding(dp(14),dp(6),dp(14),dp(6));
-  LinearLayout.LayoutParams searchParams=new LinearLayout.LayoutParams(-1,-2);searchParams.setMargins(dp(12),0,dp(12),dp(8));root.addView(search,searchParams);
+  search.setContentDescription(search.getHint());search.setMinHeight(dp(54));search.setBackground(shape(card(),19));
+  search.setPadding(dp(16),dp(10),dp(16),dp(10));
+  LinearLayout.LayoutParams searchParams=new LinearLayout.LayoutParams(-1,-2);searchParams.setMargins(dp(16),dp(3),dp(16),dp(6));root.addView(search,searchParams);
   ListView list=new ListView(this);list.setDivider(null);list.setSelector(android.R.color.transparent);
   root.addView(list,new LinearLayout.LayoutParams(-1,0,1));
   adapter=new BaseAdapter(){
@@ -171,8 +172,9 @@ public final class ArchiveActivity extends Activity {
   CallHistory.Entry entry;long binding;
   ArchiveRow(){
    root.setTag(this);root.setGravity(Gravity.CENTER_VERTICAL);
-   root.setPadding(dp(12),dp(10),dp(12),dp(10));root.setMinimumHeight(dp(78));root.setBackground(shape(card(),12));
-   avatar.setBackgroundColor(dark()?0xFF343029:0xFFF0E6D6);AvatarShapes.apply(avatar);
+   root.setMinimumHeight(dp(90));root.setBackground(new InsetDrawable(shape(card(),20),dp(16),dp(5),dp(16),dp(6)));
+   root.setPadding(dp(32),dp(17),dp(32),dp(17));
+   avatar.setBackgroundColor(NexPalette.soft(dark()));AvatarShapes.apply(avatar);
    LinearLayout.LayoutParams avatarParams=new LinearLayout.LayoutParams(dp(48),dp(48));avatarParams.setMarginEnd(dp(12));root.addView(avatar,avatarParams);
    initial.setGravity(Gravity.CENTER);avatar.addView(initial,new FrameLayout.LayoutParams(-1,-1));
    photo.setScaleType(ImageView.ScaleType.CENTER_CROP);avatar.addView(photo,new FrameLayout.LayoutParams(-1,-1));

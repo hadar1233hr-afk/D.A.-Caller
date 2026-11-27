@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "repository": "hadar1233hr-afk/D.A.-Caller",
+  "source_sha": "c7b4e62e5aac324a7ea46e84ca14d4170a6241fb",
+  "app_tree": "7aa469df7e34eda9568b5adc92a56795f3fdf2fd",
+  "run": {
+    "id": 45728361423,
+    "head_sha": "c7b4e62e5aac324a7ea46e84ca14d4170a6241fb",
+    "head_branch": "design/nex-caller-0.14",
+    "run_number": 251,
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "failure",
+    "run_attempt": 1,
+    "html_url": "https://github.com/hadar1233hr-afk/D.A.-Caller/actions/runs/45728361423"
+  },
+  "status": "FAIL_NATIVE_38_PASS_2_FAIL",
+  "host": {
+    "unique_tests": 467,
+    "classes": 45,
+    "junit_files": 45,
+    "tests": 467,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "lint_severities": {
+      "Error": 0,
+      "Warning": 16,
+      "Fatal": 0,
+      "Information": 0
+    }
+  },
+  "python_contracts": {
+    "tests": 103,
+    "status": "PASS",
+    "job_log": "validate-job.log"
+  },
+  "native": {
+    "tests": 40,
+    "failures": 2,
+    "errors": 0,
+    "skipped": 0,
+    "unique_tests": 40,
+    "junit_files": 1,
+    "missing_methods": [],
+    "extra_methods": [],
+    "duplicates": [],
+    "counter_errors": [
+      "/workspace/work/native-014-ci-45728361423/ui/outputs/androidTest-results/connected/debug/TEST-emulator-5554 - 13-_app-.xml:failures=2"
+    ],
+    "parse_errors": [],
+    "failure_details": [
+      {
+        "identity": [
+          "com.dacaller.app.ModernFeaturesIntegrationTest",
+          "testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency"
+        ],
+        "type": "failure",
+        "attributes": {},
+        "text": "junit.framework.AssertionFailedError\nat com.dacaller.app.ModernFeaturesIntegrationTest.nexIslandPresentation(ModernFeaturesIntegrationTest.java:786)\nat com.dacaller.app.ModernFeaturesIntegrationTest.testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency(ModernFeaturesIntegrationTest.java:716)\nat android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)\nat android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)\nat com.dacaller.app.ModernFeaturesIntegrationTest.runTest(ModernFeaturesIntegrationTest.java:102)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)\nat android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)\nat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)\n"
+      },
+      {
+        "identity": [
+          "com.dacaller.app.ModernFeaturesIntegrationTest",
+          "testModernInlineNavigationNineIconsAndWineSwitchPointer"
+        ],
+        "type": "failure",
+        "attributes": {},
+        "text": "junit.framework.AssertionFailedError: Actual WidgetConfigure must be the resumed native application window\nat com.dacaller.app.ModernFeaturesIntegrationTest.await(ModernFeaturesIntegrationTest.java:149)\nat com.dacaller.app.ModernFeaturesIntegrationTest.widgetConfigurationPresentation(ModernFeaturesIntegrationTest.java:513)\nat com.dacaller.app.ModernFeaturesIntegrationTest.testModernInlineNavigationNineIconsAndWineSwitchPointer(ModernFeaturesIntegrationTest.java:486)\nat android.test.InstrumentationTestCase.runMethod(InstrumentationTestCase.java:220)\nat android.test.InstrumentationTestCase.runTest(InstrumentationTestCase.java:205)\nat com.dacaller.app.ModernFeaturesIntegrationTest.runTest(ModernFeaturesIntegrationTest.java:102)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:195)\nat android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:181)\nat android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:563)\nat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2361)\n"
+      }
+    ],
+    "junit_sha256": {
+      "connected/debug/TEST-emulator-5554 - 13-_app-.xml": "74f40a4fa065e1f0089894de60b0db1e0f5d355ababacf2144f5c9bb4ea93478"
+    },
+    "status": "FAIL"
+  },
+  "png_completeness": {
+    "raw_pngs": 267,
+    "original_functional_pngs": 245,
+    "modern_functional_pngs": 19,
+    "diagnostic_pngs": [
+      "ui-snapshots/DA-CALLER-snapshots/host-failed.png",
+      "ui-modern-snapshots/DA-CALLER-next-snapshots/modern-failed-testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency.png",
+      "ui-modern-snapshots/DA-CALLER-next-snapshots/modern-failed-testModernInlineNavigationNineIconsAndWineSwitchPointer.png"
+    ],
+    "missing_modern_required_pngs": [
+      "modern-island-composition-background.png",
+      "modern-island-new-call-shown.png",
+      "modern-island-opacity-0.png",
+      "modern-island-opacity-100.png",
+      "modern-island-opacity-35.png",
+      "modern-nex-island-active-he.png",
+      "modern-nex-widget-amoled-en.png",
+      "modern-nex-widget-light-he.png"
+    ],
+    "extra_modern_pngs": [
+      "modern-failed-testGenuineTelecomIslandDragCancelHideRestoreTopAreaAndTransparency.png",
+      "modern-failed-testModernInlineNavigationNineIconsAndWineSwitchPointer.png"
+    ],
+    "no_visual_review_performed": true
+  },
+  "eight_functional_reports": [
+    {
+      "name": "matrix-verification.json",
+      "occurrences": 0,
+      "status": "MISSING_OR_DUPLICATE"
+    },
+    {
+      "name": "personalization-verification.json",
+      "occurrences": 0,
+      "status": "MISSING_OR_DUPLICATE"
+    },
+    {
+      "name": "call-integration-verification.json",
+      "occurrences": 0,
+      "status": "MISSING_OR_DUPLICATE"
+    },
+    {
+      "name": "island-verification.json",
+      "occurrences": 0,
+      "status": "MISSING_OR_DUPLICATE"
+    },
+    {
+      "name": "external-island-verification.json",
+      "occurrences": 0,
+      "status": "MISSING_OR_DUPLICATE"
+    },
+    {
+      "name": "followup-verification.json",
+      "occurrences": 0,
+      "status": "MISSING_OR_DUPLICATE"
+    },
+    {
+      "name": "callback-business-verification.json",
+      "occurrences": 0,
+      "status": "MISSING_OR_DUPLICATE"
+    },
+    {
+      "name": "modern-features-verification.json",
+      "occurrences": 0,
+      "status": "MISSING_OR_DUPLICATE"
+    }
+  ],
+  "functional_gates_executed": false,
+  "artifact_integrity": [
+    {
+      "category": "checks",
+      "id": 15075293486,
+      "name": "DA-CALLER-checks-415f6831f60c8ff7ea9d2c71a055e0d5a40b44eb",
+      "bytes": 165921,
+      "sha256": "bc3e1de4faf413c2d22c161d64eee777cd16c97c94b1949d974fd85ce1be68d7",
+      "api_bytes_match": true,
+      "api_digest_match": true,
+      "workflow_run_head_matches": true,
+      "all_crc_pass": true,
+      "safe_paths": true
+    },
+    {
+      "category": "ui",
+      "id": 15076004164,
+      "name": "DA-CALLER-Android13-UI-415f6831f60c8ff7ea9d2c71a055e0d5a40b44eb",
+      "bytes": 17611292,
+      "sha256": "d7712a6b9c052361c9dab157d49e3fe3298b81288714473f0b84cb0b533c27cf",
+      "api_bytes_match": true,
+      "api_digest_match": true,
+      "workflow_run_head_matches": true,
+      "all_crc_pass": true,
+      "safe_paths": true
+    },
+    {
+      "category": "native-failure",
+      "id": 15075744848,
+      "name": "DA-CALLER-native-failure-candidate-415f6831f60c8ff7ea9d2c71a055e0d5a40b44eb",
+      "bytes": 1336567,
+      "sha256": "1b1551b24eb314eaf2fff644a607a0587007aebec1f682a4c9bfe1edbfb3339a",
+      "api_bytes_match": true,
+      "api_digest_match": true,
+      "workflow_run_head_matches": true,
+      "all_crc_pass": true,
+      "safe_paths": true
+    }
+  ],
+  "failure_apk": {
+    "artifact_id": 15075744848,
+    "apk_sha256": "db8992d62a4366fe2d36ee64f20ff5296309e0b66c88f93b696fa580b0243ddb",
+    "apk_bytes": 1361493,
+    "certificate_sha256": "990494bb80bd99c601302db4a79ff8cfa8a174fe5bfcead63426a5581b5d45c7",
+    "package": "com.dacaller.app",
+    "version_name": "0.14.0",
+    "version_code": 23,
+    "signature_verifies": true,
+    "no_internet_permission": true,
+    "frozen_assets_match": {
+      "assets/business-directory/israel-businesses.sqlite": "cbc7dc7b41c3fa9335cbf37907243681820fe23107e40541efb306dc1b566af3",
+      "assets/business-directory/manifest.json": "fec348522615f62d36fa62ee65ff317340ea4806a85f15c457daa30378805cfa"
+    },
+    "no_foreign_product_or_test_provider_dex": true,
+    "policy": {
+      "apk_sha256": "db8992d62a4366fe2d36ee64f20ff5296309e0b66c88f93b696fa580b0243ddb",
+      "certificate_sha256": "990494bb80bd99c601302db4a79ff8cfa8a174fe5bfcead63426a5581b5d45c7",
+      "mode": "ephemeral-test-only",
+      "publication_allowed": false,
+      "required_update_certificate_matches": false,
+      "required_update_version": "0.11.0-beta.9",
+      "schema_version": 1
+    },
+    "native_failure_candidate_only": true,
+    "native_test_suite_passed": false,
+    "tested_debug_artifact_available": false,
+    "rebuilt_or_resigned": false,
+    "publication_allowed": false
+  },
+  "diagnosis": {
+    "source_file": "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java",
+    "source_sha256": "99e959147482e698c57a13e6f0f7359f480f6ced1faa563d916eba182c7eb3f2",
+    "helper_lines": [
+      569,
+      577
+    ],
+    "observed_api33_resumed_record": "topResumedActivity=ActivityRecord{901df3e u0 com.google.android.apps.nexuslauncher/.NexusLauncherActivity} t8}",
+    "observed_record_source": "raw/ui/ui-snapshots/host-failure-activities.txt:8",
+    "defect": "The new helper requires a space immediately after the exact component; an actual API33 ActivityRecord places a closing brace immediately after its component. It therefore rejects this valid record format before native accessibility-window inspection. Both failures reach this shared helper after the existing awaitActivityForeground check passed.",
+    "limits": "The retained final activities dump shows launcher after test cleanup, not the contemporaneous failing MainActivity or WidgetConfigure record; it proves the actual API33 record serialization. Fresh corrected native execution is required to establish full success."
+  },
+  "diagnostic_image_limits": {
+    "widget": "Failure capture occurs after widgetConfigurationPresentation finally finishes the Activity; the actual image is launcher, not a direct WidgetConfigure failure surface.",
+    "nex_island": "Failure capture occurs after nexIslandPresentation finally restores previous preferences; the image shows the restored original island and is not the NEX capture.",
+    "full_visual_review": "NOT_PERFORMED; 264 functional frames of 272 required plus 3 diagnostics cannot establish complete visual approval."
+  },
+  "publication_allowed": false,
+  "tested_debug_artifact_available": false,
+  "hardware_validation": "NOT_TESTED",
+  "matching_key_update": "NOT_TESTED",
+  "durable_signing_setup": "PENDING_OWNER_INPUT",
+  "evidence_bundle": {
+    "file": "authentic-failure-evidence.zip",
+    "bytes": 1221881,
+    "sha256": "ee4882e4abe22ba9b8f6aae96adf95d6ce21613ce332f48cfc10b3265128e8e4",
+    "zip_crc": "PASS",
+    "original_ui_archive_retained_in_workspace_only": true
+  }
+}

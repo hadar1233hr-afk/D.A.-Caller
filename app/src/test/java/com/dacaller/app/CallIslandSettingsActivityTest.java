@@ -158,6 +158,7 @@ public final class CallIslandSettingsActivityTest {
   assertTrue(slider.performAccessibilityAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SET_PROGRESS.getId(),value));
   assertEquals(0,prefs.getInt("island_background_opacity",-1));assertEquals(1f,required("island-settings-preview").getAlpha(),0f);
   value.putFloat(AccessibilityNodeInfo.ACTION_ARGUMENT_PROGRESS_VALUE,100);assertTrue(slider.performAccessibilityAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SET_PROGRESS.getId(),value));assertEquals(100,prefs.getInt("island_background_opacity",-1));
+  choose("island_style",4);assertEquals("nex",prefs.getString("island_style",""));assertFalse(slider.isEnabled());assertEquals(100,prefs.getInt("island_background_opacity",-1));
   choose("island_style",0);assertEquals("apple",prefs.getString("island_style",""));assertFalse(slider.isEnabled());assertEquals(100,prefs.getInt("island_background_opacity",-1));assertNoPermissionRequest();
  }
 

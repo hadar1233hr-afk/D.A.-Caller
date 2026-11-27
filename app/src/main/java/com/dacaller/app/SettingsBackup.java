@@ -46,7 +46,7 @@ final class SettingsBackup {
   bool("island_show_hold",true);bool("island_confirm_end",true);
   bool("island_outside_app",false);
   bool("callback_reminder_enabled",false);DEFAULTS.put("callback_reminder_minute",21*60);
-  option("island_style","apple","apple","glass","emerald","transparent");
+  option("island_style","apple","apple","glass","emerald","transparent","nex");
   DEFAULTS.put("island_background_opacity",35);
   option("island_position_mode","below","below","status_area");bool("island_position_set",false);
   DEFAULTS.put("island_position_x",5000);DEFAULTS.put("island_position_y",0);

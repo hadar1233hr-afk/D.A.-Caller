@@ -1,0 +1,335 @@
+{
+  "group": "other-a",
+  "source_sha": "1a4926785a72bec25c188f9c5b74116c5b498c31",
+  "app_tree": "b5f973f6b837cc747ece84e32815a102de293937",
+  "run_id": "45773402159",
+  "sheets_viewed": [
+    "other-a-01.png",
+    "other-a-02.png",
+    "other-a-03.png",
+    "other-a-04.png",
+    "other-a-05.png",
+    "other-a-06.png",
+    "other-a-07.png",
+    "other-a-08.png",
+    "other-a-09.png",
+    "other-a-10.png",
+    "other-a-11.png",
+    "other-a-12.png",
+    "other-a-13.png"
+  ],
+  "frames": [
+    {
+      "filename": "business-detail.png",
+      "sha256": "2789dee162c9a17577774b85c65abeb188b94b32b60072df1a1e0ada8dcf6b84",
+      "status": "PASS",
+      "notes": "RTL business dialog title, phone, address, source details and bottom actions remain readable without overlap; URL wraps across lines within the dialog."
+    },
+    {
+      "filename": "business-search.png",
+      "sha256": "96cf885dcc8d8de7b9a081c2e06380589b39ba026b3d062bba328d9c2a799165",
+      "status": "PASS",
+      "notes": "RTL search entry, business result, call action and bottom navigation fit with readable dark-theme contrast."
+    },
+    {
+      "filename": "business-tab-dark.png",
+      "sha256": "9ecb310a4fca7d1981c31cbb121e7b22224c4b8ad0a78d39211a3a4c343ffb80",
+      "status": "PASS",
+      "notes": "Dark business list keeps tabs, search, attribution and result call controls legible; lower list content reaches the scrolling viewport edge."
+    },
+    {
+      "filename": "business-tab-light.png",
+      "sha256": "2e812af57f0455211421dec3725f6b9068b362a2213c7b584a906e615fba1ddc",
+      "status": "PASS",
+      "notes": "Light business list keeps tabs, search, attribution and result call controls legible; lower list content reaches the scrolling viewport edge."
+    },
+    {
+      "filename": "call-integration-notification-active-private-en.png",
+      "sha256": "4f3badd9811c63cb3e42e14e74110e9fc694c0823a1693e87ae3e1f9d2457e34",
+      "status": "PASS",
+      "notes": "Expanded active-call notification has readable contact/status text and distinct hangup, speaker On and Call actions."
+    },
+    {
+      "filename": "call-integration-notification-active-private-he.png",
+      "sha256": "336025571193b1316503ba5f97057973294bc5863ffe594a1ec2a55bdc4ffc2f",
+      "status": "FAIL",
+      "notes": "Raw frame confirms the middle speaker activation action is ellipsized to “הפ...” rather than a readable complete functional label; hangup and חזור remain visible."
+    },
+    {
+      "filename": "call-integration-notification-active-speaker-en.png",
+      "sha256": "9a9c52feca62ec7b433ab70820097d957f6fef3beedb47ec19388baf2d702c21",
+      "status": "PASS",
+      "notes": "Expanded active-call notification shows readable contact/status text and separate hangup, speaker Off and Call actions."
+    },
+    {
+      "filename": "call-integration-notification-active-speaker-he.png",
+      "sha256": "e572dc8699f2faec387a23ba4b4e1b55f16fbe487eb395122ade9fb0c8177a18",
+      "status": "PASS",
+      "notes": "Hebrew active-call notification status and כבה/חזור actions remain readable with distinct controls and no overlap."
+    },
+    {
+      "filename": "call-integration-notification-incoming-he.png",
+      "sha256": "9c725a2df1d65ab894d4e9c4bfcc93e792962d6e2cd6923716ff60b5e32847ec",
+      "status": "PASS",
+      "notes": "Hebrew incoming status remains readable; reject, return and green answer controls are separate and unclipped, with expected contact-name ellipsis in header."
+    },
+    {
+      "filename": "call-integration-notification-outgoing-he.png",
+      "sha256": "1838aa183ce35eafe1f86531c7c565119fff9d25968a54345addf6287b83abfd",
+      "status": "FAIL",
+      "notes": "Hebrew outgoing notification middle speaker activation label is ellipsized to “הפ...”; the complete functional text is not readable while חזור remains intact."
+    },
+    {
+      "filename": "call-integration-return-contacts.png",
+      "sha256": "0e47c64f5dc44331be5c2f92aa236b6883c60faefc46005501021d861b844b5c",
+      "status": "PASS",
+      "notes": "Returned dark RTL contacts view retains readable search, count, contact numbers and distinct call/favorite controls; contact names use ellipsis within rows."
+    },
+    {
+      "filename": "call-integration-return-settings.png",
+      "sha256": "6dacb816b59420051bb1ecb02e9a5534959974af79dc419448470061938f2ca0",
+      "status": "PASS",
+      "notes": "Returned RTL settings view has readable display, language, icon and avatar-shape rows with distinct chevrons; top and bottom rows intersect the scroll viewport boundary."
+    },
+    {
+      "filename": "callback-list-dark.png",
+      "sha256": "44c64752a752d14b5478032fd9e70fa9fc6877ef8f603941abfed14239230705",
+      "status": "PASS",
+      "notes": "Dark RTL callback screen title, day summary, reminder contact/number, missed count and return/recent-call actions all fit with clear contrast."
+    },
+    {
+      "filename": "callback-list-light.png",
+      "sha256": "58d888a7a807856a245724cd639e1d3d50bed276a51c67d0012fb9f315c0537b",
+      "status": "PASS",
+      "notes": "Light RTL callback screen preserves readable summary and contact details with distinct green return-call and recent-call buttons."
+    },
+    {
+      "filename": "callback-settings-dark.png",
+      "sha256": "06979d80284ab5d9308fab5de76bd1334dc817adbb5764397e08f8ad12963f78",
+      "status": "PASS",
+      "notes": "Dark callback settings keep section titles, reminder explanation and pink toggle separate; lower content reaches the scroll viewport edge above navigation."
+    },
+    {
+      "filename": "callback-settings-light.png",
+      "sha256": "86c27e22d4b871899709056e78e945852613741318c20975952c206557fc33f0",
+      "status": "PASS",
+      "notes": "Light callback settings keep section titles, reminder explanation and pink toggle readable and separate; lower content reaches the scroll viewport edge."
+    },
+    {
+      "filename": "changelog-dark-bottom.png",
+      "sha256": "02eb972f1b821da261298970fed8bd43bb6bdc780755bffe04b6ede3848e7b6c",
+      "status": "PASS",
+      "notes": "Dark changelog bottom shows readable version cards, expanded 0.1.0 bullet and offline-availability footer; preceding card is cut only at scroll boundary."
+    },
+    {
+      "filename": "changelog-dark.png",
+      "sha256": "eab328961ad0ac1698c4cef7f79bcd49d9e7828792220935ecc7996b8ec89186",
+      "status": "PASS",
+      "notes": "Dark changelog title, installed 0.14.0 label, NEX release heading and Hebrew bullets are readable; expanded release continues below viewport."
+    },
+    {
+      "filename": "changelog-light-bottom.png",
+      "sha256": "b070bf2fb60f13449585df7d9d8bbb71895829527389f04ea85dc6fb6a23f22f",
+      "status": "PASS",
+      "notes": "Light changelog bottom shows readable version cards, expanded first-release description and offline footer without text overlap."
+    },
+    {
+      "filename": "changelog-light.png",
+      "sha256": "956985970bdf398ff14580db6c9c1571777af45d741381e40f7d497f4e4714bb",
+      "status": "PASS",
+      "notes": "Light changelog title, installed version and NEX release card have readable contrast; longer expanded release text continues below viewport."
+    },
+    {
+      "filename": "incoming-swipe-dragging.png",
+      "sha256": "5ae3f672170c2bf5594608caf93f3bdd7fd86a24a8250325b61f4c014c94d007",
+      "status": "PASS",
+      "notes": "Incoming screen has readable number/status, right-swipe answer instruction and red reject action; long caller name is intentionally ellipsized without overlapping controls."
+    },
+    {
+      "filename": "incoming-swipe-resting.png",
+      "sha256": "a9731bb048b6fce548b4f9ac06e8dddeca16300971369dff55e936f5a0314f99",
+      "status": "PASS",
+      "notes": "Incoming resting screen keeps number/status and separated answer/reject controls legible; long caller name ellipsizes within its header."
+    },
+    {
+      "filename": "missed-multiple-he.png",
+      "sha256": "50c34565029489a646c8530ed8af1ce370c43673e2bf677f8c0e83355e7f17a4",
+      "status": "PASS",
+      "notes": "Hebrew multiple-missed notification shows readable missed-call count and clear cleanup action; long notification detail lines ellipsize without overlap."
+    },
+    {
+      "filename": "missed-single-he.png",
+      "sha256": "94b9d6a1f6d3f756d128edf84ecf9538f2aee96c73d9e431adee77c796ac8b1b",
+      "status": "PASS",
+      "notes": "Hebrew single-missed notification title and cleanup action are readable with clear contrast; long detail line ellipsizes within the card."
+    },
+    {
+      "filename": "personalization-archive-dark.png",
+      "sha256": "2d2c56a00f9c64eb22fe01f8932f5edf11f4892cc3e9d921bc9f4d243f9db8d1",
+      "status": "PASS",
+      "notes": "Dark RTL archive title/count, search, saved caller number and wrapped date/duration fit without overlap; DA avatar remains distinct."
+    },
+    {
+      "filename": "personalization-archive-light.png",
+      "sha256": "9bc9c4d61b35d0b23802e7fc8b1ef7c24ef891832a5402ea21f4accc11f83778",
+      "status": "PASS",
+      "notes": "Light RTL archive view keeps caller details and wrapped call date/duration legible with clear card separation."
+    },
+    {
+      "filename": "personalization-backup-restore-confirmation.png",
+      "sha256": "dad633743244e51560512021aaa795881f8062862485bebbb4353773aff47853",
+      "status": "PASS",
+      "notes": "Restore confirmation title, counts, replacement/retention explanation and CANCEL/RESTORE actions are legible and separated within the dialog."
+    },
+    {
+      "filename": "personalization-backup-saved-dark.png",
+      "sha256": "e850741cda56588d8c3932b0fbce96f5025f07bcc576bd35aa1323fd5d479cfb",
+      "status": "PASS",
+      "notes": "Dark backup-success page shows readable saved-file confirmation and Close button; long explanatory paragraph continues below the scroll viewport."
+    },
+    {
+      "filename": "personalization-backup-saved-light.png",
+      "sha256": "d94a542f49bf02e40c89f1b53261ecc76376f5fc850c74c0313c47860003b959",
+      "status": "PASS",
+      "notes": "Light backup-success page has readable saved confirmation and Close action; long file-content explanation extends below viewport."
+    },
+    {
+      "filename": "personalization-chooser-dark-avatar_shapes-bottom.png",
+      "sha256": "90cf3da4ab0169d1206681154438dc404c6f535e30481bd317f026f960afe07d",
+      "status": "PASS",
+      "notes": "Dark RTL avatar-shape chooser displays circle, rounded square, square and hexagon previews with separate radio controls and readable Cancel action."
+    },
+    {
+      "filename": "personalization-chooser-dark-avatar_shapes.png",
+      "sha256": "90cf3da4ab0169d1206681154438dc404c6f535e30481bd317f026f960afe07d",
+      "status": "PASS",
+      "notes": "Dark avatar-shape dialog title, all four labels/previews, selected radio and Cancel remain legible without overlap."
+    },
+    {
+      "filename": "personalization-chooser-dark-icons-bottom.png",
+      "sha256": "324d219771165f592e5af9e632914c22f464135356e52a271038ac2477ba4d6a",
+      "status": "PASS",
+      "notes": "Dark icon chooser bottom shows readable icon labels, radio choices and Cancel; the first visible icon is partially cut at the scrolled list's top boundary."
+    },
+    {
+      "filename": "personalization-chooser-dark-icons.png",
+      "sha256": "c72a61796bec517769fc720c8442103f9ed7081b913326dc7c71db567387ecb5",
+      "status": "PASS",
+      "notes": "Dark icon chooser has readable title and four full radio/preview rows plus fixed Cancel; fifth choice is partly visible at list scroll boundary."
+    },
+    {
+      "filename": "personalization-chooser-light-avatar_shapes-bottom.png",
+      "sha256": "2f3d9b609fa7abe618e6391146fd65f4dfb7be166b17fddf8ddbdf814e0a7d8f",
+      "status": "PASS",
+      "notes": "Light avatar chooser shows all four named shapes, DA previews, radio states and Cancel with readable contrast and no overlap."
+    },
+    {
+      "filename": "personalization-chooser-light-avatar_shapes.png",
+      "sha256": "2f3d9b609fa7abe618e6391146fd65f4dfb7be166b17fddf8ddbdf814e0a7d8f",
+      "status": "PASS",
+      "notes": "Light avatar-shape dialog title, four options and Cancel action fit within dialog with clear selection state."
+    },
+    {
+      "filename": "personalization-chooser-light-icons-bottom.png",
+      "sha256": "1cbb40527cfcc67040bad237b4fac343e6dc22521d4c14bb3912c64d8709d26b",
+      "status": "PASS",
+      "notes": "Light icon chooser bottom keeps radio options and Cancel legible; first visible icon is partially cut by the scrolled list's top boundary."
+    },
+    {
+      "filename": "personalization-chooser-light-icons.png",
+      "sha256": "d7b896654f5e6f143ea89eda661de70984a7167e424416bfcad11630d5cb0d3d",
+      "status": "PASS",
+      "notes": "Light icon dialog title, full visible radio/preview rows and Cancel are readable; fifth choice is partially visible at the scrolling list bottom."
+    },
+    {
+      "filename": "personalization-contacts-dark-en-largefont-collapsed.png",
+      "sha256": "0e86b52d0f6a619ebf917b35639397f4f79e70869851ddbd71eacff4f2c9c30d",
+      "status": "FAIL",
+      "notes": "Raw frame confirms the right edge of the large-font search field clips the final r in “Search name or number”; favorites and contact controls otherwise remain separate."
+    },
+    {
+      "filename": "personalization-contacts-dark-en-largefont-expanded.png",
+      "sha256": "dfaac41365f111d8983c43c3793fc868ec44295cebf6da801c66722fbde12e00",
+      "status": "FAIL",
+      "notes": "Expanded large-font English contacts search placeholder clips the final r in “Search name or number” at the input's right edge; favorite/contact-name ellipses remain confined to their rows."
+    },
+    {
+      "filename": "personalization-contacts-dark-en-standard-collapsed.png",
+      "sha256": "828d22352560dd6b8202df76526c9153d696edf3b5601965578232e844cba5a1",
+      "status": "PASS",
+      "notes": "Standard English dark contacts show full search placeholder, collapsed favorites prompt, readable count/numbers and distinct star/call controls."
+    },
+    {
+      "filename": "personalization-contacts-dark-en-standard-expanded.png",
+      "sha256": "5dad308d71b107df797e51c119dba2d8bacd7750730c7af13251d43cb0dcf340",
+      "status": "PASS",
+      "notes": "Standard English expanded favorites show readable labels, full search placeholder and separate contact/star/call controls; lower rows continue beneath scroll boundary."
+    },
+    {
+      "filename": "personalization-contacts-dark-he-largefont-collapsed.png",
+      "sha256": "a3846d6b719275e42b2a9d7bea903bfa69322a631406abe6d9b9ceeee87c62f6",
+      "status": "PASS",
+      "notes": "Large-font dark Hebrew collapsed layout keeps complete search hint, favorites prompt, contact names/numbers and call/star controls readable in RTL."
+    },
+    {
+      "filename": "personalization-contacts-dark-he-largefont-expanded.png",
+      "sha256": "63a5eb6bbe7b873ed463beda6321e365894fac523f2245ab229f0146c442fc85",
+      "status": "PASS",
+      "notes": "Large-font dark Hebrew expanded favorites and full search hint fit; contact controls remain separate and lower list content reaches viewport edge."
+    },
+    {
+      "filename": "personalization-contacts-dark-he-standard-collapsed.png",
+      "sha256": "ac91845cb3166534b9cc3798a534cf2bde4e89377de8476ed1a6238682651ec7",
+      "status": "PASS",
+      "notes": "Standard dark RTL contacts show full search hint, favorites prompt and readable contact rows with distinct call/favorite controls."
+    },
+    {
+      "filename": "personalization-contacts-dark-he-standard-expanded.png",
+      "sha256": "beb50a23557ad9318e06357c0a4122cbca9d44aa2e56cb8ce1638a4ab5a1b78d",
+      "status": "PASS",
+      "notes": "Dark standard Hebrew expanded favorites, complete search hint and contact rows remain legible; lower list continues at scroll boundary."
+    },
+    {
+      "filename": "personalization-contacts-light-en-largefont-collapsed.png",
+      "sha256": "a04bb42dadfa452d2611b38af05463866f8c48221413ae2f1dbb47c259b7a070",
+      "status": "FAIL",
+      "notes": "Large-font light English search placeholder clips the final r in “Search name or number” at the input's right edge; adjacent plus control stays separate."
+    },
+    {
+      "filename": "personalization-contacts-light-en-largefont-expanded.png",
+      "sha256": "a42ccd831ccb9936049046f8120ff6703dcd241ddbb50fd882004e77b4184555",
+      "status": "FAIL",
+      "notes": "Expanded large-font light English contacts repeat the clipped final r of “Search name or number”; contact-name ellipses and list viewport clipping are otherwise confined."
+    },
+    {
+      "filename": "personalization-contacts-light-en-standard-collapsed.png",
+      "sha256": "e642c17df56a4934866d760708b724d75b3c556e5b544117c399847491b4f456",
+      "status": "PASS",
+      "notes": "Light standard English collapsed layout fits full search placeholder, favorites prompt and readable contact names/numbers with distinct call/favorite controls."
+    },
+    {
+      "filename": "personalization-contacts-light-en-standard-expanded.png",
+      "sha256": "eac919948f873cbe4ec1be7ec4aa0ee26874048643f86bd5e1ac172febddbb8e",
+      "status": "PASS",
+      "notes": "Light standard English expanded layout keeps full search hint, favorite labels and separate contact/star/call controls readable."
+    },
+    {
+      "filename": "personalization-contacts-light-he-largefont-collapsed.png",
+      "sha256": "0cb00900fe41d36ee1a980cd51126816da5dc30948989ade257a88e533278f4e",
+      "status": "PASS",
+      "notes": "Light large-font Hebrew collapsed layout preserves full RTL search hint, favorites prompt and readable contact numbers with distinct controls."
+    },
+    {
+      "filename": "personalization-contacts-light-he-largefont-expanded.png",
+      "sha256": "81a1605b3fbdf02fd91f3ceeb5279ee4e9133fc93f62ff99978307d4b1b9da82",
+      "status": "PASS",
+      "notes": "Light large-font Hebrew expanded favorites and complete search hint fit; contact-name ellipsis stays inside favorite item and lower rows reach viewport edge."
+    },
+    {
+      "filename": "personalization-contacts-light-he-standard-collapsed.png",
+      "sha256": "996a3b306704617447633a072e0a67a4e2963c6c1b0a1c551093295099251e40",
+      "status": "PASS",
+      "notes": "Light standard Hebrew collapsed layout shows readable favorites prompt, full search hint and separate call/star controls with clear contrast."
+    }
+  ]
+}

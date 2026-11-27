@@ -1,0 +1,21 @@
+{
+  "status": "PASS_CURRENT_PRODUCTION_HOST467_AND_LOCAL_DEBUG_BUILD",
+  "observed_at_utc": "2026-11-26T00:10:18.069458+00:00",
+  "base_commit": "619139268be9d5d00b7f892f682d8eb3473ba8ba",
+  "host_summary": {
+    "junit_files": 45,
+    "methods": 467,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "changed_production_host_inputs": []
+  },
+  "apk_bytes": 1361489,
+  "apk_sha256": "dd76c7a25edd512b8a6520acbad36d3b602160112809f1259d09b341f1fd32dd",
+  "apk_metadata": "com.dacaller.app/0.14.0/code23",
+  "internet_permission": false,
+  "native_execution": "NOT_YET_RUN_ON_NEW_SOURCE",
+  "full_visual_review": "PENDING",
+  "publication_allowed": false,
+  "note": "Local debug build only; final native candidate must come from fresh actual CI/emulator run, without publication-time rebuild/re-sign."
+}

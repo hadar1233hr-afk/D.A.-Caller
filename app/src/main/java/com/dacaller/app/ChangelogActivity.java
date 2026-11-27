@@ -35,26 +35,25 @@ public final class ChangelogActivity extends Activity {
   view.setLineSpacing(dp(2),1f);return view;
  }
  private GradientDrawable shape(int color,int radius,boolean highlighted){
-  GradientDrawable view=new GradientDrawable();view.setColor(color);view.setCornerRadius(dp(radius));
-  if(highlighted)view.setStroke(dp(1),accent);return view;
+  GradientDrawable view=new GradientDrawable();view.setColor(highlighted?NexPalette.soft(dark):color);view.setCornerRadius(dp(radius));return view;
  }
  @Override public void onCreate(Bundle state){
   super.onCreate(state);prefs=getSharedPreferences("da_caller",Context.MODE_PRIVATE);
   english=I18n.isEnglish(this);dark=prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);
-  background=prefs.getBoolean("amoled",false)?Color.BLACK:dark?0xFF141414:0xFFF7F7F5;
-  surface=dark?0xFF232323:Color.WHITE;ink=dark?0xFFF5F5F3:0xFF161C17;
-  secondary=dark?0xFFB8BEB9:0xFF59635B;
+  background=NexPalette.background(dark,prefs.getBoolean("amoled",false));
+  surface=NexPalette.surface(dark,prefs.getBoolean("amoled",false));ink=NexPalette.ink(dark);
+  secondary=NexPalette.muted(dark);
   accent="silver".equals(prefs.getString("accent","gold"))?(dark?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark);
   if(state==null)expanded.add(BuildConfig.VERSION_NAME);
   else{ArrayList<String> saved=state.getStringArrayList("expanded_versions");if(saved!=null)expanded.addAll(saved);}
   scroll=new ScrollView(this);scroll.setTag("changelog-scroll");scroll.setFillViewport(true);scroll.setBackgroundColor(background);
   LinearLayout root=column();root.setTag("changelog-root");root.setLayoutDirection(english?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);
-  root.setPadding(dp(15),dp(10),dp(15),dp(24));scroll.addView(root,new ScrollView.LayoutParams(-1,-2));setContentView(scroll);
-  LinearLayout header=new LinearLayout(this);header.setGravity(Gravity.CENTER_VERTICAL);root.addView(header,new LinearLayout.LayoutParams(-1,-2));
+  root.setPadding(dp(16),dp(8),dp(16),dp(24));scroll.addView(root,new ScrollView.LayoutParams(-1,-2));setContentView(scroll);
+  LinearLayout header=new LinearLayout(this);header.setGravity(Gravity.CENTER_VERTICAL);header.setMinimumHeight(dp(56));root.addView(header,new LinearLayout.LayoutParams(-1,-2));
   ImageView back=new ImageView(this);back.setImageDrawable(AppAppearance.backArrow(this,accent));back.setScaleType(ImageView.ScaleType.CENTER);back.setContentDescription(tr("חזרה","Back"));
   back.setTag("changelog-back");back.setFocusable(true);header.addView(back,new LinearLayout.LayoutParams(dp(48),dp(48)));
   back.setOnClickListener(v->finish());
-  TextView title=text(tr("יומן שינויים","What's new"),23,true,ink);title.setTag("changelog-title");
+  TextView title=text(tr("יומן שינויים","What's new"),22,true,ink);title.setTag("changelog-title");
   header.addView(title,new LinearLayout.LayoutParams(0,-2,1));
   String version=android.text.BidiFormatter.getInstance(!english).unicodeWrap(BuildConfig.VERSION_NAME,android.text.TextDirectionHeuristics.LTR);
   TextView installed=text(tr("הגרסה המותקנת: ","Installed version: ")+version,13,true,accent);
@@ -81,9 +80,9 @@ public final class ChangelogActivity extends Activity {
   boolean current=entry.version.equals(BuildConfig.VERSION_NAME);
   LinearLayout card=column();card.setTag("changelog-version-"+entry.version);
   card.setBackground(shape(surface,20,current));
-  LinearLayout.LayoutParams cardParams=new LinearLayout.LayoutParams(-1,-2);cardParams.topMargin=dp(10);root.addView(card,cardParams);
+  LinearLayout.LayoutParams cardParams=new LinearLayout.LayoutParams(-1,-2);cardParams.topMargin=dp(11);root.addView(card,cardParams);
   LinearLayout header=new LinearLayout(this);header.setTag("changelog-toggle-"+entry.version);header.setGravity(Gravity.CENTER_VERTICAL);
-  header.setPadding(dp(14),dp(12),dp(9),dp(12));header.setMinimumHeight(dp(72));header.setFocusable(true);header.setClickable(true);
+  header.setPadding(dp(16),dp(14),dp(12),dp(14));header.setMinimumHeight(dp(76));header.setFocusable(true);header.setClickable(true);
   card.addView(header,new LinearLayout.LayoutParams(-1,-2));
   LinearLayout labels=column();header.addView(labels,new LinearLayout.LayoutParams(0,-2,1));
   TextView version=text(entry.version,17,true,ink);version.setTextDirection(View.TEXT_DIRECTION_LTR);
@@ -91,14 +90,14 @@ public final class ChangelogActivity extends Activity {
   TextView summary=text(entry.title(english),13,false,secondary);summary.setPadding(0,dp(3),0,0);labels.addView(summary,new LinearLayout.LayoutParams(-1,-2));
   TextView badge=text(current?(entry.preview()?tr("גרסת הבדיקה המותקנת","Installed test build"):tr("הגרסה המותקנת","Installed version")):
     entry.preview()?tr("גרסת בדיקה קודמת","Earlier test build"):tr("גרסה קודמת","Earlier version"),11,current,accent);
-  badge.setTag("changelog-status-"+entry.version);badge.setPadding(0,dp(5),0,0);labels.addView(badge,new LinearLayout.LayoutParams(-1,-2));
+  badge.setTag("changelog-status-"+entry.version);if(current)badge.setTextColor(NexPalette.primaryText(dark));badge.setPadding(0,dp(5),0,0);labels.addView(badge,new LinearLayout.LayoutParams(-1,-2));
   ImageView chevron=new ImageView(this);chevron.setScaleType(ImageView.ScaleType.CENTER);
   chevron.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);header.addView(chevron,new LinearLayout.LayoutParams(dp(38),dp(48)));
-  LinearLayout details=column();details.setTag("changelog-details-"+entry.version);details.setPadding(dp(14),0,dp(14),dp(14));
+  LinearLayout details=column();details.setTag("changelog-details-"+entry.version);details.setPadding(dp(16),0,dp(16),dp(16));
   card.addView(details,new LinearLayout.LayoutParams(-1,-2));
   for(ChangelogCatalog.Change change:entry.changes){
    LinearLayout row=new LinearLayout(this);row.setGravity(Gravity.TOP);details.addView(row,new LinearLayout.LayoutParams(-1,-2));
-   TextView bullet=text("•",15,true,accent);bullet.setGravity(Gravity.CENTER);bullet.setPadding(0,dp(7),0,0);
+   TextView bullet=text("•",15,true,current?NexPalette.primaryText(dark):accent);bullet.setGravity(Gravity.CENTER);bullet.setPadding(0,dp(7),0,0);
    bullet.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);row.addView(bullet,new LinearLayout.LayoutParams(dp(19),-2));
    TextView copy=text(change.text(english),14,false,ink);copy.setPadding(dp(2),dp(7),dp(2),0);row.addView(copy,new LinearLayout.LayoutParams(0,-2,1));
   }

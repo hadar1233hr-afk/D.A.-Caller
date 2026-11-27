@@ -1,0 +1,19 @@
+{
+  "baseline": "c7b4e62e5aac324a7ea46e84ca14d4170a6241fb",
+  "current_native_source_sha256": "58e82d9cd723bc8734d36c9427262229e45eb20800504797a89b746cf6948067",
+  "python_tooling_tests": 106,
+  "python_status": "PASS",
+  "android_test_apk_compile": "PASS",
+  "lint": {
+    "Fatal": 0,
+    "Error": 0,
+    "Warning": 16,
+    "Information": 0
+  },
+  "source_files_unchanged_during_checks": 226,
+  "production_host_debug_sources_signing_and_workflows_unchanged": true,
+  "host_tests_not_rerun": "Production/host/debug inputs unchanged from authentic CI467/45 PASS",
+  "native_emulator": "PENDING_FRESH_RUN",
+  "visual272": "PENDING_FRESH_REVIEW",
+  "publication_allowed": false
+}

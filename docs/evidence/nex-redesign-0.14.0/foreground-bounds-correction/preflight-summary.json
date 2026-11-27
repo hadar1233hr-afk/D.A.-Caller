@@ -1,0 +1,26 @@
+{
+  "baseline": "24d90804b84ff473cbe749eace0f27f2655f2ea3",
+  "frozen_files": {
+    "app/src/androidTest/java/com/dacaller/app/ModernFeaturesIntegrationTest.java": "3e420f0dc64227c38757d585ccfa9173c048b93d7b1c086df9aa8164c42e06d4",
+    "scripts/tests/test_da_caller_modern_native.py": "d41eac586aaa3b8c11f43933dd1a547737ce9b95103b95e2272c678f579b48ae",
+    "scripts/verify-modern-features-native.py": "8bdd4f9e1b4445e9cd02230cc433f7ceb24bbf83d17418652e3d4ed42774ff1a"
+  },
+  "python_tooling_tests": 109,
+  "focused_modern_contracts": 48,
+  "python_status": "PASS",
+  "android_test_apk_compile": "PASS",
+  "lint": {
+    "Fatal": 0,
+    "Error": 0,
+    "Warning": 16,
+    "Information": 0
+  },
+  "build_seconds": 56,
+  "source_files_unchanged_during_checks": 226,
+  "native_methods_unchanged": 40,
+  "production_host_debug_sources_signing_and_workflows_unchanged": true,
+  "host_tests_not_rerun": "Inputs unchanged from authentic CI467/45 PASS",
+  "native_emulator": "PENDING_FRESH_RUN",
+  "visual272": "PENDING_FRESH_REVIEW",
+  "publication_allowed": false
+}

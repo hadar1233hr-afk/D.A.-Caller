@@ -116,7 +116,7 @@ public final class CallScreenActivity extends Activity {
   if(theme.style==4)shell.addView(new DotField(this,theme.dark?0xFF252525:0xFFE1E1DE),new FrameLayout.LayoutParams(-1,-1));
   hero=col();hero.setPadding(dp(theme.style==1?18:24),0,dp(theme.style==1?18:24),0);
   FrameLayout.LayoutParams hp=new FrameLayout.LayoutParams(-1,-2,Gravity.TOP);shell.addView(hero,hp);
-  caller=text("",compact()?28:34,theme.ink,theme.style==0||theme.style==3);caller.setTag("call-caller");caller.setSingleLine(true);caller.setEllipsize(android.text.TextUtils.TruncateAt.END);
+  caller=text("",compact()?28:34,theme.ink,theme.style==0||theme.style==1||theme.style==3);caller.setTag("call-caller");caller.setSingleLine(true);caller.setEllipsize(android.text.TextUtils.TruncateAt.END);
   identity=text("",15,theme.muted,false);identity.setTag("call-identity");identity.setSingleLine(true);identity.setEllipsize(android.text.TextUtils.TruncateAt.END);
   phase=text("",14,theme.muted,false);phase.setTag("call-phase");phase.setSingleLine(true);timer=text("",theme.style==4?38:theme.style==3?34:17,theme.muted,false);timer.setTag("call-timer");timer.setTextDirection(View.TEXT_DIRECTION_LTR);
   badge=text("VoLTE",10,theme.accent,true);badge.setVisibility(View.GONE);
@@ -369,7 +369,7 @@ public final class CallScreenActivity extends Activity {
   }else{
    FrameLayout circle=new FrameLayout(this);// Leave a complete scaled font line below the icon; do not borrow glyph rows.
    int diameter=condensed?(theme.style==2?52:largeType()?52:56):theme.style==2?56:54;
-   GradientDrawable bg=rounded(selected?theme.selected:theme.surface2,selected&&theme.style==1?16:999);
+   GradientDrawable bg=rounded(selected?theme.selected:theme.surface2,theme.style==1?20:999);
    if(theme.style==2&&!selected){bg.setStroke(dp(1),theme.dark?0xFF7A8A9E:0xFFFFFFFF);circle.setElevation(dp(2));}
    circle.setBackground(bg);cell.addView(circle,new LinearLayout.LayoutParams(dp(diameter),dp(diameter)));
    ImageView glyph=icon(resource,selected?theme.selectedInk:theme.ink,27);circle.addView(glyph,new FrameLayout.LayoutParams(dp(27),dp(27),Gravity.CENTER));

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.dacaller.app.NexPaletteTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-11-26T00:08:57" hostname="3ebae333e153" time="0.011">
+  <properties/>
+  <testcase name="textAndActionColorsPassContrastInAllDisplayModes" classname="com.dacaller.app.NexPaletteTest" time="0.011"/>
+  <testcase name="amoledRetainsBlackBackground" classname="com.dacaller.app.NexPaletteTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

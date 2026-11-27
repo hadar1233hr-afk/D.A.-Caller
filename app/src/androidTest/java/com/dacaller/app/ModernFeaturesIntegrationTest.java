@@ -8,6 +8,7 @@ import android.app.NotificationManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Person;
+import android.appwidget.AppWidgetManager;
 import android.app.role.RoleManager;
 import android.content.Context;
 import android.content.ComponentName;
@@ -15,13 +16,21 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.ContentObserver;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.ParcelFileDescriptor;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.provider.ContactsContract;
+import android.provider.CallLog;
 import android.service.notification.StatusBarNotification;
 import android.telecom.Call;
 import android.telecom.TelecomManager;
@@ -39,6 +48,7 @@ import android.view.inspector.WindowInspector;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -56,6 +66,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.json.JSONArray;
@@ -86,12 +97,15 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
  private final JSONArray nativeAnswers=new JSONArray(),foregroundEvidence=new JSONArray();
  private final JSONArray nativeDragRouting=new JSONArray();
  private String launcherPackage;
+ private JSONObject lastForegroundProbe;
 
  @Override protected void runTest()throws Throwable {
   try{super.runTest();}
   catch(Throwable failure){
    // Retain the actual failed surface before tearDown closes SystemUI. These
-   // diagnostic-only names are outside the strict 24-frame passing profile.
+   // diagnostic-only names are outside the strict 27-frame passing profile.
+   if(lastForegroundProbe!=null)try{write(DIRECTORY,"modern-failed-"+getName()+"-foreground.json",lastForegroundProbe.toString(2));}
+    catch(Throwable diagnosticFailure){failure.addSuppressed(diagnosticFailure);}
    try{screenshot("modern-failed-"+getName()+".png");}catch(Throwable captureFailure){failure.addSuppressed(captureFailure);}
    throw failure;
   }
@@ -210,7 +224,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
    }
    if(uniform)return points;
   }
-  fail("Real baseline has no uniform guarded background patch in the capsule's empty top padding");return null;
+  return null; // The caller tries other real capsule positions before failing.
  }
  private <T extends Activity>T launch(Class<T> type)throws Exception {
   T activity=type.cast(getInstrumentation().startActivitySync(new Intent(target,type).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)));activities.add(activity);settle();awaitActivityForeground(activity);return activity;
@@ -238,8 +252,8 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
      view.isLayoutRequested()||root.isLayoutRequested())return;
    int[] location=new int[2];view.getLocationOnScreen(location);
    // Android TextView can include its own internal RTL scroll in this API.
-   Rect result=new Rect();
-   result.set(location[0]-view.getScrollX(),location[1]-view.getScrollY(),location[0]-view.getScrollX()+view.getWidth(),location[1]-view.getScrollY()+view.getHeight());
+   Rect direct=new Rect(location[0],location[1],location[0]+view.getWidth(),location[1]+view.getHeight());
+   Rect adjusted=new Rect(direct);adjusted.offset(-view.getScrollX(),-view.getScrollY());
    Rect visible=new Rect();boolean shown=view.getGlobalVisibleRect(visible);
    // "Global" visibility is in the root/window coordinate space. Dialogs and
    // TYPE_APPLICATION_OVERLAY windows have a nonzero screen origin, whereas
@@ -249,9 +263,12 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
    AccessibilityNodeInfo node=view.createAccessibilityNodeInfo();Rect nativeBounds=new Rect();
    try{
     node.getBoundsInScreen(nativeBounds);windowId.set(node.getWindowId());
-    lastGeometry.set("screen="+result+", rootVisible="+visible+", rootScreen="+rootScreen[0]+","+rootScreen[1]+
+    lastGeometry.set("screen="+direct+", scrollAdjusted="+adjusted+", rootVisible="+visible+", rootScreen="+rootScreen[0]+","+rootScreen[1]+
      ", rootWindow="+rootWindow[0]+","+rootWindow[1]+", visibleOnScreen="+visibleOnScreen+", nativeAX="+nativeBounds+", window="+windowId.get());
    }finally{node.recycle();}
+   // The raw screen origin may already exclude internal RTL text scroll.
+   // Require exact independent agreement with BOTH global visibility and AX.
+   Rect result=direct.equals(visibleOnScreen)&&direct.equals(nativeBounds)?direct:adjusted;
    if(result.width()<=0||result.height()<=0||!new Rect(0,0,480,854).contains(result)||!shown||
      visible.width()!=view.getWidth()||visible.height()!=view.getHeight()||!visibleOnScreen.equals(result)||!nativeBounds.equals(result))return;
    candidate.set(result);
@@ -472,10 +489,161 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
     .put("switch_accessibility_checkable",node.isCheckable()).put("switch_bounds",switchBounds.toShortString()));
    ui(island::finish);ui(host::finish);settle();
   }
+  JSONObject widgetConfiguration=widgetConfigurationPresentation();
   proof("modern-presentation-native.json",new JSONObject().put("list_host","ListDispatchHostActivity: real views and pointer dispatch, records rather than places calls")
-   .put("observations",observations).put("no_floating_dialpad",true).put("all_inline_actions_retained",true).put("back_collapses_without_dial",true));
+   .put("observations",observations).put("widget_configuration",widgetConfiguration).put("no_floating_dialpad",true).put("all_inline_actions_retained",true).put("back_collapses_without_dial",true));
  }
  private <T extends View>T windowFind(Class<T> type){for(View root:WindowInspector.getGlobalWindowViews()){T view=find(root,type);if(view!=null&&view.isShown())return view;}return null;}
+
+ /** Actual production configuration Activity, with an explicitly unbound preview ID.
+  * No selection or injected input occurs; launcher-host binding is outside this proof. */
+ private JSONObject widgetConfigurationPresentation()throws Exception {
+  final int previewId=2147483000;AppWidgetManager manager=AppWidgetManager.getInstance(target);
+  assertTrue(previewId!=AppWidgetManager.INVALID_APPWIDGET_ID);assertNull(manager.getAppWidgetInfo(previewId));
+  assertEquals(android.content.pm.PackageManager.PERMISSION_GRANTED,target.checkSelfPermission(Manifest.permission.READ_CONTACTS));
+  await(()->PhoneSessionService.current==null,"Read-only configuration previews require Telecom cleanup to finish");
+  Map<String,?> before=prefs.getAll();JSONArray observations=new JSONArray();
+  AtomicInteger providerChanges=new AtomicInteger();ContentObserver observer=new ContentObserver(new Handler(Looper.getMainLooper())){
+   @Override public void onChange(boolean selfChange){providerChanges.incrementAndGet();}
+  };
+  target.getContentResolver().registerContentObserver(ContactsContract.AUTHORITY_URI,true,observer);
+  target.getContentResolver().registerContentObserver(CallLog.Calls.CONTENT_URI,true,observer);
+  try{
+   for(boolean amoled:new boolean[]{false,true}){
+    String language=amoled?"en":"he",frame="modern-nex-widget-"+(amoled?"amoled-en":"light-he")+".png";
+    assertTrue(prefs.edit().putString("language",language).putBoolean("dark",false).putBoolean("amoled",amoled).commit());
+    Map<String,?> configured=prefs.getAll();WidgetConfigure activity=null;JSONObject observation;
+    try{
+     Intent intent=new Intent(target,WidgetConfigure.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,previewId);
+     activity=(WidgetConfigure)getInstrumentation().startActivitySync(intent);activities.add(activity);settle();awaitActivityForeground(activity);
+     final WidgetConfigure shown=activity;await(()->activityForeground(shown)!=null,"Actual WidgetConfigure must be the resumed native application window");
+     LinearLayout root=(LinearLayout)((ViewGroup)activity.findViewById(android.R.id.content)).getChildAt(0);
+     TextView heading=text(root,amoled?"Choose a contact":"בחר איש קשר");EditText search=find(root,EditText.class);ImageView back=find(root,ImageView.class);
+     assertNotNull(heading);assertNotNull(search);assertNotNull(back);assertFalse(activity.isFinishing());
+     Rect rootBounds=bounds(root),headingBounds=bounds(heading),searchBounds=bounds(search),backBounds=bounds(back);
+     assertTrue(backBounds.width()>=dp(48)&&backBounds.height()>=dp(48));assertTrue(searchBounds.width()>=dp(48)&&searchBounds.height()>=dp(54));
+     JSONObject rootGeometry=nativeGeometry(root,rootBounds),headingGeometry=nativeGeometry(heading,headingBounds),searchGeometry=nativeGeometry(search,searchBounds),backGeometry=nativeGeometry(back,backBounds);
+     AtomicReference<JSONObject> metrics=new AtomicReference<>();ui(()->{try{
+      int background=((ColorDrawable)root.getBackground()).getColor(),surface=((GradientDrawable)search.getBackground()).getColor().getDefaultColor();
+      int ink=amoled?0xFFF9F1E8:0xFF37291F,muted=amoled?0xFFF2E5DD:0xFF4C352A;
+      assertEquals(amoled?Color.BLACK:0xFFF6F0E8,background);assertEquals(amoled?0xFF0A0A0A:0xFFFFFDFC,surface);
+      assertEquals(ink,heading.getCurrentTextColor());assertEquals(ink,search.getCurrentTextColor());assertEquals(muted,search.getCurrentHintTextColor());
+      assertEquals(amoled?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL,root.getLayoutDirection());
+      assertEquals(amoled?"Back":"חזרה",String.valueOf(back.getContentDescription()));assertTrue(back.isClickable()&&back.isFocusable());
+      assertEquals("",search.getText().toString());assertEquals(amoled?"Search name or number":"חיפוש שם או מספר",String.valueOf(search.getHint()));
+      android.text.Layout layout=heading.getLayout();assertNotNull(layout);JSONArray lines=new JSONArray();int covered=0;
+      for(int i=0;i<layout.getLineCount();i++){
+       assertEquals(covered,layout.getLineStart(i));covered=layout.getLineEnd(i);assertEquals(0,layout.getEllipsisCount(i));
+       assertTrue(layout.getLineLeft(i)>=-1&&layout.getLineRight(i)<=layout.getWidth()+1);
+       assertTrue(layout.getLineBottom(i)<=heading.getHeight()-heading.getCompoundPaddingTop()-heading.getCompoundPaddingBottom());
+       lines.put(new JSONObject().put("start_utf16",layout.getLineStart(i)).put("end_utf16",covered).put("ellipsis_count",layout.getEllipsisCount(i))
+        .put("left_px",layout.getLineLeft(i)).put("right_px",layout.getLineRight(i)).put("bottom_px",layout.getLineBottom(i)));
+      }
+      assertEquals(heading.length(),covered);assertEquals(750,heading.getTypeface().getWeight());assertEquals(600,search.getTypeface().getWeight());
+      float scaled=shown.getResources().getDisplayMetrics().scaledDensity;assertEquals(22f,heading.getTextSize()/scaled,0.01f);assertEquals(16f,search.getTextSize()/scaled,0.01f);
+      float hintWidth=search.getPaint().measureText(search.getHint().toString());int available=search.getWidth()-search.getCompoundPaddingLeft()-search.getCompoundPaddingRight();
+      Paint.FontMetrics font=search.getPaint().getFontMetrics();int baseline=search.getBaseline();assertTrue(hintWidth<=available);
+      assertTrue(baseline+font.top>=search.getCompoundPaddingTop()-1&&baseline+font.bottom<=search.getHeight()-search.getCompoundPaddingBottom()+1);
+      metrics.set(new JSONObject().put("layout_direction",amoled?"LTR":"RTL").put("font_scale",shown.getResources().getConfiguration().fontScale)
+       .put("background_argb",background).put("surface_argb",surface).put("heading_argb",heading.getCurrentTextColor()).put("search_argb",search.getCurrentTextColor()).put("hint_argb",search.getCurrentHintTextColor())
+       .put("status_bar_argb",shown.getWindow().getStatusBarColor()).put("navigation_bar_argb",shown.getWindow().getNavigationBarColor())
+       .put("heading",new JSONObject().put("text",heading.getText()).put("text_size_sp",heading.getTextSize()/scaled).put("font_weight",heading.getTypeface().getWeight()).put("font_variation",heading.getFontVariationSettings())
+        .put("layout_width_px",layout.getWidth()).put("content_width_px",heading.getWidth()-heading.getCompoundPaddingLeft()-heading.getCompoundPaddingRight())
+        .put("content_height_px",heading.getHeight()-heading.getCompoundPaddingTop()-heading.getCompoundPaddingBottom()).put("lines",lines))
+       .put("search_hint",new JSONObject().put("text",search.getHint()).put("text_size_sp",search.getTextSize()/scaled).put("font_weight",search.getTypeface().getWeight()).put("font_variation",search.getFontVariationSettings())
+        .put("measured_width_px",hintWidth).put("available_width_px",available).put("font_top_px",font.top).put("font_bottom_px",font.bottom).put("baseline_px",baseline)
+        .put("padding_top_px",search.getCompoundPaddingTop()).put("padding_bottom_px",search.getCompoundPaddingBottom()).put("height_px",search.getHeight())));
+     }catch(Exception failure){throw new RuntimeException(failure);}});
+     JSONObject foreground=activityForeground(activity);assertNotNull(foreground);assertNull(manager.getAppWidgetInfo(previewId));
+     Bitmap bitmap=capture(frame);JSONArray samples=new JSONArray();try{for(int n=0;n<5;n++){
+      int x=rootBounds.left+dp(2)+n,y=rootBounds.top+dp(2),color=bitmap.getPixel(x,y);assertEquals(amoled?Color.BLACK:0xFFF6F0E8,color);
+      samples.put(new JSONObject().put("x",x).put("y",y).put("argb",color));
+     }}finally{bitmap.recycle();}
+     observation=metrics.get().put("frame",frame).put("activity",WidgetConfigure.class.getName()).put("theme",amoled?"amoled":"light").put("language",language).put("amoled",amoled)
+      .put("widget_id",previewId).put("intent_widget_id",activity.getIntent().getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,AppWidgetManager.INVALID_APPWIDGET_ID)).put("widget_provider_info","null")
+      .put("foreground",foreground).put("root_geometry",rootGeometry).put("heading_geometry",headingGeometry).put("search_geometry",searchGeometry).put("back_geometry",backGeometry).put("background_samples",samples);
+    }finally{if(activity!=null){WidgetConfigure closing=activity;ui(closing::finish);settle();assertTrue(closing.isFinishing()||closing.isDestroyed());}}
+    assertEquals("Preview must not select a contact or alter preferences",configured,prefs.getAll());assertNull("Preview must not create a Telecom call",PhoneSessionService.current);
+    assertNull(manager.getAppWidgetInfo(previewId));assertEquals("No contacts/call-log provider changes during read-only preview",0,providerChanges.get());
+    observations.put(observation.put("selection_actions",0).put("native_pointer_inputs",0).put("provider_writes_requested",0).put("provider_change_notifications",providerChanges.get())
+     .put("preferences_unchanged",true).put("telecom_call_unchanged",true).put("finished",true));
+   }
+  }finally{target.getContentResolver().unregisterContentObserver(observer);restore(prefs,before);assertEquals(before,prefs.getAll());}
+  return new JSONObject().put("scope","Actual WidgetConfigure Activity; synthetic unbound ID configuration preview").put("launcher_host_binding","NOT_TESTED")
+   .put("preferences_restored",true).put("observations",observations);
+ }
+ // API33 closes the ActivityRecord component with `} tN}`; older dumps use
+ // ` tN}`. Parse the exact resumed record/component, never a component prefix
+ // or a historical paused entry that merely mentions the expected Activity.
+ private static final Pattern RESUMED_ACTIVITY=Pattern.compile("^[ \\t]*(?:mResumedActivity|topResumedActivity)[ \\t]*[:=][ \\t]*ActivityRecord\\{[0-9a-fA-F]+[ \\t]+u[0-9]+[ \\t]+([^\\s}]+)(?:\\}[ \\t]+t[0-9]+\\}|[ \\t]+t[0-9]+\\})[ \\t]*$");
+ private JSONObject activityForeground(Activity activity)throws Exception {
+  ComponentName expected=new ComponentName(activity,activity.getClass());String record=null;
+  JSONObject probe=new JSONObject().put("diagnostic_only",true).put("sampled_uptime_millis",SystemClock.uptimeMillis())
+   .put("expected_component",expected.flattenToShortString()).put("outcome","INCOMPLETE_SAMPLE");lastForegroundProbe=probe;
+  JSONArray resumedRows=new JSONArray();int omittedRows=0;
+  for(String line:shell("dumpsys activity activities").split("\\n")){
+   if(line.contains("ResumedActivity")||line.contains("resumedActivity")){
+    if(resumedRows.length()<16)resumedRows.put(line.length()>1000?line.substring(0,1000)+" [TRUNCATED]":line);else omittedRows++;
+   }
+   Matcher match=RESUMED_ACTIVITY.matcher(line);
+   if(record==null&&match.matches()&&expected.equals(ComponentName.unflattenFromString(match.group(1))))record=line.trim();
+  }
+  probe.put("actual_resumed_rows",resumedRows).put("omitted_resumed_rows",omittedRows).put("matched_record",record==null?JSONObject.NULL:record);
+  AtomicReference<Integer> decorWindow=new AtomicReference<>(-1);AtomicReference<Rect> decorBounds=new AtomicReference<>();
+  AtomicReference<JSONObject> decorState=new AtomicReference<>();
+  ui(()->{try{
+   View decor=activity.getWindow().getDecorView();
+   boolean finishing=activity.isFinishing(),destroyed=activity.isDestroyed(),activityFocus=activity.hasWindowFocus(),decorFocus=decor.hasWindowFocus(),
+    attached=decor.isAttachedToWindow(),shown=decor.isShown();int visibility=decor.getWindowVisibility();
+   JSONObject observed=new JSONObject().put("finishing",finishing).put("destroyed",destroyed).put("activity_focus",activityFocus).put("decor_focus",decorFocus)
+    .put("attached",attached).put("shown",shown).put("window_visibility",visibility).put("window_id",-1).put("bounds",JSONObject.NULL).put("ready",false);decorState.set(observed);
+   if(finishing||destroyed||!activityFocus||!decorFocus||!attached||!shown||visibility!=View.VISIBLE)return;
+   AccessibilityNodeInfo node=decor.createAccessibilityNodeInfo();try{
+    Rect bounds=new Rect();node.getBoundsInScreen(bounds);observed.put("window_id",node.getWindowId()).put("bounds",bounds.toShortString());
+    if(node.getWindowId()<0||bounds.isEmpty()||!new Rect(0,0,480,854).contains(bounds))return;
+    decorWindow.set(node.getWindowId());decorBounds.set(bounds);observed.put("ready",true);
+   }finally{node.recycle();}
+  }catch(Exception failure){throw new RuntimeException(failure);}});
+  probe.put("decor",decorState.get());JSONArray nativeWindows=new JSONArray();probe.put("native_windows",nativeWindows);int omittedWindows=0,acceptedWindow=-1,acceptedEdgeDelta=-1;
+  Rect acceptedWindowBounds=null,acceptedRootBounds=null;
+  for(AccessibilityWindowInfo window:getInstrumentation().getUiAutomation().getWindows()){
+   try{
+    Rect windowBounds=new Rect(),rootBounds=new Rect();window.getBoundsInScreen(windowBounds);
+    JSONObject observed=new JSONObject().put("window_id",window.getId()).put("type",window.getType()).put("focused",window.isFocused())
+     .put("active",window.isActive()).put("bounds",windowBounds.toShortString());
+    AccessibilityNodeInfo root=window.getRoot();String rejection;
+    if(root==null){observed.put("root",JSONObject.NULL);rejection="MISSING_AX_ROOT";}
+    else try{
+     root.getBoundsInScreen(rootBounds);Rect decor=decorBounds.get();int edgeDelta=decor==null?-1:Math.max(Math.max(Math.abs(windowBounds.left-decor.left),Math.abs(windowBounds.top-decor.top)),
+      Math.max(Math.abs(windowBounds.right-decor.right),Math.abs(windowBounds.bottom-decor.bottom)));
+     observed.put("root_package",root.getPackageName()==null?JSONObject.NULL:root.getPackageName().toString())
+      .put("root_visible",root.isVisibleToUser()).put("root_bounds",rootBounds.toShortString()).put("max_window_edge_delta_px",edgeDelta);
+     if(window.getId()!=decorWindow.get())rejection="NOT_ACTIVITY_DECOR_WINDOW";
+     else if(window.getType()!=AccessibilityWindowInfo.TYPE_APPLICATION)rejection="NOT_APPLICATION_WINDOW";
+     else if(!window.isActive()||!window.isFocused())rejection="NOT_ACTIVE_AND_FOCUSED";
+     else if(!root.isVisibleToUser()||!target.getPackageName().contentEquals(String.valueOf(root.getPackageName())))rejection="ROOT_NOT_VISIBLE_TARGET_PACKAGE";
+     else if(decor==null||decor.isEmpty()||windowBounds.isEmpty()||rootBounds.isEmpty()||!new Rect(0,0,480,854).contains(decor)||
+       !new Rect(0,0,480,854).contains(windowBounds)||!new Rect(0,0,480,854).contains(rootBounds))rejection="ROOT_OR_WINDOW_BOUNDS_INVALID";
+     else if(!rootBounds.equals(decor))rejection="NATIVE_ROOT_DIFFERS_FROM_ACTIVITY_DECOR";
+     // Measured API33 AX window edges can round one pixel inward from its
+     // exact root/Decor bounds. Keep all raw bounds and independently verify
+     // this bounded representation difference; two pixels must still refuse.
+     else if(edgeDelta>1)rejection="NATIVE_WINDOW_EDGE_DELTA_EXCEEDS_ONE_PIXEL";
+     else{rejection="NONE";acceptedWindow=window.getId();acceptedEdgeDelta=edgeDelta;acceptedWindowBounds=new Rect(windowBounds);acceptedRootBounds=new Rect(rootBounds);}
+    }finally{root.recycle();}
+    observed.put("rejection_reason",rejection);
+    if(nativeWindows.length()<32)nativeWindows.put(observed);else omittedWindows++;
+   }finally{window.recycle();}
+  }
+  probe.put("omitted_native_windows",omittedWindows);
+  if(record==null){probe.put("outcome","REJECTED_NO_EXACT_RESUMED_ACTIVITY");return null;}
+  if(decorBounds.get()==null){probe.put("outcome","REJECTED_ACTIVITY_DECOR_NOT_READY");return null;}
+  if(acceptedWindow<0){probe.put("outcome","REJECTED_NO_MATCHING_NATIVE_APPLICATION_WINDOW");return null;}
+  probe.put("outcome","FOREGROUND_CHECK_ACCEPTED").put("accepted_window_id",acceptedWindow);
+  return new JSONObject().put("component",expected.flattenToShortString()).put("resumed_record",record).put("top_resumed",true)
+   .put("native_application_window_visible",true).put("window_id",acceptedWindow).put("decor_bounds",decorBounds.get().toShortString())
+   .put("native_window_bounds",acceptedWindowBounds.toShortString()).put("native_root_bounds",acceptedRootBounds.toShortString()).put("max_window_edge_delta_px",acceptedEdgeDelta);
+ }
 
  public void testSameFileArchiveBackupRequiresSeparateExportAndRestoreOptIns()throws Exception {
   prefs.edit().putString("language","en").putBoolean("dark",false).putBoolean("amoled",false).putString(CallArchive.PREF,CallArchive.OFF).commit();
@@ -614,17 +782,33 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
   prefs.edit().putString(CallIslandPosition.MODE,"below").remove(CallIslandPosition.SET).commit();settle();
   Rect below=bounds(tag(main,"island-root"));assertTrue(below.top>=statusInset(main));assertTrue("Normal host status color restored",main.getWindow().getStatusBarColor()!=Color.TRANSPARENT);
   assertOwned(call,token);surfaces.put(surface("inapp-default-below-restored",below,token));screenshot("modern-island-below-inapp.png");
+  proof.put("nex_active",nexIslandPresentation(main,call,token));
   // Show an unmodified real app surface behind the same capsule. Sampling its empty
   // top padding avoids opaque caller-label backplates and proves compositor blending.
-  prefs.edit().putBoolean(CallIslandPosition.SET,true).putInt(CallIslandPosition.X,5000).putInt(CallIslandPosition.Y,6000).commit();settle();
-  Rect composition=bounds(tag(main,"island-root"));prefs.edit().putString("island_hidden_token",token).commit();await(()->main.getWindow().getDecorView().findViewWithTag("island-root")==null,"Composition baseline must have no island");
-  Bitmap background=capture("modern-island-composition-background.png");
+  // Select a real uncluttered patch before any opacity captures. Do not
+  // relax pixel uniformity, brightness, guard, blend or geometry assertions.
+  Rect selectedComposition=null;JSONArray attemptedPositions=new JSONArray();
+  for(int position:new int[]{6000,7500,8500,5000,4000,3000,2000,1000,9000,0,10000}){
+   prefs.edit().remove("island_hidden_token").putBoolean(CallIslandPosition.SET,true)
+    .putInt(CallIslandPosition.X,5000).putInt(CallIslandPosition.Y,position).commit();
+   await(()->main.getWindow().getDecorView().findViewWithTag("island-root")!=null,"Candidate capsule must be shown");
+   settle();Rect candidate=bounds(tag(main,"island-root"));assertOwned(call,token);
+   prefs.edit().putString("island_hidden_token",token).commit();
+   await(()->main.getWindow().getDecorView().findViewWithTag("island-root")==null,"Composition baseline must have no island");
+   settle();Bitmap probe=getInstrumentation().getUiAutomation().takeScreenshot();assertNotNull(probe);
+   boolean usable;try{assertEquals(480,probe.getWidth());assertEquals(854,probe.getHeight());usable=uniformBackgroundSamples(probe,candidate)!=null;}finally{probe.recycle();}
+   attemptedPositions.put(new JSONObject().put("normalized_y",position).put("bounds",candidate.toShortString()).put("uniform_baseline",usable));
+   if(usable){selectedComposition=candidate;break;}
+  }
+  assertNotNull("Real baseline has no uniform guarded background patch at any candidate capsule position",selectedComposition);
+  final Rect composition=selectedComposition;Bitmap background=capture("modern-island-composition-background.png");
   // Choose empty, uniform real background using this baseline only, before
   // any opacity image exists. Text antialiasing below a transparent layer can
   // quantize by one channel; it is not the empty padding this proof samples.
   Bitmap[] levels=new Bitmap[3];int[] opacity={0,35,100};
   try {
    int[] sampleXs=uniformBackgroundSamples(background,composition);
+   assertNotNull("Saved real baseline must retain the guarded uniform light patch",sampleXs);
    for(int i=0;i<opacity.length;i++){
     prefs.edit().remove("island_hidden_token").putInt("island_background_opacity",opacity[i]).commit();
     await(()->main.getWindow().getDecorView().findViewWithTag("island-root")!=null,"Transparent island did not return");settle();
@@ -644,7 +828,7 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
    proof.put("transparency",new JSONObject().put("sample_region",composition.toShortString()).put("background_is_real_app_compositor",true).put("view_alpha",1)
     .put("caller_alpha",1).put("background_alpha_35",89).put("rgb_tolerance",3).put("samples",pixels)
     .put("sample_selection","baseline-only uniform light background in central top padding")
-    .put("baseline_uniform_guard_pixels",1).put("baseline_min_rgb",200));
+    .put("baseline_uniform_guard_pixels",1).put("baseline_min_rgb",200).put("attempted_baseline_positions",attemptedPositions));
   }finally{background.recycle();for(Bitmap bitmap:levels)if(bitmap!=null)bitmap.recycle();}
   prefs.edit().putString("island_hidden_token",token).commit();modem("cancel");await(()->PhoneSessionService.current==null||PhoneSessionService.current.getState()==Call.STATE_DISCONNECTED,"First actual call did not end");
   key(KeyEvent.KEYCODE_HOME);modem("call");await(()->state(Call.STATE_RINGING)&&PhoneSessionService.islandSnapshot()!=null,"Second actual call did not bind");
@@ -658,6 +842,42 @@ public final class ModernFeaturesIntegrationTest extends InstrumentationTestCase
    .put("hide_preserves_call_and_notification",true).put("settings_restore_on_home",true).put("new_call_ignores_previous_hidden_token",true)
    .put("single_owned_surface",true).put("protected_status_icons_remain_visible",true).put("modem_end_removes_island",true);
   proof("modern-island-native.json",proof);
+ }
+ private Object islandField(CallIslandView view,String name)throws Exception {Field field=CallIslandView.class.getDeclaredField(name);field.setAccessible(true);return field.get(view);}
+ private JSONObject nexIslandPresentation(MainActivity main,Call call,String token)throws Exception {
+  assertOwned(call,token);Map<String,?> before=prefs.getAll();Rect previous=bounds(tag(main,"island-root"));int commandCount=modemCommands.length();JSONObject result;
+  try{
+   assertTrue(prefs.edit().putString("island_style","nex").putString("language","he").commit());
+   await(()->{AtomicReference<Boolean> ready=new AtomicReference<>(false);ui(()->{try{
+    View root=main.getWindow().getDecorView().findViewWithTag("island-root");if(!(root instanceof CallIslandView))return;
+    CallIslandView island=(CallIslandView)root;CallIslandState bound=(CallIslandState)islandField(island,"state");
+    ready.set(bound!=null&&token.equals(bound.token)&&bound.state==Call.STATE_ACTIVE&&island.getLayoutDirection()==View.LAYOUT_DIRECTION_RTL&&
+     ((Integer)islandField(island,"bodyTop"))==0xFF342720&&((Integer)islandField(island,"accent"))==0xFFF6A773);
+   }catch(Exception failure){throw new RuntimeException(failure);}});return ready.get();
+   },"NEX selection must rebind the same actual ACTIVE Telecom call to the visible Hebrew island");
+   awaitActivityForeground(main);CallIslandView island=(CallIslandView)tag(main,"island-root");Rect actual=bounds(island);JSONObject geometry=nativeGeometry(island,actual);
+   assertOwned(call,token);assertNull("NEX in-app preview must retain one owned surface",external());AtomicReference<JSONObject> colors=new AtomicReference<>();
+   ui(()->{try{
+    CallIslandState bound=(CallIslandState)islandField(island,"state");assertEquals(token,bound.token);assertEquals(Call.STATE_ACTIVE,bound.state);assertEquals(NUMBER,bound.number);
+    int[] gradient=((GradientDrawable)island.getBackground()).getColors();assertNotNull(gradient);assertEquals(2,gradient.length);
+    int top=(Integer)islandField(island,"bodyTop"),bottom=(Integer)islandField(island,"bodyBottom"),edge=(Integer)islandField(island,"edge"),accent=(Integer)islandField(island,"accent");
+    assertEquals(0xFF342720,top);assertEquals(0xFF241A17,bottom);assertEquals(0xFF634D43,edge);assertEquals(0xFFF6A773,accent);assertEquals(top,gradient[0]);assertEquals(bottom,gradient[1]);
+    assertEquals(1f,island.getAlpha(),0f);assertEquals(1f,island.getScaleX(),0f);assertEquals(1f,island.getScaleY(),0f);
+    TextView timer=(TextView)island.findViewWithTag("island-timer");assertNotNull(timer);assertEquals(accent,timer.getCurrentTextColor());
+    colors.set(new JSONObject().put("body_top_argb",top).put("body_bottom_argb",bottom).put("edge_argb",edge).put("accent_argb",accent).put("timer_argb",timer.getCurrentTextColor())
+     .put("bound_view_token",bound.token).put("bound_view_state",bound.state).put("view_alpha",island.getAlpha()).put("scale_x",island.getScaleX()).put("scale_y",island.getScaleY()));
+   }catch(Exception failure){throw new RuntimeException(failure);}});
+   JSONObject foreground=activityForeground(main);assertNotNull(foreground);Bitmap bitmap=capture("modern-nex-island-active-he.png");JSONArray samples=new JSONArray();
+   try{for(int n=0;n<5;n++){int x=actual.centerX()+n-2,y=actual.top+dp(3),color=bitmap.getPixel(x,y);assertEquals(255,Color.alpha(color));
+    for(int shift:new int[]{16,8,0}){int channel=(color>>shift)&255,first=(0xFF342720>>shift)&255,last=(0xFF241A17>>shift)&255;assertTrue(channel>=Math.min(first,last)-1&&channel<=Math.max(first,last)+1);}
+    samples.put(new JSONObject().put("x",x).put("y",y).put("argb",color));
+   }}finally{bitmap.recycle();}
+   assertOwned(call,token);assertEquals(commandCount,modemCommands.length());
+   result=colors.get().put("frame","modern-nex-island-active-he.png").put("style_id",prefs.getString("island_style","")).put("language",prefs.getString("language","")).put("layout_direction","RTL")
+    .put("data_origin","Android Telecom -> production PhoneSessionService -> live CallIslandView").put("token",token).put("call_state",call.getState()).put("number",call.getDetails().getHandle().getSchemeSpecificPart())
+    .put("foreground",foreground).put("geometry",geometry).put("background_samples",samples).put("extra_modem_commands",modemCommands.length()-commandCount).put("same_owned_call",true).put("single_owned_surface",true);
+  }finally{restore(prefs,before);settle();assertEquals(before,prefs.getAll());assertOwned(call,token);assertEquals(previous,bounds(tag(main,"island-root")));}
+  return result.put("preferences_restored",true).put("previous_layout_restored",true).put("previous_bounds",previous.toShortString()).put("restored_bounds",bounds(tag(main,"island-root")).toShortString());
  }
  private JSONObject statusModeSurface(Activity activity,View capsule,Rect capsuleBounds,Call call,String token)throws Exception {
   assertOwned(call,token);awaitActivityForeground(activity);

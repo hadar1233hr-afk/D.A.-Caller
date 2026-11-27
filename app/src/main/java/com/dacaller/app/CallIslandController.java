@@ -325,8 +325,8 @@ final class CallIslandController implements CallIslandView.Listener {
  }
  private void reserveBackground(){
   if(!backgroundReserved){originalContentBackground=content.getBackground();backgroundReserved=true;}
-  int color=prefs.getBoolean("amoled",false)?android.graphics.Color.BLACK:
-    prefs.getBoolean("dark",false)?0xFF131313:0xFFF5F5F4;
+  int color=NexPalette.background(prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false),
+    prefs.getBoolean("amoled",false));
   // The inset exposes android.R.id.content, which otherwise retains the
   // platform's white window background even above a dark app page.
   for(int i=0;i<content.getChildCount();i++){

@@ -71,7 +71,7 @@ public final class SettingsBackupActivityTest {
    android.app.AlertDialog dialog=ShadowAlertDialog.getLatestAlertDialog();assertNotNull(dialog);
    CheckBox archive=find(dialog.getWindow().getDecorView(),CheckBox.class);assertNotNull(archive);assertFalse(archive.isChecked());
    assertWineAndRoundedFont(archive,0xFFC76589);
-   assertEquals(500,dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE).getTypeface().getWeight());
+   assertEquals(600,dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE).getTypeface().getWeight());
    archive.setChecked(true);dialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE).performClick();shadowOf(android.os.Looper.getMainLooper()).idle();
    assertTrue(ctl.get().isFinishing());assertEquals(before,prefs.getAll());assertFalse(app.getDatabasePath("calls_archive.db").exists());
   }
@@ -154,7 +154,7 @@ public final class SettingsBackupActivityTest {
  }
  private static void assertWineAndRoundedFont(CheckBox checkBox,int wine){
   android.util.TypedValue activated=new android.util.TypedValue();assertTrue(checkBox.getContext().getTheme().resolveAttribute(android.R.attr.colorControlActivated,activated,true));
-  assertEquals(wine,activated.data);assertEquals(500,checkBox.getTypeface().getWeight());
+  assertEquals(wine,activated.data);assertEquals(600,checkBox.getTypeface().getWeight());
   assertTrue(checkBox.getMinHeight()>=Math.round(48*checkBox.getResources().getDisplayMetrics().density));
  }
  private static Button exportButton(View view){

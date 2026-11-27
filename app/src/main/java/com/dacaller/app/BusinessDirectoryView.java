@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -64,10 +65,10 @@ final class BusinessDirectoryView implements AutoCloseable {
  private boolean dark(){return prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);}
  private String tr(String he,String en){return english()?en:he;}
  private int dp(float value){return Math.round(host.getResources().getDisplayMetrics().density*value);}
- private int background(){return prefs.getBoolean("amoled",false)?Color.BLACK:dark()?0xFF131313:0xFFF5F5F4;}
- private int surface(){return prefs.getBoolean("amoled",false)?0xFF090909:dark()?0xFF1D1D1D:Color.WHITE;}
- private int ink(){return dark()?0xFFF7F7F7:0xFF181818;}
- private int muted(){return dark()?0xFFB5BBB6:0xFF646D66;}
+ private int background(){return NexPalette.background(dark(),prefs.getBoolean("amoled",false));}
+ private int surface(){return NexPalette.surface(dark(),prefs.getBoolean("amoled",false));}
+ private int ink(){return NexPalette.ink(dark());}
+ private int muted(){return NexPalette.muted(dark());}
  private int gold(){return AppAppearance.gold(dark());}
  private GradientDrawable shape(int color,int radius){GradientDrawable value=new GradientDrawable();value.setColor(color);value.setCornerRadius(dp(radius));return value;}
  private TextView text(String value,int size,boolean bold,int color){
@@ -91,19 +92,19 @@ final class BusinessDirectoryView implements AutoCloseable {
   LinearLayout root=vertical();root.setTag("business_directory_root");
   root.setLayoutDirection(english()?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);
   root.setFocusableInTouchMode(true);root.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
-  root.setBackgroundColor(background());root.setPadding(dp(12),dp(4),dp(12),0);
+  root.setBackgroundColor(background());root.setPadding(dp(16),dp(4),dp(16),0);
   LinearLayout tabs=horizontal();tabs.setTag("business_directory_tabs");root.addView(tabs,new LinearLayout.LayoutParams(-1,dp(48)));
   TextView mine=button(tr("אנשי הקשר שלי","My contacts"),()->{remember();personal.run();});mine.setTag("business_directory_personal_tab");
   tabs.addView(mine,new LinearLayout.LayoutParams(0,-1,1));
   TextView businesses=button(tr("בתי עסק","Businesses"),()->{});businesses.setTag("business_directory_business_tab");businesses.setSelected(true);
-  businesses.setBackground(shape(dark()?0xFF29251D:0xFFF0E8D9,13));businesses.setClickable(false);
+  businesses.setBackground(shape(NexPalette.soft(dark()),16));businesses.setTextColor(NexPalette.primaryText(dark()));businesses.setClickable(false);
   if(Build.VERSION.SDK_INT>=30)businesses.setStateDescription(tr("נבחר","Selected"));
   tabs.addView(businesses,new LinearLayout.LayoutParams(0,-1,1));
   EditText search=new EditText(host);searchField=search;search.setTag("business_directory_search");search.setSingleLine(true);
   search.setHint(tr("חיפוש עסק, יישוב או מספר","Search business, city or number"));search.setTextSize(14);
   AppAppearance.font(search,false);
   search.setTextColor(ink());search.setHintTextColor(muted());search.setPadding(dp(12),0,dp(12),0);
-  search.setBackground(shape(surface(),13));search.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+  search.setBackground(shape(surface(),19));search.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
   search.setFilters(new InputFilter[]{new InputFilter.LengthFilter(BusinessDirectory.MAX_QUERY_LENGTH)});search.setText(query);
   root.addView(search,new LinearLayout.LayoutParams(-1,dp(48)));
   status=text(tr("טוען את מאגר העסקים…","Loading business directory…"),12,false,muted());status.setTag("business_directory_status");
@@ -276,17 +277,17 @@ final class BusinessDirectoryView implements AutoCloseable {
   }
  }
  private final class Row {
-  final LinearLayout root=horizontal();final TextView name=text("",14,true,ink()),phone=text("",13,false,gold()),extra=text("",10,false,muted()),mark=text("",19,true,AppAppearance.gold(true));
+  final LinearLayout root=horizontal();final TextView name=text("",15,true,ink()),phone=text("",13,false,gold()),extra=text("",12,false,muted()),mark=text("",19,true,NexPalette.primaryText(dark()));
   final ImageView call=new ImageView(host);
   Row(){
-   root.setTag(this);root.setPadding(dp(6),dp(7),dp(4),dp(7));root.setMinimumHeight(dp(76));root.setBackground(shape(surface(),14));
-   FrameLayout avatar=AvatarShapes.frame(host);avatar.setBackgroundColor(0xFF173D31);mark.setGravity(Gravity.CENTER);avatar.addView(mark,new FrameLayout.LayoutParams(-1,-1));
+   root.setTag(this);root.setMinimumHeight(dp(90));root.setBackground(new InsetDrawable(shape(surface(),20),0,dp(5),0,dp(6)));root.setPadding(dp(14),dp(17),dp(12),dp(17));
+   FrameLayout avatar=AvatarShapes.frame(host);avatar.setBackgroundColor(NexPalette.soft(dark()));mark.setGravity(Gravity.CENTER);avatar.addView(mark,new FrameLayout.LayoutParams(-1,-1));
    avatar.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);root.addView(avatar,new LinearLayout.LayoutParams(dp(38),dp(38)));
    LinearLayout labels=vertical();labels.setPadding(dp(9),0,dp(5),0);name.setMaxLines(2);name.setEllipsize(TextUtils.TruncateAt.END);
    phone.setSingleLine(true);phone.setEllipsize(TextUtils.TruncateAt.END);phone.setTextDirection(View.TEXT_DIRECTION_LTR);
    extra.setSingleLine(true);extra.setEllipsize(TextUtils.TruncateAt.END);labels.addView(name);labels.addView(phone);labels.addView(extra);
    root.addView(labels,new LinearLayout.LayoutParams(0,-2,1));
-   call.setImageResource(android.R.drawable.sym_action_call);call.setImageTintList(android.content.res.ColorStateList.valueOf(gold()));call.setPadding(dp(12),dp(12),dp(12),dp(12));
+   call.setImageResource(android.R.drawable.sym_action_call);call.setImageTintList(android.content.res.ColorStateList.valueOf(NexPalette.onCall(dark())));call.setBackground(shape(NexPalette.call(dark()),16));call.setPadding(dp(13),dp(13),dp(13),dp(13));
    root.addView(call,new LinearLayout.LayoutParams(dp(48),dp(48)));
   }
  }

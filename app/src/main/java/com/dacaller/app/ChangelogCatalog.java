@@ -26,6 +26,15 @@ final class ChangelogCatalog {
  // Version boundaries and notes are grounded in app/build.gradle history and
  // docs/DA_CALLER_{VISUAL_VERIFICATION,PERSONALIZATION_VERIFICATION,DYNAMIC_ISLAND}.
  private static final List<Entry> ENTRIES=Collections.unmodifiableList(Arrays.asList(
+  new Entry("0.14.0","עיצוב חדש בהשראת NEX","A new NEX-inspired design",
+   change("שפה חזותית חדשה עם רקעים חמים, גוני טרקוטה ומנטה וכרטיסים מעוגלים, במצב בהיר, כהה ושחור AMOLED.",
+    "A new visual language with warm backgrounds, terracotta and mint accents and rounded cards in light, dark and AMOLED black modes."),
+   change("לוח חיוג וניווט תחתון בעיצוב מחודש, כרטיסי שיחות ואנשי קשר וטיפוגרפיה ברורה בעברית ובאנגלית.",
+    "A redesigned dialpad and bottom navigation, recent-call and contact cards and clear Hebrew and English typography."),
+   change("מראה עקבי למסכי אנשי קשר, ארכיון, עסקים, הגדרות וגיבוי, תוך שמירת הפעולות והנתונים הקיימים.",
+    "A consistent appearance across contact details, archive, businesses, Settings and backup while preserving existing actions and data."),
+   change("חמשת עיצובי השיחה ואפשרויות אי השיחה נשמרו, יחד עם החיוג והחיפוש ללא אינטרנט.",
+    "All five call styles and call-island options are retained, together with offline dialing and search.")),
   new Entry("0.13.0","עיצוב, אי שיחה וגיבוי משופר","Refined interface, call island and backup",
    change("פעולות שיחה נפתחות בתוך השורה בשיחות האחרונות, לצד סיכום ומועדפים בעיצוב חדש. לוח החיוג בסרגל התחתון והגדרות למעלה משמאל.",
     "Recent-call actions expand within their row, with refreshed summary and favorites. The dialpad is in bottom navigation and Settings at top left."),

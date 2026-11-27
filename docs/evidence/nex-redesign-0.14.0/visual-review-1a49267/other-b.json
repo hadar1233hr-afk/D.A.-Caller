@@ -1,0 +1,310 @@
+{
+  "group": "other-b",
+  "source_sha": "1a4926785a72bec25c188f9c5b74116c5b498c31",
+  "app_tree": "b5f973f6b837cc747ece84e32815a102de293937",
+  "run_id": "45773402159",
+  "sheets_viewed": [
+    "other-b-01.png",
+    "other-b-02.png",
+    "other-b-03.png",
+    "other-b-04.png",
+    "other-b-05.png",
+    "other-b-06.png",
+    "other-b-07.png",
+    "other-b-08.png",
+    "other-b-09.png",
+    "other-b-10.png",
+    "other-b-11.png",
+    "other-b-12.png"
+  ],
+  "frames": [
+    {
+      "filename": "personalization-contacts-light-he-standard-expanded.png",
+      "sha256": "bf9d722554a919aa2eabd5a4e81484b041803e39581187184e730a0ddff62ba7",
+      "status": "PASS",
+      "notes": "Light RTL contacts: expanded favorites, search, business control and contact rows have clear contrast and separated icons; third row continues at the scrollable lower viewport edge."
+    },
+    {
+      "filename": "personalization-contacts-shape-circle.png",
+      "sha256": "9e9d369cbc97abf63b6459aab0a575f0402f64ded75238281a21a9ea9b1ea453",
+      "status": "PASS",
+      "notes": "Dark RTL contacts with circular avatars: shape is consistently circular; search, business control, call and star actions are clear; bounded favorite-name ellipsis and lower scrolling edge are visible."
+    },
+    {
+      "filename": "personalization-contacts-shape-hexagon.png",
+      "sha256": "fb1221f79d4ba2a02637fcfcab2680017feb9819229d42d303c8eefbfcaef375",
+      "status": "PASS",
+      "notes": "Dark RTL contacts with hexagonal avatars: avatar outlines remain distinct; row names, numbers and call/star actions stay separated; bounded favorite-name ellipsis and lower scrolling edge are visible."
+    },
+    {
+      "filename": "personalization-contacts-shape-rounded_square.png",
+      "sha256": "2cfbf1ccd9a45d15c49e074d98f9ba305abb03547fc84df27db8107f42c33b92",
+      "status": "PASS",
+      "notes": "Dark RTL contacts with rounded-square avatars: corners are visibly rounded, row content remains separate from call/star controls, and navigation labels are readable."
+    },
+    {
+      "filename": "personalization-contacts-shape-square.png",
+      "sha256": "265dd940f20446ce6421cc9d73d0467870380c63d219e2a6cf1074c6979b2e6a",
+      "status": "PASS",
+      "notes": "Dark RTL contacts with square avatars: square corners are visible in favorites and rows; readable gold/cream text, green call glyphs and distinct bottom navigation; lower list edge is scrollable."
+    },
+    {
+      "filename": "personalization-recents-dark-en-largefont-compact.png",
+      "sha256": "af9bc9a5603e6c333214314883885e4002caf232323fa753ce28ae8653c50451",
+      "status": "PASS",
+      "notes": "Dark English large text compact summary: row phone numbers and controls are intact; secondary metadata visibly ends at 7:24 A... and duration is absent from the bounded preview. Read-only source confirms expansion exposes Details with full date/time and duration."
+    },
+    {
+      "filename": "personalization-recents-dark-en-largefont-expanded.png",
+      "sha256": "5d6f0a05960b288aaf72c38527a9bd47beece4577ec94b001771555f14d3710d",
+      "status": "PASS",
+      "notes": "Dark English large text expanded summary: all three summary counts and average are readable; bounded two-line row metadata ellipsizes date/time. Source confirms Details exposes complete date/time and duration."
+    },
+    {
+      "filename": "personalization-recents-dark-en-standard-compact.png",
+      "sha256": "157256719030f7154a0558a2eda8354ca33cb08da205f312dae3e34078661a56",
+      "status": "PASS",
+      "notes": "Dark English standard text compact summary: full row date/time and duration fit within two lines; favorites/summary chevrons and call controls are clearly separated."
+    },
+    {
+      "filename": "personalization-recents-dark-en-standard-expanded.png",
+      "sha256": "cff9cb2bcf1165fccf41dff4757118d2fa46c01b861af66ffc729b5917640705",
+      "status": "PASS",
+      "notes": "Dark English standard text expanded summary: counts, direction labels and average are fully readable; visible row metadata includes complete time and duration; next row begins at scrollable viewport edge."
+    },
+    {
+      "filename": "personalization-recents-dark-he-largefont-compact.png",
+      "sha256": "6dac59b5b3102801c70c3a165f269efe3350058c7c19851fabc9686e381d75d5",
+      "status": "PASS",
+      "notes": "Dark Hebrew large text compact summary: RTL placement and action separation are intact; summary and row metadata have visible bounded ellipses. Expanded summary frame shows full summary, and source confirms row Details exposes full date/time and duration."
+    },
+    {
+      "filename": "personalization-recents-dark-he-largefont-expanded.png",
+      "sha256": "4c1fd8f3d95ac4909d8c48c7367b8493d82ff84bc6b7b6dae8b6356e626d744d",
+      "status": "PASS",
+      "notes": "Dark Hebrew large text expanded summary: two-line summary, counts and average fit; row metadata preview ellipsizes its end, with source-confirmed complete date/time and duration behind Details."
+    },
+    {
+      "filename": "personalization-recents-dark-he-standard-compact.png",
+      "sha256": "52f37b49133bb8be8f26c8943c0a479f6d1542669e7505e40b915a4b8688a037",
+      "status": "PASS",
+      "notes": "Dark Hebrew standard text compact summary: summary fits, numbers remain LTR, row direction/date/time/duration are readable, and bottom labels are clear without overlap."
+    },
+    {
+      "filename": "personalization-recents-dark-he-standard-expanded.png",
+      "sha256": "0d19f09b619b85827b704d743ee366ea21a9f88831b4ce70046f3dd6785de81d",
+      "status": "PASS",
+      "notes": "Dark Hebrew standard text expanded summary: full summary metrics and average are visible; visible rows retain complete date/time and duration with distinct call and expansion controls."
+    },
+    {
+      "filename": "personalization-recents-light-en-largefont-compact.png",
+      "sha256": "60aa0a706734c9b41d72166908b62da1efb30c9dc434db15b26b4f560d683c43",
+      "status": "PASS",
+      "notes": "Light English large text compact summary: phone numbers and action controls remain clear; row secondary metadata ellipsizes after the time prefix. Source confirms row Details exposes complete date/time and duration."
+    },
+    {
+      "filename": "personalization-recents-light-en-largefont-expanded.png",
+      "sha256": "70cb6f59990f0cd6eddc96b621712599777e6baf4e36648108c63a0439eda0d4",
+      "status": "PASS",
+      "notes": "Light English large text expanded summary: summary counts and average fit with adequate contrast; row metadata is bounded and ellipsized, with complete date/time and duration available in source-confirmed Details."
+    },
+    {
+      "filename": "personalization-recents-light-en-standard-compact.png",
+      "sha256": "a5034d93fe5161b1645b4efaffc696b559a0954a1ce146b1997cba2af31d8734",
+      "status": "PASS",
+      "notes": "Light English standard text compact summary: row dates, times and durations fit; text and gold controls contrast clearly on white cards; no overlap with navigation in visible rows."
+    },
+    {
+      "filename": "personalization-recents-light-en-standard-expanded.png",
+      "sha256": "c445e6d12d322a85ad531cef6332e63d2aef768bf67260153bdd520502a76bd3",
+      "status": "PASS",
+      "notes": "Light English standard text expanded summary: summary metrics and average fit; full metadata is readable on visible rows, and next row continues at lower scrollable viewport edge."
+    },
+    {
+      "filename": "personalization-recents-light-he-largefont-compact.png",
+      "sha256": "5eef5364ab1b0bbd57a50ea60f417ac52fb631978d12f0f82364dc4dc5822caa",
+      "status": "PASS",
+      "notes": "Light Hebrew large text compact summary: RTL layout and LTR numbers remain readable; compact summary and row metadata visibly ellipsize. Expanded summary provides complete summary; source confirms Details provides full row date/time and duration."
+    },
+    {
+      "filename": "personalization-recents-light-he-largefont-expanded.png",
+      "sha256": "8b02195d030344c315eeed9c1908f0be39f9e628049b12bd22334931c85da5ed",
+      "status": "PASS",
+      "notes": "Light Hebrew large text expanded summary: full two-line summary, counts and average fit; bounded row metadata ellipsizes, with complete date/time and duration available through source-confirmed Details."
+    },
+    {
+      "filename": "personalization-recents-light-he-standard-compact.png",
+      "sha256": "81f8462aabee2ab8afa09e550f96d28ba9a644d51fbf939a9af5053a3c35c3a8",
+      "status": "PASS",
+      "notes": "Light Hebrew standard text compact summary: summary text and three row metadata blocks are readable; call and expansion controls are distinct, with no functional-label clipping."
+    },
+    {
+      "filename": "personalization-recents-light-he-standard-expanded.png",
+      "sha256": "7b6f40e60906ab66a8cac80c7b36adfbb77236b4c1bd85172ccefbd27122a161",
+      "status": "PASS",
+      "notes": "Light Hebrew standard text expanded summary: summary metrics, average and visible full row metadata fit; lower list continuation meets the fixed navigation edge as a scrolling viewport."
+    },
+    {
+      "filename": "personalization-widgets-shape-circle.png",
+      "sha256": "b818f20d631d5371eb34cdc1a042d59ae4b772046f4c617440a707d5e3f7b42e",
+      "status": "PASS",
+      "notes": "Dark circle widget preview: circular avatar shapes are consistent, five contact slots and names are separated, and the long rightmost contact name uses a bounded ellipsis."
+    },
+    {
+      "filename": "personalization-widgets-shape-hexagon.png",
+      "sha256": "5150f78049e53ec557a6d3086908fa917ce152c4329d5e58c33db3d11b3926c0",
+      "status": "PASS",
+      "notes": "Dark hexagon widget preview: all five avatar silhouettes are hexagonal; white names and header are legible, with a bounded long-name ellipsis in the rightmost slot."
+    },
+    {
+      "filename": "personalization-widgets-shape-rounded_square.png",
+      "sha256": "9f2c7994c9b1522f3f0adcd12fb03931a6b9411588b6a5ec5f916df588fb3b74",
+      "status": "PASS",
+      "notes": "Dark rounded-square widget preview: all five avatar corners are consistently rounded; names remain below avatars without overlap and long rightmost name is ellipsized."
+    },
+    {
+      "filename": "personalization-widgets-shape-square.png",
+      "sha256": "5fec21277f189c69e0c57ccff024df32e5c752e4f4848b5d28841b83a0616827",
+      "status": "PASS",
+      "notes": "Dark square widget preview: all five avatar corners are square and distinct; contact names, DA CALLER header and preview heading remain readable."
+    },
+    {
+      "filename": "recents-new-contact-editor.png",
+      "sha256": "e65dd5dc1d24d01d9ad6416af234d80dac91b03145775b96e1f2c6d43f22e40c",
+      "status": "PASS",
+      "notes": "New-contact editor: RTL first-name, family-name and nickname fields are distinct; phone number is LTR and complete; save button label fits with strong white-on-orange contrast."
+    },
+    {
+      "filename": "recents-unknown-number-actions.png",
+      "sha256": "dc49b90f3beb9e55604b0e7d9364e236590194ee1bb31908101601cd0285c0e9",
+      "status": "PASS",
+      "notes": "Expanded unknown-number row: full number and four actions Details, Add, Message and Call fit in separate buttons; call direction and time are legible; following row continues below the viewport."
+    },
+    {
+      "filename": "settings-dark-bottom.png",
+      "sha256": "5a6032580377726a6f6346c58b53dc6cc049da5a1adbede46b9b3f7d3f934752",
+      "status": "PASS",
+      "notes": "Dark settings bottom: notification/Bluetooth permission labels, diagnostic row, reminder header, changelog and DA CALLER version footer are readable; top cut is a visible scrolled-card edge."
+    },
+    {
+      "filename": "settings-dark.png",
+      "sha256": "aa79a472d7010938bc122ea7c9e205a92cfb3d20a6a54de9bc5a2fde5d3c2511",
+      "status": "PASS",
+      "notes": "Dark settings upper viewport: permission titles and status/action text form separate columns with readable contrast; last Bluetooth row continues below the scrolling edge."
+    },
+    {
+      "filename": "settings-light-bottom.png",
+      "sha256": "f18ce926bc130f72a506ba5ded5753640f77d14366ac04b9835da7fbc459546d",
+      "status": "PASS",
+      "notes": "Light settings bottom: full visible permission descriptions, diagnostics, reminder control, changelog and version footer are readable; top cut is a visible scrolled-card edge."
+    },
+    {
+      "filename": "settings-light.png",
+      "sha256": "243e8f7494a68589baf2ce607b746c797da54b06c7e5ae4fe7295d1f622345eb",
+      "status": "PASS",
+      "notes": "Light settings upper viewport: permission titles and status/action text remain separated and readable; bottom Bluetooth row continues below the scrolling viewport edge."
+    },
+    {
+      "filename": "widget-dark-contact-2x1.png",
+      "sha256": "d3c0a7790d95f27b691dc17b614660d0d9d6a5a8a5350f4da1d6b367c73c5abe",
+      "status": "PASS",
+      "notes": "Dark contact widget 2x1: contact name, complete phone number and circular initials fit within the compact card, with legible light text on dark surfaces."
+    },
+    {
+      "filename": "widget-dark-empty.png",
+      "sha256": "dfb7e8ab9f4bb627a8af46122b64384bcfe86a3362d4f3bfb43e079698c73dfb",
+      "status": "PASS",
+      "notes": "Dark empty widget: full DA CALLER favorites header and instruction to add favorites are visible; card boundary and muted text remain distinguishable."
+    },
+    {
+      "filename": "widget-dark-favorites-2x2-largefont.png",
+      "sha256": "65f028b5cc523a35f713e5ee50c7be58d99f609b422939545fa6e7fa9f210a62",
+      "status": "PASS",
+      "notes": "Dark large-text favorites 2x2: all four contact names and avatars fit and remain legible. Raw original confirms cosmetic DA C... header ellipsis; favorites label remains readable and no contact action is obscured."
+    },
+    {
+      "filename": "widget-dark-favorites-2x2.png",
+      "sha256": "4c4d9f1165694ab1d5297443dbe9693740a193ac1fc640881e8df348daaf1486",
+      "status": "PASS",
+      "notes": "Dark favorites 2x2: four names and circular avatars remain distinct within the small card; full header fits without overlap."
+    },
+    {
+      "filename": "widget-dark-favorites-4x2.png",
+      "sha256": "09ea3197585629fec0ec269fa40127f5a3fb3a5e156125397a519a7f53fe8a1c",
+      "status": "PASS",
+      "notes": "Dark favorites 4x2: all five names and avatars fit across the card, with full DA CALLER favorites header and clear spacing."
+    },
+    {
+      "filename": "widget-dark-permission.png",
+      "sha256": "ca96d5f3fef7eb5ec6a95d09b0ec66e11486a726144b2a54faa77679564f193d",
+      "status": "PASS",
+      "notes": "Dark permission widget: full contacts-permission title and two-line instruction fit with readable contrast; no clipped functional text."
+    },
+    {
+      "filename": "widget-dark-quick-1x1.png",
+      "sha256": "f2303974ce70d4e77264a9c29f5a685704191d225576821b7a0d97f876983d56",
+      "status": "PASS",
+      "notes": "Dark quick-dial widget 1x1: initials and bounded long-name ellipsis fit within the compact card; preview heading and avatar remain clear."
+    },
+    {
+      "filename": "widget-dark-two-favorites.png",
+      "sha256": "644f2c99f9b620fd88ebcbf4a577f9aaae33afc8184c2131f7912475adae20cd",
+      "status": "PASS",
+      "notes": "Dark two-favorites widget: full header plus both contact names and avatars fit, with ample separation and readable contrast."
+    },
+    {
+      "filename": "widget-light-contact-2x1.png",
+      "sha256": "0378e2521987ce20b8327b7819d6d5dd22d2b017d6927423341769818d6d6ea3",
+      "status": "PASS",
+      "notes": "Light contact widget 2x1: full contact name, complete phone number and initials fit within the card; dark text contrasts clearly with the pale background."
+    },
+    {
+      "filename": "widget-light-empty.png",
+      "sha256": "fee95e68780a76f8226c8bc4908dc00aff4b3c97e2809db2269bb889dffec2ef",
+      "status": "PASS",
+      "notes": "Light empty widget: full header and add-favorites instruction fit without clipping; muted instruction remains readable on the pale surface."
+    },
+    {
+      "filename": "widget-light-favorites-2x2-largefont.png",
+      "sha256": "eed2d9c974ded18f384db97a798de0eab9ecbe2f94baeced3eaccac26eb4a217",
+      "status": "PASS",
+      "notes": "Light large-text favorites 2x2: four contact names and avatars remain legible and unclipped. Raw original confirms cosmetic DA C... header ellipsis; favorites label is readable and contact actions are unobscured."
+    },
+    {
+      "filename": "widget-light-favorites-2x2.png",
+      "sha256": "57917bae93f5b50b1254e0d951bff672ad1909c9091e8bed2c784fed2e0b3c25",
+      "status": "PASS",
+      "notes": "Light favorites 2x2: four contact names, avatars and full header fit within the small card with clear spacing."
+    },
+    {
+      "filename": "widget-light-favorites-4x2.png",
+      "sha256": "90e9474b8643c1b26b248b0450162c96689b5a653e47d7fe518def625eac6ce7",
+      "status": "PASS",
+      "notes": "Light favorites 4x2: five contact names and avatars fit across the card; full header remains readable with adequate contrast."
+    },
+    {
+      "filename": "widget-light-permission.png",
+      "sha256": "db001c2c7be50ca50343d9b7ab1a59b44c6121d3c7ddbe9c36a18b5ee19cae27",
+      "status": "PASS",
+      "notes": "Light permission widget: complete contacts-permission title and two-line instruction are readable inside the card, without clipping or overlap."
+    },
+    {
+      "filename": "widget-light-quick-1x1.png",
+      "sha256": "22d139a32ec68e2a9b03dedf6015b10d6bffa1feb2c0102da98573bb0f02c713",
+      "status": "PASS",
+      "notes": "Light quick-dial widget 1x1: initials and bounded long-name ellipsis fit; compact card edge and dark text remain clear on the pale surface."
+    },
+    {
+      "filename": "widget-light-two-favorites.png",
+      "sha256": "cad35a875d14eb2ad4b521d892fa1e9f011a9f47dc08e68173935b465b3444f0",
+      "status": "PASS",
+      "notes": "Light two-favorites widget: full header, two names and avatars fit, with clear spacing and no overlap."
+    },
+    {
+      "filename": "widget-reconfigured.png",
+      "sha256": "301cddb0e8a1201dcbd2db21384ad97d4bd52cfe88d1e63e751e2ce99367a4d5",
+      "status": "PASS",
+      "notes": "Reconfigured dark quick-dial widget: updated contact initial and full short name are visible inside the compact card; preview heading remains readable."
+    }
+  ]
+}

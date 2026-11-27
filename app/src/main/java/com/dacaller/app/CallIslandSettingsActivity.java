@@ -55,9 +55,9 @@ public final class CallIslandSettingsActivity extends Activity {
  @Override public void onCreate(Bundle state){
   super.onCreate(state);prefs=getSharedPreferences("da_caller",Context.MODE_PRIVATE);
   dark=prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);
-  background=prefs.getBoolean("amoled",false)?Color.BLACK:dark?0xFF121413:0xFFF5F6F3;
-  surface=dark?0xFF202521:Color.WHITE;ink=dark?0xFFF5F7F4:0xFF17231B;
-  secondary=dark?0xFFB8C4BA:0xFF596B5D;accent=AppAppearance.gold(dark);
+  background=NexPalette.background(dark,prefs.getBoolean("amoled",false));
+  surface=NexPalette.surface(dark,prefs.getBoolean("amoled",false));ink=NexPalette.ink(dark);
+  secondary=NexPalette.muted(dark);accent=NexPalette.primaryText(dark);
   if(state!=null){expanded=state.getBoolean("expanded");muted=state.getBoolean("muted");speaker=state.getBoolean("speaker");
    ended=state.getBoolean("ended");phase=state.getInt("phase",Call.STATE_ACTIVE);connectedAt=state.getLong("connected_at",connectedAt);}
   ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);scroll.setBackgroundColor(background);scroll.setTag("island-settings-scroll");
@@ -66,7 +66,7 @@ public final class CallIslandSettingsActivity extends Activity {
   LinearLayout header=new LinearLayout(this);header.setGravity(Gravity.CENTER_VERTICAL);root.addView(header,new LinearLayout.LayoutParams(-1,-2));
   TextView back=text("",32,false,accent);back.setCompoundDrawablesRelativeWithIntrinsicBounds(AppAppearance.backArrow(this,accent),null,null,null);back.setPadding(dp(12),0,dp(12),0);back.setGravity(Gravity.CENTER);back.setContentDescription(tr("חזרה","Back"));
   header.addView(back,new LinearLayout.LayoutParams(dp(48),dp(48)));back.setOnClickListener(v->finish());
-  TextView title=text(tr("אי שיחה דינמי","Dynamic call island"),23,true,ink);header.addView(title,new LinearLayout.LayoutParams(0,-2,1));
+  TextView title=text(tr("אי שיחה דינמי","Dynamic call island"),22,true,ink);header.addView(title,new LinearLayout.LayoutParams(0,-2,1));
   TextView introduction=text(tr("השיחה נשארת בהישג יד באפליקציה, וגם במסך הבית ובאפליקציות אחרות אם בוחרים בכך.","Keep your call within reach in the app, and optionally on Home and above other apps."),14,false,secondary);
   introduction.setPadding(0,dp(4),0,dp(16));root.addView(introduction,new LinearLayout.LayoutParams(-1,-2));
   LinearLayout outside=group(root,tr("הפעלת האי","Enable the island"));
@@ -137,7 +137,7 @@ public final class CallIslandSettingsActivity extends Activity {
  }
  private LinearLayout group(LinearLayout root,String label){
   TextView heading=text(label,16,true,ink);heading.setPadding(dp(3),dp(18),dp(3),dp(9));root.addView(heading,new LinearLayout.LayoutParams(-1,-2));
-  LinearLayout group=column();group.setBackground(shape(surface,22));root.addView(group,new LinearLayout.LayoutParams(-1,-2));return group;
+  LinearLayout group=column();group.setBackground(shape(surface,20));root.addView(group,new LinearLayout.LayoutParams(-1,-2));return group;
  }
  private TextView choice(LinearLayout parent,String label,String tag,Runnable action){
   TextView view=text(label,15,true,ink);view.setTag(tag);view.setPadding(dp(14),dp(12),dp(14),dp(12));view.setMinimumHeight(dp(52));
@@ -190,7 +190,7 @@ public final class CallIslandSettingsActivity extends Activity {
   }catch(RuntimeException unavailable){Toast.makeText(this,tr("בחר ב־DA CALLER כחייגן ברירת המחדל בהגדרות המכשיר.","Choose DA CALLER as the default phone app in device settings."),Toast.LENGTH_LONG).show();}
  }
  private void chooseStyle(){
-  String[] values={"apple","glass","emerald","transparent"};String[] labels={tr("קלאסי שחור","Classic black"),tr("זכוכית רכה","Soft glass"),tr("אמרלד","Emerald"),tr("שקוף · רקע אמיתי","See-through · real background")};
+  String[] values={"apple","glass","emerald","transparent","nex"};String[] labels={tr("קלאסי כהה","Classic dark"),tr("זכוכית רכה","Soft glass"),tr("אמרלד","Emerald"),tr("שקוף · רקע אמיתי","See-through · real background"),tr("נקס · חום ונחושת","NEX · espresso and copper")};
   choose(tr("סגנון האי","Island style"),values,labels,prefs.getString("island_style","apple"),value->{if(!SettingsBackup.allowPreferenceChange(this))return;prefs.edit().putString("island_style",value).apply();renderPreview();});
  }
  private void choosePosition(){
@@ -249,7 +249,7 @@ public final class CallIslandSettingsActivity extends Activity {
    preview.tick(System.currentTimeMillis());
   }
  }
- private String styleLabel(){String value=prefs.getString("island_style","apple");return "transparent".equals(value)?tr("שקוף","See-through"):"glass".equals(value)?tr("זכוכית רכה","Soft glass"):"emerald".equals(value)?tr("אמרלד","Emerald"):tr("קלאסי שחור","Classic black");}
+ private String styleLabel(){String value=prefs.getString("island_style","apple");return "nex".equals(value)?tr("נקס","NEX"):"transparent".equals(value)?tr("שקוף","See-through"):"glass".equals(value)?tr("זכוכית רכה","Soft glass"):"emerald".equals(value)?tr("אמרלד","Emerald"):tr("קלאסי כהה","Classic dark");}
  private void applySystemBars(){
   getWindow().setStatusBarColor(background);getWindow().setNavigationBarColor(background);
   if(Build.VERSION.SDK_INT>=30){WindowInsetsController controller=getWindow().getInsetsController();if(controller!=null){

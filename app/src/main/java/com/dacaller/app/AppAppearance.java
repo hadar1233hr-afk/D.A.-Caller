@@ -25,16 +25,16 @@ final class AppAppearance {
  private AppAppearance(){}
  static void font(TextView v,boolean strong){
   Typeface family=v.getResources().getFont(R.font.app_round);
-  v.setTypeface(Build.VERSION.SDK_INT>=28?Typeface.create(family,strong?650:500,false):
+  v.setTypeface(Build.VERSION.SDK_INT>=28?Typeface.create(family,strong?750:600,false):
     Typeface.create(family,strong?Typeface.BOLD:Typeface.NORMAL));
-  v.setFontVariationSettings(strong?"'wght' 650":"'wght' 500");
+  v.setFontVariationSettings(strong?"'wght' 750":"'wght' 600");
  }
  /** Bitmap initials use the same licensed family, including Hebrew, on API26+. */
  static void font(Paint paint,Context context,boolean strong){
   Typeface family=context.getResources().getFont(R.font.app_round);
-  paint.setTypeface(Build.VERSION.SDK_INT>=28?Typeface.create(family,strong?650:500,false):
+  paint.setTypeface(Build.VERSION.SDK_INT>=28?Typeface.create(family,strong?750:600,false):
     Typeface.create(family,strong?Typeface.BOLD:Typeface.NORMAL));
-  paint.setFontVariationSettings(strong?"'wght' 650":"'wght' 500");
+  paint.setFontVariationSettings(strong?"'wght' 750":"'wght' 600");
  }
  /** Android's native alert layouts explicitly override the theme's font family.
   * Apply after show; layout observation also covers lazily inflated choice rows. */
@@ -61,7 +61,10 @@ final class AppAppearance {
  private static void dialogFonts(View view,int title){
   if(view instanceof TextView){
    TextView text=(TextView)view;Typeface old=text.getTypeface();
-   boolean strong=view.getId()==title&&title!=0||old!=null&&(old.isBold()||Build.VERSION.SDK_INT>=28&&old.getWeight()>=600);
+   // Native action buttons and choice rows retain the regular600 role.
+   boolean control=text instanceof android.widget.Button||text instanceof android.widget.CheckedTextView;
+   boolean strong=view.getId()==title&&title!=0||!control&&old!=null&&
+     (Build.VERSION.SDK_INT>=28?old.getWeight()>=700:old.isBold());
    // A global layout can follow our first font change; skip views whose applied
    // Typeface is still current, so observation cannot cause a relayout loop.
    if(old==null||text.getTag(R.id.appearance_dialog_font)!=old){font(text,strong);text.setTag(R.id.appearance_dialog_font,text.getTypeface());}
@@ -71,7 +74,7 @@ final class AppAppearance {
   }
  }
  /** The light shade meets ordinary-text contrast on our light cards. */
- static int gold(boolean dark){return dark?0xFFF5CB63:0xFF85620A;}
+ static int gold(boolean dark){return dark?0xFFF5CB63:0xFF805D08;}
  private static int dp(Context c,float value){return Math.round(c.getResources().getDisplayMetrics().density*value);}
  private static GradientDrawable capsule(Context c,int color,int stroke,int width,int height){
   GradientDrawable shape=new GradientDrawable();shape.setColor(color);shape.setCornerRadius(dp(c,height/2f));

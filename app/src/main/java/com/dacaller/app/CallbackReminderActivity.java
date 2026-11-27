@@ -58,13 +58,13 @@ public final class CallbackReminderActivity extends Activity {
  @Override public void onCreate(Bundle state){
   super.onCreate(state);CallReturnNavigation.install(this);prefs=getSharedPreferences("da_caller",Context.MODE_PRIVATE);
   english=I18n.isEnglish(this);dark=prefs.getBoolean("dark",false)||prefs.getBoolean("amoled",false);
-  background=prefs.getBoolean("amoled",false)?Color.BLACK:dark?0xFF141414:0xFFF7F7F5;
-  surface=dark?0xFF232323:Color.WHITE;ink=dark?0xFFF5F5F3:0xFF161C17;secondary=dark?0xFFB8BEB9:0xFF59635B;
+  background=NexPalette.background(dark,prefs.getBoolean("amoled",false));
+  surface=NexPalette.surface(dark,prefs.getBoolean("amoled",false));ink=NexPalette.ink(dark);secondary=NexPalette.muted(dark);
   accent="silver".equals(prefs.getString("accent","gold"))?(dark?0xFFE4E4E4:0xFF616161):AppAppearance.gold(dark);
   selectedDay=state==null?getIntent().getStringExtra(CallbackReminder.EXTRA_DAY):state.getString(CallbackReminder.EXTRA_DAY);
   LinearLayout root=column();root.setTag("callback-reminder-root");root.setBackgroundColor(background);
-  root.setLayoutDirection(english?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);root.setPadding(dp(12),dp(8),dp(12),dp(10));setContentView(root);
-  LinearLayout header=new LinearLayout(this);header.setGravity(Gravity.CENTER_VERTICAL);root.addView(header,new LinearLayout.LayoutParams(-1,-2));
+  root.setLayoutDirection(english?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);root.setPadding(dp(16),dp(8),dp(16),dp(12));setContentView(root);
+  LinearLayout header=new LinearLayout(this);header.setGravity(Gravity.CENTER_VERTICAL);header.setMinimumHeight(dp(56));root.addView(header,new LinearLayout.LayoutParams(-1,-2));
   ImageView back=new ImageView(this);back.setImageDrawable(AppAppearance.backArrow(this,accent));back.setScaleType(ImageView.ScaleType.CENTER);back.setContentDescription(tr("חזרה","Back"));
   back.setTag("callback-reminder-back");back.setFocusable(true);header.addView(back,new LinearLayout.LayoutParams(dp(48),dp(48)));back.setOnClickListener(v->leave());
   TextView title=text(tr("שיחות לחזור אליהן","Calls to return"),22,true,ink);title.setTag("callback-reminder-title");header.addView(title,new LinearLayout.LayoutParams(0,-2,1));
@@ -77,7 +77,7 @@ public final class CallbackReminderActivity extends Activity {
   list=new ListView(this);list.setTag("callback-reminder-scroll");list.setAdapter(adapter);list.setDivider(null);list.setClipToPadding(false);
   list.setPadding(0,0,0,dp(6));root.addView(list,new LinearLayout.LayoutParams(-1,0,1));
   TextView recent=text(tr("לשיחות האחרונות","Recent calls"),14,true,accent);recent.setTag("callback-reminder-recents");recent.setGravity(Gravity.CENTER);
-  recent.setFocusable(true);recent.setMinimumHeight(dp(48));recent.setBackground(shape(surface,16));root.addView(recent,new LinearLayout.LayoutParams(-1,-2));
+  recent.setFocusable(true);recent.setMinimumHeight(dp(48));recent.setPadding(dp(12),dp(10),dp(12),dp(10));recent.setBackground(shape(surface,18));root.addView(recent,new LinearLayout.LayoutParams(-1,-2));
   recent.setOnClickListener(v->{startActivity(new Intent(this,MainActivity.class).putExtra("show_recents",true)
     .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP));finish();});
   applySystemBars();
@@ -117,8 +117,8 @@ public final class CallbackReminderActivity extends Activity {
   @Override public long getItemId(int position){return entries.get(position).latestMissedId;}
   @Override public View getView(int position,View recycled,ViewGroup parent){
    CallbackReminderModel.Entry entry=entries.get(position);
-   LinearLayout outer=column();outer.setPadding(0,dp(5),0,dp(5));outer.setTag("callback-reminder-entry-"+entry.key);
-   LinearLayout card=column();card.setBackground(shape(surface,18));card.setPadding(dp(14),dp(12),dp(14),dp(9));outer.addView(card,new LinearLayout.LayoutParams(-1,-2));
+   LinearLayout outer=column();outer.setPadding(0,dp(5),0,dp(6));outer.setTag("callback-reminder-entry-"+entry.key);
+   LinearLayout card=column();card.setBackground(shape(surface,20));card.setPadding(dp(16),dp(16),dp(16),dp(12));outer.addView(card,new LinearLayout.LayoutParams(-1,-2));
    TextView name=text(entry.name,17,true,ink);name.setTag("callback-reminder-name-"+entry.key);card.addView(name,new LinearLayout.LayoutParams(-1,-2));
    if(!entry.number.isEmpty()&&!entry.number.equals(entry.name)){
     TextView number=text(entry.number,14,false,secondary);number.setTextDirection(View.TEXT_DIRECTION_LTR);number.setTag("callback-reminder-number-"+entry.key);
@@ -135,9 +135,9 @@ public final class CallbackReminderActivity extends Activity {
     attempts.setTag("callback-reminder-attempts-"+entry.key);attempts.setPadding(0,dp(4),0,0);card.addView(attempts,new LinearLayout.LayoutParams(-1,-2));
    }
    if(!entry.number.isEmpty()&&CallLauncher.isCallable(entry.number)){
-    TextView call=text(tr("חזרה לשיחה","Call back"),14,true,accent);call.setTag("callback-reminder-call-"+entry.key);call.setFocusable(true);call.setGravity(Gravity.CENTER);call.setMinimumHeight(dp(48));
+    TextView call=text(tr("חזרה לשיחה","Call back"),14,true,NexPalette.onCall(dark));call.setTag("callback-reminder-call-"+entry.key);call.setFocusable(true);call.setGravity(Gravity.CENTER);call.setMinimumHeight(dp(48));call.setPadding(dp(12),dp(10),dp(12),dp(10));call.setBackground(shape(NexPalette.call(dark),16));
     String spoken=BidiFormatter.getInstance(!english).unicodeWrap(entry.number,TextDirectionHeuristics.LTR);
-    call.setContentDescription(tr("התקשר אל ","Call ")+entry.name+" "+spoken);card.addView(call,new LinearLayout.LayoutParams(-1,-2));
+    call.setContentDescription(tr("התקשר אל ","Call ")+entry.name+" "+spoken);LinearLayout.LayoutParams callParams=new LinearLayout.LayoutParams(-1,-2);callParams.topMargin=dp(11);card.addView(call,callParams);
     call.setOnClickListener(v->{if(!resumed||!entries.contains(entry))return;
      if(!CallLauncher.place(CallbackReminderActivity.this,entry.number))Toast.makeText(CallbackReminderActivity.this,
        tr("לא ניתן להתחיל את השיחה","Unable to start the call"),Toast.LENGTH_SHORT).show();});

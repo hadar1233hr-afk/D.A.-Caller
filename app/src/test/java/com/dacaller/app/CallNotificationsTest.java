@@ -35,6 +35,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.android.controller.ServiceController;
 import org.robolectric.annotation.Config;
+import org.robolectric.annotation.GraphicsMode;
 import org.robolectric.annotation.LooperMode;
 import org.robolectric.shadows.ShadowContentResolver;
 import static org.junit.Assert.*;
@@ -111,6 +112,35 @@ public class CallNotificationsTest {
   assertTrue("Compact native action keeps full spoken semantics",title instanceof android.text.Spanned);
   android.text.style.TtsSpan[] spans=((android.text.Spanned)title).getSpans(0,title.length(),android.text.style.TtsSpan.class);
   assertEquals(1,spans.length);assertEquals(expected,spans[0].getArgs().getString(android.text.style.TtsSpan.ARG_TEXT));
+ }
+ @Test @GraphicsMode(GraphicsMode.Mode.NATIVE)
+ public void compactHebrewSpeakerLabelFitsWhileSpokenActionAndRoutingStayExplicit()throws Exception{
+  float originalScale=app.getResources().getConfiguration().fontScale;
+  RuntimeEnvironment.setFontScale(1.3f);
+  app.getSharedPreferences("da_caller",0).edit().putString("language","he").commit();
+  try{
+   for(int state:new int[]{Call.STATE_DIALING,Call.STATE_ACTIVE}){
+    audio(CallAudioState.ROUTE_EARPIECE,CallAudioState.ROUTE_EARPIECE|CallAudioState.ROUTE_SPEAKER);
+    Call call=call(state,"0500099000","Dana");service.onCallAdded(call);
+    Notification.Action on=action("SPEAKER_ON");assertNotNull(on);assertEquals("קול",on.title.toString());
+    assertSpokenAction("הפעל רמקול",on.title);
+    android.graphics.Paint paint=new android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG);
+    paint.setTypeface(android.graphics.Typeface.create("sans-serif",android.graphics.Typeface.NORMAL));
+    paint.setTextSize(20*app.getResources().getDisplayMetrics().scaledDensity);
+    // Conservative label-space regression; the real SystemUI capture remains
+    // the gate for its full notification layout and mandatory hang-up action.
+    float budget=40*app.getResources().getDisplayMetrics().density;
+    assertTrue("The complete large-font label must fit its compact budget",paint.measureText(on.title.toString())<=budget);
+    assertTrue(paint.measureText(on.title.toString())<paint.measureText("הפעל"));
+    assertEquals("com.dacaller.app.CALL_SPEAKER_ON",shadowOf(on.actionIntent).getSavedIntent().getAction());
+    send(on);assertEquals(CallAudioState.ROUTE_SPEAKER,service.getCallAudioState().getRoute());
+    assertNotNull("Do not replace ON before Telecom acknowledges its route",action("SPEAKER_ON"));
+    service.onCallAudioStateChanged(service.getCallAudioState());Notification.Action off=action("SPEAKER_OFF");
+    assertNotNull(off);assertEquals("כבה",off.title.toString());assertSpokenAction("כבה רמקול",off.title);
+    send(off);assertEquals(CallAudioState.ROUTE_EARPIECE,service.getCallAudioState().getRoute());
+    service.onCallRemoved(call);
+   }
+  }finally{RuntimeEnvironment.setFontScale(originalScale);}
  }
  @Test public void outgoingAndIncomingAreDistinctAndBackgroundRingingKeepsAnswerDecline(){
   Call outgoing=call(Call.STATE_DIALING,"0500099000","Dana");service.onCallAdded(outgoing);
