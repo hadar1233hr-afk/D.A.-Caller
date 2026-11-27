@@ -1,0 +1,42 @@
+{
+  "status": "CODEGO_SOURCE_REVIEW_COMPLETE",
+  "tests": 10,
+  "failures": 0,
+  "errors": 0,
+  "source_sha256": {
+    "app/src/main/java/com/dacaller/app/LocalAssistant.java": "be9e7d4631d94bd0ed0ebb22aa9c107b04bc1c6aaf7602505cac4cc70580375b",
+    "app/src/test/java/com/dacaller/app/LocalAssistantTest.java": "68d80fc65ea356eb6def69b9e4fdd67d504520ddf2ea6137de1ed111caa5ed5a",
+    "app/src/main/java/com/dacaller/app/LocalAssistantDialog.java": "d749ff4eb5204c8ada28770ea6402c1b5900a53ae5157f791d70106a9d674695",
+    "app/src/test/java/com/dacaller/app/LocalAssistantDialogTest.java": "8ccd5e6673fe545b0938c2695ec64e58a96cf393442d4b0072aa18fbc595b4d9"
+  },
+  "numeric_fix": "A numeric CALL proposal requires the raw command to be NFKC-stable; Unicode/name/read-only search normalization remains supported. Provider identity is retained and independently passes safeNumber.",
+  "actual_regressions": "End-to-end parse to safeNumber: fullwidth/circled/superscript digits and fullwidth plus/parentheses refuse; ordinary ASCII formatted Hebrew/English calls and Unicode name searches remain.",
+  "additional_parser_findings": [
+    "Bare search for/find for fall back to contact query for.",
+    "Punctuation-separated compounds/negation can be classified as contact call proposals, but cannot directly dial and still need a real provider row plus explicit confirmation."
+  ],
+  "dialog_review": "Current generation and confirmation ownership, immutable actual row number, generic read failure, transient input/results, queued Future cancellation and runtime/AppOps gates inspected. No network/storage/logging introduced.",
+  "unproven_dialog_race": "Addressed in final source; actual new host/native execution remains parent validation, not claimed by this reviewer.",
+  "limitations": [
+    "No Gradle or Android/native execution by this agent.",
+    "No signing/publication/hardware/matching-key-upgrade claim."
+  ],
+  "grammar_scope_decision": "Parent explicitly keeps grammar frozen for this change: remaining ambiguous compound-like strings are a single literal data lookup, never compound execution; actual provider matches and explicit selection/confirmation remain required. Missing-target alias coverage is limited.",
+  "dialog_followup": "Final cancellation diff reviewed read-only: lines229-236 retain exact ownership, current generation, showing state, effective data permission and single explicit dispatch. New host regression at181-195 invokes stale positive before draining mainLooper and requires no call callback.",
+  "resolved_findings": [
+    {
+      "issue": "NFKC numeric target could bypass raw safeNumber validation",
+      "resolution": "Numeric CALL proposals require NFKC-stable raw command; direct actual-source javac/JUnit10 methods pass."
+    },
+    {
+      "issue": "Cancellation owner clearing depended on posted OnDismiss callback",
+      "resolution": "Root added synchronous owned negative-button disarm and pending.isShowing positive guard, plus a cached-positive-before-OnDismiss regression for both button cancellation and Dialog.cancel."
+    }
+  ],
+  "remaining_limitations": [
+    "Rule grammar is deliberately limited: complex ambiguous strings can be one literal lookup; actual provider matches and separate explicit selection/confirmation still gate any action. No compound actions are executed.",
+    "Cancelling a Future without interruption cannot abort a provider query already running, but generation/live/permission checks suppress stale publication and queued obsolete reads are cancelled.",
+    "Host RecordingHost tests prove callback gating rather than actual Telecom; dedicated native cases are still required.",
+    "READ_CONTACTS host tests do not substitute for direct native READ_CALL_LOG and restarted runtime-denied permission checks."
+  ]
+}

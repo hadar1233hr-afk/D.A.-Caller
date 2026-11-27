@@ -1,0 +1,16 @@
+{
+  "status": "SOURCE_CHECKPOINT_NOT_RELEASE_APPROVAL",
+  "base_source": "70be2a0d63dba70eaedad9a50490e56d7d3197c5",
+  "target_version": "0.15.0",
+  "target_code": 24,
+  "actual_prior_focused_host": "20testsPASS before final numeric/cancel corrections; not current full suite",
+  "actual_parser": "10pureJavaJUnitPASS",
+  "native": "44method+restarted-denial draft NOT_COMPILED_OR_EXECUTED",
+  "full_current_build_host_lint": "PENDING",
+  "pr7_polish": "16776bf21d7a820065be130ce56810318c77ffa1; CI45933643106 reportedSUCCESS, artifacts/newvisualpending",
+  "previous_actual_pr7_visual": "272reviewed266PASS6FAIL at1a492678",
+  "signing_policy_changed": false,
+  "permanent_key_or_matching_update_verified": false,
+  "model_speech_transcription_summary_implemented": false,
+  "quota": "Actual previous agents hitusage limit; resumed in later scheduled run2026-11-27T09:03UTC withoutaccount/modelbypass"
+}

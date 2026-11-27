@@ -400,6 +400,16 @@ public class MainActivity extends Activity {
   action.addView(glyph,new FrameLayout.LayoutParams(d(24),d(24),Gravity.CENTER));
   FrameLayout.LayoutParams position=new FrameLayout.LayoutParams(d(48),d(48),Gravity.LEFT|Gravity.TOP);position.leftMargin=d(6);
   settingsToolbar.addView(action,position);decorate(action);
+  if(!page.equals("settings")){
+   TextView assistant=new TextView(this);assistant.setTag("main_assistant_button");
+   assistant.setText("✦ AI");assistant.setTextSize(16);assistant.setGravity(Gravity.CENTER);
+   AppAppearance.font(assistant,true);assistant.setTextColor(NexPalette.primaryText(dark()));
+   assistant.setBackground(rounded(soft(),18));assistant.setFocusable(true);
+   assistant.setContentDescription(I18n.isEnglish(this)?"Open local assistant":"פתיחת העוזר המקומי");
+   FrameLayout.LayoutParams assistantPosition=new FrameLayout.LayoutParams(d(76),d(48),Gravity.RIGHT|Gravity.TOP);
+   assistantPosition.rightMargin=d(6);settingsToolbar.addView(assistant,assistantPosition);decorate(assistant);
+   assistant.setOnClickListener(v->{haptic(assistant);LocalAssistantDialog.show(this);});
+  }
   action.setOnClickListener(v->{haptic(action);
    if(page.equals("settings"))page=settingsReturnPage;
    else {settingsReturnPage=page.equals("contacts")?"contacts":"recents";page="settings";}

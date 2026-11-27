@@ -1,5 +1,79 @@
 # DA CALLER continuation state
 
+## Source checkpoint after actual usage stop — 2026-11-27 09:03 UTC
+
+No overlapping agent or Gradle work was active on resume. The previous native
+review and CI-monitor agents actually hit a usage limit (reported retry8:04AM,
+timezone not established); no model/account/route change was used. This later
+scheduled run saves the accumulated source checkpoint before further validation.
+
+PR7 polish16776bf21d7a820065be130ce56810318c77ffa1 is pushed. Its CI45933643106
+now reports SUCCESS; authentic artifacts and the new272visualreview still need
+collection. Historical1a actual review remains266PASS6FAIL. The five polish source/
+test files were also integrated into PR8; no AI work is mixed back into PR7.
+
+PR8 now targets0.15.0/code24 with all22old changelog entries byte-preserved.
+Source includes safe matching/numeric identity, stale confirmation/query invalidation,
+synchronous Cancel disarm, actual AppOps/runtime permission checks, and dedicated
+44case+raw restarted-permission/282image gate drafts. Shell/Python syntax passes,
+but current full host/build/lint/Androidtest/native execution is PENDING. The20
+focused host tests passed before the last numeric/Cancel corrections, not after;
+10pureJava parser methods pass. Do not inflate this to a current22/full-suite pass.
+
+Independent review caught contradictory raw instrumentation terminal acceptance;
+the author strengthened it, but final independent native review was quota-stopped.
+Review and run all contracts before trusting any new native result. Save failures
+truthfully. Permanent signing/backup/admin setup and installed version remain
+unresolved; a version question was asked asynchronously. No new key, signing pin,
+old exception, official release, APK link, model/speech/summary claim or other
+product change is authorized or performed by this checkpoint.
+
+## Active 0.15 continuation and saved quota checkpoint — 2026-11-27
+
+The owner explicitly authorized local AI and the new hourly continuation on
+26 November. This supersedes historical AI deferral and the earlier stopped
+schedule for this newly requested work. PR8 remains feature/da-intelligence-0.15,
+base70be2a0d63dba70eaedad9a50490e56d7d3197c5. PR7 remains isolated at1a492678.
+Both previously delivered test APKs must not be resent; no official signing
+exception or matching-key update is implied.
+
+A real usage-limit error stopped the previous run. Resume only in a later
+scheduled run with the same authorized account/model; no bypass. On this resume,
+no other agent, Gradle process or emulator work was active. Current work is local
+WIP, not yet pushed or represented as verified. Root is the only Gradle runner.
+
+Current changes: shared Unicode/formatted-phone matching (9 direct pure-Java
+JUnit methods actually passed), stale-confirmation/input/queued-query invalidation,
+effective runtime plus AppOps read gates, and11dialog host tests awaiting execution.
+The first focused build really failed because android.content.PermissionChecker
+is not public SDK; the corrected public AppOps implementation is NOT YET retested.
+Version0.15.0/code24, bilingual changelog and strict current-version catalog
+contracts are coordinated; all22older entries are byte-preserved. No model,
+speech, transcription, summary, durable key or upgrade test has been implemented.
+
+Dedicated native WIP has4assistant methods plus a restarted runtime-denied phase,
+10assistant images, strict44method profile and ninth source/hash-bound gate.
+It is UNCOMPILED/UNEXECUTED and run-android-ui.sh integration is still incomplete.
+Keep the original40methods/272images/eightgates mandatory. Never fake JUnit/raw
+instrumentation, a screenshot, a grant revocation or a successful call.
+
+PR7 authentic40/272source1a492678 evidence is retained privately at
+/workspace/work/nex-014-ci-45773402159; lossless sheets and five completed group
+reports are /workspace/work/nex-014/visual-1a49267. The245nonmodern frames were
+actually viewed; six failures across two causes remain:2Hebrew notification
+activation labels truncate and4large-font English Contacts hints clip. Root has
+actually viewed16of27modern frames; remaining11are UNREVIEWED. A full272visual
+PASS is not established. Initial false positives in two reviewer groups were
+corrected by raw-frame inspection. The detached1a source worktree has no UI fix
+applied yet; do not touch stale dirty /workspace/D.A.-Caller-nex-014.
+
+Signing: current environment reported zero secret bindings and no vault/create/
+repository-secret setter capability. That does not prove repository secrets are
+empty. Recovering an owner-approved matching private key or supplying a durable
+owner-controlled backup/admin route remains required; no key, secret or pin was
+changed. Continue nonpublication work, preserve all old release protections,
+no uninstall advice, and no physical or matching-key-upgrade claim.
+
 ## Visual polish locally verified; fresh emulator review next — 2026-11-27
 
 The isolated two-cause polish passes469 unique host methods in45 classes with

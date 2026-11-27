@@ -156,16 +156,32 @@ def png(content, name, decode=False):
     return rows, channels
 
 
+ASSISTANT_NATIVE_METHODS = {
+    "testAssistantProductionSearchDisambiguationAndCancel",
+    "testAssistantLocalHistoryBusinessAndUnsupportedCommands",
+    "testAssistantEffectivePermissionRevocationAndRuntimeDeniedPhase",
+    "testAssistantExplicitConfirmedCallUsesActualTelecom",
+}
+
+
 def junit(root, sources):
     expected = set()
+    assistant = set()
     for source in sources.glob("*.java"):
         text = source.read_text()
         methods = re.findall(r"public\s+void\s+(test\w+)\s*\(\s*\)", text)
         for method in methods:
-            expected.add(("com.dacaller.app." + source.stem, method))
+            (assistant if source.stem == "LocalAssistantIntegrationTest" else expected).add(("com.dacaller.app." + source.stem, method))
     require(len(expected) == 40, "Current native source must retain36original+1inline+3modern cases")
     require(sum(owner.endswith(".ModernFeaturesIntegrationTest") for owner, _ in expected) == 3,
             "Missing additive native methods")
+    if (sources / "LocalAssistantIntegrationTest.java").exists():
+        require(assistant == {("com.dacaller.app.LocalAssistantIntegrationTest", method) for method in ASSISTANT_NATIVE_METHODS},
+                "Assistant native source must contain exactly four required dedicated cases")
+        expected |= assistant
+        require(len(expected) == 44, "Current assistant profile requires all40original plus4dedicated cases")
+    else:
+        require(not assistant, "Unknown assistant native source")
     files = sorted(root.rglob("*.xml"))
     require(bool(files), "Authentic native JUnit is missing")
     actual, hashes = set(), {}
@@ -738,7 +754,7 @@ def verify(baseline, modern, junit_root):
     for name, expected in PROOFS.items():
         proof = one(modern, name)
         require(integer(proof.get("api"), 33) and integer(proof.get("density_dpi"), 240) and large_font(proof.get("font_scale"))
-                and proof.get("package") == "com.dacaller.app" and proof.get("version_name") == "0.14.0" and integer(proof.get("version_code"), 23), "Wrong native package/version/configuration")
+                and proof.get("package") == "com.dacaller.app" and proof.get("version_name") == "0.15.0" and integer(proof.get("version_code"), 24), "Wrong native package/version/configuration")
         require(proof.get("physical_carrier_audio_verified") is False and proof.get("matching_key_upgrade_verified") is False, "Emulator cannot establish hardware/audio/upgrade proof")
         captures = proof.get("captures", {})
         require(set(captures) == expected, "Exact per-scenario saved captures missing: " + name)
@@ -752,7 +768,7 @@ def verify(baseline, modern, junit_root):
     native = junit(junit_root, Path("app/src/androidTest/java/com/dacaller/app"))
     return {"source_sha": source, "app_tree": app_tree, "workflow_run_id": os.environ.get("GITHUB_RUN_ID"),
             "api": 33, "size": "480x854", "density_dpi": 240, "font_scale": 1.3,
-            "version_name": "0.14.0", "version_code": 23, "required_real_png_files": 27,
+            "version_name": "0.15.0", "version_code": 24, "required_real_png_files": 27,
             "original_required_png_files": 245, "total_required_png_files": 272,
             "native_junit": native, "legacy_reports_canonical_sha256": legacy_reports,
             "sha256": hashes, "baseline_sha256": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in all_baseline},
@@ -766,7 +782,7 @@ def main():
     results = Path(sys.argv[3] if len(sys.argv) > 3 else "app/build/outputs/androidTest-results")
     result = verify(baseline, modern, results)
     (modern / "modern-features-verification.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
-    print("Verified40 authentic API33 native cases, original245frames and27additive real compositor frames (272total)")
+    print("Verified40original+4assistant authentic API33 native cases, original245frames and27additive real compositor frames (272total)")
 
 
 if __name__ == "__main__":

@@ -15,7 +15,9 @@ mkdir -p app/build
   adb shell cmd overlay list --user 0
   adb shell settings get secure navigation_mode
 } > app/build/ui-device-config.txt
-adb shell rm -rf /sdcard/Download/DA-CALLER-snapshots /sdcard/Download/DA-CALLER-next-snapshots
+adb shell rm -rf /sdcard/Download/DA-CALLER-snapshots /sdcard/Download/DA-CALLER-next-snapshots /sdcard/Download/DA-CALLER-assistant-snapshots
+rm -rf app/build/ui-assistant-snapshots
+mkdir -p app/build/ui-assistant-snapshots
 # Only this host bridge may drive the disposable emulator's simulated modem.
 # The native integration test communicates requests through bounded JSON files;
 # it receives actual Android Telecom calls instead of injecting fixture state.
@@ -37,9 +39,10 @@ for call_driver_attempt in {1..50}; do
 done
 test -f app/build/emulator-call-driver.ready.json
 test_status=0
-# Leave time inside the job's30-minute budget to retain the actual emulator
-# state if instrumentation blocks instead of reaching a test assertion.
-timeout --signal=INT --kill-after=30s 15m ./gradlew --no-daemon :app:connectedDebugAndroidTest || test_status=$?
+# The four dedicated assistant cases run in addition to every original case.
+# Keep a bounded run and leave room in the30-minute job for the restarted
+# permission phase, diagnostics and artifact retention.
+timeout --signal=INT --kill-after=30s 20m ./gradlew --no-daemon :app:connectedDebugAndroidTest || test_status=$?
 mkdir -p app/build/ui-snapshots
 if [ "$test_status" -ne 0 ]; then
   timeout 15s adb logcat -d -t 3000 > app/build/ui-snapshots/host-failure-logcat.txt 2>&1 || true
@@ -51,6 +54,7 @@ fi
 adb pull /sdcard/Download/DA-CALLER-snapshots/ app/build/ui-snapshots/ || true
 mkdir -p app/build/ui-modern-snapshots
 adb pull /sdcard/Download/DA-CALLER-next-snapshots/ app/build/ui-modern-snapshots/ || true
+adb pull /sdcard/Download/DA-CALLER-assistant-snapshots/ app/build/ui-assistant-snapshots/ || true
 if [ "$test_status" -ne 0 ]; then exit "$test_status"; fi
 python3 scripts/verify-ui-matrix.py app/build/ui-snapshots
 python3 scripts/verify-personalization-matrix.py app/build/ui-snapshots
@@ -62,3 +66,12 @@ python3 scripts/verify-callback-business-matrix.py app/build/ui-snapshots
 
 # Additive current-feature proof; every original245-frame verifier above remains required.
 python3 scripts/verify-modern-features-native.py app/build/ui-snapshots app/build/ui-modern-snapshots
+
+# Revoking Android runtime flags can kill the instrumented application. Do it
+# between processes, then run exactly the dedicated denied-permission case.
+# Keep the runner's verbatim native statuses rather than manufacturing JUnit.
+permission_status=0
+python3 scripts/verify-local-assistant-native.py --run-runtime-phase app/build/ui-assistant-snapshots || permission_status=$?
+adb pull /sdcard/Download/DA-CALLER-assistant-snapshots/ app/build/ui-assistant-snapshots/ || true
+if [ "$permission_status" -ne 0 ]; then exit "$permission_status"; fi
+python3 scripts/verify-local-assistant-native.py app/build/ui-snapshots app/build/ui-modern-snapshots app/build/ui-assistant-snapshots app/build/outputs/androidTest-results
