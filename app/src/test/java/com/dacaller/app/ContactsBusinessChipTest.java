@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.Collections;
@@ -71,6 +72,13 @@ public class ContactsBusinessChipTest {
  }
  private TextView chip(View page){
   TextView chip=page.findViewWithTag("contacts_directory_tab");assertNotNull(chip);return chip;
+ }
+ private EditText search(View root){
+  if(root instanceof EditText)return (EditText)root;
+  if(root instanceof ViewGroup)for(int n=0;n<((ViewGroup)root).getChildCount();n++){
+   EditText found=search(((ViewGroup)root).getChildAt(n));if(found!=null)return found;
+  }
+  return null;
  }
  private void fullLabelFits(TextView chip,String language){
   assertEquals("en".equals(language)?"Businesses":"בתי עסק",chip.getText().toString());
@@ -132,6 +140,26 @@ public class ContactsBusinessChipTest {
    assertEquals(dp(48),((View)chip.getParent()).getHeight());contained(chip,(View)chip.getParent());
    int opens=host.directoryOpens;tap(page,chip);assertEquals(opens+1,host.directoryOpens);
    assertEquals(0,host.refreshes);assertEquals(0,host.calls);
+  }
+ }
+ @Test public void contactSearchHintFitsLargeFontAndRetainsFullAccessiblePurpose(){
+  for(String language:new String[]{"en","he"})for(boolean dark:new boolean[]{false,true})for(boolean expanded:new boolean[]{false,true}){
+   prefs.edit().putBoolean("dark",dark).putBoolean("favorites_expanded",expanded).commit();
+   View page=page(language,true);EditText search=search(page);assertNotNull(search);
+   String hint=search.getHint().toString();
+   assertEquals("en".equals(language)?"Name or number":"חיפוש שם או מספר",hint);
+   assertEquals("en".equals(language)?"Search name or number":"חיפוש שם או מספר",search.getContentDescription().toString());
+   float available=search.getWidth()-search.getCompoundPaddingLeft()-search.getCompoundPaddingRight();
+   assertTrue("Complete native-measured hint must fit at font scale1.3: "+hint,
+     search.getPaint().measureText(hint)<=available);
+   Rect ink=new Rect();search.getPaint().getTextBounds(hint,0,hint.length(),ink);
+   assertTrue("The hint's final glyph must not be clipped",ink.right<=available);
+   assertEquals("Keep the readable input size",15f,search.getTextSize()/search.getResources().getDisplayMetrics().scaledDensity,.01f);
+   assertEquals(dp(48),search.getHeight());
+   LinearLayout header=(LinearLayout)search.getParent();View add=header.getChildAt(1);
+   assertEquals(dp(51),add.getWidth());assertEquals(dp(48),add.getHeight());
+   assertFalse("Search and add-contact targets must remain separate",Rect.intersects(bounds(search),bounds(add)));
+   assertEquals(0,host.calls);assertEquals(0,host.directoryOpens);
   }
  }
 }

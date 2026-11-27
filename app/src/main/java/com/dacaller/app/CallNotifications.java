@@ -20,8 +20,8 @@ final class CallNotifications {
  private static String tr(Context context,String he,String en){return I18n.isEnglish(context)?en:he;}
  private static CharSequence compactAction(Context context,String he,String en,String spokenHe,String spokenEn){
   // Native CallStyle shares a narrow action row with its mandatory hang-up
-  // button. Short visible labels fit a 320dp screen at font scale 1.3; the
-  // corresponding TTS text preserves the complete action for spoken output.
+  // button. Keep visible labels brief; the corresponding TTS text preserves
+  // the complete action for spoken output.
   SpannableString title=new SpannableString(tr(context,he,en));
   title.setSpan(new TtsSpan.TextBuilder(tr(context,spokenHe,spokenEn)).build(),0,title.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
   return title;
@@ -89,7 +89,7 @@ final class CallNotifications {
   if(controllable(state)&&speakerDestination(!speaker,supported)!=0)
    builder.addAction(R.drawable.ic_control_speaker,
      speaker?compactAction(context,"כבה","Off","כבה רמקול","Speaker off"):
-      compactAction(context,"הפעל","On","הפעל רמקול","Speaker on"),
+      compactAction(context,"קול","On","הפעל רמקול","Speaker on"),
      commands.action(speaker?"SPEAKER_OFF":"SPEAKER_ON",speaker?2005:2004));
   builder.addAction(R.drawable.ic_phone_line,compactAction(context,"חזור","Call","חזרה לשיחה","Return to call"),open);
   return builder.build();

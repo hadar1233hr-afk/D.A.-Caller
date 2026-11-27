@@ -341,11 +341,11 @@ public final class CallIntegrationSnapshotTest extends InstrumentationTestCase {
   assertFalse("Call notification must also work while the app is in the background",main.hasWindowFocus());
   shade("חזור");assertNativeIdentity("he",Call.STATE_RINGING);
   assertEquals(3,posted().getNotification().actions.length);snapshot("notification-incoming-he");
-  post(Call.STATE_DIALING,"he",false);shade("הפעל");assertNativeIdentity("he",Call.STATE_DIALING);
+  post(Call.STATE_DIALING,"he",false);shade("קול");assertNativeIdentity("he",Call.STATE_DIALING);
   assertEquals(3,posted().getNotification().actions.length);snapshot("notification-outgoing-he");
   for(String language:new String[]{"he","en"}){
    post(Call.STATE_ACTIVE,language,false);
-   String on="he".equals(language)?"הפעל":"On",off="he".equals(language)?"כבה":"Off";
+   String on="he".equals(language)?"קול":"On",off="he".equals(language)?"כבה":"Off";
    shade(on);assertNativeIdentity(language,Call.STATE_ACTIVE);snapshot("notification-active-private-"+language);
    clickText(on);await(()->NotificationFixtureReceiver.state(target).getBoolean("speaker",false),"Native speaker-on action was not dispatched");
    shade(off);assertNativeIdentity(language,Call.STATE_ACTIVE);snapshot("notification-active-speaker-"+language);
