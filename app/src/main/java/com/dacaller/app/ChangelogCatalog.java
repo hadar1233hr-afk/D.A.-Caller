@@ -26,6 +26,15 @@ final class ChangelogCatalog {
  // Version boundaries and notes are grounded in app/build.gradle history and
  // docs/DA_CALLER_{VISUAL_VERIFICATION,PERSONALIZATION_VERIFICATION,DYNAMIC_ISLAND}.
  private static final List<Entry> ENTRIES=Collections.unmodifiableList(Arrays.asList(
+  new Entry("0.15.0","עוזר פקודות מקומי","Local text-command assistant",
+   change("חיפוש מקומי בעברית ובאנגלית באנשי קשר, בעסקים וביומן השיחות, עם בחירת תוצאה ואישור נפרד לפני חיוג.",
+    "Local Hebrew and English contact, business and call-history search, with result selection and a separate confirmation before dialing."),
+   change("תוצאות ופקודות נשמרות רק בזמן שהעוזר פתוח; שינוי חיפוש או סגירה מבטלים אישורים ישנים. הרשאות נבדקות מחדש לפני שימוש בנתונים.",
+    "Commands and results remain transient; editing a query or closing the assistant invalidates older confirmations. Data access permissions are checked again before use."),
+   change("התאמה עקבית של שמות ומספרים, תמיכה בעברית מימין לשמאל ובמצב כהה ו-AMOLED. מאגר העסקים נשאר חלקי ועם ייחוס למקור.",
+    "Consistent name and number matching, Hebrew RTL, dark and AMOLED support. The business directory remains partial and source-attributed."),
+   change("זהו מנוע פקודות מקומי ראשוני. מודל שפה, זיהוי דיבור, הקלטה ותמלול אינם כלולים בשלב זה.",
+    "This is an initial local command engine. A language model, speech recognition, recording and transcription are not included at this stage.")),
   new Entry("0.14.0","עיצוב חדש בהשראת NEX","A new NEX-inspired design",
    change("שפה חזותית חדשה עם רקעים חמים, גוני טרקוטה ומנטה וכרטיסים מעוגלים, במצב בהיר, כהה ושחור AMOLED.",
     "A new visual language with warm backgrounds, terracotta and mint accents and rounded cards in light, dark and AMOLED black modes."),

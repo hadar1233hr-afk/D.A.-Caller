@@ -2,14 +2,19 @@ package com.dacaller.app;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.AppOpsManager;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Process;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -17,9 +22,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /** Local, transient assistant UI. The only call path is a separate explicit confirmation. */
 final class LocalAssistantDialog {
@@ -29,13 +34,18 @@ final class LocalAssistantDialog {
  private final boolean english,dark,amoled;
  private final LinearLayout body,results;
  private final EditText input;
- private AlertDialog dialog;
+ private AlertDialog dialog,confirmation;
+ private Future<?> pendingRead;
+ private String currentPermission;
+ private final ViewTreeObserver.OnWindowFocusChangeListener focusListener=focused->{
+  if(focused&&dialog!=null&&dialog.isShowing())permissionAvailable(currentPermission);
+ };
  private int generation;
  private LocalAssistantDialog(MainActivity host){
   this.host=host;english=I18n.isEnglish(host);
   android.content.SharedPreferences p=host.getSharedPreferences("da_caller",0);
   amoled=p.getBoolean("amoled",false);dark=p.getBoolean("dark",false)||amoled;
-  body=new LinearLayout(host);body.setOrientation(LinearLayout.VERTICAL);
+  body=new LinearLayout(host);body.setOrientation(LinearLayout.VERTICAL);body.setTag("assistant_dialog_body");
   body.setLayoutDirection(english?View.LAYOUT_DIRECTION_LTR:View.LAYOUT_DIRECTION_RTL);
   body.setPadding(dp(18),dp(12),dp(18),dp(12));body.setBackgroundColor(NexPalette.background(dark,amoled));
   TextView intro=label(tr("עוזר מקומי · פקודות טקסט ללא אינטרנט","Local assistant · offline text commands"),14,false);
@@ -55,14 +65,24 @@ final class LocalAssistantDialog {
    TextView chip=button(example,false);body.addView(chip);chip.setOnClickListener(v->{input.setText(example);submit(example);});
   }
   results=new LinearLayout(host);results.setOrientation(LinearLayout.VERTICAL);results.setTag("assistant_results");body.addView(results);
+  input.addTextChangedListener(new TextWatcher(){
+   public void beforeTextChanged(CharSequence text,int start,int count,int after){}
+   public void onTextChanged(CharSequence text,int start,int before,int count){invalidateResults();}
+   public void afterTextChanged(Editable text){}
+  });
+  body.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener(){
+   public void onViewAttachedToWindow(View view){}
+   public void onViewDetachedFromWindow(View view){clearPrivateState();}
+  });
  }
  static void show(MainActivity host){new LocalAssistantDialog(host).open();}
  private void open(){
   ScrollView scroll=new ScrollView(host);scroll.addView(body,new ScrollView.LayoutParams(-1,-2));
   dialog=new AlertDialog.Builder(host,dark?R.style.AppDialogDark:R.style.AppDialogLight)
     .setTitle("DA Intelligence").setView(scroll).setNegativeButton(tr("סגור","Close"),null).create();
-  dialog.setOnDismissListener(d->{generation++;input.setText("");results.removeAllViews();});
+  dialog.setOnDismissListener(d->clearPrivateState());
   AppAppearance.show(dialog);
+  body.getViewTreeObserver().addOnWindowFocusChangeListener(focusListener);
   if(dialog.getWindow()!=null)dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
  }
  private String tr(String he,String en){return english?en:he;}
@@ -78,8 +98,32 @@ final class LocalAssistantDialog {
   if(primary)v.setTextColor(NexPalette.onPrimary(dark));
   LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,-2);p.topMargin=dp(6);v.setLayoutParams(p);return v;
  }
- private boolean permitted(String permission){return permission==null||host.checkSelfPermission(permission)==PackageManager.PERMISSION_GRANTED;}
+ private boolean permitted(String permission){
+  if(permission==null)return true;
+  if(host.checkSelfPermission(permission)!=PackageManager.PERMISSION_GRANTED)return false;
+  try{
+   String op=AppOpsManager.permissionToOp(permission);AppOpsManager ops=host.getSystemService(AppOpsManager.class);
+   // Public noteOp resolves foreground-sensitive policy for this actual UID.
+   // An unresolved/default decision is not evidence that personal data is allowed.
+   return op!=null&&ops!=null&&ops.noteOpNoThrow(op,Process.myUid(),host.getPackageName())==AppOpsManager.MODE_ALLOWED;
+  }
+  catch(SecurityException denied){return false;}
+ }
  private boolean live(int token){return token==generation&&dialog!=null&&dialog.isShowing()&&!host.isFinishing()&&!host.isDestroyed();}
+ private void dismissConfirmation(){AlertDialog pending=confirmation;confirmation=null;if(pending!=null){pending.setMessage("");pending.dismiss();}}
+ private void invalidateResults(){
+  generation++;currentPermission=null;
+  Future<?> pending=pendingRead;pendingRead=null;if(pending!=null)pending.cancel(false);
+  dismissConfirmation();results.removeAllViews();
+ }
+ private void clearPrivateState(){
+  invalidateResults();input.setText("");
+  ViewTreeObserver tree=body.getViewTreeObserver();if(tree.isAlive())tree.removeOnWindowFocusChangeListener(focusListener);
+ }
+ private boolean permissionAvailable(String permission){
+  if(permitted(permission))return true;
+  invalidateResults();message(tr("ההרשאה אינה זמינה.","Permission is unavailable."));return false;
+ }
  private void message(String text){results.removeAllViews();results.addView(label(text,14,false));}
  private static final class Row{
   final String name,number;Row(String name,String number){this.name=name;this.number=number;}
@@ -88,22 +132,23 @@ final class LocalAssistantDialog {
   final List<Row> rows=new ArrayList<>();String info;boolean more;
  }
  private void submit(String raw){
-  final int token=++generation;LocalAssistant.Intent request=LocalAssistant.parse(raw);
+  invalidateResults();final int token=generation;LocalAssistant.Intent request=LocalAssistant.parse(raw);
   if(request.kind==LocalAssistant.Kind.UNKNOWN){message(tr("לא זוהתה פקודה נתמכת. נסה חיפוש איש קשר, עסק או שיחות אחרונות.","Unsupported command. Try contact search, business search or recent calls."));return;}
-  String permission=permission(request);
+  String permission=permission(request);currentPermission=permission;
   if(!permitted(permission)){message(tr("נדרשת הרשאה מתאימה בהגדרות החייגן. לא נקראו נתונים.","Permission is required in dialer settings. No data was read."));return;}
   if(request.kind==LocalAssistant.Kind.CALL_PROPOSAL&&LocalAssistant.safeNumber(request.query)!=null){
    Answer answer=new Answer();answer.rows.add(new Row(tr("מספר שהוזן","Entered number"),LocalAssistant.safeNumber(request.query)));
    display(answer,request,permission,token);return;
   }
   message(tr("מחפש במכשיר…","Searching device…"));
-  IO.execute(()->{
+  pendingRead=IO.submit(()->{
    Answer answer;
    try{answer=read(request);}catch(RuntimeException failure){answer=new Answer();answer.info=tr("לא ניתן לקרוא את הנתונים כרגע.","Data could not be read right now.");}
    final Answer result=answer;
    host.runOnUiThread(()->{
     if(!live(token))return;
-    if(!permitted(permission)){message(tr("ההרשאה אינה זמינה.","Permission is unavailable."));return;}
+    pendingRead=null;
+    if(!permissionAvailable(permission))return;
     display(result,request,permission,token);
    });
   });
@@ -138,7 +183,7 @@ final class LocalAssistantDialog {
     while(cursor.moveToNext()){
      String name=cursor.getString(0),number=cursor.getString(1);
      if(name==null)name="";
-     if(!name.toLowerCase(Locale.ROOT).contains(request.query)&&!(number!=null&&number.contains(request.query)))continue;
+     if(!LocalAssistant.matchesContact(name,number,request.query))continue;
      if(result.rows.size()==LIMIT){result.more=true;break;}result.rows.add(new Row(name,number));
     }
    }return result;
@@ -165,19 +210,30 @@ final class LocalAssistantDialog {
   for(Row row:answer.rows){
    String number=LocalAssistant.safeNumber(row.number);
    TextView item=label(row.name+"\n"+(row.number==null||row.number.isEmpty()?tr("מספר לא זמין","Number unavailable"):row.number),15,true);
-   item.setBackground(shape(NexPalette.surface(dark,amoled),16));results.addView(item);
+   item.setTag("assistant_result_row");item.setBackground(shape(NexPalette.surface(dark,amoled),16));results.addView(item);
    if(number!=null){
     TextView action=button(tr("בחר לחיוג","Select to call"),false);action.setTag("assistant_select_call");results.addView(action);
-    action.setOnClickListener(v->{
-     if(!live(token)||!permitted(permission))return;
-     AppAppearance.show(new AlertDialog.Builder(host,dark?R.style.AppDialogDark:R.style.AppDialogLight)
-      .setTitle(tr("אישור חיוג","Confirm call")).setMessage(row.name+"\n"+number)
-      .setNegativeButton(tr("ביטול","Cancel"),null).setPositiveButton(tr("חייג","Call"),(d,w)->{
-       if(live(token)&&permitted(permission)){dialog.dismiss();host.dialFromList(number);}
-      }));
-    });
+    action.setContentDescription(tr("בחר לחיוג: ","Select to call: ")+row.name+" · "+number);
+    action.setOnClickListener(v->{if(live(token)&&permissionAvailable(permission))confirm(row,number,permission,token);});
    }
   }
   if(answer.more)results.addView(label(tr("מוצגות 20 תוצאות ראשונות. דייק את החיפוש.","Showing the first 20 results. Refine the search."),13,false));
+ }
+ private void confirm(Row row,String number,String permission,int token){
+  dismissConfirmation();
+  AlertDialog pending=new AlertDialog.Builder(host,dark?R.style.AppDialogDark:R.style.AppDialogLight)
+   .setTitle(tr("אישור חיוג","Confirm call")).setMessage(row.name+"\n"+number)
+   .setNegativeButton(tr("ביטול","Cancel"),null).setPositiveButton(tr("חייג","Call"),null).create();
+  confirmation=pending;pending.setOnDismissListener(d->{if(confirmation==pending)confirmation=null;pending.setMessage("");});
+  AppAppearance.show(pending);pending.getWindow().getDecorView().setTag("assistant_confirmation");
+  TextView negative=pending.getButton(AlertDialog.BUTTON_NEGATIVE);negative.setTag("assistant_cancel_call");
+  // Invalidate ownership on the click itself; Dialog.OnDismiss is posted later.
+  negative.setOnClickListener(v->{if(confirmation==pending)dismissConfirmation();else pending.dismiss();});
+  TextView positive=pending.getButton(AlertDialog.BUTTON_POSITIVE);positive.setTag("assistant_confirm_call");
+  positive.setOnClickListener(v->{
+   if(confirmation!=pending||!pending.isShowing()||!live(token)){if(confirmation==pending)dismissConfirmation();else pending.dismiss();return;}
+   if(!permissionAvailable(permission))return;
+   dismissConfirmation();dialog.dismiss();host.dialFromList(number);
+  });
  }
 }

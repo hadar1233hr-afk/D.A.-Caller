@@ -8,4 +8,8 @@ Owner explicitly authorized implementation on 2026-11-26 after receiving the 0.1
 - Keep app identity, offline behavior, archive, backups, business data, call screens, navigation and all signing/publication safeguards. No changes to NEX, DA PUSH or other products.
 
 ## Phase 1 in progress
+
+Latest continuation: the offline text dialog and actual permission-aware provider/business reads are implemented in PR8. Matching and stale-confirmation/AppOps corrections plus dedicated native coverage are being validated for0.15.0/code24. They are not yet a verified APK. Full native/visual work precedes local model/speech integration; no model/speech/summary capability is claimed.
+
+Historical initial foundation checkpoint:
 Branch feature/da-intelligence-0.15 from 1a4926785a72bec25c188f9c5b74116c5b498c31. LocalAssistant.java is a deterministic bilingual proposal-only parser, with LocalAssistantTest.java coverage. No UI hookup, AI model, speech, database access, action execution or new APK yet. Next: read-only permission-aware actual contact/history/business query integration; explicit disambiguation and confirmation before calls; NEX assistant UI; test native behavior and offline performance. Do not log queries or add network permission. Keep unsupported commands explicit, no invented results. Choose next version only after test/release contract updates. Rebase or merge latest approved redesign corrections without overwriting concurrent work.

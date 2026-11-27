@@ -407,7 +407,9 @@ final class FastPages {
   addFavorites(page,contacts);
   LinearLayout head=horizontal();page.addView(head,lp(-1,48));
   EditText search=new EditText(host);
-  search.setSingleLine(true);search.setHint(tr("חיפוש שם או מספר"));
+  String searchDescription=tr("חיפוש שם או מספר");
+  search.setSingleLine(true);search.setHint(I18n.isEnglish(host)?"Name or number":searchDescription);
+  search.setContentDescription(searchDescription);
   AppAppearance.font(search,false);
   search.setHintTextColor(subtle());search.setTextColor(ink());search.setTextSize(15);
   search.setPadding(dp(12),0,dp(12),0);search.setBackground(edge(panel(),22));

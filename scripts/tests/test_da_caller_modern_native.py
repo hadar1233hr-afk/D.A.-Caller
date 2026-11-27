@@ -1,7 +1,8 @@
 """Synthetic corruption contracts for the additive native-evidence verifier.
 
 Generated images/proofs below are unit fixtures, never emulator/native evidence.
-The CI still has to execute the actual40 native methods and all272 captures.
+The CI still has to execute all40 original and4assistant native methods,
+the restarted permission phase and all282 captures.
 """
 import copy
 import hashlib
@@ -344,7 +345,7 @@ class ModernNativeContracts(unittest.TestCase):
         return names
 
     def write_junit(self, extra=""):
-        suite = ET.Element("testsuite", tests="40", failures="0", errors="0", skipped="0")
+        suite = ET.Element("testsuite", tests="44", failures="0", errors="0", skipped="0")
         for owner, method in native_identities():
             ET.SubElement(suite, "testcase", classname=owner, name=method)
         if extra:
@@ -401,7 +402,7 @@ class ModernNativeContracts(unittest.TestCase):
                 opacity35=signed(tuple(int(fg * 89 / 255 + bg * 166 / 255 + 0.5) for bg, fg in zip((180, 120, 60), (20, 20, 20)))), opacity100=signed((20, 20, 20))) for n in range(5)]))
         proofs = dict(zip(gate.PROOFS, (presentation, backup, island)))
         for name, value in proofs.items():
-            value.update(api=33, density_dpi=240, font_scale=1.3, package="com.dacaller.app", version_name="0.14.0", version_code=23,
+            value.update(api=33, density_dpi=240, font_scale=1.3, package="com.dacaller.app", version_name="0.15.0", version_code=24,
                 physical_carrier_audio_verified=False, matching_key_upgrade_verified=False,
                 captures={frame: dict(sha256=hashlib.sha256((self.modern / frame).read_bytes()).hexdigest(), width=480, height=854,
                     method="UiAutomation.takeScreenshot") for frame in gate.PROOFS[name]})
@@ -432,6 +433,18 @@ class ModernNativeContracts(unittest.TestCase):
             with self.assertRaisesRegex(AssertionError, "another workflow"):
                 self.legacy()
 
+    def test_dedicated_assistant_native_identities_are_neither_optional_nor_open_ended(self):
+        for mutation in ("missing", "extra", "renamed"):
+            self.write_junit();path=self.xml/"native.xml";suite=ET.parse(path).getroot()
+            assistant=[case for case in suite if case.get("classname")=="com.dacaller.app.LocalAssistantIntegrationTest"]
+            self.assertEqual(4,len(assistant))
+            if mutation=="missing": suite.remove(assistant[0])
+            elif mutation=="extra": ET.SubElement(suite,"testcase",classname="com.dacaller.app.LocalAssistantIntegrationTest",name="testUnreviewedExtra")
+            else: assistant[0].set("name","testDifferentAssistantCase")
+            suite.set("tests",str(len(suite)));path.write_bytes(ET.tostring(suite))
+            with self.subTest(mutation=mutation),self.assertRaisesRegex(AssertionError,"methods differ"):
+                gate.junit(self.xml,REPO/"app/src/androidTest/java/com/dacaller/app")
+
     def test_legacy_api_and_counter_types_are_strict(self):
         self.legacy_fixture()
         path = self.baseline / "personalization-verification.json"
@@ -439,10 +452,10 @@ class ModernNativeContracts(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError, "current source"):
             self.legacy()
 
-    def test_source_enumerated40_named_native_cases_are_required(self):
+    def test_source_enumerated40_legacy_and4_exact_assistant_native_cases_are_required(self):
         self.write_junit()
-        self.assertEqual(40, gate.junit(self.xml, REPO / "app/src/androidTest/java/com/dacaller/app")["tests"])
-        path = self.xml / "native.xml";value=ET.parse(path).getroot();value.remove(value[0]);value.set("tests", "39");path.write_bytes(ET.tostring(value))
+        self.assertEqual(44, gate.junit(self.xml, REPO / "app/src/androidTest/java/com/dacaller/app")["tests"])
+        path = self.xml / "native.xml";value=ET.parse(path).getroot();value.remove(value[0]);value.set("tests", "43");path.write_bytes(ET.tostring(value))
         with self.assertRaisesRegex(AssertionError, "methods differ"):
             gate.junit(self.xml, REPO / "app/src/androidTest/java/com/dacaller/app")
 
@@ -450,7 +463,7 @@ class ModernNativeContracts(unittest.TestCase):
         self.write_junit('<testsuite tests="999" failures="0" errors="0" skipped="0"/>')
         with self.assertRaisesRegex(AssertionError, "counter mismatch"):
             gate.junit(self.xml, REPO / "app/src/androidTest/java/com/dacaller/app")
-        value = self.write_junit();parent=ET.Element("testsuites", tests="41");parent.append(value);(self.xml / "native.xml").write_bytes(ET.tostring(parent))
+        value = self.write_junit();parent=ET.Element("testsuites", tests="45");parent.append(value);(self.xml / "native.xml").write_bytes(ET.tostring(parent))
         with self.assertRaisesRegex(AssertionError, "aggregate counter"):
             gate.junit(self.xml, REPO / "app/src/androidTest/java/com/dacaller/app")
 
@@ -534,9 +547,9 @@ class ModernNativeContracts(unittest.TestCase):
         name = next(iter(gate.PROOFS))
         path = self.modern / name
         valid = path.read_text()
-        for version, code in (("0.13.0", 22), ("0.14.0-beta.1", 23),
-                              ("0.14.1", 23), ("0.14.0", 22),
-                              ("0.14.0", "23"), ("0.14.0", True)):
+        for version, code in (("0.13.0", 22), ("0.14.0", 23),
+                              ("0.15.0-beta.1", 24), ("0.15.1", 24),
+                              ("0.15.0", 23), ("0.15.0", "24"), ("0.15.0", True)):
             value = json.loads(valid)
             value.update(version_name=version, version_code=code)
             path.write_text(json.dumps(value))
@@ -556,11 +569,11 @@ class ModernNativeContracts(unittest.TestCase):
         self.legacy_fixture();self.proofs_fixture();self.write_junit()
         with mock.patch.object(gate.subprocess, "check_output", side_effect=[SOURCE, TREE]):
             report = gate.verify(self.baseline, self.modern, self.xml)
-        self.assertEqual("0.14.0", report["version_name"])
-        self.assertEqual(23, report["version_code"])
+        self.assertEqual("0.15.0", report["version_name"])
+        self.assertEqual(24, report["version_code"])
         self.assertEqual(27, report["required_real_png_files"])
         self.assertEqual(272, report["total_required_png_files"])
-        self.assertEqual(40, report["native_junit"]["tests"])
+        self.assertEqual(44, report["native_junit"]["tests"])
         (self.modern / "unexpected-diagnostic.png").write_bytes(self.base_png)
         with mock.patch.object(gate.subprocess, "check_output", side_effect=[SOURCE, TREE]), self.assertRaisesRegex(AssertionError, "exactly27"):
             gate.verify(self.baseline, self.modern, self.xml)

@@ -1,0 +1,7 @@
+Picked up JAVA_TOOL_OPTIONS: -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080 -Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Djavax.net.ssl.trustStore=/workspace/toolchains/cacerts -Djavax.net.ssl.trustStorePassword=changeit
+JUnit version 4.13.2
+..........
+Time: 0.042
+
+OK (10 tests)
+

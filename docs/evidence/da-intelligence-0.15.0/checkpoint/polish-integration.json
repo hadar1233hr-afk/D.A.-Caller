@@ -1,0 +1,11 @@
+{
+  "source_commit": "16776bf21d7a820065be130ce56810318c77ffa1",
+  "files": {
+    "app/src/main/java/com/dacaller/app/FastPages.java": "ea18bbd5373e86aa3347e63944237f0a7d06b4c9a015e4bac1df5bb5ca4fa623",
+    "app/src/main/java/com/dacaller/app/CallNotifications.java": "3f8df0147a4284504a356377bf575dc46c2d6584e57f7dd34bd29b375f965238",
+    "app/src/test/java/com/dacaller/app/ContactsBusinessChipTest.java": "dcbf3d2d17940e84eed6348cea64cbaa2616eee35224991cf15afb7c13684c11",
+    "app/src/test/java/com/dacaller/app/CallNotificationsTest.java": "83111212bfacb1366b61a865887dad12b0e56b77197f75d17dcdc3b0e3a70fec",
+    "app/src/androidTest/java/com/dacaller/app/CallIntegrationSnapshotTest.java": "7683e2d0356ad25d37bf78c62237fe67211f3d9f7f5e4f07f2bbcd34ded03f7e"
+  },
+  "scope": "Only two visual fixes and their host/native expectations; no PR7 AI mixing"
+}
