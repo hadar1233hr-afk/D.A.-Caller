@@ -1,0 +1,335 @@
+{
+  "group": "call-a",
+  "source_sha": "1a4926785a72bec25c188f9c5b74116c5b498c31",
+  "app_tree": "b5f973f6b837cc747ece84e32815a102de293937",
+  "run_id": "45773402159",
+  "sheets_viewed": [
+    "call-a-01.png",
+    "call-a-02.png",
+    "call-a-03.png",
+    "call-a-04.png",
+    "call-a-05.png",
+    "call-a-06.png",
+    "call-a-07.png",
+    "call-a-08.png",
+    "call-a-09.png",
+    "call-a-10.png",
+    "call-a-11.png",
+    "call-a-12.png",
+    "call-a-13.png"
+  ],
+  "frames": [
+    {
+      "filename": "call-emerald-dark-audio-largefont.png",
+      "sha256": "a169aeb586f78f1497265fd5bab65047ced2821b52f6fdfc529dc5c633fb7b95",
+      "status": "PASS",
+      "notes": "Large Hebrew caller name, number, Bluetooth route rows, and four action labels remain separate and readable inside the outlined Emerald panel; red end-call control is unobstructed."
+    },
+    {
+      "filename": "call-emerald-dark-audio-longname-en.png",
+      "sha256": "89ee6ae1dbbecb8fb9475ff908d1b0933bb8ce440e53c26a1974f6f72a27310c",
+      "status": "PASS",
+      "notes": "English caller name ends in a bounded right ellipsis; F901, Speaker, Phone and all four bottom action labels are fully readable without overlap."
+    },
+    {
+      "filename": "call-emerald-dark-audio-longname-he.png",
+      "sha256": "50d0a0ebba417d9108b0b86fac3e9d2a3c333606bdef435dccc4652eac34ea6b",
+      "status": "PASS",
+      "notes": "RTL long caller name uses a bounded left ellipsis above the number; Hebrew route and action labels fit their rows and the end-call control remains clear."
+    },
+    {
+      "filename": "call-emerald-dark-audio-standard.png",
+      "sha256": "1b687b7eb01860a86f65d2ba5fcb31e227447abea4920d066d8e23551488eb26",
+      "status": "PASS",
+      "notes": "Standard Hebrew caller header and Bluetooth route labels fit comfortably; selected F901 and the four controls remain distinct above the clear red end-call button."
+    },
+    {
+      "filename": "call-emerald-dark-keypad-largefont.png",
+      "sha256": "84d8cd78ec7c88f5cb0ab0c6c8c33c62781da829f786fd666f765deae7037002",
+      "status": "PASS",
+      "notes": "Large rounded keypad digits, letter groups and zero-plus mark fit each oval; Hebrew action labels and red end-call control fit below with clear separation."
+    },
+    {
+      "filename": "call-emerald-dark-keypad-standard.png",
+      "sha256": "9bef23164f1fe68c802d9198ad16c80d43c066b797db99734ca6ecfdb37303ce",
+      "status": "PASS",
+      "notes": "All twelve keypad keys and their secondary letters remain readable; selected keypad and F901 controls are distinct and their Hebrew labels are intact."
+    },
+    {
+      "filename": "call-emerald-dark-more-largefont.png",
+      "sha256": "2329a5dad40e731b025a9d6cfff0b7dd4f918e576238898ba2d27a59baf9079c",
+      "status": "PASS",
+      "notes": "Large Hebrew More heading, New call and Hold rows remain fully visible; the outlined panel contains all four bottom labels and the end-call button without collision."
+    },
+    {
+      "filename": "call-emerald-dark-more-standard.png",
+      "sha256": "185231d5591354b19a0c8066137cb70afde8af2f5a4e13107be6f5da76904a6c",
+      "status": "PASS",
+      "notes": "Standard Hebrew More heading and two action rows are readable; the selected More control, other labels and red end-call button remain unobstructed."
+    },
+    {
+      "filename": "call-emerald-dark-normal-largefont.png",
+      "sha256": "edaf6463561ed133fee775eacfcb8c8ae5e76ae638e8ae8de0a445dab547cba7",
+      "status": "PASS",
+      "notes": "Large Hebrew name, phone and timer are separated above six circular controls; the Hebrew New call label fits within its column and the end-call button stays clear."
+    },
+    {
+      "filename": "call-emerald-dark-normal-longname-en.png",
+      "sha256": "155c3da82c36619fa502a48a7589bfe37954ff3780bd727d48ffe827122213c5",
+      "status": "PASS",
+      "notes": "English caller name uses a bounded right ellipsis; Mute, Keypad, More, Hold and New call remain fully labeled in the six-control grid."
+    },
+    {
+      "filename": "call-emerald-dark-normal-longname-he.png",
+      "sha256": "663f5ebd329080a7e8a51ee59a66dccd9a4a8d5758979fce8828074e2ccd9a4f",
+      "status": "PASS",
+      "notes": "RTL caller name uses a bounded left ellipsis above the number and timer; six Hebrew control labels remain visible inside the Emerald panel."
+    },
+    {
+      "filename": "call-emerald-dark-normal-standard.png",
+      "sha256": "467bb7a176eeb11890d6125565ce9a42a2f864facb0a38186a96d0a4c82ea7d4",
+      "status": "PASS",
+      "notes": "Standard Hebrew caller, active-call text and timer have clear spacing; all six circular controls and labels remain readable above the red end-call button."
+    },
+    {
+      "filename": "call-emerald-light-audio-largefont.png",
+      "sha256": "7402e7e005d4647764011b747c80bd3695bc2321f642d63d80e583e4f47a03b6",
+      "status": "PASS",
+      "notes": "Light Emerald audio view has dark readable Hebrew caller and route text; large action labels fit under their circles and the red end-call button remains distinct."
+    },
+    {
+      "filename": "call-emerald-light-audio-standard.png",
+      "sha256": "d8d827b5d1eb3fd0e048065d3efc97083a6c6ee916cb11845074afb6028cdcee",
+      "status": "PASS",
+      "notes": "Standard light audio panel shows F901, Speaker and Phone rows with readable Hebrew labels; bottom action labels and end-call icon remain intact."
+    },
+    {
+      "filename": "call-emerald-light-keypad-largefont.png",
+      "sha256": "48ce270830daf321dc5ce8d4c2765dad313275aa35ddfa35ac990ee932cdf9a0",
+      "status": "PASS",
+      "notes": "Light keypad shows large dark rounded digits and letter groups clearly against pale ovals; all Hebrew action labels fit above the end-call control."
+    },
+    {
+      "filename": "call-emerald-light-keypad-standard.png",
+      "sha256": "58b18f6ee86d39371b931aee275061155b15b2d0c301d2e350fdeb81babe0092",
+      "status": "PASS",
+      "notes": "Standard light keypad has twelve distinct readable keys, including zero-plus; the selected keypad icon and bottom Hebrew labels remain visible."
+    },
+    {
+      "filename": "call-emerald-light-more-largefont.png",
+      "sha256": "5796b9db445b3a7d99cb4a67cdba5256bc3d80c45881eaf9a87387afc02a6ee3",
+      "status": "PASS",
+      "notes": "Large dark Hebrew More heading and both action-row labels fit the light panel; four bottom labels and red end-call control are fully visible."
+    },
+    {
+      "filename": "call-emerald-light-more-standard.png",
+      "sha256": "af7b3f90efd55c293e192b0e4908401c94766fcf69027a06f219f648036045a7",
+      "status": "PASS",
+      "notes": "Standard light More panel retains readable Hebrew New call and Hold rows; selected More and F901 controls remain distinct with intact labels."
+    },
+    {
+      "filename": "call-emerald-light-normal-largefont.png",
+      "sha256": "75c03e33a051fdf9c123267ce042bc2c416a103df329f9c2301a6bdc1611589d",
+      "status": "PASS",
+      "notes": "Large Hebrew caller header, number and timer have clear spacing on the light surface; six control labels, including New call, fit without overlap."
+    },
+    {
+      "filename": "call-emerald-light-normal-standard.png",
+      "sha256": "11f64b5054c8f9a18bc6fd5ca8eb5f5291985b30b55f79dd8670d41f40b2357f",
+      "status": "PASS",
+      "notes": "Standard light caller, active-call text and timer are readable; six labeled round controls and the large red end-call button remain separated."
+    },
+    {
+      "filename": "call-frost-dark-audio-largefont.png",
+      "sha256": "b506ec974f041b57eeb8c4169cc82b38fec13e8cf8f4fde682a7a612db96097f",
+      "status": "PASS",
+      "notes": "Frost dark full-width audio card shows large Hebrew route labels and four bottom labels without clipping; selected blue F901 and wide red end-call control remain clear."
+    },
+    {
+      "filename": "call-frost-dark-audio-longname-en.png",
+      "sha256": "d24c8af08831543022d34f94f6df409f9fbab062f8b5900bae9b22e8907977f1",
+      "status": "PASS",
+      "notes": "English caller name has a bounded right ellipsis above the Frost card; F901, Speaker, Phone, Keypad, More and Mute remain fully readable."
+    },
+    {
+      "filename": "call-frost-dark-audio-longname-he.png",
+      "sha256": "d5a0995b27d3445c495d21c09b9e5b91bdcc8e812d5bd1c70638ab12abbb045f",
+      "status": "PASS",
+      "notes": "RTL long caller name ends with a bounded left ellipsis; Hebrew audio rows and four bottom labels fit the Frost card above the wide end-call button."
+    },
+    {
+      "filename": "call-frost-dark-audio-standard.png",
+      "sha256": "94b41538457f2d3fbadc46aaa6f2898bfc1c1a1c2ce5f4a0373d24348149655c",
+      "status": "PASS",
+      "notes": "Standard dark Frost audio card retains readable Hebrew route labels and clearly selected F901; four labeled controls and end-call button stay within the frame."
+    },
+    {
+      "filename": "call-frost-dark-keypad-largefont.png",
+      "sha256": "8a0e6b89c5a89915b225045b4d9c56a8a8ca699f5053cc8e0df9a18387c25ff9",
+      "status": "PASS",
+      "notes": "Large rounded digits and secondary letters fit the Frost rounded-rectangle keypad keys; four Hebrew action labels remain separate above the wide end-call control."
+    },
+    {
+      "filename": "call-frost-dark-keypad-standard.png",
+      "sha256": "4a1c4005d89240665ea0c7547387bd66f6edc098e38269fe3bbc9713e0535b00",
+      "status": "PASS",
+      "notes": "Standard Frost keypad has twelve fully visible keys, secondary letters and zero-plus; selected keypad and F901 controls remain distinct with intact labels."
+    },
+    {
+      "filename": "call-frost-dark-more-largefont.png",
+      "sha256": "c900f5ae6d6408df5a2a2f57d86a0e977b51f17d65b7164bfa7848d7cd0704b7",
+      "status": "PASS",
+      "notes": "Large Hebrew More heading and two rows fit the Frost dark card; selected More/F901 controls and all four labels remain legible above end call."
+    },
+    {
+      "filename": "call-frost-dark-more-standard.png",
+      "sha256": "32a66997cf6e16897495f7bbbe4ba9d5d35676202d64325db0cc2b171025e8ad",
+      "status": "PASS",
+      "notes": "Standard Frost More card keeps Hebrew New call and Hold rows readable; bottom controls, labels and wide red end-call control are unobstructed."
+    },
+    {
+      "filename": "call-frost-dark-normal-largefont.png",
+      "sha256": "e655afb6f08df47eda9c8691ab0280e80bd265e44177b7c8874c2155d26ac293",
+      "status": "PASS",
+      "notes": "Large RTL caller header sits to the right of the avatar without collision; large timer and all four rectangular Frost control labels fit above the wide end-call button."
+    },
+    {
+      "filename": "call-frost-dark-normal-longname-en.png",
+      "sha256": "efe1fae7fbabfcc5c815d28a5a90e8fa5e6e60aa20ed26f8b2e02be15b72cf67",
+      "status": "PASS",
+      "notes": "English caller header uses a bounded right ellipsis beside the avatar; number, large timer and Keypad/F901/More/Mute card labels remain readable."
+    },
+    {
+      "filename": "call-frost-dark-normal-longname-he.png",
+      "sha256": "ee4dfbcbb7d959bd5c4e088b650bf0137373d9b6f7722e8b12defd73d5b0dacc",
+      "status": "PASS",
+      "notes": "RTL long name uses a bounded left ellipsis beside the avatar; number and large timer are separate, and all four Hebrew card labels remain intact."
+    },
+    {
+      "filename": "call-frost-dark-normal-standard.png",
+      "sha256": "897108a79c0b3361c7af4742bfddd5ff3dafcf53ca733023fd9f6f6c39aa2089",
+      "status": "PASS",
+      "notes": "Standard RTL header, number, timer and active-call text remain separated; four rectangular control cards and end-call button preserve the Frost layout."
+    },
+    {
+      "filename": "call-frost-light-audio-largefont.png",
+      "sha256": "cd7850b6f5ee4cc9abc5b8b7e8bb8a98560da540dea15bda204e04c1c4ccd164",
+      "status": "PASS",
+      "notes": "Light Frost audio card has readable dark Hebrew caller and route labels; selected blue F901, four bottom labels and wide red end-call button are clearly visible."
+    },
+    {
+      "filename": "call-frost-light-audio-standard.png",
+      "sha256": "7ee9d5b32516edb42ee21a04208a28fb6df5c8fea728f6461488eef315275ba2",
+      "status": "PASS",
+      "notes": "Standard light Frost audio rows retain F901 checkmark and readable Hebrew labels; the four bottom actions fit within the white card without overlap."
+    },
+    {
+      "filename": "call-frost-light-keypad-largefont.png",
+      "sha256": "c9771816c6bd22d0f3ed471eef9519119e5d2a24d81745ccee9003fd3642a105",
+      "status": "PASS",
+      "notes": "Large dark digits and letter groups fit all twelve pale rounded-rectangle keys; Hebrew bottom labels remain readable above the wide end-call control."
+    },
+    {
+      "filename": "call-frost-light-keypad-standard.png",
+      "sha256": "36d960abf74daeead95d90ab00d928f81aeafc04c8eb803f00172a822a1746bc",
+      "status": "PASS",
+      "notes": "Standard light Frost keypad retains all twelve keys and zero-plus; selected keypad/F901 and four Hebrew labels remain clear above end call."
+    },
+    {
+      "filename": "call-frost-light-more-largefont.png",
+      "sha256": "5cc5fe0e904dc8f1f6c4ee6922455b7b0bb7494a32a2f8fbb25bda823c8cd00b",
+      "status": "PASS",
+      "notes": "Large Hebrew More heading and New call/Hold labels fit the white Frost card; four bottom labels remain readable and selected controls stay distinct."
+    },
+    {
+      "filename": "call-frost-light-more-standard.png",
+      "sha256": "7edb4d83d3413cccee84349c758153f010deb2644f52c35788a4b1813ee98fe2",
+      "status": "PASS",
+      "notes": "Standard light Frost More view has intact Hebrew row labels and four bottom labels; wide red end-call button remains separated from the controls."
+    },
+    {
+      "filename": "call-frost-light-normal-largefont.png",
+      "sha256": "eb5b72e0ddd857a3670039bd2e95b8b7a12188cc298e2bb8b4630db4beffb784",
+      "status": "PASS",
+      "notes": "Large RTL caller header and avatar do not collide; the number and large timer remain clear above four labeled rectangular cards and wide end-call control."
+    },
+    {
+      "filename": "call-frost-light-normal-standard.png",
+      "sha256": "8c73e89226278d826d454f5a6eef49bf257b68a433013dbb4e2a700c6ff7c645",
+      "status": "PASS",
+      "notes": "Standard light RTL header, number, timer and active-call text remain separate; four Frost card labels and the wide end-call icon are fully visible."
+    },
+    {
+      "filename": "call-graphite-dark-audio-largefont.png",
+      "sha256": "d8b5a7aac60d3c91e8a5e61d70c941a9c4b04f72217656e016672620766d0298",
+      "status": "PASS",
+      "notes": "Graphite dark audio view keeps the full Bluetooth title, large Hebrew route labels and four bottom action labels visible; free-standing circular end-call control is unobstructed."
+    },
+    {
+      "filename": "call-graphite-dark-audio-longname-en.png",
+      "sha256": "2496b890b4fa4e9366aaa45bf62aa54ebc3cd57f39641e1ceaa3d12b0fa92857",
+      "status": "PASS",
+      "notes": "English caller name ends in a bounded right ellipsis; Bluetooth title, route labels and Mute/Keypad/F901/More labels remain readable above the round end-call button."
+    },
+    {
+      "filename": "call-graphite-dark-audio-longname-he.png",
+      "sha256": "132dccb15cc552ca4f191c716e8339241c2cd517cd52ceba3e504f962ebd7f7f",
+      "status": "PASS",
+      "notes": "RTL caller name uses a bounded left ellipsis; Hebrew route and action labels remain intact, and Graphite circular controls retain clear spacing."
+    },
+    {
+      "filename": "call-graphite-dark-audio-standard.png",
+      "sha256": "0741a0513899e13fe324d7f6ea205957db576efcfe4b9533e171410daf2698da",
+      "status": "PASS",
+      "notes": "Standard Graphite audio view shows readable Bluetooth/F901 and Hebrew route labels; four free-standing controls and red round end-call button fit the frame."
+    },
+    {
+      "filename": "call-graphite-dark-keypad-largefont.png",
+      "sha256": "0964020484d810c81a1ef8dc79ca41fe9c822176442c04a040f19c4691634c8d",
+      "status": "PASS",
+      "notes": "Large rounded keypad digits, letter groups and zero-plus fit Graphite oval keys; all four Hebrew action labels remain intact above the round end-call control."
+    },
+    {
+      "filename": "call-graphite-dark-keypad-standard.png",
+      "sha256": "194ad9ab3143085ba07b3df15f8ab9a7fb013f86b385d4e442afbd023e6d6c9c",
+      "status": "PASS",
+      "notes": "Standard Graphite keypad keeps twelve distinct readable keys and selected keypad/F901 controls; bottom labels do not collide with the round end-call button."
+    },
+    {
+      "filename": "call-graphite-dark-more-largefont.png",
+      "sha256": "8fe578d3dc7a90211f50980fd264d3b3c504b4234d6a793c864c63ebfba25f09",
+      "status": "PASS",
+      "notes": "Large Hebrew More heading and both row labels remain fully visible in the Graphite panel; four action labels and the round red end-call button are clear."
+    },
+    {
+      "filename": "call-graphite-dark-more-standard.png",
+      "sha256": "797eb435c0a1911cef940145ba779eb2a5b26b430b3444cedd1bdf01c3aaa3b5",
+      "status": "PASS",
+      "notes": "Standard Graphite More heading and New call/Hold labels fit their rows; the selected More control, other action labels and round end-call icon remain unobstructed."
+    },
+    {
+      "filename": "call-graphite-dark-normal-largefont.png",
+      "sha256": "6aa7683321a0af40137ade8074ba2b75a0b8153c6fa8d2658d4cd2bce429601f",
+      "status": "PASS",
+      "notes": "Large Hebrew caller name, number and timer remain separated above six free-standing circular controls; every Hebrew action label and the red end-call icon is visible."
+    },
+    {
+      "filename": "call-graphite-dark-normal-longname-en.png",
+      "sha256": "e3a35f7049f5d4ff68881a770187bc28ebd9a874bacf925b1e602af207b2ceef",
+      "status": "PASS",
+      "notes": "English caller name has a bounded right ellipsis; Mute, Keypad, F901, More, Hold and New call labels are fully visible in the Graphite grid."
+    },
+    {
+      "filename": "call-graphite-dark-normal-longname-he.png",
+      "sha256": "b85bc48ec6609aaea807ac2fbede0bf1b4cad1ea223bfdd35f9faf45b4921373",
+      "status": "PASS",
+      "notes": "RTL long caller name uses a bounded left ellipsis above the number and timer; six Hebrew action labels remain clear without overlap or frame clipping."
+    },
+    {
+      "filename": "call-graphite-dark-normal-standard.png",
+      "sha256": "5b6d0abd5db10f6c06e554af24fa0b3c3aeb2b7c0b7109336324b43e613c6aef",
+      "status": "PASS",
+      "notes": "Standard Hebrew caller, number, active-call text and timer are readable; all six circular controls have intact labels and the round red end-call button stays clear."
+    }
+  ]
+}

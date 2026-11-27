@@ -1,0 +1,317 @@
+{
+  "group": "call-b",
+  "source_sha": "1a4926785a72bec25c188f9c5b74116c5b498c31",
+  "app_tree": "b5f973f6b837cc747ece84e32815a102de293937",
+  "run_id": "45773402159",
+  "sheets_viewed": [
+    "call-b-01.png",
+    "call-b-02.png",
+    "call-b-03.png",
+    "call-b-04.png",
+    "call-b-05.png",
+    "call-b-06.png",
+    "call-b-07.png",
+    "call-b-08.png",
+    "call-b-09.png",
+    "call-b-10.png",
+    "call-b-11.png",
+    "call-b-12.png",
+    "call-b-13.png"
+  ],
+  "frames": [
+    {
+      "filename": "call-graphite-light-audio-largefont.png",
+      "sha256": "dee323f318a2c6dcba5b72f65b2eed7bf80db683d96b2cb30e4b8a7fdb6734b6",
+      "status": "PASS",
+      "notes": "Large Hebrew caller, number, timer and all three audio routes fit; Bluetooth heading and enlarged bottom labels are readable without overlap."
+    },
+    {
+      "filename": "call-graphite-light-audio-standard.png",
+      "sha256": "da5d6dbf95b896cf56b2c151026ee62ad081120ee3e1307a2bdbcf267a9120eb",
+      "status": "PASS",
+      "notes": "Caller metadata, selected F901 checkmark, speaker/phone routes and four action labels are fully visible on the cool light palette."
+    },
+    {
+      "filename": "call-graphite-light-keypad-largefont.png",
+      "sha256": "b03d7b0be6ee5f52c6bf4ac107576d457d1eaae49eb4d311eb44c0204feec56c",
+      "status": "PASS",
+      "notes": "All twelve large rounded keypad digits/symbols and alphabet labels fit inside their pill keys; timer, action labels and red end-call glyph remain visible."
+    },
+    {
+      "filename": "call-graphite-light-keypad-standard.png",
+      "sha256": "aa076fd74f6c9df7fceea653c9a1daea61abfee5c803d6cef3ffd8a10179bbb9",
+      "status": "PASS",
+      "notes": "Full keypad grid, timer, four Hebrew action labels and end-call handset have clear spacing and contrast."
+    },
+    {
+      "filename": "call-graphite-light-more-largefont.png",
+      "sha256": "b3986d11c82da9b0572641d377e7a1ece5f02561f687b351f4f1e73fc463cd6d",
+      "status": "PASS",
+      "notes": "Enlarged RTL More heading, new-call and hold rows fit with their icons; caller metadata and bottom controls remain unobscured."
+    },
+    {
+      "filename": "call-graphite-light-more-standard.png",
+      "sha256": "bfc106d6696ee20ec7cbe4021b9b26141bcd12334c441fca1cd2a6ac9b2e42a0",
+      "status": "PASS",
+      "notes": "RTL More title and two action rows are readable, with caller metadata above and four labeled controls plus end-call below."
+    },
+    {
+      "filename": "call-graphite-light-normal-largefont.png",
+      "sha256": "bf0626eb9ba5c1707939f36e66380b4b920f6e7f44b369b6b6d2541f843d43c3",
+      "status": "PASS",
+      "notes": "Large Hebrew caller name, phone number and timer fit between avatar and six labeled circular controls; all action labels and handset are readable."
+    },
+    {
+      "filename": "call-graphite-light-normal-standard.png",
+      "sha256": "2a0acba6d4f0542aa1cf03b43b122c2b815976223a1db6fc3add7f4e2ba93c77",
+      "status": "PASS",
+      "notes": "Avatar, caller name, number, active-call label and timer are separate; six action labels and end-call fit without overlap."
+    },
+    {
+      "filename": "call-ivory-dark-audio-largefont.png",
+      "sha256": "a1fcd47c5882f855295c5662fdc44683485e70b63d8a86f893a2bc5d27aff643",
+      "status": "PASS",
+      "notes": "Ivory dark stippled header and rectangular route rows remain distinct; enlarged Hebrew labels, selected F901 checkmark and broad end-call button are clear."
+    },
+    {
+      "filename": "call-ivory-dark-audio-longname-en.png",
+      "sha256": "6ccf4da2d50f23d52ff9cf2f7ab2b29965853b2c858c60a062f572777336d1ca",
+      "status": "PASS",
+      "notes": "English caller name has a bounded trailing ellipsis; number and timer remain intact, and English audio routes/action labels fit the dark Ivory sheet."
+    },
+    {
+      "filename": "call-ivory-dark-audio-longname-he.png",
+      "sha256": "7ad4f2e81c47c470f7b475d3dc49127bfb06e37bb3f31bc613b742b6c412c2ba",
+      "status": "PASS",
+      "notes": "RTL long caller name ends with a bounded left-side ellipsis; number, timer, route labels and bottom controls remain readable and separated."
+    },
+    {
+      "filename": "call-ivory-dark-audio-standard.png",
+      "sha256": "d75ffbb5e105a8d921339ca95c34cd1020b7673c01c361a22fc5ea142abd7a59",
+      "status": "PASS",
+      "notes": "Compact caller metadata, three rectangular route rows and four labeled action circles fit; white selected F901 and red end-call glyph have clear contrast."
+    },
+    {
+      "filename": "call-ivory-dark-keypad-largefont.png",
+      "sha256": "2b3207d800881af70ceac03f72d4febaa928c475273f9875f471f424cf493898",
+      "status": "PASS",
+      "notes": "Large rounded digits and small alphabet labels fit all twelve rectangular keys; timer, selected controls, Hebrew labels and broad end-call remain unobstructed."
+    },
+    {
+      "filename": "call-ivory-dark-keypad-standard.png",
+      "sha256": "81079e2205ade440a2c10b27a027b2481e3be06daf02ca3b1fc9634ab58c4e67",
+      "status": "PASS",
+      "notes": "Full rectangular keypad and alphabet legends are readable; lower control labels and red handset button stay clear of the navigation bar."
+    },
+    {
+      "filename": "call-ivory-dark-more-largefont.png",
+      "sha256": "462bc119a30aa4e5e015d8b34b202d74ff49bfc070d418e9863e80c5e5d32b27",
+      "status": "PASS",
+      "notes": "Enlarged RTL More heading and new-call/hold rows fit in the charcoal panel; number, timer and enlarged action labels are visible."
+    },
+    {
+      "filename": "call-ivory-dark-more-standard.png",
+      "sha256": "ba8614ecddc6b172ad58db957ed388671e57fb73b5143f5c796d373a7b8c370e",
+      "status": "PASS",
+      "notes": "RTL More heading and both options fit with icons; caller metadata, four action labels and broad red end-call button remain readable."
+    },
+    {
+      "filename": "call-ivory-dark-normal-largefont.png",
+      "sha256": "4fb665a5a26f2b9e346639a8ae6b018d4936c7e1c271bca184a47a66f85f8137",
+      "status": "PASS",
+      "notes": "Large name, number, active-call text and oversized rounded timer fit above the two-by-two rectangular actions; all action labels are complete."
+    },
+    {
+      "filename": "call-ivory-dark-normal-longname-en.png",
+      "sha256": "51183e08192a2b4025c90da4e84f1ee5336d4f8b7457f0c5912ea8d04494caba",
+      "status": "PASS",
+      "notes": "Large English caller name is bounded with a trailing ellipsis; number, active-call text, rounded timer and all four English action labels remain intact."
+    },
+    {
+      "filename": "call-ivory-dark-normal-longname-he.png",
+      "sha256": "162e51ba00a620440c73d73ea59635d13d8257086751efd098516cd2c6c64967",
+      "status": "PASS",
+      "notes": "Large Hebrew long name has an intentional bounded left ellipsis; phone number, active-call label, large timer and rectangular controls do not overlap."
+    },
+    {
+      "filename": "call-ivory-dark-normal-standard.png",
+      "sha256": "f0e7e7f2fb54b1ed0d0a12fa91a17f59249c008a810ead3bdb57ad866e540490",
+      "status": "PASS",
+      "notes": "Stippled header, caller metadata and rounded timer remain distinct from rectangular actions; selected F901 and end-call handset are clearly visible."
+    },
+    {
+      "filename": "call-ivory-light-audio-largefont.png",
+      "sha256": "04412bc79e1a8a6cdcc7974dea314bd95cd698792f09e1893114cb79e17be88e",
+      "status": "PASS",
+      "notes": "Light stippled Ivory header, large caller metadata and pale rectangular route rows retain readable dark text; enlarged bottom labels and handset fit."
+    },
+    {
+      "filename": "call-ivory-light-audio-standard.png",
+      "sha256": "50bd9d70e66d3ae85782c1539442315c4cb0285670702b7c6a11306ba6359f96",
+      "status": "PASS",
+      "notes": "Name, number, timer, F901 selection check and three route labels remain legible on the light Ivory palette; bottom controls fit."
+    },
+    {
+      "filename": "call-ivory-light-keypad-largefont.png",
+      "sha256": "c18f0cdf3ee9142d9452c6b74684209f9a7d7b24df151a43e3c77b7ff91b76c0",
+      "status": "PASS",
+      "notes": "All twelve large digits/symbols and alphabet legends fit rectangular keys; timer, enlarged Hebrew control labels and handset have adequate separation."
+    },
+    {
+      "filename": "call-ivory-light-keypad-standard.png",
+      "sha256": "b3121b3d327274c66103004bbf45ed8ff05525729b6542d3c3ccc4521bfd363f",
+      "status": "PASS",
+      "notes": "Rectangular keypad grid is complete with readable digits and legends; timer, control labels and broad red end-call button are visible."
+    },
+    {
+      "filename": "call-ivory-light-more-largefont.png",
+      "sha256": "f97c8a96dfe79fcfd1e952b45341723bc3a30aa7d33a1af8713aaa842803a88d",
+      "status": "PASS",
+      "notes": "Enlarged RTL title and new-call/hold labels fit their rows; caller metadata above and four controls below remain readable on pale surfaces."
+    },
+    {
+      "filename": "call-ivory-light-more-standard.png",
+      "sha256": "a20f7f2d938cb6b8bc11e6fe5de38f278590912212020fc1f8ceb8c248cd6f9e",
+      "status": "PASS",
+      "notes": "RTL More heading and both option rows fit without icon collision; timer, number, action labels and end-call remain visible."
+    },
+    {
+      "filename": "call-ivory-light-normal-largefont.png",
+      "sha256": "c53dc36a66913a279a7c9f51413d1de6bbc66091f21ec4a53b02343b68146104",
+      "status": "PASS",
+      "notes": "Large caller identity, number, active-call text and oversized rounded timer all fit; four rectangular action labels and end-call glyph remain complete."
+    },
+    {
+      "filename": "call-ivory-light-normal-standard.png",
+      "sha256": "64f04ee4d93eaec7f69315047ed8010299e10c9440d4f113df04d3d33f11623c",
+      "status": "PASS",
+      "notes": "Light stippled header, avatar, caller metadata and rounded timer are separated; four rectangular actions and broad red handset button fit."
+    },
+    {
+      "filename": "call-pixel-dark-audio-largefont.png",
+      "sha256": "a450d9fe5fafdd6515b36b3865fdeff0517cf1acffc728a281866458466e03a1",
+      "status": "PASS",
+      "notes": "Warm brown Pixel palette, orange F901/checkmark and rounded route rows are preserved; enlarged Hebrew route/control labels and end-call glyph fit."
+    },
+    {
+      "filename": "call-pixel-dark-audio-longname-en.png",
+      "sha256": "1139cefe14ab3e72d2b44920641052cd9f05d515a29e5531689936c3e090f37d",
+      "status": "PASS",
+      "notes": "English long name has bounded trailing ellipsis while number/timer stay complete; English routes and all four action labels remain readable."
+    },
+    {
+      "filename": "call-pixel-dark-audio-longname-he.png",
+      "sha256": "0b2689379e10f18224c7f4bb5078c78ecb1aa27f5453010b56817c2a6746879e",
+      "status": "PASS",
+      "notes": "RTL long caller name uses a bounded left ellipsis; timer, number, three route rows and enlarged Hebrew action labels remain intact."
+    },
+    {
+      "filename": "call-pixel-dark-audio-standard.png",
+      "sha256": "f04ecbaf31cf45dc5c2028b7a22ed273b52e84c15e2f34780376304459cb226e",
+      "status": "PASS",
+      "notes": "Compact caller metadata, cream route labels and orange F901 selection remain clear; four labeled rounded controls and dark end-call glyph fit."
+    },
+    {
+      "filename": "call-pixel-dark-keypad-largefont.png",
+      "sha256": "8c6d7c6aa184d31c0669d91b81854210af4d734c187014734874f44b5f7fcb73",
+      "status": "PASS",
+      "notes": "Large rounded digits, alphabet legends and symbols fit all pill keys; timer and enlarged Hebrew labels stay separate from the coral handset button."
+    },
+    {
+      "filename": "call-pixel-dark-keypad-standard.png",
+      "sha256": "0c5661abd153167d398e4697aabdd5be4a9bf3b3c7844ca3dc0727ff87a8029f",
+      "status": "PASS",
+      "notes": "Complete pill keypad, timer, four labels and coral end-call handset are readable; orange selected controls remain distinct."
+    },
+    {
+      "filename": "call-pixel-dark-more-largefont.png",
+      "sha256": "e34236a5e1f94457d3a7cc753d139ef554e3d9f62b2437d5134a83f4ab31e322",
+      "status": "PASS",
+      "notes": "Raw original reinspection confirms 00:11 timer, full caller name and phone number above the More panel; enlarged RTL heading, option rows and four labels fit with clear cream-on-brown contrast."
+    },
+    {
+      "filename": "call-pixel-dark-more-standard.png",
+      "sha256": "453ea1c52a0d55b9b11d9f708980bf20f6d902fc4e1f6c4c9e6ef8916efde299",
+      "status": "PASS",
+      "notes": "Timer, caller name and number are all visible above the More panel; RTL title, new-call/hold rows, action labels and dark handset fit."
+    },
+    {
+      "filename": "call-pixel-dark-normal-largefont.png",
+      "sha256": "4efa6e62f823c6dd903f73868581a71d5a8dc9ab2c5be1f66d39a6d1fbf41ed0",
+      "status": "PASS",
+      "notes": "Large Hebrew name, phone number and rounded timer fit above the orange-initial avatar; bottom labels and coral end-call handset are readable."
+    },
+    {
+      "filename": "call-pixel-dark-normal-longname-en.png",
+      "sha256": "b277fa532656444be5d0f7b9aa9a36b561f3c2a64fa5c3849fc27bf7dd4a3fba",
+      "status": "PASS",
+      "notes": "English long name has a bounded trailing ellipsis; timer, number, avatar and four English controls remain intact with a visible end-call handset."
+    },
+    {
+      "filename": "call-pixel-dark-normal-longname-he.png",
+      "sha256": "0245c3903da14fbc17cab6edeceffdbb39391d1f241038ec7e0324cb976c2d24",
+      "status": "PASS",
+      "notes": "Large RTL long name has a bounded left ellipsis; number, timer, avatar and enlarged Hebrew control labels remain separate and readable."
+    },
+    {
+      "filename": "call-pixel-dark-normal-standard.png",
+      "sha256": "db6ec9a22f509e6c89da4445f3cc46967c2151799b9e20f7d95a310e5d6ef927",
+      "status": "PASS",
+      "notes": "Timer, caller name, phone number and orange-initial avatar are unobscured; four rounded labeled controls and coral handset button fit."
+    },
+    {
+      "filename": "call-pixel-light-audio-english-no-bluetooth.png",
+      "sha256": "45bec1db4f34394e5c0b3fc9a16990b7ecf6ee09c8bf502aba2773adcc2801d3",
+      "status": "PASS",
+      "notes": "Raw original reinspection confirms the dark handset on the coral end-call button; English Audio output title, Speaker/Phone rows, selected Phone checkmark and four action labels are complete."
+    },
+    {
+      "filename": "call-pixel-light-audio-largefont.png",
+      "sha256": "27d77007ed81b0bf3b4105cb376479c81aa5d2333d08f9dcc3ffeb3e3eccef5f",
+      "status": "PASS",
+      "notes": "Raw original reinspection confirms a visible dark end-call handset; large Hebrew timer/name/number, Bluetooth route labels, F901 checkmark and bottom action labels all fit."
+    },
+    {
+      "filename": "call-pixel-light-audio-standard.png",
+      "sha256": "9460738c24b264e299743b70186cbf01fc72573c2eea6066a19c43aa7cda24b5",
+      "status": "PASS",
+      "notes": "Raw original reinspection confirms a visible dark end-call handset; caller metadata, Bluetooth heading, all three routes and four Hebrew action labels are intact."
+    },
+    {
+      "filename": "call-pixel-light-keypad-largefont.png",
+      "sha256": "18c50d2acbd14814d63841f9057d71e778a9c23e7299f780a9a5177e709b584f",
+      "status": "PASS",
+      "notes": "Full rounded keypad and alphabet legends are readable; large Hebrew bottom labels fit, and the dark handset is clearly visible on the coral end-call button."
+    },
+    {
+      "filename": "call-pixel-light-keypad-standard.png",
+      "sha256": "5c110a8024099266c5af33ffd6584500a14f899f321f66a2a496711ec7ccc0e1",
+      "status": "PASS",
+      "notes": "All twelve rounded keys, timer and four Hebrew action labels fit; dark handset is visible on the coral end-call button."
+    },
+    {
+      "filename": "call-pixel-light-more-largefont.png",
+      "sha256": "ca8c7c393558cc47950946820969e52c0c09392f09431b4686eb5baa9a79c994",
+      "status": "PASS",
+      "notes": "Raw original reinspection confirms timer, name and number all present above the More panel, plus a visible dark end-call handset; enlarged RTL heading, new-call/hold rows and controls fit."
+    },
+    {
+      "filename": "call-pixel-light-more-standard.png",
+      "sha256": "95ff6ba46070c16ac36009bfe3c3d17e2ccc68874ab03f88b672ba18d13a490d",
+      "status": "PASS",
+      "notes": "Raw original reinspection confirms a visible dark end-call handset; timer, caller name/number, RTL More title, both option rows and four action labels are complete."
+    },
+    {
+      "filename": "call-pixel-light-normal-largefont.png",
+      "sha256": "fb45e2e503770f4bc565b2348025113697cc659f5bcb3161623a87685e0decf1",
+      "status": "PASS",
+      "notes": "Large caller name, phone number and timer fit above the avatar; enlarged Hebrew labels remain separated and the dark end-call handset is visible."
+    },
+    {
+      "filename": "call-pixel-light-normal-standard.png",
+      "sha256": "efdf406304ae5c75560ca241314ee5892ef167378d637180bfb33f0d9d084b4f",
+      "status": "PASS",
+      "notes": "Caller identity, number, timer and avatar fit on the cream header; four Hebrew action labels and dark handset on the coral button are clearly visible."
+    }
+  ]
+}

@@ -1,0 +1,2222 @@
+{
+  "review_status": "FAIL",
+  "expected_png_count": 272,
+  "reviewed_png_count": 272,
+  "counts": {
+    "PASS": 266,
+    "FAIL": 6
+  },
+  "screenshot_source_sha": "1a4926785a72bec25c188f9c5b74116c5b498c31",
+  "reviewed_app_tree": "b5f973f6b837cc747ece84e32815a102de293937",
+  "screenshot_run_id": "45773402159",
+  "frame_manifest_sha256": "328e10bfd4ca3757f16b06a05c63a288cd1e67db5c429514de9cb26711227a77",
+  "sheets_viewed": 69,
+  "reports": [
+    {
+      "path": "call-a.json",
+      "sha256": "f232cf748dc43f499556b943c464cdda988e273c4126e76988d86580acd82c55"
+    },
+    {
+      "path": "call-b.json",
+      "sha256": "2ddeb5517bc568f7b3df9218e187078c0443b895e364a562b284a6868264906f"
+    },
+    {
+      "path": "island.json",
+      "sha256": "60f39812cefd9994ba7b5efe5cbcc9b21aab4b0c95e5198d1d2e5e9148f9714e"
+    },
+    {
+      "path": "modern-root.json",
+      "sha256": "c922ec40095dc953c0ebcb3f7290a5c8fcbe5187c51c50cbfc0e1072e52eb92a"
+    },
+    {
+      "path": "other-a.json",
+      "sha256": "227deb7a8158ad251ffcfedb38267049a739fc3845f7c6f1ca21fa6bb11e2933"
+    },
+    {
+      "path": "other-b.json",
+      "sha256": "77d01da99e74a05650b5043850dfbc4d3e9e8812fd8538729ed0f7ec14242bc5"
+    }
+  ],
+  "frames": [
+    {
+      "filename": "business-detail.png",
+      "sha256": "2789dee162c9a17577774b85c65abeb188b94b32b60072df1a1e0ada8dcf6b84",
+      "status": "PASS",
+      "notes": "RTL business dialog title, phone, address, source details and bottom actions remain readable without overlap; URL wraps across lines within the dialog.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "business-search.png",
+      "sha256": "96cf885dcc8d8de7b9a081c2e06380589b39ba026b3d062bba328d9c2a799165",
+      "status": "PASS",
+      "notes": "RTL search entry, business result, call action and bottom navigation fit with readable dark-theme contrast.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "business-tab-dark.png",
+      "sha256": "9ecb310a4fca7d1981c31cbb121e7b22224c4b8ad0a78d39211a3a4c343ffb80",
+      "status": "PASS",
+      "notes": "Dark business list keeps tabs, search, attribution and result call controls legible; lower list content reaches the scrolling viewport edge.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "business-tab-light.png",
+      "sha256": "2e812af57f0455211421dec3725f6b9068b362a2213c7b584a906e615fba1ddc",
+      "status": "PASS",
+      "notes": "Light business list keeps tabs, search, attribution and result call controls legible; lower list content reaches the scrolling viewport edge.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "call-emerald-dark-audio-largefont.png",
+      "sha256": "a169aeb586f78f1497265fd5bab65047ced2821b52f6fdfc529dc5c633fb7b95",
+      "status": "PASS",
+      "notes": "Large Hebrew caller name, number, Bluetooth route rows, and four action labels remain separate and readable inside the outlined Emerald panel; red end-call control is unobstructed.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-dark-audio-longname-en.png",
+      "sha256": "89ee6ae1dbbecb8fb9475ff908d1b0933bb8ce440e53c26a1974f6f72a27310c",
+      "status": "PASS",
+      "notes": "English caller name ends in a bounded right ellipsis; F901, Speaker, Phone and all four bottom action labels are fully readable without overlap.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-dark-audio-longname-he.png",
+      "sha256": "50d0a0ebba417d9108b0b86fac3e9d2a3c333606bdef435dccc4652eac34ea6b",
+      "status": "PASS",
+      "notes": "RTL long caller name uses a bounded left ellipsis above the number; Hebrew route and action labels fit their rows and the end-call control remains clear.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-dark-audio-standard.png",
+      "sha256": "1b687b7eb01860a86f65d2ba5fcb31e227447abea4920d066d8e23551488eb26",
+      "status": "PASS",
+      "notes": "Standard Hebrew caller header and Bluetooth route labels fit comfortably; selected F901 and the four controls remain distinct above the clear red end-call button.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-dark-keypad-largefont.png",
+      "sha256": "84d8cd78ec7c88f5cb0ab0c6c8c33c62781da829f786fd666f765deae7037002",
+      "status": "PASS",
+      "notes": "Large rounded keypad digits, letter groups and zero-plus mark fit each oval; Hebrew action labels and red end-call control fit below with clear separation.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-dark-keypad-standard.png",
+      "sha256": "9bef23164f1fe68c802d9198ad16c80d43c066b797db99734ca6ecfdb37303ce",
+      "status": "PASS",
+      "notes": "All twelve keypad keys and their secondary letters remain readable; selected keypad and F901 controls are distinct and their Hebrew labels are intact.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-dark-more-largefont.png",
+      "sha256": "2329a5dad40e731b025a9d6cfff0b7dd4f918e576238898ba2d27a59baf9079c",
+      "status": "PASS",
+      "notes": "Large Hebrew More heading, New call and Hold rows remain fully visible; the outlined panel contains all four bottom labels and the end-call button without collision.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-dark-more-standard.png",
+      "sha256": "185231d5591354b19a0c8066137cb70afde8af2f5a4e13107be6f5da76904a6c",
+      "status": "PASS",
+      "notes": "Standard Hebrew More heading and two action rows are readable; the selected More control, other labels and red end-call button remain unobstructed.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-dark-normal-largefont.png",
+      "sha256": "edaf6463561ed133fee775eacfcb8c8ae5e76ae638e8ae8de0a445dab547cba7",
+      "status": "PASS",
+      "notes": "Large Hebrew name, phone and timer are separated above six circular controls; the Hebrew New call label fits within its column and the end-call button stays clear.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-dark-normal-longname-en.png",
+      "sha256": "155c3da82c36619fa502a48a7589bfe37954ff3780bd727d48ffe827122213c5",
+      "status": "PASS",
+      "notes": "English caller name uses a bounded right ellipsis; Mute, Keypad, More, Hold and New call remain fully labeled in the six-control grid.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-dark-normal-longname-he.png",
+      "sha256": "663f5ebd329080a7e8a51ee59a66dccd9a4a8d5758979fce8828074e2ccd9a4f",
+      "status": "PASS",
+      "notes": "RTL caller name uses a bounded left ellipsis above the number and timer; six Hebrew control labels remain visible inside the Emerald panel.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-dark-normal-standard.png",
+      "sha256": "467bb7a176eeb11890d6125565ce9a42a2f864facb0a38186a96d0a4c82ea7d4",
+      "status": "PASS",
+      "notes": "Standard Hebrew caller, active-call text and timer have clear spacing; all six circular controls and labels remain readable above the red end-call button.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-light-audio-largefont.png",
+      "sha256": "7402e7e005d4647764011b747c80bd3695bc2321f642d63d80e583e4f47a03b6",
+      "status": "PASS",
+      "notes": "Light Emerald audio view has dark readable Hebrew caller and route text; large action labels fit under their circles and the red end-call button remains distinct.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-light-audio-standard.png",
+      "sha256": "d8d827b5d1eb3fd0e048065d3efc97083a6c6ee916cb11845074afb6028cdcee",
+      "status": "PASS",
+      "notes": "Standard light audio panel shows F901, Speaker and Phone rows with readable Hebrew labels; bottom action labels and end-call icon remain intact.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-light-keypad-largefont.png",
+      "sha256": "48ce270830daf321dc5ce8d4c2765dad313275aa35ddfa35ac990ee932cdf9a0",
+      "status": "PASS",
+      "notes": "Light keypad shows large dark rounded digits and letter groups clearly against pale ovals; all Hebrew action labels fit above the end-call control.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-light-keypad-standard.png",
+      "sha256": "58b18f6ee86d39371b931aee275061155b15b2d0c301d2e350fdeb81babe0092",
+      "status": "PASS",
+      "notes": "Standard light keypad has twelve distinct readable keys, including zero-plus; the selected keypad icon and bottom Hebrew labels remain visible.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-light-more-largefont.png",
+      "sha256": "5796b9db445b3a7d99cb4a67cdba5256bc3d80c45881eaf9a87387afc02a6ee3",
+      "status": "PASS",
+      "notes": "Large dark Hebrew More heading and both action-row labels fit the light panel; four bottom labels and red end-call control are fully visible.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-light-more-standard.png",
+      "sha256": "af7b3f90efd55c293e192b0e4908401c94766fcf69027a06f219f648036045a7",
+      "status": "PASS",
+      "notes": "Standard light More panel retains readable Hebrew New call and Hold rows; selected More and F901 controls remain distinct with intact labels.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-light-normal-largefont.png",
+      "sha256": "75c03e33a051fdf9c123267ce042bc2c416a103df329f9c2301a6bdc1611589d",
+      "status": "PASS",
+      "notes": "Large Hebrew caller header, number and timer have clear spacing on the light surface; six control labels, including New call, fit without overlap.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-emerald-light-normal-standard.png",
+      "sha256": "11f64b5054c8f9a18bc6fd5ca8eb5f5291985b30b55f79dd8670d41f40b2357f",
+      "status": "PASS",
+      "notes": "Standard light caller, active-call text and timer are readable; six labeled round controls and the large red end-call button remain separated.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-dark-audio-largefont.png",
+      "sha256": "b506ec974f041b57eeb8c4169cc82b38fec13e8cf8f4fde682a7a612db96097f",
+      "status": "PASS",
+      "notes": "Frost dark full-width audio card shows large Hebrew route labels and four bottom labels without clipping; selected blue F901 and wide red end-call control remain clear.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-dark-audio-longname-en.png",
+      "sha256": "d24c8af08831543022d34f94f6df409f9fbab062f8b5900bae9b22e8907977f1",
+      "status": "PASS",
+      "notes": "English caller name has a bounded right ellipsis above the Frost card; F901, Speaker, Phone, Keypad, More and Mute remain fully readable.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-dark-audio-longname-he.png",
+      "sha256": "d5a0995b27d3445c495d21c09b9e5b91bdcc8e812d5bd1c70638ab12abbb045f",
+      "status": "PASS",
+      "notes": "RTL long caller name ends with a bounded left ellipsis; Hebrew audio rows and four bottom labels fit the Frost card above the wide end-call button.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-dark-audio-standard.png",
+      "sha256": "94b41538457f2d3fbadc46aaa6f2898bfc1c1a1c2ce5f4a0373d24348149655c",
+      "status": "PASS",
+      "notes": "Standard dark Frost audio card retains readable Hebrew route labels and clearly selected F901; four labeled controls and end-call button stay within the frame.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-dark-keypad-largefont.png",
+      "sha256": "8a0e6b89c5a89915b225045b4d9c56a8a8ca699f5053cc8e0df9a18387c25ff9",
+      "status": "PASS",
+      "notes": "Large rounded digits and secondary letters fit the Frost rounded-rectangle keypad keys; four Hebrew action labels remain separate above the wide end-call control.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-dark-keypad-standard.png",
+      "sha256": "4a1c4005d89240665ea0c7547387bd66f6edc098e38269fe3bbc9713e0535b00",
+      "status": "PASS",
+      "notes": "Standard Frost keypad has twelve fully visible keys, secondary letters and zero-plus; selected keypad and F901 controls remain distinct with intact labels.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-dark-more-largefont.png",
+      "sha256": "c900f5ae6d6408df5a2a2f57d86a0e977b51f17d65b7164bfa7848d7cd0704b7",
+      "status": "PASS",
+      "notes": "Large Hebrew More heading and two rows fit the Frost dark card; selected More/F901 controls and all four labels remain legible above end call.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-dark-more-standard.png",
+      "sha256": "32a66997cf6e16897495f7bbbe4ba9d5d35676202d64325db0cc2b171025e8ad",
+      "status": "PASS",
+      "notes": "Standard Frost More card keeps Hebrew New call and Hold rows readable; bottom controls, labels and wide red end-call control are unobstructed.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-dark-normal-largefont.png",
+      "sha256": "e655afb6f08df47eda9c8691ab0280e80bd265e44177b7c8874c2155d26ac293",
+      "status": "PASS",
+      "notes": "Large RTL caller header sits to the right of the avatar without collision; large timer and all four rectangular Frost control labels fit above the wide end-call button.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-dark-normal-longname-en.png",
+      "sha256": "efe1fae7fbabfcc5c815d28a5a90e8fa5e6e60aa20ed26f8b2e02be15b72cf67",
+      "status": "PASS",
+      "notes": "English caller header uses a bounded right ellipsis beside the avatar; number, large timer and Keypad/F901/More/Mute card labels remain readable.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-dark-normal-longname-he.png",
+      "sha256": "ee4dfbcbb7d959bd5c4e088b650bf0137373d9b6f7722e8b12defd73d5b0dacc",
+      "status": "PASS",
+      "notes": "RTL long name uses a bounded left ellipsis beside the avatar; number and large timer are separate, and all four Hebrew card labels remain intact.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-dark-normal-standard.png",
+      "sha256": "897108a79c0b3361c7af4742bfddd5ff3dafcf53ca733023fd9f6f6c39aa2089",
+      "status": "PASS",
+      "notes": "Standard RTL header, number, timer and active-call text remain separated; four rectangular control cards and end-call button preserve the Frost layout.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-light-audio-largefont.png",
+      "sha256": "cd7850b6f5ee4cc9abc5b8b7e8bb8a98560da540dea15bda204e04c1c4ccd164",
+      "status": "PASS",
+      "notes": "Light Frost audio card has readable dark Hebrew caller and route labels; selected blue F901, four bottom labels and wide red end-call button are clearly visible.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-light-audio-standard.png",
+      "sha256": "7ee9d5b32516edb42ee21a04208a28fb6df5c8fea728f6461488eef315275ba2",
+      "status": "PASS",
+      "notes": "Standard light Frost audio rows retain F901 checkmark and readable Hebrew labels; the four bottom actions fit within the white card without overlap.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-light-keypad-largefont.png",
+      "sha256": "c9771816c6bd22d0f3ed471eef9519119e5d2a24d81745ccee9003fd3642a105",
+      "status": "PASS",
+      "notes": "Large dark digits and letter groups fit all twelve pale rounded-rectangle keys; Hebrew bottom labels remain readable above the wide end-call control.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-light-keypad-standard.png",
+      "sha256": "36d960abf74daeead95d90ab00d928f81aeafc04c8eb803f00172a822a1746bc",
+      "status": "PASS",
+      "notes": "Standard light Frost keypad retains all twelve keys and zero-plus; selected keypad/F901 and four Hebrew labels remain clear above end call.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-light-more-largefont.png",
+      "sha256": "5cc5fe0e904dc8f1f6c4ee6922455b7b0bb7494a32a2f8fbb25bda823c8cd00b",
+      "status": "PASS",
+      "notes": "Large Hebrew More heading and New call/Hold labels fit the white Frost card; four bottom labels remain readable and selected controls stay distinct.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-light-more-standard.png",
+      "sha256": "7edb4d83d3413cccee84349c758153f010deb2644f52c35788a4b1813ee98fe2",
+      "status": "PASS",
+      "notes": "Standard light Frost More view has intact Hebrew row labels and four bottom labels; wide red end-call button remains separated from the controls.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-light-normal-largefont.png",
+      "sha256": "eb5b72e0ddd857a3670039bd2e95b8b7a12188cc298e2bb8b4630db4beffb784",
+      "status": "PASS",
+      "notes": "Large RTL caller header and avatar do not collide; the number and large timer remain clear above four labeled rectangular cards and wide end-call control.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-frost-light-normal-standard.png",
+      "sha256": "8c73e89226278d826d454f5a6eef49bf257b68a433013dbb4e2a700c6ff7c645",
+      "status": "PASS",
+      "notes": "Standard light RTL header, number, timer and active-call text remain separate; four Frost card labels and the wide end-call icon are fully visible.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-graphite-dark-audio-largefont.png",
+      "sha256": "d8b5a7aac60d3c91e8a5e61d70c941a9c4b04f72217656e016672620766d0298",
+      "status": "PASS",
+      "notes": "Graphite dark audio view keeps the full Bluetooth title, large Hebrew route labels and four bottom action labels visible; free-standing circular end-call control is unobstructed.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-graphite-dark-audio-longname-en.png",
+      "sha256": "2496b890b4fa4e9366aaa45bf62aa54ebc3cd57f39641e1ceaa3d12b0fa92857",
+      "status": "PASS",
+      "notes": "English caller name ends in a bounded right ellipsis; Bluetooth title, route labels and Mute/Keypad/F901/More labels remain readable above the round end-call button.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-graphite-dark-audio-longname-he.png",
+      "sha256": "132dccb15cc552ca4f191c716e8339241c2cd517cd52ceba3e504f962ebd7f7f",
+      "status": "PASS",
+      "notes": "RTL caller name uses a bounded left ellipsis; Hebrew route and action labels remain intact, and Graphite circular controls retain clear spacing.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-graphite-dark-audio-standard.png",
+      "sha256": "0741a0513899e13fe324d7f6ea205957db576efcfe4b9533e171410daf2698da",
+      "status": "PASS",
+      "notes": "Standard Graphite audio view shows readable Bluetooth/F901 and Hebrew route labels; four free-standing controls and red round end-call button fit the frame.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-graphite-dark-keypad-largefont.png",
+      "sha256": "0964020484d810c81a1ef8dc79ca41fe9c822176442c04a040f19c4691634c8d",
+      "status": "PASS",
+      "notes": "Large rounded keypad digits, letter groups and zero-plus fit Graphite oval keys; all four Hebrew action labels remain intact above the round end-call control.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-graphite-dark-keypad-standard.png",
+      "sha256": "194ad9ab3143085ba07b3df15f8ab9a7fb013f86b385d4e442afbd023e6d6c9c",
+      "status": "PASS",
+      "notes": "Standard Graphite keypad keeps twelve distinct readable keys and selected keypad/F901 controls; bottom labels do not collide with the round end-call button.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-graphite-dark-more-largefont.png",
+      "sha256": "8fe578d3dc7a90211f50980fd264d3b3c504b4234d6a793c864c63ebfba25f09",
+      "status": "PASS",
+      "notes": "Large Hebrew More heading and both row labels remain fully visible in the Graphite panel; four action labels and the round red end-call button are clear.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-graphite-dark-more-standard.png",
+      "sha256": "797eb435c0a1911cef940145ba779eb2a5b26b430b3444cedd1bdf01c3aaa3b5",
+      "status": "PASS",
+      "notes": "Standard Graphite More heading and New call/Hold labels fit their rows; the selected More control, other action labels and round end-call icon remain unobstructed.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-graphite-dark-normal-largefont.png",
+      "sha256": "6aa7683321a0af40137ade8074ba2b75a0b8153c6fa8d2658d4cd2bce429601f",
+      "status": "PASS",
+      "notes": "Large Hebrew caller name, number and timer remain separated above six free-standing circular controls; every Hebrew action label and the red end-call icon is visible.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-graphite-dark-normal-longname-en.png",
+      "sha256": "e3a35f7049f5d4ff68881a770187bc28ebd9a874bacf925b1e602af207b2ceef",
+      "status": "PASS",
+      "notes": "English caller name has a bounded right ellipsis; Mute, Keypad, F901, More, Hold and New call labels are fully visible in the Graphite grid.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-graphite-dark-normal-longname-he.png",
+      "sha256": "b85bc48ec6609aaea807ac2fbede0bf1b4cad1ea223bfdd35f9faf45b4921373",
+      "status": "PASS",
+      "notes": "RTL long caller name uses a bounded left ellipsis above the number and timer; six Hebrew action labels remain clear without overlap or frame clipping.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-graphite-dark-normal-standard.png",
+      "sha256": "5b6d0abd5db10f6c06e554af24fa0b3c3aeb2b7c0b7109336324b43e613c6aef",
+      "status": "PASS",
+      "notes": "Standard Hebrew caller, number, active-call text and timer are readable; all six circular controls have intact labels and the round red end-call button stays clear.",
+      "group": "call-a",
+      "report": "call-a.json"
+    },
+    {
+      "filename": "call-graphite-light-audio-largefont.png",
+      "sha256": "dee323f318a2c6dcba5b72f65b2eed7bf80db683d96b2cb30e4b8a7fdb6734b6",
+      "status": "PASS",
+      "notes": "Large Hebrew caller, number, timer and all three audio routes fit; Bluetooth heading and enlarged bottom labels are readable without overlap.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-graphite-light-audio-standard.png",
+      "sha256": "da5d6dbf95b896cf56b2c151026ee62ad081120ee3e1307a2bdbcf267a9120eb",
+      "status": "PASS",
+      "notes": "Caller metadata, selected F901 checkmark, speaker/phone routes and four action labels are fully visible on the cool light palette.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-graphite-light-keypad-largefont.png",
+      "sha256": "b03d7b0be6ee5f52c6bf4ac107576d457d1eaae49eb4d311eb44c0204feec56c",
+      "status": "PASS",
+      "notes": "All twelve large rounded keypad digits/symbols and alphabet labels fit inside their pill keys; timer, action labels and red end-call glyph remain visible.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-graphite-light-keypad-standard.png",
+      "sha256": "aa076fd74f6c9df7fceea653c9a1daea61abfee5c803d6cef3ffd8a10179bbb9",
+      "status": "PASS",
+      "notes": "Full keypad grid, timer, four Hebrew action labels and end-call handset have clear spacing and contrast.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-graphite-light-more-largefont.png",
+      "sha256": "b3986d11c82da9b0572641d377e7a1ece5f02561f687b351f4f1e73fc463cd6d",
+      "status": "PASS",
+      "notes": "Enlarged RTL More heading, new-call and hold rows fit with their icons; caller metadata and bottom controls remain unobscured.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-graphite-light-more-standard.png",
+      "sha256": "bfc106d6696ee20ec7cbe4021b9b26141bcd12334c441fca1cd2a6ac9b2e42a0",
+      "status": "PASS",
+      "notes": "RTL More title and two action rows are readable, with caller metadata above and four labeled controls plus end-call below.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-graphite-light-normal-largefont.png",
+      "sha256": "bf0626eb9ba5c1707939f36e66380b4b920f6e7f44b369b6b6d2541f843d43c3",
+      "status": "PASS",
+      "notes": "Large Hebrew caller name, phone number and timer fit between avatar and six labeled circular controls; all action labels and handset are readable.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-graphite-light-normal-standard.png",
+      "sha256": "2a0acba6d4f0542aa1cf03b43b122c2b815976223a1db6fc3add7f4e2ba93c77",
+      "status": "PASS",
+      "notes": "Avatar, caller name, number, active-call label and timer are separate; six action labels and end-call fit without overlap.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-integration-notification-active-private-en.png",
+      "sha256": "4f3badd9811c63cb3e42e14e74110e9fc694c0823a1693e87ae3e1f9d2457e34",
+      "status": "PASS",
+      "notes": "Expanded active-call notification has readable contact/status text and distinct hangup, speaker On and Call actions.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "call-integration-notification-active-private-he.png",
+      "sha256": "336025571193b1316503ba5f97057973294bc5863ffe594a1ec2a55bdc4ffc2f",
+      "status": "FAIL",
+      "notes": "Raw frame confirms the middle speaker activation action is ellipsized to “הפ...” rather than a readable complete functional label; hangup and חזור remain visible.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "call-integration-notification-active-speaker-en.png",
+      "sha256": "9a9c52feca62ec7b433ab70820097d957f6fef3beedb47ec19388baf2d702c21",
+      "status": "PASS",
+      "notes": "Expanded active-call notification shows readable contact/status text and separate hangup, speaker Off and Call actions.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "call-integration-notification-active-speaker-he.png",
+      "sha256": "e572dc8699f2faec387a23ba4b4e1b55f16fbe487eb395122ade9fb0c8177a18",
+      "status": "PASS",
+      "notes": "Hebrew active-call notification status and כבה/חזור actions remain readable with distinct controls and no overlap.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "call-integration-notification-incoming-he.png",
+      "sha256": "9c725a2df1d65ab894d4e9c4bfcc93e792962d6e2cd6923716ff60b5e32847ec",
+      "status": "PASS",
+      "notes": "Hebrew incoming status remains readable; reject, return and green answer controls are separate and unclipped, with expected contact-name ellipsis in header.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "call-integration-notification-outgoing-he.png",
+      "sha256": "1838aa183ce35eafe1f86531c7c565119fff9d25968a54345addf6287b83abfd",
+      "status": "FAIL",
+      "notes": "Hebrew outgoing notification middle speaker activation label is ellipsized to “הפ...”; the complete functional text is not readable while חזור remains intact.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "call-integration-return-contacts.png",
+      "sha256": "0e47c64f5dc44331be5c2f92aa236b6883c60faefc46005501021d861b844b5c",
+      "status": "PASS",
+      "notes": "Returned dark RTL contacts view retains readable search, count, contact numbers and distinct call/favorite controls; contact names use ellipsis within rows.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "call-integration-return-settings.png",
+      "sha256": "6dacb816b59420051bb1ecb02e9a5534959974af79dc419448470061938f2ca0",
+      "status": "PASS",
+      "notes": "Returned RTL settings view has readable display, language, icon and avatar-shape rows with distinct chevrons; top and bottom rows intersect the scroll viewport boundary.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "call-ivory-dark-audio-largefont.png",
+      "sha256": "a1fcd47c5882f855295c5662fdc44683485e70b63d8a86f893a2bc5d27aff643",
+      "status": "PASS",
+      "notes": "Ivory dark stippled header and rectangular route rows remain distinct; enlarged Hebrew labels, selected F901 checkmark and broad end-call button are clear.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-dark-audio-longname-en.png",
+      "sha256": "6ccf4da2d50f23d52ff9cf2f7ab2b29965853b2c858c60a062f572777336d1ca",
+      "status": "PASS",
+      "notes": "English caller name has a bounded trailing ellipsis; number and timer remain intact, and English audio routes/action labels fit the dark Ivory sheet.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-dark-audio-longname-he.png",
+      "sha256": "7ad4f2e81c47c470f7b475d3dc49127bfb06e37bb3f31bc613b742b6c412c2ba",
+      "status": "PASS",
+      "notes": "RTL long caller name ends with a bounded left-side ellipsis; number, timer, route labels and bottom controls remain readable and separated.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-dark-audio-standard.png",
+      "sha256": "d75ffbb5e105a8d921339ca95c34cd1020b7673c01c361a22fc5ea142abd7a59",
+      "status": "PASS",
+      "notes": "Compact caller metadata, three rectangular route rows and four labeled action circles fit; white selected F901 and red end-call glyph have clear contrast.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-dark-keypad-largefont.png",
+      "sha256": "2b3207d800881af70ceac03f72d4febaa928c475273f9875f471f424cf493898",
+      "status": "PASS",
+      "notes": "Large rounded digits and small alphabet labels fit all twelve rectangular keys; timer, selected controls, Hebrew labels and broad end-call remain unobstructed.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-dark-keypad-standard.png",
+      "sha256": "81079e2205ade440a2c10b27a027b2481e3be06daf02ca3b1fc9634ab58c4e67",
+      "status": "PASS",
+      "notes": "Full rectangular keypad and alphabet legends are readable; lower control labels and red handset button stay clear of the navigation bar.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-dark-more-largefont.png",
+      "sha256": "462bc119a30aa4e5e015d8b34b202d74ff49bfc070d418e9863e80c5e5d32b27",
+      "status": "PASS",
+      "notes": "Enlarged RTL More heading and new-call/hold rows fit in the charcoal panel; number, timer and enlarged action labels are visible.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-dark-more-standard.png",
+      "sha256": "ba8614ecddc6b172ad58db957ed388671e57fb73b5143f5c796d373a7b8c370e",
+      "status": "PASS",
+      "notes": "RTL More heading and both options fit with icons; caller metadata, four action labels and broad red end-call button remain readable.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-dark-normal-largefont.png",
+      "sha256": "4fb665a5a26f2b9e346639a8ae6b018d4936c7e1c271bca184a47a66f85f8137",
+      "status": "PASS",
+      "notes": "Large name, number, active-call text and oversized rounded timer fit above the two-by-two rectangular actions; all action labels are complete.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-dark-normal-longname-en.png",
+      "sha256": "51183e08192a2b4025c90da4e84f1ee5336d4f8b7457f0c5912ea8d04494caba",
+      "status": "PASS",
+      "notes": "Large English caller name is bounded with a trailing ellipsis; number, active-call text, rounded timer and all four English action labels remain intact.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-dark-normal-longname-he.png",
+      "sha256": "162e51ba00a620440c73d73ea59635d13d8257086751efd098516cd2c6c64967",
+      "status": "PASS",
+      "notes": "Large Hebrew long name has an intentional bounded left ellipsis; phone number, active-call label, large timer and rectangular controls do not overlap.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-dark-normal-standard.png",
+      "sha256": "f0e7e7f2fb54b1ed0d0a12fa91a17f59249c008a810ead3bdb57ad866e540490",
+      "status": "PASS",
+      "notes": "Stippled header, caller metadata and rounded timer remain distinct from rectangular actions; selected F901 and end-call handset are clearly visible.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-light-audio-largefont.png",
+      "sha256": "04412bc79e1a8a6cdcc7974dea314bd95cd698792f09e1893114cb79e17be88e",
+      "status": "PASS",
+      "notes": "Light stippled Ivory header, large caller metadata and pale rectangular route rows retain readable dark text; enlarged bottom labels and handset fit.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-light-audio-standard.png",
+      "sha256": "50bd9d70e66d3ae85782c1539442315c4cb0285670702b7c6a11306ba6359f96",
+      "status": "PASS",
+      "notes": "Name, number, timer, F901 selection check and three route labels remain legible on the light Ivory palette; bottom controls fit.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-light-keypad-largefont.png",
+      "sha256": "c18f0cdf3ee9142d9452c6b74684209f9a7d7b24df151a43e3c77b7ff91b76c0",
+      "status": "PASS",
+      "notes": "All twelve large digits/symbols and alphabet legends fit rectangular keys; timer, enlarged Hebrew control labels and handset have adequate separation.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-light-keypad-standard.png",
+      "sha256": "b3121b3d327274c66103004bbf45ed8ff05525729b6542d3c3ccc4521bfd363f",
+      "status": "PASS",
+      "notes": "Rectangular keypad grid is complete with readable digits and legends; timer, control labels and broad red end-call button are visible.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-light-more-largefont.png",
+      "sha256": "f97c8a96dfe79fcfd1e952b45341723bc3a30aa7d33a1af8713aaa842803a88d",
+      "status": "PASS",
+      "notes": "Enlarged RTL title and new-call/hold labels fit their rows; caller metadata above and four controls below remain readable on pale surfaces.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-light-more-standard.png",
+      "sha256": "a20f7f2d938cb6b8bc11e6fe5de38f278590912212020fc1f8ceb8c248cd6f9e",
+      "status": "PASS",
+      "notes": "RTL More heading and both option rows fit without icon collision; timer, number, action labels and end-call remain visible.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-light-normal-largefont.png",
+      "sha256": "c53dc36a66913a279a7c9f51413d1de6bbc66091f21ec4a53b02343b68146104",
+      "status": "PASS",
+      "notes": "Large caller identity, number, active-call text and oversized rounded timer all fit; four rectangular action labels and end-call glyph remain complete.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-ivory-light-normal-standard.png",
+      "sha256": "64f04ee4d93eaec7f69315047ed8010299e10c9440d4f113df04d3d33f11623c",
+      "status": "PASS",
+      "notes": "Light stippled header, avatar, caller metadata and rounded timer are separated; four rectangular actions and broad red handset button fit.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-dark-audio-largefont.png",
+      "sha256": "a450d9fe5fafdd6515b36b3865fdeff0517cf1acffc728a281866458466e03a1",
+      "status": "PASS",
+      "notes": "Warm brown Pixel palette, orange F901/checkmark and rounded route rows are preserved; enlarged Hebrew route/control labels and end-call glyph fit.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-dark-audio-longname-en.png",
+      "sha256": "1139cefe14ab3e72d2b44920641052cd9f05d515a29e5531689936c3e090f37d",
+      "status": "PASS",
+      "notes": "English long name has bounded trailing ellipsis while number/timer stay complete; English routes and all four action labels remain readable.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-dark-audio-longname-he.png",
+      "sha256": "0b2689379e10f18224c7f4bb5078c78ecb1aa27f5453010b56817c2a6746879e",
+      "status": "PASS",
+      "notes": "RTL long caller name uses a bounded left ellipsis; timer, number, three route rows and enlarged Hebrew action labels remain intact.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-dark-audio-standard.png",
+      "sha256": "f04ecbaf31cf45dc5c2028b7a22ed273b52e84c15e2f34780376304459cb226e",
+      "status": "PASS",
+      "notes": "Compact caller metadata, cream route labels and orange F901 selection remain clear; four labeled rounded controls and dark end-call glyph fit.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-dark-keypad-largefont.png",
+      "sha256": "8c6d7c6aa184d31c0669d91b81854210af4d734c187014734874f44b5f7fcb73",
+      "status": "PASS",
+      "notes": "Large rounded digits, alphabet legends and symbols fit all pill keys; timer and enlarged Hebrew labels stay separate from the coral handset button.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-dark-keypad-standard.png",
+      "sha256": "0c5661abd153167d398e4697aabdd5be4a9bf3b3c7844ca3dc0727ff87a8029f",
+      "status": "PASS",
+      "notes": "Complete pill keypad, timer, four labels and coral end-call handset are readable; orange selected controls remain distinct.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-dark-more-largefont.png",
+      "sha256": "e34236a5e1f94457d3a7cc753d139ef554e3d9f62b2437d5134a83f4ab31e322",
+      "status": "PASS",
+      "notes": "Raw original reinspection confirms 00:11 timer, full caller name and phone number above the More panel; enlarged RTL heading, option rows and four labels fit with clear cream-on-brown contrast.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-dark-more-standard.png",
+      "sha256": "453ea1c52a0d55b9b11d9f708980bf20f6d902fc4e1f6c4c9e6ef8916efde299",
+      "status": "PASS",
+      "notes": "Timer, caller name and number are all visible above the More panel; RTL title, new-call/hold rows, action labels and dark handset fit.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-dark-normal-largefont.png",
+      "sha256": "4efa6e62f823c6dd903f73868581a71d5a8dc9ab2c5be1f66d39a6d1fbf41ed0",
+      "status": "PASS",
+      "notes": "Large Hebrew name, phone number and rounded timer fit above the orange-initial avatar; bottom labels and coral end-call handset are readable.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-dark-normal-longname-en.png",
+      "sha256": "b277fa532656444be5d0f7b9aa9a36b561f3c2a64fa5c3849fc27bf7dd4a3fba",
+      "status": "PASS",
+      "notes": "English long name has a bounded trailing ellipsis; timer, number, avatar and four English controls remain intact with a visible end-call handset.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-dark-normal-longname-he.png",
+      "sha256": "0245c3903da14fbc17cab6edeceffdbb39391d1f241038ec7e0324cb976c2d24",
+      "status": "PASS",
+      "notes": "Large RTL long name has a bounded left ellipsis; number, timer, avatar and enlarged Hebrew control labels remain separate and readable.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-dark-normal-standard.png",
+      "sha256": "db6ec9a22f509e6c89da4445f3cc46967c2151799b9e20f7d95a310e5d6ef927",
+      "status": "PASS",
+      "notes": "Timer, caller name, phone number and orange-initial avatar are unobscured; four rounded labeled controls and coral handset button fit.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-light-audio-english-no-bluetooth.png",
+      "sha256": "45bec1db4f34394e5c0b3fc9a16990b7ecf6ee09c8bf502aba2773adcc2801d3",
+      "status": "PASS",
+      "notes": "Raw original reinspection confirms the dark handset on the coral end-call button; English Audio output title, Speaker/Phone rows, selected Phone checkmark and four action labels are complete.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-light-audio-largefont.png",
+      "sha256": "27d77007ed81b0bf3b4105cb376479c81aa5d2333d08f9dcc3ffeb3e3eccef5f",
+      "status": "PASS",
+      "notes": "Raw original reinspection confirms a visible dark end-call handset; large Hebrew timer/name/number, Bluetooth route labels, F901 checkmark and bottom action labels all fit.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-light-audio-standard.png",
+      "sha256": "9460738c24b264e299743b70186cbf01fc72573c2eea6066a19c43aa7cda24b5",
+      "status": "PASS",
+      "notes": "Raw original reinspection confirms a visible dark end-call handset; caller metadata, Bluetooth heading, all three routes and four Hebrew action labels are intact.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-light-keypad-largefont.png",
+      "sha256": "18c50d2acbd14814d63841f9057d71e778a9c23e7299f780a9a5177e709b584f",
+      "status": "PASS",
+      "notes": "Full rounded keypad and alphabet legends are readable; large Hebrew bottom labels fit, and the dark handset is clearly visible on the coral end-call button.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-light-keypad-standard.png",
+      "sha256": "5c110a8024099266c5af33ffd6584500a14f899f321f66a2a496711ec7ccc0e1",
+      "status": "PASS",
+      "notes": "All twelve rounded keys, timer and four Hebrew action labels fit; dark handset is visible on the coral end-call button.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-light-more-largefont.png",
+      "sha256": "ca8c7c393558cc47950946820969e52c0c09392f09431b4686eb5baa9a79c994",
+      "status": "PASS",
+      "notes": "Raw original reinspection confirms timer, name and number all present above the More panel, plus a visible dark end-call handset; enlarged RTL heading, new-call/hold rows and controls fit.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-light-more-standard.png",
+      "sha256": "95ff6ba46070c16ac36009bfe3c3d17e2ccc68874ab03f88b672ba18d13a490d",
+      "status": "PASS",
+      "notes": "Raw original reinspection confirms a visible dark end-call handset; timer, caller name/number, RTL More title, both option rows and four action labels are complete.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-light-normal-largefont.png",
+      "sha256": "fb45e2e503770f4bc565b2348025113697cc659f5bcb3161623a87685e0decf1",
+      "status": "PASS",
+      "notes": "Large caller name, phone number and timer fit above the avatar; enlarged Hebrew labels remain separated and the dark end-call handset is visible.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "call-pixel-light-normal-standard.png",
+      "sha256": "efdf406304ae5c75560ca241314ee5892ef167378d637180bfb33f0d9d084b4f",
+      "status": "PASS",
+      "notes": "Caller identity, number, timer and avatar fit on the cream header; four Hebrew action labels and dark handset on the coral button are clearly visible.",
+      "group": "call-b",
+      "report": "call-b.json"
+    },
+    {
+      "filename": "callback-list-dark.png",
+      "sha256": "44c64752a752d14b5478032fd9e70fa9fc6877ef8f603941abfed14239230705",
+      "status": "PASS",
+      "notes": "Dark RTL callback screen title, day summary, reminder contact/number, missed count and return/recent-call actions all fit with clear contrast.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "callback-list-light.png",
+      "sha256": "58d888a7a807856a245724cd639e1d3d50bed276a51c67d0012fb9f315c0537b",
+      "status": "PASS",
+      "notes": "Light RTL callback screen preserves readable summary and contact details with distinct green return-call and recent-call buttons.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "callback-settings-dark.png",
+      "sha256": "06979d80284ab5d9308fab5de76bd1334dc817adbb5764397e08f8ad12963f78",
+      "status": "PASS",
+      "notes": "Dark callback settings keep section titles, reminder explanation and pink toggle separate; lower content reaches the scroll viewport edge above navigation.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "callback-settings-light.png",
+      "sha256": "86c27e22d4b871899709056e78e945852613741318c20975952c206557fc33f0",
+      "status": "PASS",
+      "notes": "Light callback settings keep section titles, reminder explanation and pink toggle readable and separate; lower content reaches the scroll viewport edge.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "changelog-dark-bottom.png",
+      "sha256": "02eb972f1b821da261298970fed8bd43bb6bdc780755bffe04b6ede3848e7b6c",
+      "status": "PASS",
+      "notes": "Dark changelog bottom shows readable version cards, expanded 0.1.0 bullet and offline-availability footer; preceding card is cut only at scroll boundary.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "changelog-dark.png",
+      "sha256": "eab328961ad0ac1698c4cef7f79bcd49d9e7828792220935ecc7996b8ec89186",
+      "status": "PASS",
+      "notes": "Dark changelog title, installed 0.14.0 label, NEX release heading and Hebrew bullets are readable; expanded release continues below viewport.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "changelog-light-bottom.png",
+      "sha256": "b070bf2fb60f13449585df7d9d8bbb71895829527389f04ea85dc6fb6a23f22f",
+      "status": "PASS",
+      "notes": "Light changelog bottom shows readable version cards, expanded first-release description and offline footer without text overlap.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "changelog-light.png",
+      "sha256": "956985970bdf398ff14580db6c9c1571777af45d741381e40f7d497f4e4714bb",
+      "status": "PASS",
+      "notes": "Light changelog title, installed version and NEX release card have readable contrast; longer expanded release text continues below viewport.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "external-end-confirmation.png",
+      "sha256": "af735064381e4bd9ee8483ac66a66ee65eb9452a25e339567ed188dd4d2c742a",
+      "status": "PASS",
+      "notes": "End-call confirmation is centered and readable with separate cancel and end actions; dimmed expanded island remains below visible SystemUI clock, call chip and right-side icons.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "external-ended-launcher.png",
+      "sha256": "ec9a7506247a758d611bc31ed896866753550c804d032371a7ddbd8bec483dfe",
+      "status": "PASS",
+      "notes": "Launcher is unobstructed after call end; clock, date, app dock, search bar and navigation icons remain visible with no residual island.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "external-inapp-return.png",
+      "sha256": "562df500206ecca9b7e4ebadc050f2342a26c51e2ceb5acc3b46eb97ec0d24ee",
+      "status": "PASS",
+      "notes": "Compact RTL caller label uses bounded ellipsis beside readable active-state text and timer; contacts search, contact row and bottom navigation retain usable visible space below the island.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "external-launcher-active-compact.png",
+      "sha256": "7b918b7432105147a48280b7c44f01b6bcddef5cd9fccb1f91807543fd6bf05d",
+      "status": "PASS",
+      "notes": "Compact RTL island is below the SystemUI clock/call chip and microphone indicator; caller ellipsis, active-state label and timer are readable, with launcher dock and navigation visible.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "external-launcher-active-expanded.png",
+      "sha256": "6346ecd10b44bede02055078638fed43fc48d541b9105b80952f5e7426c6d3a3",
+      "status": "PASS",
+      "notes": "Expanded launcher island has readable caller, timer, end/hold/mute labels, return-to-call row and hide action; SystemUI clock/call chip, microphone indicator and launcher dock remain visible.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "external-launcher-native-incoming.png",
+      "sha256": "188a41771b352d98872c282b0209ffd1504561d3e3a42de9fc8077057f563def",
+      "status": "PASS",
+      "notes": "Native incoming-call card shows readable RTL caller/state text and distinct red reject, return and green answer controls; right-side status icons and launcher dock remain unobscured.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "external-other-app-active-expanded.png",
+      "sha256": "44fb318654ab9a34808b2f1781b9186fe18a081d378247fd5847c2c3cef7daad",
+      "status": "PASS",
+      "notes": "Expanded island over Clock shows readable end/hold/mute, return-to-call and hide labels; status clock/call chip and right-side icons are clear, and Clock tabs/navigation remain visible below.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "external-permission-denied-launcher.png",
+      "sha256": "188a41771b352d98872c282b0209ffd1504561d3e3a42de9fc8077057f563def",
+      "status": "PASS",
+      "notes": "Permission-denied launcher frame visibly presents the native incoming-call card with readable caller/state text and separate red reject, return and green answer controls; launcher dock/navigation remain visible.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "incoming-swipe-dragging.png",
+      "sha256": "5ae3f672170c2bf5594608caf93f3bdd7fd86a24a8250325b61f4c014c94d007",
+      "status": "PASS",
+      "notes": "Incoming screen has readable number/status, right-swipe answer instruction and red reject action; long caller name is intentionally ellipsized without overlapping controls.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "incoming-swipe-resting.png",
+      "sha256": "a9731bb048b6fce548b4f9ac06e8dddeca16300971369dff55e936f5a0314f99",
+      "status": "PASS",
+      "notes": "Incoming resting screen keeps number/status and separated answer/reject controls legible; long caller name ellipsizes within its header.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "island-app-contacts-compact.png",
+      "sha256": "1d0d964e7063c231777cf881e7c4ea85b8589de5dc77da2b39919d5ace15dad2",
+      "status": "PASS",
+      "notes": "Compact RTL island has readable timer/state and bounded caller ellipsis; SystemUI clock/icons are clear and contacts favourites, search, visible rows and bottom tabs retain space.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-app-contacts-expanded.png",
+      "sha256": "ffb67f2824628f79eca0448548865797543409d6e0a3fcc4cd33019d1405f529",
+      "status": "PASS",
+      "notes": "Expanded in-app panel keeps caller/state/timer and all four primary call-control labels readable, with clock/icons and a contact row visible. Panel has a visible scroll indicator; only a clipped sliver of its lower return action appears in the initial viewport, so this image does not establish its offscreen label visibility.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-app-recents-compact.png",
+      "sha256": "e062a940daf5975971ea652e2fd697a6cbace691c41b9afeefd03d885b335b67",
+      "status": "PASS",
+      "notes": "Compact RTL caller ellipsis, timer and active-state label are readable; status clock/icons remain clear and recent-call summary plus list rows and bottom navigation retain usable space.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-app-recents-expanded.png",
+      "sha256": "c991a6511310615519cc487f4ac054c2137461a5f7945b7c3618fcc05401094d",
+      "status": "PASS",
+      "notes": "Expanded in-app panel keeps caller/state/timer and all four primary call-control labels readable, with status icons and a recent-call row visible. A scroll indicator bounds the panel; lower return action is only a clipped sliver in this initial viewport, so its offscreen label is not judged visible.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-apple-dark-en-compact.png",
+      "sha256": "1ed0eb79d2b56f6ce0c18b27e21655e02f410213cad288d44313b5f6d46cb395",
+      "status": "PASS",
+      "notes": "Dark Apple compact island shows bounded Noa Islan... caller label, Active call, timer and waveform; SystemUI clock/icons and the search plus multiple contact rows remain visible.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-apple-dark-en-expanded.png",
+      "sha256": "65af625f404722698d75a88488f75fa2c2745fd932c63ffdb5c53f11f44a2e0a",
+      "status": "PASS",
+      "notes": "Dark Apple expanded caller, timer, collapse caret, Mute/Speaker/Hold/End labels, Open call and Hide for this call are readable; clock/icons and two contact rows remain visible below.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-apple-dark-he-compact.png",
+      "sha256": "8ac245fb45c8955e83791711c2ccf5e916710f72f166b6c1adeffdc3bb0eb605",
+      "status": "PASS",
+      "notes": "Dark Apple compact RTL caller ellipsis, active-state label, timer and waveform are readable; clock/icons are clear and Hebrew search/list text remains legible below.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-apple-dark-he-expanded.png",
+      "sha256": "92c73c1b06488e086d1d9570d020e533a840a446594e38c71905df76b1464589",
+      "status": "PASS",
+      "notes": "Dark Apple expanded RTL layout has readable caller/state/timer, collapse caret, four call-control labels, return-to-call and hide actions; Hebrew search/list and SystemUI clock/icons remain clear.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-apple-light-en-compact.png",
+      "sha256": "e6ef25a028fa817512179b8fb41d73c45f2e68c97b8f5b722c83ee676ac3178f",
+      "status": "PASS",
+      "notes": "Light screen with dark Apple compact island has readable bounded caller ellipsis, state and timer; grey SystemUI clock/icons and black contacts/search text have visible contrast.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-apple-light-en-expanded.png",
+      "sha256": "5393972947a8fba24e1cd0c24eea2f9c658fcbcb974f95ac2cbef757896230be",
+      "status": "PASS",
+      "notes": "Light Apple expanded frame shows visible collapse caret, all four primary labels, Open call and Hide for this call; dark island text contrasts and contact search plus two rows remain visible.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-apple-light-he-compact.png",
+      "sha256": "2367c7554866cf616cbdba3056545ed511a731fc86ec3f6c0873622c5a40ebf5",
+      "status": "PASS",
+      "notes": "Light Apple compact RTL caller ellipsis, state, waveform and timer are readable; SystemUI clock/icons and Hebrew search/list text remain clear.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-apple-light-he-expanded.png",
+      "sha256": "4035b97c40852a1b06621ad51069f9aacc04dca50e7cb8e5725bb874bda8db95",
+      "status": "PASS",
+      "notes": "Light Apple expanded RTL frame has visible collapse caret, readable four control labels, return-to-call and hide labels; status clock/icons and two Hebrew contact rows retain space.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-emerald-dark-en-compact.png",
+      "sha256": "5fdb3197b836b53c71e8ccdd40d1cebd1b5b48ff90a5cd96c2abd65845d6d352",
+      "status": "PASS",
+      "notes": "Emerald dark compact island shows readable bounded caller ellipsis, Active call, yellow timer and waveform; status clock/icons and contact search/list remain clear.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-emerald-dark-en-expanded.png",
+      "sha256": "eb689d9d42e30f48fd0d064d85b698c78d63afebc2ef2b135b82128b7390d2b0",
+      "status": "PASS",
+      "notes": "Raw original individually re-reviewed: Emerald dark expanded frame clearly shows the collapse caret, full Open call and Hide for this call labels, caller/state/timer and all four primary controls. SystemUI clock/icons and two contact rows remain readable.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-emerald-dark-he-compact.png",
+      "sha256": "11b426463253c181ba74be36371ff68b17d003d429852cf8b80817116556566e",
+      "status": "PASS",
+      "notes": "Emerald dark compact RTL island has readable caller ellipsis, active-state text, yellow timer and waveform; clock/icons and Hebrew list content remain visible.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-emerald-dark-he-expanded.png",
+      "sha256": "c9ff53db55f7d03ce816a5423cf1b1456a9698f9ffa8ca91ea97b8fc695eaa74",
+      "status": "PASS",
+      "notes": "Raw original individually re-reviewed: Emerald dark RTL expanded frame clearly shows the collapse caret, full return-to-call and hide labels, caller/state/timer and four primary call-control labels. Clock/icons and two Hebrew contact rows remain visible.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-emerald-light-en-compact.png",
+      "sha256": "a3edf97611efee8d82638a1ca24e7787dc396d179973a9f9f179ae6a547c3be8",
+      "status": "PASS",
+      "notes": "Emerald compact island on light background retains readable caller ellipsis, state and yellow timer; grey status clock/icons contrast and contact search/list have usable space.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-emerald-light-en-expanded.png",
+      "sha256": "a3e71ccfc1982b7375cb76c1dd89cf84d24ca467d5753a1eaebbefd61e0363df",
+      "status": "PASS",
+      "notes": "Emerald light expanded frame shows visible collapse caret, readable caller/state/timer, four primary controls, Open call and Hide for this call; clock/icons and two contact rows remain clear.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-emerald-light-he-compact.png",
+      "sha256": "8caaff0f6567d7ef4910f89fb14d7fe6babd79114caf475c1e6c5e31a139fbcf",
+      "status": "PASS",
+      "notes": "Emerald light compact RTL island keeps caller ellipsis, state, yellow timer and waveform readable; Hebrew search/list and grey status clock/icons remain visible.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-emerald-light-he-expanded.png",
+      "sha256": "410f1eb0a5b13439205bb65437d5e86a2fed0d9c862c3d1c0a62bae0b0a2b833",
+      "status": "PASS",
+      "notes": "Emerald light expanded RTL frame shows collapse caret, all four call-control labels, return-to-call and hide labels; status icons and Hebrew search plus two contact rows retain space.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-glass-dark-en-compact.png",
+      "sha256": "8dfdd53ef2539a53f340dcee97ff0c15f3b089efea73d30fd3c469846dc52ec0",
+      "status": "PASS",
+      "notes": "Glass dark compact island has readable bounded caller ellipsis, Active call, orange timer and waveform; clock/icons and contact search/list remain visible.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-glass-dark-en-expanded.png",
+      "sha256": "ec2a6b943b48778e6997300b3e3a7670b1aa73c9bd70dfadbd7518bc6a7a07bc",
+      "status": "PASS",
+      "notes": "Raw original individually re-reviewed: Glass dark expanded frame clearly shows the collapse caret, centered Open call and Hide for this call labels, caller/state/timer and four primary control labels. SystemUI clock/icons and two contact rows remain clear.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-glass-dark-he-compact.png",
+      "sha256": "933d87e727922f3c8a3f7e9be5f0d288007d241bd55f81b77d2f89503f0176fe",
+      "status": "PASS",
+      "notes": "Glass dark compact RTL island has readable caller ellipsis, state, orange timer and waveform; SystemUI clock/icons and Hebrew search/list remain clear.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-glass-dark-he-expanded.png",
+      "sha256": "19d7c53c1876cd22f1cb100e5ed9a5ad69015c234bc48a7810e6285a1fc03839",
+      "status": "PASS",
+      "notes": "Raw original individually re-reviewed: Glass dark RTL expanded frame clearly shows the collapse caret, full return-to-call and hide labels, caller/state/timer and four primary controls. Clock/icons and Hebrew search/list remain legible.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-glass-light-en-compact.png",
+      "sha256": "711c69204af29de27e4b080dee916bcb14fb31f51d350041d6d62d4dd0c34fc0",
+      "status": "PASS",
+      "notes": "Glass compact island on light background keeps bounded caller ellipsis, state, orange timer and waveform readable; grey clock/icons contrast and contact search/list remain visible.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-glass-light-en-expanded.png",
+      "sha256": "241c827aaab6fc2de07a77a7a70559bf98fa002dc91e9bb23d34a341a7bd3919",
+      "status": "PASS",
+      "notes": "Raw original individually re-reviewed: Glass light expanded frame clearly shows the collapse caret, full Open call and Hide for this call labels, caller/state/timer and four primary controls. Grey SystemUI clock/icons and contact search plus two rows remain visible.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-glass-light-he-compact.png",
+      "sha256": "d3d459c1153f49aaf568d29ff09e00ac939c5cd0b594a97be1e0efe152bbafb9",
+      "status": "PASS",
+      "notes": "Glass light compact RTL island shows readable caller ellipsis, active-state label, orange timer and waveform; Hebrew list/search text and grey SystemUI clock/icons are clear.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-glass-light-he-expanded.png",
+      "sha256": "1a39923311a7dc25aaa5b04284f43766ab667fb1d8c040bf3ee4ce802ec81cae",
+      "status": "PASS",
+      "notes": "Raw original individually re-reviewed: Glass light RTL expanded frame clearly shows the collapse caret, centered return-to-call and hide labels, caller/state/timer and four primary control labels. Grey clock/icons and Hebrew search plus two rows remain clear.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-settings-dark-bottom.png",
+      "sha256": "be7e31c109d6d5b30ee47f699b0732b88236db987310fd7dd19c62cd77e594ea",
+      "status": "PASS",
+      "notes": "Dark RTL lower settings show separate readable mute/speaker/hold and end-confirmation labels with explanatory text and distinct switches; instructions below and SystemUI clock/icons remain visible without text overlap.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-settings-dark.png",
+      "sha256": "bb8030f3ca306405ed688c7781e63975874cdfc94c310da1d78a29a17c6f2725",
+      "status": "PASS",
+      "notes": "Dark RTL settings heading, introduction, activation section and in-app/outside-app switch labels are readable with distinct switch states; clock/icons remain unobscured and content is vertically scroll-indicated.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-settings-light-bottom.png",
+      "sha256": "b0d745aed3340ecb73c8e3f0b1168a6cc02448f8b53256d5e29d99860081e33f",
+      "status": "PASS",
+      "notes": "Light RTL lower settings show readable mute/speaker/hold and end-confirmation text with contrasting switches and clear instructions below; SystemUI clock/icons and navigation remain visible.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-settings-light.png",
+      "sha256": "5c0abf4f8b32eb7e67112c2fe3384707260dd36fc4f3c2f4fbe582aba44f1466",
+      "status": "PASS",
+      "notes": "Light RTL settings title, introduction and in-app/outside-app option labels are readable; switch on/off appearance is distinct, and status clock/icons plus navigation remain clear.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-state-held.png",
+      "sha256": "464302e2065f8f83a8ee99290ddb47bc025d089f3459d50322db60d6fea74299",
+      "status": "PASS",
+      "notes": "Held-state island shows yellow held status and orange resume control with readable end/resume/speaker/mute labels, return and hide actions; caller/timer, clock/icons and two contact rows remain visible.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-state-incoming.png",
+      "sha256": "bb9013c160b7f4ff2eb5ec23241f0280d2b213b8aacc20294ae49bf3bd318a38",
+      "status": "PASS",
+      "notes": "Incoming-state RTL island shows readable caller/incoming label with separate green answer and red reject controls, readable return/hide actions and a visible collapse caret; status clock/icons and list space remain clear.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-state-noaudio.png",
+      "sha256": "01a903f67fdf99f84c247d5779d8599d852109dce7e6439b8fbfb7b01fcc79a2",
+      "status": "PASS",
+      "notes": "No-audio RTL state visibly contains end and hold controls with readable labels, readable return/hide actions and a visible collapse caret; caller/state/timer, clock/icons and search/list remain clear.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "island-state-outgoing.png",
+      "sha256": "c7c4f4e33edd99d3aec58ff0a23f4768768c0cf9b7df1e25ab2b628645637cba",
+      "status": "PASS",
+      "notes": "Outgoing-state RTL island has readable caller/outgoing text, collapse caret, four call-control labels and return/hide actions; clock/icons and search plus two contact rows remain visible.",
+      "group": "island",
+      "report": "island.json"
+    },
+    {
+      "filename": "missed-multiple-he.png",
+      "sha256": "50c34565029489a646c8530ed8af1ce370c43673e2bf677f8c0e83355e7f17a4",
+      "status": "PASS",
+      "notes": "Hebrew multiple-missed notification shows readable missed-call count and clear cleanup action; long notification detail lines ellipsize without overlap.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "missed-single-he.png",
+      "sha256": "94b9d6a1f6d3f756d128edf84ecf9538f2aee96c73d9e431adee77c796ac8b1b",
+      "status": "PASS",
+      "notes": "Hebrew single-missed notification title and cleanup action are readable with clear contrast; long detail line ellipsizes within the card.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "modern-archive-merged.png",
+      "sha256": "710a0336965f4d7666ac859d47d6554995d40cdc8a37e342e8756e6bdd3b354d",
+      "status": "PASS",
+      "notes": "Archive merge summary and Close action are clear; lower explanatory text continues in the scrolling page.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-archive-restore-off.png",
+      "sha256": "3a66feeacb0616b7fe883b8751da9886c45e526643aad73a2c82d07300db38fa",
+      "status": "PASS",
+      "notes": "Full restore message and Cancel/Restore buttons remain readable without the archive opt-in for this file.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-archive-restore-on.png",
+      "sha256": "5eb7d9b6f5e37db4be2dac679acb9879887f16b375ec8bb5d514f8ba4fe53e25",
+      "status": "PASS",
+      "notes": "Archive merge explanation, checked opt-in and both dialog actions fit without overlap.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-backup-options-off.png",
+      "sha256": "0f5061d45856ae9e364847e0a7fcf1954adc4a882b25af69bd08886ca85b11d2",
+      "status": "PASS",
+      "notes": "Unchecked archive opt-in and complete save/Close actions are visible on warm NEX surfaces.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-backup-options-on.png",
+      "sha256": "d8ec8dabaffba9ecb512e62af8f4700bd084ea96f52e8c2011db76fc7d77fe4f",
+      "status": "PASS",
+      "notes": "Checked archive opt-in, save and Close remain readable; additional instructions continue below the viewport.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-bottom-dialpad-dark-he.png",
+      "sha256": "e7938c717ef16b063a8a1d7b5b5ad86eda2bb8d10790df1e85c85407606d65fc",
+      "status": "PASS",
+      "notes": "Large rounded digits, letters, close/backspace/add-contact and mint call action fit in Hebrew dark mode.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-bottom-dialpad-light-en.png",
+      "sha256": "bc736a0de21337611f5f79a65e0551b9a65b63b1d49364a7d34564ffc33ff23e",
+      "status": "PASS",
+      "notes": "English number heading and all digit/action tiles fit above system navigation.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-icons-all-nine-dark-he.png",
+      "sha256": "e7741c73b590ca39f6b752f39b88d558d813ae00abf6f0b0bd15e4cdecf01f8e",
+      "status": "PASS",
+      "notes": "Last launcher choices and Cancel remain readable; a partial first row is the scrolled list boundary.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-icons-all-nine-light-en.png",
+      "sha256": "4b0860c0346275f6ce0b633475f15760ec5a278a9d31e3ad44bc12abf9448017",
+      "status": "PASS",
+      "notes": "Final icon choices, radio targets and Cancel are clear; first partial icon is at a scroll boundary.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-island-below-inapp.png",
+      "sha256": "671bbf25c990e1ab6164c6e2a217de2c68ee5337668960e6ff624f32bbcd87b2",
+      "status": "PASS",
+      "notes": "Compact active call clears native status icons and leaves readable recents and navigation.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-island-composition-background.png",
+      "sha256": "e92a75c5d6c2d9f4a1b7c7a9faa50528959bbf1582dd5c286786f3ce4972bda3",
+      "status": "PASS",
+      "notes": "Actual no-island compositor background retains readable Recents and navigation.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-island-dragged.png",
+      "sha256": "38ab30d949362c6b75713751477a69fe44ace5f052f6d99727e33cf1fb0cec13",
+      "status": "PASS",
+      "notes": "Expanded Home overlay keeps caller/timer, caret, call controls and Open/Hide actions visible above launcher dock.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-island-hide-home.png",
+      "sha256": "50d37a2382b2c28f785a6802c8a14973c6e742815fdf27bf3b58a08b714d05b0",
+      "status": "PASS",
+      "notes": "Hidden custom island leaves launcher intact; native ongoing-call status chip remains visible.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-island-new-call-shown.png",
+      "sha256": "edd95e7676131c0f8c868ea507041a355764f87d3f3d51c3906c813786d0c7a9",
+      "status": "PASS",
+      "notes": "New actual call restores compact custom island below native call notification with readable state/timer.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-island-opacity-0.png",
+      "sha256": "899d5d10cdd76fe6357a350f77a4c4c9b1f00123df60aebd528396fcf5497136",
+      "status": "PASS",
+      "notes": "Transparent body exposes real Recents while opaque caller/time backplates stay readable at the deliberately moved overlay position.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-island-opacity-100.png",
+      "sha256": "a5152f41acace42ebd01d25501445e012fc83960191e98aaea1eb89f47ab50e9",
+      "status": "PASS",
+      "notes": "Opaque body keeps caller/time clear; its user-selected moved position overlays part of Recents intentionally.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-island-opacity-35.png",
+      "sha256": "06c6ae4aafa348f7b66f15b54ec309319b407d86f5073549d9b5c4fa493404b7",
+      "status": "PASS",
+      "notes": "Partially transparent body exposes Recents with readable caller/time backplates at the deliberately moved overlay position.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-island-restore-home.png",
+      "sha256": "62867de11baa3a2bd99bb218c64f94384e638af15fec8606a984ed1fab36b2b9",
+      "status": "PASS",
+      "notes": "Restored Home island and timer are readable; native status icons remain clear. Transient restore toast fits.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-island-status-external.png",
+      "sha256": "203ec73ff71447bdef4dacaf1a42e8b884b771fbd7377b4cd01a77eb2b77eb1e",
+      "status": "PASS",
+      "notes": "Constrained external status-mode fallback is below clock/icon lanes; caller/timer and transient toast are readable.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-island-status-inapp.png",
+      "sha256": "c4353416b67232b6604d79267c861c757447dbb53f26988feaf57e55aa9bf029",
+      "status": "PASS",
+      "notes": "In-app protected fallback clears native status lanes and preserves usable Recents/navigation.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-nex-island-active-he.png",
+      "sha256": "517096dde6b1a57906fcc6ca21cb5351462cd196aa8be5124a4625a873edff88",
+      "status": "PASS",
+      "notes": "Actual Hebrew ACTIVE NEX island shows copper timer and readable caller/state, clears status bar and preserves underlying Recents.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-nex-widget-amoled-en.png",
+      "sha256": "d3bea5fb6eed7c0ad88e4598b5c392f0ec4ce6959542db5e598b08ef2608091e",
+      "status": "PASS",
+      "notes": "True-black widget configuration has complete wrapped English heading, full search hint, Back and readable empty-state text.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-nex-widget-light-he.png",
+      "sha256": "10d22ebf23cc7c2b6a70b5dcb9fbf57c7a3baa6d67233d72e23d7ab1a26ec0c0",
+      "status": "PASS",
+      "notes": "Hebrew widget configuration heading, back arrow, full hint and empty state fit with correct RTL spacing on warm surfaces.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-recents-inline-dark-he.png",
+      "sha256": "284d6fd3b379c6e0e3b2a13b212d1f0748e56f50ec5bb64e64b637d353f4fa8e",
+      "status": "PASS",
+      "notes": "Dark Hebrew expanded row keeps full number and four readable inline actions; bounded date preview can be opened through Details.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-recents-inline-light-en.png",
+      "sha256": "71f8357454e8db54425318652eef75f9beebd6ec92fc729075ccb59f901f9ec3",
+      "status": "PASS",
+      "notes": "Full phone and all four inline actions are visible; Message wraps across two lines without clipping; Details retains full metadata access.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-wine-controls-dark-he.png",
+      "sha256": "084b8cacdd386d0d5994ac9ec01ccb06959d58a924e0684491e1b95d3b6d4218",
+      "status": "PASS",
+      "notes": "Hebrew titles/descriptions and native wine switches have readable contrast and clear RTL layout.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "modern-wine-controls-light-en.png",
+      "sha256": "6f28ed5da586dc5c2c15375884e5a3a3a687d4892190908f4048d3da24c69214",
+      "status": "PASS",
+      "notes": "English heading, description and first switch fit; lower settings continue through an evident scrolling viewport.",
+      "group": "modern-root",
+      "report": "modern-root.json"
+    },
+    {
+      "filename": "personalization-archive-dark.png",
+      "sha256": "2d2c56a00f9c64eb22fe01f8932f5edf11f4892cc3e9d921bc9f4d243f9db8d1",
+      "status": "PASS",
+      "notes": "Dark RTL archive title/count, search, saved caller number and wrapped date/duration fit without overlap; DA avatar remains distinct.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-archive-light.png",
+      "sha256": "9bc9c4d61b35d0b23802e7fc8b1ef7c24ef891832a5402ea21f4accc11f83778",
+      "status": "PASS",
+      "notes": "Light RTL archive view keeps caller details and wrapped call date/duration legible with clear card separation.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-backup-restore-confirmation.png",
+      "sha256": "dad633743244e51560512021aaa795881f8062862485bebbb4353773aff47853",
+      "status": "PASS",
+      "notes": "Restore confirmation title, counts, replacement/retention explanation and CANCEL/RESTORE actions are legible and separated within the dialog.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-backup-saved-dark.png",
+      "sha256": "e850741cda56588d8c3932b0fbce96f5025f07bcc576bd35aa1323fd5d479cfb",
+      "status": "PASS",
+      "notes": "Dark backup-success page shows readable saved-file confirmation and Close button; long explanatory paragraph continues below the scroll viewport.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-backup-saved-light.png",
+      "sha256": "d94a542f49bf02e40c89f1b53261ecc76376f5fc850c74c0313c47860003b959",
+      "status": "PASS",
+      "notes": "Light backup-success page has readable saved confirmation and Close action; long file-content explanation extends below viewport.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-chooser-dark-avatar_shapes-bottom.png",
+      "sha256": "90cf3da4ab0169d1206681154438dc404c6f535e30481bd317f026f960afe07d",
+      "status": "PASS",
+      "notes": "Dark RTL avatar-shape chooser displays circle, rounded square, square and hexagon previews with separate radio controls and readable Cancel action.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-chooser-dark-avatar_shapes.png",
+      "sha256": "90cf3da4ab0169d1206681154438dc404c6f535e30481bd317f026f960afe07d",
+      "status": "PASS",
+      "notes": "Dark avatar-shape dialog title, all four labels/previews, selected radio and Cancel remain legible without overlap.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-chooser-dark-icons-bottom.png",
+      "sha256": "324d219771165f592e5af9e632914c22f464135356e52a271038ac2477ba4d6a",
+      "status": "PASS",
+      "notes": "Dark icon chooser bottom shows readable icon labels, radio choices and Cancel; the first visible icon is partially cut at the scrolled list's top boundary.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-chooser-dark-icons.png",
+      "sha256": "c72a61796bec517769fc720c8442103f9ed7081b913326dc7c71db567387ecb5",
+      "status": "PASS",
+      "notes": "Dark icon chooser has readable title and four full radio/preview rows plus fixed Cancel; fifth choice is partly visible at list scroll boundary.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-chooser-light-avatar_shapes-bottom.png",
+      "sha256": "2f3d9b609fa7abe618e6391146fd65f4dfb7be166b17fddf8ddbdf814e0a7d8f",
+      "status": "PASS",
+      "notes": "Light avatar chooser shows all four named shapes, DA previews, radio states and Cancel with readable contrast and no overlap.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-chooser-light-avatar_shapes.png",
+      "sha256": "2f3d9b609fa7abe618e6391146fd65f4dfb7be166b17fddf8ddbdf814e0a7d8f",
+      "status": "PASS",
+      "notes": "Light avatar-shape dialog title, four options and Cancel action fit within dialog with clear selection state.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-chooser-light-icons-bottom.png",
+      "sha256": "1cbb40527cfcc67040bad237b4fac343e6dc22521d4c14bb3912c64d8709d26b",
+      "status": "PASS",
+      "notes": "Light icon chooser bottom keeps radio options and Cancel legible; first visible icon is partially cut by the scrolled list's top boundary.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-chooser-light-icons.png",
+      "sha256": "d7b896654f5e6f143ea89eda661de70984a7167e424416bfcad11630d5cb0d3d",
+      "status": "PASS",
+      "notes": "Light icon dialog title, full visible radio/preview rows and Cancel are readable; fifth choice is partially visible at the scrolling list bottom.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-contacts-dark-en-largefont-collapsed.png",
+      "sha256": "0e86b52d0f6a619ebf917b35639397f4f79e70869851ddbd71eacff4f2c9c30d",
+      "status": "FAIL",
+      "notes": "Raw frame confirms the right edge of the large-font search field clips the final r in “Search name or number”; favorites and contact controls otherwise remain separate.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-contacts-dark-en-largefont-expanded.png",
+      "sha256": "dfaac41365f111d8983c43c3793fc868ec44295cebf6da801c66722fbde12e00",
+      "status": "FAIL",
+      "notes": "Expanded large-font English contacts search placeholder clips the final r in “Search name or number” at the input's right edge; favorite/contact-name ellipses remain confined to their rows.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-contacts-dark-en-standard-collapsed.png",
+      "sha256": "828d22352560dd6b8202df76526c9153d696edf3b5601965578232e844cba5a1",
+      "status": "PASS",
+      "notes": "Standard English dark contacts show full search placeholder, collapsed favorites prompt, readable count/numbers and distinct star/call controls.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-contacts-dark-en-standard-expanded.png",
+      "sha256": "5dad308d71b107df797e51c119dba2d8bacd7750730c7af13251d43cb0dcf340",
+      "status": "PASS",
+      "notes": "Standard English expanded favorites show readable labels, full search placeholder and separate contact/star/call controls; lower rows continue beneath scroll boundary.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-contacts-dark-he-largefont-collapsed.png",
+      "sha256": "a3846d6b719275e42b2a9d7bea903bfa69322a631406abe6d9b9ceeee87c62f6",
+      "status": "PASS",
+      "notes": "Large-font dark Hebrew collapsed layout keeps complete search hint, favorites prompt, contact names/numbers and call/star controls readable in RTL.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-contacts-dark-he-largefont-expanded.png",
+      "sha256": "63a5eb6bbe7b873ed463beda6321e365894fac523f2245ab229f0146c442fc85",
+      "status": "PASS",
+      "notes": "Large-font dark Hebrew expanded favorites and full search hint fit; contact controls remain separate and lower list content reaches viewport edge.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-contacts-dark-he-standard-collapsed.png",
+      "sha256": "ac91845cb3166534b9cc3798a534cf2bde4e89377de8476ed1a6238682651ec7",
+      "status": "PASS",
+      "notes": "Standard dark RTL contacts show full search hint, favorites prompt and readable contact rows with distinct call/favorite controls.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-contacts-dark-he-standard-expanded.png",
+      "sha256": "beb50a23557ad9318e06357c0a4122cbca9d44aa2e56cb8ce1638a4ab5a1b78d",
+      "status": "PASS",
+      "notes": "Dark standard Hebrew expanded favorites, complete search hint and contact rows remain legible; lower list continues at scroll boundary.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-contacts-light-en-largefont-collapsed.png",
+      "sha256": "a04bb42dadfa452d2611b38af05463866f8c48221413ae2f1dbb47c259b7a070",
+      "status": "FAIL",
+      "notes": "Large-font light English search placeholder clips the final r in “Search name or number” at the input's right edge; adjacent plus control stays separate.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-contacts-light-en-largefont-expanded.png",
+      "sha256": "a42ccd831ccb9936049046f8120ff6703dcd241ddbb50fd882004e77b4184555",
+      "status": "FAIL",
+      "notes": "Expanded large-font light English contacts repeat the clipped final r of “Search name or number”; contact-name ellipses and list viewport clipping are otherwise confined.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-contacts-light-en-standard-collapsed.png",
+      "sha256": "e642c17df56a4934866d760708b724d75b3c556e5b544117c399847491b4f456",
+      "status": "PASS",
+      "notes": "Light standard English collapsed layout fits full search placeholder, favorites prompt and readable contact names/numbers with distinct call/favorite controls.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-contacts-light-en-standard-expanded.png",
+      "sha256": "eac919948f873cbe4ec1be7ec4aa0ee26874048643f86bd5e1ac172febddbb8e",
+      "status": "PASS",
+      "notes": "Light standard English expanded layout keeps full search hint, favorite labels and separate contact/star/call controls readable.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-contacts-light-he-largefont-collapsed.png",
+      "sha256": "0cb00900fe41d36ee1a980cd51126816da5dc30948989ade257a88e533278f4e",
+      "status": "PASS",
+      "notes": "Light large-font Hebrew collapsed layout preserves full RTL search hint, favorites prompt and readable contact numbers with distinct controls.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-contacts-light-he-largefont-expanded.png",
+      "sha256": "81a1605b3fbdf02fd91f3ceeb5279ee4e9133fc93f62ff99978307d4b1b9da82",
+      "status": "PASS",
+      "notes": "Light large-font Hebrew expanded favorites and complete search hint fit; contact-name ellipsis stays inside favorite item and lower rows reach viewport edge.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-contacts-light-he-standard-collapsed.png",
+      "sha256": "996a3b306704617447633a072e0a67a4e2963c6c1b0a1c551093295099251e40",
+      "status": "PASS",
+      "notes": "Light standard Hebrew collapsed layout shows readable favorites prompt, full search hint and separate call/star controls with clear contrast.",
+      "group": "other-a",
+      "report": "other-a.json"
+    },
+    {
+      "filename": "personalization-contacts-light-he-standard-expanded.png",
+      "sha256": "bf9d722554a919aa2eabd5a4e81484b041803e39581187184e730a0ddff62ba7",
+      "status": "PASS",
+      "notes": "Light RTL contacts: expanded favorites, search, business control and contact rows have clear contrast and separated icons; third row continues at the scrollable lower viewport edge.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-contacts-shape-circle.png",
+      "sha256": "9e9d369cbc97abf63b6459aab0a575f0402f64ded75238281a21a9ea9b1ea453",
+      "status": "PASS",
+      "notes": "Dark RTL contacts with circular avatars: shape is consistently circular; search, business control, call and star actions are clear; bounded favorite-name ellipsis and lower scrolling edge are visible.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-contacts-shape-hexagon.png",
+      "sha256": "fb1221f79d4ba2a02637fcfcab2680017feb9819229d42d303c8eefbfcaef375",
+      "status": "PASS",
+      "notes": "Dark RTL contacts with hexagonal avatars: avatar outlines remain distinct; row names, numbers and call/star actions stay separated; bounded favorite-name ellipsis and lower scrolling edge are visible.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-contacts-shape-rounded_square.png",
+      "sha256": "2cfbf1ccd9a45d15c49e074d98f9ba305abb03547fc84df27db8107f42c33b92",
+      "status": "PASS",
+      "notes": "Dark RTL contacts with rounded-square avatars: corners are visibly rounded, row content remains separate from call/star controls, and navigation labels are readable.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-contacts-shape-square.png",
+      "sha256": "265dd940f20446ce6421cc9d73d0467870380c63d219e2a6cf1074c6979b2e6a",
+      "status": "PASS",
+      "notes": "Dark RTL contacts with square avatars: square corners are visible in favorites and rows; readable gold/cream text, green call glyphs and distinct bottom navigation; lower list edge is scrollable.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-recents-dark-en-largefont-compact.png",
+      "sha256": "af9bc9a5603e6c333214314883885e4002caf232323fa753ce28ae8653c50451",
+      "status": "PASS",
+      "notes": "Dark English large text compact summary: row phone numbers and controls are intact; secondary metadata visibly ends at 7:24 A... and duration is absent from the bounded preview. Read-only source confirms expansion exposes Details with full date/time and duration.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-recents-dark-en-largefont-expanded.png",
+      "sha256": "5d6f0a05960b288aaf72c38527a9bd47beece4577ec94b001771555f14d3710d",
+      "status": "PASS",
+      "notes": "Dark English large text expanded summary: all three summary counts and average are readable; bounded two-line row metadata ellipsizes date/time. Source confirms Details exposes complete date/time and duration.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-recents-dark-en-standard-compact.png",
+      "sha256": "157256719030f7154a0558a2eda8354ca33cb08da205f312dae3e34078661a56",
+      "status": "PASS",
+      "notes": "Dark English standard text compact summary: full row date/time and duration fit within two lines; favorites/summary chevrons and call controls are clearly separated.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-recents-dark-en-standard-expanded.png",
+      "sha256": "cff9cb2bcf1165fccf41dff4757118d2fa46c01b861af66ffc729b5917640705",
+      "status": "PASS",
+      "notes": "Dark English standard text expanded summary: counts, direction labels and average are fully readable; visible row metadata includes complete time and duration; next row begins at scrollable viewport edge.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-recents-dark-he-largefont-compact.png",
+      "sha256": "6dac59b5b3102801c70c3a165f269efe3350058c7c19851fabc9686e381d75d5",
+      "status": "PASS",
+      "notes": "Dark Hebrew large text compact summary: RTL placement and action separation are intact; summary and row metadata have visible bounded ellipses. Expanded summary frame shows full summary, and source confirms row Details exposes full date/time and duration.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-recents-dark-he-largefont-expanded.png",
+      "sha256": "4c1fd8f3d95ac4909d8c48c7367b8493d82ff84bc6b7b6dae8b6356e626d744d",
+      "status": "PASS",
+      "notes": "Dark Hebrew large text expanded summary: two-line summary, counts and average fit; row metadata preview ellipsizes its end, with source-confirmed complete date/time and duration behind Details.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-recents-dark-he-standard-compact.png",
+      "sha256": "52f37b49133bb8be8f26c8943c0a479f6d1542669e7505e40b915a4b8688a037",
+      "status": "PASS",
+      "notes": "Dark Hebrew standard text compact summary: summary fits, numbers remain LTR, row direction/date/time/duration are readable, and bottom labels are clear without overlap.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-recents-dark-he-standard-expanded.png",
+      "sha256": "0d19f09b619b85827b704d743ee366ea21a9f88831b4ce70046f3dd6785de81d",
+      "status": "PASS",
+      "notes": "Dark Hebrew standard text expanded summary: full summary metrics and average are visible; visible rows retain complete date/time and duration with distinct call and expansion controls.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-recents-light-en-largefont-compact.png",
+      "sha256": "60aa0a706734c9b41d72166908b62da1efb30c9dc434db15b26b4f560d683c43",
+      "status": "PASS",
+      "notes": "Light English large text compact summary: phone numbers and action controls remain clear; row secondary metadata ellipsizes after the time prefix. Source confirms row Details exposes complete date/time and duration.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-recents-light-en-largefont-expanded.png",
+      "sha256": "70cb6f59990f0cd6eddc96b621712599777e6baf4e36648108c63a0439eda0d4",
+      "status": "PASS",
+      "notes": "Light English large text expanded summary: summary counts and average fit with adequate contrast; row metadata is bounded and ellipsized, with complete date/time and duration available in source-confirmed Details.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-recents-light-en-standard-compact.png",
+      "sha256": "a5034d93fe5161b1645b4efaffc696b559a0954a1ce146b1997cba2af31d8734",
+      "status": "PASS",
+      "notes": "Light English standard text compact summary: row dates, times and durations fit; text and gold controls contrast clearly on white cards; no overlap with navigation in visible rows.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-recents-light-en-standard-expanded.png",
+      "sha256": "c445e6d12d322a85ad531cef6332e63d2aef768bf67260153bdd520502a76bd3",
+      "status": "PASS",
+      "notes": "Light English standard text expanded summary: summary metrics and average fit; full metadata is readable on visible rows, and next row continues at lower scrollable viewport edge.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-recents-light-he-largefont-compact.png",
+      "sha256": "5eef5364ab1b0bbd57a50ea60f417ac52fb631978d12f0f82364dc4dc5822caa",
+      "status": "PASS",
+      "notes": "Light Hebrew large text compact summary: RTL layout and LTR numbers remain readable; compact summary and row metadata visibly ellipsize. Expanded summary provides complete summary; source confirms Details provides full row date/time and duration.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-recents-light-he-largefont-expanded.png",
+      "sha256": "8b02195d030344c315eeed9c1908f0be39f9e628049b12bd22334931c85da5ed",
+      "status": "PASS",
+      "notes": "Light Hebrew large text expanded summary: full two-line summary, counts and average fit; bounded row metadata ellipsizes, with complete date/time and duration available through source-confirmed Details.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-recents-light-he-standard-compact.png",
+      "sha256": "81f8462aabee2ab8afa09e550f96d28ba9a644d51fbf939a9af5053a3c35c3a8",
+      "status": "PASS",
+      "notes": "Light Hebrew standard text compact summary: summary text and three row metadata blocks are readable; call and expansion controls are distinct, with no functional-label clipping.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-recents-light-he-standard-expanded.png",
+      "sha256": "7b6f40e60906ab66a8cac80c7b36adfbb77236b4c1bd85172ccefbd27122a161",
+      "status": "PASS",
+      "notes": "Light Hebrew standard text expanded summary: summary metrics, average and visible full row metadata fit; lower list continuation meets the fixed navigation edge as a scrolling viewport.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-widgets-shape-circle.png",
+      "sha256": "b818f20d631d5371eb34cdc1a042d59ae4b772046f4c617440a707d5e3f7b42e",
+      "status": "PASS",
+      "notes": "Dark circle widget preview: circular avatar shapes are consistent, five contact slots and names are separated, and the long rightmost contact name uses a bounded ellipsis.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-widgets-shape-hexagon.png",
+      "sha256": "5150f78049e53ec557a6d3086908fa917ce152c4329d5e58c33db3d11b3926c0",
+      "status": "PASS",
+      "notes": "Dark hexagon widget preview: all five avatar silhouettes are hexagonal; white names and header are legible, with a bounded long-name ellipsis in the rightmost slot.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-widgets-shape-rounded_square.png",
+      "sha256": "9f2c7994c9b1522f3f0adcd12fb03931a6b9411588b6a5ec5f916df588fb3b74",
+      "status": "PASS",
+      "notes": "Dark rounded-square widget preview: all five avatar corners are consistently rounded; names remain below avatars without overlap and long rightmost name is ellipsized.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "personalization-widgets-shape-square.png",
+      "sha256": "5fec21277f189c69e0c57ccff024df32e5c752e4f4848b5d28841b83a0616827",
+      "status": "PASS",
+      "notes": "Dark square widget preview: all five avatar corners are square and distinct; contact names, DA CALLER header and preview heading remain readable.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "recents-new-contact-editor.png",
+      "sha256": "e65dd5dc1d24d01d9ad6416af234d80dac91b03145775b96e1f2c6d43f22e40c",
+      "status": "PASS",
+      "notes": "New-contact editor: RTL first-name, family-name and nickname fields are distinct; phone number is LTR and complete; save button label fits with strong white-on-orange contrast.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "recents-unknown-number-actions.png",
+      "sha256": "dc49b90f3beb9e55604b0e7d9364e236590194ee1bb31908101601cd0285c0e9",
+      "status": "PASS",
+      "notes": "Expanded unknown-number row: full number and four actions Details, Add, Message and Call fit in separate buttons; call direction and time are legible; following row continues below the viewport.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "settings-dark-bottom.png",
+      "sha256": "5a6032580377726a6f6346c58b53dc6cc049da5a1adbede46b9b3f7d3f934752",
+      "status": "PASS",
+      "notes": "Dark settings bottom: notification/Bluetooth permission labels, diagnostic row, reminder header, changelog and DA CALLER version footer are readable; top cut is a visible scrolled-card edge.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "settings-dark.png",
+      "sha256": "aa79a472d7010938bc122ea7c9e205a92cfb3d20a6a54de9bc5a2fde5d3c2511",
+      "status": "PASS",
+      "notes": "Dark settings upper viewport: permission titles and status/action text form separate columns with readable contrast; last Bluetooth row continues below the scrolling edge.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "settings-light-bottom.png",
+      "sha256": "f18ce926bc130f72a506ba5ded5753640f77d14366ac04b9835da7fbc459546d",
+      "status": "PASS",
+      "notes": "Light settings bottom: full visible permission descriptions, diagnostics, reminder control, changelog and version footer are readable; top cut is a visible scrolled-card edge.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "settings-light.png",
+      "sha256": "243e8f7494a68589baf2ce607b746c797da54b06c7e5ae4fe7295d1f622345eb",
+      "status": "PASS",
+      "notes": "Light settings upper viewport: permission titles and status/action text remain separated and readable; bottom Bluetooth row continues below the scrolling viewport edge.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "widget-dark-contact-2x1.png",
+      "sha256": "d3c0a7790d95f27b691dc17b614660d0d9d6a5a8a5350f4da1d6b367c73c5abe",
+      "status": "PASS",
+      "notes": "Dark contact widget 2x1: contact name, complete phone number and circular initials fit within the compact card, with legible light text on dark surfaces.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "widget-dark-empty.png",
+      "sha256": "dfb7e8ab9f4bb627a8af46122b64384bcfe86a3362d4f3bfb43e079698c73dfb",
+      "status": "PASS",
+      "notes": "Dark empty widget: full DA CALLER favorites header and instruction to add favorites are visible; card boundary and muted text remain distinguishable.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "widget-dark-favorites-2x2-largefont.png",
+      "sha256": "65f028b5cc523a35f713e5ee50c7be58d99f609b422939545fa6e7fa9f210a62",
+      "status": "PASS",
+      "notes": "Dark large-text favorites 2x2: all four contact names and avatars fit and remain legible. Raw original confirms cosmetic DA C... header ellipsis; favorites label remains readable and no contact action is obscured.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "widget-dark-favorites-2x2.png",
+      "sha256": "4c4d9f1165694ab1d5297443dbe9693740a193ac1fc640881e8df348daaf1486",
+      "status": "PASS",
+      "notes": "Dark favorites 2x2: four names and circular avatars remain distinct within the small card; full header fits without overlap.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "widget-dark-favorites-4x2.png",
+      "sha256": "09ea3197585629fec0ec269fa40127f5a3fb3a5e156125397a519a7f53fe8a1c",
+      "status": "PASS",
+      "notes": "Dark favorites 4x2: all five names and avatars fit across the card, with full DA CALLER favorites header and clear spacing.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "widget-dark-permission.png",
+      "sha256": "ca96d5f3fef7eb5ec6a95d09b0ec66e11486a726144b2a54faa77679564f193d",
+      "status": "PASS",
+      "notes": "Dark permission widget: full contacts-permission title and two-line instruction fit with readable contrast; no clipped functional text.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "widget-dark-quick-1x1.png",
+      "sha256": "f2303974ce70d4e77264a9c29f5a685704191d225576821b7a0d97f876983d56",
+      "status": "PASS",
+      "notes": "Dark quick-dial widget 1x1: initials and bounded long-name ellipsis fit within the compact card; preview heading and avatar remain clear.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "widget-dark-two-favorites.png",
+      "sha256": "644f2c99f9b620fd88ebcbf4a577f9aaae33afc8184c2131f7912475adae20cd",
+      "status": "PASS",
+      "notes": "Dark two-favorites widget: full header plus both contact names and avatars fit, with ample separation and readable contrast.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "widget-light-contact-2x1.png",
+      "sha256": "0378e2521987ce20b8327b7819d6d5dd22d2b017d6927423341769818d6d6ea3",
+      "status": "PASS",
+      "notes": "Light contact widget 2x1: full contact name, complete phone number and initials fit within the card; dark text contrasts clearly with the pale background.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "widget-light-empty.png",
+      "sha256": "fee95e68780a76f8226c8bc4908dc00aff4b3c97e2809db2269bb889dffec2ef",
+      "status": "PASS",
+      "notes": "Light empty widget: full header and add-favorites instruction fit without clipping; muted instruction remains readable on the pale surface.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "widget-light-favorites-2x2-largefont.png",
+      "sha256": "eed2d9c974ded18f384db97a798de0eab9ecbe2f94baeced3eaccac26eb4a217",
+      "status": "PASS",
+      "notes": "Light large-text favorites 2x2: four contact names and avatars remain legible and unclipped. Raw original confirms cosmetic DA C... header ellipsis; favorites label is readable and contact actions are unobscured.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "widget-light-favorites-2x2.png",
+      "sha256": "57917bae93f5b50b1254e0d951bff672ad1909c9091e8bed2c784fed2e0b3c25",
+      "status": "PASS",
+      "notes": "Light favorites 2x2: four contact names, avatars and full header fit within the small card with clear spacing.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "widget-light-favorites-4x2.png",
+      "sha256": "90e9474b8643c1b26b248b0450162c96689b5a653e47d7fe518def625eac6ce7",
+      "status": "PASS",
+      "notes": "Light favorites 4x2: five contact names and avatars fit across the card; full header remains readable with adequate contrast.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "widget-light-permission.png",
+      "sha256": "db001c2c7be50ca50343d9b7ab1a59b44c6121d3c7ddbe9c36a18b5ee19cae27",
+      "status": "PASS",
+      "notes": "Light permission widget: complete contacts-permission title and two-line instruction are readable inside the card, without clipping or overlap.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "widget-light-quick-1x1.png",
+      "sha256": "22d139a32ec68e2a9b03dedf6015b10d6bffa1feb2c0102da98573bb0f02c713",
+      "status": "PASS",
+      "notes": "Light quick-dial widget 1x1: initials and bounded long-name ellipsis fit; compact card edge and dark text remain clear on the pale surface.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "widget-light-two-favorites.png",
+      "sha256": "cad35a875d14eb2ad4b521d892fa1e9f011a9f47dc08e68173935b465b3444f0",
+      "status": "PASS",
+      "notes": "Light two-favorites widget: full header, two names and avatars fit, with clear spacing and no overlap.",
+      "group": "other-b",
+      "report": "other-b.json"
+    },
+    {
+      "filename": "widget-reconfigured.png",
+      "sha256": "301cddb0e8a1201dcbd2db21384ad97d4bd52cfe88d1e63e751e2ce99367a4d5",
+      "status": "PASS",
+      "notes": "Reconfigured dark quick-dial widget: updated contact initial and full short name are visible inside the compact card; preview heading remains readable.",
+      "group": "other-b",
+      "report": "other-b.json"
+    }
+  ],
+  "limits": [
+    "Actual emulator images only; physical hardware and matching-key upgrade not tested.",
+    "Configuration preview IDs are synthetic; actual launcher-host binding not tested."
+  ]
+}

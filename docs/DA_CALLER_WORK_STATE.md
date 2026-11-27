@@ -74,6 +74,38 @@ owner-controlled backup/admin route remains required; no key, secret or pin was
 changed. Continue nonpublication work, preserve all old release protections,
 no uninstall advice, and no physical or matching-key-upgrade claim.
 
+## Visual polish locally verified; fresh emulator review next — 2026-11-27
+
+The isolated two-cause polish passes469 unique host methods in45 classes with
+zero failures/errors/skips, debug and Androidtest APK builds, and lint with zero
+errors. All tracked app/script source hashes remained unchanged during checks.
+All40native method IDs, signing/workflows and frozen business assets are preserved.
+Authentic JUnit/log/lint proof is retained in visual-polish-preflight.
+
+The historical1a492678 full actual review remains266PASS/6FAIL; it is not relabeled
+as passing. This new source needs fresh40native/272screens and actual visual
+review before approval. No official publication, matching-key update or hardware
+verification is claimed. Previously delivered APKs are not resent; AI stays inPR8.
+
+## Completed272-image review and required polish — 2026-11-27
+
+The authenticated1a492678/CI45773402159 source genuinely passed40native methods,
+467host methods and all272automatic image checks. All272 images have now also
+been actually reviewed:266PASS/6FAIL/0unreviewed in69lossless sheets. Two visual
+causes affect six frames: native Hebrew speaker activation label truncation and
+large-font English Contacts hint clipping. Evidence and all six raw before
+images are retained in visual-review-1a49267. No full visual GO is claimed.
+
+The current isolated polish changes only visible copy/accessibility and two
+corresponding native label expectations: short Hebrew קול preserves full TTS
+הפעל רמקול and unchanged SPEAKER_ON/OFF intents; short English Name or number
+keeps15sp and the full search accessible description. Widget hints, actual
+search, dialing, data, all40native method IDs and release/signing guards stay
+unchanged. Two new host regressions check fit and full spoken/action semantics.
+Build/unit/lint are running; fresh40native/272screens and actual review remain
+required. Do not send the already delivered0.14test APK again. PR8AI work stays
+in feature/da-intelligence-0.15; never mix it into this0.14branch.
+
 ## Measured window-edge correction passes local checks — 2026-11-26 UTC
 
 The two authentic pre-cleanup probes now have a narrowly bounded correction.

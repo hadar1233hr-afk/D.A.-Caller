@@ -1,0 +1,179 @@
+{
+  "group": "modern-root",
+  "source_sha": "1a4926785a72bec25c188f9c5b74116c5b498c31",
+  "app_tree": "b5f973f6b837cc747ece84e32815a102de293937",
+  "run_id": "45773402159",
+  "sheets_viewed": [
+    "modern-root-01.png",
+    "modern-root-02.png",
+    "modern-root-03.png",
+    "modern-root-04.png",
+    "modern-root-05.png",
+    "modern-root-06.png",
+    "modern-root-07.png"
+  ],
+  "frames": [
+    {
+      "filename": "modern-archive-merged.png",
+      "sha256": "710a0336965f4d7666ac859d47d6554995d40cdc8a37e342e8756e6bdd3b354d",
+      "status": "PASS",
+      "notes": "Archive merge summary and Close action are clear; lower explanatory text continues in the scrolling page."
+    },
+    {
+      "filename": "modern-archive-restore-off.png",
+      "sha256": "3a66feeacb0616b7fe883b8751da9886c45e526643aad73a2c82d07300db38fa",
+      "status": "PASS",
+      "notes": "Full restore message and Cancel/Restore buttons remain readable without the archive opt-in for this file."
+    },
+    {
+      "filename": "modern-archive-restore-on.png",
+      "sha256": "5eb7d9b6f5e37db4be2dac679acb9879887f16b375ec8bb5d514f8ba4fe53e25",
+      "status": "PASS",
+      "notes": "Archive merge explanation, checked opt-in and both dialog actions fit without overlap."
+    },
+    {
+      "filename": "modern-backup-options-off.png",
+      "sha256": "0f5061d45856ae9e364847e0a7fcf1954adc4a882b25af69bd08886ca85b11d2",
+      "status": "PASS",
+      "notes": "Unchecked archive opt-in and complete save/Close actions are visible on warm NEX surfaces."
+    },
+    {
+      "filename": "modern-backup-options-on.png",
+      "sha256": "d8ec8dabaffba9ecb512e62af8f4700bd084ea96f52e8c2011db76fc7d77fe4f",
+      "status": "PASS",
+      "notes": "Checked archive opt-in, save and Close remain readable; additional instructions continue below the viewport."
+    },
+    {
+      "filename": "modern-bottom-dialpad-dark-he.png",
+      "sha256": "e7938c717ef16b063a8a1d7b5b5ad86eda2bb8d10790df1e85c85407606d65fc",
+      "status": "PASS",
+      "notes": "Large rounded digits, letters, close/backspace/add-contact and mint call action fit in Hebrew dark mode."
+    },
+    {
+      "filename": "modern-bottom-dialpad-light-en.png",
+      "sha256": "bc736a0de21337611f5f79a65e0551b9a65b63b1d49364a7d34564ffc33ff23e",
+      "status": "PASS",
+      "notes": "English number heading and all digit/action tiles fit above system navigation."
+    },
+    {
+      "filename": "modern-icons-all-nine-dark-he.png",
+      "sha256": "e7741c73b590ca39f6b752f39b88d558d813ae00abf6f0b0bd15e4cdecf01f8e",
+      "status": "PASS",
+      "notes": "Last launcher choices and Cancel remain readable; a partial first row is the scrolled list boundary."
+    },
+    {
+      "filename": "modern-icons-all-nine-light-en.png",
+      "sha256": "4b0860c0346275f6ce0b633475f15760ec5a278a9d31e3ad44bc12abf9448017",
+      "status": "PASS",
+      "notes": "Final icon choices, radio targets and Cancel are clear; first partial icon is at a scroll boundary."
+    },
+    {
+      "filename": "modern-island-below-inapp.png",
+      "sha256": "671bbf25c990e1ab6164c6e2a217de2c68ee5337668960e6ff624f32bbcd87b2",
+      "status": "PASS",
+      "notes": "Compact active call clears native status icons and leaves readable recents and navigation."
+    },
+    {
+      "filename": "modern-island-composition-background.png",
+      "sha256": "e92a75c5d6c2d9f4a1b7c7a9faa50528959bbf1582dd5c286786f3ce4972bda3",
+      "status": "PASS",
+      "notes": "Actual no-island compositor background retains readable Recents and navigation."
+    },
+    {
+      "filename": "modern-island-dragged.png",
+      "sha256": "38ab30d949362c6b75713751477a69fe44ace5f052f6d99727e33cf1fb0cec13",
+      "status": "PASS",
+      "notes": "Expanded Home overlay keeps caller/timer, caret, call controls and Open/Hide actions visible above launcher dock."
+    },
+    {
+      "filename": "modern-island-hide-home.png",
+      "sha256": "50d37a2382b2c28f785a6802c8a14973c6e742815fdf27bf3b58a08b714d05b0",
+      "status": "PASS",
+      "notes": "Hidden custom island leaves launcher intact; native ongoing-call status chip remains visible."
+    },
+    {
+      "filename": "modern-island-new-call-shown.png",
+      "sha256": "edd95e7676131c0f8c868ea507041a355764f87d3f3d51c3906c813786d0c7a9",
+      "status": "PASS",
+      "notes": "New actual call restores compact custom island below native call notification with readable state/timer."
+    },
+    {
+      "filename": "modern-island-opacity-0.png",
+      "sha256": "899d5d10cdd76fe6357a350f77a4c4c9b1f00123df60aebd528396fcf5497136",
+      "status": "PASS",
+      "notes": "Transparent body exposes real Recents while opaque caller/time backplates stay readable at the deliberately moved overlay position."
+    },
+    {
+      "filename": "modern-island-opacity-100.png",
+      "sha256": "a5152f41acace42ebd01d25501445e012fc83960191e98aaea1eb89f47ab50e9",
+      "status": "PASS",
+      "notes": "Opaque body keeps caller/time clear; its user-selected moved position overlays part of Recents intentionally."
+    },
+    {
+      "filename": "modern-island-opacity-35.png",
+      "sha256": "06c6ae4aafa348f7b66f15b54ec309319b407d86f5073549d9b5c4fa493404b7",
+      "status": "PASS",
+      "notes": "Partially transparent body exposes Recents with readable caller/time backplates at the deliberately moved overlay position."
+    },
+    {
+      "filename": "modern-island-restore-home.png",
+      "sha256": "62867de11baa3a2bd99bb218c64f94384e638af15fec8606a984ed1fab36b2b9",
+      "status": "PASS",
+      "notes": "Restored Home island and timer are readable; native status icons remain clear. Transient restore toast fits."
+    },
+    {
+      "filename": "modern-island-status-external.png",
+      "sha256": "203ec73ff71447bdef4dacaf1a42e8b884b771fbd7377b4cd01a77eb2b77eb1e",
+      "status": "PASS",
+      "notes": "Constrained external status-mode fallback is below clock/icon lanes; caller/timer and transient toast are readable."
+    },
+    {
+      "filename": "modern-island-status-inapp.png",
+      "sha256": "c4353416b67232b6604d79267c861c757447dbb53f26988feaf57e55aa9bf029",
+      "status": "PASS",
+      "notes": "In-app protected fallback clears native status lanes and preserves usable Recents/navigation."
+    },
+    {
+      "filename": "modern-nex-island-active-he.png",
+      "sha256": "517096dde6b1a57906fcc6ca21cb5351462cd196aa8be5124a4625a873edff88",
+      "status": "PASS",
+      "notes": "Actual Hebrew ACTIVE NEX island shows copper timer and readable caller/state, clears status bar and preserves underlying Recents."
+    },
+    {
+      "filename": "modern-nex-widget-amoled-en.png",
+      "sha256": "d3bea5fb6eed7c0ad88e4598b5c392f0ec4ce6959542db5e598b08ef2608091e",
+      "status": "PASS",
+      "notes": "True-black widget configuration has complete wrapped English heading, full search hint, Back and readable empty-state text."
+    },
+    {
+      "filename": "modern-nex-widget-light-he.png",
+      "sha256": "10d22ebf23cc7c2b6a70b5dcb9fbf57c7a3baa6d67233d72e23d7ab1a26ec0c0",
+      "status": "PASS",
+      "notes": "Hebrew widget configuration heading, back arrow, full hint and empty state fit with correct RTL spacing on warm surfaces."
+    },
+    {
+      "filename": "modern-recents-inline-dark-he.png",
+      "sha256": "284d6fd3b379c6e0e3b2a13b212d1f0748e56f50ec5bb64e64b637d353f4fa8e",
+      "status": "PASS",
+      "notes": "Dark Hebrew expanded row keeps full number and four readable inline actions; bounded date preview can be opened through Details."
+    },
+    {
+      "filename": "modern-recents-inline-light-en.png",
+      "sha256": "71f8357454e8db54425318652eef75f9beebd6ec92fc729075ccb59f901f9ec3",
+      "status": "PASS",
+      "notes": "Full phone and all four inline actions are visible; Message wraps across two lines without clipping; Details retains full metadata access."
+    },
+    {
+      "filename": "modern-wine-controls-dark-he.png",
+      "sha256": "084b8cacdd386d0d5994ac9ec01ccb06959d58a924e0684491e1b95d3b6d4218",
+      "status": "PASS",
+      "notes": "Hebrew titles/descriptions and native wine switches have readable contrast and clear RTL layout."
+    },
+    {
+      "filename": "modern-wine-controls-light-en.png",
+      "sha256": "6f28ed5da586dc5c2c15375884e5a3a3a687d4892190908f4048d3da24c69214",
+      "status": "PASS",
+      "notes": "English heading, description and first switch fit; lower settings continue through an evident scrolling viewport."
+    }
+  ]
+}
